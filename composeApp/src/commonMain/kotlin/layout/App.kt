@@ -1,3 +1,4 @@
+package layout
 
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Box
@@ -14,7 +15,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import org.jetbrains.compose.ui.tooling.preview.Preview
-
 
 @Composable
 @Preview
@@ -34,12 +34,21 @@ fun App() {
                         }
                     )
                 },
-            contentAlignment = Alignment.Center,
         ) {
-            Column {
+            Column(
+                modifier = Modifier.align(
+                    Alignment.Center
+                )
+            ){
                 Text("X:$x")
                 Text("Y:$y")
             }
+
+            Player(
+                x = x,
+                y = y,
+                size = 100f,
+            )
         }
     }
 }
