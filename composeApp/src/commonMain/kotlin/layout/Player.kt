@@ -18,8 +18,8 @@ fun Player(
     Box(
         modifier = Modifier
             .offset(
-                x = x.pxToDp(),
-                y = y.pxToDp(),
+                x = (x - size / 2).pxToDp(),
+                y = (y - size / 2).pxToDp(),
             )
             .size(size.pxToDp())
             .background(Colors.Player),
