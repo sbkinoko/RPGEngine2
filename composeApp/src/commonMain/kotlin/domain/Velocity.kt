@@ -6,13 +6,12 @@ class Velocity() {
     var x: Float = 0f
     var y: Float = 0f
 
-    private val maxVelocity = 10f
-
     constructor(
         dx: Float,
         dy: Float,
+        maxVelocity: Float = 10f,
     ) : this() {
-        val dz = sqrt(x * x + y * y)
+        val dz = sqrt(dx * dx + dy *dy)
         val ratio = if (maxVelocity < dz) {
             maxVelocity / dz
         } else {
