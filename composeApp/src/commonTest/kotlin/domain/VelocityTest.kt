@@ -37,6 +37,7 @@ class VelocityTest {
             actual = velocity.y
         )
     }
+
     @Test
     fun max10x3y4() {
         val velocity = Velocity(

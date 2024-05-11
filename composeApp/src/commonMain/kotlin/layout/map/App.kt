@@ -2,8 +2,7 @@ package layout.map
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.awaitEachGesture
-import androidx.compose.foundation.gestures.detectDragGestures
-import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
@@ -15,20 +14,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.pointer.PointerEventType
-import androidx.compose.ui.input.pointer.PointerEventType.Companion.Press
-import androidx.compose.ui.input.pointer.PointerEventType.Companion.Release
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.util.fastAny
 import extension.pxToDp
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 @Preview
 fun App() {
-    var x: Float by remember { mutableStateOf(0f) }
-    var y: Float by remember { mutableStateOf(0f) }
-
     val mapViewModel = MapViewModel()
 
     mapViewModel.updatePosition()
@@ -39,39 +33,23 @@ fun App() {
         Box(
             modifier = Modifier
                 .pointerInput(Unit) {
-                    detectDragGestures(
-                        onDrag = { change, _ ->
-                            mapViewModel.updateVelocity(
-                                x = change.position.x,
-                                y = change.position.y,
-                            )
-                        },
-                    )
-                    detectTapGestures(
-                        onTap = {
-                            mapViewModel.updateVelocity(
-                                x = it.x,
-                                y = it.y,
-                            )
-                        },
-                        onPress = {
-                            mapViewModel.updateVelocity(
-                                x = it.x,
-                                y = it.y,
-                            )
-                        }
-                    )
                     awaitEachGesture {
-                        val event = awaitPointerEvent()
-                        when (val type: PointerEventType = event.type) {
-                            Press -> {
-
-                            }
-
-                            Release -> {
-                                mapViewModel.resetVelocity()
-                            }
-                        }
+                        val down = awaitFirstDown()
+                        mapViewModel.setTapPoint(
+                            x = down.position.x,
+                            y = down.position.y,
+                        )
+                        do {
+                            val event = awaitPointerEvent()
+                            val lastPosition = event.changes.last().position
+                            mapViewModel.setTapPoint(
+                                x = lastPosition.x,
+                                y = lastPosition.y,
+                            )
+                        } while (
+                            event.changes.fastAny { it.pressed }
+                        )
+                        mapViewModel.resetVelocity()
                     }
                 }
                 .onGloballyPositioned {
