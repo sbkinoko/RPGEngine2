@@ -7,7 +7,7 @@ class Player {
         return point
     }
 
-    private var velocity = Velocity(
+    var velocity = Velocity(
         dx = 1f,
         dy = 0f,
     )

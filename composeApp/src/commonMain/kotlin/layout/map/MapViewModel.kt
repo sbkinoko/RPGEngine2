@@ -10,6 +10,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import manager.map.BackgroundCellManager
 
 class MapViewModel {
     private var player: Player = Player()
@@ -18,12 +19,20 @@ class MapViewModel {
 
     private var tapPoint: Point? = null
 
+    private var mutableBackgroundCellManager: MutableStateFlow<BackgroundCellManager?> =
+        MutableStateFlow(null)
+    val backgroundCellManger = mutableBackgroundCellManager.asStateFlow()
+
     fun updatePosition() {
         CoroutineScope(Dispatchers.IO).launch {
             while (true) {
                 delay(30L)
                 updateVelocity()
                 player.move()
+                mutableBackgroundCellManager.value?.moveBackgroundCell(
+                    dx = player.velocity.x,
+                    dy = player.velocity.y,
+                )
                 mutablePlayerPosition.value = player.getPoint()
             }
         }
@@ -39,8 +48,8 @@ class MapViewModel {
         )
     }
 
-    private fun updateVelocity(){
-        if(tapPoint == null){
+    private fun updateVelocity() {
+        if (tapPoint == null) {
             return
         }
 
@@ -54,7 +63,6 @@ class MapViewModel {
         player.updateVelocity(velocity = velocity)
     }
 
-
     fun resetVelocity() {
         val velocity = Velocity(
             dx = 0f,
@@ -67,5 +75,14 @@ class MapViewModel {
 
     fun getPlayerSize(): Float {
         return player.size
+    }
+
+    fun initBackgroundCellManager(
+        screenWidth: Int
+    ) {
+        mutableBackgroundCellManager.value = BackgroundCellManager(
+            cellNum = 5,
+            sideLength = screenWidth,
+        )
     }
 }
