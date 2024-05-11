@@ -5,9 +5,12 @@ class BackgroundCell {
     var mapPoint: MapPoint = MapPoint()
 
     fun moveDisplayPoint(
-        dx:Float,
-        dy:Float,
-    ){
-
+        dx: Float,
+        dy: Float,
+    ) {
+        displayPoint = Point(
+            x = displayPoint.x + dx,
+            y = displayPoint.y + dy,
+        )
     }
 }
