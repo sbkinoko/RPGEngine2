@@ -52,4 +52,34 @@ class BackgroundCellTest {
             actual = bgCell.displayPoint.y,
         )
     }
+
+    @Test
+    fun side() {
+        val backgroundCell = BackgroundCell()
+        backgroundCell.displayPoint = Point(
+            x = 10f,
+            y = 15f,
+        )
+        backgroundCell.cellSize = 10f
+
+        assertEquals(
+            expected = 10f,
+            actual = backgroundCell.leftSide
+        )
+
+        assertEquals(
+            expected = 20f,
+            actual = backgroundCell.rightSide,
+        )
+
+        assertEquals(
+            expected = 15f,
+            actual = backgroundCell.topSide,
+        )
+
+        assertEquals(
+            expected = 25f,
+            actual = backgroundCell.bottomSide,
+        )
+    }
 }
