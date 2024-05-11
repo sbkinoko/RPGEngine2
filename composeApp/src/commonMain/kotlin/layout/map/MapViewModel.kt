@@ -1,8 +1,8 @@
 package layout.map
 
-import domain.Player
-import domain.Point
-import domain.Velocity
+import domain.map.Player
+import domain.map.Point
+import domain.map.Velocity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -16,7 +16,7 @@ class MapViewModel {
     private val mutablePlayerPosition = MutableStateFlow(player.getPoint())
     val playerPosition = mutablePlayerPosition.asStateFlow()
 
-    var tapPoint: Point? = null
+    private var tapPoint: Point? = null
 
     fun updatePosition() {
         CoroutineScope(Dispatchers.IO).launch {
