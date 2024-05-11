@@ -23,9 +23,6 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 @Preview
 fun App() {
-    var x: Float by remember { mutableStateOf(0f) }
-    var y: Float by remember { mutableStateOf(0f) }
-
     val mapViewModel = MapViewModel()
 
     mapViewModel.updatePosition()
@@ -38,14 +35,14 @@ fun App() {
                 .pointerInput(Unit) {
                     awaitEachGesture {
                         val down = awaitFirstDown()
-                        mapViewModel.updateVelocity(
+                        mapViewModel.setTapPoint(
                             x = down.position.x,
                             y = down.position.y,
                         )
                         do {
                             val event = awaitPointerEvent()
                             val lastPosition = event.changes.last().position
-                            mapViewModel.updateVelocity(
+                            mapViewModel.setTapPoint(
                                 x = lastPosition.x,
                                 y = lastPosition.y,
                             )
