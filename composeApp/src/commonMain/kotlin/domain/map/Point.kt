@@ -1,4 +1,4 @@
-package domain
+package domain.map
 
 class Point(
     var x: Float = 0f,

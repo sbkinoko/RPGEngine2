@@ -1,4 +1,4 @@
-package domain
+package domain.map
 
 class Player {
     private var point = Point()

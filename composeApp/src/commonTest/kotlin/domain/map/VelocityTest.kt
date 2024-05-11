@@ -1,4 +1,4 @@
-package domain
+package domain.map
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
