@@ -28,12 +28,14 @@ class MapViewModel {
             while (true) {
                 delay(30L)
                 updateVelocity()
-                player.move()
-                mutableBackgroundCellManager.value?.moveBackgroundCell(
-                    dx = player.velocity.x,
-                    dy = player.velocity.y,
-                )
-                mutablePlayerPosition.value = player.getPoint()
+                if (player.isMoving) {
+                    player.move()
+                    mutableBackgroundCellManager.value?.moveBackgroundCell(
+                        dx = player.velocity.x,
+                        dy = player.velocity.y,
+                    )
+                    mutablePlayerPosition.value = player.getPoint()
+                }
             }
         }
     }

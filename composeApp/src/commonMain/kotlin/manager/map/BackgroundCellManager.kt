@@ -1,13 +1,39 @@
 package manager.map
 
 import domain.map.BackgroundCell
+import domain.map.MapPoint
 import domain.map.Point
 
 class BackgroundCellManager(
     val cellNum: Int,
-    sideLength: Int,
+    val sideLength: Int,
 ) {
     private val backgroundCellArray: Array<Array<BackgroundCell>>
+
+    val diffOfLoop: Float
+    val allCellNum: Int
+
+    init {
+        val cellSize = sideLength / cellNum.toFloat()
+        allCellNum = cellNum + 1
+        diffOfLoop = cellSize * (allCellNum)
+        backgroundCellArray = Array(allCellNum) { row ->
+            Array(allCellNum) { col ->
+                BackgroundCell().apply {
+                    displayPoint = Point(
+                        x = (col) * cellSize,
+                        y = (row) * cellSize,
+                    )
+                    mapPoint = MapPoint(
+                        x = col,
+                        y = row,
+                    )
+
+                    this.cellSize = cellSize
+                }
+            }
+        }
+    }
 
     fun getCell(
         col: Int,
@@ -16,31 +42,47 @@ class BackgroundCellManager(
         return backgroundCellArray[row][col]
     }
 
-    init {
-        val cellSize = sideLength / cellNum.toFloat()
-        backgroundCellArray = Array(cellNum) { row ->
-            Array(cellNum) { col ->
-                BackgroundCell().apply {
-                    displayPoint = Point(
-                        x = col * cellSize,
-                        y = row * cellSize,
+    fun moveBackgroundCell(
+        dx: Float = 0f,
+        dy: Float = 0f,
+    ) {
+        backgroundCellArray.forEach { rowArray ->
+            rowArray.forEach { bgCell ->
+                bgCell.apply {
+                    moveDisplayPoint(
+                        dx = dx,
+                        dy = dy,
                     )
-                    this.cellSize = cellSize
                 }
+                checkLoop(bgCell = bgCell)
             }
         }
     }
 
-    fun moveBackgroundCell(
-        dx: Float,
-        dy: Float,
-    ) {
-        backgroundCellArray.forEach { rowArray ->
-            rowArray.forEach { bgCell ->
-                bgCell.moveDisplayPoint(
-                    dx = dx,
-                    dy = dy,
+    fun checkLoop(bgCell: BackgroundCell) {
+        bgCell.apply {
+            if (sideLength < leftSide) {
+                moveDisplayPoint(
+                    dx = -diffOfLoop,
                 )
+                mapPoint.x -= allCellNum
+            } else if (rightSide < 0) {
+                moveDisplayPoint(
+                    dx = diffOfLoop,
+                )
+                mapPoint.x += allCellNum
+            }
+
+            if (sideLength < topSide) {
+                moveDisplayPoint(
+                    dy = -diffOfLoop,
+                )
+                mapPoint.y -= allCellNum
+            } else if (bottomSide < 0) {
+                moveDisplayPoint(
+                    dy = diffOfLoop,
+                )
+                mapPoint.y += allCellNum
             }
         }
     }

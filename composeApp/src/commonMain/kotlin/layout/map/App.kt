@@ -91,8 +91,8 @@ fun App() {
 @Composable
 fun showBackground(backgroundCellManager: BackgroundCellManager) {
     Box {
-        for (row: Int in 0 until backgroundCellManager.cellNum) {
-            for (col: Int in 0 until backgroundCellManager.cellNum) {
+        for (row: Int in 0 until backgroundCellManager.allCellNum) {
+            for (col: Int in 0 until backgroundCellManager.allCellNum) {
                 backgroundCellManager.getCell(
                     col = col,
                     row = row,
@@ -111,7 +111,12 @@ fun showBackground(backgroundCellManager: BackgroundCellManager) {
                                 color = Colors.BackgroundCell,
                                 shape = RectangleShape,
                             ),
-                        text = "row:$row\ncol:$col\nx=${this.displayPoint.x}",
+                        text = StringBuilder()
+                            .append("row:$row\n")
+                            .append("col:$col\n")
+                            .append("mapX:${mapPoint.x}\n")
+                            .append("mapY:${mapPoint.y}\n")
+                            .toString(),
                     )
                 }
             }

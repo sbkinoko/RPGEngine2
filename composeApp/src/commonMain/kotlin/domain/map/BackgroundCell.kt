@@ -18,8 +18,8 @@ class BackgroundCell {
         get() = displayPoint.y + cellSize
 
     fun moveDisplayPoint(
-        dx: Float,
-        dy: Float,
+        dx: Float = 0f,
+        dy: Float = 0f,
     ) {
         displayPoint = Point(
             x = displayPoint.x + dx,

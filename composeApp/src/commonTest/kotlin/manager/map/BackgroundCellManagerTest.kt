@@ -5,13 +5,27 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class BackgroundCellManagerTest {
-    lateinit var backgroundCellManager: BackgroundCellManager
+    companion object {
+        const val CELL_NUM = 3
+        const val SIDE_LENGTH = 30
+    }
+
+
+    private lateinit var backgroundCellManager: BackgroundCellManager
 
     @BeforeTest
     fun beforeTest() {
         backgroundCellManager = BackgroundCellManager(
-            cellNum = 3,
-            sideLength = 30,
+            cellNum = CELL_NUM,
+            sideLength = SIDE_LENGTH,
+        )
+    }
+
+    @Test
+    fun countCell() {
+        backgroundCellManager.getCell(
+            col = 3,
+            row = 3,
         )
     }
 
@@ -72,6 +86,110 @@ class BackgroundCellManagerTest {
                 expected = 5f,
                 actual = y,
             )
+        }
+    }
+
+    @Test
+    fun checkLoop_LeftUp() {
+        backgroundCellManager.moveBackgroundCell(dx = -15f)
+        backgroundCellManager.getCell(0, 0).apply {
+            displayPoint.apply {
+                assertEquals(
+                    expected = 25f,
+                    actual = x,
+                )
+                assertEquals(
+                    expected = 0f,
+                    actual = y,
+                )
+            }
+            mapPoint.apply {
+                assertEquals(
+                    expected = 4,
+                    actual = x,
+                )
+                assertEquals(
+                    expected = 0,
+                    actual = y,
+                )
+            }
+        }
+
+        backgroundCellManager.moveBackgroundCell(dy = -15f)
+        backgroundCellManager.getCell(0, 0).apply {
+            displayPoint.apply {
+                assertEquals(
+                    expected = 25f,
+                    actual = x,
+                )
+                assertEquals(
+                    expected = 25f,
+                    actual = y,
+                )
+            }
+            mapPoint.apply {
+                assertEquals(
+                    expected = 4,
+                    actual = x,
+                )
+                assertEquals(
+                    expected = 4,
+                    actual = y,
+                )
+            }
+        }
+    }
+
+    @Test
+    fun checkLoop_RightDown() {
+        val dx = 35f
+        backgroundCellManager.moveBackgroundCell(dx = dx)
+        backgroundCellManager.getCell(0, 0).apply {
+            displayPoint.apply {
+                assertEquals(
+                    expected = -dx + SIDE_LENGTH,
+                    actual = x,
+                )
+                assertEquals(
+                    expected = 0f,
+                    actual = y,
+                )
+            }
+            mapPoint.apply {
+                assertEquals(
+                    expected = -4,
+                    actual = x,
+                )
+                assertEquals(
+                    expected = 0,
+                    actual = y,
+                )
+            }
+        }
+
+        val dy = 35f
+        backgroundCellManager.moveBackgroundCell(dy = dy)
+        backgroundCellManager.getCell(0, 0).apply {
+            displayPoint.apply {
+                assertEquals(
+                    expected = -dx + SIDE_LENGTH,
+                    actual = x,
+                )
+                assertEquals(
+                    expected = -dy + SIDE_LENGTH,
+                    actual = y,
+                )
+            }
+            mapPoint.apply {
+                assertEquals(
+                    expected = -4,
+                    actual = x,
+                )
+                assertEquals(
+                    expected = -4,
+                    actual = y,
+                )
+            }
         }
     }
 }
