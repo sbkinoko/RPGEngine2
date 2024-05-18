@@ -10,6 +10,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import manager.map.BackgroundCellManager
 
 class MapViewModel {
     private var player: Player = Player()
@@ -18,17 +19,44 @@ class MapViewModel {
 
     private var tapPoint: Point? = null
 
+    private var mutableBackgroundCellManager: MutableStateFlow<BackgroundCellManager?> =
+        MutableStateFlow(null)
+    val backgroundCellManger = mutableBackgroundCellManager.asStateFlow()
+
+
+    fun initBackgroundCellManager(
+        screenWidth: Int,
+    ) {
+        mutableBackgroundCellManager.value = BackgroundCellManager(
+            cellNum = 5,
+            sideLength = screenWidth,
+        )
+    }
+
+    /**
+     * 主人公の位置を更新
+     */
     fun updatePosition() {
         CoroutineScope(Dispatchers.IO).launch {
             while (true) {
                 delay(30L)
                 updateVelocity()
-                player.move()
-                mutablePlayerPosition.value = player.getPoint()
+                if (player.isMoving) {
+                    player.move()
+                    mutableBackgroundCellManager.value?.moveBackgroundCell(
+                        dx = player.velocity.x,
+                        dy = player.velocity.y,
+                    )
+                    mutablePlayerPosition.value = player.getPoint()
+                }
             }
         }
     }
 
+    /**
+     * @param x tapのx座標
+     * @param y tapのy座標
+     */
     fun setTapPoint(
         x: Float,
         y: Float,
@@ -39,8 +67,11 @@ class MapViewModel {
         )
     }
 
-    private fun updateVelocity(){
-        if(tapPoint == null){
+    /**
+     * タップの位置に対して速度を計算
+     */
+    private fun updateVelocity() {
+        if (tapPoint == null) {
             return
         }
 
@@ -54,6 +85,9 @@ class MapViewModel {
         player.updateVelocity(velocity = velocity)
     }
 
+    /**
+     * 速度を0にする
+     */
 
     fun resetVelocity() {
         val velocity = Velocity(

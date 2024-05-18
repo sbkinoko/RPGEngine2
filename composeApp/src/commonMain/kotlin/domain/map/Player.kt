@@ -3,12 +3,16 @@ package domain.map
 class Player {
     private var point = Point()
 
+    val isMoving: Boolean
+        get() = velocity.x != 0f ||
+                velocity.y != 0f
+
     fun getPoint(): Point {
         return point
     }
 
-    private var velocity = Velocity(
-        dx = 1f,
+    var velocity = Velocity(
+        dx = 0f,
         dy = 0f,
     )
 
