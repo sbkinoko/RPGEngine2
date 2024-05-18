@@ -37,7 +37,7 @@ class BackgroundCellManager(
 
     fun getCell(
         col: Int,
-        row: Int
+        row: Int,
     ): BackgroundCell {
         return backgroundCellArray[row][col]
     }

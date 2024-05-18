@@ -23,6 +23,9 @@ class MapViewModel {
         MutableStateFlow(null)
     val backgroundCellManger = mutableBackgroundCellManager.asStateFlow()
 
+    /**
+     * 主人公の位置を更新
+     */
     fun updatePosition() {
         CoroutineScope(Dispatchers.IO).launch {
             while (true) {
@@ -40,6 +43,10 @@ class MapViewModel {
         }
     }
 
+    /**
+     * @param x tapのx座標
+     * @param y tapのy座標
+     */
     fun setTapPoint(
         x: Float,
         y: Float,
@@ -50,6 +57,9 @@ class MapViewModel {
         )
     }
 
+    /**
+     * タップの位置に対して速度を計算
+     */
     private fun updateVelocity() {
         if (tapPoint == null) {
             return
@@ -64,6 +74,10 @@ class MapViewModel {
 
         player.updateVelocity(velocity = velocity)
     }
+
+    /**
+     * 速度を0にする
+     */
 
     fun resetVelocity() {
         val velocity = Velocity(
@@ -80,7 +94,7 @@ class MapViewModel {
     }
 
     fun initBackgroundCellManager(
-        screenWidth: Int
+        screenWidth: Int,
     ) {
         mutableBackgroundCellManager.value = BackgroundCellManager(
             cellNum = 5,
