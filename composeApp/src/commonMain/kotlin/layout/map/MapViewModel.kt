@@ -23,6 +23,16 @@ class MapViewModel {
         MutableStateFlow(null)
     val backgroundCellManger = mutableBackgroundCellManager.asStateFlow()
 
+
+    fun initBackgroundCellManager(
+        screenWidth: Int,
+    ) {
+        mutableBackgroundCellManager.value = BackgroundCellManager(
+            cellNum = 5,
+            sideLength = screenWidth,
+        )
+    }
+
     /**
      * 主人公の位置を更新
      */
@@ -91,14 +101,5 @@ class MapViewModel {
 
     fun getPlayerSize(): Float {
         return player.size
-    }
-
-    fun initBackgroundCellManager(
-        screenWidth: Int,
-    ) {
-        mutableBackgroundCellManager.value = BackgroundCellManager(
-            cellNum = 5,
-            sideLength = screenWidth,
-        )
     }
 }
