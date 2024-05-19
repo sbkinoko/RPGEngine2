@@ -27,8 +27,14 @@ class MapViewModel(
         MutableStateFlow(null)
     val backgroundCellManger = mutableBackgroundCellManager.asStateFlow()
 
+    private lateinit var playerMoveArea: Square
+
+    private var backGroundVelocity: Velocity = Velocity()
+
     init {
         player = Player(
+            initX = 700f,
+            initY = 700f,
             size = playerSize,
         )
         mutablePlayerPosition = MutableStateFlow(player.square)
@@ -42,6 +48,12 @@ class MapViewModel(
             cellNum = 5,
             sideLength = screenWidth,
         )
+
+        playerMoveArea = Square(
+            x = (MOVE_BORDER * screenWidth),
+            y = (MOVE_BORDER * screenWidth),
+            size = ((1 - 2 * MOVE_BORDER) * screenWidth),
+        )
     }
 
     /**
@@ -53,12 +65,12 @@ class MapViewModel(
                 delay(30L)
                 updateVelocity()
                 if (player.isMoving) {
+                    mediateVelocity()
                     player.move()
                     // todo いい感じにする方法を探す
                     mutablePlayerPosition.value = player.square.getNew()
                     mutableBackgroundCellManager.value?.moveBackgroundCell(
-                        dx = player.velocity.x,
-                        dy = player.velocity.y,
+                        velocity = backGroundVelocity
                     )
                 }
             }
@@ -108,5 +120,40 @@ class MapViewModel(
         tapPoint = null
 
         player.updateVelocity(velocity = velocity)
+    }
+
+    /**
+     * playerを動かすか、背景を動かすか決定する
+     */
+    fun mediateVelocity() {
+        var vx = 0f
+        var vy = 0f
+        if ((player.square.isLeft(playerMoveArea) &&
+                    player.velocity.x < 0) ||
+            (player.square.isRight(playerMoveArea) &&
+                    0 < player.velocity.x)
+        ) {
+            vx = -(player.velocity.x)
+            player.velocity.x = 0f
+        }
+
+        if ((player.square.isUp(playerMoveArea) &&
+                    player.velocity.y < 0) ||
+            (player.square.isDown(playerMoveArea) &&
+                    0 < player.velocity.y)
+        ) {
+            vy = -(player.velocity.y)
+            player.velocity.y = 0f
+
+        }
+
+        backGroundVelocity = Velocity(
+            dx = vx,
+            dy = vy,
+        )
+    }
+
+    companion object {
+        private const val MOVE_BORDER = 0.3f
     }
 }
