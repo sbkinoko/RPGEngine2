@@ -52,4 +52,20 @@ data class Square(
             size = size,
         )
     }
+
+    fun isLeft(other: Square): Boolean {
+        return this.rightSide <= other.leftSide
+    }
+
+    fun isRight(other: Square): Boolean {
+        return other.rightSide <= this.leftSide
+    }
+
+    fun isDown(other: Square): Boolean {
+        return other.bottomSide <= this.topSide
+    }
+
+    fun isUp(other: Square): Boolean {
+        return this.bottomSide <= other.topSide
+    }
 }

@@ -1,6 +1,8 @@
 package domain.map
 
 class Player(
+    initX: Float = 0f,
+    initY: Float = 0f,
     val size: Float,
 ) {
     var square: Square
@@ -8,8 +10,8 @@ class Player(
     init {
         square = Square(
             displayPoint = Point(
-                x = 0f,
-                y = 0f,
+                x = initX,
+                y = initY,
             ),
             size = size,
         )

@@ -2,6 +2,7 @@ package manager.map
 
 import domain.map.BackgroundCell
 import domain.map.MapPoint
+import domain.map.Velocity
 
 class BackgroundCellManager(
     val cellNum: Int,
@@ -37,6 +38,15 @@ class BackgroundCellManager(
         row: Int,
     ): BackgroundCell {
         return backgroundCellArray[row][col]
+    }
+
+    fun moveBackgroundCell(
+        velocity: Velocity,
+    ) {
+        moveBackgroundCell(
+            dx = velocity.x,
+            dy = velocity.y,
+        )
     }
 
     fun moveBackgroundCell(
