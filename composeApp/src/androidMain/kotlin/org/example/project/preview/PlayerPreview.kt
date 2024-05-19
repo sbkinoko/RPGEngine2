@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import domain.map.Point
+import domain.map.Square
 import layout.map.Player
 
 @Preview
@@ -14,9 +16,13 @@ fun PlayerPreview() {
         modifier = Modifier.fillMaxSize()
     ) {
         Player(
-            x = 100f,
-            y = 100f,
-            size = 100f,
+            square = Square(
+                displayPoint = Point(
+                    x = 100f,
+                    y = 100f,
+                ),
+                size = 100f,
+            ),
         )
     }
 }

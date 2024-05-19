@@ -2,20 +2,24 @@ package layout.map
 
 import domain.map.Player
 import domain.map.Point
+import domain.map.Square
 import domain.map.Velocity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import manager.map.BackgroundCellManager
 
-class MapViewModel {
-    private var player: Player = Player()
-    private val mutablePlayerPosition = MutableStateFlow(player.getPoint())
-    val playerPosition = mutablePlayerPosition.asStateFlow()
+class MapViewModel(
+    playerSize: Float,
+) {
+    private var player: Player
+    private val mutablePlayerPosition: MutableStateFlow<Square>
+    val playerPosition: StateFlow<Square>
 
     private var tapPoint: Point? = null
 
@@ -23,6 +27,13 @@ class MapViewModel {
         MutableStateFlow(null)
     val backgroundCellManger = mutableBackgroundCellManager.asStateFlow()
 
+    init {
+        player = Player(
+            size = playerSize,
+        )
+        mutablePlayerPosition = MutableStateFlow(player.square)
+        playerPosition = mutablePlayerPosition.asStateFlow()
+    }
 
     fun initBackgroundCellManager(
         screenWidth: Int,
@@ -43,11 +54,12 @@ class MapViewModel {
                 updateVelocity()
                 if (player.isMoving) {
                     player.move()
+                    // todo いい感じにする方法を探す
+                    mutablePlayerPosition.value = player.square.getNew()
                     mutableBackgroundCellManager.value?.moveBackgroundCell(
                         dx = player.velocity.x,
                         dy = player.velocity.y,
                     )
-                    mutablePlayerPosition.value = player.getPoint()
                 }
             }
         }
@@ -75,8 +87,8 @@ class MapViewModel {
             return
         }
 
-        val dx = (tapPoint?.x ?: 0f) - (player.getPoint().x + player.size / 2)
-        val dy = (tapPoint?.y ?: 0f) - (player.getPoint().y + player.size / 2)
+        val dx = (tapPoint?.x ?: 0f) - (player.square.x + player.size / 2)
+        val dy = (tapPoint?.y ?: 0f) - (player.square.y + player.size / 2)
         val velocity = Velocity(
             dx = dx,
             dy = dy,
@@ -88,7 +100,6 @@ class MapViewModel {
     /**
      * 速度を0にする
      */
-
     fun resetVelocity() {
         val velocity = Velocity(
             dx = 0f,
@@ -97,9 +108,5 @@ class MapViewModel {
         tapPoint = null
 
         player.updateVelocity(velocity = velocity)
-    }
-
-    fun getPlayerSize(): Float {
-        return player.size
     }
 }
