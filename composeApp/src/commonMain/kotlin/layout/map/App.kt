@@ -30,12 +30,17 @@ import values.Colors
 @Composable
 @Preview
 fun App() {
-    val mapViewModel: MapViewModel by remember { mutableStateOf(MapViewModel()) }
+    val mapViewModel: MapViewModel by remember {
+        mutableStateOf(
+            MapViewModel(
+                playerSize = 100f,
+            )
+        )
+    }
 
     mapViewModel.updatePosition()
-    val playerPosition = mapViewModel.playerPosition.collectAsState()
     val backgroundCellManager = mapViewModel.backgroundCellManger.collectAsState()
-
+    val playerSquare = mapViewModel.playerPosition.collectAsState()
     var screenSize: Int by remember { mutableStateOf(0) }
     MaterialTheme {
         Box(
@@ -80,9 +85,7 @@ fun App() {
             }
 
             Player(
-                x = playerPosition.value.x,
-                y = playerPosition.value.y,
-                size = mapViewModel.getPlayerSize(),
+                square = playerSquare.value,
             )
         }
     }
@@ -103,8 +106,8 @@ fun showBackground(backgroundCellManager: BackgroundCellManager) {
                                 this.cellSize.pxToDp()
                             )
                             .offset(
-                                x = this.displayPoint.x.pxToDp(),
-                                y = this.displayPoint.y.pxToDp(),
+                                x = this.square.leftSide.pxToDp(),
+                                y = this.square.topSide.pxToDp(),
                             )
                             .border(
                                 width = 1.dp,

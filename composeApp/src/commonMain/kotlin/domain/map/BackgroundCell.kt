@@ -1,29 +1,36 @@
 package domain.map
 
-class BackgroundCell {
-    var displayPoint: Point = Point()
+class BackgroundCell(
+    cellSize: Float,
+    x: Float,
+    y: Float,
+) {
     var mapPoint: MapPoint = MapPoint()
-    var cellSize: Float = 0f
 
-    val leftSide: Float
-        get() = displayPoint.x
+    val square: Square
 
-    val rightSide: Float
-        get() = displayPoint.x + cellSize
+    init {
+        square = Square(
+            displayPoint = Point(
+                x = x,
+                y = y,
+            ),
+            size = cellSize,
+        )
+    }
 
-    val topSide: Float
-        get() = displayPoint.y
-
-    val bottomSide: Float
-        get() = displayPoint.y + cellSize
+    val cellSize: Float
+        get() {
+            return square.size
+        }
 
     fun moveDisplayPoint(
         dx: Float = 0f,
         dy: Float = 0f,
     ) {
-        displayPoint = Point(
-            x = displayPoint.x + dx,
-            y = displayPoint.y + dy,
+        square.move(
+            dx = dx,
+            dy = dy,
         )
     }
 }

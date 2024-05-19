@@ -2,7 +2,6 @@ package manager.map
 
 import domain.map.BackgroundCell
 import domain.map.MapPoint
-import domain.map.Point
 
 class BackgroundCellManager(
     val cellNum: Int,
@@ -19,17 +18,15 @@ class BackgroundCellManager(
         diffOfLoop = cellSize * (allCellNum)
         backgroundCellArray = Array(allCellNum) { row ->
             Array(allCellNum) { col ->
-                BackgroundCell().apply {
-                    displayPoint = Point(
-                        x = (col) * cellSize,
-                        y = (row) * cellSize,
-                    )
+                BackgroundCell(
+                    x = (col) * cellSize,
+                    y = (row) * cellSize,
+                    cellSize = cellSize,
+                ).apply {
                     mapPoint = MapPoint(
                         x = col,
                         y = row,
                     )
-
-                    this.cellSize = cellSize
                 }
             }
         }
@@ -61,24 +58,24 @@ class BackgroundCellManager(
 
     fun checkLoop(bgCell: BackgroundCell) {
         bgCell.apply {
-            if (sideLength < leftSide) {
-                moveDisplayPoint(
+            if (sideLength < square.leftSide) {
+                square.move(
                     dx = -diffOfLoop,
                 )
                 mapPoint.x -= allCellNum
-            } else if (rightSide < 0) {
+            } else if (square.rightSide < 0) {
                 moveDisplayPoint(
                     dx = diffOfLoop,
                 )
                 mapPoint.x += allCellNum
             }
 
-            if (sideLength < topSide) {
+            if (sideLength < square.topSide) {
                 moveDisplayPoint(
                     dy = -diffOfLoop,
                 )
                 mapPoint.y -= allCellNum
-            } else if (bottomSide < 0) {
+            } else if (square.bottomSide < 0) {
                 moveDisplayPoint(
                     dy = diffOfLoop,
                 )

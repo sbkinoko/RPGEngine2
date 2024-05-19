@@ -1,27 +1,33 @@
 package domain.map
 
-class Player {
-    private var point = Point()
+class Player(
+    val size: Float,
+) {
+    var square: Square
+
+    init {
+        square = Square(
+            displayPoint = Point(
+                x = 0f,
+                y = 0f,
+            ),
+            size = size,
+        )
+    }
 
     val isMoving: Boolean
         get() = velocity.x != 0f ||
                 velocity.y != 0f
-
-    fun getPoint(): Point {
-        return point
-    }
 
     var velocity = Velocity(
         dx = 0f,
         dy = 0f,
     )
 
-    var size: Float = 100f
-
     fun move() {
-        point = Point(
-            x = point.x + velocity.x,
-            y = point.y + velocity.y,
+        square.move(
+            velocity.x,
+            velocity.y,
         )
     }
 

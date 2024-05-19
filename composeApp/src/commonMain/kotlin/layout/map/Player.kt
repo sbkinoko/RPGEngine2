@@ -6,22 +6,21 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import domain.map.Square
 import extension.pxToDp
 import values.Colors
 
 @Composable
 fun Player(
-    x: Float,
-    y: Float,
-    size: Float,
+    square: Square
 ) {
     Box(
         modifier = Modifier
             .offset(
-                x = x.pxToDp(),
-                y = y.pxToDp(),
+                x = square.x.pxToDp(),
+                y = square.y.pxToDp(),
             )
-            .size(size.pxToDp())
+            .size(square.size.pxToDp())
             .background(Colors.Player),
     ) {
 

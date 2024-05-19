@@ -38,38 +38,38 @@ class BackgroundCellManagerTest {
             actual = cell1.cellSize,
         )
 
-        cell1.displayPoint.apply {
+        cell1.square.apply {
             assertEquals(
                 expected = 0f,
-                actual = x,
+                actual = leftSide,
             )
             assertEquals(
                 expected = 0f,
-                actual = y,
+                actual = topSide,
             )
         }
 
         val cell2 = backgroundCellManager.getCell(1, 0)
-        cell2.displayPoint.apply {
+        cell2.square.apply {
             assertEquals(
                 expected = 10f,
-                actual = x,
+                actual = leftSide,
             )
             assertEquals(
                 expected = 0f,
-                actual = y,
+                actual = topSide,
             )
         }
 
         val cell3 = backgroundCellManager.getCell(0, 1)
-        cell3.displayPoint.apply {
+        cell3.square.apply {
             assertEquals(
                 expected = 0f,
-                actual = x,
+                actual = leftSide,
             )
             assertEquals(
                 expected = 10f,
-                actual = y,
+                actual = topSide,
             )
         }
     }
@@ -77,14 +77,14 @@ class BackgroundCellManagerTest {
     @Test
     fun move() {
         backgroundCellManager.moveBackgroundCell(dx = 10f, dy = 5f)
-        backgroundCellManager.getCell(0, 0).displayPoint.apply {
+        backgroundCellManager.getCell(0, 0).square.apply {
             assertEquals(
                 expected = 10f,
-                actual = x,
+                actual = leftSide,
             )
             assertEquals(
                 expected = 5f,
-                actual = y,
+                actual = topSide,
             )
         }
     }
@@ -96,14 +96,14 @@ class BackgroundCellManagerTest {
     fun checkLoop_Up(){
         backgroundCellManager.moveBackgroundCell(dy = -15f)
         backgroundCellManager.getCell(0, 0).apply {
-            displayPoint.apply {
+            square.apply {
                 assertEquals(
                     expected = 0f,
-                    actual = x,
+                    actual = leftSide,
                 )
                 assertEquals(
                     expected = 25f,
-                    actual = y,
+                    actual = topSide,
                 )
             }
             mapPoint.apply {
@@ -127,14 +127,14 @@ class BackgroundCellManagerTest {
         val dy = 35f
         backgroundCellManager.moveBackgroundCell(dy = dy)
         backgroundCellManager.getCell(0, 0).apply {
-            displayPoint.apply {
+            square.apply {
                 assertEquals(
                     expected = 0f,
-                    actual = x,
+                    actual = leftSide,
                 )
                 assertEquals(
                     expected = -dy + SIDE_LENGTH,
-                    actual = y,
+                    actual = topSide,
                 )
             }
             mapPoint.apply {
@@ -157,14 +157,14 @@ class BackgroundCellManagerTest {
     fun checkLoop_LeftUp() {
         backgroundCellManager.moveBackgroundCell(dx = -15f)
         backgroundCellManager.getCell(0, 0).apply {
-            displayPoint.apply {
+            square.apply {
                 assertEquals(
                     expected = 25f,
-                    actual = x,
+                    actual = leftSide,
                 )
                 assertEquals(
                     expected = 0f,
-                    actual = y,
+                    actual = topSide,
                 )
             }
             mapPoint.apply {
@@ -189,14 +189,14 @@ class BackgroundCellManagerTest {
         val dx = 35f
         backgroundCellManager.moveBackgroundCell(dx = dx)
         backgroundCellManager.getCell(0, 0).apply {
-            displayPoint.apply {
+            square.apply {
                 assertEquals(
                     expected = -dx + SIDE_LENGTH,
-                    actual = x,
+                    actual = leftSide,
                 )
                 assertEquals(
                     expected = 0f,
-                    actual = y,
+                    actual = topSide,
                 )
             }
             mapPoint.apply {
