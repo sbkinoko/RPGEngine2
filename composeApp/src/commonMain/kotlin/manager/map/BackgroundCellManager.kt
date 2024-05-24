@@ -2,6 +2,7 @@ package manager.map
 
 import domain.map.BackgroundCell
 import domain.map.MapPoint
+import domain.map.Square
 import domain.map.Velocity
 
 class BackgroundCellManager(
@@ -10,10 +11,17 @@ class BackgroundCellManager(
 ) {
     private val backgroundCellArray: Array<Array<BackgroundCell>>
 
-    val diffOfLoop: Float
+    private val diffOfLoop: Float
     val allCellNum: Int
 
+    private val fieldSquare: Square
+
     init {
+        fieldSquare = Square(
+            x = 0f,
+            y = 0f,
+            size = sideLength.toFloat(),
+        )
         val cellSize = sideLength / cellNum.toFloat()
         allCellNum = cellNum + 1
         diffOfLoop = cellSize * (allCellNum)
@@ -66,26 +74,26 @@ class BackgroundCellManager(
         }
     }
 
-    fun checkLoop(bgCell: BackgroundCell) {
+    private fun checkLoop(bgCell: BackgroundCell) {
         bgCell.apply {
-            if (sideLength < square.leftSide) {
+            if (square.isRight(fieldSquare)) {
                 square.move(
                     dx = -diffOfLoop,
                 )
                 mapPoint.x -= allCellNum
-            } else if (square.rightSide < 0) {
+            } else if (square.isLeft(fieldSquare)) {
                 moveDisplayPoint(
                     dx = diffOfLoop,
                 )
                 mapPoint.x += allCellNum
             }
 
-            if (sideLength < square.topSide) {
+            if (square.isDown(fieldSquare)) {
                 moveDisplayPoint(
                     dy = -diffOfLoop,
                 )
                 mapPoint.y -= allCellNum
-            } else if (square.bottomSide < 0) {
+            } else if (square.isUp(fieldSquare)) {
                 moveDisplayPoint(
                     dy = diffOfLoop,
                 )
