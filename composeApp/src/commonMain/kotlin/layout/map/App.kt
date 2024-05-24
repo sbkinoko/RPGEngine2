@@ -1,5 +1,6 @@
 package layout.map
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.awaitEachGesture
@@ -23,7 +24,9 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastAny
 import extension.pxToDp
-import manager.map.BackgroundCellManager
+import manager.map.BackgroundManager
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import values.Colors
 
@@ -91,16 +94,19 @@ fun App() {
     }
 }
 
+@OptIn(ExperimentalResourceApi::class)
 @Composable
-fun showBackground(backgroundCellManager: BackgroundCellManager) {
+fun showBackground(backgroundManager: BackgroundManager) {
+    val imageBinder = ImageBInder()
+
     Box {
-        for (row: Int in 0 until backgroundCellManager.allCellNum) {
-            for (col: Int in 0 until backgroundCellManager.allCellNum) {
-                backgroundCellManager.getCell(
+        for (row: Int in 0 until backgroundManager.allCellNum) {
+            for (col: Int in 0 until backgroundManager.allCellNum) {
+                backgroundManager.getCell(
                     col = col,
                     row = row,
                 ).apply {
-                    Text(
+                    Box(
                         modifier = Modifier
                             .size(
                                 this.cellSize.pxToDp()
@@ -113,14 +119,29 @@ fun showBackground(backgroundCellManager: BackgroundCellManager) {
                                 width = 1.dp,
                                 color = Colors.BackgroundCell,
                                 shape = RectangleShape,
+                            )
+                    ) {
+                        Image(
+                            modifier = Modifier
+                                .fillMaxSize(),
+                            painter = painterResource(
+                                imageBinder.bind(imgId = imgID)
                             ),
-                        text = StringBuilder()
-                            .append("row:$row\n")
-                            .append("col:$col\n")
-                            .append("mapX:${mapPoint.x}\n")
-                            .append("mapY:${mapPoint.y}\n")
-                            .toString(),
-                    )
+                            contentDescription = "background"
+                        )
+
+
+                        Text(
+                            modifier = Modifier
+                                .fillMaxSize(),
+                            text = StringBuilder()
+                                .append("row:$row\n")
+                                .append("col:$col\n")
+                                .append("mapX:${mapPoint.x}\n")
+                                .append("mapY:${mapPoint.y}\n")
+                                .toString(),
+                        )
+                    }
                 }
             }
         }

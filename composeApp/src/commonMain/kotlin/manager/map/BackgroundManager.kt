@@ -1,11 +1,12 @@
 package manager.map
 
 import domain.map.BackgroundCell
+import domain.map.MapData
 import domain.map.MapPoint
 import domain.map.Square
 import domain.map.Velocity
 
-class BackgroundCellManager(
+class BackgroundManager(
     val cellNum: Int,
     val sideLength: Int,
 ) {
@@ -15,6 +16,8 @@ class BackgroundCellManager(
     val allCellNum: Int
 
     private val fieldSquare: Square
+
+    var mapData: MapData = MapData()
 
     init {
         fieldSquare = Square(
@@ -76,29 +79,40 @@ class BackgroundCellManager(
 
     private fun checkLoop(bgCell: BackgroundCell) {
         bgCell.apply {
-            if (square.isRight(fieldSquare)) {
+            val mapX: Int = if (square.isRight(fieldSquare)) {
                 square.move(
                     dx = -diffOfLoop,
                 )
-                mapPoint.x -= allCellNum
+                mapPoint.x - allCellNum
             } else if (square.isLeft(fieldSquare)) {
                 moveDisplayPoint(
                     dx = diffOfLoop,
                 )
-                mapPoint.x += allCellNum
+                mapPoint.x + allCellNum
+            } else {
+                mapPoint.x
             }
 
-            if (square.isDown(fieldSquare)) {
+            val mapY: Int = if (square.isDown(fieldSquare)) {
                 moveDisplayPoint(
                     dy = -diffOfLoop,
                 )
-                mapPoint.y -= allCellNum
+                mapPoint.y - allCellNum
             } else if (square.isUp(fieldSquare)) {
                 moveDisplayPoint(
                     dy = diffOfLoop,
                 )
-                mapPoint.y += allCellNum
+                mapPoint.y + allCellNum
+            } else {
+                mapPoint.y
             }
+
+            mapPoint = MapPoint(
+                x = mapX,
+                y = mapY,
+            )
+
+            imgID = mapData.getDataAt(mapPoint)
         }
     }
 }

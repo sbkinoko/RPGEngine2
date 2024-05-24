@@ -19,6 +19,12 @@ class MapData {
         x: Int,
         y: Int,
     ): Int {
+        if (y < 0 || field.size <= y ||
+            x < 0 || field[0].size <= x
+        ) {
+            return 0
+        }
+
         return field[y][x]
     }
 
