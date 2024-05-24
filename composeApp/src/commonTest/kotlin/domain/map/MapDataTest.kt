@@ -3,13 +3,13 @@ package domain.map
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class MapTest {
+class MapDataTest {
 
-    private val map = Map()
+    private val mapData = MapData()
 
     @Test
     fun testGetXY() {
-        map.getDataAt(
+        mapData.getDataAt(
             x = 0,
             y = 0,
         ).apply {
@@ -19,7 +19,7 @@ class MapTest {
             )
         }
 
-        map.getDataAt(
+        mapData.getDataAt(
             x = 0,
             y = 9,
         ).apply {
@@ -29,7 +29,7 @@ class MapTest {
             )
         }
 
-        map.getDataAt(
+        mapData.getDataAt(
             x = 9,
             y = 9,
         ).apply {
@@ -42,7 +42,7 @@ class MapTest {
 
     @Test
     fun testGetMapPoint() {
-        map.getDataAt(
+        mapData.getDataAt(
             MapPoint(
                 x = 0,
                 y = 0,
@@ -54,7 +54,7 @@ class MapTest {
             )
         }
 
-        map.getDataAt(
+        mapData.getDataAt(
             MapPoint(
                 x = 0,
                 y = 9,
@@ -66,7 +66,7 @@ class MapTest {
             )
         }
 
-        map.getDataAt(
+        mapData.getDataAt(
             MapPoint(
                 x = 9,
                 y = 9,

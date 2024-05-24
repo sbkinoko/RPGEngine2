@@ -1,6 +1,6 @@
 package domain.map
 
-class Map {
+class MapData {
 
     private val field = arrayOf(
         arrayOf(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
