@@ -97,7 +97,7 @@ fun App() {
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 fun showBackground(backgroundManager: BackgroundManager) {
-    val imageBinder = ImageBInder()
+    val imageBinder = ImageBinder()
 
     Box {
         for (row: Int in 0 until backgroundManager.allCellNum) {

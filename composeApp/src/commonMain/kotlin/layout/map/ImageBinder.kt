@@ -7,7 +7,7 @@ import rpgengine.composeapp.generated.resources.bg_00
 import rpgengine.composeapp.generated.resources.bg_02
 import rpgengine.composeapp.generated.resources.bg_null
 
-class ImageBInder {
+class ImageBinder {
 
     @OptIn(ExperimentalResourceApi::class)
     fun bind(imgId: Int): DrawableResource {
