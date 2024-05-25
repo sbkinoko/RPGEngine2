@@ -79,40 +79,77 @@ class BackgroundManager(
 
     private fun checkLoop(bgCell: BackgroundCell) {
         bgCell.apply {
-            val mapX: Int = if (square.isRight(fieldSquare)) {
-                square.move(
-                    dx = -diffOfLoop,
-                )
-                mapPoint.x - allCellNum
-            } else if (square.isLeft(fieldSquare)) {
-                moveDisplayPoint(
-                    dx = diffOfLoop,
-                )
-                mapPoint.x + allCellNum
-            } else {
-                mapPoint.x
-            }
+            val mapX: Int =
+                if (square.isRight(fieldSquare)) {
+                    square.move(
+                        dx = -diffOfLoop,
+                    )
+                    mapPoint.x - allCellNum
+                } else if (square.isLeft(fieldSquare)) {
+                    moveDisplayPoint(
+                        dx = diffOfLoop,
+                    )
+                    mapPoint.x + allCellNum
+                } else {
+                    mapPoint.x
+                }
 
-            val mapY: Int = if (square.isDown(fieldSquare)) {
-                moveDisplayPoint(
-                    dy = -diffOfLoop,
-                )
-                mapPoint.y - allCellNum
-            } else if (square.isUp(fieldSquare)) {
-                moveDisplayPoint(
-                    dy = diffOfLoop,
-                )
-                mapPoint.y + allCellNum
-            } else {
-                mapPoint.y
-            }
+            val mapY: Int =
+                if (square.isDown(fieldSquare)) {
+                    moveDisplayPoint(
+                        dy = -diffOfLoop,
+                    )
+                    mapPoint.y - allCellNum
+                } else if (square.isUp(fieldSquare)) {
+                    moveDisplayPoint(
+                        dy = diffOfLoop,
+                    )
+                    mapPoint.y + allCellNum
+                } else {
+                    mapPoint.y
+                }
 
-            mapPoint = MapPoint(
-                x = mapX,
-                y = mapY,
-            )
+            mapPoint = getMapPoint(x = mapX, y = mapY)
 
             imgID = mapData.getDataAt(mapPoint)
         }
+    }
+
+    private fun getMapPoint(x: Int, y: Int): MapPoint {
+        return if (!mapData.isLoop) {
+            MapPoint(
+                x = x,
+                y = y,
+            )
+        } else {
+            MapPoint(
+                x = collectX(x = x),
+                y = collectY(y = y),
+            )
+        }
+    }
+
+    private fun collectX(x: Int): Int {
+        return collectPoint(
+            max = mapData.width,
+            value = x
+        )
+    }
+
+    private fun collectY(y: Int): Int {
+        return collectPoint(
+            max = mapData.height,
+            value = y
+        )
+    }
+
+    private fun collectPoint(max: Int, value: Int): Int {
+        if (value < 0) {
+            return value + max
+        }
+        if (max <= value) {
+            return value - max
+        }
+        return value
     }
 }

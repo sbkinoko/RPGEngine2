@@ -2,18 +2,23 @@ package domain.map
 
 class MapData {
 
-    private val field = arrayOf(
-        arrayOf(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-        arrayOf(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-        arrayOf(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-        arrayOf(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-        arrayOf(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-        arrayOf(2, 2, 2, 2, 2, 1, 1, 1, 1, 1),
-        arrayOf(2, 2, 2, 2, 2, 1, 1, 1, 1, 1),
-        arrayOf(2, 2, 2, 2, 2, 1, 1, 1, 1, 1),
-        arrayOf(2, 2, 2, 2, 2, 1, 1, 1, 1, 1),
-        arrayOf(2, 2, 2, 2, 2, 1, 1, 1, 1, 1),
-    )
+    val isLoop: Boolean = true
+
+    val width: Int
+        get() = 10
+
+    val height: Int
+        get() = 10
+
+    private val field = Array(height) { y ->
+        Array(width) { x ->
+            if (x < 5 && y < 5) {
+                2
+            } else {
+                1
+            }
+        }
+    }
 
     fun getDataAt(
         x: Int,
