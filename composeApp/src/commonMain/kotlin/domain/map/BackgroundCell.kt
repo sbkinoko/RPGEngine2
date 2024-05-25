@@ -9,6 +9,8 @@ class BackgroundCell(
 
     val square: Square
 
+    var imgID: Int = 0
+
     init {
         square = Square(
             displayPoint = Point(

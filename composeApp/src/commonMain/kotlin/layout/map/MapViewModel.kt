@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import manager.map.BackgroundCellManager
+import manager.map.BackgroundManager
 
 class MapViewModel(
     playerSize: Float,
@@ -23,9 +23,9 @@ class MapViewModel(
 
     private var tapPoint: Point? = null
 
-    private var mutableBackgroundCellManager: MutableStateFlow<BackgroundCellManager?> =
+    private var mutableBackgroundManager: MutableStateFlow<BackgroundManager?> =
         MutableStateFlow(null)
-    val backgroundCellManger = mutableBackgroundCellManager.asStateFlow()
+    val backgroundCellManger = mutableBackgroundManager.asStateFlow()
 
     private lateinit var playerMoveArea: Square
 
@@ -44,7 +44,7 @@ class MapViewModel(
     fun initBackgroundCellManager(
         screenWidth: Int,
     ) {
-        mutableBackgroundCellManager.value = BackgroundCellManager(
+        mutableBackgroundManager.value = BackgroundManager(
             cellNum = 5,
             sideLength = screenWidth,
         )
@@ -69,7 +69,7 @@ class MapViewModel(
                     player.move()
                     // todo いい感じにする方法を探す
                     mutablePlayerPosition.value = player.square.getNew()
-                    mutableBackgroundCellManager.value?.moveBackgroundCell(
+                    mutableBackgroundManager.value?.moveBackgroundCell(
                         velocity = backGroundVelocity
                     )
                 }

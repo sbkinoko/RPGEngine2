@@ -4,18 +4,18 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class BackgroundCellManagerTest {
+class BackgroundManagerTest {
     companion object {
         const val CELL_NUM = 3
         const val SIDE_LENGTH = 30
     }
 
 
-    private lateinit var backgroundCellManager: BackgroundCellManager
+    private lateinit var backgroundManager: BackgroundManager
 
     @BeforeTest
     fun beforeTest() {
-        backgroundCellManager = BackgroundCellManager(
+        backgroundManager = BackgroundManager(
             cellNum = CELL_NUM,
             sideLength = SIDE_LENGTH,
         )
@@ -23,7 +23,7 @@ class BackgroundCellManagerTest {
 
     @Test
     fun countCell() {
-        backgroundCellManager.getCell(
+        backgroundManager.getCell(
             col = 3,
             row = 3,
         )
@@ -31,7 +31,7 @@ class BackgroundCellManagerTest {
 
     @Test
     fun checkInitPosition() {
-        val cell1 = backgroundCellManager.getCell(0, 0)
+        val cell1 = backgroundManager.getCell(0, 0)
 
         assertEquals(
             expected = 10f,
@@ -49,7 +49,7 @@ class BackgroundCellManagerTest {
             )
         }
 
-        val cell2 = backgroundCellManager.getCell(1, 0)
+        val cell2 = backgroundManager.getCell(1, 0)
         cell2.square.apply {
             assertEquals(
                 expected = 10f,
@@ -61,7 +61,7 @@ class BackgroundCellManagerTest {
             )
         }
 
-        val cell3 = backgroundCellManager.getCell(0, 1)
+        val cell3 = backgroundManager.getCell(0, 1)
         cell3.square.apply {
             assertEquals(
                 expected = 0f,
@@ -76,8 +76,8 @@ class BackgroundCellManagerTest {
 
     @Test
     fun move() {
-        backgroundCellManager.moveBackgroundCell(dx = 10f, dy = 5f)
-        backgroundCellManager.getCell(0, 0).square.apply {
+        backgroundManager.moveBackgroundCell(dx = 10f, dy = 5f)
+        backgroundManager.getCell(0, 0).square.apply {
             assertEquals(
                 expected = 10f,
                 actual = leftSide,
@@ -94,8 +94,8 @@ class BackgroundCellManagerTest {
      */
     @Test
     fun checkLoop_Up(){
-        backgroundCellManager.moveBackgroundCell(dy = -15f)
-        backgroundCellManager.getCell(0, 0).apply {
+        backgroundManager.moveBackgroundCell(dy = -15f)
+        backgroundManager.getCell(0, 0).apply {
             square.apply {
                 assertEquals(
                     expected = 0f,
@@ -125,8 +125,8 @@ class BackgroundCellManagerTest {
     @Test
     fun checkLoop_Down() {
         val dy = 35f
-        backgroundCellManager.moveBackgroundCell(dy = dy)
-        backgroundCellManager.getCell(0, 0).apply {
+        backgroundManager.moveBackgroundCell(dy = dy)
+        backgroundManager.getCell(0, 0).apply {
             square.apply {
                 assertEquals(
                     expected = 0f,
@@ -155,8 +155,8 @@ class BackgroundCellManagerTest {
      */
     @Test
     fun checkLoop_LeftUp() {
-        backgroundCellManager.moveBackgroundCell(dx = -15f)
-        backgroundCellManager.getCell(0, 0).apply {
+        backgroundManager.moveBackgroundCell(dx = -15f)
+        backgroundManager.getCell(0, 0).apply {
             square.apply {
                 assertEquals(
                     expected = 25f,
@@ -187,8 +187,8 @@ class BackgroundCellManagerTest {
     @Test
     fun checkLoop_Right() {
         val dx = 35f
-        backgroundCellManager.moveBackgroundCell(dx = dx)
-        backgroundCellManager.getCell(0, 0).apply {
+        backgroundManager.moveBackgroundCell(dx = dx)
+        backgroundManager.getCell(0, 0).apply {
             square.apply {
                 assertEquals(
                     expected = -dx + SIDE_LENGTH,
