@@ -1,5 +1,6 @@
 package manager.map
 
+import data.map.mapdata.NonLoopMap
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -9,7 +10,6 @@ class BackgroundManagerTest {
         const val CELL_NUM = 3
         const val SIDE_LENGTH = 30
     }
-
 
     private lateinit var backgroundManager: BackgroundManager
 
@@ -95,6 +95,7 @@ class BackgroundManagerTest {
     @Test
     fun checkLoop_Up(){
         backgroundManager.moveBackgroundCell(dy = -15f)
+        backgroundManager.mapData = NonLoopMap()
         backgroundManager.getCell(0, 0).apply {
             square.apply {
                 assertEquals(
@@ -125,6 +126,7 @@ class BackgroundManagerTest {
     @Test
     fun checkLoop_Down() {
         val dy = 35f
+        backgroundManager.mapData = NonLoopMap()
         backgroundManager.moveBackgroundCell(dy = dy)
         backgroundManager.getCell(0, 0).apply {
             square.apply {
@@ -178,7 +180,6 @@ class BackgroundManagerTest {
                 )
             }
         }
-
     }
 
     /**
@@ -187,6 +188,7 @@ class BackgroundManagerTest {
     @Test
     fun checkLoop_Right() {
         val dx = 35f
+        backgroundManager.mapData = NonLoopMap()
         backgroundManager.moveBackgroundCell(dx = dx)
         backgroundManager.getCell(0, 0).apply {
             square.apply {

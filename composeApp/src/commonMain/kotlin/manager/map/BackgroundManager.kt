@@ -1,5 +1,6 @@
 package manager.map
 
+import data.map.mapdata.LoopMap
 import domain.map.BackgroundCell
 import domain.map.MapData
 import domain.map.MapPoint
@@ -9,6 +10,7 @@ import domain.map.Velocity
 class BackgroundManager(
     val cellNum: Int,
     val sideLength: Int,
+    var mapData: MapData = LoopMap()
 ) {
     private val backgroundCellArray: Array<Array<BackgroundCell>>
 
@@ -16,8 +18,6 @@ class BackgroundManager(
     val allCellNum: Int
 
     private val fieldSquare: Square
-
-    var mapData: MapData = MapData()
 
     init {
         fieldSquare = Square(
@@ -109,7 +109,10 @@ class BackgroundManager(
                     mapPoint.y
                 }
 
-            mapPoint = getMapPoint(x = mapX, y = mapY)
+            mapPoint = getMapPoint(
+                x = mapX,
+                y = mapY,
+            )
 
             imgID = mapData.getDataAt(mapPoint)
         }

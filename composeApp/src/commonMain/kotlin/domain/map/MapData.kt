@@ -1,24 +1,14 @@
 package domain.map
 
-class MapData {
+abstract class MapData {
 
-    val isLoop: Boolean = true
+    abstract val isLoop: Boolean
 
-    val width: Int
-        get() = 10
+    abstract val width: Int
 
-    val height: Int
-        get() = 10
+    abstract val height: Int
 
-    private val field = Array(height) { y ->
-        Array(width) { x ->
-            if (x < 5 && y < 5) {
-                2
-            } else {
-                1
-            }
-        }
-    }
+    abstract val field: Array<Array<Int>>
 
     fun getDataAt(
         x: Int,
