@@ -9,7 +9,7 @@ class Velocity() {
     constructor(
         dx: Float,
         dy: Float,
-        maxVelocity: Float = 10f,
+        maxVelocity: Float = 20f,
     ) : this() {
         val dz = sqrt(dx * dx + dy *dy)
         val ratio = if (maxVelocity < dz) {
