@@ -42,7 +42,12 @@ class BackgroundManager(
                     x = (col) * cellSize,
                     y = (row) * cellSize,
                     cellSize = cellSize,
-                )
+                ).apply {
+                    mapPoint = MapPoint(
+                        x = col,
+                        y = row,
+                    )
+                }
             }
         }
         loadMapData()
