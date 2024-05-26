@@ -2,20 +2,16 @@ package data.map.mapdata
 
 import domain.map.MapData
 
-class NonLoopMap : MapData() {
-    override val isLoop = false
+class LoopTestMap : MapData() {
+    override val isLoop = true
     override val width: Int
-        get() = 10
+        get() = 4
     override val height: Int
-        get() = 10
+        get() = 4
     override val field: Array<Array<Int>>
         get() = Array(height) { y ->
             Array(width) { x ->
-                if (x < 5 && 5 <= y) {
-                    2
-                } else {
-                    1
-                }
+                x + width * y
             }
         }
 }

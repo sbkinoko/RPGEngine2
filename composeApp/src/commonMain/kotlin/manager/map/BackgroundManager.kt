@@ -10,14 +10,19 @@ import domain.map.Velocity
 class BackgroundManager(
     val cellNum: Int,
     val sideLength: Int,
-    var mapData: MapData = LoopMap()
 ) {
-    private val backgroundCellArray: Array<Array<BackgroundCell>>
+    private var backgroundCellArray: Array<Array<BackgroundCell>>
 
     private val diffOfLoop: Float
     val allCellNum: Int
 
     private val fieldSquare: Square
+
+    var mapData: MapData = LoopMap()
+        set(value) {
+            field = value
+            loadMapData()
+        }
 
     init {
         fieldSquare = Square(
@@ -34,14 +39,10 @@ class BackgroundManager(
                     x = (col) * cellSize,
                     y = (row) * cellSize,
                     cellSize = cellSize,
-                ).apply {
-                    mapPoint = MapPoint(
-                        x = col,
-                        y = row,
-                    )
-                }
+                )
             }
         }
+        loadMapData()
     }
 
     fun getCell(
@@ -154,5 +155,18 @@ class BackgroundManager(
             return value - max
         }
         return value
+    }
+
+    private fun loadMapData() {
+        backgroundCellArray = backgroundCellArray.mapIndexed { y, rowArray ->
+            rowArray.mapIndexed { x, cell ->
+                cell.apply {
+                    imgID = mapData.getDataAt(
+                        x = x,
+                        y = y,
+                    )
+                }
+            }.toTypedArray()
+        }.toTypedArray()
     }
 }
