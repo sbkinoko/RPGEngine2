@@ -189,7 +189,10 @@ class BackgroundManager(
                             x = x,
                             y = y,
                         )
-                    }}
+                    } else {
+                        isPlayerIncludeCell = false
+                    }
+                }
             }.toTypedArray()
         }.toTypedArray()
     }
