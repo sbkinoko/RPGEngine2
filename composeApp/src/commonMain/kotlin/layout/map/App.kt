@@ -118,7 +118,12 @@ fun showBackground(backgroundManager: BackgroundManager) {
                             )
                             .border(
                                 width = 1.dp,
-                                color = Colors.BackgroundCell,
+                                color = if(isPlayerIncludeCell){
+                                    Colors.PlayerIncludeCell
+                                }else{
+                                    Colors.BackgroundCell
+                                }
+                                ,
                                 shape = RectangleShape,
                             )
                     ) {
