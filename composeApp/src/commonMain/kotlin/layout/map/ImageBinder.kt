@@ -15,7 +15,7 @@ class ImageBinder {
         return when (imgId) {
             1 -> Res.drawable.bg_00
             2 -> Res.drawable.bg_02
-            3 -> Res.drawable.bg_20
+            3, 4 -> Res.drawable.bg_20
             else -> Res.drawable.bg_null
         }
     }

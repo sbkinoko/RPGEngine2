@@ -43,7 +43,7 @@ fun App() {
     }
 
     mapViewModel.updatePosition()
-    val backgroundCellManager = mapViewModel.backgroundCellManger.collectAsState()
+    val backgroundCellManager = mapViewModel.backgroundManger.collectAsState()
     val playerSquare = mapViewModel.playerPosition.collectAsState()
     var screenSize: Int by remember { mutableStateOf(0) }
     MaterialTheme {
