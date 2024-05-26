@@ -1,5 +1,7 @@
 package viewmodel
 
+import data.map.mapdata.LoopMap
+import data.map.mapdata.NonLoopMap
 import domain.map.BackgroundCell
 import domain.map.Player
 import domain.map.Point
@@ -26,7 +28,7 @@ class MapViewModel(
 
     private var mutableBackgroundManager: MutableStateFlow<BackgroundManager?> =
         MutableStateFlow(null)
-    val backgroundCellManger = mutableBackgroundManager.asStateFlow()
+    val backgroundManger = mutableBackgroundManager.asStateFlow()
 
     private lateinit var playerMoveArea: Square
 
@@ -51,12 +53,15 @@ class MapViewModel(
             cellNum = 5,
             sideLength = screenWidth,
         )
+        backgroundManger.value?.mapData = LoopMap()
 
         playerMoveArea = Square(
             x = (MOVE_BORDER * screenWidth),
             y = (MOVE_BORDER * screenWidth),
             size = ((1 - 2 * MOVE_BORDER) * screenWidth),
         )
+
+        reloadMapData(mapX = 0, mapY = 0)
     }
 
     /**
@@ -164,19 +169,52 @@ class MapViewModel(
     }
 
     private fun findPlayerIncludeCell() {
-        playerIncludeCell = backgroundCellManger.value?.findCellIncludePlayer(
+        playerIncludeCell = backgroundManger.value?.findCellIncludePlayer(
             player = player
         )
     }
 
+    private fun setPlayerCenter() {
+        val center = backgroundManger.value?.getDisplayPointCenter() ?: return
+        // 仮の移動先
+        player.moveTo(
+            center,
+        )
+    }
+
     private fun cellEvent(backgroundCell: BackgroundCell) {
-        if (backgroundCell.imgID == 3) {
-            // 仮の移動先
-            player.moveTo(
-                x = 200f,
-                y = 200f,
-            )
+        when (backgroundCell.imgID) {
+            3 -> {
+                backgroundManger.value?.mapData = NonLoopMap()
+                reloadMapData(
+                    mapX = 0,
+                    mapY = 2,
+                )
+            }
+
+            4 -> {
+                backgroundManger.value?.mapData = LoopMap()
+                reloadMapData(
+                    mapX = 5,
+                    mapY = 5,
+                )
+            }
         }
+    }
+
+    private fun reloadMapData(
+        mapX: Int,
+        mapY: Int,
+    ) {
+        setPlayerCenter()
+        backgroundManger.value?.resetSquarePosition(
+            mapX = mapX,
+            mapY = mapY,
+        )
+        playerIncludeCell = backgroundManger.value
+            ?.findCellIncludePlayer(
+                player = player
+            )
     }
 
     companion object {

@@ -44,8 +44,17 @@ class Player(
         y: Float,
     ) {
         square.moveTo(
-            x = x,
-            y = y
+            x = x - size / 2,
+            y = y - size / 2
+        )
+    }
+
+    fun moveTo(
+        point: Point
+    ) {
+        moveTo(
+            x = point.x,
+            y = point.y,
         )
     }
 }

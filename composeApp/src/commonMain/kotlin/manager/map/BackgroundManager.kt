@@ -5,6 +5,7 @@ import domain.map.BackgroundCell
 import domain.map.MapData
 import domain.map.MapPoint
 import domain.map.Player
+import domain.map.Point
 import domain.map.Square
 import domain.map.Velocity
 
@@ -12,12 +13,14 @@ class BackgroundManager(
     val cellNum: Int,
     val sideLength: Int,
 ) {
-    private var backgroundCellArray: Array<Array<BackgroundCell>>
+    private lateinit var backgroundCellArray: Array<Array<BackgroundCell>>
 
     private val diffOfLoop: Float
     val allCellNum: Int
 
     private val fieldSquare: Square
+
+    private val cellSize: Float
 
     var mapData: MapData = LoopMap()
         set(value) {
@@ -31,23 +34,10 @@ class BackgroundManager(
             y = 0f,
             size = sideLength.toFloat(),
         )
-        val cellSize = sideLength / cellNum.toFloat()
+        cellSize = sideLength / cellNum.toFloat()
         allCellNum = cellNum + 1
         diffOfLoop = cellSize * (allCellNum)
-        backgroundCellArray = Array(allCellNum) { row ->
-            Array(allCellNum) { col ->
-                BackgroundCell(
-                    x = (col) * cellSize,
-                    y = (row) * cellSize,
-                    cellSize = cellSize,
-                ).apply {
-                    mapPoint = MapPoint(
-                        x = col,
-                        y = row,
-                    )
-                }
-            }
-        }
+        resetSquarePosition()
         loadMapData()
     }
 
@@ -82,6 +72,13 @@ class BackgroundManager(
                 checkLoop(bgCell = bgCell)
             }
         }
+    }
+
+    fun getDisplayPointCenter(): Point {
+        return Point(
+            x = sideLength / 2f,
+            y = sideLength / 2f,
+        )
     }
 
     private fun checkLoop(bgCell: BackgroundCell) {
@@ -176,8 +173,8 @@ class BackgroundManager(
         }.toTypedArray()
     }
 
-    fun findCellIncludePlayer(player: Player):BackgroundCell? {
-        var playerIncludeCell:BackgroundCell? = null
+    fun findCellIncludePlayer(player: Player): BackgroundCell? {
+        var playerIncludeCell: BackgroundCell? = null
         backgroundCellArray.mapIndexed { _, rowArray ->
             rowArray.mapIndexed { _, cell ->
                 cell.apply {
@@ -191,5 +188,26 @@ class BackgroundManager(
             }.toTypedArray()
         }.toTypedArray()
         return playerIncludeCell
+    }
+
+    fun resetSquarePosition(
+        mapX: Int = 0,
+        mapY: Int = 0,
+    ) {
+        backgroundCellArray = Array(allCellNum) { row ->
+            Array(allCellNum) { col ->
+                BackgroundCell(
+                    x = (col) * cellSize,
+                    y = (row) * cellSize,
+                    cellSize = cellSize,
+                ).apply {
+                    mapPoint = getMapPoint(
+                        x = col - 2 + mapX,
+                        y = row - 2 + mapY,
+                    )
+                    imgID = mapData.getDataAt(mapPoint)
+                }
+            }
+        }
     }
 }
