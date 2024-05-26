@@ -4,6 +4,7 @@ import data.map.mapdata.LoopMap
 import domain.map.BackgroundCell
 import domain.map.MapData
 import domain.map.MapPoint
+import domain.map.Player
 import domain.map.Square
 import domain.map.Velocity
 
@@ -17,6 +18,8 @@ class BackgroundManager(
     val allCellNum: Int
 
     private val fieldSquare: Square
+
+    var playerIncludeCell: MapPoint? = null
 
     var mapData: MapData = LoopMap()
         set(value) {
@@ -166,6 +169,22 @@ class BackgroundManager(
                         y = y,
                     )
                 }
+            }.toTypedArray()
+        }.toTypedArray()
+    }
+
+    fun findCellIncludePlayer(player: Player) {
+        playerIncludeCell = null
+        backgroundCellArray.mapIndexed { y, rowArray ->
+            rowArray.mapIndexed { x, cell ->
+                cell.apply {
+                    if (player.square.isIn(square)) {
+                        isPlayerIncludeCell = true
+                        playerIncludeCell = MapPoint(
+                            x = x,
+                            y = y,
+                        )
+                    }}
             }.toTypedArray()
         }.toTypedArray()
     }

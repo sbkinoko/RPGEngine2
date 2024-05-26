@@ -11,6 +11,8 @@ class BackgroundCell(
 
     var imgID: Int = 0
 
+    var isPlayerIncludeCell = false
+
     init {
         square = Square(
             displayPoint = Point(

@@ -72,6 +72,7 @@ class MapViewModel(
                     mutableBackgroundManager.value?.moveBackgroundCell(
                         velocity = backGroundVelocity
                     )
+                    findPlayerIncludeCell()
                 }
             }
         }
@@ -151,6 +152,12 @@ class MapViewModel(
             dx = vx,
             dy = vy,
         )
+    }
+
+    private fun findPlayerIncludeCell(){
+      backgroundCellManger.value?.findCellIncludePlayer(
+          player = player
+      )
     }
 
     companion object {

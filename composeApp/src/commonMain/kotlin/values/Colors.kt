@@ -10,4 +10,5 @@ object Colors {
     val Player = red
     val MapBackground = gray
     val BackgroundCell = blue
+    val PlayerIncludeCell = red
 }
