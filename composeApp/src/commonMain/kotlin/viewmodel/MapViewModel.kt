@@ -1,4 +1,4 @@
-package layout.map
+package viewmodel
 
 import domain.map.Player
 import domain.map.Point
