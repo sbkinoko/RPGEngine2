@@ -1,19 +1,14 @@
 package domain.map
 
-class MapData {
+abstract class MapData {
 
-    private val field = arrayOf(
-        arrayOf(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-        arrayOf(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-        arrayOf(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-        arrayOf(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-        arrayOf(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-        arrayOf(2, 2, 2, 2, 2, 1, 1, 1, 1, 1),
-        arrayOf(2, 2, 2, 2, 2, 1, 1, 1, 1, 1),
-        arrayOf(2, 2, 2, 2, 2, 1, 1, 1, 1, 1),
-        arrayOf(2, 2, 2, 2, 2, 1, 1, 1, 1, 1),
-        arrayOf(2, 2, 2, 2, 2, 1, 1, 1, 1, 1),
-    )
+    abstract val isLoop: Boolean
+
+    abstract val width: Int
+
+    abstract val height: Int
+
+    abstract val field: Array<Array<Int>>
 
     fun getDataAt(
         x: Int,

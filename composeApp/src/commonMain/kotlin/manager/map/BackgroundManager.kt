@@ -1,5 +1,6 @@
 package manager.map
 
+import data.map.mapdata.LoopMap
 import domain.map.BackgroundCell
 import domain.map.MapData
 import domain.map.MapPoint
@@ -10,14 +11,18 @@ class BackgroundManager(
     val cellNum: Int,
     val sideLength: Int,
 ) {
-    private val backgroundCellArray: Array<Array<BackgroundCell>>
+    private var backgroundCellArray: Array<Array<BackgroundCell>>
 
     private val diffOfLoop: Float
     val allCellNum: Int
 
     private val fieldSquare: Square
 
-    var mapData: MapData = MapData()
+    var mapData: MapData = LoopMap()
+        set(value) {
+            field = value
+            loadMapData()
+        }
 
     init {
         fieldSquare = Square(
@@ -34,14 +39,10 @@ class BackgroundManager(
                     x = (col) * cellSize,
                     y = (row) * cellSize,
                     cellSize = cellSize,
-                ).apply {
-                    mapPoint = MapPoint(
-                        x = col,
-                        y = row,
-                    )
-                }
+                )
             }
         }
+        loadMapData()
     }
 
     fun getCell(
@@ -79,40 +80,93 @@ class BackgroundManager(
 
     private fun checkLoop(bgCell: BackgroundCell) {
         bgCell.apply {
-            val mapX: Int = if (square.isRight(fieldSquare)) {
-                square.move(
-                    dx = -diffOfLoop,
-                )
-                mapPoint.x - allCellNum
-            } else if (square.isLeft(fieldSquare)) {
-                moveDisplayPoint(
-                    dx = diffOfLoop,
-                )
-                mapPoint.x + allCellNum
-            } else {
-                mapPoint.x
-            }
+            val mapX: Int =
+                if (square.isRight(fieldSquare)) {
+                    square.move(
+                        dx = -diffOfLoop,
+                    )
+                    mapPoint.x - allCellNum
+                } else if (square.isLeft(fieldSquare)) {
+                    moveDisplayPoint(
+                        dx = diffOfLoop,
+                    )
+                    mapPoint.x + allCellNum
+                } else {
+                    mapPoint.x
+                }
 
-            val mapY: Int = if (square.isDown(fieldSquare)) {
-                moveDisplayPoint(
-                    dy = -diffOfLoop,
-                )
-                mapPoint.y - allCellNum
-            } else if (square.isUp(fieldSquare)) {
-                moveDisplayPoint(
-                    dy = diffOfLoop,
-                )
-                mapPoint.y + allCellNum
-            } else {
-                mapPoint.y
-            }
+            val mapY: Int =
+                if (square.isDown(fieldSquare)) {
+                    moveDisplayPoint(
+                        dy = -diffOfLoop,
+                    )
+                    mapPoint.y - allCellNum
+                } else if (square.isUp(fieldSquare)) {
+                    moveDisplayPoint(
+                        dy = diffOfLoop,
+                    )
+                    mapPoint.y + allCellNum
+                } else {
+                    mapPoint.y
+                }
 
-            mapPoint = MapPoint(
+            mapPoint = getMapPoint(
                 x = mapX,
                 y = mapY,
             )
 
             imgID = mapData.getDataAt(mapPoint)
         }
+    }
+
+    private fun getMapPoint(x: Int, y: Int): MapPoint {
+        return if (!mapData.isLoop) {
+            MapPoint(
+                x = x,
+                y = y,
+            )
+        } else {
+            MapPoint(
+                x = collectX(x = x),
+                y = collectY(y = y),
+            )
+        }
+    }
+
+    private fun collectX(x: Int): Int {
+        return collectPoint(
+            max = mapData.width,
+            value = x
+        )
+    }
+
+    private fun collectY(y: Int): Int {
+        return collectPoint(
+            max = mapData.height,
+            value = y
+        )
+    }
+
+    private fun collectPoint(max: Int, value: Int): Int {
+        if (value < 0) {
+            return value + max
+        }
+        if (max <= value) {
+            return value - max
+        }
+        return value
+    }
+
+    private fun loadMapData() {
+        backgroundCellArray = backgroundCellArray.mapIndexed { y, rowArray ->
+            rowArray.mapIndexed { x, cell ->
+                cell.apply {
+                    imgID = mapData.getDataAt(
+                        x = x,
+                        y = y,
+                    )
+                }
+            }.toTypedArray()
+        }.toTypedArray()
     }
 }
