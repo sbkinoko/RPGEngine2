@@ -19,8 +19,6 @@ class BackgroundManager(
 
     private val fieldSquare: Square
 
-    var playerIncludeCell: MapPoint? = null
-
     var mapData: MapData = LoopMap()
         set(value) {
             field = value
@@ -178,22 +176,20 @@ class BackgroundManager(
         }.toTypedArray()
     }
 
-    fun findCellIncludePlayer(player: Player) {
-        playerIncludeCell = null
-        backgroundCellArray.mapIndexed { y, rowArray ->
-            rowArray.mapIndexed { x, cell ->
+    fun findCellIncludePlayer(player: Player):BackgroundCell? {
+        var playerIncludeCell:BackgroundCell? = null
+        backgroundCellArray.mapIndexed { _, rowArray ->
+            rowArray.mapIndexed { _, cell ->
                 cell.apply {
                     if (player.square.isIn(square)) {
                         isPlayerIncludeCell = true
-                        playerIncludeCell = MapPoint(
-                            x = x,
-                            y = y,
-                        )
+                        playerIncludeCell = this
                     } else {
                         isPlayerIncludeCell = false
                     }
                 }
             }.toTypedArray()
         }.toTypedArray()
+        return playerIncludeCell
     }
 }
