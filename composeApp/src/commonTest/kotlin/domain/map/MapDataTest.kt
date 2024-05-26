@@ -1,11 +1,12 @@
 package domain.map
 
+import data.map.mapdata.LoopMap
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class MapDataTest {
 
-    private val mapData = MapData()
+    private val mapData = LoopMap()
 
     @Test
     fun testGetXY() {
