@@ -44,6 +44,14 @@ data class Square(
         )
     }
 
+    fun moveTo(
+        x: Float,
+        y: Float,
+    ) {
+        displayPoint.x = x
+        displayPoint.y = y
+    }
+
     fun getNew(): Square {
         return Square(
             x = x,

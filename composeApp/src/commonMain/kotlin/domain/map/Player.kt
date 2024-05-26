@@ -38,4 +38,14 @@ class Player(
     ) {
         this.velocity = velocity
     }
+
+    fun moveTo(
+        x: Float,
+        y: Float,
+    ) {
+        square.moveTo(
+            x = x,
+            y = y
+        )
+    }
 }

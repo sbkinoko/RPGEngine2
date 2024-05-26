@@ -1,5 +1,6 @@
 package viewmodel
 
+import domain.map.BackgroundCell
 import domain.map.Player
 import domain.map.Point
 import domain.map.Square
@@ -30,6 +31,8 @@ class MapViewModel(
     private lateinit var playerMoveArea: Square
 
     private var backGroundVelocity: Velocity = Velocity()
+
+    private var playerIncludeCell: BackgroundCell? = null
 
     init {
         player = Player(
@@ -72,7 +75,13 @@ class MapViewModel(
                     mutableBackgroundManager.value?.moveBackgroundCell(
                         velocity = backGroundVelocity
                     )
+                    val prePlayerIncludeCell = playerIncludeCell
                     findPlayerIncludeCell()
+                    if (playerIncludeCell != null &&
+                        prePlayerIncludeCell != playerIncludeCell
+                    ) {
+                        cellEvent(playerIncludeCell!!)
+                    }
                 }
             }
         }
@@ -154,10 +163,20 @@ class MapViewModel(
         )
     }
 
-    private fun findPlayerIncludeCell(){
-      backgroundCellManger.value?.findCellIncludePlayer(
-          player = player
-      )
+    private fun findPlayerIncludeCell() {
+        playerIncludeCell = backgroundCellManger.value?.findCellIncludePlayer(
+            player = player
+        )
+    }
+
+    private fun cellEvent(backgroundCell: BackgroundCell) {
+        if (backgroundCell.imgID == 3) {
+            // 仮の移動先
+            player.moveTo(
+                x = 200f,
+                y = 200f,
+            )
+        }
     }
 
     companion object {
