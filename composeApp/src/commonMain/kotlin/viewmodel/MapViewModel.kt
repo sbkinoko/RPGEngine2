@@ -168,20 +168,29 @@ class MapViewModel(
         )
     }
 
+    /**
+     * プレイヤーを含んでいるセルを取得する
+     */
     private fun findPlayerIncludeCell() {
         playerIncludeCell = backgroundManger.value?.findCellIncludePlayer(
             player = player
         )
     }
 
+    /**
+     * プレイヤーを中心に移動する
+     */
     private fun setPlayerCenter() {
-        val center = backgroundManger.value?.getDisplayPointCenter() ?: return
+        val center = backgroundManger.value?.getCenterOfDisplay() ?: return
         // 仮の移動先
         player.moveTo(
             center,
         )
     }
 
+    /**
+     * 全身が入ったセルのイベントを処理する
+     */
     private fun cellEvent(backgroundCell: BackgroundCell) {
         when (backgroundCell.imgID) {
             3 -> {
@@ -202,12 +211,15 @@ class MapViewModel(
         }
     }
 
+    /**
+     * 中心を指定して背景画像を再度読み込む
+     */
     private fun reloadMapData(
         mapX: Int,
         mapY: Int,
     ) {
         setPlayerCenter()
-        backgroundManger.value?.resetSquarePosition(
+        backgroundManger.value?.resetGackgroundCellPosition(
             mapX = mapX,
             mapY = mapY,
         )

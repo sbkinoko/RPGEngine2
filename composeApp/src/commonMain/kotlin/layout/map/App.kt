@@ -33,7 +33,7 @@ import viewmodel.MapViewModel
 
 @Composable
 @Preview
-fun App() {
+fun MapScreen() {
     val mapViewModel: MapViewModel by remember {
         mutableStateOf(
             MapViewModel(

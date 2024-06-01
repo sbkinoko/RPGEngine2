@@ -10,6 +10,10 @@ import rpgengine.composeapp.generated.resources.bg_null
 
 class ImageBinder {
 
+    /**
+     * idと画像を紐づけ
+     * @param imgId 背景画像のid
+     */
     @OptIn(ExperimentalResourceApi::class)
     fun bind(imgId: Int): DrawableResource {
         return when (imgId) {

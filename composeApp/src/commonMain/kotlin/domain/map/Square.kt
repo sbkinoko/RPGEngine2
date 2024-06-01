@@ -76,6 +76,10 @@ data class Square(
         return this.bottomSide <= other.topSide
     }
 
+    /**
+     * otherにこのsquareが包含されているかをチェックする
+     * @param other 比較したいsquare
+     */
     fun isIn(other: Square): Boolean {
         if (this.leftSide < other.leftSide)
             return false
