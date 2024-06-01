@@ -5,6 +5,7 @@ class BackgroundCell(
     x: Float,
     y: Float,
 ) {
+    // FIXME: privateにする
     var mapPoint: MapPoint = MapPoint()
 
     val square: Square

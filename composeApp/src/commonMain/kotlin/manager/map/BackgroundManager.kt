@@ -4,7 +4,6 @@ import data.map.mapdata.LoopMap
 import domain.map.BackgroundCell
 import domain.map.MapData
 import domain.map.MapPoint
-import domain.map.Player
 import domain.map.Point
 import domain.map.Square
 import domain.map.Velocity
@@ -12,6 +11,7 @@ import domain.map.Velocity
 class BackgroundManager(
     val cellNum: Int,
     val sideLength: Int,
+    mapData:MapData = LoopMap()
 ) {
     private lateinit var backgroundCellArray: Array<Array<BackgroundCell>>
 
@@ -22,24 +22,25 @@ class BackgroundManager(
 
     private val cellSize: Float
 
-    private var playerIncludeCell :BackgroundCell? = null
-    private var prePlayerIncludeCell : BackgroundCell? = null
+    private var playerIncludeCell: BackgroundCell? = null
+    private var prePlayerIncludeCell: BackgroundCell? = null
 
-    val eventCell:BackgroundCell?
+    val eventCell: BackgroundCell?
         get() {
-            if(playerIncludeCell == null)
+            if (playerIncludeCell == null)
                 return null
-            if(playerIncludeCell == prePlayerIncludeCell)
+            if (playerIncludeCell == prePlayerIncludeCell)
                 return null
 
             return playerIncludeCell
         }
 
-    var mapData: MapData = LoopMap()
-        set(value) {
-            field = value
-            loadMapData()
-        }
+    private var mapData: MapData
+
+    fun setMapData(mapData:MapData){
+        this.mapData = mapData
+        loadMapData()
+    }
 
     init {
         fieldSquare = Square(
@@ -50,6 +51,7 @@ class BackgroundManager(
         cellSize = sideLength / cellNum.toFloat()
         allCellNum = cellNum + 1
         diffOfLoop = cellSize * (allCellNum)
+        this.mapData = mapData
         resetBackgroundCellPosition()
         loadMapData()
     }
@@ -221,12 +223,13 @@ class BackgroundManager(
     /**
      * プレイヤーが入っているセルを更新する
      */
-    fun findCellIncludePlayer(player: Player) {
+    fun findCellIncludePlayer(playerSquare: Square) {
         prePlayerIncludeCell = playerIncludeCell
+        playerIncludeCell = null
         backgroundCellArray.mapIndexed { _, rowArray ->
             rowArray.mapIndexed { _, cell ->
                 cell.apply {
-                    if (player.square.isIn(square)) {
+                    if (playerSquare.isIn(square)) {
                         isPlayerIncludeCell = true
                         playerIncludeCell = this
                     } else {
@@ -247,13 +250,13 @@ class BackgroundManager(
         backgroundCellArray = Array(allCellNum) { row ->
             Array(allCellNum) { col ->
                 BackgroundCell(
-                    x = (col) * cellSize,
-                    y = (row) * cellSize,
+                    x = col * cellSize,
+                    y = row * cellSize,
                     cellSize = cellSize,
                 ).apply {
                     mapPoint = getMapPoint(
-                        x = col - 2 + mapX,
-                        y = row - 2 + mapY,
+                        x = col - (cellNum - 1) / 2 + mapX,
+                        y = row - (cellNum - 1) / 2 + mapY,
                     )
                     imgID = mapData.getDataAt(mapPoint)
                 }

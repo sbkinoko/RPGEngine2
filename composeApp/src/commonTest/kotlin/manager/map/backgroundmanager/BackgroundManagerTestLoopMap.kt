@@ -1,6 +1,7 @@
 package manager.map.backgroundmanager
 
 import data.map.mapdata.LoopTestMap
+import domain.map.BackgroundCell
 import manager.map.BackgroundManager
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -15,8 +16,8 @@ class BackgroundManagerTestLoopMap {
         backgroundManager = BackgroundManager(
             cellNum = CELL_NUM,
             sideLength = SIDE_LENGTH,
+            mapData = LoopTestMap()
         )
-        backgroundManager.mapData = LoopTestMap()
     }
 
     /**
@@ -25,7 +26,7 @@ class BackgroundManagerTestLoopMap {
     @Test
     fun checkLoop_Up() {
         backgroundManager.moveBackgroundCell(dy = -15f)
-        backgroundManager.getCell(0, 0).apply {
+        getLeftTopCell().apply {
             square.apply {
                 assertEquals(
                     expected = 0f,
@@ -38,11 +39,11 @@ class BackgroundManagerTestLoopMap {
             }
             mapPoint.apply {
                 assertEquals(
-                    expected = 0,
+                    expected = leftTopCellMapX,
                     actual = x,
                 )
                 assertEquals(
-                    expected = 0,
+                    expected = leftTopCellMapY,
                     actual = y,
                 )
             }
@@ -56,7 +57,7 @@ class BackgroundManagerTestLoopMap {
     fun checkLoop_Down() {
         val dy = 35f
         backgroundManager.moveBackgroundCell(dy = dy)
-        backgroundManager.getCell(0, 0).apply {
+        getLeftTopCell().apply {
             square.apply {
                 assertEquals(
                     expected = 0f,
@@ -69,11 +70,11 @@ class BackgroundManagerTestLoopMap {
             }
             mapPoint.apply {
                 assertEquals(
-                    expected = 0,
+                    expected = leftTopCellMapX,
                     actual = x,
                 )
                 assertEquals(
-                    expected = 0,
+                    expected = leftTopCellMapY,
                     actual = y,
                 )
             }
@@ -86,7 +87,7 @@ class BackgroundManagerTestLoopMap {
     @Test
     fun checkLoop_Left() {
         backgroundManager.moveBackgroundCell(dx = -15f)
-        backgroundManager.getCell(0, 0).apply {
+        getLeftTopCell().apply {
             square.apply {
                 assertEquals(
                     expected = 25f,
@@ -99,11 +100,11 @@ class BackgroundManagerTestLoopMap {
             }
             mapPoint.apply {
                 assertEquals(
-                    expected = 0,
+                    expected = leftTopCellMapX,
                     actual = x,
                 )
                 assertEquals(
-                    expected = 0,
+                    expected = leftTopCellMapY,
                     actual = y,
                 )
             }
@@ -117,7 +118,7 @@ class BackgroundManagerTestLoopMap {
     fun checkLoop_Right() {
         val dx = 35f
         backgroundManager.moveBackgroundCell(dx = dx)
-        backgroundManager.getCell(0, 0).apply {
+        getLeftTopCell().apply {
             square.apply {
                 assertEquals(
                     expected = -dx + SIDE_LENGTH,
@@ -130,14 +131,26 @@ class BackgroundManagerTestLoopMap {
             }
             mapPoint.apply {
                 assertEquals(
-                    expected = 0,
+                    expected = leftTopCellMapX,
                     actual = x,
                 )
                 assertEquals(
-                    expected = 0,
+                    expected = leftTopCellMapY,
                     actual = y,
                 )
             }
         }
+    }
+
+    /**
+     * 中心が(0,0)　左上のセルは(-1,-1) ループしてるので(3,3)
+     */
+    private fun getLeftTopCell(): BackgroundCell {
+        return backgroundManager.getCell(0, 0)
+    }
+
+    companion object {
+        private val leftTopCellMapX = 3
+        private val leftTopCellMapY = 3
     }
 }

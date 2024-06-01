@@ -51,7 +51,7 @@ class MapViewModel(
             cellNum = 5,
             sideLength = screenWidth,
         )
-        backgroundManger.value?.mapData = LoopMap()
+        backgroundManger.value?.setMapData(LoopMap())
 
         playerMoveArea = Square(
             x = (MOVE_BORDER * screenWidth),
@@ -80,7 +80,7 @@ class MapViewModel(
                     )
                     backgroundManger.value?.apply {
                         findCellIncludePlayer(
-                            player = player
+                            playerSquare = player.square
                         )
                         eventCell?.apply {
                             callCellEvent(this)
@@ -184,7 +184,7 @@ class MapViewModel(
     private fun callCellEvent(backgroundCell: BackgroundCell) {
         when (backgroundCell.imgID) {
             3 -> {
-                backgroundManger.value?.mapData = NonLoopMap()
+                backgroundManger.value?.setMapData(NonLoopMap())
                 reloadMapData(
                     mapX = 0,
                     mapY = 2,
@@ -192,7 +192,7 @@ class MapViewModel(
             }
 
             4 -> {
-                backgroundManger.value?.mapData = LoopMap()
+                backgroundManger.value?.setMapData(LoopMap())
                 reloadMapData(
                     mapX = 5,
                     mapY = 5,
@@ -214,7 +214,7 @@ class MapViewModel(
             mapY = mapY,
         )
         backgroundManger.value?.findCellIncludePlayer(
-            player = player
+            playerSquare = player.square
         )
     }
 
