@@ -4,7 +4,6 @@ data class Square(
     val displayPoint: Point = Point(),
     val size: Float,
 ) {
-
     constructor(
         x: Float,
         y: Float,
@@ -45,6 +44,14 @@ data class Square(
         )
     }
 
+    fun moveTo(
+        x: Float,
+        y: Float,
+    ) {
+        displayPoint.x = x
+        displayPoint.y = y
+    }
+
     fun getNew(): Square {
         return Square(
             x = x,
@@ -67,5 +74,21 @@ data class Square(
 
     fun isUp(other: Square): Boolean {
         return this.bottomSide <= other.topSide
+    }
+
+    fun isIn(other: Square): Boolean {
+        if (this.leftSide < other.leftSide)
+            return false
+
+        if (other.rightSide < this.rightSide)
+            return false
+
+        if (this.topSide < other.topSide)
+            return false
+
+        if (other.bottomSide < this.bottomSide)
+            return false
+
+        return true
     }
 }

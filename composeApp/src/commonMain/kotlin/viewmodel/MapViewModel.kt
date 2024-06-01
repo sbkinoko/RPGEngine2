@@ -1,5 +1,8 @@
 package viewmodel
 
+import data.map.mapdata.LoopMap
+import data.map.mapdata.NonLoopMap
+import domain.map.BackgroundCell
 import domain.map.Player
 import domain.map.Point
 import domain.map.Square
@@ -25,11 +28,13 @@ class MapViewModel(
 
     private var mutableBackgroundManager: MutableStateFlow<BackgroundManager?> =
         MutableStateFlow(null)
-    val backgroundCellManger = mutableBackgroundManager.asStateFlow()
+    val backgroundManger = mutableBackgroundManager.asStateFlow()
 
     private lateinit var playerMoveArea: Square
 
     private var backGroundVelocity: Velocity = Velocity()
+
+    private var playerIncludeCell: BackgroundCell? = null
 
     init {
         player = Player(
@@ -48,12 +53,15 @@ class MapViewModel(
             cellNum = 5,
             sideLength = screenWidth,
         )
+        backgroundManger.value?.mapData = LoopMap()
 
         playerMoveArea = Square(
             x = (MOVE_BORDER * screenWidth),
             y = (MOVE_BORDER * screenWidth),
             size = ((1 - 2 * MOVE_BORDER) * screenWidth),
         )
+
+        reloadMapData(mapX = 0, mapY = 0)
     }
 
     /**
@@ -72,6 +80,13 @@ class MapViewModel(
                     mutableBackgroundManager.value?.moveBackgroundCell(
                         velocity = backGroundVelocity
                     )
+                    val prePlayerIncludeCell = playerIncludeCell
+                    findPlayerIncludeCell()
+                    if (playerIncludeCell != null &&
+                        prePlayerIncludeCell != playerIncludeCell
+                    ) {
+                        cellEvent(playerIncludeCell!!)
+                    }
                 }
             }
         }
@@ -151,6 +166,55 @@ class MapViewModel(
             dx = vx,
             dy = vy,
         )
+    }
+
+    private fun findPlayerIncludeCell() {
+        playerIncludeCell = backgroundManger.value?.findCellIncludePlayer(
+            player = player
+        )
+    }
+
+    private fun setPlayerCenter() {
+        val center = backgroundManger.value?.getDisplayPointCenter() ?: return
+        // 仮の移動先
+        player.moveTo(
+            center,
+        )
+    }
+
+    private fun cellEvent(backgroundCell: BackgroundCell) {
+        when (backgroundCell.imgID) {
+            3 -> {
+                backgroundManger.value?.mapData = NonLoopMap()
+                reloadMapData(
+                    mapX = 0,
+                    mapY = 2,
+                )
+            }
+
+            4 -> {
+                backgroundManger.value?.mapData = LoopMap()
+                reloadMapData(
+                    mapX = 5,
+                    mapY = 5,
+                )
+            }
+        }
+    }
+
+    private fun reloadMapData(
+        mapX: Int,
+        mapY: Int,
+    ) {
+        setPlayerCenter()
+        backgroundManger.value?.resetSquarePosition(
+            mapX = mapX,
+            mapY = mapY,
+        )
+        playerIncludeCell = backgroundManger.value
+            ?.findCellIncludePlayer(
+                player = player
+            )
     }
 
     companion object {

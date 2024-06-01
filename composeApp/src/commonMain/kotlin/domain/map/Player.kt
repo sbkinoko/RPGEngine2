@@ -38,4 +38,23 @@ class Player(
     ) {
         this.velocity = velocity
     }
+
+    fun moveTo(
+        x: Float,
+        y: Float,
+    ) {
+        square.moveTo(
+            x = x - size / 2,
+            y = y - size / 2
+        )
+    }
+
+    fun moveTo(
+        point: Point
+    ) {
+        moveTo(
+            x = point.x,
+            y = point.y,
+        )
+    }
 }

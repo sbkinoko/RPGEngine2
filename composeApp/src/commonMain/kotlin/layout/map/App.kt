@@ -43,7 +43,7 @@ fun App() {
     }
 
     mapViewModel.updatePosition()
-    val backgroundCellManager = mapViewModel.backgroundCellManger.collectAsState()
+    val backgroundCellManager = mapViewModel.backgroundManger.collectAsState()
     val playerSquare = mapViewModel.playerPosition.collectAsState()
     var screenSize: Int by remember { mutableStateOf(0) }
     MaterialTheme {
@@ -118,7 +118,12 @@ fun showBackground(backgroundManager: BackgroundManager) {
                             )
                             .border(
                                 width = 1.dp,
-                                color = Colors.BackgroundCell,
+                                color = if(isPlayerIncludeCell){
+                                    Colors.PlayerIncludeCell
+                                }else{
+                                    Colors.BackgroundCell
+                                }
+                                ,
                                 shape = RectangleShape,
                             )
                     ) {
