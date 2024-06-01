@@ -37,10 +37,13 @@ class BackgroundManager(
         cellSize = sideLength / cellNum.toFloat()
         allCellNum = cellNum + 1
         diffOfLoop = cellSize * (allCellNum)
-        resetSquarePosition()
+        resetGackgroundCellPosition()
         loadMapData()
     }
 
+    /**
+     * 指定した位置のcellを取得する
+     */
     fun getCell(
         col: Int,
         row: Int,
@@ -48,6 +51,9 @@ class BackgroundManager(
         return backgroundCellArray[row][col]
     }
 
+    /**
+     * 速度にしたがって背景を移動させる
+     */
     fun moveBackgroundCell(
         velocity: Velocity,
     ) {
@@ -57,6 +63,9 @@ class BackgroundManager(
         )
     }
 
+    /**
+     * 速度にしたがって背景を移動させる
+     */
     fun moveBackgroundCell(
         dx: Float = 0f,
         dy: Float = 0f,
@@ -69,19 +78,25 @@ class BackgroundManager(
                         dy = dy,
                     )
                 }
-                checkLoop(bgCell = bgCell)
+                loopBackgroundCell(bgCell = bgCell)
             }
         }
     }
 
-    fun getDisplayPointCenter(): Point {
+    /**
+     * 表示領域の中心を返す
+     */
+    fun getCenterOfDisplay(): Point {
         return Point(
             x = sideLength / 2f,
             y = sideLength / 2f,
         )
     }
 
-    private fun checkLoop(bgCell: BackgroundCell) {
+    /**
+     * 背景を移動させたときに必要ならループさせる
+     */
+    private fun loopBackgroundCell(bgCell: BackgroundCell) {
         bgCell.apply {
             val mapX: Int =
                 if (square.isRight(fieldSquare)) {
@@ -122,6 +137,10 @@ class BackgroundManager(
         }
     }
 
+    /**
+     * 指定した位置の座標を取得する
+     * ループしてるかどうかによって補正が異なる
+     */
     private fun getMapPoint(x: Int, y: Int): MapPoint {
         return if (!mapData.isLoop) {
             MapPoint(
@@ -136,6 +155,9 @@ class BackgroundManager(
         }
     }
 
+    /**
+     * x軸に対して補正を行う
+     */
     private fun collectX(x: Int): Int {
         return collectPoint(
             max = mapData.width,
@@ -143,6 +165,9 @@ class BackgroundManager(
         )
     }
 
+    /**
+     * y軸に対して補正を行う
+     */
     private fun collectY(y: Int): Int {
         return collectPoint(
             max = mapData.height,
@@ -150,6 +175,10 @@ class BackgroundManager(
         )
     }
 
+    /**
+     * @param max 補正の最大値
+     * @param value 補正したい値
+     */
     private fun collectPoint(max: Int, value: Int): Int {
         if (value < 0) {
             return value + max
@@ -160,6 +189,9 @@ class BackgroundManager(
         return value
     }
 
+    /**
+     * 背景画像を読み込む
+     */
     private fun loadMapData() {
         backgroundCellArray = backgroundCellArray.mapIndexed { y, rowArray ->
             rowArray.mapIndexed { x, cell ->
@@ -173,6 +205,9 @@ class BackgroundManager(
         }.toTypedArray()
     }
 
+    /**
+     * プレイヤーが入っているセルがあればそれを返す
+     */
     fun findCellIncludePlayer(player: Player): BackgroundCell? {
         var playerIncludeCell: BackgroundCell? = null
         backgroundCellArray.mapIndexed { _, rowArray ->
@@ -190,7 +225,10 @@ class BackgroundManager(
         return playerIncludeCell
     }
 
-    fun resetSquarePosition(
+    /**
+     * 背景画像の位置をリセットする
+     */
+    fun resetGackgroundCellPosition(
         mapX: Int = 0,
         mapY: Int = 0,
     ) {
