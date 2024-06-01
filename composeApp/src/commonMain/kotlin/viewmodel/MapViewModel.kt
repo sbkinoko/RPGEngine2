@@ -34,8 +34,6 @@ class MapViewModel(
 
     private var backGroundVelocity: Velocity = Velocity()
 
-    private var playerIncludeCell: BackgroundCell? = null
-
     init {
         player = Player(
             initX = 700f,
@@ -80,12 +78,13 @@ class MapViewModel(
                     mutableBackgroundManager.value?.moveBackgroundCell(
                         velocity = backGroundVelocity
                     )
-                    val prePlayerIncludeCell = playerIncludeCell
-                    findPlayerIncludeCell()
-                    if (playerIncludeCell != null &&
-                        prePlayerIncludeCell != playerIncludeCell
-                    ) {
-                        cellEvent(playerIncludeCell!!)
+                    backgroundManger.value?.apply {
+                        findCellIncludePlayer(
+                            player = player
+                        )
+                        eventCell?.apply {
+                            callCellEvent(this)
+                        }
                     }
                 }
             }
@@ -169,15 +168,6 @@ class MapViewModel(
     }
 
     /**
-     * プレイヤーを含んでいるセルを取得する
-     */
-    private fun findPlayerIncludeCell() {
-        playerIncludeCell = backgroundManger.value?.findCellIncludePlayer(
-            player = player
-        )
-    }
-
-    /**
      * プレイヤーを中心に移動する
      */
     private fun setPlayerCenter() {
@@ -191,7 +181,7 @@ class MapViewModel(
     /**
      * 全身が入ったセルのイベントを処理する
      */
-    private fun cellEvent(backgroundCell: BackgroundCell) {
+    private fun callCellEvent(backgroundCell: BackgroundCell) {
         when (backgroundCell.imgID) {
             3 -> {
                 backgroundManger.value?.mapData = NonLoopMap()
@@ -219,14 +209,13 @@ class MapViewModel(
         mapY: Int,
     ) {
         setPlayerCenter()
-        backgroundManger.value?.resetGackgroundCellPosition(
+        backgroundManger.value?.resetBackgroundCellPosition(
             mapX = mapX,
             mapY = mapY,
         )
-        playerIncludeCell = backgroundManger.value
-            ?.findCellIncludePlayer(
-                player = player
-            )
+        backgroundManger.value?.findCellIncludePlayer(
+            player = player
+        )
     }
 
     companion object {

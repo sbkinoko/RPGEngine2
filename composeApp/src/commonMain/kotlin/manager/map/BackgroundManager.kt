@@ -22,6 +22,19 @@ class BackgroundManager(
 
     private val cellSize: Float
 
+    private var playerIncludeCell :BackgroundCell? = null
+    private var prePlayerIncludeCell : BackgroundCell? = null
+
+    val eventCell:BackgroundCell?
+        get() {
+            if(playerIncludeCell == null)
+                return null
+            if(playerIncludeCell == prePlayerIncludeCell)
+                return null
+
+            return playerIncludeCell
+        }
+
     var mapData: MapData = LoopMap()
         set(value) {
             field = value
@@ -37,7 +50,7 @@ class BackgroundManager(
         cellSize = sideLength / cellNum.toFloat()
         allCellNum = cellNum + 1
         diffOfLoop = cellSize * (allCellNum)
-        resetGackgroundCellPosition()
+        resetBackgroundCellPosition()
         loadMapData()
     }
 
@@ -206,10 +219,10 @@ class BackgroundManager(
     }
 
     /**
-     * プレイヤーが入っているセルがあればそれを返す
+     * プレイヤーが入っているセルを更新する
      */
-    fun findCellIncludePlayer(player: Player): BackgroundCell? {
-        var playerIncludeCell: BackgroundCell? = null
+    fun findCellIncludePlayer(player: Player) {
+        prePlayerIncludeCell = playerIncludeCell
         backgroundCellArray.mapIndexed { _, rowArray ->
             rowArray.mapIndexed { _, cell ->
                 cell.apply {
@@ -222,13 +235,12 @@ class BackgroundManager(
                 }
             }.toTypedArray()
         }.toTypedArray()
-        return playerIncludeCell
     }
 
     /**
      * 背景画像の位置をリセットする
      */
-    fun resetGackgroundCellPosition(
+    fun resetBackgroundCellPosition(
         mapX: Int = 0,
         mapY: Int = 0,
     ) {
