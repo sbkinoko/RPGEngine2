@@ -74,7 +74,7 @@ fun MapScreen() {
                         } while (
                             event.changes.fastAny { it.pressed }
                         )
-                        mapViewModel.resetVelocity()
+                        mapViewModel.resetTapPoint()
                     }
                 }
                 .onGloballyPositioned {

@@ -61,7 +61,10 @@ class MapViewModel(
      * 主人公の位置を更新
      */
     fun updatePosition() {
-        updateVelocity()
+        if (tapPoint != null) {
+            updateVelocityByTap(tapPoint!!)
+        }
+
         if (player.isMoving) {
             mediateVelocity()
             player.move()
@@ -98,13 +101,9 @@ class MapViewModel(
     /**
      * タップの位置に対して速度を計算
      */
-    private fun updateVelocity() {
-        if (tapPoint == null) {
-            return
-        }
-
-        val dx = (tapPoint?.x ?: 0f) - (player.square.x + player.size / 2)
-        val dy = (tapPoint?.y ?: 0f) - (player.square.y + player.size / 2)
+    private fun updateVelocityByTap(tapPoint: Point) {
+        val dx = (tapPoint.x) - (player.square.x + player.size / 2)
+        val dy = (tapPoint.y) - (player.square.y + player.size / 2)
         val velocity = Velocity(
             dx = dx,
             dy = dy,
@@ -114,9 +113,9 @@ class MapViewModel(
     }
 
     /**
-     * 速度を0にする
+     * タップしてない状態にする
      */
-    fun resetVelocity() {
+    fun resetTapPoint() {
         val velocity = Velocity(
             dx = 0f,
             dy = 0f,
