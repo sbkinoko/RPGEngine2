@@ -11,8 +11,7 @@ class MapViewModelTest {
     @BeforeTest
     fun beforeTest() {
         mapViewModel = MapViewModel(PLAYER_SIZE)
-        // 主人公の位置は(15,15)
-        mapViewModel.initBackgroundCellManager(30)
+        mapViewModel.initBackgroundCellManager(SCREEN_SIZE)
     }
 
     @Test
@@ -21,7 +20,7 @@ class MapViewModelTest {
         val y = 16f
         mapViewModel.setTapPoint(
             x = x,
-            y = x,
+            y = y,
         )
 
         mapViewModel.updatePosition()
@@ -38,7 +37,32 @@ class MapViewModelTest {
         }
     }
 
+    @Test
+    fun resetTapPoint() {
+        val x = 17f
+        val y = 16f
+        mapViewModel.setTapPoint(
+            x = x,
+            y = y,
+        )
+        mapViewModel.resetTapPoint()
+
+        mapViewModel.updatePosition()
+
+        mapViewModel.playerPosition.value.apply {
+            assertEquals(
+                SCREEN_SIZE/2 - PLAYER_SIZE/2,
+                this.x,
+            )
+            assertEquals(
+                SCREEN_SIZE/2 - PLAYER_SIZE/2,
+                this.y,
+            )
+        }
+    }
+
     companion object{
         private const val PLAYER_SIZE = 5f
+        private const val SCREEN_SIZE = 30
     }
 }
