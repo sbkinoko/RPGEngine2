@@ -1,27 +1,23 @@
 package layout.map
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.util.fastAny
-import extension.pxToDp
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import values.Colors
 import viewmodel.MapViewModel
 
 @Composable
 @Preview
 fun MapScreen(
     mapViewModel: MapViewModel,
-    screenSize: Int
+    modifier: Modifier = Modifier,
 ) {
     LaunchedEffect(Unit) {
         while (true) {
@@ -31,8 +27,7 @@ fun MapScreen(
     }
 
     Box(
-        modifier = Modifier
-            .size(size = screenSize.pxToDp())
+        modifier = modifier
             .pointerInput(Unit) {
                 awaitEachGesture {
                     val down = awaitFirstDown()
@@ -52,10 +47,7 @@ fun MapScreen(
                     )
                     mapViewModel.resetTapPoint()
                 }
-            }
-            .background(
-                color = Colors.MapBackground
-            ),
+            },
     ) {
         mapViewModel.backgroundManger.collectAsState().value?.let {
             showBackground(it)
