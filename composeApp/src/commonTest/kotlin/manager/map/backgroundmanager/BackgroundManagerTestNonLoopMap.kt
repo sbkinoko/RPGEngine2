@@ -15,8 +15,8 @@ class BackgroundManagerTestNonLoopMap {
         backgroundManager = BackgroundManager(
             cellNum = CELL_NUM,
             sideLength = SIDE_LENGTH,
+            mapData = NonLoopTestMap(),
         )
-        backgroundManager.mapData = NonLoopTestMap()
     }
 
     /**
@@ -38,11 +38,11 @@ class BackgroundManagerTestNonLoopMap {
             }
             mapPoint.apply {
                 assertEquals(
-                    expected = 0,
+                    expected = INITIAL_LEFT_TOP_MAP_X,
                     actual = x,
                 )
                 assertEquals(
-                    expected = 4,
+                    expected = 3,
                     actual = y,
                 )
             }
@@ -69,11 +69,11 @@ class BackgroundManagerTestNonLoopMap {
             }
             mapPoint.apply {
                 assertEquals(
-                    expected = 0,
+                    expected = INITIAL_LEFT_TOP_MAP_X,
                     actual = x,
                 )
                 assertEquals(
-                    expected = -4,
+                    expected = -5,
                     actual = y,
                 )
             }
@@ -99,11 +99,11 @@ class BackgroundManagerTestNonLoopMap {
             }
             mapPoint.apply {
                 assertEquals(
-                    expected = 4,
+                    expected = 3,
                     actual = x,
                 )
                 assertEquals(
-                    expected = 0,
+                    expected = INITIAL_LEFT_TOP_MAP_Y,
                     actual = y,
                 )
             }
@@ -130,14 +130,19 @@ class BackgroundManagerTestNonLoopMap {
             }
             mapPoint.apply {
                 assertEquals(
-                    expected = -4,
+                    expected = -5,
                     actual = x,
                 )
                 assertEquals(
-                    expected = 0,
+                    expected = INITIAL_LEFT_TOP_MAP_Y,
                     actual = y,
                 )
             }
         }
+    }
+
+    companion object {
+        private const val INITIAL_LEFT_TOP_MAP_X = -1
+        private const val INITIAL_LEFT_TOP_MAP_Y = -1
     }
 }
