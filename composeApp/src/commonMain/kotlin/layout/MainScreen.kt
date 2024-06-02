@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
 import extension.pxToDp
+import layout.controller.Controller
 import layout.map.MapScreen
 import values.Colors
 import viewmodel.MapViewModel
@@ -56,7 +57,7 @@ fun MainScreen() {
                 mapViewModel = mapViewModel,
                 screenSize = screenSize,
             )
-            Box(
+            Controller(
                 modifier = Modifier
                     .fillMaxSize()
                     .border(
@@ -66,7 +67,7 @@ fun MainScreen() {
                     )
                     .background(
                         Colors.ControllerArea,
-                    )
+                    ),
             )
         }
     }
