@@ -5,7 +5,6 @@ import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -31,41 +30,39 @@ fun MapScreen(
         }
     }
 
-    MaterialTheme {
-        Box(
-            modifier = Modifier
-                .size(size = screenSize.pxToDp())
-                .pointerInput(Unit) {
-                    awaitEachGesture {
-                        val down = awaitFirstDown()
+    Box(
+        modifier = Modifier
+            .size(size = screenSize.pxToDp())
+            .pointerInput(Unit) {
+                awaitEachGesture {
+                    val down = awaitFirstDown()
+                    mapViewModel.setTapPoint(
+                        x = down.position.x,
+                        y = down.position.y,
+                    )
+                    do {
+                        val event = awaitPointerEvent()
+                        val lastPosition = event.changes.last().position
                         mapViewModel.setTapPoint(
-                            x = down.position.x,
-                            y = down.position.y,
+                            x = lastPosition.x,
+                            y = lastPosition.y,
                         )
-                        do {
-                            val event = awaitPointerEvent()
-                            val lastPosition = event.changes.last().position
-                            mapViewModel.setTapPoint(
-                                x = lastPosition.x,
-                                y = lastPosition.y,
-                            )
-                        } while (
-                            event.changes.fastAny { it.pressed }
-                        )
-                        mapViewModel.resetTapPoint()
-                    }
+                    } while (
+                        event.changes.fastAny { it.pressed }
+                    )
+                    mapViewModel.resetTapPoint()
                 }
-                .background(
-                    color = Colors.MapBackground
-                ),
-        ) {
-            mapViewModel.backgroundManger.collectAsState().value?.let {
-                showBackground(it)
             }
-
-            Player(
-                square = mapViewModel.playerPosition.collectAsState().value,
-            )
+            .background(
+                color = Colors.MapBackground
+            ),
+    ) {
+        mapViewModel.backgroundManger.collectAsState().value?.let {
+            showBackground(it)
         }
+
+        Player(
+            square = mapViewModel.playerPosition.collectAsState().value,
+        )
     }
 }

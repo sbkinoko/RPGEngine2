@@ -3,6 +3,7 @@ package layout
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -43,8 +44,10 @@ fun MainScreen() {
         return
     }
 
-    MapScreen(
-        mapViewModel = mapViewModel,
-        screenSize = screenSize,
-    )
+    MaterialTheme {
+        MapScreen(
+            mapViewModel = mapViewModel,
+            screenSize = screenSize,
+        )
+    }
 }
