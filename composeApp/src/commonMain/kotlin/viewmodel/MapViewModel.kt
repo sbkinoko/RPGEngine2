@@ -7,14 +7,9 @@ import domain.map.Player
 import domain.map.Point
 import domain.map.Square
 import domain.map.Velocity
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 import manager.map.BackgroundManager
 
 class MapViewModel(
@@ -66,26 +61,21 @@ class MapViewModel(
      * 主人公の位置を更新
      */
     fun updatePosition() {
-        CoroutineScope(Dispatchers.IO).launch {
-            while (true) {
-                delay(30L)
-                updateVelocity()
-                if (player.isMoving) {
-                    mediateVelocity()
-                    player.move()
-                    // todo いい感じにする方法を探す
-                    mutablePlayerPosition.value = player.square.getNew()
-                    mutableBackgroundManager.value?.moveBackgroundCell(
-                        velocity = backGroundVelocity
-                    )
-                    backgroundManger.value?.apply {
-                        findCellIncludePlayer(
-                            playerSquare = player.square
-                        )
-                        eventCell?.apply {
-                            callCellEvent(this)
-                        }
-                    }
+        updateVelocity()
+        if (player.isMoving) {
+            mediateVelocity()
+            player.move()
+            // todo いい感じにする方法を探す
+            mutablePlayerPosition.value = player.square.getNew()
+            mutableBackgroundManager.value?.moveBackgroundCell(
+                velocity = backGroundVelocity
+            )
+            backgroundManger.value?.apply {
+                findCellIncludePlayer(
+                    playerSquare = player.square
+                )
+                eventCell?.apply {
+                    callCellEvent(this)
                 }
             }
         }
@@ -136,6 +126,7 @@ class MapViewModel(
         player.updateVelocity(velocity = velocity)
     }
 
+    // todo mangerクラスを作る
     /**
      * playerを動かすか、背景を動かすか決定する
      */
@@ -158,7 +149,6 @@ class MapViewModel(
         ) {
             vy = -(player.velocity.y)
             player.velocity.y = 0f
-
         }
 
         backGroundVelocity = Velocity(
