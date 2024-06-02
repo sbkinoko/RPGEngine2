@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,6 +25,7 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastAny
 import extension.pxToDp
+import kotlinx.coroutines.delay
 import manager.map.BackgroundManager
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
@@ -42,7 +44,13 @@ fun MapScreen() {
         )
     }
 
-    mapViewModel.updatePosition()
+    LaunchedEffect(Unit){
+        while (true){
+            delay(30L)
+            mapViewModel.updatePosition()
+        }
+    }
+
     val backgroundCellManager = mapViewModel.backgroundManger.collectAsState()
     val playerSquare = mapViewModel.playerPosition.collectAsState()
     var screenSize: Int by remember { mutableStateOf(0) }
@@ -66,7 +74,7 @@ fun MapScreen() {
                         } while (
                             event.changes.fastAny { it.pressed }
                         )
-                        mapViewModel.resetVelocity()
+                        mapViewModel.resetTapPoint()
                     }
                 }
                 .onGloballyPositioned {

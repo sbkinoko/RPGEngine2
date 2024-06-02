@@ -7,14 +7,9 @@ import domain.map.Player
 import domain.map.Point
 import domain.map.Square
 import domain.map.Velocity
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 import manager.map.BackgroundManager
 
 class MapViewModel(
@@ -66,26 +61,24 @@ class MapViewModel(
      * 主人公の位置を更新
      */
     fun updatePosition() {
-        CoroutineScope(Dispatchers.IO).launch {
-            while (true) {
-                delay(30L)
-                updateVelocity()
-                if (player.isMoving) {
-                    mediateVelocity()
-                    player.move()
-                    // todo いい感じにする方法を探す
-                    mutablePlayerPosition.value = player.square.getNew()
-                    mutableBackgroundManager.value?.moveBackgroundCell(
-                        velocity = backGroundVelocity
-                    )
-                    backgroundManger.value?.apply {
-                        findCellIncludePlayer(
-                            playerSquare = player.square
-                        )
-                        eventCell?.apply {
-                            callCellEvent(this)
-                        }
-                    }
+        if (tapPoint != null) {
+            updateVelocityByTap(tapPoint!!)
+        }
+
+        if (player.isMoving) {
+            mediateVelocity()
+            player.move()
+            // todo いい感じにする方法を探す
+            mutablePlayerPosition.value = player.square.getNew()
+            mutableBackgroundManager.value?.moveBackgroundCell(
+                velocity = backGroundVelocity
+            )
+            backgroundManger.value?.apply {
+                findCellIncludePlayer(
+                    playerSquare = player.square
+                )
+                eventCell?.apply {
+                    callCellEvent(this)
                 }
             }
         }
@@ -108,13 +101,9 @@ class MapViewModel(
     /**
      * タップの位置に対して速度を計算
      */
-    private fun updateVelocity() {
-        if (tapPoint == null) {
-            return
-        }
-
-        val dx = (tapPoint?.x ?: 0f) - (player.square.x + player.size / 2)
-        val dy = (tapPoint?.y ?: 0f) - (player.square.y + player.size / 2)
+    private fun updateVelocityByTap(tapPoint: Point) {
+        val dx = (tapPoint.x) - (player.square.x + player.size / 2)
+        val dy = (tapPoint.y) - (player.square.y + player.size / 2)
         val velocity = Velocity(
             dx = dx,
             dy = dy,
@@ -124,9 +113,9 @@ class MapViewModel(
     }
 
     /**
-     * 速度を0にする
+     * タップしてない状態にする
      */
-    fun resetVelocity() {
+    fun resetTapPoint() {
         val velocity = Velocity(
             dx = 0f,
             dy = 0f,
@@ -136,6 +125,7 @@ class MapViewModel(
         player.updateVelocity(velocity = velocity)
     }
 
+    // todo mangerクラスを作る
     /**
      * playerを動かすか、背景を動かすか決定する
      */
@@ -158,7 +148,6 @@ class MapViewModel(
         ) {
             vy = -(player.velocity.y)
             player.velocity.y = 0f
-
         }
 
         backGroundVelocity = Velocity(
