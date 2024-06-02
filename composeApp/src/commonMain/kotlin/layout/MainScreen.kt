@@ -46,8 +46,9 @@ fun MainScreen() {
 
     MaterialTheme {
         MapScreen(
+            modifier = Modifier
+                .size(size = screenSize.pxToDp()),
             mapViewModel = mapViewModel,
-            screenSize = screenSize,
         )
     }
 }
