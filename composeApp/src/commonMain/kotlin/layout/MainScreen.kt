@@ -54,8 +54,9 @@ fun MainScreen() {
     MaterialTheme {
         Column {
             MapScreen(
+                modifier = Modifier
+                    .size(size = screenSize.pxToDp()),
                 mapViewModel = mapViewModel,
-                screenSize = screenSize,
             )
             Controller(
                 modifier = Modifier
