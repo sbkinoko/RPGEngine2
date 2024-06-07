@@ -44,20 +44,20 @@ fun Stick(
     Box(
         modifier = modifier
             .padding(5.dp)
-            .fillMaxSize(),
+            .fillMaxSize()
+            .onGloballyPositioned {
+                largeCircleSize = it.size.height
+                smallCircleSize = it.size.height / 3
+                stickPosition = StickPosition(
+                    circleSize = largeCircleSize / 2,
+                    stickSize = smallCircleSize / 2,
+                )
+            },
         contentAlignment = Alignment.Center,
     ) {
         Canvas(
             modifier = Modifier
-                .fillMaxSize()
-                .onGloballyPositioned {
-                    largeCircleSize = it.size.height
-                    smallCircleSize = it.size.height / 3
-                    stickPosition = StickPosition(
-                        circleSize = largeCircleSize / 2,
-                        stickSize = smallCircleSize / 2,
-                    )
-                }
+                .size(size = largeCircleSize.pxToDp())
                 .pointerInput(Unit) {
                     awaitEachGesture {
                         val down = awaitFirstDown()
