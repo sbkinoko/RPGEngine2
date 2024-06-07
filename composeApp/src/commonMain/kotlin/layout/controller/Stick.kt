@@ -20,6 +20,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastAny
+import domain.controller.StickPosition
 import extension.pxToDp
 import values.Colors
 
@@ -27,11 +28,19 @@ import values.Colors
 fun Stick(
     modifier: Modifier = Modifier,
 ) {
+    //todo largeとsmallもstickにしまいたい
     var largeCircleSize: Int by remember { mutableStateOf(0) }
     var smallCircleSize: Int by remember { mutableStateOf(0) }
 
-    var tapX: Float by remember { mutableStateOf(0f) }
-    var tapY: Float by remember { mutableStateOf(0f) }
+    var stickPosition: StickPosition by remember {
+        mutableStateOf(
+            StickPosition(
+                circleSize = 1,
+                stickSize = 1,
+            )
+        )
+    }
+
     Box(
         modifier = modifier
             .padding(5.dp)
@@ -44,22 +53,36 @@ fun Stick(
                 .onGloballyPositioned {
                     largeCircleSize = it.size.height
                     smallCircleSize = it.size.height / 3
+                    stickPosition = StickPosition(
+                        circleSize = largeCircleSize / 2,
+                        stickSize = smallCircleSize / 2,
+                    )
                 }
                 .pointerInput(Unit) {
                     awaitEachGesture {
                         val down = awaitFirstDown()
-                        tapX = down.position.x - largeCircleSize / 2f
-                        tapY = down.position.y - largeCircleSize / 2f
+                        stickPosition = StickPosition(
+                            circleSize = largeCircleSize / 2,
+                            stickSize = smallCircleSize / 2,
+                            position = down.position,
+                        )
+
                         do {
                             val event = awaitPointerEvent()
                             val lastPosition = event.changes.last().position
-                            tapX = lastPosition.x - largeCircleSize / 2f
-                            tapY = lastPosition.y - largeCircleSize / 2f
+                            stickPosition = StickPosition(
+                                circleSize = largeCircleSize / 2,
+                                stickSize = smallCircleSize / 2,
+                                position = lastPosition,
+                            )
                         } while (
                             event.changes.fastAny { it.pressed }
                         )
-                        tapX = 0f
-                        tapY = 0f
+
+                        stickPosition = StickPosition(
+                            circleSize = largeCircleSize / 2,
+                            stickSize = smallCircleSize / 2,
+                        )
                     }
                 },
             onDraw = {
@@ -73,8 +96,8 @@ fun Stick(
         Canvas(
             modifier = Modifier
                 .offset(
-                    x = tapX.pxToDp(),
-                    y = tapY.pxToDp(),
+                    x = stickPosition.x.pxToDp(),
+                    y = stickPosition.y.pxToDp(),
                 )
                 .size(
                     size = smallCircleSize.pxToDp()
