@@ -37,7 +37,7 @@ fun Stick(
     var stickPosition: StickPosition by remember {
         mutableStateOf(
             StickPosition(
-                circleSize = 1,
+                circleRadius = 1,
                 stickSize = 1,
             )
         )
@@ -56,7 +56,7 @@ fun Stick(
                 largeCircleSize = it.size.height
                 smallCircleSize = it.size.height / 3
                 stickPosition = StickPosition(
-                    circleSize = largeCircleSize / 2,
+                    circleRadius = largeCircleSize / 2,
                     stickSize = smallCircleSize / 2,
                 )
             },
@@ -69,7 +69,7 @@ fun Stick(
                     awaitEachGesture {
                         val down = awaitFirstDown()
                         stickPosition = StickPosition(
-                            circleSize = largeCircleSize / 2,
+                            circleRadius = largeCircleSize / 2,
                             stickSize = smallCircleSize / 2,
                             position = down.position,
                         )
@@ -78,7 +78,7 @@ fun Stick(
                             val event = awaitPointerEvent()
                             val lastPosition = event.changes.last().position
                             stickPosition = StickPosition(
-                                circleSize = largeCircleSize / 2,
+                                circleRadius = largeCircleSize / 2,
                                 stickSize = smallCircleSize / 2,
                                 position = lastPosition,
                             )
@@ -87,7 +87,7 @@ fun Stick(
                         )
 
                         stickPosition = StickPosition(
-                            circleSize = largeCircleSize / 2,
+                            circleRadius = largeCircleSize / 2,
                             stickSize = smallCircleSize / 2,
                         )
                     }
