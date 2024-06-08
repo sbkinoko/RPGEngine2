@@ -15,12 +15,13 @@ class Velocity(
     ) : this(
         maxVelocity = maxVelocity,
     ) {
-        val ratio = Normalizer.normalize(
+        Normalizer.normalize(
             x = dx,
             y = dy,
             max = maxVelocity,
-        )
-        x = dx * ratio
-        y = dy * ratio
+        ).apply {
+            this@Velocity.x = x
+            this@Velocity.y = y
+        }
     }
 }

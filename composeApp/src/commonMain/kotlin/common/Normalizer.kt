@@ -1,5 +1,6 @@
 package common
 
+import domain.map.Point
 import kotlin.math.sqrt
 
 class Normalizer {
@@ -8,16 +9,21 @@ class Normalizer {
             x: Float,
             y: Float,
             max: Number,
-        ): Float {
+        ): Point {
             val dz = sqrt(x * x + y * y)
             val fMax = max.toFloat()
+
             // maxを超える場合はmaxになるように調整
             val ratio = if (fMax < dz) {
                 fMax / dz
             } else {
                 1f
             }
-            return ratio
+
+            return Point(
+                x = x * ratio,
+                y = y * ratio,
+            )
         }
     }
 }
