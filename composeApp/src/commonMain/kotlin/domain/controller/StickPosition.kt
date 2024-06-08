@@ -4,11 +4,11 @@ import androidx.compose.ui.geometry.Offset
 import kotlin.math.sqrt
 
 class StickPosition(
-    val circleSize: Int,
+    val circleRadius: Int,
     stickSize: Int,
     position: Offset = Offset(
-        x = circleSize.toFloat(),
-        y = circleSize.toFloat(),
+        x = circleRadius.toFloat(),
+        y = circleRadius.toFloat(),
     ),
 ) {
     private var tapX: Int = 0
@@ -20,19 +20,19 @@ class StickPosition(
         get() = tapY
 
     val ratioX: Float
-        get() = tapX / circleSize.toFloat()
+        get() = tapX / circleRadius.toFloat()
 
     val ratioY: Float
-        get() = tapY / circleSize.toFloat()
+        get() = tapY / circleRadius.toFloat()
 
     /**
      * タップ位置をもとにスティックの表示位置を計算する
      */
     init {
-        val dx = position.x - circleSize
-        val dy = position.y - circleSize
+        val dx = position.x - circleRadius
+        val dy = position.y - circleRadius
 
-        val movableAreaSize = circleSize - stickSize
+        val movableAreaSize = circleRadius - stickSize
 
         val dz = sqrt(dx * dx + dy * dy)
         val ratio = if (movableAreaSize < dz) {
