@@ -12,7 +12,7 @@ class StickPosition(
         y = circleRadius.toFloat(),
     ),
 ) {
-    private lateinit var tap: Point
+    private var tap: Point
 
     val x: Int
         get() = tap.x.toInt()
