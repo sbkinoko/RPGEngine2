@@ -69,6 +69,7 @@ fun MainScreen() {
                     .background(
                         Colors.ControllerArea,
                     ),
+                controllerCallback = mapViewModel
             )
         }
     }
