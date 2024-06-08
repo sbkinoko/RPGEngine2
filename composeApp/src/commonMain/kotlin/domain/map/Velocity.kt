@@ -11,6 +11,7 @@ class Velocity() {
         dy: Float,
         maxVelocity: Float = 20f,
     ) : this() {
+        // todo 後でスティックと共通化する
         val dz = sqrt(dx * dx + dy *dy)
         val ratio = if (maxVelocity < dz) {
             maxVelocity / dz
