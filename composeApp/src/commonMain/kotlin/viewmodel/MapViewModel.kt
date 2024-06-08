@@ -2,6 +2,7 @@ package viewmodel
 
 import data.map.mapdata.LoopMap
 import data.map.mapdata.NonLoopMap
+import domain.controller.ControllerCallback
 import domain.map.BackgroundCell
 import domain.map.Player
 import domain.map.Point
@@ -14,7 +15,7 @@ import manager.map.BackgroundManager
 
 class MapViewModel(
     playerSize: Float,
-) {
+) : ControllerCallback {
     private var player: Player
     private val mutablePlayerPosition: MutableStateFlow<Square>
     val playerPosition: StateFlow<Square>
@@ -107,6 +108,18 @@ class MapViewModel(
         val velocity = Velocity(
             dx = dx,
             dy = dy,
+        )
+
+        player.updateVelocity(velocity = velocity)
+    }
+
+    private fun updateVelocityByStick(dx: Float, dy: Float) {
+        val vx = player.velocity.maxVelocity * dx
+        val vy = player.velocity.maxVelocity * dy
+
+        val velocity = Velocity(
+            dx = vx,
+            dy = vy,
         )
 
         player.updateVelocity(velocity = velocity)
@@ -209,5 +222,15 @@ class MapViewModel(
 
     companion object {
         private const val MOVE_BORDER = 0.3f
+    }
+
+    override fun moveStick(
+        dx: Float,
+        dy: Float,
+    ) {
+        updateVelocityByStick(
+            dx = dx,
+            dy = dy,
+        )
     }
 }
