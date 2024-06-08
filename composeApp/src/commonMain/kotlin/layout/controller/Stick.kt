@@ -20,6 +20,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastAny
+import domain.controller.ControllerCallback
 import domain.controller.StickPosition
 import extension.pxToDp
 import values.Colors
@@ -27,6 +28,7 @@ import values.Colors
 @Composable
 fun Stick(
     modifier: Modifier = Modifier,
+    controllerCallback: ControllerCallback,
 ) {
     //todo largeとsmallもstickにしまいたい
     var largeCircleSize: Int by remember { mutableStateOf(0) }
@@ -40,6 +42,11 @@ fun Stick(
             )
         )
     }
+
+    controllerCallback.moveStick(
+        dx = stickPosition.ratioX,
+        dy = stickPosition.ratioY,
+    )
 
     Box(
         modifier = modifier

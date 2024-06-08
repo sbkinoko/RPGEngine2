@@ -4,7 +4,7 @@ import androidx.compose.ui.geometry.Offset
 import kotlin.math.sqrt
 
 class StickPosition(
-    circleSize: Int,
+    val circleSize: Int,
     stickSize: Int,
     position: Offset = Offset(
         x = circleSize.toFloat(),
@@ -18,6 +18,12 @@ class StickPosition(
         get() = tapX
     val y: Int
         get() = tapY
+
+    val ratioX: Float
+        get() = tapX / circleSize.toFloat()
+
+    val ratioY: Float
+        get() = tapY / circleSize.toFloat()
 
     /**
      * タップ位置をもとにスティックの表示位置を計算する
