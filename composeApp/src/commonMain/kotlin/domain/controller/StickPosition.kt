@@ -1,7 +1,7 @@
 package domain.controller
 
 import androidx.compose.ui.geometry.Offset
-import kotlin.math.sqrt
+import common.Normalizer
 
 class StickPosition(
     val circleRadius: Int,
@@ -31,15 +31,14 @@ class StickPosition(
     init {
         val dx = position.x - circleRadius
         val dy = position.y - circleRadius
-
         val movableAreaSize = circleRadius - stickSize
 
-        val dz = sqrt(dx * dx + dy * dy)
-        val ratio = if (movableAreaSize < dz) {
-            movableAreaSize / dz
-        } else {
-            1f
-        }
+        val ratio = Normalizer.normalize(
+            x = dx,
+            y = dy,
+            max = movableAreaSize,
+        )
+
         tapX = (dx * ratio).toInt()
         tapY = (dy * ratio).toInt()
     }
