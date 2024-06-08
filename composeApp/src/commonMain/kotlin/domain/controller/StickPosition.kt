@@ -1,7 +1,8 @@
 package domain.controller
 
 import androidx.compose.ui.geometry.Offset
-import kotlin.math.sqrt
+import common.Normalizer
+import domain.map.Point
 
 class StickPosition(
     val circleRadius: Int,
@@ -11,19 +12,18 @@ class StickPosition(
         y = circleRadius.toFloat(),
     ),
 ) {
-    private var tapX: Int = 0
-    private var tapY: Int = 0
+    private var tap: Point
 
     val x: Int
-        get() = tapX
+        get() = tap.x.toInt()
     val y: Int
-        get() = tapY
+        get() = tap.y.toInt()
 
     val ratioX: Float
-        get() = tapX / circleRadius.toFloat()
+        get() = x / circleRadius.toFloat()
 
     val ratioY: Float
-        get() = tapY / circleRadius.toFloat()
+        get() = y / circleRadius.toFloat()
 
     /**
      * タップ位置をもとにスティックの表示位置を計算する
@@ -31,16 +31,12 @@ class StickPosition(
     init {
         val dx = position.x - circleRadius
         val dy = position.y - circleRadius
-
         val movableAreaSize = circleRadius - stickSize
 
-        val dz = sqrt(dx * dx + dy * dy)
-        val ratio = if (movableAreaSize < dz) {
-            movableAreaSize / dz
-        } else {
-            1f
-        }
-        tapX = (dx * ratio).toInt()
-        tapY = (dy * ratio).toInt()
+        tap = Normalizer.normalize(
+            x = dx,
+            y = dy,
+            max = movableAreaSize,
+        )
     }
 }
