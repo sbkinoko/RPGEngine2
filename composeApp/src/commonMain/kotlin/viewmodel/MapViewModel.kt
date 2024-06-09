@@ -115,8 +115,8 @@ class MapViewModel(
     }
 
     private fun updateVelocityByStick(dx: Float, dy: Float) {
-        val vx = player.velocity.maxVelocity * dx
-        val vy = player.velocity.maxVelocity * dy
+        val vx = player.maxVelocity * dx
+        val vy = player.maxVelocity * dy
 
         tentativePlayerVelocity = Velocity(
             dx = vx,
@@ -146,7 +146,7 @@ class MapViewModel(
             player = player.square,
             playerMoveArea = playerMoveArea,
         )
-        player.velocity = mediatedVelocity.first
+        player.updateVelocity(mediatedVelocity.first)
         backGroundVelocity = mediatedVelocity.second
     }
 
