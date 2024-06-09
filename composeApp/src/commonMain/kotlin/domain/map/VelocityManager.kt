@@ -1,13 +1,13 @@
 package domain.map
 
-class VelocityMediator {
+class VelocityManager {
 
     companion object {
 
         /**
          * 移動可能領域とプレイヤーの位置を比較して、どっちをどう動かすかを調整するメソッド
          */
-        fun mediateVelocity(
+        fun manageVelocity(
             tentativePlayerVelocity: Velocity,
             player: Square,
             playerMoveArea: Square,
@@ -52,6 +52,7 @@ class VelocityMediator {
                 dx = vpx,
                 dy = vpy,
             )
+
             return Pair(playerVelocity, backGroundVelocity)
         }
     }

@@ -231,7 +231,7 @@ class VelocityMediatorTest {
         vbx: Float,
         vby: Float,
     ) {
-        VelocityMediator.mediateVelocity(
+        VelocityManager.manageVelocity(
             tentativePlayerVelocity = velocity,
             player = player.square,
             playerMoveArea = Square(
