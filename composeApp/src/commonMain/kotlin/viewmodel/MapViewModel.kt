@@ -30,6 +30,7 @@ class MapViewModel(
     private lateinit var playerMoveArea: Square
 
     private var backGroundVelocity: Velocity = Velocity()
+    private var tentativePlayerVelocity: Velocity = Velocity()
 
     init {
         player = Player(
@@ -67,8 +68,9 @@ class MapViewModel(
             updateVelocityByTap(tapPoint!!)
         }
 
-        if (player.isMoving) {
+        if (tentativePlayerVelocity.isMoving) {
             mediateVelocity()
+
             player.move()
             // todo いい感じにする方法を探す
             mutablePlayerPosition.value = player.square.getNew()
@@ -106,24 +108,20 @@ class MapViewModel(
     private fun updateVelocityByTap(tapPoint: Point) {
         val dx = (tapPoint.x) - (player.square.x + player.size / 2)
         val dy = (tapPoint.y) - (player.square.y + player.size / 2)
-        val velocity = Velocity(
+        tentativePlayerVelocity = Velocity(
             dx = dx,
             dy = dy,
         )
-
-        player.updateVelocity(velocity = velocity)
     }
 
     private fun updateVelocityByStick(dx: Float, dy: Float) {
         val vx = player.velocity.maxVelocity * dx
         val vy = player.velocity.maxVelocity * dy
 
-        val velocity = Velocity(
+        tentativePlayerVelocity = Velocity(
             dx = vx,
             dy = vy,
         )
-
-        player.updateVelocity(velocity = velocity)
     }
 
     /**
@@ -136,7 +134,7 @@ class MapViewModel(
         )
         tapPoint = null
 
-        player.updateVelocity(velocity = velocity)
+        tentativePlayerVelocity = velocity
     }
 
     /**
@@ -144,7 +142,8 @@ class MapViewModel(
      */
     private fun mediateVelocity() {
         val mediatedVelocity = VelocityMediator.mediateVelocity(
-            player = player,
+            tentativePlayerVelocity = tentativePlayerVelocity,
+            player = player.square,
             playerMoveArea = playerMoveArea,
         )
         player.velocity = mediatedVelocity.first
@@ -202,10 +201,6 @@ class MapViewModel(
         )
     }
 
-    companion object {
-        private const val MOVE_BORDER = 0.3f
-    }
-
     override fun moveStick(
         dx: Float,
         dy: Float,
@@ -214,5 +209,9 @@ class MapViewModel(
             dx = dx,
             dy = dy,
         )
+    }
+
+    companion object {
+        private const val MOVE_BORDER = 0.3f
     }
 }

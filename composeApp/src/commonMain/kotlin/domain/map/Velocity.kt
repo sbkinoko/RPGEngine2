@@ -3,15 +3,19 @@ package domain.map
 import common.Normalizer
 
 class Velocity(
-    val maxVelocity: Float = 20f,
+    val maxVelocity: Float = MAX,
 ) {
     var x: Float = 0f
     var y: Float = 0f
 
+    val isMoving: Boolean
+        get() = x != 0f ||
+                y != 0f
+
     constructor(
         dx: Float,
         dy: Float,
-        maxVelocity: Float = 20f,
+        maxVelocity: Float = MAX,
     ) : this(
         maxVelocity = maxVelocity,
     ) {
@@ -23,5 +27,9 @@ class Velocity(
             this@Velocity.x = x
             this@Velocity.y = y
         }
+    }
+
+    companion object {
+        val MAX = 20f
     }
 }

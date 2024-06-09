@@ -17,10 +17,6 @@ class Player(
         )
     }
 
-    val isMoving: Boolean
-        get() = velocity.x != 0f ||
-                velocity.y != 0f
-
     var velocity = Velocity(
         dx = 0f,
         dy = 0f,

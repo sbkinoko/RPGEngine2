@@ -8,39 +8,40 @@ class VelocityMediator {
          * 移動可能領域とプレイヤーの位置を比較して、どっちをどう動かすかを調整するメソッド
          */
         fun mediateVelocity(
-            player: Player,
+            tentativePlayerVelocity: Velocity,
+            player: Square,
             playerMoveArea: Square,
         ): Pair<Velocity, Velocity> {
             // 背景の移動速度
             val vbx: Float
-            val vby :Float
+            val vby: Float
 
             // プレイヤーの移動速度
             val vpx: Float
-            val vpy:Float
+            val vpy: Float
 
-            if ((player.square.isLeft(playerMoveArea) &&
-                        player.velocity.x < 0) ||
-                (player.square.isRight(playerMoveArea) &&
-                        0 < player.velocity.x)
+            if ((player.isLeft(playerMoveArea) &&
+                        tentativePlayerVelocity.x < 0) ||
+                (player.isRight(playerMoveArea) &&
+                        0 < tentativePlayerVelocity.x)
             ) {
-                vbx = -(player.velocity.x)
+                vbx = -(tentativePlayerVelocity.x)
                 vpx = 0f
             } else {
-                vpx = player.velocity.x
+                vpx = tentativePlayerVelocity.x
                 vbx = 0f
             }
 
-            if ((player.square.isUp(playerMoveArea) &&
-                        player.velocity.y < 0) ||
-                (player.square.isDown(playerMoveArea) &&
-                        0 < player.velocity.y)
+            if ((player.isUp(playerMoveArea) &&
+                        tentativePlayerVelocity.y < 0) ||
+                (player.isDown(playerMoveArea) &&
+                        0 < tentativePlayerVelocity.y)
             ) {
-                vby = -(player.velocity.y)
+                vby = -(tentativePlayerVelocity.y)
                 vpy = 0f
-            }else{
+            } else {
                 vby = 0f
-                vpy = player.velocity.y
+                vpy = tentativePlayerVelocity.y
             }
 
             val backGroundVelocity = Velocity(

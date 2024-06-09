@@ -11,6 +11,7 @@ class VelocityMediatorTest {
     @Test
     fun checkNoMove() {
         check(
+            velocity = Velocity(),
             player = Player(
                 initX = CENTER,
                 initY = CENTER,
@@ -29,16 +30,15 @@ class VelocityMediatorTest {
     @Test
     fun checkPlayerMove() {
         check(
+            velocity = Velocity(
+                dx = 3f,
+                dy = 4f,
+            ),
             player = Player(
                 initX = CENTER,
                 initY = CENTER,
                 size = PLAYER_SIZE,
-            ).apply {
-                velocity = Velocity(
-                    dx = 3f,
-                    dy = 4f,
-                )
-            },
+            ),
             vpx = 3f,
             vpy = 4f,
             vbx = 0f,
@@ -52,16 +52,15 @@ class VelocityMediatorTest {
     @Test
     fun checkMoveInLeftToLeft() {
         check(
+            velocity = Velocity(
+                dx = -3f,
+                dy = 0f,
+            ),
             player = Player(
                 initX = 5f,
                 initY = CENTER,
                 size = PLAYER_SIZE,
-            ).apply {
-                velocity = Velocity(
-                    dx = -3f,
-                    dy = 0f,
-                )
-            },
+            ),
             vpx = 0f,
             vpy = 0f,
             vbx = 3f,
@@ -75,16 +74,15 @@ class VelocityMediatorTest {
     @Test
     fun checkMoveInLeftToRight() {
         check(
+            velocity = Velocity(
+                dx = 3f,
+                dy = 0f,
+            ),
             player = Player(
                 initX = 5f,
                 initY = CENTER,
                 size = PLAYER_SIZE,
-            ).apply {
-                velocity = Velocity(
-                    dx = 3f,
-                    dy = 0f,
-                )
-            },
+            ),
             vpx = 3f,
             vpy = 0f,
             vbx = 0f,
@@ -98,16 +96,15 @@ class VelocityMediatorTest {
     @Test
     fun checkMoveInRightToLeft() {
         check(
+            velocity = Velocity(
+                dx = -3f,
+                dy = 0f,
+            ),
             player = Player(
                 initX = 45f,
                 initY = CENTER,
                 size = PLAYER_SIZE,
-            ).apply {
-                velocity = Velocity(
-                    dx = -3f,
-                    dy = 0f,
-                )
-            },
+            ),
             vpx = -3f,
             vpy = 0f,
             vbx = 0f,
@@ -121,16 +118,15 @@ class VelocityMediatorTest {
     @Test
     fun checkMoveInRightToRight() {
         check(
+            velocity = Velocity(
+                dx = 3f,
+                dy = 0f,
+            ),
             player = Player(
                 initX = 45f,
                 initY = CENTER,
                 size = PLAYER_SIZE,
-            ).apply {
-                velocity = Velocity(
-                    dx = 3f,
-                    dy = 0f,
-                )
-            },
+            ),
             vpx = 0f,
             vpy = 0f,
             vbx = -3f,
@@ -144,16 +140,15 @@ class VelocityMediatorTest {
     @Test
     fun checkMoveInTopToTop() {
         check(
+            velocity = Velocity(
+                dx = 0f,
+                dy = -4f,
+            ),
             player = Player(
                 initX = CENTER,
                 initY = 5f,
                 size = PLAYER_SIZE,
-            ).apply {
-                velocity = Velocity(
-                    dx = 0f,
-                    dy = -4f,
-                )
-            },
+            ),
             vpx = 0f,
             vpy = 0f,
             vbx = 0f,
@@ -167,16 +162,15 @@ class VelocityMediatorTest {
     @Test
     fun checkMoveInTopToBottom() {
         check(
+            velocity = Velocity(
+                dx = 0f,
+                dy = 4f,
+            ),
             player = Player(
                 initX = CENTER,
                 initY = 5f,
                 size = PLAYER_SIZE,
-            ).apply {
-                velocity = Velocity(
-                    dx = 0f,
-                    dy = 4f,
-                )
-            },
+            ),
             vpx = 0f,
             vpy = 4f,
             vbx = 0f,
@@ -190,16 +184,15 @@ class VelocityMediatorTest {
     @Test
     fun checkMoveInBottomToTop() {
         check(
+            velocity = Velocity(
+                dx = 0f,
+                dy = -4f,
+            ),
             player = Player(
                 initX = CENTER,
                 initY = 45f,
                 size = PLAYER_SIZE,
-            ).apply {
-                velocity = Velocity(
-                    dx = 0f,
-                    dy = -4f,
-                )
-            },
+            ),
             vpx = 0f,
             vpy = -4f,
             vbx = 0f,
@@ -213,16 +206,15 @@ class VelocityMediatorTest {
     @Test
     fun checkMoveInBottomToBottom() {
         check(
+            velocity = Velocity(
+                dx = 0f,
+                dy = 4f,
+            ),
             player = Player(
                 initX = CENTER,
                 initY = 45f,
                 size = PLAYER_SIZE,
-            ).apply {
-                velocity = Velocity(
-                    dx = 0f,
-                    dy = 4f,
-                )
-            },
+            ),
             vpx = 0f,
             vpy = 0f,
             vbx = 0f,
@@ -232,6 +224,7 @@ class VelocityMediatorTest {
 
 
     private fun check(
+        velocity: Velocity,
         player: Player,
         vpx: Float,
         vpy: Float,
@@ -239,7 +232,8 @@ class VelocityMediatorTest {
         vby: Float,
     ) {
         VelocityMediator.mediateVelocity(
-            player = player,
+            tentativePlayerVelocity = velocity,
+            player = player.square,
             playerMoveArea = Square(
                 x = 10f,
                 y = 10f,
