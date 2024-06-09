@@ -49,7 +49,7 @@ fun MapScreen(
                 }
             },
     ) {
-        mapViewModel.backgroundManger.collectAsState().value?.let {
+        mapViewModel.backgroundManger.collectAsState().value.let {
             showBackground(it)
         }
 
