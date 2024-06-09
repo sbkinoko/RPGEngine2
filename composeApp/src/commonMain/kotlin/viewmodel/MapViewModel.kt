@@ -8,6 +8,7 @@ import domain.map.Player
 import domain.map.Point
 import domain.map.Square
 import domain.map.Velocity
+import domain.map.VelocityMediator
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -138,35 +139,16 @@ class MapViewModel(
         player.updateVelocity(velocity = velocity)
     }
 
-    // todo mangerクラスを作る
     /**
      * playerを動かすか、背景を動かすか決定する
      */
-    fun mediateVelocity() {
-        var vx = 0f
-        var vy = 0f
-        if ((player.square.isLeft(playerMoveArea) &&
-                    player.velocity.x < 0) ||
-            (player.square.isRight(playerMoveArea) &&
-                    0 < player.velocity.x)
-        ) {
-            vx = -(player.velocity.x)
-            player.velocity.x = 0f
-        }
-
-        if ((player.square.isUp(playerMoveArea) &&
-                    player.velocity.y < 0) ||
-            (player.square.isDown(playerMoveArea) &&
-                    0 < player.velocity.y)
-        ) {
-            vy = -(player.velocity.y)
-            player.velocity.y = 0f
-        }
-
-        backGroundVelocity = Velocity(
-            dx = vx,
-            dy = vy,
+    private fun mediateVelocity() {
+        val mediatedVelocity = VelocityMediator.mediateVelocity(
+            player = player,
+            playerMoveArea = playerMoveArea,
         )
+        player.velocity = mediatedVelocity.first
+        backGroundVelocity = mediatedVelocity.second
     }
 
     /**
