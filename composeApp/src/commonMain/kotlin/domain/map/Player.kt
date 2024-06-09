@@ -7,6 +7,14 @@ class Player(
 ) {
     var square: Square
 
+    private var velocity = Velocity(
+        dx = 0f,
+        dy = 0f,
+    )
+
+    val maxVelocity: Float
+        get() = velocity.maxVelocity
+
     init {
         square = Square(
             displayPoint = Point(
@@ -16,15 +24,6 @@ class Player(
             size = size,
         )
     }
-
-    val isMoving: Boolean
-        get() = velocity.x != 0f ||
-                velocity.y != 0f
-
-    var velocity = Velocity(
-        dx = 0f,
-        dy = 0f,
-    )
 
     fun move() {
         square.move(
