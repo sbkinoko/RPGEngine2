@@ -20,6 +20,7 @@ fun Controller(
         Buttons(
             modifier = Modifier.weight(1f)
                 .fillMaxSize(),
+            controllerCallback = controllerCallback,
         )
     }
 }
