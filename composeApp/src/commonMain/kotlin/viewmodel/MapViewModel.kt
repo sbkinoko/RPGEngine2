@@ -12,6 +12,7 @@ import domain.map.VelocityManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import layout.map.PlayerMoveSquare
 import manager.map.BackgroundManager
 
 class MapViewModel : ControllerCallback {
@@ -34,7 +35,7 @@ class MapViewModel : ControllerCallback {
 
     init {
         player = Player(
-            size = 20f,
+            size = VIRTUAL_PLAYER_SIZE,
         )
         mutablePlayerPosition = MutableStateFlow(player.square)
         playerPosition = mutablePlayerPosition.asStateFlow()
@@ -47,10 +48,9 @@ class MapViewModel : ControllerCallback {
         )
         backgroundManger.value.setMapData(LoopMap())
 
-        playerMoveArea = Square(
-            x = (MOVE_BORDER * VIRTUAL_SCREEN_SIZE),
-            y = (MOVE_BORDER * VIRTUAL_SCREEN_SIZE),
-            size = ((1 - 2 * MOVE_BORDER) * VIRTUAL_SCREEN_SIZE),
+        playerMoveArea = PlayerMoveSquare(
+            screenSize = VIRTUAL_SCREEN_SIZE,
+            borderRate = MOVE_BORDER,
         )
 
         reloadMapData(mapX = 0, mapY = 0)
@@ -209,7 +209,8 @@ class MapViewModel : ControllerCallback {
     }
 
     companion object {
-        private const val MOVE_BORDER = 0.3f
+        const val MOVE_BORDER = 0.3f
         const val VIRTUAL_SCREEN_SIZE = 210
+        const val VIRTUAL_PLAYER_SIZE = 20f
     }
 }

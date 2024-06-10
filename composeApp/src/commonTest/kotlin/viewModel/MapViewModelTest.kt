@@ -11,8 +11,7 @@ class MapViewModelTest {
 
     @BeforeTest
     fun beforeTest() {
-        mapViewModel = MapViewModel(PLAYER_SIZE)
-        mapViewModel.initBackgroundCellManager(SCREEN_SIZE)
+        mapViewModel = MapViewModel()
     }
 
     @Test
@@ -29,11 +28,11 @@ class MapViewModelTest {
 
             mapViewModel.playerPosition.value.apply {
                 assertEquals(
-                    x - PLAYER_SIZE / 2,
+                    x - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
                     this.x,
                 )
                 assertEquals(
-                    y - PLAYER_SIZE / 2,
+                    y - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
                     this.y,
                 )
             }
@@ -46,7 +45,7 @@ class MapViewModelTest {
      */
     @Test
     fun updatePosition2Times() {
-        val x = SCREEN_SIZE.toFloat()
+        val x = MapViewModel.VIRTUAL_SCREEN_SIZE.toFloat()
         val y = CENTER
         mapViewModel.setTapPoint(
             x = x,
@@ -56,11 +55,11 @@ class MapViewModelTest {
         mapViewModel.updatePosition()
         mapViewModel.playerPosition.value.apply {
             assertEquals(
-                CENTER + Velocity.MAX - PLAYER_SIZE / 2,
+                CENTER + Velocity.MAX - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
                 this.x,
             )
             assertEquals(
-                y - PLAYER_SIZE / 2,
+                y - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
                 this.y,
             )
         }
@@ -68,11 +67,11 @@ class MapViewModelTest {
         mapViewModel.updatePosition()
         mapViewModel.playerPosition.value.apply {
             assertEquals(
-                CENTER + Velocity.MAX * 2 - PLAYER_SIZE / 2,
+                CENTER + Velocity.MAX * 2 - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
                 this.x,
             )
             assertEquals(
-                y - PLAYER_SIZE / 2,
+                y - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
                 this.y,
             )
         }
@@ -81,11 +80,11 @@ class MapViewModelTest {
         mapViewModel.updatePosition()
         mapViewModel.playerPosition.value.apply {
             assertEquals(
-                CENTER + Velocity.MAX * 2 - PLAYER_SIZE / 2,
+                CENTER + Velocity.MAX * 2 - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
                 this.x,
             )
             assertEquals(
-                y - PLAYER_SIZE / 2,
+                y - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
                 this.y,
             )
         }
@@ -93,8 +92,8 @@ class MapViewModelTest {
 
     @Test
     fun resetTapPoint() {
-        val x = SCREEN_SIZE + 2f
-        val y = SCREEN_SIZE + 1f
+        val x = MapViewModel.VIRTUAL_SCREEN_SIZE + 2f
+        val y = MapViewModel.VIRTUAL_SCREEN_SIZE + 1f
         mapViewModel.setTapPoint(
             x = x,
             y = y,
@@ -105,19 +104,17 @@ class MapViewModelTest {
 
         mapViewModel.playerPosition.value.apply {
             assertEquals(
-                SCREEN_SIZE / 2 - PLAYER_SIZE / 2,
+                MapViewModel.VIRTUAL_SCREEN_SIZE / 2 - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
                 this.x,
             )
             assertEquals(
-                SCREEN_SIZE / 2 - PLAYER_SIZE / 2,
+                MapViewModel.VIRTUAL_SCREEN_SIZE / 2 - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
                 this.y,
             )
         }
     }
 
     companion object {
-        private const val PLAYER_SIZE = 5f
-        private const val SCREEN_SIZE = 100
-        private const val CENTER = SCREEN_SIZE / 2f
+        private const val CENTER = MapViewModel.VIRTUAL_SCREEN_SIZE / 2f
     }
 }

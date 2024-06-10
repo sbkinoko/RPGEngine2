@@ -1,6 +1,6 @@
 package domain.map
 
-data class Square(
+open class Square(
     val displayPoint: Point = Point(),
     val size: Float,
 ) {
