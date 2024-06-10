@@ -30,6 +30,6 @@ class Velocity(
     }
 
     companion object {
-        val MAX = 20f
+        const val MAX = 5f
     }
 }

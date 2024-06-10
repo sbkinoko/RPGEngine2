@@ -23,6 +23,7 @@ fun PlayerPreview() {
                 ),
                 size = 100f,
             ),
+            screenRatio = 1f,
         )
     }
 }

@@ -26,9 +26,7 @@ import viewmodel.MapViewModel
 fun MainScreen() {
     val mapViewModel: MapViewModel by remember {
         mutableStateOf(
-            MapViewModel(
-                playerSize = 100f,
-            )
+            MapViewModel()
         )
     }
 
@@ -38,7 +36,6 @@ fun MainScreen() {
         Box(modifier = Modifier
             .onGloballyPositioned {
                 screenSize = it.size.width
-                mapViewModel.initBackgroundCellManager(screenSize)
             }
             .then(
                 if (screenSize != 0) {
@@ -57,6 +54,7 @@ fun MainScreen() {
                 modifier = Modifier
                     .size(size = screenSize.pxToDp()),
                 mapViewModel = mapViewModel,
+                screenRatio = screenSize / MapViewModel.VIRTUAL_SCREEN_SIZE.toFloat()
             )
             Controller(
                 modifier = Modifier

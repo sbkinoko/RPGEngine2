@@ -14,51 +14,43 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import manager.map.BackgroundManager
 
-class MapViewModel(
-    playerSize: Float,
-) : ControllerCallback {
+class MapViewModel : ControllerCallback {
     private var player: Player
     private val mutablePlayerPosition: MutableStateFlow<Square>
     val playerPosition: StateFlow<Square>
 
     private var tapPoint: Point? = null
 
-    private lateinit var mutableBackgroundManager:
+    private var mutableBackgroundManager:
             MutableStateFlow<BackgroundManager>
 
     val backgroundManger: StateFlow<BackgroundManager>
         get() = mutableBackgroundManager.asStateFlow()
 
-    private lateinit var playerMoveArea: Square
+    private var playerMoveArea: Square
 
     private var backGroundVelocity: Velocity = Velocity()
     private var tentativePlayerVelocity: Velocity = Velocity()
 
     init {
         player = Player(
-            initX = 700f,
-            initY = 700f,
-            size = playerSize,
+            size = 20f,
         )
         mutablePlayerPosition = MutableStateFlow(player.square)
         playerPosition = mutablePlayerPosition.asStateFlow()
-    }
 
-    fun initBackgroundCellManager(
-        screenWidth: Int,
-    ) {
         mutableBackgroundManager = MutableStateFlow(
             BackgroundManager(
                 cellNum = 5,
-                sideLength = screenWidth,
+                sideLength = VIRTUAL_SCREEN_SIZE,
             )
         )
         backgroundManger.value.setMapData(LoopMap())
 
         playerMoveArea = Square(
-            x = (MOVE_BORDER * screenWidth),
-            y = (MOVE_BORDER * screenWidth),
-            size = ((1 - 2 * MOVE_BORDER) * screenWidth),
+            x = (MOVE_BORDER * VIRTUAL_SCREEN_SIZE),
+            y = (MOVE_BORDER * VIRTUAL_SCREEN_SIZE),
+            size = ((1 - 2 * MOVE_BORDER) * VIRTUAL_SCREEN_SIZE),
         )
 
         reloadMapData(mapX = 0, mapY = 0)
@@ -218,5 +210,6 @@ class MapViewModel(
 
     companion object {
         private const val MOVE_BORDER = 0.3f
+        const val VIRTUAL_SCREEN_SIZE = 210
     }
 }
