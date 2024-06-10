@@ -12,49 +12,45 @@ import domain.map.VelocityManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import layout.map.PlayerMoveSquare
 import manager.map.BackgroundManager
 
-class MapViewModel(
-    playerSize: Float,
-) : ControllerCallback {
+class MapViewModel : ControllerCallback {
     private var player: Player
     private val mutablePlayerPosition: MutableStateFlow<Square>
     val playerPosition: StateFlow<Square>
 
     private var tapPoint: Point? = null
 
-    private var mutableBackgroundManager: MutableStateFlow<BackgroundManager?> =
-        MutableStateFlow(null)
-    val backgroundManger = mutableBackgroundManager.asStateFlow()
+    private var mutableBackgroundManager:
+            MutableStateFlow<BackgroundManager>
 
-    private lateinit var playerMoveArea: Square
+    val backgroundManger: StateFlow<BackgroundManager>
+        get() = mutableBackgroundManager.asStateFlow()
+
+    private var playerMoveArea: Square
 
     private var backGroundVelocity: Velocity = Velocity()
     private var tentativePlayerVelocity: Velocity = Velocity()
 
     init {
         player = Player(
-            initX = 700f,
-            initY = 700f,
-            size = playerSize,
+            size = VIRTUAL_PLAYER_SIZE,
         )
         mutablePlayerPosition = MutableStateFlow(player.square)
         playerPosition = mutablePlayerPosition.asStateFlow()
-    }
 
-    fun initBackgroundCellManager(
-        screenWidth: Int,
-    ) {
-        mutableBackgroundManager.value = BackgroundManager(
-            cellNum = 5,
-            sideLength = screenWidth,
+        mutableBackgroundManager = MutableStateFlow(
+            BackgroundManager(
+                cellNum = 5,
+                sideLength = VIRTUAL_SCREEN_SIZE,
+            )
         )
-        backgroundManger.value?.setMapData(LoopMap())
+        backgroundManger.value.setMapData(LoopMap())
 
-        playerMoveArea = Square(
-            x = (MOVE_BORDER * screenWidth),
-            y = (MOVE_BORDER * screenWidth),
-            size = ((1 - 2 * MOVE_BORDER) * screenWidth),
+        playerMoveArea = PlayerMoveSquare(
+            screenSize = VIRTUAL_SCREEN_SIZE,
+            borderRate = MOVE_BORDER,
         )
 
         reloadMapData(mapX = 0, mapY = 0)
@@ -74,13 +70,14 @@ class MapViewModel(
             player.move()
             // todo いい感じにする方法を探す
             mutablePlayerPosition.value = player.square.getNew()
-            mutableBackgroundManager.value?.moveBackgroundCell(
+            mutableBackgroundManager.value.moveBackgroundCell(
                 velocity = backGroundVelocity
             )
-            backgroundManger.value?.apply {
+            backgroundManger.value.apply {
                 findCellIncludePlayer(
                     playerSquare = player.square
                 )
+                // イベントがあったらイベント処理をする
                 eventCell?.apply {
                     callCellEvent(this)
                 }
@@ -154,7 +151,7 @@ class MapViewModel(
      * プレイヤーを中心に移動する
      */
     private fun setPlayerCenter() {
-        val center = backgroundManger.value?.getCenterOfDisplay() ?: return
+        val center = backgroundManger.value.getCenterOfDisplay()
         // 仮の移動先
         player.moveTo(
             center,
@@ -167,7 +164,7 @@ class MapViewModel(
     private fun callCellEvent(backgroundCell: BackgroundCell) {
         when (backgroundCell.imgID) {
             3 -> {
-                backgroundManger.value?.setMapData(NonLoopMap())
+                backgroundManger.value.setMapData(NonLoopMap())
                 reloadMapData(
                     mapX = 0,
                     mapY = 2,
@@ -175,7 +172,7 @@ class MapViewModel(
             }
 
             4 -> {
-                backgroundManger.value?.setMapData(LoopMap())
+                backgroundManger.value.setMapData(LoopMap())
                 reloadMapData(
                     mapX = 5,
                     mapY = 5,
@@ -192,11 +189,11 @@ class MapViewModel(
         mapY: Int,
     ) {
         setPlayerCenter()
-        backgroundManger.value?.resetBackgroundCellPosition(
+        backgroundManger.value.resetBackgroundCellPosition(
             mapX = mapX,
             mapY = mapY,
         )
-        backgroundManger.value?.findCellIncludePlayer(
+        backgroundManger.value.findCellIncludePlayer(
             playerSquare = player.square
         )
     }
@@ -212,6 +209,8 @@ class MapViewModel(
     }
 
     companion object {
-        private const val MOVE_BORDER = 0.3f
+        const val MOVE_BORDER = 0.3f
+        const val VIRTUAL_SCREEN_SIZE = 210
+        const val VIRTUAL_PLAYER_SIZE = 20f
     }
 }

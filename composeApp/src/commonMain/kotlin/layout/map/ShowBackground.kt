@@ -19,7 +19,10 @@ import values.Colors
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-fun showBackground(backgroundManager: BackgroundManager) {
+fun showBackground(
+    backgroundManager: BackgroundManager,
+    screenRatio: Float,
+) {
     val imageBinder = ImageBinder()
 
     Box {
@@ -32,11 +35,11 @@ fun showBackground(backgroundManager: BackgroundManager) {
                     Box(
                         modifier = Modifier
                             .size(
-                                this.cellSize.pxToDp()
+                                (cellSize * screenRatio).pxToDp()
                             )
                             .offset(
-                                x = this.square.leftSide.pxToDp(),
-                                y = this.square.topSide.pxToDp(),
+                                x = (square.leftSide * screenRatio).pxToDp(),
+                                y = (square.topSide * screenRatio).pxToDp(),
                             )
                             .border(
                                 width = 1.dp,

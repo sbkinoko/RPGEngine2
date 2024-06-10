@@ -12,15 +12,16 @@ import values.Colors
 
 @Composable
 fun Player(
-    square: Square
+    square: Square,
+    screenRatio: Float,
 ) {
     Box(
         modifier = Modifier
             .offset(
-                x = square.x.pxToDp(),
-                y = square.y.pxToDp(),
+                x = (square.x * screenRatio).pxToDp(),
+                y = (square.y * screenRatio).pxToDp(),
             )
-            .size(square.size.pxToDp())
+            .size((square.size * screenRatio).pxToDp())
             .background(Colors.Player),
     ) {
 

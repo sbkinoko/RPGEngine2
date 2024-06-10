@@ -1,5 +1,7 @@
 package domain.map
 
+import layout.map.PlayerMoveSquare
+import viewmodel.MapViewModel
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -13,9 +15,7 @@ class VelocityMediatorTest {
         check(
             velocity = Velocity(),
             player = Player(
-                initX = CENTER,
-                initY = CENTER,
-                size = PLAYER_SIZE,
+                size = MapViewModel.VIRTUAL_PLAYER_SIZE,
             ),
             vpx = 0f,
             vpy = 0f,
@@ -35,10 +35,15 @@ class VelocityMediatorTest {
                 dy = 4f,
             ),
             player = Player(
-                initX = CENTER,
-                initY = CENTER,
-                size = PLAYER_SIZE,
-            ),
+                size = MapViewModel.VIRTUAL_PLAYER_SIZE,
+            ).apply {
+                moveTo(
+                    point = Point(
+                        x = CENTER,
+                        y = CENTER,
+                    )
+                )
+            },
             vpx = 3f,
             vpy = 4f,
             vbx = 0f,
@@ -57,10 +62,15 @@ class VelocityMediatorTest {
                 dy = 0f,
             ),
             player = Player(
-                initX = 5f,
-                initY = CENTER,
-                size = PLAYER_SIZE,
-            ),
+                size = MapViewModel.VIRTUAL_PLAYER_SIZE,
+            ).apply {
+                moveTo(
+                    point = Point(
+                        x = SMALL_BORDER,
+                        y = CENTER,
+                    )
+                )
+            },
             vpx = 0f,
             vpy = 0f,
             vbx = 3f,
@@ -79,10 +89,15 @@ class VelocityMediatorTest {
                 dy = 0f,
             ),
             player = Player(
-                initX = 5f,
-                initY = CENTER,
-                size = PLAYER_SIZE,
-            ),
+                size = MapViewModel.VIRTUAL_PLAYER_SIZE,
+            ).apply {
+                moveTo(
+                    point = Point(
+                        x = SMALL_BORDER,
+                        y = CENTER,
+                    )
+                )
+            },
             vpx = 3f,
             vpy = 0f,
             vbx = 0f,
@@ -101,10 +116,15 @@ class VelocityMediatorTest {
                 dy = 0f,
             ),
             player = Player(
-                initX = 45f,
-                initY = CENTER,
-                size = PLAYER_SIZE,
-            ),
+                size = MapViewModel.VIRTUAL_PLAYER_SIZE,
+            ).apply {
+                moveTo(
+                    Point(
+                        x = LARGE_BORDER,
+                        y = CENTER,
+                    )
+                )
+            },
             vpx = -3f,
             vpy = 0f,
             vbx = 0f,
@@ -123,10 +143,15 @@ class VelocityMediatorTest {
                 dy = 0f,
             ),
             player = Player(
-                initX = 45f,
-                initY = CENTER,
-                size = PLAYER_SIZE,
-            ),
+                size = MapViewModel.VIRTUAL_PLAYER_SIZE,
+            ).apply {
+                moveTo(
+                    point = Point(
+                        x = LARGE_BORDER,
+                        y = CENTER,
+                    )
+                )
+            },
             vpx = 0f,
             vpy = 0f,
             vbx = -3f,
@@ -145,10 +170,15 @@ class VelocityMediatorTest {
                 dy = -4f,
             ),
             player = Player(
-                initX = CENTER,
-                initY = 5f,
-                size = PLAYER_SIZE,
-            ),
+                size = MapViewModel.VIRTUAL_PLAYER_SIZE,
+            ).apply {
+                moveTo(
+                    point = Point(
+                        x = CENTER,
+                        y = SMALL_BORDER,
+                    )
+                )
+            },
             vpx = 0f,
             vpy = 0f,
             vbx = 0f,
@@ -167,10 +197,15 @@ class VelocityMediatorTest {
                 dy = 4f,
             ),
             player = Player(
-                initX = CENTER,
-                initY = 5f,
-                size = PLAYER_SIZE,
-            ),
+                size = MapViewModel.VIRTUAL_PLAYER_SIZE,
+            ).apply {
+                moveTo(
+                    point = Point(
+                        x = CENTER,
+                        y = SMALL_BORDER,
+                    )
+                )
+            },
             vpx = 0f,
             vpy = 4f,
             vbx = 0f,
@@ -189,10 +224,15 @@ class VelocityMediatorTest {
                 dy = -4f,
             ),
             player = Player(
-                initX = CENTER,
-                initY = 45f,
-                size = PLAYER_SIZE,
-            ),
+                size = MapViewModel.VIRTUAL_PLAYER_SIZE,
+            ).apply {
+                moveTo(
+                    point = Point(
+                        x = CENTER,
+                        y = LARGE_BORDER,
+                    )
+                )
+            },
             vpx = 0f,
             vpy = -4f,
             vbx = 0f,
@@ -211,10 +251,15 @@ class VelocityMediatorTest {
                 dy = 4f,
             ),
             player = Player(
-                initX = CENTER,
-                initY = 45f,
-                size = PLAYER_SIZE,
-            ),
+                size = MapViewModel.VIRTUAL_PLAYER_SIZE,
+            ).apply {
+                moveTo(
+                    point = Point(
+                        x = CENTER,
+                        y = LARGE_BORDER,
+                    )
+                )
+            },
             vpx = 0f,
             vpy = 0f,
             vbx = 0f,
@@ -234,10 +279,9 @@ class VelocityMediatorTest {
         VelocityManager.manageVelocity(
             tentativePlayerVelocity = velocity,
             player = player.square,
-            playerMoveArea = Square(
-                x = 10f,
-                y = 10f,
-                size = 30f
+            playerMoveArea = PlayerMoveSquare(
+                screenSize = MapViewModel.VIRTUAL_SCREEN_SIZE,
+                borderRate = MapViewModel.MOVE_BORDER,
             ),
         ).apply {
             first.apply {
@@ -267,7 +311,10 @@ class VelocityMediatorTest {
     }
 
     companion object {
-        private const val CENTER = 25f
-        private const val PLAYER_SIZE = 5f
+        private const val CENTER = MapViewModel.VIRTUAL_SCREEN_SIZE / 2f
+        private const val LARGE_BORDER =
+            MapViewModel.VIRTUAL_SCREEN_SIZE * (1f - MapViewModel.MOVE_BORDER) + MapViewModel.VIRTUAL_PLAYER_SIZE
+        private const val SMALL_BORDER =
+            MapViewModel.VIRTUAL_SCREEN_SIZE * MapViewModel.MOVE_BORDER - MapViewModel.VIRTUAL_PLAYER_SIZE
     }
 }

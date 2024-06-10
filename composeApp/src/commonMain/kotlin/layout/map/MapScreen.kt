@@ -17,6 +17,7 @@ import viewmodel.MapViewModel
 @Preview
 fun MapScreen(
     mapViewModel: MapViewModel,
+    screenRatio: Float,
     modifier: Modifier = Modifier,
 ) {
     LaunchedEffect(Unit) {
@@ -32,15 +33,15 @@ fun MapScreen(
                 awaitEachGesture {
                     val down = awaitFirstDown()
                     mapViewModel.setTapPoint(
-                        x = down.position.x,
-                        y = down.position.y,
+                        x = down.position.x / screenRatio,
+                        y = down.position.y / screenRatio,
                     )
                     do {
                         val event = awaitPointerEvent()
                         val lastPosition = event.changes.last().position
                         mapViewModel.setTapPoint(
-                            x = lastPosition.x,
-                            y = lastPosition.y,
+                            x = lastPosition.x / screenRatio,
+                            y = lastPosition.y / screenRatio,
                         )
                     } while (
                         event.changes.fastAny { it.pressed }
@@ -49,12 +50,16 @@ fun MapScreen(
                 }
             },
     ) {
-        mapViewModel.backgroundManger.collectAsState().value?.let {
-            showBackground(it)
+        mapViewModel.backgroundManger.collectAsState().value.let {
+            showBackground(
+                backgroundManager = it,
+                screenRatio = screenRatio
+            )
         }
 
         Player(
             square = mapViewModel.playerPosition.collectAsState().value,
+            screenRatio = screenRatio
         )
     }
 }
