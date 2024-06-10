@@ -33,6 +33,9 @@ class MapViewModel : ControllerCallback {
     private var backGroundVelocity: Velocity = Velocity()
     private var tentativePlayerVelocity: Velocity = Velocity()
 
+    override lateinit var pressB: () -> Unit
+
+
     init {
         player = Player(
             size = VIRTUAL_PLAYER_SIZE,

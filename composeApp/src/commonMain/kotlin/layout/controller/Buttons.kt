@@ -9,10 +9,12 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import domain.controller.ControllerCallback
 
 @Composable
 fun Buttons(
-    modifier: Modifier = Modifier
+    controllerCallback: ControllerCallback,
+    modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier
@@ -32,7 +34,7 @@ fun Buttons(
 
         Button(
             modifier = buttonModifier,
-            onClick = {},
+            onClick = controllerCallback.pressB,
         ) {
             Text(text = "B")
         }

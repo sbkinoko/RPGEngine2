@@ -6,4 +6,6 @@ interface ControllerCallback {
         dx: Float,
         dy: Float,
     )
+
+    var pressB: () -> Unit
 }
