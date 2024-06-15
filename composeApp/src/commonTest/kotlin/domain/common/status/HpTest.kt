@@ -40,6 +40,23 @@ class HpTest {
     }
 
     @Test
+    fun decValue() {
+        val dec = 9
+        hp.point -= dec
+        assertEquals(
+            expected = hpValue - dec,
+            actual = hp.point
+        )
+
+        // hpは0以下にならない
+        hp.point -= dec
+        assertEquals(
+            expected = 0,
+            actual = hp.point
+        )
+    }
+
+    @Test
     fun setMaxValueTest_15() {
         val value = 15
         hp.maxPoint = value
