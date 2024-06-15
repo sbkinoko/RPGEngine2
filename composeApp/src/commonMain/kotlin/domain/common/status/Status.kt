@@ -12,4 +12,9 @@ class Status {
         value = 10,
         maxValue = 100,
     )
+
+    val isActive: Boolean
+        get() {
+            return true
+        }
 }
