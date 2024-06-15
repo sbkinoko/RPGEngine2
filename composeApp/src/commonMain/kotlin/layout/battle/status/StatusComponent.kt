@@ -4,26 +4,49 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import domain.common.status.Status
+import values.Colors
+import domain.common.status.Point as StatusPoint
 
 @Composable
 fun StatusComponent(
+    status: Status,
     modifier: Modifier = Modifier,
 ) {
-    val hp = 10
-    val maxHp = 100
-
-    val mp = 5
-    val maxMp = 50
+    // 戦闘可能かどうかで色を変える
+    val color = if (status.isActive) {
+        Colors.IsActivePlayer
+    } else {
+        Colors.NotActivePlayer
+    }
 
     Column(modifier = modifier) {
         Text(
-            text = "player"
+            text = status.name,
+            color = color,
         )
-        Text(
-            text = "HP $hp/$maxHp"
+        Point(
+            paramName = "HP",
+            point = status.hp,
+            color = color,
         )
-        Text(
-            text = "MP $mp/$maxMp"
+        Point(
+            paramName = "MP",
+            point = status.mp,
+            color = color,
         )
     }
+}
+
+@Composable
+private fun Point(
+    paramName: String,
+    point: StatusPoint,
+    color: Color
+) {
+    Text(
+        text = "$paramName ${point.point}/${point.maxPoint}",
+        color = color,
+    )
 }
