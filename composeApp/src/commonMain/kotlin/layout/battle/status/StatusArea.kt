@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
+import domain.common.status.Status
 import values.Colors
 
 @Composable
@@ -25,6 +26,12 @@ fun StatusArea(
                     color = Colors.StatusComponent,
                     shape = RectangleShape,
                 ),
+            status = Status().apply {
+                hp.maxPoint = 100
+                hp.point = 50
+                mp.maxPoint = 10
+                mp.point = 5
+            }
         )
         StatusComponent(
             modifier = Modifier
@@ -35,6 +42,12 @@ fun StatusArea(
                     color = Colors.StatusComponent,
                     shape = RectangleShape,
                 ),
+            status = Status().apply {
+                hp.maxPoint = 100
+                hp.point = 77
+                mp.maxPoint = 111
+                mp.point = 50
+            }
         )
         StatusComponent(
             modifier = Modifier
@@ -45,6 +58,12 @@ fun StatusArea(
                     color = Colors.StatusComponent,
                     shape = RectangleShape,
                 ),
+            status = Status().apply {
+                hp.maxPoint = 200
+                hp.point = 50
+                mp.maxPoint = 10
+                mp.point = 50
+            }
         )
         StatusComponent(
             modifier = Modifier
@@ -55,6 +74,12 @@ fun StatusArea(
                     color = Colors.StatusComponent,
                     shape = RectangleShape,
                 ),
+            status = Status().apply {
+                hp.maxPoint = 10
+                hp.point = 50
+                mp.maxPoint = 100
+                mp.point = 5
+            }
         )
     }
 }

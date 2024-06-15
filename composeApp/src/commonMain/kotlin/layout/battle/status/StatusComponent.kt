@@ -4,26 +4,36 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import domain.common.status.Status
+import domain.common.status.Point as StatusPoint
 
 @Composable
 fun StatusComponent(
+    status: Status,
     modifier: Modifier = Modifier,
 ) {
-    val hp = 10
-    val maxHp = 100
-
-    val mp = 5
-    val maxMp = 50
 
     Column(modifier = modifier) {
         Text(
             text = "player"
         )
-        Text(
-            text = "HP $hp/$maxHp"
+        Point(
+            "HP",
+            status.hp,
         )
-        Text(
-            text = "MP $mp/$maxMp"
+        Point(
+            "MP",
+            status.mp,
         )
     }
+}
+
+@Composable
+private fun Point(
+    paramName: String,
+    point: StatusPoint,
+) {
+    Text(
+        text = "$paramName ${point.point}/${point.maxPoint}"
+    )
 }
