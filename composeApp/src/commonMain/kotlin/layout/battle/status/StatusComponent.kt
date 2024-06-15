@@ -1,16 +1,14 @@
-package layout.battle
+package layout.battle.status
 
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun StatusArea(
+fun StatusComponent(
     modifier: Modifier = Modifier,
-){
-    Row(
-        modifier = modifier,
-    ) {
+) {
+    Column(modifier = modifier) {
 
     }
 }
