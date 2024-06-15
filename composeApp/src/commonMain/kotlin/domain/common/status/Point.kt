@@ -16,16 +16,4 @@ abstract class Point {
 
     abstract var maxPoint: Int
 
-//    fun incValue(){
-//
-//    }
-//
-//    fun decValue(){
-//
-//    }
-//
-//
-//    fun setMaxValue(){
-//
-//    }
 }
