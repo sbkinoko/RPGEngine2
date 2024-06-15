@@ -14,6 +14,12 @@ abstract class Point(
         }
 
     var maxPoint: Int = 10
+        set(value) {
+            field = value
+            if (maxPoint < point) {
+                point = maxPoint
+            }
+        }
 
     init {
         point = value
