@@ -8,11 +8,15 @@ class HpTest {
 
     private lateinit var hp: HP
 
-    private val MaxHP = 10
+    private val maxHP = 10
+    private val hpValue = 10
 
     @BeforeTest
     fun beforeTest() {
-        hp = HP()
+        hp = HP(
+            maxValue = maxHP,
+            value = hpValue
+        )
     }
 
     @Test
@@ -30,7 +34,7 @@ class HpTest {
         val value = 11
         hp.point = value
         assertEquals(
-            expected = MaxHP,
+            expected = maxHP,
             actual = hp.point
         )
     }
