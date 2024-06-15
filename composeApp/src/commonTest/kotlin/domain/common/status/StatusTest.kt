@@ -29,5 +29,4 @@ class StatusTest {
             actual = status.isActive
         )
     }
-
 }

@@ -15,6 +15,6 @@ class Status {
 
     val isActive: Boolean
         get() {
-            return true
+            return 0 < hp.point
         }
 }
