@@ -1,9 +1,6 @@
 package domain.common.status
 
-abstract class Point(
-    maxValue: Int,
-    value: Int,
-) {
+abstract class Point {
     var point: Int = 0
         set(value) {
             field = if (maxPoint <= value) {
@@ -17,19 +14,7 @@ abstract class Point(
             }
         }
 
-    var maxPoint: Int = 10
-        set(value) {
-            field = value
-            if (maxPoint < point) {
-                point = maxPoint
-            }
-        }
-
-    init {
-        point = value
-        maxPoint = maxValue
-    }
-
+    abstract var maxPoint: Int
 
 //    fun incValue(){
 //
