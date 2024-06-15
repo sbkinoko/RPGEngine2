@@ -70,7 +70,6 @@ class HpTest {
         )
     }
 
-
     @Test
     fun setMaxValueTest_9() {
         val value = 9
@@ -81,6 +80,30 @@ class HpTest {
         )
         assertEquals(
             expected = value,
+            actual = hp.point,
+        )
+    }
+
+    @Test
+    fun decMaxValueTest_9() {
+        val value = 9
+        hp.maxPoint -= value
+        assertEquals(
+            expected = maxHP - value,
+            actual = hp.maxPoint
+        )
+        assertEquals(
+            expected = maxHP - value,
+            actual = hp.point,
+        )
+
+        hp.maxPoint -= value
+        assertEquals(
+            expected = HP.MIN_MAX_VALUE,
+            actual = hp.maxPoint
+        )
+        assertEquals(
+            expected = HP.MIN_MAX_VALUE,
             actual = hp.point,
         )
     }

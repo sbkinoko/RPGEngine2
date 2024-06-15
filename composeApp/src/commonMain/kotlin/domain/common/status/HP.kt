@@ -6,4 +6,8 @@ class HP(
 ) : Point(
     value = value,
     maxValue = maxValue,
-)
+) {
+    companion object {
+        val MIN_MAX_VALUE = 1
+    }
+}
