@@ -17,4 +17,5 @@ object Colors {
     val BattleCommand = blue
     val MonsterArea = red
     val StatusArea = black
+    val StatusComponent = blue
 }
