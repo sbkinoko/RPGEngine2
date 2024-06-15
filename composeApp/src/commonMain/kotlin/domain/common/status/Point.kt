@@ -11,6 +11,10 @@ abstract class Point(
             } else {
                 value
             }
+
+            if (field < 0) {
+                field = 0
+            }
         }
 
     var maxPoint: Int = 10
