@@ -27,6 +27,7 @@ fun StatusArea(
                     shape = RectangleShape,
                 ),
             status = Status().apply {
+                name = "test1"
                 hp.maxPoint = 100
                 hp.point = 50
                 mp.maxPoint = 10
@@ -43,6 +44,7 @@ fun StatusArea(
                     shape = RectangleShape,
                 ),
             status = Status().apply {
+                name = "test2"
                 hp.maxPoint = 100
                 hp.point = 77
                 mp.maxPoint = 111
@@ -59,6 +61,7 @@ fun StatusArea(
                     shape = RectangleShape,
                 ),
             status = Status().apply {
+                name = "HPたくさん"
                 hp.maxPoint = 200
                 hp.point = 50
                 mp.maxPoint = 10
@@ -75,6 +78,7 @@ fun StatusArea(
                     shape = RectangleShape,
                 ),
             status = Status().apply {
+                name = "MPたくさん"
                 hp.maxPoint = 10
                 hp.point = 50
                 mp.maxPoint = 100

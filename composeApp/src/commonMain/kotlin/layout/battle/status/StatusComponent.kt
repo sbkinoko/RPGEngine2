@@ -12,10 +12,9 @@ fun StatusComponent(
     status: Status,
     modifier: Modifier = Modifier,
 ) {
-
     Column(modifier = modifier) {
         Text(
-            text = "player"
+            text = status.name
         )
         Point(
             "HP",
