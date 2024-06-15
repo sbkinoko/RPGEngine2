@@ -46,7 +46,7 @@ fun StatusArea(
             status = Status().apply {
                 name = "test2"
                 hp.maxPoint = 100
-                hp.point = 77
+                hp.point = 0
                 mp.maxPoint = 111
                 mp.point = 50
             }

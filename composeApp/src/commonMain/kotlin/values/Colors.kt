@@ -18,4 +18,7 @@ object Colors {
     val MonsterArea = red
     val StatusArea = black
     val StatusComponent = blue
+
+    val IsActivePlayer = black
+    val NotActivePlayer = red
 }
