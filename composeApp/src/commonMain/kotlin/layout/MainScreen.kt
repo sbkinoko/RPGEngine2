@@ -7,13 +7,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -21,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import domain.ScreenType
 import domain.controller.ControllerCallback
 import extension.pxToDp
+import layout.battle.BattleScreen
 import layout.controller.Controller
 import layout.map.MapScreen
 import values.Colors
@@ -86,14 +85,11 @@ fun MainScreen() {
                 }
 
                 else -> {
-                    Box(
-                        contentAlignment = Alignment.Center,
+                    BattleScreen(
                         modifier = Modifier.size(
-                            size = screenSize.pxToDp(),
-                        ),
-                    ) {
-                        Text(text = "Changed")
-                    }
+                            size = screenSize.pxToDp()
+                        )
+                    )
                     Controller(
                         modifier = Modifier
                             .fillMaxSize()
