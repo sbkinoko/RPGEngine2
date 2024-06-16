@@ -49,6 +49,7 @@ fun BattleScreen(
                     color = Colors.BattleCommand,
                     shape = RectangleShape,
                 ),
+            battleViewModel = battleViewModel,
         )
     }
 }
