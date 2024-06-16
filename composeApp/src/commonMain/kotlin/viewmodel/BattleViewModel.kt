@@ -11,6 +11,9 @@ class BattleViewModel() :
 
     override lateinit var pressB: () -> Unit
 
+    val isBattleFinish: Boolean
+        get() = true
+
     init {
         initPlayers()
     }

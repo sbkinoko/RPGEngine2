@@ -247,4 +247,51 @@ class BattleViewModelTest {
             )
         }
     }
+
+    @Test
+    fun checkIsBattleFinish() {
+        battleViewModel.monsters = List(3) {
+            MonsterStatus(
+                imgId = 1,
+                name = "テスト",
+            ).apply {
+                hp.apply {
+                    maxPoint = maxHP
+                    point = maxHP
+                }
+            }
+        }
+
+        val id = 0
+        val damage = 10
+
+        battleViewModel.attack(
+            target = id,
+            damage = damage
+        )
+        assertEquals(
+            expected = false,
+            actual = battleViewModel.isBattleFinish
+        )
+
+        // 隣を攻撃
+        battleViewModel.attack(
+            target = id,
+            damage = damage
+        )
+        assertEquals(
+            expected = false,
+            actual = battleViewModel.isBattleFinish
+        )
+
+        // 隣の隣を攻撃
+        battleViewModel.attack(
+            target = id,
+            damage = damage
+        )
+        assertEquals(
+            expected = true,
+            actual = battleViewModel.isBattleFinish
+        )
+    }
 }
