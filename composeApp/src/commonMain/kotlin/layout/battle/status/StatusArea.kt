@@ -12,78 +12,24 @@ import values.Colors
 
 @Composable
 fun StatusArea(
+    statusList: List<Status>,
     modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier,
     ) {
-        StatusComponent(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxHeight()
-                .border(
-                    width = 1.dp,
-                    color = Colors.StatusComponent,
-                    shape = RectangleShape,
-                ),
-            status = Status().apply {
-                name = "test1"
-                hp.maxPoint = 100
-                hp.point = 50
-                mp.maxPoint = 10
-                mp.point = 5
-            }
-        )
-        StatusComponent(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxHeight()
-                .border(
-                    width = 1.dp,
-                    color = Colors.StatusComponent,
-                    shape = RectangleShape,
-                ),
-            status = Status().apply {
-                name = "test2"
-                hp.maxPoint = 100
-                hp.point = 0
-                mp.maxPoint = 111
-                mp.point = 50
-            }
-        )
-        StatusComponent(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxHeight()
-                .border(
-                    width = 1.dp,
-                    color = Colors.StatusComponent,
-                    shape = RectangleShape,
-                ),
-            status = Status().apply {
-                name = "HPたくさん"
-                hp.maxPoint = 200
-                hp.point = 50
-                mp.maxPoint = 10
-                mp.point = 50
-            }
-        )
-        StatusComponent(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxHeight()
-                .border(
-                    width = 1.dp,
-                    color = Colors.StatusComponent,
-                    shape = RectangleShape,
-                ),
-            status = Status().apply {
-                name = "MPたくさん"
-                hp.maxPoint = 10
-                hp.point = 50
-                mp.maxPoint = 100
-                mp.point = 5
-            }
-        )
+        statusList.forEach {
+            StatusComponent(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxHeight()
+                    .border(
+                        width = 1.dp,
+                        color = Colors.StatusComponent,
+                        shape = RectangleShape,
+                    ),
+                status = it,
+            )
+        }
     }
 }
