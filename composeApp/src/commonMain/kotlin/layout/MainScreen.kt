@@ -18,7 +18,6 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
 import domain.ScreenType
 import domain.common.status.MonsterStatus
-import domain.controller.ControllerCallback
 import extension.pxToDp
 import layout.battle.BattleScreen
 import layout.controller.Controller
@@ -56,6 +55,10 @@ fun MainScreen() {
         nowScreen = ScreenType.BATTLE
     }
     mapViewModel.pressB = bCallBack
+
+    battleViewModel.pressB = {
+        nowScreen = ScreenType.FIELD
+    }
 
     if (screenSize == 0) {
         Box(modifier = Modifier
@@ -116,15 +119,7 @@ fun MainScreen() {
                             .background(
                                 Colors.ControllerArea,
                             ),
-                        controllerCallback = object : ControllerCallback {
-                            override fun moveStick(dx: Float, dy: Float) {
-
-                            }
-
-                            override var pressB: () -> Unit = {
-                                nowScreen = ScreenType.FIELD
-                            }
-                        }
+                        controllerCallback = battleViewModel,
                     )
                 }
             }
