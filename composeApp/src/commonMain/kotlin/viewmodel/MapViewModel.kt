@@ -211,6 +211,10 @@ class MapViewModel : ControllerCallback {
         )
     }
 
+    override var pressA: () -> Unit = {
+        //todo Aを押した時の処理を実装
+    }
+
     companion object {
         const val MOVE_BORDER = 0.3f
         const val VIRTUAL_SCREEN_SIZE = 210

@@ -2,10 +2,14 @@ package viewmodel
 
 import domain.common.status.MonsterStatus
 import domain.common.status.Status
+import domain.controller.ControllerCallback
 
-class BattleViewModel {
+class BattleViewModel() :
+    ControllerCallback {
     lateinit var monsters: List<MonsterStatus>
     lateinit var playrs: List<Status>
+
+    override lateinit var pressB: () -> Unit
 
     init {
         initPlayers()
@@ -65,5 +69,16 @@ class BattleViewModel {
         }
 
         monsters[actualTarget].hp.point -= damage
+    }
+
+    override fun moveStick(dx: Float, dy: Float) {
+        // スティック操作に対する処理を実装
+    }
+
+    override var pressA = {
+        attack(
+            target = 0,
+            damage = 10,
+        )
     }
 }
