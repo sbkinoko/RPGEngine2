@@ -55,6 +55,15 @@ class BattleViewModel {
         target: Int,
         damage: Int,
     ) {
-        monsters[target].hp.point -= damage
+        var actualTarget = target
+        //　戦闘不能じゃないtargetを探す
+        while (monsters[actualTarget].isActive.not()) {
+            actualTarget++
+            if (monsters.size <= actualTarget) {
+                actualTarget = 0
+            }
+        }
+
+        monsters[actualTarget].hp.point -= damage
     }
 }

@@ -194,4 +194,57 @@ class BattleViewModelTest {
             )
         }
     }
+
+    @Test
+    fun attackTo1When1And2IsNotActive() {
+        battleViewModel.monsters = List(3) {
+            MonsterStatus(
+                imgId = 1,
+                name = "テスト",
+            ).apply {
+                hp.apply {
+                    maxPoint = maxHP
+                    point = maxHP
+                }
+            }
+        }
+
+        val id = 0
+        val damage = 10
+
+        battleViewModel.attack(
+            target = id,
+            damage = damage
+        )
+        battleViewModel.monsters[0].hp.apply {
+            assertEquals(
+                expected = 0,
+                actual = point
+            )
+        }
+
+        // 隣を攻撃
+        battleViewModel.attack(
+            target = id,
+            damage = damage
+        )
+        battleViewModel.monsters[1].hp.apply {
+            assertEquals(
+                expected = 0,
+                actual = point
+            )
+        }
+
+        // 隣の隣を攻撃
+        battleViewModel.attack(
+            target = id,
+            damage = damage
+        )
+        battleViewModel.monsters[2].hp.apply {
+            assertEquals(
+                expected = 0,
+                actual = point
+            )
+        }
+    }
 }
