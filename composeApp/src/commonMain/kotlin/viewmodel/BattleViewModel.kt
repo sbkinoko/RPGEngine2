@@ -55,6 +55,6 @@ class BattleViewModel {
         target: Int,
         damage: Int,
     ) {
-
+        monsters[target].hp.point -= damage
     }
 }
