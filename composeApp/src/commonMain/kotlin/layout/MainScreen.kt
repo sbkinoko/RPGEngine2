@@ -17,13 +17,16 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
 import domain.ScreenType
+import domain.common.status.MonsterStatus
 import domain.controller.ControllerCallback
 import extension.pxToDp
 import layout.battle.BattleScreen
 import layout.controller.Controller
 import layout.map.MapScreen
 import values.Colors
+import viewmodel.BattleViewModel
 import viewmodel.MapViewModel
+import kotlin.random.Random
 
 @Composable
 fun MainScreen() {
@@ -33,12 +36,23 @@ fun MainScreen() {
         )
     }
 
+    val battleViewModel: BattleViewModel by remember {
+        mutableStateOf(
+            BattleViewModel()
+        )
+    }
+
     var screenSize: Int by remember { mutableStateOf(0) }
     var nowScreen: ScreenType by remember {
         mutableStateOf(ScreenType.FIELD)
     }
 
     val bCallBack: () -> Unit = {
+        // ランダムで1~5の敵を作成
+        battleViewModel.monsters = List(Random.nextInt(5) + 1) {
+            MonsterStatus(1, "花")
+        }
+
         nowScreen = ScreenType.BATTLE
     }
     mapViewModel.pressB = bCallBack
@@ -88,7 +102,8 @@ fun MainScreen() {
                     BattleScreen(
                         modifier = Modifier.size(
                             size = screenSize.pxToDp()
-                        )
+                        ),
+                        battleViewModel = battleViewModel,
                     )
                     Controller(
                         modifier = Modifier
@@ -109,7 +124,6 @@ fun MainScreen() {
                             override var pressB: () -> Unit = {
                                 nowScreen = ScreenType.FIELD
                             }
-
                         }
                     )
                 }

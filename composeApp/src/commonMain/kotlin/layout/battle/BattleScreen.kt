@@ -9,9 +9,11 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import layout.battle.status.StatusArea
 import values.Colors
+import viewmodel.BattleViewModel
 
 @Composable
 fun BattleScreen(
+    battleViewModel: BattleViewModel,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -25,6 +27,7 @@ fun BattleScreen(
                     color = Colors.StatusArea,
                     shape = RectangleShape,
                 ),
+            statusList = battleViewModel.playrs,
         )
 
         MonsterArea(
@@ -35,6 +38,7 @@ fun BattleScreen(
                     color = Colors.MonsterArea,
                     shape = RectangleShape,
                 ),
+            monsters = battleViewModel.monsters
         )
 
         CommandArea(

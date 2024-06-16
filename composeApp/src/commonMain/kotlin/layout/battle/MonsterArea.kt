@@ -15,6 +15,7 @@ import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun MonsterArea(
+    monsters: List<MonsterStatus>,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -22,14 +23,13 @@ fun MonsterArea(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Monster(
-            modifier = Modifier
-                .weight(1f),
-            monsterStatus = MonsterStatus(
-                imgId = 1,
-                name = "花"
+        monsters.forEach {
+            Monster(
+                modifier = Modifier
+                    .weight(1f),
+                monsterStatus = it,
             )
-        )
+        }
     }
 }
 
