@@ -4,6 +4,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
@@ -16,6 +17,8 @@ fun BattleScreen(
     battleViewModel: BattleViewModel,
     modifier: Modifier = Modifier,
 ) {
+    val monsters = battleViewModel.monsters.collectAsState().value
+
     Column(
         modifier = modifier,
     ) {
@@ -38,7 +41,7 @@ fun BattleScreen(
                     color = Colors.MonsterArea,
                     shape = RectangleShape,
                 ),
-            monsters = battleViewModel.monsters
+            battleViewModel = battleViewModel,
         )
 
         CommandArea(

@@ -3,10 +3,14 @@ package viewmodel
 import domain.common.status.MonsterStatus
 import domain.common.status.Status
 import domain.controller.ControllerCallback
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
-class BattleViewModel() :
+class BattleViewModel :
     ControllerCallback {
-    lateinit var monsters: List<MonsterStatus>
+    var _monsters: MutableStateFlow<MutableList<MonsterStatus>> = MutableStateFlow(mutableListOf())
+    var monsters: StateFlow<MutableList<MonsterStatus>> = _monsters.asStateFlow()
     lateinit var playrs: List<Status>
 
     override lateinit var pressB: () -> Unit
@@ -15,7 +19,7 @@ class BattleViewModel() :
      * 敵が全滅したかどうかをチェック
      */
     val isAllMonsterNotActive: Boolean
-        get() = !monsters.any {
+        get() = !monsters.value.any {
             it.isActive
         }
 
@@ -69,14 +73,27 @@ class BattleViewModel() :
     ) {
         var actualTarget = target
         //　戦闘不能じゃないtargetを探す
-        while (monsters[actualTarget].isActive.not()) {
+        while (monsters.value[actualTarget].isActive.not()) {
             actualTarget++
-            if (monsters.size <= actualTarget) {
+            if (monsters.value.size <= actualTarget) {
                 actualTarget = 0
             }
         }
+        monsters.value[actualTarget].hp.point -= damage
 
-        monsters[actualTarget].hp.point -= damage
+        val newMonsterList = MutableList(monsters.value.size) {
+            monsters.value[it]
+        }
+
+        _monsters.value = newMonsterList
+
+        if (isAllMonsterNotActive) {
+            finishBattle()
+        }
+    }
+
+    private fun finishBattle() {
+        pressB()
     }
 
     override fun moveStick(dx: Float, dy: Float) {
