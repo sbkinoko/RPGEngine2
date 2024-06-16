@@ -50,4 +50,11 @@ class BattleViewModel {
             }
         }
     }
+
+    fun attack(
+        target: Int,
+        damage: Int,
+    ) {
+
+    }
 }
