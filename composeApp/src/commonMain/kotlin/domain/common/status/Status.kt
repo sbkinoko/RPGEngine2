@@ -1,6 +1,6 @@
 package domain.common.status
 
-class Status {
+open class Status {
     lateinit var name: String
 
     val hp = HP(
