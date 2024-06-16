@@ -11,8 +11,13 @@ class BattleViewModel() :
 
     override lateinit var pressB: () -> Unit
 
-    val isBattleFinish: Boolean
-        get() = true
+    /**
+     * 敵が全滅したかどうかをチェック
+     */
+    val isAllMonsterNotActive: Boolean
+        get() = !monsters.any {
+            it.isActive
+        }
 
     init {
         initPlayers()

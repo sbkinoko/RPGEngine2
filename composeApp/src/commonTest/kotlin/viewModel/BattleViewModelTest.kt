@@ -271,7 +271,7 @@ class BattleViewModelTest {
         )
         assertEquals(
             expected = false,
-            actual = battleViewModel.isBattleFinish
+            actual = battleViewModel.isAllMonsterNotActive
         )
 
         // 隣を攻撃
@@ -281,7 +281,7 @@ class BattleViewModelTest {
         )
         assertEquals(
             expected = false,
-            actual = battleViewModel.isBattleFinish
+            actual = battleViewModel.isAllMonsterNotActive
         )
 
         // 隣の隣を攻撃
@@ -291,7 +291,7 @@ class BattleViewModelTest {
         )
         assertEquals(
             expected = true,
-            actual = battleViewModel.isBattleFinish
+            actual = battleViewModel.isAllMonsterNotActive
         )
     }
 }
