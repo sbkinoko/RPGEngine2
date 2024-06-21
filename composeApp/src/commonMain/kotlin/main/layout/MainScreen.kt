@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,6 +26,7 @@ import common.status.param.MP
 import common.values.Colors
 import controller.layout.Controller
 import main.domain.ScreenType
+import main.viewmodel.MainViewModel
 import map.layout.MapScreen
 import map.viewmodel.MapViewModel
 import kotlin.random.Random
@@ -43,10 +45,14 @@ fun MainScreen() {
         )
     }
 
-    var screenSize: Int by remember { mutableStateOf(0) }
-    var nowScreen: ScreenType by remember {
-        mutableStateOf(ScreenType.FIELD)
+    val mainViewModel: MainViewModel by remember {
+        mutableStateOf(
+            MainViewModel()
+        )
     }
+    val screenType = mainViewModel.nowScreenType.collectAsState()
+
+    var screenSize: Int by remember { mutableStateOf(0) }
 
     val bCallBack: () -> Unit = {
         battleViewModel.setMonsters(
@@ -64,12 +70,12 @@ fun MainScreen() {
             }
         )
 
-        nowScreen = ScreenType.BATTLE
+        mainViewModel.toBattle()
     }
     mapViewModel.pressB = bCallBack
 
     battleViewModel.pressB = {
-        nowScreen = ScreenType.FIELD
+        mainViewModel.toField()
     }
 
     if (screenSize == 0) {
@@ -90,7 +96,7 @@ fun MainScreen() {
 
     MaterialTheme {
         Column {
-            when (nowScreen) {
+            when (screenType.value) {
                 ScreenType.FIELD -> {
                     MapScreen(
                         modifier = Modifier
