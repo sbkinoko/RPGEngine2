@@ -12,8 +12,9 @@ import kotlinx.coroutines.flow.asStateFlow
 
 class BattleViewModel :
     ControllerCallback {
-    var _monsters: MutableStateFlow<MutableList<MonsterStatus>> = MutableStateFlow(mutableListOf())
-    var monsters: StateFlow<MutableList<MonsterStatus>> = _monsters.asStateFlow()
+    var mutableMonsters: MutableStateFlow<MutableList<MonsterStatus>> =
+        MutableStateFlow(mutableListOf())
+    var monsters: StateFlow<MutableList<MonsterStatus>> = mutableMonsters.asStateFlow()
     lateinit var playrs: List<Status>
 
     override lateinit var pressB: () -> Unit
@@ -96,13 +97,20 @@ class BattleViewModel :
                 actualTarget = 0
             }
         }
-        monsters.value[actualTarget].hp.point -= damage
 
-        val newMonsterList = MutableList(monsters.value.size) {
-            monsters.value[it]
-        }
-
-        _monsters.value = newMonsterList
+        mutableMonsters.value = List(monsters.value.size) {
+            if (it != actualTarget) {
+                mutableMonsters.value[it]
+            } else {
+                val monster = mutableMonsters.value[actualTarget]
+                monster.copy(
+                    hp = HP(
+                        maxValue = monster.hp.maxPoint,
+                        value = monster.hp.point - damage
+                    )
+                )
+            }
+        }.toMutableList()
 
         if (isAllMonsterNotActive) {
             finishBattle()

@@ -22,7 +22,7 @@ class BattleViewModelTest {
 
     @Test
     fun attackTo1() {
-        battleViewModel._monsters.value = MutableList(1) {
+        battleViewModel.mutableMonsters.value = MutableList(1) {
             getMonster()
         }
 
@@ -43,7 +43,7 @@ class BattleViewModelTest {
 
     @Test
     fun attackTo2When2Monster() {
-        battleViewModel._monsters.value = MutableList(2) {
+        battleViewModel.mutableMonsters.value = MutableList(2) {
             getMonster()
         }
 
@@ -71,7 +71,7 @@ class BattleViewModelTest {
 
     @Test
     fun attackTo1When1IsNotActive() {
-        battleViewModel._monsters.value = MutableList(2) {
+        battleViewModel.mutableMonsters.value = MutableList(2) {
             getMonster()
         }
 
@@ -120,7 +120,7 @@ class BattleViewModelTest {
 
     @Test
     fun attackTo2When2IsNotActive() {
-        battleViewModel._monsters.value = MutableList(2) {
+        battleViewModel.mutableMonsters.value = MutableList(2) {
             getMonster()
         }
 
@@ -169,7 +169,7 @@ class BattleViewModelTest {
 
     @Test
     fun attackTo1When1And2IsNotActive() {
-        battleViewModel._monsters.value = MutableList(3) {
+        battleViewModel.mutableMonsters.value = MutableList(3) {
             getMonster()
         }
 
@@ -214,7 +214,7 @@ class BattleViewModelTest {
 
     @Test
     fun checkIsBattleFinish() {
-        battleViewModel._monsters.value = MutableList(3) {
+        battleViewModel.mutableMonsters.value = MutableList(3) {
             getMonster()
         }
 

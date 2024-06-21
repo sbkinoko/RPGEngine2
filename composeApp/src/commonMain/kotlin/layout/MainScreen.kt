@@ -50,7 +50,7 @@ fun MainScreen() {
 
     val bCallBack: () -> Unit = {
         // ランダムで1~5の敵を作成
-        battleViewModel._monsters.value = MutableList(Random.nextInt(5) + 1) {
+        battleViewModel.mutableMonsters.value = MutableList(Random.nextInt(5) + 1) {
             MonsterStatus(
                 1, "花",
                 hp = HP(
