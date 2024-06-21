@@ -6,13 +6,26 @@ import domain.common.status.Status
 import domain.common.status.param.HP
 import domain.common.status.param.MP
 import domain.controller.ControllerCallback
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class BattleViewModel :
     ControllerCallback {
-    lateinit var monsters: List<MonsterStatus>
+    private var mutableMonsters: MutableStateFlow<MutableList<MonsterStatus>> =
+        MutableStateFlow(mutableListOf())
+    var monsters: StateFlow<MutableList<MonsterStatus>> = mutableMonsters.asStateFlow()
     lateinit var playrs: List<Status>
 
     override lateinit var pressB: () -> Unit
+
+    /**
+     * 敵が全滅したかどうかをチェック
+     */
+    val isAllMonsterNotActive: Boolean
+        get() = !monsters.value.any {
+            it.isActive
+        }
 
     init {
         initPlayers()
@@ -33,7 +46,6 @@ class BattleViewModel :
                     )
                 )
 
-
                 1 -> PlayerStatus(
                     name = "test2",
                     hp = HP(
@@ -45,7 +57,6 @@ class BattleViewModel :
                         value = 50,
                     )
                 )
-
 
                 2 -> PlayerStatus(
                     name = "HPたくさん",
@@ -74,20 +85,45 @@ class BattleViewModel :
         }
     }
 
+    fun setMonsters(monsters: List<MonsterStatus>) {
+        mutableMonsters.value = monsters.toMutableList()
+    }
+
     fun attack(
         target: Int,
         damage: Int,
     ) {
         var actualTarget = target
         //　戦闘不能じゃないtargetを探す
-        while (monsters[actualTarget].isActive.not()) {
+        while (monsters.value[actualTarget].isActive.not()) {
             actualTarget++
-            if (monsters.size <= actualTarget) {
+            if (monsters.value.size <= actualTarget) {
                 actualTarget = 0
             }
         }
 
-        monsters[actualTarget].hp.point -= damage
+        mutableMonsters.value = mutableMonsters.value
+            //　ダメージを与えた敵だけ新しいインスタンスに変更
+            .mapIndexed { index, monsterStatus ->
+                if (index != actualTarget) {
+                    monsterStatus
+                } else {
+                    monsterStatus.copy(
+                        hp = HP(
+                            maxValue = monsterStatus.hp.maxPoint,
+                            value = monsterStatus.hp.point - damage
+                        )
+                    )
+                }
+            }.toMutableList()
+
+        if (isAllMonsterNotActive) {
+            finishBattle()
+        }
+    }
+
+    private fun finishBattle() {
+        pressB()
     }
 
     override fun moveStick(dx: Float, dy: Float) {

@@ -17,13 +17,16 @@ class BattleViewModelTest {
     @BeforeTest
     fun beforeTest() {
         battleViewModel = BattleViewModel()
+        battleViewModel.pressB = {}
     }
 
     @Test
     fun attackTo1() {
-        battleViewModel.monsters = List(1) {
-            getMonster()
-        }
+        battleViewModel.setMonsters(
+            MutableList(1) {
+                getMonster()
+            }
+        )
 
         val id = 0
         val damage = 5
@@ -32,7 +35,7 @@ class BattleViewModelTest {
             damage = damage
         )
 
-        battleViewModel.monsters[id].hp.apply {
+        battleViewModel.monsters.value[id].hp.apply {
             assertEquals(
                 expected = maxPoint - damage,
                 actual = point
@@ -42,9 +45,11 @@ class BattleViewModelTest {
 
     @Test
     fun attackTo2When2Monster() {
-        battleViewModel.monsters = List(2) {
-            getMonster()
-        }
+        battleViewModel.setMonsters(
+            MutableList(2) {
+                getMonster()
+            }
+        )
 
         val id = 1
         val damage = 5
@@ -53,14 +58,14 @@ class BattleViewModelTest {
             damage = damage
         )
 
-        battleViewModel.monsters[0].hp.apply {
+        battleViewModel.monsters.value[0].hp.apply {
             assertEquals(
                 expected = maxPoint,
                 actual = point
             )
         }
 
-        battleViewModel.monsters[1].hp.apply {
+        battleViewModel.monsters.value[1].hp.apply {
             assertEquals(
                 expected = maxPoint - damage,
                 actual = point
@@ -70,9 +75,11 @@ class BattleViewModelTest {
 
     @Test
     fun attackTo1When1IsNotActive() {
-        battleViewModel.monsters = List(2) {
-            getMonster()
-        }
+        battleViewModel.setMonsters(
+            MutableList(2) {
+                getMonster()
+            }
+        )
 
         val id = 0
         val damage = 10
@@ -81,14 +88,14 @@ class BattleViewModelTest {
             damage = damage
         )
 
-        battleViewModel.monsters[0].hp.apply {
+        battleViewModel.monsters.value[0].hp.apply {
             assertEquals(
                 expected = 0,
                 actual = point
             )
         }
 
-        battleViewModel.monsters[1].hp.apply {
+        battleViewModel.monsters.value[1].hp.apply {
             assertEquals(
                 expected = maxPoint,
                 actual = point
@@ -102,14 +109,14 @@ class BattleViewModelTest {
             damage = damage
         )
 
-        battleViewModel.monsters[0].hp.apply {
+        battleViewModel.monsters.value[0].hp.apply {
             assertEquals(
                 expected = 0,
                 actual = point
             )
         }
 
-        battleViewModel.monsters[1].hp.apply {
+        battleViewModel.monsters.value[1].hp.apply {
             assertEquals(
                 expected = 0,
                 actual = point
@@ -119,9 +126,11 @@ class BattleViewModelTest {
 
     @Test
     fun attackTo2When2IsNotActive() {
-        battleViewModel.monsters = List(2) {
-            getMonster()
-        }
+        battleViewModel.setMonsters(
+            MutableList(2) {
+                getMonster()
+            }
+        )
 
         val id = 1
         val damage = 10
@@ -130,14 +139,14 @@ class BattleViewModelTest {
             damage = damage
         )
 
-        battleViewModel.monsters[0].hp.apply {
+        battleViewModel.monsters.value[0].hp.apply {
             assertEquals(
                 expected = maxPoint,
                 actual = point
             )
         }
 
-        battleViewModel.monsters[1].hp.apply {
+        battleViewModel.monsters.value[1].hp.apply {
             assertEquals(
                 expected = 0,
                 actual = point
@@ -151,14 +160,14 @@ class BattleViewModelTest {
             damage = damage
         )
 
-        battleViewModel.monsters[0].hp.apply {
+        battleViewModel.monsters.value[0].hp.apply {
             assertEquals(
                 expected = 0,
                 actual = point
             )
         }
 
-        battleViewModel.monsters[1].hp.apply {
+        battleViewModel.monsters.value[1].hp.apply {
             assertEquals(
                 expected = 0,
                 actual = point
@@ -168,9 +177,11 @@ class BattleViewModelTest {
 
     @Test
     fun attackTo1When1And2IsNotActive() {
-        battleViewModel.monsters = List(3) {
-            getMonster()
-        }
+        battleViewModel.setMonsters(
+            MutableList(3) {
+                getMonster()
+            }
+        )
 
         val id = 0
         val damage = 10
@@ -179,7 +190,7 @@ class BattleViewModelTest {
             target = id,
             damage = damage
         )
-        battleViewModel.monsters[0].hp.apply {
+        battleViewModel.monsters.value[0].hp.apply {
             assertEquals(
                 expected = 0,
                 actual = point
@@ -191,7 +202,7 @@ class BattleViewModelTest {
             target = id,
             damage = damage
         )
-        battleViewModel.monsters[1].hp.apply {
+        battleViewModel.monsters.value[1].hp.apply {
             assertEquals(
                 expected = 0,
                 actual = point
@@ -203,12 +214,53 @@ class BattleViewModelTest {
             target = id,
             damage = damage
         )
-        battleViewModel.monsters[2].hp.apply {
+        battleViewModel.monsters.value[2].hp.apply {
             assertEquals(
                 expected = 0,
                 actual = point
             )
         }
+    }
+
+    @Test
+    fun checkIsBattleFinish() {
+        battleViewModel.setMonsters(
+            MutableList(3) {
+                getMonster()
+            }
+        )
+
+        val id = 0
+        val damage = 10
+
+        battleViewModel.attack(
+            target = id,
+            damage = damage
+        )
+        assertEquals(
+            expected = false,
+            actual = battleViewModel.isAllMonsterNotActive
+        )
+
+        // 隣を攻撃
+        battleViewModel.attack(
+            target = id,
+            damage = damage
+        )
+        assertEquals(
+            expected = false,
+            actual = battleViewModel.isAllMonsterNotActive
+        )
+
+        // 隣の隣を攻撃
+        battleViewModel.attack(
+            target = id,
+            damage = damage
+        )
+        assertEquals(
+            expected = true,
+            actual = battleViewModel.isAllMonsterNotActive
+        )
     }
 
     private fun getMonster() = MonsterStatus(

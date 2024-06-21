@@ -3,6 +3,7 @@ package layout.battle
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,6 +27,7 @@ fun MonsterArea(
         monsters.forEach {
             Monster(
                 modifier = Modifier
+                    .padding(5.dp)
                     .weight(1f),
                 monsterStatus = it,
             )
@@ -39,15 +41,20 @@ fun Monster(
     monsterStatus: MonsterStatus,
     modifier: Modifier = Modifier,
 ) {
-    Image(
-        modifier = modifier
-            .padding(5.dp),
-        painter = painterResource(
-            ImageBinder.bind(
-                imgId = monsterStatus.imgId,
-            )
-        ),
-        contentScale = ContentScale.Fit,
-        contentDescription = "monster"
-    )
+    if (monsterStatus.isActive) {
+        Image(
+            modifier = modifier,
+            painter = painterResource(
+                ImageBinder.bind(
+                    imgId = monsterStatus.imgId,
+                )
+            ),
+            contentScale = ContentScale.Fit,
+            contentDescription = "monster",
+        )
+    } else {
+        Spacer(
+            modifier = modifier
+        )
+    }
 }
