@@ -45,7 +45,6 @@ class BattleViewModel :
                     )
                 )
 
-
                 1 -> PlayerStatus(
                     name = "test2",
                     hp = HP(
@@ -57,7 +56,6 @@ class BattleViewModel :
                         value = 50,
                     )
                 )
-
 
                 2 -> PlayerStatus(
                     name = "HPたくさん",
