@@ -1,17 +1,14 @@
 package domain.common.status
 
-open class Status {
-    lateinit var name: String
+import domain.common.status.param.HP
+import domain.common.status.param.MP
 
-    val hp = HP(
-        value = 10,
-        maxValue = 100,
-    )
+interface Status {
+    var name: String
 
-    val mp = MP(
-        value = 10,
-        maxValue = 100,
-    )
+    val hp: HP
+
+    val mp: MP
 
     val isActive: Boolean
         get() {

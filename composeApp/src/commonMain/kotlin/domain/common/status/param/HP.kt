@@ -1,8 +1,8 @@
-package domain.common.status
+package domain.common.status.param
 
-class MP(
-    value: Int,
+class HP(
     maxValue: Int,
+    value: Int = maxValue,
 ) : Point() {
 
     override var maxPoint = 10
@@ -24,6 +24,6 @@ class MP(
     }
 
     companion object {
-        const val MIN_MAX_VALUE = 0
+        const val MIN_MAX_VALUE = 1
     }
 }

@@ -1,5 +1,7 @@
 package domain.common.status
 
+import domain.common.status.param.HP
+import domain.common.status.param.MP
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -9,7 +11,15 @@ class StatusTest {
 
     @BeforeTest
     fun beforeTest() {
-        status = Status()
+        status = PlayerStatus(
+            name = "test",
+            hp = HP(
+                maxValue = 100,
+            ),
+            mp = MP(
+                maxValue = 100,
+            )
+        )
     }
 
     @Test

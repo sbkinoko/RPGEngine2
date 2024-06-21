@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import domain.common.status.Status
 import values.Colors
-import domain.common.status.Point as StatusPoint
+import domain.common.status.param.Point as StatusPoint
 
 @Composable
 fun StatusComponent(
