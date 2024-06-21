@@ -17,8 +17,6 @@ fun BattleScreen(
     battleViewModel: BattleViewModel,
     modifier: Modifier = Modifier,
 ) {
-    val monsters = battleViewModel.monsters.collectAsState().value
-
     Column(
         modifier = modifier,
     ) {
@@ -41,7 +39,7 @@ fun BattleScreen(
                     color = Colors.MonsterArea,
                     shape = RectangleShape,
                 ),
-            battleViewModel = battleViewModel,
+            monsters = battleViewModel.monsters.collectAsState().value,
         )
 
         CommandArea(

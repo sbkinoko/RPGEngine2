@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -14,15 +13,12 @@ import androidx.compose.ui.unit.dp
 import domain.common.status.MonsterStatus
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
-import viewmodel.BattleViewModel
 
 @Composable
 fun MonsterArea(
-    battleViewModel: BattleViewModel,
+    monsters: List<MonsterStatus>,
     modifier: Modifier = Modifier,
 ) {
-    val monsters = battleViewModel.monsters.collectAsState().value
-
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.Center,
