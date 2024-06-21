@@ -9,12 +9,14 @@ import domain.controller.ControllerCallback
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import manager.battle.AttackManager
+import manager.battle.FindTarget
 
 class BattleViewModel :
     ControllerCallback {
-    private var mutableMonsters: MutableStateFlow<MutableList<MonsterStatus>> =
+    private var mutableMonsters: MutableStateFlow<List<MonsterStatus>> =
         MutableStateFlow(mutableListOf())
-    var monsters: StateFlow<MutableList<MonsterStatus>> = mutableMonsters.asStateFlow()
+    var monsters: StateFlow<List<MonsterStatus>> = mutableMonsters.asStateFlow()
     lateinit var playrs: List<Status>
 
     override lateinit var pressB: () -> Unit
@@ -93,28 +95,16 @@ class BattleViewModel :
         target: Int,
         damage: Int,
     ) {
-        var actualTarget = target
-        //　戦闘不能じゃないtargetを探す
-        while (monsters.value[actualTarget].isActive.not()) {
-            actualTarget++
-            if (monsters.value.size <= actualTarget) {
-                actualTarget = 0
-            }
-        }
+        val actualTarget = FindTarget().find(
+            monsters = monsters.value,
+            target = target,
+        )
 
-        mutableMonsters.value = mutableMonsters.value
-            //　ダメージを与えた敵だけ新しいインスタンスに変更
-            .mapIndexed { index, monsterStatus ->
-                if (index != actualTarget) {
-                    monsterStatus
-                } else {
-                    monsterStatus.copy(
-                        hp = monsterStatus.hp.copy(
-                            value = monsterStatus.hp.value - damage
-                        )
-                    )
-                }
-            }.toMutableList()
+        mutableMonsters.value = AttackManager().attack(
+            target = actualTarget,
+            damage = damage,
+            monsters = monsters.value
+        )
 
         if (isAllMonsterNotActive) {
             finishBattle()
