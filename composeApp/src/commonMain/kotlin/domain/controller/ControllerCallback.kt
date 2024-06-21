@@ -7,5 +7,8 @@ interface ControllerCallback {
         dy: Float,
     )
 
+    var pressA: () -> Unit
+
     var pressB: () -> Unit
+
 }

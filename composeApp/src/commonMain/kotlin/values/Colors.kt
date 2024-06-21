@@ -13,4 +13,12 @@ object Colors {
     val PlayerIncludeCell = red
     val ControllerArea = white
     val ControllerLine = black
+
+    val BattleCommand = blue
+    val MonsterArea = red
+    val StatusArea = black
+    val StatusComponent = blue
+
+    val IsActivePlayer = black
+    val NotActivePlayer = red
 }

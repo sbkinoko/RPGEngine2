@@ -7,24 +7,27 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
 import domain.ScreenType
-import domain.controller.ControllerCallback
+import domain.common.status.MonsterStatus
+import domain.common.status.param.HP
+import domain.common.status.param.MP
 import extension.pxToDp
+import layout.battle.BattleScreen
 import layout.controller.Controller
 import layout.map.MapScreen
 import values.Colors
+import viewmodel.BattleViewModel
 import viewmodel.MapViewModel
+import kotlin.random.Random
 
 @Composable
 fun MainScreen() {
@@ -34,15 +37,40 @@ fun MainScreen() {
         )
     }
 
+    val battleViewModel: BattleViewModel by remember {
+        mutableStateOf(
+            BattleViewModel()
+        )
+    }
+
     var screenSize: Int by remember { mutableStateOf(0) }
     var nowScreen: ScreenType by remember {
         mutableStateOf(ScreenType.FIELD)
     }
 
     val bCallBack: () -> Unit = {
+        battleViewModel.setMonsters(
+            // ランダムで1~5の敵を作成
+            MutableList(Random.nextInt(5) + 1) {
+                MonsterStatus(
+                    1, "花",
+                    hp = HP(
+                        maxValue = 10,
+                    ),
+                    mp = MP(
+                        maxValue = 10,
+                    )
+                )
+            }
+        )
+
         nowScreen = ScreenType.BATTLE
     }
     mapViewModel.pressB = bCallBack
+
+    battleViewModel.pressB = {
+        nowScreen = ScreenType.FIELD
+    }
 
     if (screenSize == 0) {
         Box(modifier = Modifier
@@ -86,14 +114,12 @@ fun MainScreen() {
                 }
 
                 else -> {
-                    Box(
-                        contentAlignment = Alignment.Center,
+                    BattleScreen(
                         modifier = Modifier.size(
-                            size = screenSize.pxToDp(),
+                            size = screenSize.pxToDp()
                         ),
-                    ) {
-                        Text(text = "Changed")
-                    }
+                        battleViewModel = battleViewModel,
+                    )
                     Controller(
                         modifier = Modifier
                             .fillMaxSize()
@@ -105,16 +131,7 @@ fun MainScreen() {
                             .background(
                                 Colors.ControllerArea,
                             ),
-                        controllerCallback = object : ControllerCallback {
-                            override fun moveStick(dx: Float, dy: Float) {
-
-                            }
-
-                            override var pressB: () -> Unit = {
-                                nowScreen = ScreenType.FIELD
-                            }
-
-                        }
+                        controllerCallback = battleViewModel,
                     )
                 }
             }
