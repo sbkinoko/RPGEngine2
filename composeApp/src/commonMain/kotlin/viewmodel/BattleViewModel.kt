@@ -109,9 +109,8 @@ class BattleViewModel :
                     monsterStatus
                 } else {
                     monsterStatus.copy(
-                        hp = HP(
-                            maxValue = monsterStatus.hp.maxPoint,
-                            value = monsterStatus.hp.point - damage
+                        hp = monsterStatus.hp.copy(
+                            value = monsterStatus.hp.value - damage
                         )
                     )
                 }
