@@ -1,7 +1,7 @@
 package viewModel
 
-import domain.map.Velocity
-import viewmodel.MapViewModel
+import map.domain.Velocity
+import map.viewmodel.MapViewModel
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals

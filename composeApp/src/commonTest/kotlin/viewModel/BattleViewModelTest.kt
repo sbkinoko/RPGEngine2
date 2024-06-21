@@ -1,7 +1,7 @@
 package viewModel
 
+import battle.viewmodel.BattleViewModel
 import domain.common.status.MonsterStatusTest.Companion.getMonster
-import viewmodel.BattleViewModel
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals

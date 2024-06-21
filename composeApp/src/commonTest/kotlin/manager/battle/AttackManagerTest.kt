@@ -1,5 +1,6 @@
 package manager.battle
 
+import battle.manager.AttackManager
 import domain.common.status.MonsterStatusTest.Companion.getMonster
 import kotlin.test.BeforeTest
 import kotlin.test.Test

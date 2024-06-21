@@ -1,7 +1,9 @@
 package domain.common.status
 
-import domain.common.status.param.HP
-import domain.common.status.param.MP
+import common.status.PlayerStatus
+import common.status.Status
+import common.status.param.HP
+import common.status.param.MP
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals

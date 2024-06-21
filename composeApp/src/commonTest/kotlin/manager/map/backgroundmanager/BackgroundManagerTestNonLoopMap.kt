@@ -1,7 +1,7 @@
 package manager.map.backgroundmanager
 
 import data.map.mapdata.NonLoopTestMap
-import manager.map.BackgroundManager
+import map.manager.BackgroundManager
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals

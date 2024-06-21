@@ -1,6 +1,6 @@
 package common
 
-import domain.map.Point
+import map.domain.Point
 import kotlin.math.sqrt
 
 class Normalizer {

@@ -1,6 +1,7 @@
 package domain.map
 
-import data.map.mapdata.LoopMap
+import map.data.LoopMap
+import map.domain.MapPoint
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

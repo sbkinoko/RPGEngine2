@@ -1,5 +1,6 @@
 package domain.map
 
+import map.domain.BackgroundCell
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

@@ -1,7 +1,11 @@
 package domain.map
 
-import layout.map.PlayerMoveSquare
-import viewmodel.MapViewModel
+import map.domain.Player
+import map.domain.Point
+import map.domain.Velocity
+import map.domain.VelocityManager
+import map.layout.PlayerMoveSquare
+import map.viewmodel.MapViewModel
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

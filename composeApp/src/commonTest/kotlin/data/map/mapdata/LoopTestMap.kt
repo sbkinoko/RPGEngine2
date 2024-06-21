@@ -1,6 +1,6 @@
 package data.map.mapdata
 
-import domain.map.MapData
+import map.domain.MapData
 
 class LoopTestMap : MapData() {
     override val isLoop = true

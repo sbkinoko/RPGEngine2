@@ -1,5 +1,7 @@
 package domain.map
 
+import map.domain.Point
+import map.domain.Square
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse

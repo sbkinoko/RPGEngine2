@@ -1,5 +1,6 @@
 package domain.map
 
+import map.domain.Velocity
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

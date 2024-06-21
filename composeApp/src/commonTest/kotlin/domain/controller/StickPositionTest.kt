@@ -1,6 +1,7 @@
 package domain.controller
 
 import androidx.compose.ui.geometry.Offset
+import controller.domain.StickPosition
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

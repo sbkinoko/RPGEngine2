@@ -1,8 +1,8 @@
 package manager.map.backgroundmanager
 
 import data.map.mapdata.LoopTestMap
-import domain.map.Square
-import manager.map.BackgroundManager
+import map.domain.Square
+import map.manager.BackgroundManager
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
