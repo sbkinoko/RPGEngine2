@@ -49,18 +49,20 @@ fun MainScreen() {
     }
 
     val bCallBack: () -> Unit = {
-        // ランダムで1~5の敵を作成
-        battleViewModel.mutableMonsters.value = MutableList(Random.nextInt(5) + 1) {
-            MonsterStatus(
-                1, "花",
-                hp = HP(
-                    maxValue = 10,
-                ),
-                mp = MP(
-                    maxValue = 10,
+        battleViewModel.setMonsters(
+            // ランダムで1~5の敵を作成
+            MutableList(Random.nextInt(5) + 1) {
+                MonsterStatus(
+                    1, "花",
+                    hp = HP(
+                        maxValue = 10,
+                    ),
+                    mp = MP(
+                        maxValue = 10,
+                    )
                 )
-            )
-        }
+            }
+        )
 
         nowScreen = ScreenType.BATTLE
     }

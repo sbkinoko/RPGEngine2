@@ -22,9 +22,11 @@ class BattleViewModelTest {
 
     @Test
     fun attackTo1() {
-        battleViewModel.mutableMonsters.value = MutableList(1) {
-            getMonster()
-        }
+        battleViewModel.setMonsters(
+            MutableList(1) {
+                getMonster()
+            }
+        )
 
         val id = 0
         val damage = 5
@@ -43,9 +45,11 @@ class BattleViewModelTest {
 
     @Test
     fun attackTo2When2Monster() {
-        battleViewModel.mutableMonsters.value = MutableList(2) {
-            getMonster()
-        }
+        battleViewModel.setMonsters(
+            MutableList(2) {
+                getMonster()
+            }
+        )
 
         val id = 1
         val damage = 5
@@ -71,9 +75,11 @@ class BattleViewModelTest {
 
     @Test
     fun attackTo1When1IsNotActive() {
-        battleViewModel.mutableMonsters.value = MutableList(2) {
-            getMonster()
-        }
+        battleViewModel.setMonsters(
+            MutableList(2) {
+                getMonster()
+            }
+        )
 
         val id = 0
         val damage = 10
@@ -120,9 +126,11 @@ class BattleViewModelTest {
 
     @Test
     fun attackTo2When2IsNotActive() {
-        battleViewModel.mutableMonsters.value = MutableList(2) {
-            getMonster()
-        }
+        battleViewModel.setMonsters(
+            MutableList(2) {
+                getMonster()
+            }
+        )
 
         val id = 1
         val damage = 10
@@ -169,9 +177,11 @@ class BattleViewModelTest {
 
     @Test
     fun attackTo1When1And2IsNotActive() {
-        battleViewModel.mutableMonsters.value = MutableList(3) {
-            getMonster()
-        }
+        battleViewModel.setMonsters(
+            MutableList(3) {
+                getMonster()
+            }
+        )
 
         val id = 0
         val damage = 10
@@ -214,9 +224,11 @@ class BattleViewModelTest {
 
     @Test
     fun checkIsBattleFinish() {
-        battleViewModel.mutableMonsters.value = MutableList(3) {
-            getMonster()
-        }
+        battleViewModel.setMonsters(
+            MutableList(3) {
+                getMonster()
+            }
+        )
 
         val id = 0
         val damage = 10
