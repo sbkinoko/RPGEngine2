@@ -1,10 +1,9 @@
 package domain.common.status.param
 
-class HP(
-    maxValue: Int,
-    value: Int = maxValue,
+data class HP(
+    var maxValue: Int,
+    var value: Int = maxValue,
 ) : Point() {
-
     override var maxPoint = 10
         set(value) {
             field = if (value < MIN_MAX_VALUE) {

@@ -1,8 +1,8 @@
 package domain.common.status.param
 
 class MP(
-    maxValue: Int,
-    value: Int = maxValue,
+    var maxValue: Int,
+    var value: Int = maxValue,
 ) : Point() {
 
     override var maxPoint = 10
