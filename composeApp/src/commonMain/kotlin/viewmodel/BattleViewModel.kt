@@ -1,7 +1,10 @@
 package viewmodel
 
 import domain.common.status.MonsterStatus
+import domain.common.status.PlayerStatus
 import domain.common.status.Status
+import domain.common.status.param.HP
+import domain.common.status.param.MP
 import domain.controller.ControllerCallback
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -30,39 +33,55 @@ class BattleViewModel :
     private fun initPlayers() {
         playrs = List(4) {
             when (it) {
-                0 -> {
-                    Status().apply {
-                        name = "test1"
-                        hp.maxPoint = 100
-                        hp.point = 50
-                        mp.maxPoint = 10
-                        mp.point = 5
-                    }
-                }
+                0 -> PlayerStatus(
+                    name = "test1",
+                    hp = HP(
+                        maxValue = 100,
+                        value = 50,
+                    ),
+                    mp = MP(
+                        maxValue = 10,
+                        value = 5,
+                    )
+                )
 
-                1 -> Status().apply {
-                    name = "test2"
-                    hp.maxPoint = 100
-                    hp.point = 0
-                    mp.maxPoint = 111
-                    mp.point = 50
-                }
 
-                2 -> Status().apply {
-                    name = "HPたくさん"
-                    hp.maxPoint = 200
-                    hp.point = 50
-                    mp.maxPoint = 10
-                    mp.point = 50
-                }
+                1 -> PlayerStatus(
+                    name = "test2",
+                    hp = HP(
+                        maxValue = 100,
+                        value = 0,
+                    ),
+                    mp = MP(
+                        maxValue = 111,
+                        value = 50,
+                    )
+                )
 
-                else -> Status().apply {
-                    name = "MPたくさん"
-                    hp.maxPoint = 10
-                    hp.point = 50
-                    mp.maxPoint = 100
-                    mp.point = 5
-                }
+
+                2 -> PlayerStatus(
+                    name = "HPたくさん",
+                    hp = HP(
+                        maxValue = 200,
+                        value = 50,
+                    ),
+                    mp = MP(
+                        maxValue = 10,
+                        value = 50,
+                    )
+                )
+
+                else -> PlayerStatus(
+                    name = "MPたくさん",
+                    hp = HP(
+                        maxValue = 10,
+                        value = 50,
+                    ),
+                    mp = MP(
+                        maxValue = 100,
+                        value = 50,
+                    )
+                )
             }
         }
     }

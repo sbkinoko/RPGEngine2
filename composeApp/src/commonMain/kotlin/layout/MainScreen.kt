@@ -18,6 +18,8 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
 import domain.ScreenType
 import domain.common.status.MonsterStatus
+import domain.common.status.param.HP
+import domain.common.status.param.MP
 import extension.pxToDp
 import layout.battle.BattleScreen
 import layout.controller.Controller
@@ -48,8 +50,16 @@ fun MainScreen() {
 
     val bCallBack: () -> Unit = {
         // ランダムで1~5の敵を作成
-        battleViewModel._monsters.value = MutableList(Random.nextInt(5) + 1) {
-            MonsterStatus(1, "花")
+        battleViewModel._monsters.value = List(Random.nextInt(5) + 1) {
+            MonsterStatus(
+                1, "花",
+                hp = HP(
+                    maxValue = 10,
+                ),
+                mp = MP(
+                    maxValue = 10,
+                )
+            )
         }
 
         nowScreen = ScreenType.BATTLE

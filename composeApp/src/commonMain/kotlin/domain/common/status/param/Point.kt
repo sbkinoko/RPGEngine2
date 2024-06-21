@@ -1,4 +1,4 @@
-package domain.common.status
+package domain.common.status.param
 
 abstract class Point {
     var point: Int = 0
