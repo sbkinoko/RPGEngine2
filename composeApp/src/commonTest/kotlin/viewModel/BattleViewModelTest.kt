@@ -1,6 +1,8 @@
 package viewModel
 
 import domain.common.status.MonsterStatus
+import domain.common.status.param.HP
+import domain.common.status.param.MP
 import viewmodel.BattleViewModel
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -10,6 +12,7 @@ class BattleViewModelTest {
     private lateinit var battleViewModel: BattleViewModel
 
     private val maxHP = 10
+    private val maxMP = 10
 
     @BeforeTest
     fun beforeTest() {
@@ -19,15 +22,7 @@ class BattleViewModelTest {
     @Test
     fun attackTo1() {
         battleViewModel.monsters = List(1) {
-            MonsterStatus(
-                imgId = 1,
-                name = "テスト",
-            ).apply {
-                hp.apply {
-                    maxPoint = maxHP
-                    point = maxHP
-                }
-            }
+            getMonster()
         }
 
         val id = 0
@@ -48,15 +43,7 @@ class BattleViewModelTest {
     @Test
     fun attackTo2When2Monster() {
         battleViewModel.monsters = List(2) {
-            MonsterStatus(
-                imgId = 1,
-                name = "テスト",
-            ).apply {
-                hp.apply {
-                    maxPoint = maxHP
-                    point = maxHP
-                }
-            }
+            getMonster()
         }
 
         val id = 1
@@ -84,15 +71,7 @@ class BattleViewModelTest {
     @Test
     fun attackTo1When1IsNotActive() {
         battleViewModel.monsters = List(2) {
-            MonsterStatus(
-                imgId = 1,
-                name = "テスト",
-            ).apply {
-                hp.apply {
-                    maxPoint = maxHP
-                    point = maxHP
-                }
-            }
+            getMonster()
         }
 
         val id = 0
@@ -141,15 +120,7 @@ class BattleViewModelTest {
     @Test
     fun attackTo2When2IsNotActive() {
         battleViewModel.monsters = List(2) {
-            MonsterStatus(
-                imgId = 1,
-                name = "テスト",
-            ).apply {
-                hp.apply {
-                    maxPoint = maxHP
-                    point = maxHP
-                }
-            }
+            getMonster()
         }
 
         val id = 1
@@ -198,15 +169,7 @@ class BattleViewModelTest {
     @Test
     fun attackTo1When1And2IsNotActive() {
         battleViewModel.monsters = List(3) {
-            MonsterStatus(
-                imgId = 1,
-                name = "テスト",
-            ).apply {
-                hp.apply {
-                    maxPoint = maxHP
-                    point = maxHP
-                }
-            }
+            getMonster()
         }
 
         val id = 0
@@ -247,4 +210,15 @@ class BattleViewModelTest {
             )
         }
     }
+
+    private fun getMonster() = MonsterStatus(
+        imgId = 1,
+        name = "テスト",
+        hp = HP(
+            maxValue = maxHP,
+        ),
+        mp = MP(
+            maxValue = maxMP,
+        )
+    )
 }
