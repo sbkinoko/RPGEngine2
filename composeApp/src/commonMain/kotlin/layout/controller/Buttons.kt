@@ -27,7 +27,7 @@ fun Buttons(
 
         Button(
             modifier = buttonModifier,
-            onClick = {},
+            onClick = controllerCallback.pressA,
         ) {
             Text(text = "A")
         }
