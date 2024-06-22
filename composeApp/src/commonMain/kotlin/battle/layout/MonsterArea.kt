@@ -2,8 +2,11 @@ package battle.layout
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,12 +28,24 @@ fun MonsterArea(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         monsters.forEach {
-            Monster(
+            Box(
+                contentAlignment = Alignment.Center,
                 modifier = Modifier
                     .padding(5.dp)
-                    .weight(1f),
-                monsterStatus = it,
-            )
+                    .weight(1f)
+                    .fillMaxHeight(),
+            ) {
+                Arrow(
+                    modifier = Modifier.align(
+                        Alignment.TopCenter,
+                    )
+                )
+
+                Monster(
+                    modifier = Modifier.fillMaxWidth(),
+                    monsterStatus = it,
+                )
+            }
         }
     }
 }
