@@ -8,6 +8,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
+import battle.layout.command.CommandArea
 import battle.layout.status.StatusArea
 import battle.viewmodel.BattleViewModel
 import common.values.Colors
