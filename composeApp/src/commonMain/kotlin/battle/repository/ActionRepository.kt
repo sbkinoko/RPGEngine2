@@ -9,7 +9,7 @@ interface ActionRepository {
         target: Int,
     )
 
-    // 通常攻撃以外ができたら技の情報を返す
+    // fixme 通常攻撃以外ができたら技の情報を返す
     fun getAction(
         playerId: Int
     ): ActionData
