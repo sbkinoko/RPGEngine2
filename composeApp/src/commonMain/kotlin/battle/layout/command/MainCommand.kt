@@ -1,4 +1,4 @@
-package battle.layout
+package battle.layout.command
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -12,9 +12,9 @@ import androidx.compose.ui.Modifier
 import battle.viewmodel.BattleViewModel
 
 @Composable
-fun CommandArea(
-    modifier: Modifier = Modifier,
+fun MainCommand(
     battleViewModel: BattleViewModel,
+    modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
         Row(
