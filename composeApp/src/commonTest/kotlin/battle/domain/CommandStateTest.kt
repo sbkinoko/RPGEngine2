@@ -16,8 +16,8 @@ class CommandStateTest {
     @Test
     fun initialStateEmpty() {
         assertEquals(
-            expected = 0,
-            actual = commandState.commandStack.size
+            expected = MainCommand,
+            actual = commandState.nowState
         )
     }
 
@@ -26,12 +26,8 @@ class CommandStateTest {
         commandState.push(MainCommand)
 
         assertEquals(
-            expected = 1,
-            actual = commandState.commandStack.size
-        )
-        assertEquals(
             expected = MainCommand,
-            actual = commandState.commandStack.last()
+            actual = commandState.nowState
         )
 
         val playerID = 1
@@ -42,14 +38,10 @@ class CommandStateTest {
         )
 
         assertEquals(
-            expected = 2,
-            actual = commandState.commandStack.size
-        )
-        assertEquals(
             expected = PlayerActionCommand(
                 playerId = playerID,
             ),
-            actual = commandState.commandStack.last()
+            actual = commandState.nowState
         )
     }
 
@@ -57,31 +49,44 @@ class CommandStateTest {
     fun popState() {
         commandState.push(MainCommand)
 
-        val playerID = 1
+        val playerID1 = 1
+        val playerCommand1 = PlayerActionCommand(
+            playerId = playerID1,
+        )
         commandState.push(
-            PlayerActionCommand(
-                playerId = playerID,
-            )
+            playerCommand1
+        )
+
+        val playerID2 = 2
+        val playerCommand2 = PlayerActionCommand(
+            playerId = playerID2,
+        )
+        commandState.push(
+            playerCommand2,
+        )
+
+        assertEquals(
+            expected = playerCommand2,
+            actual = commandState.nowState
         )
 
         commandState.pop()
         assertEquals(
-            expected = 1,
-            actual = commandState.commandStack.size
-        )
-        assertEquals(
-            expected = MainCommand,
-            actual = commandState.commandStack.last()
+            expected = playerCommand1,
+            actual = commandState.nowState
         )
 
         commandState.pop()
         assertEquals(
-            expected = 1,
-            actual = commandState.commandStack.size
+            expected = MainCommand,
+            actual = commandState.nowState
         )
+
+        // MainCommandでpopしてもそのまま
+        commandState.pop()
         assertEquals(
             expected = MainCommand,
-            actual = commandState.commandStack.last()
+            actual = commandState.nowState
         )
     }
 }
