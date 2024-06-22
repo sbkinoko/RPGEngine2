@@ -163,6 +163,7 @@ class BattleViewModel :
                     playerId = playerId + 1,
                 )
             )
+            // todo repositoryに行動をセットする
         } else {
             finishBattle()
         }
