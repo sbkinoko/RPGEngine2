@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,12 +35,12 @@ fun MonsterArea(
                     .weight(1f)
                     .fillMaxHeight(),
             ) {
-                Text(
+                Arrow(
                     modifier = Modifier.align(
                         Alignment.TopCenter,
-                    ),
-                    text = "↓",
+                    )
                 )
+
                 Monster(
                     modifier = Modifier.fillMaxWidth(),
                     monsterStatus = it,
