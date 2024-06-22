@@ -1,0 +1,5 @@
+package battle.domain
+
+data class ActionData(
+    val target: Int,
+)

@@ -7,6 +7,7 @@ import common.status.PlayerStatus
 import common.status.Status
 import common.status.param.HP
 import common.status.param.MP
+import common.values.playerNum
 import controller.domain.ControllerCallback
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -34,7 +35,7 @@ class BattleViewModel :
     }
 
     private fun initPlayers() {
-        playrs = List(4) {
+        playrs = List(playerNum) {
             when (it) {
                 0 -> PlayerStatus(
                     name = "test1",
