@@ -9,11 +9,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import battle.viewmodel.BattleViewModel
 
 @Composable
 fun MainCommand(
-    battleViewModel: BattleViewModel,
+    mainCommandCallBack: MainCommandCallBack,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
@@ -26,10 +25,7 @@ fun MainCommand(
                 modifier = Modifier.weight(1f)
                     .fillMaxHeight()
                     .clickable {
-                        battleViewModel.attack(
-                            target = 0,
-                            damage = 10,
-                        )
+                        mainCommandCallBack.attack.invoke()
                     },
                 text = "攻撃",
                 // todo 文字サイズの自動調整を実装

@@ -5,5 +5,5 @@ sealed class CommandType
 data object MainCommand : CommandType()
 
 class PlayerActionCommand(
-    playerId: Int,
+    val playerId: Int,
 ) : CommandType()
