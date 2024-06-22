@@ -1,10 +1,14 @@
 package battle.viewmodel
 
+import battle.domain.CommandState
+import battle.domain.MainCommand
+import battle.domain.PlayerActionCommand
+import battle.layout.command.MainCommandCallBack
+import battle.layout.command.PlayerActionCallBack
 import battle.manager.AttackManager
 import battle.manager.FindTarget
 import common.status.MonsterStatus
 import common.status.PlayerStatus
-import common.status.Status
 import common.status.param.HP
 import common.status.param.MP
 import common.values.playerNum
@@ -18,9 +22,14 @@ class BattleViewModel :
     private var mutableMonsters: MutableStateFlow<List<MonsterStatus>> =
         MutableStateFlow(mutableListOf())
     var monsters: StateFlow<List<MonsterStatus>> = mutableMonsters.asStateFlow()
-    lateinit var playrs: List<Status>
+
+    lateinit var players: List<PlayerStatus>
 
     override lateinit var pressB: () -> Unit
+
+    private var mutableCommandState: MutableStateFlow<CommandState> =
+        MutableStateFlow(CommandState())
+    val commandState: StateFlow<CommandState> = mutableCommandState.asStateFlow()
 
     /**
      * 敵が全滅したかどうかをチェック
@@ -30,12 +39,27 @@ class BattleViewModel :
             it.isActive
         }
 
+    val mainCommandCallback = object : MainCommandCallBack {
+        override val attack: () -> Unit = {
+            selectMainAttack()
+        }
+    }
+
+    val playerCommandCallback = object : PlayerActionCallBack {
+        override val attack: () -> Unit = {
+            val nowState = ((commandState.value.nowState) as PlayerActionCommand)
+            selectPlayerAttack(
+                playerId = nowState.playerId,
+            )
+        }
+    }
+
     init {
         initPlayers()
     }
 
     private fun initPlayers() {
-        playrs = List(playerNum) {
+        players = List(playerNum) {
             when (it) {
                 0 -> PlayerStatus(
                     name = "test1",
@@ -112,6 +136,10 @@ class BattleViewModel :
         }
     }
 
+    fun startBattle() {
+        mutableCommandState.value = CommandState()
+    }
+
     private fun finishBattle() {
         pressB()
     }
@@ -120,10 +148,38 @@ class BattleViewModel :
         // スティック操作に対する処理を実装
     }
 
-    override var pressA = {
-        attack(
-            target = 0,
-            damage = 10,
+    fun selectMainAttack() {
+        mutableCommandState.value = commandState.value.push(
+            PlayerActionCommand(
+                playerId = 0,
+            )
         )
+    }
+
+    fun selectPlayerAttack(playerId: Int) {
+        if (playerId < playerNum - 1) {
+            mutableCommandState.value = commandState.value.push(
+                PlayerActionCommand(
+                    playerId = playerId + 1,
+                )
+            )
+            // todo repositoryに行動をセットする
+        } else {
+            finishBattle()
+        }
+    }
+
+    override var pressA = {
+        when (
+            val nowState = commandState.value.nowState
+        ) {
+            is MainCommand -> {
+                selectMainAttack()
+            }
+
+            is PlayerActionCommand -> {
+                selectPlayerAttack(playerId = nowState.playerId)
+            }
+        }
     }
 }

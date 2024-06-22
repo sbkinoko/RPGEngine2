@@ -29,7 +29,7 @@ fun BattleScreen(
                     color = Colors.StatusArea,
                     shape = RectangleShape,
                 ),
-            statusList = battleViewModel.playrs,
+            statusList = battleViewModel.players,
         )
 
         MonsterArea(
