@@ -5,7 +5,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class CommandStateTest {
-
     private lateinit var commandState: CommandState
 
     @BeforeTest
@@ -14,7 +13,7 @@ class CommandStateTest {
     }
 
     @Test
-    fun initialStateEmpty() {
+    fun initialState() {
         assertEquals(
             expected = MainCommand,
             actual = commandState.nowState
@@ -23,37 +22,27 @@ class CommandStateTest {
 
     @Test
     fun pushState() {
-        commandState.push(MainCommand)
-
-        assertEquals(
-            expected = MainCommand,
-            actual = commandState.nowState
-        )
-
         val playerID = 1
-        commandState.push(
-            PlayerActionCommand(
-                playerId = playerID,
-            )
+        val playerCommand = PlayerActionCommand(
+            playerId = playerID,
+        )
+        commandState = commandState.push(
+            playerCommand,
         )
 
         assertEquals(
-            expected = PlayerActionCommand(
-                playerId = playerID,
-            ),
+            expected = playerCommand,
             actual = commandState.nowState
         )
     }
 
     @Test
     fun popState() {
-        commandState.push(MainCommand)
-
         val playerID1 = 1
         val playerCommand1 = PlayerActionCommand(
             playerId = playerID1,
         )
-        commandState.push(
+        commandState = commandState.push(
             playerCommand1
         )
 
@@ -61,7 +50,7 @@ class CommandStateTest {
         val playerCommand2 = PlayerActionCommand(
             playerId = playerID2,
         )
-        commandState.push(
+        commandState = commandState.push(
             playerCommand2,
         )
 
@@ -70,20 +59,20 @@ class CommandStateTest {
             actual = commandState.nowState
         )
 
-        commandState.pop()
+        commandState = commandState.pop()
         assertEquals(
             expected = playerCommand1,
             actual = commandState.nowState
         )
 
-        commandState.pop()
+        commandState = commandState.pop()
         assertEquals(
             expected = MainCommand,
             actual = commandState.nowState
         )
 
         // MainCommandでpopしてもそのまま
-        commandState.pop()
+        commandState = commandState.pop()
         assertEquals(
             expected = MainCommand,
             actual = commandState.nowState
