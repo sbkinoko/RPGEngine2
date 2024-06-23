@@ -3,3 +3,10 @@ interface Platform {
 }
 
 expect fun getPlatform(): Platform
+
+
+interface NowTime {
+    val nowTime: Long
+}
+
+expect fun getNowTime(): NowTime

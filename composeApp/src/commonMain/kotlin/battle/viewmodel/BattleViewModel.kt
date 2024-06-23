@@ -1,5 +1,6 @@
 package battle.viewmodel
 
+import NowTime
 import battle.domain.CommandState
 import battle.domain.MainCommand
 import battle.domain.PlayerActionCommand
@@ -18,6 +19,7 @@ import common.status.param.HP
 import common.status.param.MP
 import common.values.playerNum
 import controller.domain.ControllerCallback
+import getNowTime
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -138,10 +140,13 @@ class BattleViewModel :
         target: Int,
         damage: Int,
     ) {
-        val actualTarget = FindTarget().find(
-            monsters = monsters.value,
-            target = target,
-        )
+        var actualTarget = target
+        if (monsters.value[target].isActive.not()) {
+            actualTarget = FindTarget().findNext(
+                monsters = monsters.value,
+                target = target,
+            )
+        }
 
         mutableMonsters.value = AttackManager().attack(
             target = actualTarget,
@@ -166,8 +171,51 @@ class BattleViewModel :
         pressB()
     }
 
+    private var lastUpdateTime: Long = 0
+    private val nowTime: NowTime = getNowTime()
     override fun moveStick(dx: Float, dy: Float) {
-        // スティック操作に対する処理を実装
+        if (nowTime.nowTime - lastUpdateTime < 200) {
+            return
+        }
+        lastUpdateTime = nowTime.nowTime
+
+        when (commandState.value.nowState) {
+            is SelectEnemyCommand -> {
+                val target = selectedEnemyState.value.selectedEnemy.first()
+                if (0.5 <= dx) {
+                    setTargetEnemy(
+                        FindTarget().findNext(
+                            target = target,
+                            monsters = monsters.value,
+                        )
+                    )
+                } else if (dx <= -0.5) {
+                    setTargetEnemy(
+                        FindTarget().findPrev(
+                            target = target,
+                            monsters = monsters.value,
+                        )
+                    )
+                }
+            }
+
+            else -> Unit
+        }
+    }
+
+    private fun setTargetEnemy(target: Int?) {
+        if (target == null) {
+            // 矢印削除
+            mutableSelectedEnemyState.value = mutableSelectedEnemyState.value.copy(
+                selectedEnemy = emptyList()
+            )
+            return
+        }
+
+        // fixme 複数選択するようになったら修正
+        mutableSelectedEnemyState.value = mutableSelectedEnemyState.value.copy(
+            selectedEnemy = listOf(target)
+        )
     }
 
     fun selectMainAttack() {
@@ -195,9 +243,7 @@ class BattleViewModel :
         )
 
         // 矢印削除
-        mutableSelectedEnemyState.value = mutableSelectedEnemyState.value.copy(
-            selectedEnemy = emptyList()
-        )
+        setTargetEnemy(null)
 
         // 次のコマンドに移動
         if (playerId < playerNum - 1) {
@@ -225,10 +271,9 @@ class BattleViewModel :
             return
         }
 
-        // fixme 複数選択するようになったら修正
         // 別の敵を選択
-        mutableSelectedEnemyState.value = selectedEnemyState.value.copy(
-            selectedEnemy = listOf(monsterId)
+        setTargetEnemy(
+            monsterId
         )
     }
 

@@ -23,7 +23,7 @@ class FindTargetTest {
         for (cnt: Int in 0..1) {
             // 対象のモンスターが戦闘可能な場合
             //　対象のモンスターを攻撃することを確認
-            findTarget.find(
+            findTarget.findNext(
                 monsters = monsters,
                 target = cnt,
             ).apply {
@@ -49,7 +49,7 @@ class FindTargetTest {
 
         // 対象のモンスターが倒れているときは
         // 隣のモンスター攻撃することを確認
-        findTarget.find(
+        findTarget.findNext(
             monsters = monsters,
             target = id,
         ).apply {
@@ -75,7 +75,7 @@ class FindTargetTest {
         // 対象のモンスターが倒れているときは
         // 隣のモンスター攻撃することを確認
         //　ただし、隣が一周して戻ることもある
-        findTarget.find(
+        findTarget.findNext(
             monsters = monsters,
             target = id,
         ).apply {
@@ -103,7 +103,7 @@ class FindTargetTest {
         // 対象のモンスターが倒れているときは
         // 隣のモンスター攻撃することを確認
         //　ただし、隣が一周して戻ることもある
-        findTarget.find(
+        findTarget.findNext(
             monsters = monsters,
             target = id,
         ).apply {
