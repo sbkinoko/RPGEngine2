@@ -34,7 +34,7 @@ class BattleViewModel :
     val commandState: StateFlow<CommandState> = mutableCommandState.asStateFlow()
 
     private var mutableSelectedEnemyState: MutableStateFlow<SelectedEnemyState> =
-        MutableStateFlow(SelectedEnemyState(emptyList()))
+        MutableStateFlow(SelectedEnemyState(emptyList(), 0))
     val selectedEnemyState: StateFlow<SelectedEnemyState> =
         mutableSelectedEnemyState.asStateFlow()
 
@@ -145,6 +145,10 @@ class BattleViewModel :
 
     fun startBattle() {
         mutableCommandState.value = CommandState()
+        mutableSelectedEnemyState.value = SelectedEnemyState(
+            emptyList(),
+            monsters.value.size,
+        )
     }
 
     private fun finishBattle() {
@@ -167,6 +171,9 @@ class BattleViewModel :
         mutableCommandState.value = commandState.value.push(
             SelectEnemyCommand(playerId)
         )
+        mutableSelectedEnemyState.value = mutableSelectedEnemyState.value.copy(
+            selectedEnemy = listOf(1),
+        )
     }
 
     fun selectAttackEnemy(playerId: Int) {
@@ -175,11 +182,16 @@ class BattleViewModel :
                 PlayerActionCommand(
                     playerId = playerId + 1,
                 )
-                // todo repositoryに行動をセットする
             )
+            // todo repositoryに行動をセットする
         } else {
             finishBattle()
         }
+
+        // 矢印削除
+        mutableSelectedEnemyState.value = mutableSelectedEnemyState.value.copy(
+            selectedEnemy = emptyList()
+        )
     }
 
     override var pressA = {
