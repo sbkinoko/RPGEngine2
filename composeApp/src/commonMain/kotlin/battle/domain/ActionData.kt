@@ -1,5 +1,5 @@
 package battle.domain
 
 data class ActionData(
-    val target: Int,
+    val target: List<Int>,
 )

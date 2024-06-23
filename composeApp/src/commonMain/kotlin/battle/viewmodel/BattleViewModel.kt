@@ -9,6 +9,8 @@ import battle.layout.command.MainCommandCallBack
 import battle.layout.command.PlayerActionCallBack
 import battle.manager.AttackManager
 import battle.manager.FindTarget
+import battle.repository.ActionRepository
+import battle.repositoryimpl.ActionRepositoryImpl
 import common.status.MonsterStatus
 import common.status.PlayerStatus
 import common.status.param.HP
@@ -37,6 +39,8 @@ class BattleViewModel :
         MutableStateFlow(SelectedEnemyState(emptyList(), 0))
     val selectedEnemyState: StateFlow<SelectedEnemyState> =
         mutableSelectedEnemyState.asStateFlow()
+
+    private val actionRepository: ActionRepository = ActionRepositoryImpl()
 
     /**
      * 敵が全滅したかどうかをチェック
@@ -183,7 +187,10 @@ class BattleViewModel :
                     playerId = playerId + 1,
                 )
             )
-            // todo repositoryに行動をセットする
+            actionRepository.setAction(
+                playerId = playerId,
+                target = mutableSelectedEnemyState.value.selectedEnemy
+            )
         } else {
             finishBattle()
         }
