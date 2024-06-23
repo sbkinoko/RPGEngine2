@@ -3,6 +3,8 @@ package battle.viewmodel
 import battle.domain.CommandState
 import battle.domain.MainCommand
 import battle.domain.PlayerActionCommand
+import battle.domain.SelectEnemyCommand
+import battle.domain.SelectedEnemyState
 import battle.layout.command.MainCommandCallBack
 import battle.layout.command.PlayerActionCallBack
 import battle.manager.AttackManager
@@ -30,6 +32,11 @@ class BattleViewModel :
     private var mutableCommandState: MutableStateFlow<CommandState> =
         MutableStateFlow(CommandState())
     val commandState: StateFlow<CommandState> = mutableCommandState.asStateFlow()
+
+    private var mutableSelectedEnemyState: MutableStateFlow<SelectedEnemyState> =
+        MutableStateFlow(SelectedEnemyState(emptyList()))
+    val selectedEnemyState: StateFlow<SelectedEnemyState> =
+        mutableSelectedEnemyState.asStateFlow()
 
     /**
      * 敵が全滅したかどうかをチェック
@@ -157,13 +164,19 @@ class BattleViewModel :
     }
 
     fun selectPlayerAttack(playerId: Int) {
+        mutableCommandState.value = commandState.value.push(
+            SelectEnemyCommand(playerId)
+        )
+    }
+
+    fun selectAttackEnemy(playerId: Int) {
         if (playerId < playerNum - 1) {
             mutableCommandState.value = commandState.value.push(
                 PlayerActionCommand(
                     playerId = playerId + 1,
                 )
+                // todo repositoryに行動をセットする
             )
-            // todo repositoryに行動をセットする
         } else {
             finishBattle()
         }
@@ -178,7 +191,15 @@ class BattleViewModel :
             }
 
             is PlayerActionCommand -> {
-                selectPlayerAttack(playerId = nowState.playerId)
+                selectPlayerAttack(
+                    playerId = nowState.playerId
+                )
+            }
+
+            is SelectEnemyCommand -> {
+                selectAttackEnemy(
+                    playerId = nowState.playerId,
+                )
             }
         }
     }

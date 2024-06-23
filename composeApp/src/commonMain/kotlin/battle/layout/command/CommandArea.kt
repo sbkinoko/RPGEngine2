@@ -5,6 +5,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import battle.domain.MainCommand
 import battle.domain.PlayerActionCommand
+import battle.domain.SelectEnemyCommand
 import battle.viewmodel.BattleViewModel
 
 @Composable
@@ -23,5 +24,12 @@ fun CommandArea(
             playerActionCallBack = battleViewModel.playerCommandCallback,
             playerStatus = battleViewModel.players[nowState.playerId]
         )
+
+        is SelectEnemyCommand -> {
+            SelectEnemy(
+                modifier = modifier,
+                playerStatus = battleViewModel.players[nowState.playerId]
+            )
+        }
     }
 }
