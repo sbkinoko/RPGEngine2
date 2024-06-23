@@ -3,6 +3,8 @@ package battle.viewmodel
 import battle.domain.CommandState
 import battle.domain.MainCommand
 import battle.domain.PlayerActionCommand
+import battle.domain.SelectEnemyCommand
+import battle.domain.SelectedEnemyState
 import battle.layout.command.MainCommandCallBack
 import battle.layout.command.PlayerActionCallBack
 import battle.manager.AttackManager
@@ -30,6 +32,11 @@ class BattleViewModel :
     private var mutableCommandState: MutableStateFlow<CommandState> =
         MutableStateFlow(CommandState())
     val commandState: StateFlow<CommandState> = mutableCommandState.asStateFlow()
+
+    private var mutableSelectedEnemyState: MutableStateFlow<SelectedEnemyState> =
+        MutableStateFlow(SelectedEnemyState(emptyList(), 0))
+    val selectedEnemyState: StateFlow<SelectedEnemyState> =
+        mutableSelectedEnemyState.asStateFlow()
 
     /**
      * 敵が全滅したかどうかをチェック
@@ -138,6 +145,10 @@ class BattleViewModel :
 
     fun startBattle() {
         mutableCommandState.value = CommandState()
+        mutableSelectedEnemyState.value = SelectedEnemyState(
+            emptyList(),
+            monsters.value.size,
+        )
     }
 
     private fun finishBattle() {
@@ -157,6 +168,15 @@ class BattleViewModel :
     }
 
     fun selectPlayerAttack(playerId: Int) {
+        mutableCommandState.value = commandState.value.push(
+            SelectEnemyCommand(playerId)
+        )
+        mutableSelectedEnemyState.value = mutableSelectedEnemyState.value.copy(
+            selectedEnemy = listOf(1),
+        )
+    }
+
+    fun selectAttackEnemy(playerId: Int) {
         if (playerId < playerNum - 1) {
             mutableCommandState.value = commandState.value.push(
                 PlayerActionCommand(
@@ -167,6 +187,11 @@ class BattleViewModel :
         } else {
             finishBattle()
         }
+
+        // 矢印削除
+        mutableSelectedEnemyState.value = mutableSelectedEnemyState.value.copy(
+            selectedEnemy = emptyList()
+        )
     }
 
     override var pressA = {
@@ -178,7 +203,15 @@ class BattleViewModel :
             }
 
             is PlayerActionCommand -> {
-                selectPlayerAttack(playerId = nowState.playerId)
+                selectPlayerAttack(
+                    playerId = nowState.playerId
+                )
+            }
+
+            is SelectEnemyCommand -> {
+                selectAttackEnemy(
+                    playerId = nowState.playerId,
+                )
             }
         }
     }

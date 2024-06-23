@@ -41,6 +41,7 @@ fun BattleScreen(
                     shape = RectangleShape,
                 ),
             monsters = battleViewModel.monsters.collectAsState().value,
+            selectedEnemyState = battleViewModel.selectedEnemyState.collectAsState().value,
         )
 
         CommandArea(
