@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,6 +25,7 @@ import common.extension.pxToDp
 import common.values.Colors
 import controller.domain.ControllerCallback
 import controller.domain.StickPosition
+import kotlinx.coroutines.delay
 
 @Composable
 fun Stick(
@@ -43,10 +45,20 @@ fun Stick(
         )
     }
 
-    controllerCallback.moveStick(
-        dx = stickPosition.ratioX,
-        dy = stickPosition.ratioY,
-    )
+    LaunchedEffect(Unit) {
+        while (true) {
+            if (
+                stickPosition.ratioX != 0f ||
+                stickPosition.ratioY != 0f
+            ) {
+                controllerCallback.moveStick(
+                    dx = stickPosition.ratioX,
+                    dy = stickPosition.ratioY,
+                )
+            }
+            delay(30)
+        }
+    }
 
     Box(
         modifier = modifier

@@ -8,12 +8,12 @@ class ActionRepositoryImpl : ActionRepository {
 
     override fun setAction(
         playerId: Int,
-        target: Int,
+        target: List<Int>,
     ) {
         actionMap[playerId] = ActionData(target)
     }
 
     override fun getAction(playerId: Int): ActionData {
-        return actionMap[playerId] ?: ActionData(0)
+        return actionMap[playerId] ?: ActionData(listOf(0))
     }
 }

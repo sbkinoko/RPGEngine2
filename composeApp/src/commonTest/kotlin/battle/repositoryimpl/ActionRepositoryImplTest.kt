@@ -17,7 +17,7 @@ class ActionRepositoryImplTest {
     @Test
     fun setActionTest() {
         val playerID = 1
-        val target = 1
+        val target = listOf(1)
         actionRepository.setAction(
             playerId = playerID,
             target = target,
@@ -31,7 +31,7 @@ class ActionRepositoryImplTest {
         }
 
         val playerID2 = 2
-        val target2 = 2
+        val target2 = listOf(2)
         actionRepository.setAction(
             playerId = playerID2,
             target = target2,
@@ -48,7 +48,7 @@ class ActionRepositoryImplTest {
     @Test
     fun updateActionTest() {
         val playerID = 1
-        val target = 1
+        val target = listOf(1)
         actionRepository.setAction(
             playerId = playerID,
             target = target,
@@ -61,7 +61,7 @@ class ActionRepositoryImplTest {
             )
         }
 
-        val target2 = 2
+        val target2 = listOf(2)
         actionRepository.setAction(
             playerId = playerID,
             target = target2,
@@ -79,7 +79,7 @@ class ActionRepositoryImplTest {
     fun getNotSetPlayerId() {
         actionRepository.getAction(1).apply {
             assertEquals(
-                expected = 0,
+                expected = listOf(0),
                 actual = this.target,
             )
         }

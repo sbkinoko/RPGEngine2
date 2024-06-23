@@ -32,17 +32,20 @@ fun BattleScreen(
             statusList = battleViewModel.players,
         )
 
-        MonsterArea(
-            modifier = Modifier.weight(1f)
-                .fillMaxWidth()
-                .border(
-                    width = 1.dp,
-                    color = Colors.MonsterArea,
-                    shape = RectangleShape,
-                ),
-            monsters = battleViewModel.monsters.collectAsState().value,
-            selectedEnemyState = battleViewModel.selectedEnemyState.collectAsState().value,
-        )
+        battleViewModel.apply {
+            MonsterArea(
+                modifier = Modifier.weight(1f)
+                    .fillMaxWidth()
+                    .border(
+                        width = 1.dp,
+                        color = Colors.MonsterArea,
+                        shape = RectangleShape,
+                    ),
+                monsters = monsters.collectAsState().value,
+                selectedEnemyState = selectedEnemyState.collectAsState().value,
+                selectEnemyCallBack = selectEnemyCallBack,
+            )
+        }
 
         CommandArea(
             modifier = Modifier.weight(1f)
