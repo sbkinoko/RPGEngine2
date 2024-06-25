@@ -1,13 +1,25 @@
 package battle.viewmodel
 
+import NowTime
+import battle.domain.CommandState
+import battle.domain.MainCommand
+import battle.domain.PlayerActionCommand
+import battle.domain.SelectEnemyCommand
+import battle.domain.SelectedEnemyState
+import battle.layout.command.MainCommandCallBack
+import battle.layout.command.PlayerActionCallBack
+import battle.layout.command.SelectEnemyCallBack
 import battle.manager.AttackManager
 import battle.manager.FindTarget
+import battle.repository.ActionRepository
+import battle.repositoryimpl.ActionRepositoryImpl
 import common.status.MonsterStatus
 import common.status.PlayerStatus
-import common.status.Status
 import common.status.param.HP
 import common.status.param.MP
+import common.values.playerNum
 import controller.domain.ControllerCallback
+import getNowTime
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,9 +29,21 @@ class BattleViewModel :
     private var mutableMonsters: MutableStateFlow<List<MonsterStatus>> =
         MutableStateFlow(mutableListOf())
     var monsters: StateFlow<List<MonsterStatus>> = mutableMonsters.asStateFlow()
-    lateinit var playrs: List<Status>
+
+    lateinit var players: List<PlayerStatus>
 
     override lateinit var pressB: () -> Unit
+
+    private var mutableCommandState: MutableStateFlow<CommandState> =
+        MutableStateFlow(CommandState())
+    val commandState: StateFlow<CommandState> = mutableCommandState.asStateFlow()
+
+    private var mutableSelectedEnemyState: MutableStateFlow<SelectedEnemyState> =
+        MutableStateFlow(SelectedEnemyState(emptyList(), 0))
+    val selectedEnemyState: StateFlow<SelectedEnemyState> =
+        mutableSelectedEnemyState.asStateFlow()
+
+    private val actionRepository: ActionRepository = ActionRepositoryImpl()
 
     /**
      * 敵が全滅したかどうかをチェック
@@ -29,12 +53,33 @@ class BattleViewModel :
             it.isActive
         }
 
+    val mainCommandCallback = object : MainCommandCallBack {
+        override val attack: () -> Unit = {
+            selectMainAttack()
+        }
+    }
+
+    val playerCommandCallback = object : PlayerActionCallBack {
+        override val attack: () -> Unit = {
+            val nowState = ((commandState.value.nowState) as PlayerActionCommand)
+            selectPlayerAttack(
+                playerId = nowState.playerId,
+            )
+        }
+    }
+
+    val selectEnemyCallBack = object : SelectEnemyCallBack {
+        override val clickMonsterImage: (Int) -> Unit = { monsterId ->
+            selectAttackMonster(monsterId)
+        }
+    }
+
     init {
         initPlayers()
     }
 
     private fun initPlayers() {
-        playrs = List(4) {
+        players = List(playerNum) {
             when (it) {
                 0 -> PlayerStatus(
                     name = "test1",
@@ -95,10 +140,13 @@ class BattleViewModel :
         target: Int,
         damage: Int,
     ) {
-        val actualTarget = FindTarget().find(
-            monsters = monsters.value,
-            target = target,
-        )
+        var actualTarget = target
+        if (monsters.value[target].isActive.not()) {
+            actualTarget = FindTarget().findNext(
+                monsters = monsters.value,
+                target = target,
+            )
+        }
 
         mutableMonsters.value = AttackManager().attack(
             target = actualTarget,
@@ -111,18 +159,147 @@ class BattleViewModel :
         }
     }
 
+    fun startBattle() {
+        mutableCommandState.value = CommandState()
+        mutableSelectedEnemyState.value = SelectedEnemyState(
+            emptyList(),
+            monsters.value.size,
+        )
+    }
+
     private fun finishBattle() {
         pressB()
     }
 
+    private var lastUpdateTime: Long = 0
+    private val nowTime: NowTime = getNowTime()
     override fun moveStick(dx: Float, dy: Float) {
-        // スティック操作に対する処理を実装
+        if (nowTime.nowTime - lastUpdateTime < 200) {
+            return
+        }
+        lastUpdateTime = nowTime.nowTime
+
+        when (commandState.value.nowState) {
+            is SelectEnemyCommand -> {
+                val target = selectedEnemyState.value.selectedEnemy.first()
+                if (0.5 <= dx) {
+                    setTargetEnemy(
+                        FindTarget().findNext(
+                            target = target,
+                            monsters = monsters.value,
+                        )
+                    )
+                } else if (dx <= -0.5) {
+                    setTargetEnemy(
+                        FindTarget().findPrev(
+                            target = target,
+                            monsters = monsters.value,
+                        )
+                    )
+                }
+            }
+
+            else -> Unit
+        }
+    }
+
+    private fun setTargetEnemy(target: Int?) {
+        if (target == null) {
+            // 矢印削除
+            mutableSelectedEnemyState.value = mutableSelectedEnemyState.value.copy(
+                selectedEnemy = emptyList()
+            )
+            return
+        }
+
+        // fixme 複数選択するようになったら修正
+        mutableSelectedEnemyState.value = mutableSelectedEnemyState.value.copy(
+            selectedEnemy = listOf(target)
+        )
+    }
+
+    fun selectMainAttack() {
+        mutableCommandState.value = commandState.value.push(
+            PlayerActionCommand(
+                playerId = 0,
+            )
+        )
+    }
+
+    fun selectPlayerAttack(playerId: Int) {
+        mutableSelectedEnemyState.value = mutableSelectedEnemyState.value.copy(
+            selectedEnemy = actionRepository.getAction(playerId).target,
+        )
+        mutableCommandState.value = commandState.value.push(
+            SelectEnemyCommand(playerId)
+        )
+    }
+
+    fun selectAttackEnemy(playerId: Int) {
+        // 行動を保存
+        actionRepository.setAction(
+            playerId = playerId,
+            target = mutableSelectedEnemyState.value.selectedEnemy
+        )
+
+        // 矢印削除
+        setTargetEnemy(null)
+
+        // 次のコマンドに移動
+        if (playerId < playerNum - 1) {
+            mutableCommandState.value = commandState.value.push(
+                PlayerActionCommand(
+                    playerId = playerId + 1,
+                )
+            )
+        } else {
+            // fixme　攻撃フェーズに移動
+            //　一周したのでリセット
+            mutableCommandState.value = CommandState()
+        }
+    }
+
+    fun selectAttackMonster(monsterId: Int) {
+        //　敵を選択中以外は操作しない
+        if (selectedEnemyState.value.selectedEnemy.isEmpty()) {
+            return
+        }
+
+        // すでに選んでる敵を選んだら確定
+        if (selectedEnemyState.value.selectedEnemy.first() == monsterId) {
+            goNextCommand()
+            return
+        }
+
+        // 別の敵を選択
+        setTargetEnemy(
+            monsterId
+        )
     }
 
     override var pressA = {
-        attack(
-            target = 0,
-            damage = 10,
-        )
+        goNextCommand()
+    }
+
+    private fun goNextCommand() {
+        when (
+            val nowState = commandState.value.nowState
+        ) {
+            is MainCommand -> {
+                selectMainAttack()
+            }
+
+            is PlayerActionCommand -> {
+                selectPlayerAttack(
+                    playerId = nowState.playerId
+                )
+            }
+
+            is SelectEnemyCommand -> {
+                selectAttackEnemy(
+                    playerId = nowState.playerId,
+                )
+            }
+        }
     }
 }

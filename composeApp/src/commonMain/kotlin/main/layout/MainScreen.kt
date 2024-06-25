@@ -71,6 +71,7 @@ fun MainScreen() {
         )
 
         mainViewModel.toBattle()
+        battleViewModel.startBattle()
     }
     mapViewModel.pressB = bCallBack
 

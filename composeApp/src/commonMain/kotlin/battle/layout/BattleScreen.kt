@@ -8,6 +8,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
+import battle.layout.command.CommandArea
 import battle.layout.status.StatusArea
 import battle.viewmodel.BattleViewModel
 import common.values.Colors
@@ -28,19 +29,23 @@ fun BattleScreen(
                     color = Colors.StatusArea,
                     shape = RectangleShape,
                 ),
-            statusList = battleViewModel.playrs,
+            statusList = battleViewModel.players,
         )
 
-        MonsterArea(
-            modifier = Modifier.weight(1f)
-                .fillMaxWidth()
-                .border(
-                    width = 1.dp,
-                    color = Colors.MonsterArea,
-                    shape = RectangleShape,
-                ),
-            monsters = battleViewModel.monsters.collectAsState().value,
-        )
+        battleViewModel.apply {
+            MonsterArea(
+                modifier = Modifier.weight(1f)
+                    .fillMaxWidth()
+                    .border(
+                        width = 1.dp,
+                        color = Colors.MonsterArea,
+                        shape = RectangleShape,
+                    ),
+                monsters = monsters.collectAsState().value,
+                selectedEnemyState = selectedEnemyState.collectAsState().value,
+                selectEnemyCallBack = selectEnemyCallBack,
+            )
+        }
 
         CommandArea(
             modifier = Modifier.weight(1f)
