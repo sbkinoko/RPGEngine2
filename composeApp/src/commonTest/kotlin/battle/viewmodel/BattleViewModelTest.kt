@@ -1,6 +1,7 @@
 package battle.viewmodel
 
 import battle.BattleModule
+import common.CommonModule
 import common.status.MonsterStatusTest.Companion.getMonster
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -18,7 +19,8 @@ class BattleViewModelTest : KoinTest {
     fun beforeTest() {
         startKoin {
             modules(
-                BattleModule
+                BattleModule,
+                CommonModule,
             )
         }
 
