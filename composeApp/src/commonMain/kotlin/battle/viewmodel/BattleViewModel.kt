@@ -12,10 +12,9 @@ import battle.layout.command.SelectEnemyCallBack
 import battle.repository.ActionRepository
 import battle.service.AttackService
 import battle.service.FindTargetService
+import common.repository.PlayerRepository
 import common.status.MonsterStatus
 import common.status.PlayerStatus
-import common.status.param.HP
-import common.status.param.MP
 import common.values.playerNum
 import controller.domain.ControllerCallback
 import getNowTime
@@ -48,6 +47,7 @@ class BattleViewModel :
     private val actionRepository: ActionRepository by inject()
     private val attackService: AttackService by inject()
     private val findTargetService: FindTargetService by inject()
+    private val playerRepository: PlayerRepository by inject()
 
     /**
      * 敵が全滅したかどうかをチェック
@@ -84,55 +84,7 @@ class BattleViewModel :
 
     private fun initPlayers() {
         players = List(playerNum) {
-            when (it) {
-                0 -> PlayerStatus(
-                    name = "test1",
-                    hp = HP(
-                        maxValue = 100,
-                        value = 50,
-                    ),
-                    mp = MP(
-                        maxValue = 10,
-                        value = 5,
-                    )
-                )
-
-                1 -> PlayerStatus(
-                    name = "test2",
-                    hp = HP(
-                        maxValue = 100,
-                        value = 0,
-                    ),
-                    mp = MP(
-                        maxValue = 111,
-                        value = 50,
-                    )
-                )
-
-                2 -> PlayerStatus(
-                    name = "HPたくさん",
-                    hp = HP(
-                        maxValue = 200,
-                        value = 50,
-                    ),
-                    mp = MP(
-                        maxValue = 10,
-                        value = 50,
-                    )
-                )
-
-                else -> PlayerStatus(
-                    name = "MPたくさん",
-                    hp = HP(
-                        maxValue = 10,
-                        value = 50,
-                    ),
-                    mp = MP(
-                        maxValue = 100,
-                        value = 50,
-                    )
-                )
-            }
+            playerRepository.getPlayer(id = it)
         }
     }
 
