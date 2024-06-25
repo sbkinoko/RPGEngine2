@@ -1,17 +1,34 @@
 package battle.viewmodel
 
+import battle.BattleModule
 import common.status.MonsterStatusTest.Companion.getMonster
+import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
+import org.koin.test.KoinTest
+import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class BattleViewModelTest {
+class BattleViewModelTest : KoinTest {
     private lateinit var battleViewModel: BattleViewModel
+
 
     @BeforeTest
     fun beforeTest() {
+        startKoin {
+            modules(
+                BattleModule
+            )
+        }
+
         battleViewModel = BattleViewModel()
         battleViewModel.pressB = {}
+    }
+
+    @AfterTest
+    fun afterTest() {
+        stopKoin()
     }
 
 

@@ -9,10 +9,9 @@ import battle.domain.SelectedEnemyState
 import battle.layout.command.MainCommandCallBack
 import battle.layout.command.PlayerActionCallBack
 import battle.layout.command.SelectEnemyCallBack
-import battle.manager.AttackManager
-import battle.manager.FindTarget
 import battle.repository.ActionRepository
-import battle.repositoryimpl.ActionRepositoryImpl
+import battle.service.AttackService
+import battle.service.FindTargetService
 import common.status.MonsterStatus
 import common.status.PlayerStatus
 import common.status.param.HP
@@ -23,9 +22,12 @@ import getNowTime
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 class BattleViewModel :
-    ControllerCallback {
+    ControllerCallback,
+    KoinComponent {
     private var mutableMonsters: MutableStateFlow<List<MonsterStatus>> =
         MutableStateFlow(mutableListOf())
     var monsters: StateFlow<List<MonsterStatus>> = mutableMonsters.asStateFlow()
@@ -43,7 +45,9 @@ class BattleViewModel :
     val selectedEnemyState: StateFlow<SelectedEnemyState> =
         mutableSelectedEnemyState.asStateFlow()
 
-    private val actionRepository: ActionRepository = ActionRepositoryImpl()
+    private val actionRepository: ActionRepository by inject()
+    private val attackService: AttackService by inject()
+    private val findTargetService: FindTargetService by inject()
 
     /**
      * 敵が全滅したかどうかをチェック
@@ -142,13 +146,13 @@ class BattleViewModel :
     ) {
         var actualTarget = target
         if (monsters.value[target].isActive.not()) {
-            actualTarget = FindTarget().findNext(
+            actualTarget = findTargetService.findNext(
                 monsters = monsters.value,
                 target = target,
             )
         }
 
-        mutableMonsters.value = AttackManager().attack(
+        mutableMonsters.value = attackService.attack(
             target = actualTarget,
             damage = damage,
             monsters = monsters.value
@@ -184,14 +188,14 @@ class BattleViewModel :
                 val target = selectedEnemyState.value.selectedEnemy.first()
                 if (0.5 <= dx) {
                     setTargetEnemy(
-                        FindTarget().findNext(
+                        findTargetService.findNext(
                             target = target,
                             monsters = monsters.value,
                         )
                     )
                 } else if (dx <= -0.5) {
                     setTargetEnemy(
-                        FindTarget().findPrev(
+                        findTargetService.findPrev(
                             target = target,
                             monsters = monsters.value,
                         )

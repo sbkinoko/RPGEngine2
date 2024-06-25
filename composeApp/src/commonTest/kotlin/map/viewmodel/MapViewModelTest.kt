@@ -1,6 +1,10 @@
 package map.viewmodel
 
+import map.MapModule
 import map.domain.Velocity
+import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
+import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -10,7 +14,15 @@ class MapViewModelTest {
 
     @BeforeTest
     fun beforeTest() {
+        startKoin {
+            modules(MapModule)
+        }
         mapViewModel = MapViewModel()
+    }
+
+    @AfterTest
+    fun afterTest() {
+        stopKoin()
     }
 
     @Test
