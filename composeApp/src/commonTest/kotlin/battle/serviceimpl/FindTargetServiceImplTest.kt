@@ -1,17 +1,17 @@
-package battle.manger
+package battle.serviceimpl
 
-import battle.manager.FindTarget
+import battle.service.FindTargetService
 import common.status.MonsterStatusTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class FindTargetTest {
-    private lateinit var findTarget: FindTarget
+class FindTargetServiceImplTest {
+    private lateinit var findTarget: FindTargetService
 
     @BeforeTest
     fun beforeTest() {
-        findTarget = FindTarget()
+        findTarget = FindTargetServiceImpl()
     }
 
     @Test

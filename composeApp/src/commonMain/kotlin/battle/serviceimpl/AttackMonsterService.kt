@@ -1,10 +1,11 @@
-package battle.manager
+package battle.serviceimpl
 
+import battle.service.AttackService
 import common.status.MonsterStatus
 
-class AttackManager {
+class AttackMonsterService : AttackService {
 
-    fun attack(
+    override fun attack(
         target: Int,
         damage: Int,
         monsters: List<MonsterStatus>,

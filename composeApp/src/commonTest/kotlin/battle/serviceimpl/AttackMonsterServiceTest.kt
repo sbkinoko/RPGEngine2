@@ -1,18 +1,17 @@
-package battle.manger
+package battle.serviceimpl
 
-import battle.manager.AttackManager
 import common.status.MonsterStatusTest.Companion.getMonster
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class AttackManagerTest {
+class AttackMonsterServiceTest {
 
-    private lateinit var attackManager: AttackManager
+    private lateinit var attackMonsterService: AttackMonsterService
 
     @BeforeTest
     fun beforeTest() {
-        attackManager = AttackManager()
+        attackMonsterService = AttackMonsterService()
     }
 
     @Test
@@ -24,7 +23,7 @@ class AttackManagerTest {
         val id = 0
         val damage = 5
 
-        val newMonsters = attackManager.attack(
+        val newMonsters = attackMonsterService.attack(
             target = id,
             damage = damage,
             monsters = monsters
@@ -47,7 +46,7 @@ class AttackManagerTest {
         val id = 1
         val damage = 5
 
-        attackManager.attack(
+        attackMonsterService.attack(
             target = id,
             damage = damage,
             monsters = monsters,
