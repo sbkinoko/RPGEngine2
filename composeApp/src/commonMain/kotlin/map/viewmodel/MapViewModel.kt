@@ -14,9 +14,12 @@ import map.domain.Velocity
 import map.domain.VelocityManager
 import map.layout.PlayerMoveSquare
 import map.manager.BackgroundManager
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class MapViewModel : ControllerCallback {
-    private var player: Player
+class MapViewModel : ControllerCallback, KoinComponent {
+    val player: Player by inject()
+
     private val mutablePlayerPosition: MutableStateFlow<Square>
     val playerPosition: StateFlow<Square>
 
@@ -37,9 +40,6 @@ class MapViewModel : ControllerCallback {
 
 
     init {
-        player = Player(
-            size = VIRTUAL_PLAYER_SIZE,
-        )
         mutablePlayerPosition = MutableStateFlow(player.square)
         playerPosition = mutablePlayerPosition.asStateFlow()
 
