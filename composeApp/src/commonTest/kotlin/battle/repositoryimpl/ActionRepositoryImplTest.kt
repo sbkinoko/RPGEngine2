@@ -84,4 +84,20 @@ class ActionRepositoryImplTest {
             )
         }
     }
+
+    @Test
+    fun resetTargetTest() {
+        val init = listOf(1, 2, 3)
+        actionRepository.setAction(1, target = init)
+        assertEquals(
+            expected = init,
+            actual = actionRepository.getAction(1).target,
+        )
+
+        actionRepository.resetTarget()
+        assertEquals(
+            expected = listOf(0),
+            actual = actionRepository.getAction(1).target,
+        )
+    }
 }

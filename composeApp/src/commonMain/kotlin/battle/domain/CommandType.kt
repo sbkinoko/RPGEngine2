@@ -11,3 +11,5 @@ class PlayerActionCommand(
 class SelectEnemyCommand(
     val playerId: Int,
 ) : CommandType()
+
+data object AttackPhaseCommand : CommandType()

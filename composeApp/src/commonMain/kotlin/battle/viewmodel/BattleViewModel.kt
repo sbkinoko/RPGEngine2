@@ -1,11 +1,13 @@
 package battle.viewmodel
 
 import NowTime
+import battle.domain.AttackPhaseCommand
 import battle.domain.CommandState
 import battle.domain.MainCommand
 import battle.domain.PlayerActionCommand
 import battle.domain.SelectEnemyCommand
 import battle.domain.SelectedEnemyState
+import battle.layout.command.AttackPhaseCommandCallBack
 import battle.layout.command.MainCommandCallBack
 import battle.layout.command.PlayerActionCallBack
 import battle.layout.command.SelectEnemyCallBack
@@ -49,6 +51,12 @@ class BattleViewModel :
     private val findTargetService: FindTargetService by inject()
     private val playerRepository: PlayerRepository by inject()
 
+    val targetName: String
+        get() {
+            val targetId = actionRepository.getAction(attackingPlayerId.value).target.first()
+            return monsters.value[targetId].name
+        }
+
     /**
      * 敵が全滅したかどうかをチェック
      */
@@ -69,6 +77,12 @@ class BattleViewModel :
             selectPlayerAttack(
                 playerId = nowState.playerId,
             )
+        }
+    }
+
+    val attackPhaseCommandCallback = object : AttackPhaseCommandCallBack {
+        override val pressA: () -> Unit = {
+            attackPhase()
         }
     }
 
@@ -121,6 +135,8 @@ class BattleViewModel :
             emptyList(),
             monsters.value.size,
         )
+        mutableAttackingPlayerId.value = 0
+        actionRepository.resetTarget()
     }
 
     private fun finishBattle() {
@@ -209,9 +225,8 @@ class BattleViewModel :
                 )
             )
         } else {
-            // fixme　攻撃フェーズに移動
-            //　一周したのでリセット
-            mutableCommandState.value = CommandState()
+            //　一周したので攻撃フェーズに移動
+            mutableCommandState.value = mutableCommandState.value.push(AttackPhaseCommand)
         }
     }
 
@@ -237,6 +252,22 @@ class BattleViewModel :
         goNextCommand()
     }
 
+    private val mutableAttackingPlayerId: MutableStateFlow<Int> = MutableStateFlow(0)
+    val attackingPlayerId: StateFlow<Int> = mutableAttackingPlayerId.asStateFlow()
+
+    private fun attackPhase() {
+        attack(
+            target = actionRepository.getAction(attackingPlayerId.value).target.first(),
+            damage = 10,
+        )
+        if (attackingPlayerId.value < playerNum - 1) {
+            mutableAttackingPlayerId.value++
+        } else {
+            mutableAttackingPlayerId.value = 0
+            mutableCommandState.value = CommandState()
+        }
+    }
+
     private fun goNextCommand() {
         when (
             val nowState = commandState.value.nowState
@@ -255,6 +286,10 @@ class BattleViewModel :
                 selectAttackEnemy(
                     playerId = nowState.playerId,
                 )
+            }
+
+            is AttackPhaseCommand -> {
+                attackPhase()
             }
         }
     }
