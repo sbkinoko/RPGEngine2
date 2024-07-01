@@ -9,7 +9,9 @@ interface BattleMonsterRepository {
 
     fun getMonster(id: Int): MonsterStatus
 
-    suspend fun setMonster(monsters: MutableList<MonsterStatus>)
+    fun getMonsters(): List<MonsterStatus>
+
+    suspend fun setMonster(monsters: List<MonsterStatus>)
 
     suspend fun reload()
 }

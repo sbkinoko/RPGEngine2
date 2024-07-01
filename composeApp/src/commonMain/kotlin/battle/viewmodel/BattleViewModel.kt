@@ -13,8 +13,8 @@ import battle.layout.command.PlayerActionCallBack
 import battle.layout.command.SelectEnemyCallBack
 import battle.repository.ActionRepository
 import battle.repository.BattleMonsterRepository
-import battle.service.AttackService
 import battle.service.FindTargetService
+import battle.usecase.AttackUseCase
 import common.repository.PlayerRepository
 import common.status.MonsterStatus
 import common.status.PlayerStatus
@@ -53,10 +53,10 @@ class BattleViewModel :
         mutableSelectedEnemyState.asStateFlow()
 
     private val actionRepository: ActionRepository by inject()
-    private val attackService: AttackService by inject()
     private val findTargetService: FindTargetService by inject()
     private val playerRepository: PlayerRepository by inject()
     private val battleMonsterRepository: BattleMonsterRepository by inject()
+    private val attackUseCase: AttackUseCase by inject()
 
     val targetName: String
         get() {
@@ -68,7 +68,7 @@ class BattleViewModel :
      * 敵が全滅したかどうかをチェック
      */
     val isAllMonsterNotActive: Boolean
-        get() = !monsters.value.any {
+        get() = !battleMonsterRepository.getMonsters().any {
             it.isActive
         }
 
@@ -126,30 +126,17 @@ class BattleViewModel :
         }
     }
 
-    fun attack(
+    suspend fun attack(
         target: Int,
         damage: Int,
     ) {
-        var actualTarget = target
-        if (monsters.value[target].isActive.not()) {
-            actualTarget = findTargetService.findNext(
-                monsters = monsters.value,
-                target = target,
-            )
-        }
+        attackUseCase(
+            target = target,
+            damage = damage,
+        )
 
-        CoroutineScope(Dispatchers.IO).launch {
-            battleMonsterRepository.setMonster(
-                attackService.attack(
-                    target = actualTarget,
-                    damage = damage,
-                    monsters = monsters.value
-                ).toMutableList()
-            )
-
-            if (isAllMonsterNotActive) {
-                finishBattle()
-            }
+        if (isAllMonsterNotActive) {
+            finishBattle()
         }
     }
 
@@ -280,15 +267,17 @@ class BattleViewModel :
     val attackingPlayerId: StateFlow<Int> = mutableAttackingPlayerId.asStateFlow()
 
     private fun attackPhase() {
-        attack(
-            target = actionRepository.getAction(attackingPlayerId.value).target.first(),
-            damage = 10,
-        )
-        if (attackingPlayerId.value < playerNum - 1) {
-            mutableAttackingPlayerId.value++
-        } else {
-            mutableAttackingPlayerId.value = 0
-            mutableCommandState.value = CommandState()
+        CoroutineScope(Dispatchers.IO).launch {
+            attack(
+                target = actionRepository.getAction(attackingPlayerId.value).target.first(),
+                damage = 10,
+            )
+            if (attackingPlayerId.value < playerNum - 1) {
+                mutableAttackingPlayerId.value++
+            } else {
+                mutableAttackingPlayerId.value = 0
+                mutableCommandState.value = CommandState()
+            }
         }
     }
 
