@@ -66,14 +66,16 @@ class BattleViewModel :
         }
 
     val mainCommandCallback = object : MainCommandCallBack {
-        override val attack: () -> Unit = {
+        override val attack: () -> Unit = attack@{
+            if (commandState.value.nowState !is MainCommand) return@attack
             selectMainAttack()
         }
     }
 
     val playerCommandCallback = object : PlayerActionCallBack {
-        override val attack: () -> Unit = {
-            val nowState = ((commandState.value.nowState) as PlayerActionCommand)
+        override val attack: () -> Unit = attack@{
+            val nowState = ((commandState.value.nowState) as? PlayerActionCommand)
+                ?: return@attack
             selectPlayerAttack(
                 playerId = nowState.playerId,
             )
@@ -81,7 +83,8 @@ class BattleViewModel :
     }
 
     val attackPhaseCommandCallback = object : AttackPhaseCommandCallBack {
-        override val pressA: () -> Unit = {
+        override val pressA: () -> Unit = pressA@{
+            if ((commandState.value.nowState) !is AttackPhaseCommand) return@pressA
             attackPhase()
         }
     }
