@@ -12,6 +12,7 @@ import battle.layout.command.MainCommandCallBack
 import battle.layout.command.PlayerActionCallBack
 import battle.layout.command.SelectEnemyCallBack
 import battle.repository.ActionRepository
+import battle.repository.BattleMonsterRepository
 import battle.service.AttackService
 import battle.service.FindTargetService
 import common.repository.PlayerRepository
@@ -20,18 +21,23 @@ import common.status.PlayerStatus
 import common.values.playerNum
 import controller.domain.ControllerCallback
 import getNowTime
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class BattleViewModel :
     ControllerCallback,
     KoinComponent {
-    private var mutableMonsters: MutableStateFlow<List<MonsterStatus>> =
-        MutableStateFlow(mutableListOf())
-    var monsters: StateFlow<List<MonsterStatus>> = mutableMonsters.asStateFlow()
+    var monsters: StateFlow<List<MonsterStatus>>
 
     lateinit var players: List<PlayerStatus>
 
@@ -50,11 +56,12 @@ class BattleViewModel :
     private val attackService: AttackService by inject()
     private val findTargetService: FindTargetService by inject()
     private val playerRepository: PlayerRepository by inject()
+    private val battleMonsterRepository: BattleMonsterRepository by inject()
 
     val targetName: String
         get() {
             val targetId = actionRepository.getAction(attackingPlayerId.value).target.first()
-            return monsters.value[targetId].name
+            return battleMonsterRepository.getMonster(targetId).name
         }
 
     /**
@@ -97,6 +104,14 @@ class BattleViewModel :
 
     init {
         initPlayers()
+        monsters =
+            battleMonsterRepository.monsterListFlow.map {
+                it
+            }.stateIn(
+                scope = CoroutineScope(Dispatchers.IO),
+                started = SharingStarted.WhileSubscribed(5000),
+                initialValue = emptyList()
+            )
     }
 
     private fun initPlayers() {
@@ -106,7 +121,9 @@ class BattleViewModel :
     }
 
     fun setMonsters(monsters: List<MonsterStatus>) {
-        mutableMonsters.value = monsters.toMutableList()
+        CoroutineScope(Dispatchers.Default).launch {
+            battleMonsterRepository.setMonster(monsters.toMutableList())
+        }
     }
 
     fun attack(
@@ -121,14 +138,18 @@ class BattleViewModel :
             )
         }
 
-        mutableMonsters.value = attackService.attack(
-            target = actualTarget,
-            damage = damage,
-            monsters = monsters.value
-        )
+        CoroutineScope(Dispatchers.IO).launch {
+            battleMonsterRepository.setMonster(
+                attackService.attack(
+                    target = actualTarget,
+                    damage = damage,
+                    monsters = monsters.value
+                ).toMutableList()
+            )
 
-        if (isAllMonsterNotActive) {
-            finishBattle()
+            if (isAllMonsterNotActive) {
+                finishBattle()
+            }
         }
     }
 
@@ -268,6 +289,12 @@ class BattleViewModel :
         } else {
             mutableAttackingPlayerId.value = 0
             mutableCommandState.value = CommandState()
+        }
+    }
+
+    fun reloadMonster() {
+        CoroutineScope(Dispatchers.IO).launch {
+            battleMonsterRepository.reload()
         }
     }
 
