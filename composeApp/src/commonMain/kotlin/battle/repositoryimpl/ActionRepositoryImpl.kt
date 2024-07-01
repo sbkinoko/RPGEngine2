@@ -16,4 +16,12 @@ class ActionRepositoryImpl : ActionRepository {
     override fun getAction(playerId: Int): ActionData {
         return actionMap[playerId] ?: ActionData(listOf(0))
     }
+
+    override fun resetTarget() {
+        actionMap.forEach {
+            actionMap[it.key] = ActionData(
+                listOf(0)
+            )
+        }
+    }
 }
