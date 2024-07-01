@@ -26,11 +26,17 @@ class AttackUseCase(
         val afterMonster = attackService.attack(
             target = actualTarget,
             damage = damage,
-            monsters = monsters
+            monster = monsters[target]
         )
 
         battleMonsterRepository.setMonster(
-            monsters = afterMonster,
+            monsters = monsters.mapIndexed { index, monsterStatus ->
+                if (index != actualTarget) {
+                    monsterStatus
+                } else {
+                    afterMonster
+                }
+            }
         )
     }
 }
