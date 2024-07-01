@@ -1,7 +1,9 @@
 package battle
 
 import battle.repository.ActionRepository
+import battle.repository.BattleMonsterRepository
 import battle.repositoryimpl.ActionRepositoryImpl
+import battle.repositoryimpl.BattleMonsterRepositoryImpl
 import battle.service.AttackService
 import battle.service.FindTargetService
 import battle.serviceimpl.AttackMonsterService
@@ -19,5 +21,9 @@ val BattleModule = module {
 
     single<FindTargetService> {
         FindTargetServiceImpl()
+    }
+
+    single<BattleMonsterRepository> {
+        BattleMonsterRepositoryImpl()
     }
 }
