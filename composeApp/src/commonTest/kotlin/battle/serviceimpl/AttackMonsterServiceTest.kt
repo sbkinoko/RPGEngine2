@@ -16,9 +16,7 @@ class AttackMonsterServiceTest {
 
     @Test
     fun attackTo1() {
-        val monsters = List(1) {
-            getMonster()
-        }
+        val monster = getMonster()
 
         val id = 0
         val damage = 5
@@ -26,44 +24,14 @@ class AttackMonsterServiceTest {
         val newMonsters = attackMonsterService.attack(
             target = id,
             damage = damage,
-            monsters = monsters
+            monster = monster,
         )
 
-        newMonsters[id].hp.apply {
+        newMonsters.hp.apply {
             assertEquals(
                 expected = maxPoint - damage,
                 actual = point
             )
-        }
-    }
-
-    @Test
-    fun attackTo2When2Monster() {
-        val monsters = List(2) {
-            getMonster()
-        }
-
-        val id = 1
-        val damage = 5
-
-        attackMonsterService.attack(
-            target = id,
-            damage = damage,
-            monsters = monsters,
-        ).let {
-            it[0].hp.apply {
-                assertEquals(
-                    expected = maxPoint,
-                    actual = point
-                )
-            }
-
-            it[1].hp.apply {
-                assertEquals(
-                    expected = maxPoint - damage,
-                    actual = point
-                )
-            }
         }
     }
 }

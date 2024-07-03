@@ -3,6 +3,7 @@ package battle.viewmodel
 import battle.BattleModule
 import common.CommonModule
 import common.status.MonsterStatusTest.Companion.getMonster
+import kotlinx.coroutines.runBlocking
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
@@ -36,42 +37,44 @@ class BattleViewModelTest : KoinTest {
 
     @Test
     fun checkIsBattleFinish() {
-        battleViewModel.setMonsters(
-            MutableList(3) {
-                getMonster()
-            }
-        )
+        runBlocking {
+            battleViewModel.setMonsters(
+                MutableList(3) {
+                    getMonster()
+                }
+            )
 
-        val id = 0
-        val damage = 10
+            val id = 0
+            val damage = 10
 
-        battleViewModel.attack(
-            target = id,
-            damage = damage
-        )
-        assertEquals(
-            expected = false,
-            actual = battleViewModel.isAllMonsterNotActive
-        )
+            battleViewModel.attack(
+                target = id,
+                damage = damage
+            )
+            assertEquals(
+                expected = false,
+                actual = battleViewModel.isAllMonsterNotActive
+            )
 
-        // 隣を攻撃
-        battleViewModel.attack(
-            target = id,
-            damage = damage
-        )
-        assertEquals(
-            expected = false,
-            actual = battleViewModel.isAllMonsterNotActive
-        )
+            // 隣を攻撃
+            battleViewModel.attack(
+                target = id,
+                damage = damage
+            )
+            assertEquals(
+                expected = false,
+                actual = battleViewModel.isAllMonsterNotActive
+            )
 
-        // 隣の隣を攻撃
-        battleViewModel.attack(
-            target = id,
-            damage = damage
-        )
-        assertEquals(
-            expected = true,
-            actual = battleViewModel.isAllMonsterNotActive
-        )
+            // 隣の隣を攻撃
+            battleViewModel.attack(
+                target = id,
+                damage = damage
+            )
+            assertEquals(
+                expected = true,
+                actual = battleViewModel.isAllMonsterNotActive
+            )
+        }
     }
 }

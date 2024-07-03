@@ -10,6 +10,6 @@ interface AttackService {
     fun attack(
         target: Int,
         damage: Int,
-        monsters: List<MonsterStatus>,
-    ): List<MonsterStatus>
+        monster: MonsterStatus,
+    ): MonsterStatus
 }
