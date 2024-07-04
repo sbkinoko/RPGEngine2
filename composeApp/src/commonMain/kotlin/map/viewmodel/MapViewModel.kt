@@ -9,9 +9,9 @@ import map.data.NonLoopMap
 import map.domain.BackgroundCell
 import map.domain.Player
 import map.domain.Point
+import map.domain.Square
 import map.domain.Velocity
 import map.domain.VelocityManager
-import map.domain.collision.Square
 import map.layout.PlayerMoveSquare
 import map.manager.BackgroundManager
 import org.koin.core.component.KoinComponent
@@ -68,12 +68,8 @@ class MapViewModel : ControllerCallback, KoinComponent {
         }
 
         if (tentativePlayerVelocity.isMoving) {
-            checkMove()
-            if (!canMove) {
-                return
-            }
-
             mediateVelocity()
+
             player.move()
             // todo いい感じにする方法を探す
             mutablePlayerPosition.value = player.square.getNew()
@@ -217,16 +213,6 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
     override var pressA: () -> Unit = {
         //todo Aを押した時の処理を実装
-    }
-
-    private var canMove = true
-    private fun checkMove() {
-        val square = player.square.getNew()
-        square.move(
-            dx = tentativePlayerVelocity.x,
-            dy = tentativePlayerVelocity.y
-        )
-        canMove = !backgroundManger.value.isCollided(square)
     }
 
     companion object {

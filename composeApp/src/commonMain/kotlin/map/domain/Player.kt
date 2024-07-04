@@ -1,7 +1,5 @@
 package map.domain
 
-import map.domain.collision.Square
-
 class Player(
     val size: Float,
 ) {

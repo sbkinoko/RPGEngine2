@@ -1,8 +1,5 @@
 package map.domain
 
-import map.domain.collision.CollisionDetectShape
-import map.domain.collision.Square
-
 class BackgroundCell(
     cellSize: Float,
     x: Float,
@@ -11,33 +8,21 @@ class BackgroundCell(
     // FIXME: privateにする
     var mapPoint: MapPoint = MapPoint()
 
-    val square: Square = Square(
-        displayPoint = Point(
-            x = x,
-            y = y,
-        ),
-        size = cellSize,
-    )
-
-    var collisionList: List<CollisionDetectShape> = emptyList()
+    val square: Square
 
     var imgID: Int = 0
-        set(value) {
-            field = value
-            if (value == 2) {
-                collisionList = listOf(
-                    Square(
-                        x = square.x,
-                        y = square.y,
-                        size = cellSize
-                    )
-                )
-            } else {
-                collisionList = emptyList()
-            }
-        }
 
     var isPlayerIncludeCell = false
+
+    init {
+        square = Square(
+            displayPoint = Point(
+                x = x,
+                y = y,
+            ),
+            size = cellSize,
+        )
+    }
 
     val cellSize: Float
         get() {
@@ -52,11 +37,5 @@ class BackgroundCell(
             dx = dx,
             dy = dy,
         )
-        collisionList.forEach {
-            (it as Square).move(
-                dx = dx,
-                dy = dy,
-            )
-        }
     }
 }
