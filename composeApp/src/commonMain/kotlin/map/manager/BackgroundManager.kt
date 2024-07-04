@@ -5,8 +5,8 @@ import map.domain.BackgroundCell
 import map.domain.MapData
 import map.domain.MapPoint
 import map.domain.Point
-import map.domain.Square
 import map.domain.Velocity
+import map.domain.collision.Square
 
 class BackgroundManager(
     val cellNum: Int,
@@ -262,5 +262,25 @@ class BackgroundManager(
                 }
             }
         }
+    }
+
+    fun isCollided(player: Square): Boolean {
+        backgroundCellArray.forEachIndexed { row, rowArray ->
+            rowArray.forEachIndexed { col, cell ->
+                if (cell.collisionList.isNotEmpty()) {
+                    println("$col $row")
+                    cell.collisionList.forEach {
+                        println("bg")
+                        (it as Square).printPosition()
+                        println("player")
+                        player.printPosition()
+                        if (it.isOverlap(player)) {
+                            return true
+                        }
+                    }
+                }
+            }
+        }
+        return false
     }
 }

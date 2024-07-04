@@ -1,7 +1,7 @@
 package map.manager
 
 import map.data.LoopTestMap
-import map.domain.Square
+import map.domain.collision.Square
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals

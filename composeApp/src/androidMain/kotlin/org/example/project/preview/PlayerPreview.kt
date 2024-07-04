@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import map.domain.Point
-import map.domain.Square
+import map.domain.collision.Square
 import map.layout.Player
 
 @Preview
