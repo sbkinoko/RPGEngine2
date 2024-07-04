@@ -100,19 +100,15 @@ open class Square(
     }
 
     override fun isOverlap(other: Square): Boolean {
-        println((this.rightSide).toString() + ":" + other.leftSide)
         if (this.rightSide < other.leftSide)
             return false
 
-        println((other.rightSide).toString() + ":" + this.leftSide)
         if (other.rightSide < this.leftSide)
             return false
 
-        println((this.bottomSide).toString() + ":" + other.topSide)
         if (this.bottomSide < other.topSide)
             return false
 
-        println((other.bottomSide).toString() + ":" + this.topSide)
         if (other.bottomSide < this.topSide)
             return false
 

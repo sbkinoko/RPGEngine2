@@ -121,7 +121,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
     private fun updateVelocityByStick(dx: Float, dy: Float) {
         val vx = player.maxVelocity * dx
         val vy = player.maxVelocity * dy
-
+        println("updateVelocityByStick")
         tentativePlayerVelocity = Velocity(
             dx = vx,
             dy = vy,
