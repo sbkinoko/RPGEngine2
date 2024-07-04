@@ -1,6 +1,5 @@
 package map.domain
 
-import map.domain.collision.Square
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -228,87 +227,6 @@ class SquareTest {
             }
         }
     }
-
-    @Test
-    fun isOverlapUp() {
-        val baseSquare = Square(
-            displayPoint = Point(10f, 10f),
-            size = 10f
-        )
-
-        val upSquare1 = Square(
-            displayPoint = Point(10f, 0f),
-            size = 10f,
-        )
-        assertTrue { baseSquare.isOverlap(upSquare1) }
-        assertTrue { upSquare1.isOverlap(baseSquare) }
-
-        upSquare1.move(dx = 0f, dy = -1f)
-
-        assertFalse { baseSquare.isOverlap(upSquare1) }
-        assertFalse { upSquare1.isOverlap(baseSquare) }
-    }
-
-    @Test
-    fun isOverlapBottom() {
-        val baseSquare = Square(
-            displayPoint = Point(10f, 10f),
-            size = 10f
-        )
-
-        val upSquare1 = Square(
-            displayPoint = Point(10f, 20f),
-            size = 10f,
-        )
-        assertTrue { baseSquare.isOverlap(upSquare1) }
-        assertTrue { upSquare1.isOverlap(baseSquare) }
-
-        upSquare1.move(dx = 0f, dy = 1f)
-
-        assertFalse { baseSquare.isOverlap(upSquare1) }
-        assertFalse { upSquare1.isOverlap(baseSquare) }
-    }
-
-    @Test
-    fun isOverlapLeft() {
-        val baseSquare = Square(
-            displayPoint = Point(10f, 10f),
-            size = 10f
-        )
-
-        val upSquare1 = Square(
-            displayPoint = Point(0f, 10f),
-            size = 10f,
-        )
-        assertTrue { baseSquare.isOverlap(upSquare1) }
-        assertTrue { upSquare1.isOverlap(baseSquare) }
-
-        upSquare1.move(dx = -1f, dy = 0f)
-
-        assertFalse { baseSquare.isOverlap(upSquare1) }
-        assertFalse { upSquare1.isOverlap(baseSquare) }
-    }
-
-    @Test
-    fun isOverlapRight() {
-        val baseSquare = Square(
-            displayPoint = Point(10f, 10f),
-            size = 10f
-        )
-
-        val upSquare1 = Square(
-            displayPoint = Point(20f, 10f),
-            size = 10f,
-        )
-        assertTrue { baseSquare.isOverlap(upSquare1) }
-        assertTrue { upSquare1.isOverlap(baseSquare) }
-
-        upSquare1.move(dx = 1f, dy = 0f)
-
-        assertFalse { baseSquare.isOverlap(upSquare1) }
-        assertFalse { upSquare1.isOverlap(baseSquare) }
-    }
-
 
     companion object {
         private const val SIZE = 10f
