@@ -1,9 +1,12 @@
-package map.domain
+package map.domain.collision
+
+import androidx.compose.ui.graphics.Path
+import map.domain.Point
 
 open class Square(
     val displayPoint: Point = Point(),
     val size: Float,
-) {
+) : CollisionDetectShape {
     constructor(
         x: Float,
         y: Float,
@@ -94,5 +97,42 @@ open class Square(
             return false
 
         return true
+    }
+
+    override fun isOverlap(other: Square): Boolean {
+        println((this.rightSide).toString() + ":" + other.leftSide)
+        if (this.rightSide < other.leftSide)
+            return false
+
+        println((other.rightSide).toString() + ":" + this.leftSide)
+        if (other.rightSide < this.leftSide)
+            return false
+
+        println((this.bottomSide).toString() + ":" + other.topSide)
+        if (this.bottomSide < other.topSide)
+            return false
+
+        println((other.bottomSide).toString() + ":" + this.topSide)
+        if (other.bottomSide < this.topSide)
+            return false
+
+        return true
+    }
+
+    override fun toPath(screenRatio: Float): Path {
+        val path = Path()
+        path.moveTo(
+            0f, 0f
+        )
+        path.lineTo(0f, size * screenRatio)
+        path.lineTo(size * screenRatio, size * screenRatio)
+        path.lineTo(size * screenRatio, 0f)
+        path.close()
+        return path
+    }
+
+    fun printPosition() {
+        println("x = ${displayPoint.x}")
+        println("y = ${displayPoint.y}")
     }
 }
