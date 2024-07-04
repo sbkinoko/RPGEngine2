@@ -265,15 +265,10 @@ class BackgroundManager(
     }
 
     fun isCollided(player: Square): Boolean {
-        backgroundCellArray.forEachIndexed { row, rowArray ->
-            rowArray.forEachIndexed { col, cell ->
+        backgroundCellArray.forEach { rowArray ->
+            rowArray.forEach { cell ->
                 if (cell.collisionList.isNotEmpty()) {
-                    println("$col $row")
                     cell.collisionList.forEach {
-                        println("bg")
-                        (it as Square).printPosition()
-                        println("player")
-                        player.printPosition()
                         if (it.isOverlap(player)) {
                             return true
                         }
