@@ -2,6 +2,7 @@ package map.manager
 
 import map.domain.Player
 import map.domain.Velocity
+import kotlin.math.abs
 
 class MoveManager {
 
@@ -58,56 +59,97 @@ class MoveManager {
         canMoveX: Boolean,
         canMoveY: Boolean,
     ): Velocity {
-        if (canMoveX) {
-            var vMin =
-                if (0 <= velocity.y) {
-                    0f
-                } else {
-                    velocity.y
-                }
-            var vMax = if (0 <= velocity.y) {
+        val vy =
+            if (canMoveX) {
+                getVy(
+                    velocity = velocity,
+                    player = player,
+                    backgroundManger = backgroundManger,
+                )
+            } else {
                 velocity.y
-            } else {
-                0f
             }
 
-            var vy = (vMin + vMax) / 2
-
-            for (cnt: Int in 0..5) {
-                val square = player.square.getNew()
-                square.move(
-                    velocity.x,
-                    vy,
-                )
-                if (backgroundManger.isCollided(square)) {
-                    if (0 <= velocity.y) {
-                        vMax = vy
-                    } else {
-                        vMin = vy
-                    }
-                } else {
-                    if (0 <= velocity.y) {
-                        vMin = vy
-                    } else {
-                        vMax = vy
-                    }
-                }
-                vy = (vMin + vMax) / 2
-            }
-            return if (0 <= velocity.y) {
-                velocity.copy(
-                    y = vMin,
+        val vx =
+            if (canMoveY) {
+                getVx(
+                    velocity = velocity,
+                    player = player,
+                    backgroundManger = backgroundManger,
                 )
             } else {
-                velocity.copy(
-                    y = vMax,
-                )
+                velocity.x
             }
-        }
 
         return Velocity(
-            x = 0f,
-            y = 0f,
+            x = vx,
+            y = vy,
         )
+    }
+
+    private fun getVy(
+        velocity: Velocity,
+        player: Player,
+        backgroundManger: BackgroundManager,
+    ): Float {
+        val dir = if (0 <= velocity.y) {
+            1
+        } else {
+            -1
+        }
+
+        var vMin = 0f
+        var vMax = abs(velocity.y)
+
+        var vy = (vMin + vMax) / 2
+
+        for (cnt: Int in 0..5) {
+            val square = player.square.getNew()
+            square.move(
+                velocity.x,
+                vy * dir,
+            )
+            if (backgroundManger.isCollided(square)) {
+                vMax = vy
+            } else {
+                vMin = vy
+            }
+            vy = (vMin + vMax) / 2
+        }
+
+        return vMin * dir
+    }
+
+    private fun getVx(
+        velocity: Velocity,
+        player: Player,
+        backgroundManger: BackgroundManager,
+    ): Float {
+        val dir = if (0 <= velocity.x) {
+            1
+        } else {
+            -1
+        }
+
+        var vMin = 0f
+        var vMax = abs(velocity.x)
+
+        var vx = (vMin + vMax) / 2
+
+        for (cnt: Int in 0..5) {
+            val square = player.square.getNew()
+            square.move(
+                vx * dir,
+                velocity.y,
+            )
+            if (backgroundManger.isCollided(square)) {
+                vMax = vx
+            } else {
+                vMin = vx
+            }
+            vx = (vMin + vMax) / 2
+        }
+
+        return vMin * dir
     }
 }
