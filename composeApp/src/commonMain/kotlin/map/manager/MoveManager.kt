@@ -100,21 +100,23 @@ class MoveManager {
 
         var vMin = 0f
         var vMax = abs(velocity.y)
-
-        var vy = (vMin + vMax) / 2
+        var average = (vMin + vMax) / 2
 
         for (cnt: Int in 0..5) {
-            val square = player.square.getNew()
-            square.move(
-                velocity.x,
-                vy * dir,
-            )
-            if (backgroundManger.isCollided(square)) {
-                vMax = vy
-            } else {
-                vMin = vy
+            getMinMaxPair(
+                player = player,
+                backgroundManger = backgroundManger,
+                max = vMax,
+                min = vMin,
+                dx = velocity.x,
+                dy = average * dir,
+                average = average,
+            ).apply {
+                vMin = first
+                vMax = second
             }
-            vy = (vMin + vMax) / 2
+
+            average = (vMin + vMax) / 2
         }
 
         return vMin * dir
@@ -133,23 +135,49 @@ class MoveManager {
 
         var vMin = 0f
         var vMax = abs(velocity.x)
-
-        var vx = (vMin + vMax) / 2
+        var average = (vMin + vMax) / 2
 
         for (cnt: Int in 0..5) {
-            val square = player.square.getNew()
-            square.move(
-                vx * dir,
-                velocity.y,
-            )
-            if (backgroundManger.isCollided(square)) {
-                vMax = vx
-            } else {
-                vMin = vx
+            getMinMaxPair(
+                player = player,
+                backgroundManger = backgroundManger,
+                max = vMax,
+                min = vMin,
+                dx = average * dir,
+                dy = velocity.y,
+                average = average,
+            ).apply {
+                vMin = first
+                vMax = second
             }
-            vx = (vMin + vMax) / 2
+
+            average = (vMin + vMax) / 2
         }
 
         return vMin * dir
+    }
+
+    private fun getMinMaxPair(
+        player: Player,
+        backgroundManger: BackgroundManager,
+        dx: Float,
+        dy: Float,
+        min: Float,
+        max: Float,
+        average: Float,
+    ): Pair<Float, Float> {
+        val square = player.square.getNew()
+
+        square.move(
+            dx,
+            dy,
+        )
+        return if (backgroundManger.isCollided(square)) {
+            // 動けないなら最大を更新
+            Pair(min, average)
+        } else {
+            // 動けるなら最小を更新
+            Pair(average, max)
+        }
     }
 }
