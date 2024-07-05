@@ -5,8 +5,8 @@ import map.domain.BackgroundCell
 import map.domain.MapData
 import map.domain.MapPoint
 import map.domain.Point
-import map.domain.Square
 import map.domain.Velocity
+import map.domain.collision.Square
 
 class BackgroundManager(
     val cellNum: Int,
@@ -262,5 +262,23 @@ class BackgroundManager(
                 }
             }
         }
+    }
+
+    /**
+     * 障害物と衝突しているかどうかをチェック
+     */
+    fun isCollided(player: Square): Boolean {
+        backgroundCellArray.forEach { rowArray ->
+            rowArray.forEach { cell ->
+                if (cell.collisionList.isNotEmpty()) {
+                    cell.collisionList.forEach {
+                        if (it.isOverlap(player)) {
+                            return true
+                        }
+                    }
+                }
+            }
+        }
+        return false
     }
 }

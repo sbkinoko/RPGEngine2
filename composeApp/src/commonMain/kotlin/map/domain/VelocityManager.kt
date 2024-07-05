@@ -1,5 +1,7 @@
 package map.domain
 
+import map.domain.collision.Square
+
 class VelocityManager {
 
     companion object {
@@ -45,12 +47,12 @@ class VelocityManager {
             }
 
             val backGroundVelocity = Velocity(
-                dx = vbx,
-                dy = vby,
+                x = vbx,
+                y = vby,
             )
             val playerVelocity = Velocity(
-                dx = vpx,
-                dy = vpy,
+                x = vpx,
+                y = vpy,
             )
 
             return Pair(playerVelocity, backGroundVelocity)

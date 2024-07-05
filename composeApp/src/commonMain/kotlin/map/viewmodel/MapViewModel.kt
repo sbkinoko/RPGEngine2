@@ -9,11 +9,12 @@ import map.data.NonLoopMap
 import map.domain.BackgroundCell
 import map.domain.Player
 import map.domain.Point
-import map.domain.Square
 import map.domain.Velocity
 import map.domain.VelocityManager
+import map.domain.collision.Square
 import map.layout.PlayerMoveSquare
 import map.manager.BackgroundManager
+import map.manager.MoveManager
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -35,6 +36,8 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
     private var backGroundVelocity: Velocity = Velocity()
     private var tentativePlayerVelocity: Velocity = Velocity()
+
+    val moveManager = MoveManager()
 
     override lateinit var pressB: () -> Unit
 
@@ -68,8 +71,12 @@ class MapViewModel : ControllerCallback, KoinComponent {
         }
 
         if (tentativePlayerVelocity.isMoving) {
-            mediateVelocity()
+            checkMove()
+            if (!canMove) {
+                return
+            }
 
+            mediateVelocity()
             player.move()
             // todo いい感じにする方法を探す
             mutablePlayerPosition.value = player.square.getNew()
@@ -109,18 +116,17 @@ class MapViewModel : ControllerCallback, KoinComponent {
         val dx = (tapPoint.x) - (player.square.x + player.size / 2)
         val dy = (tapPoint.y) - (player.square.y + player.size / 2)
         tentativePlayerVelocity = Velocity(
-            dx = dx,
-            dy = dy,
+            x = dx,
+            y = dy,
         )
     }
 
     private fun updateVelocityByStick(dx: Float, dy: Float) {
         val vx = player.maxVelocity * dx
         val vy = player.maxVelocity * dy
-
         tentativePlayerVelocity = Velocity(
-            dx = vx,
-            dy = vy,
+            x = vx,
+            y = vy,
         )
     }
 
@@ -129,8 +135,8 @@ class MapViewModel : ControllerCallback, KoinComponent {
      */
     fun resetTapPoint() {
         val velocity = Velocity(
-            dx = 0f,
-            dy = 0f,
+            x = 0f,
+            y = 0f,
         )
         tapPoint = null
 
@@ -213,6 +219,27 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
     override var pressA: () -> Unit = {
         //todo Aを押した時の処理を実装
+    }
+
+    private var canMove = true
+    private fun checkMove() {
+        val square = player.square.getNew()
+        square.move(
+            dx = tentativePlayerVelocity.x,
+            dy = tentativePlayerVelocity.y
+        )
+
+        // このままの速度で動けるなら移動
+        if (backgroundManger.value.isCollided(square).not()) {
+            return
+        }
+
+        // 動けないので動ける最大の速度を取得
+        tentativePlayerVelocity = moveManager.getMovableVelocity(
+            player = player,
+            tentativePlayerVelocity = tentativePlayerVelocity,
+            backgroundManger = backgroundManger.value
+        )
     }
 
     companion object {

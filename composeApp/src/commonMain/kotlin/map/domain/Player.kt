@@ -1,13 +1,15 @@
 package map.domain
 
+import map.domain.collision.Square
+
 class Player(
     val size: Float,
 ) {
     var square: Square
 
     private var velocity = Velocity(
-        dx = 0f,
-        dy = 0f,
+        x = 0f,
+        y = 0f,
     )
 
     val maxVelocity: Float

@@ -1,5 +1,6 @@
 package map.layout
 
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -60,6 +61,17 @@ fun showBackground(
                             contentDescription = "background"
                         )
 
+                        collisionList.forEach {
+                            Canvas(
+                                modifier = Modifier.fillMaxSize(),
+                                onDraw = {
+                                    drawPath(
+                                        path = it.toPath(screenRatio),
+                                        color = Colors.BackgroundCell,
+                                    )
+                                }
+                            )
+                        }
 
                         Text(
                             modifier = Modifier
