@@ -38,11 +38,11 @@ class BackgroundManagerTestLoopMap {
             }
             mapPoint.apply {
                 assertEquals(
-                    expected = leftTopCellMapX,
+                    expected = LEFT_TOP_CELL_MAP_X,
                     actual = x,
                 )
                 assertEquals(
-                    expected = leftTopCellMapY,
+                    expected = LEFT_TOP_CELL_MAP_Y,
                     actual = y,
                 )
             }
@@ -69,11 +69,11 @@ class BackgroundManagerTestLoopMap {
             }
             mapPoint.apply {
                 assertEquals(
-                    expected = leftTopCellMapX,
+                    expected = LEFT_TOP_CELL_MAP_X,
                     actual = x,
                 )
                 assertEquals(
-                    expected = leftTopCellMapY,
+                    expected = LEFT_TOP_CELL_MAP_Y,
                     actual = y,
                 )
             }
@@ -99,11 +99,11 @@ class BackgroundManagerTestLoopMap {
             }
             mapPoint.apply {
                 assertEquals(
-                    expected = leftTopCellMapX,
+                    expected = LEFT_TOP_CELL_MAP_X,
                     actual = x,
                 )
                 assertEquals(
-                    expected = leftTopCellMapY,
+                    expected = LEFT_TOP_CELL_MAP_Y,
                     actual = y,
                 )
             }
@@ -130,11 +130,11 @@ class BackgroundManagerTestLoopMap {
             }
             mapPoint.apply {
                 assertEquals(
-                    expected = leftTopCellMapX,
+                    expected = LEFT_TOP_CELL_MAP_X,
                     actual = x,
                 )
                 assertEquals(
-                    expected = leftTopCellMapY,
+                    expected = LEFT_TOP_CELL_MAP_Y,
                     actual = y,
                 )
             }
@@ -149,7 +149,7 @@ class BackgroundManagerTestLoopMap {
     }
 
     companion object {
-        private val leftTopCellMapX = 3
-        private val leftTopCellMapY = 3
+        private const val LEFT_TOP_CELL_MAP_X = 3
+        private const val LEFT_TOP_CELL_MAP_Y = 3
     }
 }

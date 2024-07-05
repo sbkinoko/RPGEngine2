@@ -2,6 +2,7 @@ package map.domain
 
 import map.domain.collision.CollisionDetectShape
 import map.domain.collision.Square
+import map.repository.CollisionRepository
 
 class BackgroundCell(
     cellSize: Float,
@@ -20,21 +21,16 @@ class BackgroundCell(
     )
 
     var collisionList: List<CollisionDetectShape> = emptyList()
+    private val collisionRepository = CollisionRepository()
 
     var imgID: Int = 0
         set(value) {
             field = value
-            if (value == 2) {
-                collisionList = listOf(
-                    Square(
-                        x = square.x,
-                        y = square.y,
-                        size = cellSize
-                    )
-                )
-            } else {
-                collisionList = emptyList()
-            }
+            collisionList = collisionRepository.getCollisionDate(
+                cellSize = cellSize,
+                square = square,
+                id = value,
+            )
         }
 
     var isPlayerIncludeCell = false

@@ -1,5 +1,6 @@
-package map.domain
+package map.manager
 
+import map.domain.Velocity
 import map.domain.collision.Square
 
 class VelocityManager {

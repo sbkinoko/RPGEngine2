@@ -5,7 +5,9 @@ import map.domain.collision.Square
 class Player(
     val size: Float,
 ) {
-    var square: Square
+    var square: Square = Square(
+        size = size,
+    )
 
     private var velocity = Velocity(
         x = 0f,
@@ -14,12 +16,6 @@ class Player(
 
     val maxVelocity: Float
         get() = velocity.maxVelocity
-
-    init {
-        square = Square(
-            size = size,
-        )
-    }
 
     fun move() {
         square.move(
@@ -34,7 +30,7 @@ class Player(
         this.velocity = velocity
     }
 
-    fun moveTo(
+    private fun moveTo(
         x: Float,
         y: Float,
     ) {

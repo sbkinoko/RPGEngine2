@@ -126,9 +126,4 @@ open class Square(
         path.close()
         return path
     }
-
-    fun printPosition() {
-        println("x = ${displayPoint.x}")
-        println("y = ${displayPoint.y}")
-    }
 }
