@@ -10,11 +10,11 @@ import map.domain.BackgroundCell
 import map.domain.Player
 import map.domain.Point
 import map.domain.Velocity
-import map.domain.VelocityManager
 import map.domain.collision.Square
 import map.layout.PlayerMoveSquare
 import map.manager.BackgroundManager
 import map.manager.MoveManager
+import map.manager.VelocityManager
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 

@@ -1,5 +1,8 @@
-package map.domain
+package map.manager
 
+import map.domain.Player
+import map.domain.Point
+import map.domain.Velocity
 import map.layout.PlayerMoveSquare
 import map.viewmodel.MapViewModel
 import kotlin.test.Test
