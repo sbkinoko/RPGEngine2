@@ -59,26 +59,26 @@ class MoveManager {
         canMoveX: Boolean,
         canMoveY: Boolean,
     ): Velocity {
-        val vy =
-            if (canMoveX) {
-                getVy(
-                    velocity = velocity,
-                    player = player,
-                    backgroundManger = backgroundManger,
-                )
-            } else {
-                velocity.y
-            }
-
         val vx =
-            if (canMoveY) {
+            if (canMoveX) {
+                velocity.x
+            } else {
                 getVx(
                     velocity = velocity,
                     player = player,
                     backgroundManger = backgroundManger,
                 )
+            }
+
+        val vy =
+            if (canMoveY) {
+                velocity.y
             } else {
-                velocity.x
+                getVy(
+                    velocity = velocity,
+                    player = player,
+                    backgroundManger = backgroundManger,
+                )
             }
 
         return Velocity(
@@ -92,34 +92,23 @@ class MoveManager {
         player: Player,
         backgroundManger: BackgroundManager,
     ): Float {
-        val dir = if (0 <= velocity.y) {
-            1
-        } else {
-            -1
-        }
-
-        var vMin = 0f
-        var vMax = abs(velocity.y)
-        var average = (vMin + vMax) / 2
+        val dir = velocity.y.toDir()
+        var section = Section(
+            min = 0f,
+            max = abs(velocity.y),
+        )
 
         for (cnt: Int in 0..5) {
-            getMinMaxPair(
+            section = getNewSection(
                 player = player,
                 backgroundManger = backgroundManger,
-                max = vMax,
-                min = vMin,
                 dx = velocity.x,
-                dy = average * dir,
-                average = average,
-            ).apply {
-                vMin = first
-                vMax = second
-            }
-
-            average = (vMin + vMax) / 2
+                dy = section.average * dir,
+                section = section,
+            )
         }
 
-        return vMin * dir
+        return section.min * dir
     }
 
     private fun getVx(
@@ -127,57 +116,65 @@ class MoveManager {
         player: Player,
         backgroundManger: BackgroundManager,
     ): Float {
-        val dir = if (0 <= velocity.x) {
-            1
-        } else {
-            -1
-        }
-
-        var vMin = 0f
-        var vMax = abs(velocity.x)
-        var average = (vMin + vMax) / 2
+        val dir = velocity.x.toDir()
+        var section = Section(
+            min = 0f,
+            max = abs(velocity.x),
+        )
 
         for (cnt: Int in 0..5) {
-            getMinMaxPair(
+            section = getNewSection(
                 player = player,
                 backgroundManger = backgroundManger,
-                max = vMax,
-                min = vMin,
-                dx = average * dir,
+                dx = section.average * dir,
                 dy = velocity.y,
-                average = average,
-            ).apply {
-                vMin = first
-                vMax = second
-            }
-
-            average = (vMin + vMax) / 2
+                section = section,
+            )
         }
 
-        return vMin * dir
+        return section.min * dir
     }
 
-    private fun getMinMaxPair(
+    private fun getNewSection(
         player: Player,
         backgroundManger: BackgroundManager,
         dx: Float,
         dy: Float,
-        min: Float,
-        max: Float,
-        average: Float,
-    ): Pair<Float, Float> {
+        section: Section,
+    ): Section {
         val square = player.square.getNew()
 
         square.move(
             dx,
             dy,
         )
+
         return if (backgroundManger.isCollided(square)) {
             // 動けないなら最大を更新
-            Pair(min, average)
+            section.copy(
+                max = section.average,
+            )
         } else {
             // 動けるなら最小を更新
-            Pair(average, max)
+            section.copy(
+                min = section.average,
+            )
         }
+    }
+
+    private fun Float.toDir(): Int {
+        return if (0 <= this) {
+            1
+        } else {
+            -1
+        }
+    }
+
+    private data class Section(
+        val min: Float,
+        val max: Float,
+    ) {
+        val average: Float
+            get() = (min + max) / 2
     }
 }
