@@ -234,13 +234,13 @@ class MapViewModel : ControllerCallback, KoinComponent {
             return
         }
 
+        // 動けないので動ける最大の速度を取得
         tentativePlayerVelocity = moveManager.getMovableVelocity(
             player = player,
             tentativePlayerVelocity = tentativePlayerVelocity,
             backgroundManger = backgroundManger.value
         )
     }
-
 
     companion object {
         const val MOVE_BORDER = 0.3f
