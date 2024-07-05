@@ -264,6 +264,9 @@ class BackgroundManager(
         }
     }
 
+    /**
+     * 障害物と衝突しているかどうかをチェック
+     */
     fun isCollided(player: Square): Boolean {
         backgroundCellArray.forEach { rowArray ->
             rowArray.forEach { cell ->

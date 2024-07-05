@@ -31,8 +31,8 @@ class VelocityMediatorTest {
     fun checkPlayerMove() {
         check(
             velocity = Velocity(
-                dx = 3f,
-                dy = 4f,
+                x = 3f,
+                y = 4f,
             ),
             player = Player(
                 size = MapViewModel.VIRTUAL_PLAYER_SIZE,
@@ -58,8 +58,8 @@ class VelocityMediatorTest {
     fun checkMoveInLeftToLeft() {
         check(
             velocity = Velocity(
-                dx = -3f,
-                dy = 0f,
+                x = -3f,
+                y = 0f,
             ),
             player = Player(
                 size = MapViewModel.VIRTUAL_PLAYER_SIZE,
@@ -85,8 +85,8 @@ class VelocityMediatorTest {
     fun checkMoveInLeftToRight() {
         check(
             velocity = Velocity(
-                dx = 3f,
-                dy = 0f,
+                x = 3f,
+                y = 0f,
             ),
             player = Player(
                 size = MapViewModel.VIRTUAL_PLAYER_SIZE,
@@ -112,8 +112,8 @@ class VelocityMediatorTest {
     fun checkMoveInRightToLeft() {
         check(
             velocity = Velocity(
-                dx = -3f,
-                dy = 0f,
+                x = -3f,
+                y = 0f,
             ),
             player = Player(
                 size = MapViewModel.VIRTUAL_PLAYER_SIZE,
@@ -139,8 +139,8 @@ class VelocityMediatorTest {
     fun checkMoveInRightToRight() {
         check(
             velocity = Velocity(
-                dx = 3f,
-                dy = 0f,
+                x = 3f,
+                y = 0f,
             ),
             player = Player(
                 size = MapViewModel.VIRTUAL_PLAYER_SIZE,
@@ -166,8 +166,8 @@ class VelocityMediatorTest {
     fun checkMoveInTopToTop() {
         check(
             velocity = Velocity(
-                dx = 0f,
-                dy = -4f,
+                x = 0f,
+                y = -4f,
             ),
             player = Player(
                 size = MapViewModel.VIRTUAL_PLAYER_SIZE,
@@ -193,8 +193,8 @@ class VelocityMediatorTest {
     fun checkMoveInTopToBottom() {
         check(
             velocity = Velocity(
-                dx = 0f,
-                dy = 4f,
+                x = 0f,
+                y = 4f,
             ),
             player = Player(
                 size = MapViewModel.VIRTUAL_PLAYER_SIZE,
@@ -220,8 +220,8 @@ class VelocityMediatorTest {
     fun checkMoveInBottomToTop() {
         check(
             velocity = Velocity(
-                dx = 0f,
-                dy = -4f,
+                x = 0f,
+                y = -4f,
             ),
             player = Player(
                 size = MapViewModel.VIRTUAL_PLAYER_SIZE,
@@ -247,8 +247,8 @@ class VelocityMediatorTest {
     fun checkMoveInBottomToBottom() {
         check(
             velocity = Velocity(
-                dx = 0f,
-                dy = 4f,
+                x = 0f,
+                y = 4f,
             ),
             player = Player(
                 size = MapViewModel.VIRTUAL_PLAYER_SIZE,

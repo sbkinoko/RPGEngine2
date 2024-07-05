@@ -8,8 +8,8 @@ class Player(
     var square: Square
 
     private var velocity = Velocity(
-        dx = 0f,
-        dy = 0f,
+        x = 0f,
+        y = 0f,
     )
 
     val maxVelocity: Float

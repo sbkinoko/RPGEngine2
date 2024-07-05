@@ -113,8 +113,8 @@ class MapViewModel : ControllerCallback, KoinComponent {
         val dx = (tapPoint.x) - (player.square.x + player.size / 2)
         val dy = (tapPoint.y) - (player.square.y + player.size / 2)
         tentativePlayerVelocity = Velocity(
-            dx = dx,
-            dy = dy,
+            x = dx,
+            y = dy,
         )
     }
 
@@ -122,8 +122,8 @@ class MapViewModel : ControllerCallback, KoinComponent {
         val vx = player.maxVelocity * dx
         val vy = player.maxVelocity * dy
         tentativePlayerVelocity = Velocity(
-            dx = vx,
-            dy = vy,
+            x = vx,
+            y = vy,
         )
     }
 
@@ -132,8 +132,8 @@ class MapViewModel : ControllerCallback, KoinComponent {
      */
     fun resetTapPoint() {
         val velocity = Velocity(
-            dx = 0f,
-            dy = 0f,
+            x = 0f,
+            y = 0f,
         )
         tapPoint = null
 
@@ -225,7 +225,102 @@ class MapViewModel : ControllerCallback, KoinComponent {
             dx = tentativePlayerVelocity.x,
             dy = tentativePlayerVelocity.y
         )
-        canMove = !backgroundManger.value.isCollided(square)
+
+        // このままの速度で動けるなら移動
+        if (backgroundManger.value.isCollided(square).not()) {
+            return
+        }
+
+        //　x方向だけの移動ができるかチェック
+        val onlyMoveX = player.square.getNew()
+        onlyMoveX.move(
+            dx = tentativePlayerVelocity.x,
+            dy = 0f,
+        )
+        var canMoveX =
+            backgroundManger.value.isCollided(onlyMoveX).not()
+
+        //　y方向だけの移動ができるかチェック
+        val onlyMoveY = player.square.getNew()
+        onlyMoveY.move(
+            dx = 0f,
+            dy = tentativePlayerVelocity.y,
+        )
+        var canMoveY =
+            backgroundManger.value.isCollided(onlyMoveY).not()
+
+        if (canMoveX && canMoveY) {
+            if (tentativePlayerVelocity.y <= tentativePlayerVelocity.x) {
+//                canMoveX = true
+                canMoveY = false
+            } else {
+                canMoveX = false
+//                canMoveY = true
+            }
+        }
+
+        tentativePlayerVelocity = changeVelocity(
+            tentativePlayerVelocity,
+            canMoveX,
+            canMoveY,
+        )
+    }
+
+    private fun changeVelocity(
+        velocity: Velocity,
+        canMoveX: Boolean,
+        canMoveY: Boolean,
+    ): Velocity {
+        if (canMoveX) {
+            var vMin = if (velocity.y < 0) {
+                velocity.y
+            } else {
+                0f
+            }
+            var vMax = if (velocity.y < 0) {
+                0f
+            } else {
+                velocity.y
+            }
+
+            var vy = (vMin + vMax) / 2
+
+            for (cnt: Int in 0..5) {
+                val square = player.square.getNew()
+                square.move(
+                    velocity.x,
+                    vy,
+                )
+                if (backgroundManger.value.isCollided(square)) {
+                    if (0 <= velocity.y) {
+                        vMax = vy
+                    } else {
+                        vMin = vy
+                    }
+                } else {
+                    if (0 <= velocity.y) {
+                        vMin = vy
+                    } else {
+                        vMax = vy
+                    }
+                }
+                vy = (vMin + vMax) / 2
+            }
+            return if (0 <= velocity.y) {
+                velocity.copy(
+                    y = vMin,
+                )
+            } else {
+                velocity.copy(
+                    y = vMax,
+                )
+            }
+        }
+
+        return Velocity(
+            x = 0f,
+            y = 0f,
+        )
     }
 
     companion object {
