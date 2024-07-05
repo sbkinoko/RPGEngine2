@@ -21,6 +21,7 @@ import org.koin.core.component.inject
 class MapViewModel : ControllerCallback, KoinComponent {
     val player: Player by inject()
 
+    // fixme repositoryにしまう
     private val mutablePlayerPosition: MutableStateFlow<Square> = MutableStateFlow(player.square)
     val playerPosition: StateFlow<Square> = mutablePlayerPosition.asStateFlow()
 
