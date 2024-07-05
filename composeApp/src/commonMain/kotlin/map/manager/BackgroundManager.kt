@@ -16,11 +16,15 @@ class BackgroundManager(
     private lateinit var backgroundCellArray: Array<Array<BackgroundCell>>
 
     private val diffOfLoop: Float
-    val allCellNum: Int
+    val allCellNum: Int = cellNum + 1
 
-    private val fieldSquare: Square
+    private val fieldSquare: Square = Square(
+        x = 0f,
+        y = 0f,
+        size = sideLength.toFloat(),
+    )
 
-    private val cellSize: Float
+    private val cellSize: Float = sideLength / cellNum.toFloat()
 
     private var playerIncludeCell: BackgroundCell? = null
     private var prePlayerIncludeCell: BackgroundCell? = null
@@ -43,13 +47,6 @@ class BackgroundManager(
     }
 
     init {
-        fieldSquare = Square(
-            x = 0f,
-            y = 0f,
-            size = sideLength.toFloat(),
-        )
-        cellSize = sideLength / cellNum.toFloat()
-        allCellNum = cellNum + 1
         diffOfLoop = cellSize * (allCellNum)
         this.mapData = mapData
         resetBackgroundCellPosition()

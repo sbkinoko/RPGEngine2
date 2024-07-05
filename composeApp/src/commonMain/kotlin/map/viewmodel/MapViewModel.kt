@@ -21,13 +21,18 @@ import org.koin.core.component.inject
 class MapViewModel : ControllerCallback, KoinComponent {
     val player: Player by inject()
 
-    private val mutablePlayerPosition: MutableStateFlow<Square>
-    val playerPosition: StateFlow<Square>
+    private val mutablePlayerPosition: MutableStateFlow<Square> = MutableStateFlow(player.square)
+    val playerPosition: StateFlow<Square> = mutablePlayerPosition.asStateFlow()
 
     private var tapPoint: Point? = null
 
     private var mutableBackgroundManager:
-            MutableStateFlow<BackgroundManager>
+            MutableStateFlow<BackgroundManager> = MutableStateFlow(
+        BackgroundManager(
+            cellNum = 5,
+            sideLength = VIRTUAL_SCREEN_SIZE,
+        )
+    )
 
     val backgroundManger: StateFlow<BackgroundManager>
         get() = mutableBackgroundManager.asStateFlow()
@@ -37,21 +42,12 @@ class MapViewModel : ControllerCallback, KoinComponent {
     private var backGroundVelocity: Velocity = Velocity()
     private var tentativePlayerVelocity: Velocity = Velocity()
 
-    val moveManager = MoveManager()
+    private val moveManager = MoveManager()
 
     override lateinit var pressB: () -> Unit
 
 
     init {
-        mutablePlayerPosition = MutableStateFlow(player.square)
-        playerPosition = mutablePlayerPosition.asStateFlow()
-
-        mutableBackgroundManager = MutableStateFlow(
-            BackgroundManager(
-                cellNum = 5,
-                sideLength = VIRTUAL_SCREEN_SIZE,
-            )
-        )
         backgroundManger.value.setMapData(LoopMap())
 
         playerMoveArea = PlayerMoveSquare(

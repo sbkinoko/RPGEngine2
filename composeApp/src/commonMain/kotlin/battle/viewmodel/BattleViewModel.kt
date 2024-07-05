@@ -218,7 +218,7 @@ class BattleViewModel :
         )
     }
 
-    fun selectAttackEnemy(playerId: Int) {
+    private fun selectAttackEnemy(playerId: Int) {
         // 行動を保存
         actionRepository.setAction(
             playerId = playerId,
