@@ -7,8 +7,8 @@ class VelocityTest {
     @Test
     fun max5x3y4() {
         val velocity = Velocity(
-            dx = 3f,
-            dy = 4f,
+            x = 3f,
+            y = 4f,
             maxVelocity = 5f,
         )
         assertEquals(
@@ -24,8 +24,8 @@ class VelocityTest {
     @Test
     fun max5x6y8() {
         val velocity = Velocity(
-            dx = 6f,
-            dy = 8f,
+            x = 6f,
+            y = 8f,
             maxVelocity = 5f,
         )
         assertEquals(
@@ -41,8 +41,8 @@ class VelocityTest {
     @Test
     fun max10x3y4() {
         val velocity = Velocity(
-            dx = 3f,
-            dy = 4f,
+            x = 3f,
+            y = 4f,
             maxVelocity = 5f,
         )
         assertEquals(

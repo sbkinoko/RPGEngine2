@@ -14,6 +14,7 @@ import map.domain.VelocityManager
 import map.domain.collision.Square
 import map.layout.PlayerMoveSquare
 import map.manager.BackgroundManager
+import map.manager.MoveManager
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -35,6 +36,8 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
     private var backGroundVelocity: Velocity = Velocity()
     private var tentativePlayerVelocity: Velocity = Velocity()
+
+    val moveManager = MoveManager()
 
     override lateinit var pressB: () -> Unit
 
@@ -113,8 +116,8 @@ class MapViewModel : ControllerCallback, KoinComponent {
         val dx = (tapPoint.x) - (player.square.x + player.size / 2)
         val dy = (tapPoint.y) - (player.square.y + player.size / 2)
         tentativePlayerVelocity = Velocity(
-            dx = dx,
-            dy = dy,
+            x = dx,
+            y = dy,
         )
     }
 
@@ -122,8 +125,8 @@ class MapViewModel : ControllerCallback, KoinComponent {
         val vx = player.maxVelocity * dx
         val vy = player.maxVelocity * dy
         tentativePlayerVelocity = Velocity(
-            dx = vx,
-            dy = vy,
+            x = vx,
+            y = vy,
         )
     }
 
@@ -132,8 +135,8 @@ class MapViewModel : ControllerCallback, KoinComponent {
      */
     fun resetTapPoint() {
         val velocity = Velocity(
-            dx = 0f,
-            dy = 0f,
+            x = 0f,
+            y = 0f,
         )
         tapPoint = null
 
@@ -225,7 +228,18 @@ class MapViewModel : ControllerCallback, KoinComponent {
             dx = tentativePlayerVelocity.x,
             dy = tentativePlayerVelocity.y
         )
-        canMove = !backgroundManger.value.isCollided(square)
+
+        // このままの速度で動けるなら移動
+        if (backgroundManger.value.isCollided(square).not()) {
+            return
+        }
+
+        // 動けないので動ける最大の速度を取得
+        tentativePlayerVelocity = moveManager.getMovableVelocity(
+            player = player,
+            tentativePlayerVelocity = tentativePlayerVelocity,
+            backgroundManger = backgroundManger.value
+        )
     }
 
     companion object {
