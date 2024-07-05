@@ -47,15 +47,10 @@ fun Stick(
 
     LaunchedEffect(Unit) {
         while (true) {
-            if (
-                stickPosition.ratioX != 0f ||
-                stickPosition.ratioY != 0f
-            ) {
-                controllerCallback.moveStick(
-                    dx = stickPosition.ratioX,
-                    dy = stickPosition.ratioY,
-                )
-            }
+            controllerCallback.moveStick(
+                dx = stickPosition.ratioX,
+                dy = stickPosition.ratioY,
+            )
             delay(30)
         }
     }
