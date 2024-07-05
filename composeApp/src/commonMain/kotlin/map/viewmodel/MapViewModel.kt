@@ -14,6 +14,7 @@ import map.domain.VelocityManager
 import map.domain.collision.Square
 import map.layout.PlayerMoveSquare
 import map.manager.BackgroundManager
+import map.manager.MoveManager
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -35,6 +36,8 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
     private var backGroundVelocity: Velocity = Velocity()
     private var tentativePlayerVelocity: Velocity = Velocity()
+
+    val moveManager = MoveManager()
 
     override lateinit var pressB: () -> Unit
 
@@ -231,97 +234,13 @@ class MapViewModel : ControllerCallback, KoinComponent {
             return
         }
 
-        //　x方向だけの移動ができるかチェック
-        val onlyMoveX = player.square.getNew()
-        onlyMoveX.move(
-            dx = tentativePlayerVelocity.x,
-            dy = 0f,
-        )
-        var canMoveX =
-            backgroundManger.value.isCollided(onlyMoveX).not()
-
-        //　y方向だけの移動ができるかチェック
-        val onlyMoveY = player.square.getNew()
-        onlyMoveY.move(
-            dx = 0f,
-            dy = tentativePlayerVelocity.y,
-        )
-        var canMoveY =
-            backgroundManger.value.isCollided(onlyMoveY).not()
-
-        if (canMoveX && canMoveY) {
-            if (tentativePlayerVelocity.y <= tentativePlayerVelocity.x) {
-//                canMoveX = true
-                canMoveY = false
-            } else {
-                canMoveX = false
-//                canMoveY = true
-            }
-        }
-
-        tentativePlayerVelocity = changeVelocity(
-            tentativePlayerVelocity,
-            canMoveX,
-            canMoveY,
+        tentativePlayerVelocity = moveManager.getMovableVelocity(
+            player = player,
+            tentativePlayerVelocity = tentativePlayerVelocity,
+            backgroundManger = backgroundManger.value
         )
     }
 
-    private fun changeVelocity(
-        velocity: Velocity,
-        canMoveX: Boolean,
-        canMoveY: Boolean,
-    ): Velocity {
-        if (canMoveX) {
-            var vMin = if (velocity.y < 0) {
-                velocity.y
-            } else {
-                0f
-            }
-            var vMax = if (velocity.y < 0) {
-                0f
-            } else {
-                velocity.y
-            }
-
-            var vy = (vMin + vMax) / 2
-
-            for (cnt: Int in 0..5) {
-                val square = player.square.getNew()
-                square.move(
-                    velocity.x,
-                    vy,
-                )
-                if (backgroundManger.value.isCollided(square)) {
-                    if (0 <= velocity.y) {
-                        vMax = vy
-                    } else {
-                        vMin = vy
-                    }
-                } else {
-                    if (0 <= velocity.y) {
-                        vMin = vy
-                    } else {
-                        vMax = vy
-                    }
-                }
-                vy = (vMin + vMax) / 2
-            }
-            return if (0 <= velocity.y) {
-                velocity.copy(
-                    y = vMin,
-                )
-            } else {
-                velocity.copy(
-                    y = vMax,
-                )
-            }
-        }
-
-        return Velocity(
-            x = 0f,
-            y = 0f,
-        )
-    }
 
     companion object {
         const val MOVE_BORDER = 0.3f
