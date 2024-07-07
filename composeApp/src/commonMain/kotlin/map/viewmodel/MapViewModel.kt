@@ -2,6 +2,7 @@ package map.viewmodel
 
 import controller.domain.ControllerCallback
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import map.data.LoopMap
@@ -15,15 +16,19 @@ import map.layout.PlayerMoveSquare
 import map.manager.BackgroundManager
 import map.manager.MoveManager
 import map.manager.VelocityManager
+import map.repository.player.PlayerRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class MapViewModel : ControllerCallback, KoinComponent {
     val player: Player by inject()
+    private val playerRepository: PlayerRepository by inject()
 
     // fixme repositoryにしまう
     private val mutablePlayerPosition: MutableStateFlow<Square> = MutableStateFlow(player.square)
     val playerPosition: StateFlow<Square> = mutablePlayerPosition.asStateFlow()
+
+    val playerSquare: SharedFlow<Square> = playerRepository.playerPositionFLow
 
     private var tapPoint: Point? = null
 

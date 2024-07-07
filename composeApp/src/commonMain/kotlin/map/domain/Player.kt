@@ -5,12 +5,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import map.domain.collision.Square
 import map.repository.player.PlayerRepository
+import map.usecase.PlayerMoveToUseCase
 import map.usecase.PlayerMoveUseCase
 
 class Player(
     val size: Float,
     private val playerRepository: PlayerRepository,
     private val playerMoveUseCase: PlayerMoveUseCase,
+    private val playerMoveToUseCase: PlayerMoveToUseCase,
 ) {
     var square: Square = Square(
         size = size,
@@ -48,22 +50,15 @@ class Player(
         this.velocity = velocity
     }
 
-    private fun moveTo(
-        x: Float,
-        y: Float,
-    ) {
-        square.moveTo(
-            x = x - size / 2,
-            y = y - size / 2
-        )
-    }
-
     fun moveTo(
         point: Point
     ) {
-        moveTo(
-            x = point.x,
-            y = point.y,
-        )
+        CoroutineScope(Dispatchers.Default).launch {
+            playerMoveToUseCase(
+                x = point.x - size / 2,
+                y = point.y - size / 2,
+            )
+            square = playerRepository.getPlayerPosition()
+        }
     }
 }

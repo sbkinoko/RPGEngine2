@@ -3,6 +3,7 @@ package map
 import map.domain.Player
 import map.repository.player.PlayerRepository
 import map.repository.player.PlayerRepositoryImpl
+import map.usecase.PlayerMoveToUseCase
 import map.usecase.PlayerMoveUseCase
 import map.viewmodel.MapViewModel
 import org.koin.dsl.module
@@ -13,6 +14,7 @@ val MapModule = module {
             MapViewModel.VIRTUAL_PLAYER_SIZE,
             playerRepository = get(),
             playerMoveUseCase = get(),
+            playerMoveToUseCase = get(),
         )
     }
 
@@ -22,7 +24,13 @@ val MapModule = module {
 
     single {
         PlayerMoveUseCase(
-            playerRepository = get()
+            playerRepository = get(),
+        )
+    }
+
+    single {
+        PlayerMoveToUseCase(
+            playerRepository = get(),
         )
     }
 }
