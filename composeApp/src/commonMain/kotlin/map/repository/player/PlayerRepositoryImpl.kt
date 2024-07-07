@@ -5,18 +5,20 @@ import map.domain.collision.Square
 
 class PlayerRepositoryImpl : PlayerRepository {
     override val playerPositionFLow: MutableSharedFlow<Square>
-        get() = TODO("Not yet implemented")
+        get() = MutableSharedFlow()
 
+    private lateinit var playerPosition: Square
 
     override fun getPlayerPosition(): Square {
-        TODO("Not yet implemented")
+        return playerPosition
     }
 
     override suspend fun setPlayerPosition(square: Square) {
-        TODO("Not yet implemented")
+        playerPosition = square
+        playerPositionFLow.emit(playerPosition)
     }
 
     override suspend fun reload() {
-        TODO("Not yet implemented")
+        playerPositionFLow.emit(playerPosition)
     }
 }
