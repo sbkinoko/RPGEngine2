@@ -2,6 +2,7 @@ package map
 
 import map.domain.Player
 import map.manager.MoveManager
+import map.manager.VelocityManager
 import map.repository.player.PlayerRepository
 import map.repository.player.PlayerRepositoryImpl
 import map.usecase.PlayerMoveToUseCase
@@ -37,6 +38,12 @@ val MapModule = module {
 
     single {
         MoveManager(
+            playerRepository = get(),
+        )
+    }
+
+    single {
+        VelocityManager(
             playerRepository = get(),
         )
     }

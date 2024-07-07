@@ -24,6 +24,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
     val player: Player by inject()
     private val playerRepository: PlayerRepository by inject()
     private val moveManager: MoveManager by inject()
+    private val velocityManager: VelocityManager by inject()
 
     // fixme repositoryにしまう
     private val mutablePlayerPosition: MutableStateFlow<Square> = MutableStateFlow(player.square)
@@ -148,9 +149,8 @@ class MapViewModel : ControllerCallback, KoinComponent {
      * playerを動かすか、背景を動かすか決定する
      */
     private fun mediateVelocity() {
-        val mediatedVelocity = VelocityManager.manageVelocity(
+        val mediatedVelocity = velocityManager.manageVelocity(
             tentativePlayerVelocity = tentativePlayerVelocity,
-            player = player.square,
             playerMoveArea = playerMoveArea,
         )
         player.updateVelocity(mediatedVelocity.first)
