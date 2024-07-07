@@ -1,14 +1,39 @@
 package map.manager
 
-import map.domain.Player
-import map.domain.Point
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
+import map.MapModule
 import map.domain.Velocity
 import map.layout.PlayerMoveSquare
+import map.usecase.PlayerMoveToUseCase
 import map.viewmodel.MapViewModel
+import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
+import org.koin.test.KoinTest
+import org.koin.test.inject
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class VelocityMediatorTest {
+class VelocityMediatorTest : KoinTest {
+
+    private val velocityManager: VelocityManager by inject()
+    private val moveToUseCase: PlayerMoveToUseCase by inject()
+
+    @BeforeTest
+    fun beforeTest() {
+        startKoin {
+            modules(
+                MapModule
+            )
+        }
+    }
+
+    @AfterTest
+    fun afterTest() {
+        stopKoin()
+    }
 
     /**
      * 動かない
@@ -17,9 +42,6 @@ class VelocityMediatorTest {
     fun checkNoMove() {
         check(
             velocity = Velocity(),
-            player = Player(
-                size = MapViewModel.VIRTUAL_PLAYER_SIZE,
-            ),
             vpx = 0f,
             vpy = 0f,
             vbx = 0f,
@@ -32,26 +54,24 @@ class VelocityMediatorTest {
      */
     @Test
     fun checkPlayerMove() {
-        check(
-            velocity = Velocity(
-                x = 3f,
-                y = 4f,
-            ),
-            player = Player(
-                size = MapViewModel.VIRTUAL_PLAYER_SIZE,
-            ).apply {
-                moveTo(
-                    point = Point(
-                        x = CENTER,
-                        y = CENTER,
-                    )
-                )
-            },
-            vpx = 3f,
-            vpy = 4f,
-            vbx = 0f,
-            vby = 0f,
-        )
+        runBlocking {
+            moveToUseCase(
+                x = CENTER,
+                y = CENTER,
+            )
+            delay(100)
+
+            check(
+                velocity = Velocity(
+                    x = 3f,
+                    y = 4f,
+                ),
+                vpx = 3f,
+                vpy = 4f,
+                vbx = 0f,
+                vby = 0f,
+            )
+        }
     }
 
     /**
@@ -59,26 +79,23 @@ class VelocityMediatorTest {
      */
     @Test
     fun checkMoveInLeftToLeft() {
-        check(
-            velocity = Velocity(
-                x = -3f,
-                y = 0f,
-            ),
-            player = Player(
-                size = MapViewModel.VIRTUAL_PLAYER_SIZE,
-            ).apply {
-                moveTo(
-                    point = Point(
-                        x = SMALL_BORDER,
-                        y = CENTER,
-                    )
-                )
-            },
-            vpx = 0f,
-            vpy = 0f,
-            vbx = 3f,
-            vby = 0f,
-        )
+        runBlocking {
+            moveToUseCase(
+                x = SMALL_BORDER,
+                y = CENTER,
+            )
+            delay(100)
+            check(
+                velocity = Velocity(
+                    x = -3f,
+                    y = 0f,
+                ),
+                vpx = 0f,
+                vpy = 0f,
+                vbx = 3f,
+                vby = 0f,
+            )
+        }
     }
 
     /**
@@ -86,26 +103,24 @@ class VelocityMediatorTest {
      */
     @Test
     fun checkMoveInLeftToRight() {
-        check(
-            velocity = Velocity(
-                x = 3f,
-                y = 0f,
-            ),
-            player = Player(
-                size = MapViewModel.VIRTUAL_PLAYER_SIZE,
-            ).apply {
-                moveTo(
-                    point = Point(
-                        x = SMALL_BORDER,
-                        y = CENTER,
-                    )
-                )
-            },
-            vpx = 3f,
-            vpy = 0f,
-            vbx = 0f,
-            vby = 0f,
-        )
+        runBlocking {
+            moveToUseCase(
+                x = SMALL_BORDER,
+                y = CENTER,
+            )
+            delay(100)
+
+            check(
+                velocity = Velocity(
+                    x = 3f,
+                    y = 0f,
+                ),
+                vpx = 3f,
+                vpy = 0f,
+                vbx = 0f,
+                vby = 0f,
+            )
+        }
     }
 
     /**
@@ -113,26 +128,23 @@ class VelocityMediatorTest {
      */
     @Test
     fun checkMoveInRightToLeft() {
-        check(
-            velocity = Velocity(
-                x = -3f,
-                y = 0f,
-            ),
-            player = Player(
-                size = MapViewModel.VIRTUAL_PLAYER_SIZE,
-            ).apply {
-                moveTo(
-                    Point(
-                        x = LARGE_BORDER,
-                        y = CENTER,
-                    )
-                )
-            },
-            vpx = -3f,
-            vpy = 0f,
-            vbx = 0f,
-            vby = 0f,
-        )
+        runBlocking {
+            moveToUseCase(
+                x = LARGE_BORDER,
+                y = CENTER,
+            )
+            delay(100)
+            check(
+                velocity = Velocity(
+                    x = -3f,
+                    y = 0f,
+                ),
+                vpx = -3f,
+                vpy = 0f,
+                vbx = 0f,
+                vby = 0f,
+            )
+        }
     }
 
     /**
@@ -140,26 +152,22 @@ class VelocityMediatorTest {
      */
     @Test
     fun checkMoveInRightToRight() {
-        check(
-            velocity = Velocity(
-                x = 3f,
-                y = 0f,
-            ),
-            player = Player(
-                size = MapViewModel.VIRTUAL_PLAYER_SIZE,
-            ).apply {
-                moveTo(
-                    point = Point(
-                        x = LARGE_BORDER,
-                        y = CENTER,
-                    )
-                )
-            },
-            vpx = 0f,
-            vpy = 0f,
-            vbx = -3f,
-            vby = 0f,
-        )
+        runBlocking {
+            moveToUseCase(
+                x = LARGE_BORDER,
+                y = CENTER,
+            )
+            check(
+                velocity = Velocity(
+                    x = 3f,
+                    y = 0f,
+                ),
+                vpx = 0f,
+                vpy = 0f,
+                vbx = -3f,
+                vby = 0f,
+            )
+        }
     }
 
     /**
@@ -167,26 +175,24 @@ class VelocityMediatorTest {
      */
     @Test
     fun checkMoveInTopToTop() {
-        check(
-            velocity = Velocity(
-                x = 0f,
-                y = -4f,
-            ),
-            player = Player(
-                size = MapViewModel.VIRTUAL_PLAYER_SIZE,
-            ).apply {
-                moveTo(
-                    point = Point(
-                        x = CENTER,
-                        y = SMALL_BORDER,
-                    )
-                )
-            },
-            vpx = 0f,
-            vpy = 0f,
-            vbx = 0f,
-            vby = 4f,
-        )
+        runBlocking {
+            moveToUseCase(
+                x = CENTER,
+                y = SMALL_BORDER,
+            )
+            delay(100)
+
+            check(
+                velocity = Velocity(
+                    x = 0f,
+                    y = -4f,
+                ),
+                vpx = 0f,
+                vpy = 0f,
+                vbx = 0f,
+                vby = 4f,
+            )
+        }
     }
 
     /**
@@ -194,26 +200,24 @@ class VelocityMediatorTest {
      */
     @Test
     fun checkMoveInTopToBottom() {
-        check(
-            velocity = Velocity(
-                x = 0f,
-                y = 4f,
-            ),
-            player = Player(
-                size = MapViewModel.VIRTUAL_PLAYER_SIZE,
-            ).apply {
-                moveTo(
-                    point = Point(
-                        x = CENTER,
-                        y = SMALL_BORDER,
-                    )
-                )
-            },
-            vpx = 0f,
-            vpy = 4f,
-            vbx = 0f,
-            vby = 0f,
-        )
+        runBlocking {
+            moveToUseCase(
+                x = CENTER,
+                y = SMALL_BORDER,
+            )
+            delay(100)
+
+            check(
+                velocity = Velocity(
+                    x = 0f,
+                    y = 4f,
+                ),
+                vpx = 0f,
+                vpy = 4f,
+                vbx = 0f,
+                vby = 0f,
+            )
+        }
     }
 
     /**
@@ -221,26 +225,24 @@ class VelocityMediatorTest {
      */
     @Test
     fun checkMoveInBottomToTop() {
-        check(
-            velocity = Velocity(
-                x = 0f,
-                y = -4f,
-            ),
-            player = Player(
-                size = MapViewModel.VIRTUAL_PLAYER_SIZE,
-            ).apply {
-                moveTo(
-                    point = Point(
-                        x = CENTER,
-                        y = LARGE_BORDER,
-                    )
-                )
-            },
-            vpx = 0f,
-            vpy = -4f,
-            vbx = 0f,
-            vby = 0f,
-        )
+        runBlocking {
+            moveToUseCase(
+                x = CENTER,
+                y = LARGE_BORDER,
+            )
+            delay(100)
+            check(
+                velocity = Velocity(
+                    x = 0f,
+                    y = -4f,
+                ),
+
+                vpx = 0f,
+                vpy = -4f,
+                vbx = 0f,
+                vby = 0f,
+            )
+        }
     }
 
     /**
@@ -248,40 +250,34 @@ class VelocityMediatorTest {
      */
     @Test
     fun checkMoveInBottomToBottom() {
-        check(
-            velocity = Velocity(
-                x = 0f,
-                y = 4f,
-            ),
-            player = Player(
-                size = MapViewModel.VIRTUAL_PLAYER_SIZE,
-            ).apply {
-                moveTo(
-                    point = Point(
-                        x = CENTER,
-                        y = LARGE_BORDER,
-                    )
-                )
-            },
-            vpx = 0f,
-            vpy = 0f,
-            vbx = 0f,
-            vby = -4f,
-        )
+        runBlocking {
+            moveToUseCase(
+                x = CENTER,
+                y = LARGE_BORDER,
+            )
+            delay(100)
+            check(
+                velocity = Velocity(
+                    x = 0f,
+                    y = 4f,
+                ),
+                vpx = 0f,
+                vpy = 0f,
+                vbx = 0f,
+                vby = -4f,
+            )
+        }
     }
-
 
     private fun check(
         velocity: Velocity,
-        player: Player,
         vpx: Float,
         vpy: Float,
         vbx: Float,
         vby: Float,
     ) {
-        VelocityManager.manageVelocity(
+        velocityManager.manageVelocity(
             tentativePlayerVelocity = velocity,
-            player = player.square,
             playerMoveArea = PlayerMoveSquare(
                 screenSize = MapViewModel.VIRTUAL_SCREEN_SIZE,
                 borderRate = MapViewModel.MOVE_BORDER,
