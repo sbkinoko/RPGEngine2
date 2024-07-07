@@ -23,6 +23,7 @@ import org.koin.core.component.inject
 class MapViewModel : ControllerCallback, KoinComponent {
     val player: Player by inject()
     private val playerRepository: PlayerRepository by inject()
+    private val moveManager: MoveManager by inject()
 
     // fixme repositoryにしまう
     private val mutablePlayerPosition: MutableStateFlow<Square> = MutableStateFlow(player.square)
@@ -47,8 +48,6 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
     private var backGroundVelocity: Velocity = Velocity()
     private var tentativePlayerVelocity: Velocity = Velocity()
-
-    private val moveManager = MoveManager()
 
     override lateinit var pressB: () -> Unit
 
@@ -238,7 +237,6 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
         // 動けないので動ける最大の速度を取得
         tentativePlayerVelocity = moveManager.getMovableVelocity(
-            player = player,
             tentativePlayerVelocity = tentativePlayerVelocity,
             backgroundManger = backgroundManger.value
         )
