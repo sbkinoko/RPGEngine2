@@ -1,10 +1,13 @@
 package map.viewmodel
 
 import controller.domain.ControllerCallback
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import map.data.LoopMap
 import map.data.NonLoopMap
 import map.domain.BackgroundCell
@@ -17,6 +20,8 @@ import map.manager.BackgroundManager
 import map.manager.MoveManager
 import map.manager.VelocityManager
 import map.repository.player.PlayerRepository
+import map.usecase.PlayerMoveToUseCase
+import map.usecase.PlayerMoveUseCase
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -25,6 +30,9 @@ class MapViewModel : ControllerCallback, KoinComponent {
     private val playerRepository: PlayerRepository by inject()
     private val moveManager: MoveManager by inject()
     private val velocityManager: VelocityManager by inject()
+
+    private val playerMoveUseCase: PlayerMoveUseCase by inject()
+    private val playerMoveToUseCase: PlayerMoveToUseCase by inject()
 
     val playerSquare: SharedFlow<Square> = playerRepository.playerPositionFLow
 
@@ -56,6 +64,11 @@ class MapViewModel : ControllerCallback, KoinComponent {
             screenSize = VIRTUAL_SCREEN_SIZE,
             borderRate = MOVE_BORDER,
         )
+        CoroutineScope(Dispatchers.Default).launch {
+            playerRepository.setPlayerPosition(
+                Square(size = player.size)
+            )
+        }
 
         reloadMapData(mapX = 0, mapY = 0)
     }
@@ -75,7 +88,11 @@ class MapViewModel : ControllerCallback, KoinComponent {
             }
 
             mediateVelocity()
-            player.move()
+            CoroutineScope(Dispatchers.Default).launch {
+                playerMoveUseCase(
+                    player = player,
+                )
+            }
             mutableBackgroundManager.value.moveBackgroundCell(
                 velocity = backGroundVelocity
             )
@@ -158,9 +175,12 @@ class MapViewModel : ControllerCallback, KoinComponent {
     private fun setPlayerCenter() {
         val center = backgroundManger.value.getCenterOfDisplay()
         // 仮の移動先
-        player.moveTo(
-            center,
-        )
+        CoroutineScope(Dispatchers.Default).launch {
+            playerMoveToUseCase(
+                x = center.x - player.size / 2,
+                y = center.y - player.size / 2,
+            )
+        }
     }
 
     /**

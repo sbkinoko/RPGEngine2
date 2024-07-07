@@ -14,9 +14,6 @@ val MapModule = module {
     single {
         Player(
             MapViewModel.VIRTUAL_PLAYER_SIZE,
-            playerRepository = get(),
-            playerMoveUseCase = get(),
-            playerMoveToUseCase = get(),
         )
     }
 

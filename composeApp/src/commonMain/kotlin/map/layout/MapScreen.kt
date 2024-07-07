@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.util.fastAny
 import kotlinx.coroutines.delay
-import map.domain.collision.Square
+import map.repository.player.PlayerRepository
 import map.viewmodel.MapViewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -60,11 +60,7 @@ fun MapScreen(
 
         Player(
             square = mapViewModel.playerSquare.collectAsState(
-                Square(
-                    x = 0f,
-                    y = 0f,
-                    size = 0f,
-                )
+                PlayerRepository.initialSquare
             ).value,
             screenRatio = screenRatio
         )
