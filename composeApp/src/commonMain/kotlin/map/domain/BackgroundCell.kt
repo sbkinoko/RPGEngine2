@@ -26,7 +26,7 @@ class BackgroundCell(
     var imgID: Int = 0
         set(value) {
             field = value
-            collisionList = collisionRepository.getCollisionDate(
+            collisionList = collisionRepository.getCollisionData(
                 cellSize = cellSize,
                 square = square,
                 id = value,

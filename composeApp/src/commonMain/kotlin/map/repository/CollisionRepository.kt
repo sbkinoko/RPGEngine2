@@ -5,7 +5,7 @@ import map.domain.collision.Square
 
 class CollisionRepository {
 
-    fun getCollisionDate(
+    fun getCollisionData(
         id: Int,
         cellSize: Float,
         square: Square,
