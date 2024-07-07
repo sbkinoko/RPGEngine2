@@ -4,8 +4,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import map.domain.collision.Square
 
 class PlayerRepositoryImpl : PlayerRepository {
-    override val playerPositionFLow: MutableSharedFlow<Square>
-        get() = MutableSharedFlow()
+    override val playerPositionFLow: MutableSharedFlow<Square> = MutableSharedFlow(replay = 1)
 
     private lateinit var playerPosition: Square
 
@@ -15,7 +14,7 @@ class PlayerRepositoryImpl : PlayerRepository {
 
     override suspend fun setPlayerPosition(square: Square) {
         playerPosition = square
-        playerPositionFLow.emit(playerPosition)
+        playerPositionFLow.emit(square)
     }
 
     override suspend fun reload() {

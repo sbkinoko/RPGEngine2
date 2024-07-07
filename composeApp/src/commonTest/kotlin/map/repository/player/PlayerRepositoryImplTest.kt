@@ -1,6 +1,14 @@
 package map.repository.player
 
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import map.MapModule
 import map.domain.Point
@@ -13,7 +21,6 @@ import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 class PlayerRepositoryImplTest : KoinTest {
 
@@ -56,6 +63,7 @@ class PlayerRepositoryImplTest : KoinTest {
         }
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     @Test
     fun checkFlow() {
         val square = Square(
@@ -67,22 +75,42 @@ class PlayerRepositoryImplTest : KoinTest {
         )
 
         runBlocking {
-            try {
-                repository.playerPositionFLow.first()
-                assertTrue { false }
-            } catch (e: Exception) {
-                // 値がないことを確認
-                assertTrue { true }
+            var count = 0
+            val collectJob: Job = launch {
+                repository.playerPositionFLow.asSharedFlow()
+                    .onEach {
+                        count++
+                    }.launchIn(GlobalScope)
             }
+
             repository.setPlayerPosition(
                 square = square
             )
-            repository.playerPositionFLow.first().apply {
-                assertEquals(
-                    expected = square,
-                    actual = this,
-                )
-            }
+            delay(100)
+
+            val a = repository.playerPositionFLow.first()
+            assertEquals(
+                expected = square,
+                actual = a,
+            )
+            assertEquals(
+                expected = 1,
+                actual = count
+            )
+
+            repository.reload()
+            delay(100)
+
+            assertEquals(
+                expected = square,
+                actual = a,
+            )
+            assertEquals(
+                expected = 2,
+                actual = count
+            )
+
+            collectJob.cancel()
         }
     }
 }
