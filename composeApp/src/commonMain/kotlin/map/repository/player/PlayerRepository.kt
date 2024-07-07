@@ -1,14 +1,14 @@
 package map.repository.player
 
 import kotlinx.coroutines.flow.MutableSharedFlow
-import map.domain.Point
+import map.domain.collision.Square
 
 interface PlayerRepository {
-    val playerPositionFLow: MutableSharedFlow<Point>
+    val playerPositionFLow: MutableSharedFlow<Square>
 
-    fun getPlayerPosition(): Point
+    fun getPlayerPosition(): Square
 
-    suspend fun setPlayerPosition(point: Point)
+    suspend fun setPlayerPosition(square: Square)
 
     suspend fun reload()
 }
