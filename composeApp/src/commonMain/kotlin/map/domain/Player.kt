@@ -14,10 +14,6 @@ class Player(
     private val playerMoveUseCase: PlayerMoveUseCase,
     private val playerMoveToUseCase: PlayerMoveToUseCase,
 ) {
-    var square: Square = Square(
-        size = size,
-    )
-
     private var velocity = Velocity(
         x = 0f,
         y = 0f,
@@ -29,7 +25,9 @@ class Player(
     init {
         CoroutineScope(Dispatchers.Default).launch {
             playerRepository.setPlayerPosition(
-                square = square,
+                square = Square(
+                    size = size,
+                ),
             )
         }
     }
@@ -40,7 +38,6 @@ class Player(
                 vx = velocity.x,
                 vy = velocity.y,
             )
-            square = playerRepository.getPlayerPosition()
         }
     }
 
@@ -58,7 +55,6 @@ class Player(
                 x = point.x - size / 2,
                 y = point.y - size / 2,
             )
-            square = playerRepository.getPlayerPosition()
         }
     }
 }

@@ -26,10 +26,6 @@ class MapViewModel : ControllerCallback, KoinComponent {
     private val moveManager: MoveManager by inject()
     private val velocityManager: VelocityManager by inject()
 
-    // fixme repositoryにしまう
-    private val mutablePlayerPosition: MutableStateFlow<Square> = MutableStateFlow(player.square)
-    val playerPosition: StateFlow<Square> = mutablePlayerPosition.asStateFlow()
-
     val playerSquare: SharedFlow<Square> = playerRepository.playerPositionFLow
 
     private var tapPoint: Point? = null
@@ -80,14 +76,12 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
             mediateVelocity()
             player.move()
-            // todo いい感じにする方法を探す
-            mutablePlayerPosition.value = player.square.getNew()
             mutableBackgroundManager.value.moveBackgroundCell(
                 velocity = backGroundVelocity
             )
             backgroundManger.value.apply {
                 findCellIncludePlayer(
-                    playerSquare = player.square
+                    playerSquare = playerRepository.getPlayerPosition()
                 )
                 // イベントがあったらイベント処理をする
                 eventCell?.apply {
@@ -115,8 +109,9 @@ class MapViewModel : ControllerCallback, KoinComponent {
      * タップの位置に対して速度を計算
      */
     private fun updateVelocityByTap(tapPoint: Point) {
-        val dx = (tapPoint.x) - (player.square.x + player.size / 2)
-        val dy = (tapPoint.y) - (player.square.y + player.size / 2)
+        val square = playerRepository.getPlayerPosition()
+        val dx = (tapPoint.x) - (square.x + player.size / 2)
+        val dy = (tapPoint.y) - (square.y + player.size / 2)
         tentativePlayerVelocity = Velocity(
             x = dx,
             y = dy,
@@ -204,7 +199,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
             mapY = mapY,
         )
         backgroundManger.value.findCellIncludePlayer(
-            playerSquare = player.square
+            playerSquare = playerRepository.getPlayerPosition()
         )
     }
 
@@ -224,7 +219,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
     private var canMove = true
     private fun checkMove() {
-        val square = player.square.getNew()
+        val square = playerRepository.getPlayerPosition().getNew()
         square.move(
             dx = tentativePlayerVelocity.x,
             dy = tentativePlayerVelocity.y
