@@ -1,5 +1,6 @@
 package map.manager
 
+import kotlinx.coroutines.runBlocking
 import map.data.LoopMap
 import map.domain.BackgroundCell
 import map.domain.MapData
@@ -7,13 +8,16 @@ import map.domain.MapPoint
 import map.domain.Point
 import map.domain.Velocity
 import map.domain.collision.Square
+import map.repository.backgroundcell.BackgroundRepository
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 class BackgroundManager(
     val cellNum: Int,
     val sideLength: Int,
     mapData: MapData = LoopMap()
-) {
-    private lateinit var backgroundCellArray: Array<Array<BackgroundCell>>
+) : KoinComponent {
+    private val repository: BackgroundRepository by inject()
 
     private val diffOfLoop: Float
     val allCellNum: Int = cellNum + 1
@@ -60,7 +64,10 @@ class BackgroundManager(
         col: Int,
         row: Int,
     ): BackgroundCell {
-        return backgroundCellArray[row][col]
+        return repository.getBackgroundAt(
+            x = col,
+            y = row,
+        )
     }
 
     /**
@@ -82,7 +89,7 @@ class BackgroundManager(
         dx: Float = 0f,
         dy: Float = 0f,
     ) {
-        backgroundCellArray.forEach { rowArray ->
+        repository.background.forEach { rowArray ->
             rowArray.forEach { bgCell ->
                 bgCell.apply {
                     moveDisplayPoint(
@@ -205,16 +212,20 @@ class BackgroundManager(
      * 背景画像を読み込む
      */
     private fun loadMapData() {
-        backgroundCellArray = backgroundCellArray.mapIndexed { y, rowArray ->
-            rowArray.mapIndexed { x, cell ->
-                cell.apply {
-                    imgID = mapData.getDataAt(
-                        x = x,
-                        y = y,
-                    )
+        runBlocking {
+            repository.setBackground(
+                repository.background.mapIndexed { y, rowArray ->
+                    rowArray.mapIndexed { x, cell ->
+                        cell.apply {
+                            imgID = mapData.getDataAt(
+                                x = x,
+                                y = y,
+                            )
+                        }
+                    }
                 }
-            }.toTypedArray()
-        }.toTypedArray()
+            )
+        }
     }
 
     /**
@@ -223,7 +234,7 @@ class BackgroundManager(
     fun findCellIncludePlayer(playerSquare: Square) {
         prePlayerIncludeCell = playerIncludeCell
         playerIncludeCell = null
-        backgroundCellArray.mapIndexed { _, rowArray ->
+        repository.background.mapIndexed { _, rowArray ->
             rowArray.mapIndexed { _, cell ->
                 cell.apply {
                     if (playerSquare.isIn(square)) {
@@ -233,8 +244,8 @@ class BackgroundManager(
                         isPlayerIncludeCell = false
                     }
                 }
-            }.toTypedArray()
-        }.toTypedArray()
+            }
+        }
     }
 
     /**
@@ -244,28 +255,33 @@ class BackgroundManager(
         mapX: Int = 0,
         mapY: Int = 0,
     ) {
-        backgroundCellArray = Array(allCellNum) { row ->
-            Array(allCellNum) { col ->
-                BackgroundCell(
-                    x = col * cellSize,
-                    y = row * cellSize,
-                    cellSize = cellSize,
-                ).apply {
-                    mapPoint = getMapPoint(
-                        x = col - (cellNum - 1) / 2 + mapX,
-                        y = row - (cellNum - 1) / 2 + mapY,
-                    )
-                    imgID = mapData.getDataAt(mapPoint)
+        runBlocking {
+            repository.setBackground(
+                List(allCellNum) { row ->
+                    List(allCellNum) { col ->
+                        BackgroundCell(
+                            x = col * cellSize,
+                            y = row * cellSize,
+                            cellSize = cellSize,
+                        ).apply {
+                            mapPoint = getMapPoint(
+                                x = col - (cellNum - 1) / 2 + mapX,
+                                y = row - (cellNum - 1) / 2 + mapY,
+                            )
+                            imgID = mapData.getDataAt(mapPoint)
+                        }
+                    }
                 }
-            }
+            )
         }
     }
+
 
     /**
      * 障害物と衝突しているかどうかをチェック
      */
     fun isCollided(player: Square): Boolean {
-        backgroundCellArray.forEach { rowArray ->
+        repository.background.forEach { rowArray ->
             rowArray.forEach { cell ->
                 if (cell.collisionList.isNotEmpty()) {
                     cell.collisionList.forEach {
