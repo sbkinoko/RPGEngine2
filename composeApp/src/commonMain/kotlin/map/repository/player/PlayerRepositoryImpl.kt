@@ -6,7 +6,7 @@ import map.domain.collision.Square
 class PlayerRepositoryImpl : PlayerRepository {
     override val playerPositionFLow: MutableSharedFlow<Square> = MutableSharedFlow(replay = 1)
 
-    private lateinit var playerPosition: Square
+    private var playerPosition: Square = PlayerRepository.initialSquare
 
     override fun getPlayerPosition(): Square {
         return playerPosition
