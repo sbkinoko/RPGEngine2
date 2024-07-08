@@ -4,7 +4,6 @@ import kotlinx.coroutines.runBlocking
 import map.data.LoopMap
 import map.domain.BackgroundCell
 import map.domain.MapData
-import map.domain.MapPoint
 import map.domain.Point
 import map.domain.Velocity
 import map.domain.collision.Square
@@ -147,65 +146,13 @@ class BackgroundManager(
                     mapPoint.y
                 }
 
-            mapPoint = getMapPoint(
+            mapPoint = mapData.getMapPoint(
                 x = mapX,
                 y = mapY,
             )
 
             imgID = mapData.getDataAt(mapPoint)
         }
-    }
-
-    /**
-     * 指定した位置の座標を取得する
-     * ループしてるかどうかによって補正が異なる
-     */
-    private fun getMapPoint(x: Int, y: Int): MapPoint {
-        return if (!mapData.isLoop) {
-            MapPoint(
-                x = x,
-                y = y,
-            )
-        } else {
-            MapPoint(
-                x = collectX(x = x),
-                y = collectY(y = y),
-            )
-        }
-    }
-
-    /**
-     * x軸に対して補正を行う
-     */
-    private fun collectX(x: Int): Int {
-        return collectPoint(
-            max = mapData.width,
-            value = x
-        )
-    }
-
-    /**
-     * y軸に対して補正を行う
-     */
-    private fun collectY(y: Int): Int {
-        return collectPoint(
-            max = mapData.height,
-            value = y
-        )
-    }
-
-    /**
-     * @param max 補正の最大値
-     * @param value 補正したい値
-     */
-    private fun collectPoint(max: Int, value: Int): Int {
-        if (value < 0) {
-            return value + max
-        }
-        if (max <= value) {
-            return value - max
-        }
-        return value
     }
 
     /**
@@ -264,7 +211,7 @@ class BackgroundManager(
                             y = row * cellSize,
                             cellSize = cellSize,
                         ).apply {
-                            mapPoint = getMapPoint(
+                            mapPoint = mapData.getMapPoint(
                                 x = col - (cellNum - 1) / 2 + mapX,
                                 y = row - (cellNum - 1) / 2 + mapY,
                             )
