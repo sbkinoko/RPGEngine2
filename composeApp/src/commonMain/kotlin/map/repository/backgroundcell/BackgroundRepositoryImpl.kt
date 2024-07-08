@@ -4,19 +4,20 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import map.domain.BackgroundCell
 
 class BackgroundRepositoryImpl : BackgroundRepository {
-    override val backgroundFlow: MutableSharedFlow<List<List<BackgroundCell>>>
-        get() = TODO("Not yet implemented")
+    override val backgroundFlow: MutableSharedFlow<List<List<BackgroundCell>>> =
+        MutableSharedFlow(replay = 1)
     override var background: List<List<BackgroundCell>> = BackgroundRepository.initialBackground
 
     override fun getBackgroundAt(x: Int, y: Int): BackgroundCell {
-        TODO("Not yet implemented")
+        return background[y][x]
     }
 
     override suspend fun setBackground(background: List<List<BackgroundCell>>) {
-        TODO("Not yet implemented")
+        this.background = background
+        backgroundFlow.emit(background)
     }
 
     override suspend fun reload() {
-        TODO("Not yet implemented")
+        backgroundFlow.emit(background)
     }
 }
