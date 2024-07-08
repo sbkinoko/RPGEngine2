@@ -275,23 +275,4 @@ class BackgroundManager(
             )
         }
     }
-
-
-    /**
-     * 障害物と衝突しているかどうかをチェック
-     */
-    fun isCollided(player: Square): Boolean {
-        repository.background.forEach { rowArray ->
-            rowArray.forEach { cell ->
-                if (cell.collisionList.isNotEmpty()) {
-                    cell.collisionList.forEach {
-                        if (it.isOverlap(player)) {
-                            return true
-                        }
-                    }
-                }
-            }
-        }
-        return false
-    }
 }

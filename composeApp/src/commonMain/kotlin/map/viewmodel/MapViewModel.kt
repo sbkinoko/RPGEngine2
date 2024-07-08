@@ -20,6 +20,7 @@ import map.manager.BackgroundManager
 import map.manager.MoveManager
 import map.manager.VelocityManager
 import map.repository.player.PlayerRepository
+import map.usecase.IsCollidedUseCase
 import map.usecase.PlayerMoveToUseCase
 import map.usecase.PlayerMoveUseCase
 import org.koin.core.component.KoinComponent
@@ -33,6 +34,8 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
     private val playerMoveUseCase: PlayerMoveUseCase by inject()
     private val playerMoveToUseCase: PlayerMoveToUseCase by inject()
+
+    private val isCollidedUseCase: IsCollidedUseCase = IsCollidedUseCase()
 
     val playerSquare: SharedFlow<Square> = playerRepository.playerPositionFLow
 
@@ -246,14 +249,13 @@ class MapViewModel : ControllerCallback, KoinComponent {
         )
 
         // このままの速度で動けるなら移動
-        if (backgroundManger.value.isCollided(square).not()) {
+        if (isCollidedUseCase(square).not()) {
             return
         }
 
         // 動けないので動ける最大の速度を取得
         tentativePlayerVelocity = moveManager.getMovableVelocity(
             tentativePlayerVelocity = tentativePlayerVelocity,
-            backgroundManger = backgroundManger.value
         )
     }
 

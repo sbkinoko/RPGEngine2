@@ -3,10 +3,12 @@ package map.manager
 import map.domain.Velocity
 import map.domain.collision.Square
 import map.repository.player.PlayerRepository
+import map.usecase.IsCollidedUseCase
 import kotlin.math.abs
 
 class MoveManager(
     private val playerRepository: PlayerRepository,
+    private val isCollidedUseCase: IsCollidedUseCase = IsCollidedUseCase()
 ) {
     private val playerSquare: Square
         get() = playerRepository.getPlayerPosition().getNew()
@@ -16,7 +18,6 @@ class MoveManager(
      */
     fun getMovableVelocity(
         tentativePlayerVelocity: Velocity,
-        backgroundManger: BackgroundManager,
     ): Velocity {
         //　x方向だけの移動ができるかチェック
         val onlyMoveX = playerSquare
@@ -25,7 +26,7 @@ class MoveManager(
             dy = 0f,
         )
         var canMoveX =
-            backgroundManger.isCollided(onlyMoveX).not()
+            isCollidedUseCase(onlyMoveX).not()
 
         //　y方向だけの移動ができるかチェック
         val onlyMoveY = playerSquare
@@ -34,7 +35,7 @@ class MoveManager(
             dy = tentativePlayerVelocity.y,
         )
         var canMoveY =
-            backgroundManger.isCollided(onlyMoveY).not()
+            isCollidedUseCase(onlyMoveY).not()
 
         // 両方に移動できる場合は速い方に動かす
         if (canMoveX && canMoveY) {
@@ -49,7 +50,6 @@ class MoveManager(
 
         return changeVelocity(
             velocity = tentativePlayerVelocity,
-            backgroundManger = backgroundManger,
             canMoveX = canMoveX,
             canMoveY = canMoveY,
         )
@@ -57,7 +57,6 @@ class MoveManager(
 
     private fun changeVelocity(
         velocity: Velocity,
-        backgroundManger: BackgroundManager,
         canMoveX: Boolean,
         canMoveY: Boolean,
     ): Velocity {
@@ -67,7 +66,6 @@ class MoveManager(
             } else {
                 getVx(
                     velocity = velocity,
-                    backgroundManger = backgroundManger,
                 )
             }
 
@@ -77,7 +75,6 @@ class MoveManager(
             } else {
                 getVy(
                     velocity = velocity,
-                    backgroundManger = backgroundManger,
                 )
             }
 
@@ -89,7 +86,6 @@ class MoveManager(
 
     private fun getVy(
         velocity: Velocity,
-        backgroundManger: BackgroundManager,
     ): Float {
         val dir = velocity.y.toDir()
         var section = Section(
@@ -99,7 +95,6 @@ class MoveManager(
 
         for (cnt: Int in 0..5) {
             section = getNewSection(
-                backgroundManger = backgroundManger,
                 dx = velocity.x,
                 dy = section.average * dir,
                 section = section,
@@ -111,7 +106,6 @@ class MoveManager(
 
     private fun getVx(
         velocity: Velocity,
-        backgroundManger: BackgroundManager,
     ): Float {
         val dir = velocity.x.toDir()
         var section = Section(
@@ -121,7 +115,6 @@ class MoveManager(
 
         for (cnt: Int in 0..5) {
             section = getNewSection(
-                backgroundManger = backgroundManger,
                 dx = section.average * dir,
                 dy = velocity.y,
                 section = section,
@@ -132,7 +125,6 @@ class MoveManager(
     }
 
     private fun getNewSection(
-        backgroundManger: BackgroundManager,
         dx: Float,
         dy: Float,
         section: Section,
@@ -144,7 +136,7 @@ class MoveManager(
             dy,
         )
 
-        return if (backgroundManger.isCollided(square)) {
+        return if (isCollidedUseCase(square)) {
             // 動けないなら最大を更新
             section.copy(
                 max = section.average,
