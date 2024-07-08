@@ -6,7 +6,7 @@ import map.domain.BackgroundCell
 interface BackgroundRepository {
     val backgroundFlow: MutableSharedFlow<List<List<BackgroundCell>>>
 
-    val background: List<List<BackgroundCell>>
+    var background: List<List<BackgroundCell>>
 
     fun getBackgroundAt(x: Int, y: Int): BackgroundCell
 
