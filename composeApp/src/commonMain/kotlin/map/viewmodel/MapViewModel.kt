@@ -20,6 +20,8 @@ import map.manager.BackgroundManager
 import map.manager.MoveManager
 import map.manager.VelocityManager
 import map.repository.player.PlayerRepository
+import map.usecase.IsCollidedUseCase
+import map.usecase.MoveBackgroundUseCase
 import map.usecase.PlayerMoveToUseCase
 import map.usecase.PlayerMoveUseCase
 import org.koin.core.component.KoinComponent
@@ -33,6 +35,9 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
     private val playerMoveUseCase: PlayerMoveUseCase by inject()
     private val playerMoveToUseCase: PlayerMoveToUseCase by inject()
+
+    private val isCollidedUseCase: IsCollidedUseCase = IsCollidedUseCase()
+    private val moveBackgroundUseCase: MoveBackgroundUseCase by inject()
 
     val playerSquare: SharedFlow<Square> = playerRepository.playerPositionFLow
 
@@ -58,7 +63,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
 
     init {
-        backgroundManger.value.setMapData(LoopMap())
+        backgroundManger.value.mapData = LoopMap()
 
         playerMoveArea = PlayerMoveSquare(
             screenSize = VIRTUAL_SCREEN_SIZE,
@@ -72,6 +77,12 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
         reloadMapData(mapX = 0, mapY = 0)
     }
+
+    private val fieldSquare: Square = Square(
+        x = 0f,
+        y = 0f,
+        size = VIRTUAL_SCREEN_SIZE.toFloat(),
+    )
 
     /**
      * 主人公の位置を更新
@@ -93,9 +104,15 @@ class MapViewModel : ControllerCallback, KoinComponent {
                     player = player,
                 )
             }
-            mutableBackgroundManager.value.moveBackgroundCell(
-                velocity = backGroundVelocity
-            )
+            moveBackgroundUseCase(
+                velocity = backGroundVelocity,
+                fieldSquare = fieldSquare,
+                diffOfLoop = backgroundManger.value.diffOfLoop,
+                allCellNum = backgroundManger.value.allCellNum,
+                mapData = backgroundManger.value.mapData,
+
+                )
+
             backgroundManger.value.apply {
                 findCellIncludePlayer(
                     playerSquare = playerRepository.getPlayerPosition()
@@ -189,7 +206,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
     private fun callCellEvent(backgroundCell: BackgroundCell) {
         when (backgroundCell.imgID) {
             3 -> {
-                backgroundManger.value.setMapData(NonLoopMap())
+                backgroundManger.value.mapData = NonLoopMap()
                 reloadMapData(
                     mapX = 0,
                     mapY = 2,
@@ -197,7 +214,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
             }
 
             4 -> {
-                backgroundManger.value.setMapData(LoopMap())
+                backgroundManger.value.mapData = LoopMap()
                 reloadMapData(
                     mapX = 5,
                     mapY = 5,
@@ -246,14 +263,13 @@ class MapViewModel : ControllerCallback, KoinComponent {
         )
 
         // このままの速度で動けるなら移動
-        if (backgroundManger.value.isCollided(square).not()) {
+        if (isCollidedUseCase(square).not()) {
             return
         }
 
         // 動けないので動ける最大の速度を取得
         tentativePlayerVelocity = moveManager.getMovableVelocity(
             tentativePlayerVelocity = tentativePlayerVelocity,
-            backgroundManger = backgroundManger.value
         )
     }
 

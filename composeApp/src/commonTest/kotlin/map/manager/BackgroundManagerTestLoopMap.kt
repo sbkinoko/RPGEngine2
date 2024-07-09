@@ -1,22 +1,71 @@
 package map.manager
 
+import map.MapModule
 import map.data.LoopTestMap
 import map.domain.BackgroundCell
+import map.domain.Velocity
+import map.domain.collision.Square
+import map.usecase.MoveBackgroundUseCase
+import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
+import org.koin.test.KoinTest
+import org.koin.test.inject
+import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class BackgroundManagerTestLoopMap {
+class BackgroundManagerTestLoopMap : KoinTest {
 
     private lateinit var backgroundManager: BackgroundManager
+    private val moveBackgroundUseCase: MoveBackgroundUseCase by inject()
+
+    private val mapData = LoopTestMap()
 
     @BeforeTest
     fun beforeTest() {
+        startKoin {
+            modules(
+                MapModule,
+            )
+        }
+
         backgroundManager = BackgroundManager(
             cellNum = CELL_NUM,
             sideLength = SIDE_LENGTH,
-            mapData = LoopTestMap()
+            mapData = mapData,
         )
+    }
+
+    @AfterTest
+    fun afterTest() {
+        stopKoin()
+    }
+
+    @Test
+    fun checkFirstPosition() {
+        backgroundManager.getCell(0, 0).apply {
+            square.apply {
+                assertEquals(
+                    expected = 0f,
+                    actual = leftSide,
+                )
+                assertEquals(
+                    expected = 0f,
+                    actual = topSide,
+                )
+            }
+            mapPoint.apply {
+                assertEquals(
+                    expected = LEFT_TOP_CELL_MAP_X,
+                    actual = x,
+                )
+                assertEquals(
+                    expected = LEFT_TOP_CELL_MAP_Y,
+                    actual = y,
+                )
+            }
+        }
     }
 
     /**
@@ -24,7 +73,23 @@ class BackgroundManagerTestLoopMap {
      */
     @Test
     fun checkLoop_Up() {
-        backgroundManager.moveBackgroundCell(dy = -15f)
+        val dy = 15f
+        moveBackgroundUseCase.invoke(
+            velocity = Velocity(
+                x = 0f,
+                y = -dy,
+                maxVelocity = dy,
+            ),
+            fieldSquare = Square(
+                x = 0f,
+                y = 0f,
+                size = SIDE_LENGTH.toFloat(),
+            ),
+            diffOfLoop = backgroundManager.diffOfLoop,
+            allCellNum = backgroundManager.allCellNum,
+            mapData = mapData,
+        )
+
         getLeftTopCell().apply {
             square.apply {
                 assertEquals(
@@ -55,7 +120,22 @@ class BackgroundManagerTestLoopMap {
     @Test
     fun checkLoop_Down() {
         val dy = 35f
-        backgroundManager.moveBackgroundCell(dy = dy)
+        moveBackgroundUseCase(
+            velocity = Velocity(
+                x = 0f,
+                y = dy,
+                maxVelocity = dy,
+            ),
+            fieldSquare = Square(
+                x = 0f,
+                y = 0f,
+                size = SIDE_LENGTH.toFloat(),
+            ),
+            diffOfLoop = backgroundManager.diffOfLoop,
+            allCellNum = backgroundManager.allCellNum,
+            mapData = mapData,
+        )
+
         getLeftTopCell().apply {
             square.apply {
                 assertEquals(
@@ -85,7 +165,23 @@ class BackgroundManagerTestLoopMap {
      */
     @Test
     fun checkLoop_Left() {
-        backgroundManager.moveBackgroundCell(dx = -15f)
+        val dx = 15f
+        moveBackgroundUseCase(
+            velocity = Velocity(
+                x = -dx,
+                y = 0f,
+                maxVelocity = dx,
+            ),
+            fieldSquare = Square(
+                x = 0f,
+                y = 0f,
+                size = SIDE_LENGTH.toFloat(),
+            ),
+            diffOfLoop = backgroundManager.diffOfLoop,
+            allCellNum = backgroundManager.allCellNum,
+            mapData = mapData,
+        )
+
         getLeftTopCell().apply {
             square.apply {
                 assertEquals(
@@ -116,7 +212,22 @@ class BackgroundManagerTestLoopMap {
     @Test
     fun checkLoop_Right() {
         val dx = 35f
-        backgroundManager.moveBackgroundCell(dx = dx)
+        moveBackgroundUseCase(
+            velocity = Velocity(
+                x = dx,
+                y = 0f,
+                maxVelocity = dx,
+            ),
+            fieldSquare = Square(
+                x = 0f,
+                y = 0f,
+                size = SIDE_LENGTH.toFloat(),
+            ),
+            diffOfLoop = backgroundManager.diffOfLoop,
+            allCellNum = backgroundManager.allCellNum,
+            mapData = mapData,
+        )
+
         getLeftTopCell().apply {
             square.apply {
                 assertEquals(
