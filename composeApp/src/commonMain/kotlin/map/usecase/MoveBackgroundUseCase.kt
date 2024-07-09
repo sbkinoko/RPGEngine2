@@ -10,6 +10,7 @@ import org.koin.core.component.inject
 
 class MoveBackgroundUseCase : KoinComponent {
     private val repository: BackgroundRepository by inject()
+
     operator fun invoke(
         velocity: Velocity,
         fieldSquare: Square,

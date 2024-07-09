@@ -1,23 +1,44 @@
 package map.manager
 
+import map.MapModule
 import map.data.LoopTestMap
+import map.domain.Velocity
 import map.domain.collision.Square
+import map.usecase.MoveBackgroundUseCase
+import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
+import org.koin.test.KoinTest
+import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-class BackgroundManagerTest {
+class BackgroundManagerTest : KoinTest {
 
     private lateinit var backgroundManager: BackgroundManager
+    private val moveBackgroundUseCase = MoveBackgroundUseCase()
+
+    private val mapData = LoopTestMap()
 
     @BeforeTest
     fun beforeTest() {
+        startKoin {
+            modules(
+                MapModule,
+            )
+        }
+
         backgroundManager = BackgroundManager(
             cellNum = CELL_NUM,
             sideLength = SIDE_LENGTH,
             mapData = LoopTestMap(),
         )
+    }
+
+    @AfterTest
+    fun afterTest() {
+        stopKoin()
     }
 
     @Test
@@ -89,7 +110,25 @@ class BackgroundManagerTest {
 
     @Test
     fun move() {
-        backgroundManager.moveBackgroundCell(dx = 10f, dy = 5f)
+        val dx = 10f
+        val dy = 5f
+        val vMax = 20f
+        moveBackgroundUseCase(
+            velocity = Velocity(
+                x = dx,
+                y = dy,
+                maxVelocity = vMax,
+            ),
+            fieldSquare = Square(
+                x = 0f,
+                y = 0f,
+                size = SIDE_LENGTH.toFloat(),
+            ),
+            diffOfLoop = backgroundManager.diffOfLoop,
+            allCellNum = backgroundManager.allCellNum,
+            mapData = mapData,
+        )
+
         backgroundManager.getCell(0, 0).square.apply {
             assertEquals(
                 expected = 10f,
