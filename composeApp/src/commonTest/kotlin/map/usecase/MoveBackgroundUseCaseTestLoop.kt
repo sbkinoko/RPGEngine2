@@ -1,12 +1,14 @@
-package map.manager
+package map.usecase
 
 import map.MapModule
 import map.data.LoopTestMap
 import map.domain.BackgroundCell
 import map.domain.Velocity
 import map.domain.collision.Square
+import map.manager.BackgroundManager
+import map.manager.CELL_NUM
+import map.manager.SIDE_LENGTH
 import map.repository.backgroundcell.BackgroundRepository
-import map.usecase.MoveBackgroundUseCase
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
@@ -16,8 +18,7 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class BackgroundManagerTestLoopMap : KoinTest {
-
+class MoveBackgroundUseCaseTestLoop : KoinTest {
     private lateinit var backgroundManager: BackgroundManager
     private val moveBackgroundUseCase: MoveBackgroundUseCase by inject()
     private val repository: BackgroundRepository by inject()
