@@ -5,12 +5,10 @@ import map.domain.MapData
 import map.domain.Velocity
 import map.domain.collision.Square
 import map.repository.backgroundcell.BackgroundRepository
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
-class MoveBackgroundUseCase : KoinComponent {
-    private val repository: BackgroundRepository by inject()
-
+class MoveBackgroundUseCase(
+    private val repository: BackgroundRepository,
+) {
     operator fun invoke(
         velocity: Velocity,
         fieldSquare: Square,

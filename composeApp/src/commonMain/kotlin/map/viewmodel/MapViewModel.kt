@@ -37,7 +37,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
     private val playerMoveToUseCase: PlayerMoveToUseCase by inject()
 
     private val isCollidedUseCase: IsCollidedUseCase = IsCollidedUseCase()
-    private val moveBackgroundUseCase: MoveBackgroundUseCase = MoveBackgroundUseCase()
+    private val moveBackgroundUseCase: MoveBackgroundUseCase by inject()
 
     val playerSquare: SharedFlow<Square> = playerRepository.playerPositionFLow
 

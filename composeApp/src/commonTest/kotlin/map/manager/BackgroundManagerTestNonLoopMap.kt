@@ -8,6 +8,7 @@ import map.usecase.MoveBackgroundUseCase
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
+import org.koin.test.inject
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -16,7 +17,7 @@ import kotlin.test.assertEquals
 class BackgroundManagerTestNonLoopMap : KoinTest {
 
     private lateinit var backgroundManager: BackgroundManager
-    private val moveBackgroundUseCase = MoveBackgroundUseCase()
+    private val moveBackgroundUseCase: MoveBackgroundUseCase by inject()
 
     private val mapData = NonLoopTestMap()
 

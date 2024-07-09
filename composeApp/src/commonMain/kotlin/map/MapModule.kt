@@ -7,6 +7,7 @@ import map.repository.backgroundcell.BackgroundRepository
 import map.repository.backgroundcell.BackgroundRepositoryImpl
 import map.repository.player.PlayerRepository
 import map.repository.player.PlayerRepositoryImpl
+import map.usecase.MoveBackgroundUseCase
 import map.usecase.PlayerMoveToUseCase
 import map.usecase.PlayerMoveUseCase
 import map.viewmodel.MapViewModel
@@ -36,6 +37,12 @@ val MapModule = module {
     single {
         PlayerMoveToUseCase(
             playerRepository = get(),
+        )
+    }
+
+    single {
+        MoveBackgroundUseCase(
+            repository = get()
         )
     }
 
