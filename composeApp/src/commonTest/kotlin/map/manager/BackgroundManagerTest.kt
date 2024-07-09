@@ -4,6 +4,7 @@ import map.MapModule
 import map.data.LoopTestMap
 import map.domain.Velocity
 import map.domain.collision.Square
+import map.repository.backgroundcell.BackgroundRepository
 import map.usecase.MoveBackgroundUseCase
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -19,6 +20,7 @@ class BackgroundManagerTest : KoinTest {
 
     private lateinit var backgroundManager: BackgroundManager
     private val moveBackgroundUseCase: MoveBackgroundUseCase by inject()
+    private val repository: BackgroundRepository by inject()
 
     private val mapData = LoopTestMap()
 
@@ -44,18 +46,18 @@ class BackgroundManagerTest : KoinTest {
 
     @Test
     fun countCell() {
-        backgroundManager.getCell(
-            col = 0,
-            row = 0,
+        repository.getBackgroundAt(
+            x = 0,
+            y = 0,
         ).apply {
             assertEquals(
                 expected = 0,
                 this.imgID,
             )
         }
-        backgroundManager.getCell(
-            col = 2,
-            row = 2,
+        repository.getBackgroundAt(
+            x = 2,
+            y = 2,
         ).apply {
             assertEquals(
                 expected = 10,
@@ -66,7 +68,10 @@ class BackgroundManagerTest : KoinTest {
 
     @Test
     fun checkInitPosition() {
-        val cell1 = backgroundManager.getCell(0, 0)
+        val cell1 = repository.getBackgroundAt(
+            x = 0,
+            y = 0,
+        )
 
         assertEquals(
             expected = 10f,
@@ -84,7 +89,10 @@ class BackgroundManagerTest : KoinTest {
             )
         }
 
-        val cell2 = backgroundManager.getCell(1, 0)
+        val cell2 = repository.getBackgroundAt(
+            x = 1,
+            y = 0,
+        )
         cell2.square.apply {
             assertEquals(
                 expected = 10f,
@@ -96,7 +104,10 @@ class BackgroundManagerTest : KoinTest {
             )
         }
 
-        val cell3 = backgroundManager.getCell(0, 1)
+        val cell3 = repository.getBackgroundAt(
+            x = 0,
+            y = 1,
+        )
         cell3.square.apply {
             assertEquals(
                 expected = 0f,
@@ -130,7 +141,10 @@ class BackgroundManagerTest : KoinTest {
             mapData = mapData,
         )
 
-        backgroundManager.getCell(0, 0).square.apply {
+        repository.getBackgroundAt(
+            x = 0,
+            y = 0,
+        ).square.apply {
             assertEquals(
                 expected = 10f,
                 actual = leftSide,
@@ -205,54 +219,60 @@ class BackgroundManagerTest : KoinTest {
 
     @Test
     fun resetPosition() {
-        backgroundManager.apply {
-            getCell(0, 0).apply {
-                square.apply {
-                    assertEquals(
-                        0f,
-                        x,
-                    )
-                    assertEquals(
-                        0f,
-                        y,
-                    )
-                }
-                mapPoint.apply {
-                    assertEquals(
-                        3,
-                        x,
-                    )
-                    assertEquals(
-                        3,
-                        y,
-                    )
-                }
+        repository.getBackgroundAt(
+            x = 0,
+            y = 0,
+        ).apply {
+            square.apply {
+                assertEquals(
+                    0f,
+                    x,
+                )
+                assertEquals(
+                    0f,
+                    y,
+                )
             }
-            resetBackgroundCellPosition(
-                mapX = 1,
-                mapY = 1
-            )
-            getCell(0, 0).apply {
-                square.apply {
-                    assertEquals(
-                        0f,
-                        x,
-                    )
-                    assertEquals(
-                        0f,
-                        y,
-                    )
-                }
-                mapPoint.apply {
-                    assertEquals(
-                        0,
-                        x,
-                    )
-                    assertEquals(
-                        0,
-                        y,
-                    )
-                }
+            mapPoint.apply {
+                assertEquals(
+                    3,
+                    x,
+                )
+                assertEquals(
+                    3,
+                    y,
+                )
+            }
+        }
+
+        backgroundManager.resetBackgroundCellPosition(
+            mapX = 1,
+            mapY = 1
+        )
+
+        repository.getBackgroundAt(
+            x = 0,
+            y = 0,
+        ).apply {
+            square.apply {
+                assertEquals(
+                    0f,
+                    x,
+                )
+                assertEquals(
+                    0f,
+                    y,
+                )
+            }
+            mapPoint.apply {
+                assertEquals(
+                    0,
+                    x,
+                )
+                assertEquals(
+                    0,
+                    y,
+                )
             }
         }
     }

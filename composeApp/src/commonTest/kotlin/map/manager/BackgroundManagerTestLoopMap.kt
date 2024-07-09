@@ -5,6 +5,7 @@ import map.data.LoopTestMap
 import map.domain.BackgroundCell
 import map.domain.Velocity
 import map.domain.collision.Square
+import map.repository.backgroundcell.BackgroundRepository
 import map.usecase.MoveBackgroundUseCase
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -19,6 +20,7 @@ class BackgroundManagerTestLoopMap : KoinTest {
 
     private lateinit var backgroundManager: BackgroundManager
     private val moveBackgroundUseCase: MoveBackgroundUseCase by inject()
+    private val repository: BackgroundRepository by inject()
 
     private val mapData = LoopTestMap()
 
@@ -44,7 +46,10 @@ class BackgroundManagerTestLoopMap : KoinTest {
 
     @Test
     fun checkFirstPosition() {
-        backgroundManager.getCell(0, 0).apply {
+        repository.getBackgroundAt(
+            x = 0,
+            y = 0,
+        ).apply {
             square.apply {
                 assertEquals(
                     expected = 0f,
@@ -256,7 +261,10 @@ class BackgroundManagerTestLoopMap : KoinTest {
      * 中心が(0,0)　左上のセルは(-1,-1) ループしてるので(3,3)
      */
     private fun getLeftTopCell(): BackgroundCell {
-        return backgroundManager.getCell(0, 0)
+        return repository.getBackgroundAt(
+            x = 0,
+            y = 0,
+        )
     }
 
     companion object {
