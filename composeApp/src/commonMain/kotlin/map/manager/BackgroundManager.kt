@@ -7,6 +7,7 @@ import map.domain.MapData
 import map.domain.Point
 import map.domain.collision.Square
 import map.repository.backgroundcell.BackgroundRepository
+import map.usecase.ResetBackgroundPositionUseCase
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -16,11 +17,12 @@ class BackgroundManager(
     mapData: MapData = LoopMap()
 ) : KoinComponent {
     private val repository: BackgroundRepository by inject()
+    private val useCase: ResetBackgroundPositionUseCase by inject()
 
     val diffOfLoop: Float
     val allCellNum: Int = cellNum + 1
 
-    private val cellSize: Float = sideLength / cellNum.toFloat()
+    val cellSize: Float = sideLength / cellNum.toFloat()
 
     private var playerIncludeCell: BackgroundCell? = null
     private var prePlayerIncludeCell: BackgroundCell? = null
@@ -44,7 +46,15 @@ class BackgroundManager(
     init {
         diffOfLoop = cellSize * (allCellNum)
         this.mapData = mapData
-        resetBackgroundCellPosition()
+        // fixme ここでやりたくない
+        useCase(
+            mapX = 0,
+            mapY = 0,
+            allCellNum = allCellNum,
+            cellNum = cellNum,
+            cellSize = cellSize,
+            mapData = mapData
+        )
         loadMapData()
     }
 
@@ -95,34 +105,6 @@ class BackgroundManager(
                     }
                 }
             }
-        }
-    }
-
-    /**
-     * 背景画像の位置をリセットする
-     */
-    fun resetBackgroundCellPosition(
-        mapX: Int = 0,
-        mapY: Int = 0,
-    ) {
-        runBlocking {
-            repository.setBackground(
-                List(allCellNum) { row ->
-                    List(allCellNum) { col ->
-                        BackgroundCell(
-                            x = col * cellSize,
-                            y = row * cellSize,
-                            cellSize = cellSize,
-                        ).apply {
-                            mapPoint = mapData.getMapPoint(
-                                x = col - (cellNum - 1) / 2 + mapX,
-                                y = row - (cellNum - 1) / 2 + mapY,
-                            )
-                            imgID = mapData.getDataAt(mapPoint)
-                        }
-                    }
-                }
-            )
         }
     }
 }

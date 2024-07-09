@@ -10,6 +10,7 @@ import map.repository.player.PlayerRepositoryImpl
 import map.usecase.MoveBackgroundUseCase
 import map.usecase.PlayerMoveToUseCase
 import map.usecase.PlayerMoveUseCase
+import map.usecase.ResetBackgroundPositionUseCase
 import map.viewmodel.MapViewModel
 import org.koin.dsl.module
 
@@ -42,6 +43,12 @@ val MapModule = module {
 
     single {
         MoveBackgroundUseCase(
+            repository = get()
+        )
+    }
+
+    single {
+        ResetBackgroundPositionUseCase(
             repository = get()
         )
     }

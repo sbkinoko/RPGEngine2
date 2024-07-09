@@ -25,6 +25,7 @@ import map.usecase.IsCollidedUseCase
 import map.usecase.MoveBackgroundUseCase
 import map.usecase.PlayerMoveToUseCase
 import map.usecase.PlayerMoveUseCase
+import map.usecase.ResetBackgroundPositionUseCase
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -39,6 +40,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
     private val isCollidedUseCase: IsCollidedUseCase = IsCollidedUseCase()
     private val moveBackgroundUseCase: MoveBackgroundUseCase by inject()
+    private val resetBackgroundPositionUseCase: ResetBackgroundPositionUseCase by inject()
     private val backgroundRepository: BackgroundRepository by inject()
 
     val playerSquare: SharedFlow<Square> = playerRepository.playerPositionFLow
@@ -237,9 +239,13 @@ class MapViewModel : ControllerCallback, KoinComponent {
         mapY: Int,
     ) {
         setPlayerCenter()
-        backgroundManger.value.resetBackgroundCellPosition(
+        resetBackgroundPositionUseCase(
             mapX = mapX,
             mapY = mapY,
+            mapData = backgroundManger.value.mapData,
+            cellSize = backgroundManger.value.cellSize,
+            cellNum = backgroundManger.value.cellNum,
+            allCellNum = backgroundManger.value.allCellNum,
         )
         backgroundManger.value.findCellIncludePlayer(
             playerSquare = playerRepository.getPlayerPosition()
