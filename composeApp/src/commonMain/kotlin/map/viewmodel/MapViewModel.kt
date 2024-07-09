@@ -19,6 +19,7 @@ import map.layout.PlayerMoveSquare
 import map.manager.BackgroundManager
 import map.manager.MoveManager
 import map.manager.VelocityManager
+import map.repository.backgroundcell.BackgroundRepository
 import map.repository.player.PlayerRepository
 import map.usecase.IsCollidedUseCase
 import map.usecase.MoveBackgroundUseCase
@@ -38,6 +39,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
     private val isCollidedUseCase: IsCollidedUseCase = IsCollidedUseCase()
     private val moveBackgroundUseCase: MoveBackgroundUseCase by inject()
+    private val backgroundRepository: BackgroundRepository by inject()
 
     val playerSquare: SharedFlow<Square> = playerRepository.playerPositionFLow
 
@@ -61,6 +63,10 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
     override lateinit var pressB: () -> Unit
 
+    val backgroundCells: List<List<BackgroundCell>>
+        get() {
+            return backgroundRepository.background
+        }
 
     init {
         backgroundManger.value.mapData = LoopMap()

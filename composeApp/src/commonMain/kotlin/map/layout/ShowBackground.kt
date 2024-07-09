@@ -14,25 +14,22 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import common.extension.pxToDp
 import common.values.Colors
-import map.manager.BackgroundManager
+import map.domain.BackgroundCell
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 fun showBackground(
-    backgroundManager: BackgroundManager,
+    backgroundCell: List<List<BackgroundCell>>,
     screenRatio: Float,
 ) {
     val imageBinder = ImageBinder()
 
     Box {
-        for (row: Int in 0 until backgroundManager.allCellNum) {
-            for (col: Int in 0 until backgroundManager.allCellNum) {
-                backgroundManager.getCell(
-                    col = col,
-                    row = row,
-                ).apply {
+        backgroundCell.forEachIndexed { row, backgroundCells ->
+            backgroundCells.forEachIndexed { col, cell ->
+                cell.apply {
                     Box(
                         modifier = Modifier
                             .size(

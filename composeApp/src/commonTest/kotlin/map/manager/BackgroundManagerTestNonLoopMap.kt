@@ -4,6 +4,7 @@ import map.MapModule
 import map.data.NonLoopTestMap
 import map.domain.Velocity
 import map.domain.collision.Square
+import map.repository.backgroundcell.BackgroundRepository
 import map.usecase.MoveBackgroundUseCase
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -18,6 +19,7 @@ class BackgroundManagerTestNonLoopMap : KoinTest {
 
     private lateinit var backgroundManager: BackgroundManager
     private val moveBackgroundUseCase: MoveBackgroundUseCase by inject()
+    private val repository: BackgroundRepository by inject()
 
     private val mapData = NonLoopTestMap()
 
@@ -42,8 +44,11 @@ class BackgroundManagerTestNonLoopMap : KoinTest {
     }
 
     @Test
-    fun checkFirstPosition() {
-        backgroundManager.getCell(0, 0).apply {
+    fun heckFirstPosition() {
+        repository.getBackgroundAt(
+            x = 0,
+            y = 0,
+        ).apply {
             square.apply {
                 assertEquals(
                     expected = 0f,
@@ -89,7 +94,10 @@ class BackgroundManagerTestNonLoopMap : KoinTest {
             mapData = mapData,
         )
 
-        backgroundManager.getCell(0, 0).apply {
+        repository.getBackgroundAt(
+            x = 0,
+            y = 0,
+        ).apply {
             square.apply {
                 assertEquals(
                     expected = 0f,
@@ -135,7 +143,10 @@ class BackgroundManagerTestNonLoopMap : KoinTest {
             mapData = mapData,
         )
 
-        backgroundManager.getCell(0, 0).apply {
+        repository.getBackgroundAt(
+            x = 0,
+            y = 0,
+        ).apply {
             square.apply {
                 assertEquals(
                     expected = 0f,
@@ -181,7 +192,10 @@ class BackgroundManagerTestNonLoopMap : KoinTest {
             mapData = mapData,
         )
 
-        backgroundManager.getCell(0, 0).apply {
+        repository.getBackgroundAt(
+            x = 0,
+            y = 0,
+        ).apply {
             square.apply {
                 assertEquals(
                     expected = 25f,
@@ -227,7 +241,10 @@ class BackgroundManagerTestNonLoopMap : KoinTest {
             mapData = mapData,
         )
 
-        backgroundManager.getCell(0, 0).apply {
+        repository.getBackgroundAt(
+            x = 0,
+            y = 0,
+        ).apply {
             square.apply {
                 assertEquals(
                     expected = -dx + SIDE_LENGTH,

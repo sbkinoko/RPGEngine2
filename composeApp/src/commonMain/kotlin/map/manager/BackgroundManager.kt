@@ -49,19 +49,6 @@ class BackgroundManager(
     }
 
     /**
-     * 指定した位置のcellを取得する
-     */
-    fun getCell(
-        col: Int,
-        row: Int,
-    ): BackgroundCell {
-        return repository.getBackgroundAt(
-            x = col,
-            y = row,
-        )
-    }
-
-    /**
      * 表示領域の中心を返す
      */
     fun getCenterOfDisplay(): Point {
