@@ -13,6 +13,7 @@ class BackgroundManager(
     private val repository: BackgroundRepository by inject()
 
     val diffOfLoop: Float
+        get() = cellSize * (allCellNum)
     private val cellNum: Int
         get() = repository.cellNum
 
@@ -36,7 +37,6 @@ class BackgroundManager(
         }
 
     init {
-        diffOfLoop = cellSize * (allCellNum)
         repository.cellNum = cellNum
     }
 
