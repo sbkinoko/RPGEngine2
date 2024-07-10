@@ -120,8 +120,6 @@ class MapViewModel : ControllerCallback, KoinComponent {
             moveBackgroundUseCase(
                 velocity = backGroundVelocity,
                 fieldSquare = fieldSquare,
-                diffOfLoop = backgroundManger.value.diffOfLoop,
-                allCellNum = backgroundManger.value.allCellNum,
             )
 
             backgroundManger.value.apply {

@@ -11,8 +11,6 @@ class MoveBackgroundUseCase(
     operator fun invoke(
         velocity: Velocity,
         fieldSquare: Square,
-        diffOfLoop: Float,
-        allCellNum: Int,
     ) {
         repository.background.forEach { rowArray ->
             rowArray.forEach { bgCell ->
@@ -25,8 +23,6 @@ class MoveBackgroundUseCase(
                 loopBackgroundCell(
                     bgCell = bgCell,
                     fieldSquare = fieldSquare,
-                    diffOfLoop = diffOfLoop,
-                    allCellNum = allCellNum,
                 )
             }
         }
@@ -38,9 +34,11 @@ class MoveBackgroundUseCase(
     private fun loopBackgroundCell(
         bgCell: BackgroundCell,
         fieldSquare: Square,
-        diffOfLoop: Float,
-        allCellNum: Int,
     ) {
+        // loopに必要な移動量
+        val allCellNum = repository.allCellNum
+        val diffOfLoop = allCellNum * repository.cellSize
+
         bgCell.apply {
             val mapX: Int =
                 if (square.isRight(fieldSquare)) {
