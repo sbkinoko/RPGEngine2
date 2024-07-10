@@ -75,7 +75,6 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
         mutableBackgroundManager = MutableStateFlow(
             BackgroundManager(
-                sideLength = VIRTUAL_SCREEN_SIZE,
             )
         )
 
@@ -249,7 +248,6 @@ class MapViewModel : ControllerCallback, KoinComponent {
             mapData = mapData,
             mapX = mapX,
             mapY = mapY,
-            cellSize = backgroundManger.value.cellSize,
         )
         backgroundManger.value.findCellIncludePlayer(
             playerSquare = playerRepository.getPlayerPosition()

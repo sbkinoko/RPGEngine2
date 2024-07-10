@@ -7,21 +7,17 @@ import map.repository.backgroundcell.BackgroundRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class BackgroundManager(
-    val sideLength: Int,
-) : KoinComponent {
+class BackgroundManager : KoinComponent {
     private val repository: BackgroundRepository by inject()
 
     val diffOfLoop: Float
-        get() = cellSize * (allCellNum)
-    private val cellNum: Int
-        get() = repository.cellNum
+        get() = cellSize * repository.allCellNum
 
     val allCellNum: Int
         get() = repository.allCellNum
 
     val cellSize: Float
-        get() = sideLength / cellNum.toFloat()
+        get() = repository.cellSize
 
     private var playerIncludeCell: BackgroundCell? = null
     private var prePlayerIncludeCell: BackgroundCell? = null
@@ -41,8 +37,8 @@ class BackgroundManager(
      */
     fun getCenterOfDisplay(): Point {
         return Point(
-            x = sideLength / 2f,
-            y = sideLength / 2f,
+            x = repository.screenSeize / 2f,
+            y = repository.screenSeize / 2f,
         )
     }
 
