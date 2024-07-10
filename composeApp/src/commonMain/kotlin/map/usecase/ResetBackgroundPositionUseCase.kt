@@ -2,6 +2,7 @@ package map.usecase
 
 import kotlinx.coroutines.runBlocking
 import map.domain.BackgroundCell
+import map.domain.MapData
 import map.repository.backgroundcell.BackgroundRepository
 
 class ResetBackgroundPositionUseCase(
@@ -11,10 +12,15 @@ class ResetBackgroundPositionUseCase(
         allCellNum: Int,
         cellNum: Int,
         cellSize: Float,
+        mapData: MapData,
         mapX: Int,
         mapY: Int,
     ) {
         runBlocking {
+            // map情報を更新
+            repository.mapData = mapData
+
+            // 更新した情報を元に背景リセット
             repository.setBackground(
                 List(allCellNum) { row ->
                     List(allCellNum) { col ->

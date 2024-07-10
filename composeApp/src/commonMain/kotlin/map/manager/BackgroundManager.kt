@@ -1,6 +1,5 @@
 package map.manager
 
-import kotlinx.coroutines.runBlocking
 import map.domain.BackgroundCell
 import map.domain.Point
 import map.domain.collision.Square
@@ -44,26 +43,6 @@ class BackgroundManager(
             x = sideLength / 2f,
             y = sideLength / 2f,
         )
-    }
-
-    /**
-     * 背景画像を読み込む
-     */
-    private fun loadMapData() {
-        runBlocking {
-            repository.setBackground(
-                repository.background.mapIndexed { y, rowArray ->
-                    rowArray.mapIndexed { x, cell ->
-                        cell.apply {
-                            imgID = repository.mapData.getDataAt(
-                                x = x,
-                                y = y,
-                            )
-                        }
-                    }
-                }
-            )
-        }
     }
 
     /**

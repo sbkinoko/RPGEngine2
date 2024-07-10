@@ -72,8 +72,6 @@ class MapViewModel : ControllerCallback, KoinComponent {
         }
 
     init {
-        backgroundRepository.mapData = LoopMap()
-
         playerMoveArea = PlayerMoveSquare(
             screenSize = VIRTUAL_SCREEN_SIZE,
             borderRate = MOVE_BORDER,
@@ -244,8 +242,8 @@ class MapViewModel : ControllerCallback, KoinComponent {
         mapData: MapData,
     ) {
         setPlayerCenter()
-        backgroundRepository.mapData = mapData
         resetBackgroundPositionUseCase(
+            mapData = mapData,
             mapX = mapX,
             mapY = mapY,
             cellSize = backgroundManger.value.cellSize,

@@ -33,8 +33,6 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
             )
         }
 
-        repository.mapData = mapData
-
         backgroundManager = BackgroundManager(
             cellNum = CELL_NUM,
             sideLength = SIDE_LENGTH,
@@ -44,6 +42,7 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
             allCellNum = backgroundManager.allCellNum,
             cellNum = backgroundManager.cellNum,
             cellSize = backgroundManager.cellSize,
+            mapData = mapData,
             mapX = 0,
             mapY = 0,
         )
