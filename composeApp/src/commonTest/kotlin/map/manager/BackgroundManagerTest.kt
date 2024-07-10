@@ -142,8 +142,6 @@ class BackgroundManagerTest : KoinTest {
                 y = 0f,
                 size = SIDE_LENGTH.toFloat(),
             ),
-            diffOfLoop = backgroundManager.diffOfLoop,
-            allCellNum = backgroundManager.allCellNum,
         )
 
         repository.getBackgroundAt(
