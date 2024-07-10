@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 import map.data.LoopMap
 import map.data.NonLoopMap
 import map.domain.BackgroundCell
+import map.domain.MapData
 import map.domain.Player
 import map.domain.Point
 import map.domain.Velocity
@@ -83,7 +84,11 @@ class MapViewModel : ControllerCallback, KoinComponent {
             )
         }
 
-        reloadMapData(mapX = 0, mapY = 0)
+        reloadMapData(
+            mapX = 0,
+            mapY = 0,
+            mapData = LoopMap(),
+        )
     }
 
     private val fieldSquare: Square = Square(
@@ -216,14 +221,15 @@ class MapViewModel : ControllerCallback, KoinComponent {
                 reloadMapData(
                     mapX = 0,
                     mapY = 2,
+                    mapData = NonLoopMap(),
                 )
             }
 
             4 -> {
-                backgroundRepository.mapData = LoopMap()
                 reloadMapData(
                     mapX = 5,
                     mapY = 5,
+                    mapData = LoopMap()
                 )
             }
         }
@@ -235,8 +241,10 @@ class MapViewModel : ControllerCallback, KoinComponent {
     private fun reloadMapData(
         mapX: Int,
         mapY: Int,
+        mapData: MapData,
     ) {
         setPlayerCenter()
+        backgroundRepository.mapData = mapData
         resetBackgroundPositionUseCase(
             mapX = mapX,
             mapY = mapY,

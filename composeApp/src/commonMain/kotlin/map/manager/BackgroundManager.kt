@@ -37,24 +37,8 @@ class BackgroundManager(
             return playerIncludeCell
         }
 
-    var mapData: MapData = LoopMap()
-        set(value) {
-            loadMapData()
-            field = value
-        }
-
     init {
         diffOfLoop = cellSize * (allCellNum)
-        repository.mapData = mapData
-        // fixme ここでやりたくない
-        useCase(
-            mapX = 0,
-            mapY = 0,
-            allCellNum = allCellNum,
-            cellNum = cellNum,
-            cellSize = cellSize,
-        )
-        loadMapData()
     }
 
     /**
@@ -76,7 +60,7 @@ class BackgroundManager(
                 repository.background.mapIndexed { y, rowArray ->
                     rowArray.mapIndexed { x, cell ->
                         cell.apply {
-                            imgID = mapData.getDataAt(
+                            imgID = repository.mapData.getDataAt(
                                 x = x,
                                 y = y,
                             )
