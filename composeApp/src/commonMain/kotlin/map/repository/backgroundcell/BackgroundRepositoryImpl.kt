@@ -12,6 +12,11 @@ class BackgroundRepositoryImpl : BackgroundRepository {
 
     override var mapData: MapData = LoopMap()
 
+    override var cellNum: Int = 3
+
+    override val allCellNum: Int
+        get() = cellNum + 1
+
     override fun getBackgroundAt(x: Int, y: Int): BackgroundCell {
         return background[y][x]
     }

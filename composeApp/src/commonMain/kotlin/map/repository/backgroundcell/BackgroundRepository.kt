@@ -11,6 +11,10 @@ interface BackgroundRepository {
 
     var mapData: MapData
 
+    var cellNum: Int
+
+    val allCellNum: Int
+
     fun getBackgroundAt(x: Int, y: Int): BackgroundCell
 
     suspend fun setBackground(background: List<List<BackgroundCell>>)
