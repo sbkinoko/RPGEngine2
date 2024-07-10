@@ -1,23 +1,17 @@
 package map.manager
 
-import kotlinx.coroutines.runBlocking
-import map.data.LoopMap
 import map.domain.BackgroundCell
-import map.domain.MapData
 import map.domain.Point
 import map.domain.collision.Square
 import map.repository.backgroundcell.BackgroundRepository
-import map.usecase.ResetBackgroundPositionUseCase
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class BackgroundManager(
     val cellNum: Int,
     val sideLength: Int,
-    mapData: MapData = LoopMap()
 ) : KoinComponent {
     private val repository: BackgroundRepository by inject()
-    private val useCase: ResetBackgroundPositionUseCase by inject()
 
     val diffOfLoop: Float
     val allCellNum: Int = cellNum + 1
@@ -37,25 +31,8 @@ class BackgroundManager(
             return playerIncludeCell
         }
 
-    var mapData: MapData = LoopMap()
-        set(value) {
-            loadMapData()
-            field = value
-        }
-
     init {
         diffOfLoop = cellSize * (allCellNum)
-        this.mapData = mapData
-        // fixme ここでやりたくない
-        useCase(
-            mapX = 0,
-            mapY = 0,
-            allCellNum = allCellNum,
-            cellNum = cellNum,
-            cellSize = cellSize,
-            mapData = mapData
-        )
-        loadMapData()
     }
 
     /**
@@ -66,26 +43,6 @@ class BackgroundManager(
             x = sideLength / 2f,
             y = sideLength / 2f,
         )
-    }
-
-    /**
-     * 背景画像を読み込む
-     */
-    private fun loadMapData() {
-        runBlocking {
-            repository.setBackground(
-                repository.background.mapIndexed { y, rowArray ->
-                    rowArray.mapIndexed { x, cell ->
-                        cell.apply {
-                            imgID = mapData.getDataAt(
-                                x = x,
-                                y = y,
-                            )
-                        }
-                    }
-                }
-            )
-        }
     }
 
     /**

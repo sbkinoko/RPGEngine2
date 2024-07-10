@@ -17,6 +17,10 @@ class ResetBackgroundPositionUseCase(
         mapY: Int,
     ) {
         runBlocking {
+            // map情報を更新
+            repository.mapData = mapData
+
+            // 更新した情報を元に背景リセット
             repository.setBackground(
                 List(allCellNum) { row ->
                     List(allCellNum) { col ->
@@ -25,11 +29,13 @@ class ResetBackgroundPositionUseCase(
                             y = row * cellSize,
                             cellSize = cellSize,
                         ).apply {
-                            mapPoint = mapData.getMapPoint(
-                                x = col - (cellNum - 1) / 2 + mapX,
-                                y = row - (cellNum - 1) / 2 + mapY,
-                            )
-                            imgID = mapData.getDataAt(mapPoint)
+                            repository.mapData.apply {
+                                mapPoint = getMapPoint(
+                                    x = col - (cellNum - 1) / 2 + mapX,
+                                    y = row - (cellNum - 1) / 2 + mapY,
+                                )
+                                imgID = getDataAt(mapPoint)
+                            }
                         }
                     }
                 }

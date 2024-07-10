@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 import map.data.LoopMap
 import map.data.NonLoopMap
 import map.domain.BackgroundCell
+import map.domain.MapData
 import map.domain.Player
 import map.domain.Point
 import map.domain.Velocity
@@ -71,8 +72,6 @@ class MapViewModel : ControllerCallback, KoinComponent {
         }
 
     init {
-        backgroundManger.value.mapData = LoopMap()
-
         playerMoveArea = PlayerMoveSquare(
             screenSize = VIRTUAL_SCREEN_SIZE,
             borderRate = MOVE_BORDER,
@@ -83,7 +82,11 @@ class MapViewModel : ControllerCallback, KoinComponent {
             )
         }
 
-        reloadMapData(mapX = 0, mapY = 0)
+        reloadMapData(
+            mapX = 0,
+            mapY = 0,
+            mapData = LoopMap(),
+        )
     }
 
     private val fieldSquare: Square = Square(
@@ -117,9 +120,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
                 fieldSquare = fieldSquare,
                 diffOfLoop = backgroundManger.value.diffOfLoop,
                 allCellNum = backgroundManger.value.allCellNum,
-                mapData = backgroundManger.value.mapData,
-
-                )
+            )
 
             backgroundManger.value.apply {
                 findCellIncludePlayer(
@@ -214,18 +215,19 @@ class MapViewModel : ControllerCallback, KoinComponent {
     private fun callCellEvent(backgroundCell: BackgroundCell) {
         when (backgroundCell.imgID) {
             3 -> {
-                backgroundManger.value.mapData = NonLoopMap()
+                backgroundRepository.mapData = NonLoopMap()
                 reloadMapData(
                     mapX = 0,
                     mapY = 2,
+                    mapData = NonLoopMap(),
                 )
             }
 
             4 -> {
-                backgroundManger.value.mapData = LoopMap()
                 reloadMapData(
                     mapX = 5,
                     mapY = 5,
+                    mapData = LoopMap()
                 )
             }
         }
@@ -237,12 +239,13 @@ class MapViewModel : ControllerCallback, KoinComponent {
     private fun reloadMapData(
         mapX: Int,
         mapY: Int,
+        mapData: MapData,
     ) {
         setPlayerCenter()
         resetBackgroundPositionUseCase(
+            mapData = mapData,
             mapX = mapX,
             mapY = mapY,
-            mapData = backgroundManger.value.mapData,
             cellSize = backgroundManger.value.cellSize,
             cellNum = backgroundManger.value.cellNum,
             allCellNum = backgroundManger.value.allCellNum,

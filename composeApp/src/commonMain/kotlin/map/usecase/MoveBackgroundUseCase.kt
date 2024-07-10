@@ -1,7 +1,6 @@
 package map.usecase
 
 import map.domain.BackgroundCell
-import map.domain.MapData
 import map.domain.Velocity
 import map.domain.collision.Square
 import map.repository.backgroundcell.BackgroundRepository
@@ -14,7 +13,6 @@ class MoveBackgroundUseCase(
         fieldSquare: Square,
         diffOfLoop: Float,
         allCellNum: Int,
-        mapData: MapData,
     ) {
         repository.background.forEach { rowArray ->
             rowArray.forEach { bgCell ->
@@ -29,7 +27,6 @@ class MoveBackgroundUseCase(
                     fieldSquare = fieldSquare,
                     diffOfLoop = diffOfLoop,
                     allCellNum = allCellNum,
-                    mapData = mapData,
                 )
             }
         }
@@ -43,7 +40,6 @@ class MoveBackgroundUseCase(
         fieldSquare: Square,
         diffOfLoop: Float,
         allCellNum: Int,
-        mapData: MapData,
     ) {
         bgCell.apply {
             val mapX: Int =
@@ -76,12 +72,14 @@ class MoveBackgroundUseCase(
                     mapPoint.y
                 }
 
-            mapPoint = mapData.getMapPoint(
-                x = mapX,
-                y = mapY,
-            )
+            repository.mapData.apply {
+                mapPoint = getMapPoint(
+                    x = mapX,
+                    y = mapY,
+                )
 
-            imgID = mapData.getDataAt(mapPoint)
+                imgID = getDataAt(mapPoint)
+            }
         }
     }
 }

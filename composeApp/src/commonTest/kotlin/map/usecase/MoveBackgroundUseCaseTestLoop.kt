@@ -22,6 +22,7 @@ class MoveBackgroundUseCaseTestLoop : KoinTest {
     private lateinit var backgroundManager: BackgroundManager
     private val moveBackgroundUseCase: MoveBackgroundUseCase by inject()
     private val repository: BackgroundRepository by inject()
+    private val resetBackgroundPositionUseCase: ResetBackgroundPositionUseCase by inject()
 
     private val mapData = LoopTestMap()
 
@@ -36,7 +37,15 @@ class MoveBackgroundUseCaseTestLoop : KoinTest {
         backgroundManager = BackgroundManager(
             cellNum = CELL_NUM,
             sideLength = SIDE_LENGTH,
+        )
+
+        resetBackgroundPositionUseCase(
+            allCellNum = backgroundManager.allCellNum,
+            cellNum = backgroundManager.cellNum,
+            cellSize = backgroundManager.cellSize,
             mapData = mapData,
+            mapX = 0,
+            mapY = 0,
         )
     }
 
@@ -93,7 +102,6 @@ class MoveBackgroundUseCaseTestLoop : KoinTest {
             ),
             diffOfLoop = backgroundManager.diffOfLoop,
             allCellNum = backgroundManager.allCellNum,
-            mapData = mapData,
         )
 
         getLeftTopCell().apply {
@@ -139,7 +147,6 @@ class MoveBackgroundUseCaseTestLoop : KoinTest {
             ),
             diffOfLoop = backgroundManager.diffOfLoop,
             allCellNum = backgroundManager.allCellNum,
-            mapData = mapData,
         )
 
         getLeftTopCell().apply {
@@ -185,7 +192,6 @@ class MoveBackgroundUseCaseTestLoop : KoinTest {
             ),
             diffOfLoop = backgroundManager.diffOfLoop,
             allCellNum = backgroundManager.allCellNum,
-            mapData = mapData,
         )
 
         getLeftTopCell().apply {
@@ -231,7 +237,6 @@ class MoveBackgroundUseCaseTestLoop : KoinTest {
             ),
             diffOfLoop = backgroundManager.diffOfLoop,
             allCellNum = backgroundManager.allCellNum,
-            mapData = mapData,
         )
 
         getLeftTopCell().apply {
