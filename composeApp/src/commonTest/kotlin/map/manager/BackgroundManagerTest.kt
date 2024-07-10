@@ -6,6 +6,7 @@ import map.domain.Velocity
 import map.domain.collision.Square
 import map.repository.backgroundcell.BackgroundRepository
 import map.usecase.MoveBackgroundUseCase
+import map.usecase.ResetBackgroundPositionUseCase
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
@@ -21,6 +22,7 @@ class BackgroundManagerTest : KoinTest {
     private lateinit var backgroundManager: BackgroundManager
     private val moveBackgroundUseCase: MoveBackgroundUseCase by inject()
     private val repository: BackgroundRepository by inject()
+    private val resetBackgroundPositionUseCase: ResetBackgroundPositionUseCase by inject()
 
     private val mapData = LoopTestMap()
 
@@ -32,10 +34,19 @@ class BackgroundManagerTest : KoinTest {
             )
         }
 
+        repository.mapData = mapData
+
         backgroundManager = BackgroundManager(
             cellNum = CELL_NUM,
             sideLength = SIDE_LENGTH,
-            mapData = LoopTestMap(),
+        )
+
+        resetBackgroundPositionUseCase(
+            allCellNum = backgroundManager.allCellNum,
+            cellNum = backgroundManager.cellNum,
+            cellSize = backgroundManager.cellSize,
+            mapX = 1,
+            mapY = 1,
         )
     }
 
@@ -138,7 +149,6 @@ class BackgroundManagerTest : KoinTest {
             ),
             diffOfLoop = backgroundManager.diffOfLoop,
             allCellNum = backgroundManager.allCellNum,
-            mapData = mapData,
         )
 
         repository.getBackgroundAt(

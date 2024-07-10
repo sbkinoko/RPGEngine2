@@ -1,23 +1,18 @@
 package map.manager
 
 import kotlinx.coroutines.runBlocking
-import map.data.LoopMap
 import map.domain.BackgroundCell
-import map.domain.MapData
 import map.domain.Point
 import map.domain.collision.Square
 import map.repository.backgroundcell.BackgroundRepository
-import map.usecase.ResetBackgroundPositionUseCase
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class BackgroundManager(
     val cellNum: Int,
     val sideLength: Int,
-    mapData: MapData = LoopMap()
 ) : KoinComponent {
     private val repository: BackgroundRepository by inject()
-    private val useCase: ResetBackgroundPositionUseCase by inject()
 
     val diffOfLoop: Float
     val allCellNum: Int = cellNum + 1

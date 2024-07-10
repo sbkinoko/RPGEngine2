@@ -30,10 +30,17 @@ class ResetBackgroundPositionUseCaseTest : KoinTest {
                 MapModule
             )
         }
+        repository.mapData = mapData
         backgroundManager = BackgroundManager(
             cellNum = CELL_NUM,
             sideLength = SIDE_LENGTH,
-            mapData = mapData,
+        )
+        resetBackgroundPositionUseCase(
+            allCellNum = backgroundManager.allCellNum,
+            cellNum = backgroundManager.cellNum,
+            cellSize = backgroundManager.cellSize,
+            mapX = 0,
+            mapY = 0,
         )
     }
 
@@ -76,7 +83,6 @@ class ResetBackgroundPositionUseCaseTest : KoinTest {
             allCellNum = backgroundManager.allCellNum,
             cellNum = backgroundManager.cellNum,
             cellSize = backgroundManager.cellSize,
-            mapData = mapData,
         )
 
         repository.getBackgroundAt(

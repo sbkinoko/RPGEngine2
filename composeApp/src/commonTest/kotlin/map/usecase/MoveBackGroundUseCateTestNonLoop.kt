@@ -21,6 +21,7 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
     private lateinit var backgroundManager: BackgroundManager
     private val moveBackgroundUseCase: MoveBackgroundUseCase by inject()
     private val repository: BackgroundRepository by inject()
+    private val resetBackgroundPositionUseCase: ResetBackgroundPositionUseCase by inject()
 
     private val mapData = NonLoopTestMap()
 
@@ -32,10 +33,19 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
             )
         }
 
+        repository.mapData = mapData
+
         backgroundManager = BackgroundManager(
             cellNum = CELL_NUM,
             sideLength = SIDE_LENGTH,
-            mapData = mapData,
+        )
+
+        resetBackgroundPositionUseCase(
+            allCellNum = backgroundManager.allCellNum,
+            cellNum = backgroundManager.cellNum,
+            cellSize = backgroundManager.cellSize,
+            mapX = 0,
+            mapY = 0,
         )
     }
 
@@ -92,7 +102,6 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
             ),
             diffOfLoop = backgroundManager.diffOfLoop,
             allCellNum = backgroundManager.allCellNum,
-            mapData = mapData,
         )
 
         repository.getBackgroundAt(
@@ -141,7 +150,6 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
             ),
             diffOfLoop = backgroundManager.diffOfLoop,
             allCellNum = backgroundManager.allCellNum,
-            mapData = mapData,
         )
 
         repository.getBackgroundAt(
@@ -190,7 +198,6 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
             ),
             diffOfLoop = backgroundManager.diffOfLoop,
             allCellNum = backgroundManager.allCellNum,
-            mapData = mapData,
         )
 
         repository.getBackgroundAt(
@@ -239,7 +246,6 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
             ),
             diffOfLoop = backgroundManager.diffOfLoop,
             allCellNum = backgroundManager.allCellNum,
-            mapData = mapData,
         )
 
         repository.getBackgroundAt(
