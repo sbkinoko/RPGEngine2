@@ -36,10 +36,6 @@ class BackgroundManager(
             return playerIncludeCell
         }
 
-    init {
-        repository.cellNum = cellNum
-    }
-
     /**
      * 表示領域の中心を返す
      */
