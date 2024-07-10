@@ -45,7 +45,7 @@ class BackgroundManager(
 
     init {
         diffOfLoop = cellSize * (allCellNum)
-        this.mapData = mapData
+        repository.mapData = mapData
         // fixme ここでやりたくない
         useCase(
             mapX = 0,
@@ -53,7 +53,6 @@ class BackgroundManager(
             allCellNum = allCellNum,
             cellNum = cellNum,
             cellSize = cellSize,
-            mapData = mapData
         )
         loadMapData()
     }

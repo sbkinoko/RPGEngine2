@@ -71,7 +71,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
         }
 
     init {
-        backgroundManger.value.mapData = LoopMap()
+        backgroundRepository.mapData = LoopMap()
 
         playerMoveArea = PlayerMoveSquare(
             screenSize = VIRTUAL_SCREEN_SIZE,
@@ -117,9 +117,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
                 fieldSquare = fieldSquare,
                 diffOfLoop = backgroundManger.value.diffOfLoop,
                 allCellNum = backgroundManger.value.allCellNum,
-                mapData = backgroundManger.value.mapData,
-
-                )
+            )
 
             backgroundManger.value.apply {
                 findCellIncludePlayer(
@@ -214,7 +212,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
     private fun callCellEvent(backgroundCell: BackgroundCell) {
         when (backgroundCell.imgID) {
             3 -> {
-                backgroundManger.value.mapData = NonLoopMap()
+                backgroundRepository.mapData = NonLoopMap()
                 reloadMapData(
                     mapX = 0,
                     mapY = 2,
@@ -222,7 +220,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
             }
 
             4 -> {
-                backgroundManger.value.mapData = LoopMap()
+                backgroundRepository.mapData = LoopMap()
                 reloadMapData(
                     mapX = 5,
                     mapY = 5,
@@ -242,7 +240,6 @@ class MapViewModel : ControllerCallback, KoinComponent {
         resetBackgroundPositionUseCase(
             mapX = mapX,
             mapY = mapY,
-            mapData = backgroundManger.value.mapData,
             cellSize = backgroundManger.value.cellSize,
             cellNum = backgroundManger.value.cellNum,
             allCellNum = backgroundManger.value.allCellNum,
