@@ -37,7 +37,6 @@ class BackgroundManager(
 
     init {
         diffOfLoop = cellSize * (allCellNum)
-        repository.cellNum = cellNum
     }
 
     /**
