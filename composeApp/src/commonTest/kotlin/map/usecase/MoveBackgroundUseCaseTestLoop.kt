@@ -34,14 +34,12 @@ class MoveBackgroundUseCaseTestLoop : KoinTest {
             )
         }
 
+        repository.cellNum = CELL_NUM
         backgroundManager = BackgroundManager(
-            cellNum = CELL_NUM,
             sideLength = SIDE_LENGTH,
         )
 
         resetBackgroundPositionUseCase(
-            allCellNum = backgroundManager.allCellNum,
-            cellNum = backgroundManager.cellNum,
             cellSize = backgroundManager.cellSize,
             mapData = mapData,
             mapX = 0,
