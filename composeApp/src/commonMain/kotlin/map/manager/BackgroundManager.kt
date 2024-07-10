@@ -8,15 +8,19 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class BackgroundManager(
-    val cellNum: Int,
     val sideLength: Int,
 ) : KoinComponent {
     private val repository: BackgroundRepository by inject()
 
     val diffOfLoop: Float
-    val allCellNum: Int = cellNum + 1
+    private val cellNum: Int
+        get() = repository.cellNum
 
-    val cellSize: Float = sideLength / cellNum.toFloat()
+    val allCellNum: Int
+        get() = repository.allCellNum
+
+    val cellSize: Float
+        get() = sideLength / cellNum.toFloat()
 
     private var playerIncludeCell: BackgroundCell? = null
     private var prePlayerIncludeCell: BackgroundCell? = null
@@ -33,6 +37,7 @@ class BackgroundManager(
 
     init {
         diffOfLoop = cellSize * (allCellNum)
+        repository.cellNum = cellNum
     }
 
     /**

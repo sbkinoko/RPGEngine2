@@ -49,12 +49,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
     private var tapPoint: Point? = null
 
     private var mutableBackgroundManager:
-            MutableStateFlow<BackgroundManager> = MutableStateFlow(
-        BackgroundManager(
-            cellNum = 5,
-            sideLength = VIRTUAL_SCREEN_SIZE,
-        )
-    )
+            MutableStateFlow<BackgroundManager>
 
     val backgroundManger: StateFlow<BackgroundManager>
         get() = mutableBackgroundManager.asStateFlow()
@@ -76,6 +71,14 @@ class MapViewModel : ControllerCallback, KoinComponent {
             screenSize = VIRTUAL_SCREEN_SIZE,
             borderRate = MOVE_BORDER,
         )
+        backgroundRepository.cellNum = 5
+
+        mutableBackgroundManager = MutableStateFlow(
+            BackgroundManager(
+                sideLength = VIRTUAL_SCREEN_SIZE,
+            )
+        )
+
         CoroutineScope(Dispatchers.Default).launch {
             playerRepository.setPlayerPosition(
                 Square(size = player.size)
@@ -247,8 +250,6 @@ class MapViewModel : ControllerCallback, KoinComponent {
             mapX = mapX,
             mapY = mapY,
             cellSize = backgroundManger.value.cellSize,
-            cellNum = backgroundManger.value.cellNum,
-            allCellNum = backgroundManger.value.allCellNum,
         )
         backgroundManger.value.findCellIncludePlayer(
             playerSquare = playerRepository.getPlayerPosition()

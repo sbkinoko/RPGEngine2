@@ -9,8 +9,6 @@ class ResetBackgroundPositionUseCase(
     private val repository: BackgroundRepository,
 ) {
     operator fun invoke(
-        allCellNum: Int,
-        cellNum: Int,
         cellSize: Float,
         mapData: MapData,
         mapX: Int,
@@ -22,19 +20,19 @@ class ResetBackgroundPositionUseCase(
 
             // 更新した情報を元に背景リセット
             repository.setBackground(
-                List(allCellNum) { row ->
-                    List(allCellNum) { col ->
+                List(repository.allCellNum) { row ->
+                    List(repository.allCellNum) { col ->
                         BackgroundCell(
                             x = col * cellSize,
                             y = row * cellSize,
                             cellSize = cellSize,
                         ).apply {
-                            repository.mapData.apply {
-                                mapPoint = getMapPoint(
+                            repository.apply {
+                                mapPoint = mapData.getMapPoint(
                                     x = col - (cellNum - 1) / 2 + mapX,
                                     y = row - (cellNum - 1) / 2 + mapY,
                                 )
-                                imgID = getDataAt(mapPoint)
+                                imgID = mapData.getDataAt(mapPoint)
                             }
                         }
                     }
