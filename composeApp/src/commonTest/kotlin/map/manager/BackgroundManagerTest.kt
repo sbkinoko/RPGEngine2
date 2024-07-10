@@ -34,14 +34,11 @@ class BackgroundManagerTest : KoinTest {
             )
         }
 
-        backgroundManager = BackgroundManager(
-            sideLength = SIDE_LENGTH,
-        )
-
         repository.cellNum = CELL_NUM
+        repository.screenSeize = SIDE_LENGTH
+        backgroundManager = BackgroundManager()
 
         resetBackgroundPositionUseCase(
-            cellSize = backgroundManager.cellSize,
             mapData = mapData,
             mapX = 1,
             mapY = 1,

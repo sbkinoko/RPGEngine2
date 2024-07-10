@@ -15,6 +15,10 @@ interface BackgroundRepository {
 
     val allCellNum: Int
 
+    var screenSeize: Int
+
+    val cellSize: Float
+
     fun getBackgroundAt(x: Int, y: Int): BackgroundCell
 
     suspend fun setBackground(background: List<List<BackgroundCell>>)
