@@ -69,6 +69,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
             borderRate = MOVE_BORDER,
         )
         backgroundRepository.cellNum = 5
+        backgroundRepository.screenSize = VIRTUAL_SCREEN_SIZE
 
         CoroutineScope(Dispatchers.Default).launch {
             playerRepository.setPlayerPosition(
