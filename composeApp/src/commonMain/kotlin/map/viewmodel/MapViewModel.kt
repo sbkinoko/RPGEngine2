@@ -22,6 +22,8 @@ import map.manager.MoveManager
 import map.manager.VelocityManager
 import map.repository.backgroundcell.BackgroundRepository
 import map.repository.player.PlayerRepository
+import map.repository.playercell.PlayerCellRepository
+import map.usecase.FindEventCellUseCase
 import map.usecase.IsCollidedUseCase
 import map.usecase.MoveBackgroundUseCase
 import map.usecase.PlayerMoveToUseCase
@@ -43,6 +45,9 @@ class MapViewModel : ControllerCallback, KoinComponent {
     private val moveBackgroundUseCase: MoveBackgroundUseCase by inject()
     private val resetBackgroundPositionUseCase: ResetBackgroundPositionUseCase by inject()
     private val backgroundRepository: BackgroundRepository by inject()
+    private val playerCellRepository: PlayerCellRepository by inject()
+
+    private val findEventCellUseCase: FindEventCellUseCase by inject()
 
     val playerSquare: SharedFlow<Square> = playerRepository.playerPositionFLow
 
@@ -122,14 +127,11 @@ class MapViewModel : ControllerCallback, KoinComponent {
                 fieldSquare = fieldSquare,
             )
 
-            backgroundManger.value.apply {
-                findCellIncludePlayer(
-                    playerSquare = playerRepository.getPlayerPosition()
-                )
-                // イベントがあったらイベント処理をする
-                eventCell?.apply {
-                    callCellEvent(this)
-                }
+            // playerが入っているマスを設定
+            findEventCellUseCase()
+            //　そのマスに基づいてイベントを呼び出し
+            playerCellRepository.playerIncludeCell?.let {
+                callCellEvent(it)
             }
         }
     }
@@ -247,9 +249,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
             mapX = mapX,
             mapY = mapY,
         )
-        backgroundManger.value.findCellIncludePlayer(
-            playerSquare = playerRepository.getPlayerPosition()
-        )
+        findEventCellUseCase()
     }
 
     override fun moveStick(

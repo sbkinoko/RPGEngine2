@@ -7,6 +7,9 @@ import map.repository.backgroundcell.BackgroundRepository
 import map.repository.backgroundcell.BackgroundRepositoryImpl
 import map.repository.player.PlayerRepository
 import map.repository.player.PlayerRepositoryImpl
+import map.repository.playercell.PlayerCellRepository
+import map.repository.playercell.PlayerCellRepositoryImpl
+import map.usecase.FindEventCellUseCase
 import map.usecase.MoveBackgroundUseCase
 import map.usecase.PlayerMoveToUseCase
 import map.usecase.PlayerMoveUseCase
@@ -27,6 +30,10 @@ val MapModule = module {
 
     single<BackgroundRepository> {
         BackgroundRepositoryImpl()
+    }
+
+    single<PlayerCellRepository> {
+        PlayerCellRepositoryImpl()
     }
 
     single {
@@ -50,6 +57,14 @@ val MapModule = module {
     single {
         ResetBackgroundPositionUseCase(
             repository = get()
+        )
+    }
+
+    single {
+        FindEventCellUseCase(
+            playerRepository = get(),
+            playerCellRepository = get(),
+            backgroundRepository = get(),
         )
     }
 

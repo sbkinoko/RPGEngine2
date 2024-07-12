@@ -15,7 +15,6 @@ import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 class BackgroundManagerTest : KoinTest {
 
@@ -170,53 +169,6 @@ class BackgroundManagerTest : KoinTest {
                 expected = SIDE_LENGTH / 2f,
                 actual = y,
             )
-        }
-    }
-
-    @Test
-    fun playerIncludeSquare() {
-        val square = Square(
-            x = 1f,
-            y = 1f,
-            size = 5f,
-        )
-
-        backgroundManager.apply {
-            // 最初に全身が入ってるからnullじゃない
-            findCellIncludePlayer(square)
-            val cell1 = eventCell
-            assertTrue {
-                cell1 != null
-            }
-
-            // 前回のマスから動いてないからnull
-            findCellIncludePlayer(square)
-            val cell2 = eventCell
-            assertTrue {
-                cell2 == null
-            }
-
-            // 全身が入ってないから動いたけどnull
-            square.moveTo(
-                x = 7.5f,
-                y = 7.5f,
-            )
-            findCellIncludePlayer(square)
-            val cell3 = eventCell
-            assertTrue {
-                cell3 == null
-            }
-
-            // 全身が入ったからnullじゃない
-            square.moveTo(
-                x = 0.5f,
-                y = 0.5f,
-            )
-            findCellIncludePlayer(square)
-            val cell4 = eventCell
-            assertTrue {
-                cell4 != null
-            }
         }
     }
 }
