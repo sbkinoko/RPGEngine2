@@ -4,9 +4,11 @@ import map.domain.BackgroundCell
 import map.domain.Velocity
 import map.domain.collision.Square
 import map.repository.backgroundcell.BackgroundRepository
+import map.repository.collision.CollisionRepository
 
 class MoveBackgroundUseCase(
     private val repository: BackgroundRepository,
+    private val collisionRepository: CollisionRepository,
 ) {
     operator fun invoke(
         velocity: Velocity,
@@ -77,6 +79,11 @@ class MoveBackgroundUseCase(
                 )
 
                 imgID = getDataAt(mapPoint)
+                collisionList = collisionRepository.collisionData(
+                    cellSize = cellSize,
+                    square = square,
+                    id = imgID,
+                )
             }
         }
     }

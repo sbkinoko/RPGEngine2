@@ -1,11 +1,11 @@
-package map.repository
+package map.repository.collision
 
 import map.domain.collision.CollisionDetectShape
 import map.domain.collision.Square
 
-class CollisionRepository {
+class CollisionRepositoryImpl : CollisionRepository {
 
-    fun getCollisionData(
+    override fun collisionData(
         id: Int,
         cellSize: Float,
         square: Square,

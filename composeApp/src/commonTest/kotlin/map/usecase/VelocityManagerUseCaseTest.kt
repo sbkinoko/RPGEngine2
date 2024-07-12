@@ -1,11 +1,10 @@
-package map.manager
+package map.usecase
 
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import map.MapModule
 import map.domain.Velocity
 import map.layout.PlayerMoveSquare
-import map.usecase.PlayerMoveToUseCase
 import map.viewmodel.MapViewModel
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -16,9 +15,9 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class VelocityMediatorTest : KoinTest {
+class VelocityManagerUseCaseTest : KoinTest {
 
-    private val velocityManager: VelocityManager by inject()
+    private val velocityManageUseCase: VelocityManageUseCase by inject()
     private val moveToUseCase: PlayerMoveToUseCase by inject()
 
     @BeforeTest
@@ -276,7 +275,7 @@ class VelocityMediatorTest : KoinTest {
         vbx: Float,
         vby: Float,
     ) {
-        velocityManager.manageVelocity(
+        velocityManageUseCase.manageVelocity(
             tentativePlayerVelocity = velocity,
             playerMoveArea = PlayerMoveSquare(
                 screenSize = MapViewModel.VIRTUAL_SCREEN_SIZE,

@@ -4,9 +4,11 @@ import kotlinx.coroutines.runBlocking
 import map.domain.BackgroundCell
 import map.domain.MapData
 import map.repository.backgroundcell.BackgroundRepository
+import map.repository.collision.CollisionRepository
 
 class ResetBackgroundPositionUseCase(
     private val repository: BackgroundRepository,
+    private val collisionRepository: CollisionRepository,
 ) {
     operator fun invoke(
         mapData: MapData,
@@ -17,27 +19,32 @@ class ResetBackgroundPositionUseCase(
             // map情報を更新
             repository.mapData = mapData
 
-            // 更新した情報を元に背景リセット
+            val background: List<List<BackgroundCell>>
             repository.apply {
-                setBackground(
-                    List(allCellNum) { row ->
-                        List(allCellNum) { col ->
-                            BackgroundCell(
-                                x = col * cellSize,
-                                y = row * cellSize,
+                background = List(allCellNum) { row ->
+                    List(allCellNum) { col ->
+                        BackgroundCell(
+                            x = col * cellSize,
+                            y = row * cellSize,
+                            cellSize = cellSize,
+                        ).apply {
+                            mapPoint = mapData.getMapPoint(
+                                x = col - (cellNum - 1) / 2 + mapX,
+                                y = row - (cellNum - 1) / 2 + mapY,
+                            )
+                            imgID = mapData.getDataAt(mapPoint)
+                            collisionList = collisionRepository.collisionData(
                                 cellSize = cellSize,
-                            ).apply {
-                                mapPoint = mapData.getMapPoint(
-                                    x = col - (cellNum - 1) / 2 + mapX,
-                                    y = row - (cellNum - 1) / 2 + mapY,
-                                )
-                                imgID = mapData.getDataAt(mapPoint)
-                            }
+                                square = square,
+                                id = imgID,
+                            )
                         }
-
                     }
-                )
+                }
             }
+
+            // 更新した情報を元に背景リセット
+            repository.setBackground(background = background)
         }
     }
 }

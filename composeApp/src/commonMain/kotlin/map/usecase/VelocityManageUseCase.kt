@@ -1,10 +1,10 @@
-package map.manager
+package map.usecase
 
 import map.domain.Velocity
 import map.domain.collision.Square
 import map.repository.player.PlayerRepository
 
-class VelocityManager(
+class VelocityManageUseCase(
     private val playerRepository: PlayerRepository,
 ) {
     /**

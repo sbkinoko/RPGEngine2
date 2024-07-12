@@ -1,20 +1,23 @@
 package map
 
 import map.domain.Player
-import map.manager.MoveManager
-import map.manager.VelocityManager
 import map.repository.backgroundcell.BackgroundRepository
 import map.repository.backgroundcell.BackgroundRepositoryImpl
+import map.repository.collision.CollisionRepository
+import map.repository.collision.CollisionRepositoryImpl
 import map.repository.player.PlayerRepository
 import map.repository.player.PlayerRepositoryImpl
 import map.repository.playercell.PlayerCellRepository
 import map.repository.playercell.PlayerCellRepositoryImpl
 import map.usecase.FindEventCellUseCase
 import map.usecase.GetScreenCenterUseCase
+import map.usecase.IsCollidedUseCase
 import map.usecase.MoveBackgroundUseCase
+import map.usecase.PlayerMoveManageUseCase
 import map.usecase.PlayerMoveToUseCase
 import map.usecase.PlayerMoveUseCase
 import map.usecase.ResetBackgroundPositionUseCase
+import map.usecase.VelocityManageUseCase
 import map.viewmodel.MapViewModel
 import org.koin.dsl.module
 
@@ -37,6 +40,10 @@ val MapModule = module {
         PlayerCellRepositoryImpl()
     }
 
+    single<CollisionRepository> {
+        CollisionRepositoryImpl()
+    }
+
     single {
         PlayerMoveUseCase(
             playerRepository = get(),
@@ -51,13 +58,15 @@ val MapModule = module {
 
     single {
         MoveBackgroundUseCase(
-            repository = get()
+            repository = get(),
+            collisionRepository = get(),
         )
     }
 
     single {
         ResetBackgroundPositionUseCase(
-            repository = get()
+            repository = get(),
+            collisionRepository = get(),
         )
     }
 
@@ -76,14 +85,21 @@ val MapModule = module {
     }
 
     single {
-        MoveManager(
+        PlayerMoveManageUseCase(
+            playerRepository = get(),
+            isCollidedUseCase = get(),
+        )
+    }
+
+    single {
+        VelocityManageUseCase(
             playerRepository = get(),
         )
     }
 
     single {
-        VelocityManager(
-            playerRepository = get(),
+        IsCollidedUseCase(
+            repository = get(),
         )
     }
 }
