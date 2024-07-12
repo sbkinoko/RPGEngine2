@@ -8,9 +8,9 @@ import org.koin.test.inject
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 
-class MoveManageUseCaseTest : KoinTest {
+class PlayerMoveManageUseCaseTest : KoinTest {
 
-    private val useCase: MoveManageUseCase by inject()
+    private val useCase: PlayerMoveManageUseCase by inject()
 
     @BeforeTest
     fun beforeTest() {

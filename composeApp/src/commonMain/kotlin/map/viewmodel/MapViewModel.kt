@@ -21,7 +21,7 @@ import map.usecase.FindEventCellUseCase
 import map.usecase.GetScreenCenterUseCase
 import map.usecase.IsCollidedUseCase
 import map.usecase.MoveBackgroundUseCase
-import map.usecase.MoveManageUseCase
+import map.usecase.PlayerMoveManageUseCase
 import map.usecase.PlayerMoveToUseCase
 import map.usecase.PlayerMoveUseCase
 import map.usecase.ResetBackgroundPositionUseCase
@@ -32,7 +32,7 @@ import org.koin.core.component.inject
 class MapViewModel : ControllerCallback, KoinComponent {
     val player: Player by inject()
     private val playerRepository: PlayerRepository by inject()
-    private val moveManageUseCase: MoveManageUseCase by inject()
+    private val playerMoveManageUseCase: PlayerMoveManageUseCase by inject()
     private val velocityManageUseCase: VelocityManageUseCase by inject()
 
     private val getScreenCenterUseCase: GetScreenCenterUseCase by inject()
@@ -265,7 +265,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
         }
 
         // 動けないので動ける最大の速度を取得
-        tentativePlayerVelocity = moveManageUseCase.getMovableVelocity(
+        tentativePlayerVelocity = playerMoveManageUseCase.getMovableVelocity(
             tentativePlayerVelocity = tentativePlayerVelocity,
         )
     }

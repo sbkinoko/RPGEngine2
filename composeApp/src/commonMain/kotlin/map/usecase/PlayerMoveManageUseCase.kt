@@ -5,7 +5,7 @@ import map.domain.collision.Square
 import map.repository.player.PlayerRepository
 import kotlin.math.abs
 
-class MoveManageUseCase(
+class PlayerMoveManageUseCase(
     private val playerRepository: PlayerRepository,
     private val isCollidedUseCase: IsCollidedUseCase,
 ) {

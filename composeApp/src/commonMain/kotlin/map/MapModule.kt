@@ -13,7 +13,7 @@ import map.usecase.FindEventCellUseCase
 import map.usecase.GetScreenCenterUseCase
 import map.usecase.IsCollidedUseCase
 import map.usecase.MoveBackgroundUseCase
-import map.usecase.MoveManageUseCase
+import map.usecase.PlayerMoveManageUseCase
 import map.usecase.PlayerMoveToUseCase
 import map.usecase.PlayerMoveUseCase
 import map.usecase.ResetBackgroundPositionUseCase
@@ -85,7 +85,7 @@ val MapModule = module {
     }
 
     single {
-        MoveManageUseCase(
+        PlayerMoveManageUseCase(
             playerRepository = get(),
             isCollidedUseCase = get(),
         )
