@@ -5,7 +5,6 @@ import map.data.LoopTestMap
 import map.domain.BackgroundCell
 import map.domain.Velocity
 import map.domain.collision.Square
-import map.manager.BackgroundManager
 import map.manager.CELL_NUM
 import map.manager.SIDE_LENGTH
 import map.repository.backgroundcell.BackgroundRepository
@@ -19,7 +18,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class MoveBackgroundUseCaseTestLoop : KoinTest {
-    private lateinit var backgroundManager: BackgroundManager
     private val moveBackgroundUseCase: MoveBackgroundUseCase by inject()
     private val repository: BackgroundRepository by inject()
     private val resetBackgroundPositionUseCase: ResetBackgroundPositionUseCase by inject()
@@ -35,8 +33,7 @@ class MoveBackgroundUseCaseTestLoop : KoinTest {
         }
 
         repository.cellNum = CELL_NUM
-        repository.screenSeize = SIDE_LENGTH
-        backgroundManager = BackgroundManager()
+        repository.screenSize = SIDE_LENGTH
 
         resetBackgroundPositionUseCase(
             mapData = mapData,

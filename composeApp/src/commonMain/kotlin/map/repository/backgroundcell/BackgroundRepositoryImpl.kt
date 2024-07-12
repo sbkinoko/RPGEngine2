@@ -18,9 +18,9 @@ class BackgroundRepositoryImpl : BackgroundRepository {
     override val allCellNum: Int
         get() = cellNum + 1
 
-    override var screenSeize: Int = MapViewModel.VIRTUAL_SCREEN_SIZE
+    override var screenSize: Int = MapViewModel.VIRTUAL_SCREEN_SIZE
     override val cellSize: Float
-        get() = screenSeize / cellNum.toFloat()
+        get() = screenSize / cellNum.toFloat()
 
     override fun getBackgroundAt(x: Int, y: Int): BackgroundCell {
         return background[y][x]

@@ -3,10 +3,7 @@ package map.viewmodel
 import controller.domain.ControllerCallback
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import map.data.LoopMap
 import map.data.NonLoopMap
@@ -17,13 +14,13 @@ import map.domain.Point
 import map.domain.Velocity
 import map.domain.collision.Square
 import map.layout.PlayerMoveSquare
-import map.manager.BackgroundManager
 import map.manager.MoveManager
 import map.manager.VelocityManager
 import map.repository.backgroundcell.BackgroundRepository
 import map.repository.player.PlayerRepository
 import map.repository.playercell.PlayerCellRepository
 import map.usecase.FindEventCellUseCase
+import map.usecase.GetScreenCenterUseCase
 import map.usecase.IsCollidedUseCase
 import map.usecase.MoveBackgroundUseCase
 import map.usecase.PlayerMoveToUseCase
@@ -38,6 +35,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
     private val moveManager: MoveManager by inject()
     private val velocityManager: VelocityManager by inject()
 
+    private val getScreenCenterUseCase: GetScreenCenterUseCase by inject()
     private val playerMoveUseCase: PlayerMoveUseCase by inject()
     private val playerMoveToUseCase: PlayerMoveToUseCase by inject()
 
@@ -53,12 +51,6 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
     private var tapPoint: Point? = null
 
-    private var mutableBackgroundManager:
-            MutableStateFlow<BackgroundManager>
-
-    val backgroundManger: StateFlow<BackgroundManager>
-        get() = mutableBackgroundManager.asStateFlow()
-
     private var playerMoveArea: Square
 
     private var backGroundVelocity: Velocity = Velocity()
@@ -66,10 +58,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
     override lateinit var pressB: () -> Unit
 
-    val backgroundCells: List<List<BackgroundCell>>
-        get() {
-            return backgroundRepository.background
-        }
+    val backgroundCells = backgroundRepository.backgroundFlow
 
     init {
         playerMoveArea = PlayerMoveSquare(
@@ -77,11 +66,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
             borderRate = MOVE_BORDER,
         )
         backgroundRepository.cellNum = 5
-
-        mutableBackgroundManager = MutableStateFlow(
-            BackgroundManager(
-            )
-        )
+        backgroundRepository.screenSize = VIRTUAL_SCREEN_SIZE
 
         CoroutineScope(Dispatchers.Default).launch {
             playerRepository.setPlayerPosition(
@@ -201,7 +186,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
      * プレイヤーを中心に移動する
      */
     private fun setPlayerCenter() {
-        val center = backgroundManger.value.getCenterOfDisplay()
+        val center = getScreenCenterUseCase()
         // 仮の移動先
         CoroutineScope(Dispatchers.Default).launch {
             playerMoveToUseCase(

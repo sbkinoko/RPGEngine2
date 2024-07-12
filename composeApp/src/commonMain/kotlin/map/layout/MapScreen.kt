@@ -51,12 +51,12 @@ fun MapScreen(
                 }
             },
     ) {
-        mapViewModel.backgroundManger.collectAsState().value.let {
-            showBackground(
-                backgroundCell = mapViewModel.backgroundCells,
-                screenRatio = screenRatio
-            )
-        }
+        showBackground(
+            backgroundCell = mapViewModel.backgroundCells.collectAsState(
+                listOf()
+            ).value,
+            screenRatio = screenRatio
+        )
 
         Player(
             square = mapViewModel.playerSquare.collectAsState(

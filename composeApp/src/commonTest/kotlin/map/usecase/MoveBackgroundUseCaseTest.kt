@@ -1,12 +1,12 @@
-package map.manager
+package map.usecase
 
 import map.MapModule
 import map.data.LoopTestMap
 import map.domain.Velocity
 import map.domain.collision.Square
+import map.manager.CELL_NUM
+import map.manager.SIDE_LENGTH
 import map.repository.backgroundcell.BackgroundRepository
-import map.usecase.MoveBackgroundUseCase
-import map.usecase.ResetBackgroundPositionUseCase
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
@@ -16,9 +16,7 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class BackgroundManagerTest : KoinTest {
-
-    private lateinit var backgroundManager: BackgroundManager
+class MoveBackgroundUseCaseTest : KoinTest {
     private val moveBackgroundUseCase: MoveBackgroundUseCase by inject()
     private val repository: BackgroundRepository by inject()
     private val resetBackgroundPositionUseCase: ResetBackgroundPositionUseCase by inject()
@@ -34,41 +32,18 @@ class BackgroundManagerTest : KoinTest {
         }
 
         repository.cellNum = CELL_NUM
-        repository.screenSeize = SIDE_LENGTH
-        backgroundManager = BackgroundManager()
+        repository.screenSize = SIDE_LENGTH
 
         resetBackgroundPositionUseCase(
             mapData = mapData,
-            mapX = 1,
-            mapY = 1,
+            mapX = 0,
+            mapY = 0,
         )
     }
 
     @AfterTest
     fun afterTest() {
         stopKoin()
-    }
-
-    @Test
-    fun countCell() {
-        repository.getBackgroundAt(
-            x = 0,
-            y = 0,
-        ).apply {
-            assertEquals(
-                expected = 0,
-                this.imgID,
-            )
-        }
-        repository.getBackgroundAt(
-            x = 2,
-            y = 2,
-        ).apply {
-            assertEquals(
-                expected = 10,
-                this.imgID,
-            )
-        }
     }
 
     @Test
@@ -154,20 +129,6 @@ class BackgroundManagerTest : KoinTest {
             assertEquals(
                 expected = 5f,
                 actual = topSide,
-            )
-        }
-    }
-
-    @Test
-    fun getCenterDisplay() {
-        backgroundManager.getCenterOfDisplay().apply {
-            assertEquals(
-                expected = SIDE_LENGTH / 2f,
-                actual = x,
-            )
-            assertEquals(
-                expected = SIDE_LENGTH / 2f,
-                actual = y,
             )
         }
     }
