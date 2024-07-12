@@ -1,8 +1,6 @@
 package map
 
 import map.domain.Player
-import map.manager.MoveManager
-import map.manager.VelocityManager
 import map.repository.backgroundcell.BackgroundRepository
 import map.repository.backgroundcell.BackgroundRepositoryImpl
 import map.repository.collision.CollisionRepository
@@ -13,10 +11,13 @@ import map.repository.playercell.PlayerCellRepository
 import map.repository.playercell.PlayerCellRepositoryImpl
 import map.usecase.FindEventCellUseCase
 import map.usecase.GetScreenCenterUseCase
+import map.usecase.IsCollidedUseCase
 import map.usecase.MoveBackgroundUseCase
+import map.usecase.MoveManageUseCase
 import map.usecase.PlayerMoveToUseCase
 import map.usecase.PlayerMoveUseCase
 import map.usecase.ResetBackgroundPositionUseCase
+import map.usecase.VelocityManageUseCase
 import map.viewmodel.MapViewModel
 import org.koin.dsl.module
 
@@ -84,14 +85,21 @@ val MapModule = module {
     }
 
     single {
-        MoveManager(
+        MoveManageUseCase(
+            playerRepository = get(),
+            isCollidedUseCase = get(),
+        )
+    }
+
+    single {
+        VelocityManageUseCase(
             playerRepository = get(),
         )
     }
 
     single {
-        VelocityManager(
-            playerRepository = get(),
+        IsCollidedUseCase(
+            repository = get(),
         )
     }
 }

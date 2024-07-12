@@ -1,14 +1,13 @@
-package map.manager
+package map.usecase
 
 import map.domain.Velocity
 import map.domain.collision.Square
 import map.repository.player.PlayerRepository
-import map.usecase.IsCollidedUseCase
 import kotlin.math.abs
 
-class MoveManager(
+class MoveManageUseCase(
     private val playerRepository: PlayerRepository,
-    private val isCollidedUseCase: IsCollidedUseCase = IsCollidedUseCase()
+    private val isCollidedUseCase: IsCollidedUseCase,
 ) {
     private val playerSquare: Square
         get() = playerRepository.getPlayerPosition().getNew()

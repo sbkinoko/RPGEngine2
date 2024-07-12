@@ -14,8 +14,6 @@ import map.domain.Point
 import map.domain.Velocity
 import map.domain.collision.Square
 import map.layout.PlayerMoveSquare
-import map.manager.MoveManager
-import map.manager.VelocityManager
 import map.repository.backgroundcell.BackgroundRepository
 import map.repository.player.PlayerRepository
 import map.repository.playercell.PlayerCellRepository
@@ -23,23 +21,25 @@ import map.usecase.FindEventCellUseCase
 import map.usecase.GetScreenCenterUseCase
 import map.usecase.IsCollidedUseCase
 import map.usecase.MoveBackgroundUseCase
+import map.usecase.MoveManageUseCase
 import map.usecase.PlayerMoveToUseCase
 import map.usecase.PlayerMoveUseCase
 import map.usecase.ResetBackgroundPositionUseCase
+import map.usecase.VelocityManageUseCase
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class MapViewModel : ControllerCallback, KoinComponent {
     val player: Player by inject()
     private val playerRepository: PlayerRepository by inject()
-    private val moveManager: MoveManager by inject()
-    private val velocityManager: VelocityManager by inject()
+    private val moveManageUseCase: MoveManageUseCase by inject()
+    private val velocityManageUseCase: VelocityManageUseCase by inject()
 
     private val getScreenCenterUseCase: GetScreenCenterUseCase by inject()
     private val playerMoveUseCase: PlayerMoveUseCase by inject()
     private val playerMoveToUseCase: PlayerMoveToUseCase by inject()
 
-    private val isCollidedUseCase: IsCollidedUseCase = IsCollidedUseCase()
+    private val isCollidedUseCase: IsCollidedUseCase by inject()
     private val moveBackgroundUseCase: MoveBackgroundUseCase by inject()
     private val resetBackgroundPositionUseCase: ResetBackgroundPositionUseCase by inject()
     private val backgroundRepository: BackgroundRepository by inject()
@@ -174,7 +174,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
      * playerを動かすか、背景を動かすか決定する
      */
     private fun mediateVelocity() {
-        val mediatedVelocity = velocityManager.manageVelocity(
+        val mediatedVelocity = velocityManageUseCase.manageVelocity(
             tentativePlayerVelocity = tentativePlayerVelocity,
             playerMoveArea = playerMoveArea,
         )
@@ -265,7 +265,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
         }
 
         // 動けないので動ける最大の速度を取得
-        tentativePlayerVelocity = moveManager.getMovableVelocity(
+        tentativePlayerVelocity = moveManageUseCase.getMovableVelocity(
             tentativePlayerVelocity = tentativePlayerVelocity,
         )
     }

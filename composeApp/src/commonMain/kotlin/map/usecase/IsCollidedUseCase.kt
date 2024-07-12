@@ -2,11 +2,10 @@ package map.usecase
 
 import map.domain.collision.Square
 import map.repository.backgroundcell.BackgroundRepository
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
-class IsCollidedUseCase : KoinComponent {
-    private val repository: BackgroundRepository by inject()
+class IsCollidedUseCase(
+    private val repository: BackgroundRepository
+) {
 
     /**
      * 障害物と衝突しているかどうかをチェック
