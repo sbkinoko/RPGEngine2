@@ -4,7 +4,6 @@ import map.MapModule
 import map.data.NonLoopTestMap
 import map.domain.Velocity
 import map.domain.collision.Square
-import map.manager.BackgroundManager
 import map.manager.CELL_NUM
 import map.manager.SIDE_LENGTH
 import map.repository.backgroundcell.BackgroundRepository
@@ -34,7 +33,7 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
         }
 
         repository.cellNum = CELL_NUM
-        repository.screenSeize = SIDE_LENGTH
+        repository.screenSize = SIDE_LENGTH
 
         backgroundManager = BackgroundManager()
 

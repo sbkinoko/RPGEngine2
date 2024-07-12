@@ -2,7 +2,6 @@ package map.usecase
 
 import map.MapModule
 import map.data.LoopTestMap
-import map.manager.BackgroundManager
 import map.manager.CELL_NUM
 import map.manager.SIDE_LENGTH
 import map.repository.backgroundcell.BackgroundRepository
@@ -20,7 +19,6 @@ class ResetBackgroundPositionUseCaseTest : KoinTest {
 
     private val resetBackgroundPositionUseCase: ResetBackgroundPositionUseCase
             by inject()
-    private lateinit var backgroundManager: BackgroundManager
     private val repository: BackgroundRepository by inject()
 
     @BeforeTest
@@ -32,8 +30,7 @@ class ResetBackgroundPositionUseCaseTest : KoinTest {
         }
 
         repository.cellNum = CELL_NUM
-        repository.screenSeize = SIDE_LENGTH
-        backgroundManager = BackgroundManager()
+        repository.screenSize = SIDE_LENGTH
         resetBackgroundPositionUseCase(
             mapData = mapData,
             mapX = 0,

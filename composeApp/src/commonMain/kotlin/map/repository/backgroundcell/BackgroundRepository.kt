@@ -15,7 +15,7 @@ interface BackgroundRepository {
 
     val allCellNum: Int
 
-    var screenSeize: Int
+    var screenSize: Int
 
     val cellSize: Float
 
