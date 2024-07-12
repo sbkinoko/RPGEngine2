@@ -52,7 +52,9 @@ fun MapScreen(
             },
     ) {
         showBackground(
-            backgroundCell = mapViewModel.backgroundCells,
+            backgroundCell = mapViewModel.backgroundCells.collectAsState(
+                listOf()
+            ).value,
             screenRatio = screenRatio
         )
 

@@ -58,10 +58,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
     override lateinit var pressB: () -> Unit
 
-    val backgroundCells: List<List<BackgroundCell>>
-        get() {
-            return backgroundRepository.background
-        }
+    val backgroundCells = backgroundRepository.backgroundFlow
 
     init {
         playerMoveArea = PlayerMoveSquare(
