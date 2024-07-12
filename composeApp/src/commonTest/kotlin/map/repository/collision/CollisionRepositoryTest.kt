@@ -1,15 +1,36 @@
-package map.repository
+package map.repository.collision
 
+import map.MapModule
 import map.domain.collision.Square
+import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
+import org.koin.test.KoinTest
+import org.koin.test.inject
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class CollisionRepositoryTest {
-    private val collisionRepository = CollisionRepository()
+class CollisionRepositoryTest : KoinTest {
+    private val collisionRepository: CollisionRepository by inject()
+
+    @BeforeTest
+    fun beforeTest() {
+        startKoin {
+            modules(
+                MapModule,
+            )
+        }
+    }
+
+    @AfterTest
+    fun afterTest() {
+        stopKoin()
+    }
 
     @Test
     fun getData_0() {
-        collisionRepository.getCollisionData(
+        collisionRepository.collisionData(
             id = 0,
             cellSize = 10f,
             square = Square(
@@ -27,7 +48,7 @@ class CollisionRepositoryTest {
 
     @Test
     fun getData_1() {
-        collisionRepository.getCollisionData(
+        collisionRepository.collisionData(
             id = 2,
             cellSize = 10f,
             square = Square(
