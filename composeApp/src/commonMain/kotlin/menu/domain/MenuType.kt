@@ -1,5 +1,6 @@
 package menu.domain
 
 enum class MenuType {
-    None
+    None,
+    Main,
 }

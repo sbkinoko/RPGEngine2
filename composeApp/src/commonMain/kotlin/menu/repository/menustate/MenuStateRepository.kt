@@ -4,11 +4,11 @@ import kotlinx.coroutines.flow.Flow
 import menu.domain.MenuType
 
 interface MenuStateRepository {
-    val screenTypeFlow: Flow<MenuType>
+    val menuTypeFlow: Flow<MenuType>
 
-    var screenType: MenuType
+    var menuType: MenuType
 
     companion object {
-        val INITIAL_SCREEN_TYPE: MenuType = MenuType.None
+        val INITIAL_MENU_TYPE: MenuType = MenuType.None
     }
 }
