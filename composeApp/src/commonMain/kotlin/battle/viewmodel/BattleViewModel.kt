@@ -31,6 +31,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import main.domain.ScreenType
+import main.repository.screentype.ScreenTypeRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -41,7 +43,9 @@ class BattleViewModel :
 
     lateinit var players: List<PlayerStatus>
 
-    override lateinit var pressB: () -> Unit
+    override var pressB: () -> Unit = {
+        screenTypeRepository.screenType = ScreenType.FIELD
+    }
 
     private var mutableCommandState: MutableStateFlow<CommandState> =
         MutableStateFlow(CommandState())
@@ -57,6 +61,8 @@ class BattleViewModel :
     private val playerRepository: PlayerRepository by inject()
     private val battleMonsterRepository: BattleMonsterRepository by inject()
     private val attackUseCase: AttackUseCase by inject()
+
+    private val screenTypeRepository: ScreenTypeRepository by inject()
 
     val targetName: String
         get() {
@@ -141,6 +147,7 @@ class BattleViewModel :
     }
 
     fun startBattle() {
+        screenTypeRepository.screenType = ScreenType.BATTLE
         mutableCommandState.value = CommandState()
         mutableSelectedEnemyState.value = SelectedEnemyState(
             emptyList(),

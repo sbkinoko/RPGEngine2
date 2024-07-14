@@ -26,6 +26,7 @@ import common.status.param.MP
 import common.values.Colors
 import controller.layout.Controller
 import main.domain.ScreenType
+import main.repository.screentype.ScreenTypeRepository
 import main.viewmodel.MainViewModel
 import map.layout.MapScreen
 import map.viewmodel.MapViewModel
@@ -50,7 +51,10 @@ fun MainScreen() {
             MainViewModel()
         )
     }
-    val screenType = mainViewModel.nowScreenType.collectAsState()
+
+    val screenType = mainViewModel.nowScreenType.collectAsState(
+        ScreenTypeRepository.INITIAL_SCREEN_TYPE,
+    )
 
     var screenSize: Int by remember { mutableStateOf(0) }
 
@@ -70,14 +74,9 @@ fun MainScreen() {
             }
         )
 
-        mainViewModel.toBattle()
         battleViewModel.startBattle()
     }
     mapViewModel.pressB = bCallBack
-
-    battleViewModel.pressB = {
-        mainViewModel.toField()
-    }
 
     if (screenSize == 0) {
         Box(modifier = Modifier
