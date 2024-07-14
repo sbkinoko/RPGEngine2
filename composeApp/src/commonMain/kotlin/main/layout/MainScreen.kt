@@ -17,7 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
-import battle.layout.BattleScreen
 import battle.viewmodel.BattleViewModel
 import common.extension.pxToDp
 import common.status.MonsterStatus
@@ -26,8 +25,8 @@ import common.status.param.MP
 import common.values.Colors
 import controller.layout.Controller
 import main.domain.ScreenType
+import main.repository.screentype.ScreenTypeRepository
 import main.viewmodel.MainViewModel
-import map.layout.MapScreen
 import map.viewmodel.MapViewModel
 import kotlin.random.Random
 
@@ -50,10 +49,14 @@ fun MainScreen() {
             MainViewModel()
         )
     }
-    val screenType = mainViewModel.nowScreenType.collectAsState()
+
+    val screenType = mainViewModel.nowScreenType.collectAsState(
+        ScreenTypeRepository.INITIAL_SCREEN_TYPE,
+    )
 
     var screenSize: Int by remember { mutableStateOf(0) }
 
+    // fixme　viewModelの初期化時に初期化できるようにしたい
     val bCallBack: () -> Unit = {
         battleViewModel.setMonsters(
             // ランダムで1~5の敵を作成
@@ -70,14 +73,9 @@ fun MainScreen() {
             }
         )
 
-        mainViewModel.toBattle()
         battleViewModel.startBattle()
     }
     mapViewModel.pressB = bCallBack
-
-    battleViewModel.pressB = {
-        mainViewModel.toField()
-    }
 
     if (screenSize == 0) {
         Box(modifier = Modifier
@@ -97,51 +95,31 @@ fun MainScreen() {
 
     MaterialTheme {
         Column {
-            when (screenType.value) {
-                ScreenType.FIELD -> {
-                    MapScreen(
-                        modifier = Modifier
-                            .size(size = screenSize.pxToDp()),
-                        mapViewModel = mapViewModel,
-                        screenRatio = screenSize / MapViewModel.VIRTUAL_SCREEN_SIZE.toFloat()
-                    )
-                    Controller(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .border(
-                                width = 1.dp,
-                                color = Colors.Player,
-                                shape = RectangleShape,
-                            )
-                            .background(
-                                Colors.ControllerArea,
-                            ),
-                        controllerCallback = mapViewModel
-                    )
-                }
+            PlayArea(
+                modifier = Modifier
+                    .size(size = screenSize.pxToDp()),
+                screenType = screenType.value,
+                screenSize = screenSize,
+                mapViewModel = mapViewModel,
+                battleViewModel = battleViewModel,
+            )
 
-                else -> {
-                    BattleScreen(
-                        modifier = Modifier.size(
-                            size = screenSize.pxToDp()
-                        ),
-                        battleViewModel = battleViewModel,
+            Controller(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .border(
+                        width = 1.dp,
+                        color = Colors.Player,
+                        shape = RectangleShape,
                     )
-                    Controller(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .border(
-                                width = 1.dp,
-                                color = Colors.Player,
-                                shape = RectangleShape,
-                            )
-                            .background(
-                                Colors.ControllerArea,
-                            ),
-                        controllerCallback = battleViewModel,
-                    )
-                }
-            }
+                    .background(
+                        Colors.ControllerArea,
+                    ),
+                controllerCallback = when (screenType.value) {
+                    ScreenType.FIELD -> mapViewModel
+                    ScreenType.BATTLE -> battleViewModel
+                },
+            )
         }
     }
 }
