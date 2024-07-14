@@ -1,10 +1,10 @@
 package menu.repository.menustate
 
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import menu.domain.MenuType
 
 interface MenuStateRepository {
-    val menuTypeFlow: Flow<MenuType>
+    val menuTypeFlow: MutableSharedFlow<MenuType>
 
     var menuType: MenuType
 
