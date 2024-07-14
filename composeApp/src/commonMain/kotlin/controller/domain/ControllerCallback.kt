@@ -11,4 +11,6 @@ interface ControllerCallback {
 
     var pressB: () -> Unit
 
+    var pressM: () -> Unit
+
 }

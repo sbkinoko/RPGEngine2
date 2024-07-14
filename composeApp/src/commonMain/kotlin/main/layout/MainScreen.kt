@@ -28,6 +28,7 @@ import main.domain.ScreenType
 import main.repository.screentype.ScreenTypeRepository
 import main.viewmodel.MainViewModel
 import map.viewmodel.MapViewModel
+import menu.MenuViewModel
 import kotlin.random.Random
 
 @Composable
@@ -47,6 +48,12 @@ fun MainScreen() {
     val mainViewModel: MainViewModel by remember {
         mutableStateOf(
             MainViewModel()
+        )
+    }
+
+    val menuViewModel: MenuViewModel by remember {
+        mutableStateOf(
+            MenuViewModel()
         )
     }
 
@@ -102,6 +109,7 @@ fun MainScreen() {
                 screenSize = screenSize,
                 mapViewModel = mapViewModel,
                 battleViewModel = battleViewModel,
+                menuViewModel = menuViewModel,
             )
 
             Controller(
@@ -118,6 +126,7 @@ fun MainScreen() {
                 controllerCallback = when (screenType.value) {
                     ScreenType.FIELD -> mapViewModel
                     ScreenType.BATTLE -> battleViewModel
+                    ScreenType.MENU -> menuViewModel
                 },
             )
         }
