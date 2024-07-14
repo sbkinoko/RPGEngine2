@@ -56,6 +56,7 @@ fun MainScreen() {
 
     var screenSize: Int by remember { mutableStateOf(0) }
 
+    // fixme　viewModelの初期化時に初期化できるようにしたい
     val bCallBack: () -> Unit = {
         battleViewModel.setMonsters(
             // ランダムで1~5の敵を作成
