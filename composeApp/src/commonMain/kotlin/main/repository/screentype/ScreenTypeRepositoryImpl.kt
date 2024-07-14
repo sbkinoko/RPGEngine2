@@ -1,13 +1,23 @@
 package main.repository.screentype
 
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.launch
 import main.domain.ScreenType
+import main.repository.screentype.ScreenTypeRepository.Companion.INITIAL_SCREEN_TYPE
 
 class ScreenTypeRepositoryImpl : ScreenTypeRepository {
-    override val screenTypeFlow: Flow<ScreenType>
-        get() = TODO("Not yet implemented")
+    override val screenTypeFlow: MutableSharedFlow<ScreenType> = MutableSharedFlow(replay = 1)
+
+    private var _screenType: ScreenType = INITIAL_SCREEN_TYPE
 
     override var screenType: ScreenType
-        get() = TODO("Not yet implemented")
-        set(value) {}
+        get() = _screenType
+        set(value) {
+            _screenType = value
+            CoroutineScope(Dispatchers.Default).launch {
+                screenTypeFlow.emit(value)
+            }
+        }
 }

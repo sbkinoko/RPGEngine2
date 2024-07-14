@@ -42,16 +42,18 @@ class ScreenTypeRepositoryImplTest : KoinTest {
             }
 
             screenTypeRepository.screenType = ScreenType.BATTLE
+
+            delay(100)
+
             assertEquals(
                 expected = ScreenType.BATTLE,
                 actual = screenTypeRepository.screenType
             )
-
-            delay(100)
             assertEquals(
                 expected = 1,
                 actual = count
             )
+
             collectJob.cancel()
         }
     }
