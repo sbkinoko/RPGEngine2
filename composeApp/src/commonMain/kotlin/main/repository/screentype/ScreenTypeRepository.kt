@@ -1,10 +1,10 @@
 package main.repository.screentype
 
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import main.domain.ScreenType
 
 interface ScreenTypeRepository {
-    val screenTypeFlow: Flow<ScreenType>
+    val screenTypeFlow: MutableSharedFlow<ScreenType>
 
     var screenType: ScreenType
 
