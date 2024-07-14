@@ -7,6 +7,8 @@ import battle.viewmodel.BattleViewModel
 import main.domain.ScreenType
 import map.layout.MapScreen
 import map.viewmodel.MapViewModel
+import menu.MenuViewModel
+import menu.layout.MenuScreen
 
 @Composable
 fun PlayArea(
@@ -14,6 +16,7 @@ fun PlayArea(
     screenSize: Int,
     mapViewModel: MapViewModel,
     battleViewModel: BattleViewModel,
+    menuViewModel: MenuViewModel,
     modifier: Modifier = Modifier,
 ) {
     when (screenType) {
@@ -25,10 +28,17 @@ fun PlayArea(
             )
         }
 
-        else -> {
+        ScreenType.BATTLE -> {
             BattleScreen(
                 modifier = modifier,
                 battleViewModel = battleViewModel,
+            )
+        }
+
+        ScreenType.MENU -> {
+            MenuScreen(
+                modifier = modifier,
+                menuViewModel = menuViewModel,
             )
         }
     }

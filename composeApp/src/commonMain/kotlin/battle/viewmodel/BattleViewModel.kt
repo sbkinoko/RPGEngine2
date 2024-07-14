@@ -47,6 +47,8 @@ class BattleViewModel :
         screenTypeRepository.screenType = ScreenType.FIELD
     }
 
+    override var pressM: () -> Unit = {}
+
     private var mutableCommandState: MutableStateFlow<CommandState> =
         MutableStateFlow(CommandState())
     val commandState: StateFlow<CommandState> = mutableCommandState.asStateFlow()
