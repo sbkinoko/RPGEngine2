@@ -1,6 +1,7 @@
 package menu.layout
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
@@ -40,13 +41,19 @@ fun MainMenu(
                 modifier = equalAllocationModifier,
             ) {
                 CenterText(
-                    modifier = equalAllocationModifier,
+                    modifier = equalAllocationModifier
+                        .clickable {
+                            it.first.onClick()
+                        },
                     text = it.first.text,
                 )
 
                 it.second?.let {
                     CenterText(
-                        modifier = equalAllocationModifier,
+                        modifier = equalAllocationModifier
+                            .clickable {
+                                it.onClick()
+                            },
                         text = it.text,
                     )
                 } ?: run {

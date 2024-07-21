@@ -18,6 +18,10 @@ class MenuViewModel : KoinComponent, ControllerCallback {
 
     }
 
+    fun setMenuType(menuType: MenuType) {
+        menuStateRepository.menuType = menuType
+    }
+
     override var pressA: () -> Unit = {}
     override var pressB: () -> Unit = {}
     override var pressM: () -> Unit = {
