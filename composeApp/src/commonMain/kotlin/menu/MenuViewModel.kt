@@ -23,8 +23,20 @@ class MenuViewModel : KoinComponent, ControllerCallback {
     }
 
     override var pressA: () -> Unit = {}
-    override var pressB: () -> Unit = {}
+    override var pressB: () -> Unit = {
+        if (menuStateRepository.menuType == MenuType.Main) {
+            backToField()
+        } else {
+            menuStateRepository.pop()
+        }
+    }
+
     override var pressM: () -> Unit = {
+        backToField()
+    }
+
+    private fun backToField() {
         screenTypeRepository.screenType = ScreenType.FIELD
+
     }
 }

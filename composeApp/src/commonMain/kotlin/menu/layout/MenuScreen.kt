@@ -17,11 +17,13 @@ fun MenuScreen(
     when (val state = menuState.value) {
         MenuType.Main -> MainMenu(
             modifier = modifier,
-            mainMenuItemList = List(8) {
+            mainMenuItemList = List(6) {
                 MainMenuItem(
                     text = "text${it + 1}",
                     onClick = {
-                        menuViewModel.setMenuType(it.toMenuType())
+                        menuViewModel.setMenuType(
+                            (it + 1).toMenuType()
+                        )
                     },
                 )
             }
