@@ -8,6 +8,8 @@ interface MenuStateRepository {
 
     var menuType: MenuType
 
+    fun pop()
+
     companion object {
         val INITIAL_MENU_TYPE: MenuType = MenuType.Main
     }

@@ -54,6 +54,18 @@ class MenuStateRepositoryImplTest : KoinTest {
                 actual = count
             )
 
+            menuStateRepository.pop()
+
+            delay(100)
+            assertEquals(
+                expected = MenuType.Main,
+                actual = menuStateRepository.menuType
+            )
+            assertEquals(
+                expected = 2,
+                actual = count
+            )
+
             collectJob.cancel()
         }
     }
