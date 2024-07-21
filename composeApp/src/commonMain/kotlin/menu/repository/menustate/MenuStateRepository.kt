@@ -9,6 +9,6 @@ interface MenuStateRepository {
     var menuType: MenuType
 
     companion object {
-        val INITIAL_MENU_TYPE: MenuType = MenuType.None
+        val INITIAL_MENU_TYPE: MenuType = MenuType.Main
     }
 }

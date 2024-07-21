@@ -41,12 +41,12 @@ class MenuStateRepositoryImplTest : KoinTest {
                 }
             }
 
-            menuStateRepository.menuType = MenuType.Main
+            menuStateRepository.menuType = MenuType.Status
 
             delay(100)
 
             assertEquals(
-                expected = MenuType.Main,
+                expected = MenuType.Status,
                 actual = menuStateRepository.menuType
             )
             assertEquals(
@@ -57,5 +57,4 @@ class MenuStateRepositoryImplTest : KoinTest {
             collectJob.cancel()
         }
     }
-
 }
