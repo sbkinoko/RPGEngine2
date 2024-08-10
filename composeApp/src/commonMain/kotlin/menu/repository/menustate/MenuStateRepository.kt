@@ -8,6 +8,11 @@ interface MenuStateRepository {
 
     var menuType: MenuType
 
+    fun pop()
+
+    //　mを押して画面を戻った時に状態を初期化する
+    fun reset()
+
     companion object {
         val INITIAL_MENU_TYPE: MenuType = MenuType.Main
     }

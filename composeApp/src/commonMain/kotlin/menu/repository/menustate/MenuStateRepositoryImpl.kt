@@ -11,10 +11,31 @@ class MenuStateRepositoryImpl : MenuStateRepository {
 
     private var _menuType: MenuType = MenuStateRepository.INITIAL_MENU_TYPE
 
+    private val mutableList: MutableList<MenuType> = mutableListOf(
+        MenuType.Main,
+    )
+
+    override fun pop() {
+        // 空になることはない
+        if (mutableList.size == 1) {
+            return
+        }
+        mutableList.removeLast()
+        menuType = mutableList.last()
+    }
+
+    override fun reset() {
+        while (mutableList.size != 0) {
+            mutableList.removeLast()
+        }
+        menuType = MenuType.Main
+    }
+
     override var menuType: MenuType
         get() = _menuType
         set(value) {
             _menuType = value
+            mutableList.add(value)
             CoroutineScope(Dispatchers.Default).launch {
                 menuTypeFlow.emit(value)
             }
