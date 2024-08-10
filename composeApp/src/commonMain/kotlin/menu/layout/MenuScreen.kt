@@ -19,14 +19,18 @@ fun MenuScreen(
             modifier = modifier,
             mainMenuItemList = List(6) {
                 MainMenuItem(
-                    text = "text${it + 1}",
+                    text = it.toMenuType().title,
                     onClick = {
                         menuViewModel.setMenuType(
-                            (it + 1).toMenuType()
+                            it.toMenuType()
                         )
                     },
                 )
             }
+        )
+
+        MenuType.Status -> StatusMenu(
+            modifier = modifier,
         )
 
         else -> Text(
@@ -37,11 +41,11 @@ fun MenuScreen(
 }
 
 fun Int.toMenuType() = when (this) {
-    1 -> MenuType.Item1
-    2 -> MenuType.Item2
-    3 -> MenuType.Item3
-    4 -> MenuType.Item4
-    5 -> MenuType.Item5
-    6 -> MenuType.Item6
+    0 -> MenuType.Status
+    1 -> MenuType.Item2
+    2 -> MenuType.Item3
+    3 -> MenuType.Item4
+    4 -> MenuType.Item5
+    5 -> MenuType.Item6
     else -> throw RuntimeException()
 }

@@ -1,12 +1,16 @@
 package menu.domain
 
-enum class MenuType {
+enum class MenuType(
+    val title: String = "",
+) {
     Main,
-    Status,
-    Item1,
-    Item2,
-    Item3,
-    Item4,
-    Item5,
-    Item6,
+    Status(
+        title = "ステータス",
+    ),
+    Item1(title = "text1"),
+    Item2(title = "text2"),
+    Item3(title = "text3"),
+    Item4(title = "text4"),
+    Item5(title = "text5"),
+    Item6(title = "text6"),
 }
