@@ -21,7 +21,9 @@ object Colors {
     val StatusArea = black
     val StatusComponent = blue
 
-
     val IsActivePlayer = black
     val NotActivePlayer = red
+
+    val SelectedMenu = red
+    val MenuFrame = blue
 }
