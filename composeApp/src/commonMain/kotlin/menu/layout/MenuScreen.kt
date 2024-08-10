@@ -13,7 +13,6 @@ fun MenuScreen(
     menuViewModel: MenuViewModel,
     modifier: Modifier = Modifier,
 ) {
-    // 初期値をmainMenuにするのはよくない
     val menuState = menuViewModel.menuType.collectAsState(MenuType.Main)
     when (val state = menuState.value) {
         MenuType.Main -> MainMenu(

@@ -69,4 +69,39 @@ class MenuStateRepositoryImplTest : KoinTest {
             collectJob.cancel()
         }
     }
+
+    @Test
+    fun checkReset() {
+        var count = 0
+        runBlocking {
+            val collectJob = launch {
+                menuStateRepository.menuTypeFlow.collect {
+                    count++
+                }
+            }
+
+            menuStateRepository.menuType = MenuType.Status
+            delay(100)
+
+            menuStateRepository.menuType = MenuType.Item1
+            delay(100)
+
+            menuStateRepository.reset()
+
+            delay(100)
+
+            //　リセットしたので標準状態
+            assertEquals(
+                expected = MenuType.Main,
+                actual = menuStateRepository.menuType
+            )
+            // セット2回とリセット分
+            assertEquals(
+                expected = 3,
+                actual = count
+            )
+
+            collectJob.cancel()
+        }
+    }
 }

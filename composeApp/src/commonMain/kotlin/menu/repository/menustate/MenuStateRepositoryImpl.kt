@@ -24,6 +24,13 @@ class MenuStateRepositoryImpl : MenuStateRepository {
         menuType = mutableList.last()
     }
 
+    override fun reset() {
+        while (mutableList.size != 0) {
+            mutableList.removeLast()
+        }
+        menuType = MenuType.Main
+    }
+
     override var menuType: MenuType
         get() = _menuType
         set(value) {

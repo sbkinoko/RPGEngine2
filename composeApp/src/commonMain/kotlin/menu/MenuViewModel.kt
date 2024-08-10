@@ -37,6 +37,6 @@ class MenuViewModel : KoinComponent, ControllerCallback {
 
     private fun backToField() {
         screenTypeRepository.screenType = ScreenType.FIELD
-
+        menuStateRepository.reset()
     }
 }
