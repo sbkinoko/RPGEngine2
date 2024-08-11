@@ -1,4 +1,4 @@
-package menu.domain
+package menu.main
 
 data class MainMenuItem(
     val text: String,
