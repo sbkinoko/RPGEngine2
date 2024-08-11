@@ -1,15 +1,24 @@
 package menu.layout
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.unit.dp
 import common.layout.CenterText
 import common.values.Colors
 import menu.domain.MainMenuItem
@@ -31,29 +40,68 @@ fun MainMenu(
         }
     }
 
+    var selected: Int by remember {
+        mutableStateOf(0)
+    }
+
     Column(
-        modifier = modifier.background(
-            Colors.MenuAra
-        ),
+        modifier = modifier
+            .background(
+                Colors.MenuBackground,
+            )
+            .padding(5.dp)
+            .border(
+                width = 2.dp,
+                color = Colors.MenuFrame,
+                shape = RectangleShape,
+            )
+            .padding(5.dp),
+        verticalArrangement = Arrangement.spacedBy(
+            5.dp,
+        )
     ) {
-        pairedList.forEach {
+        pairedList.forEachIndexed { index, pair ->
             Row(
                 modifier = equalAllocationModifier,
+                horizontalArrangement = Arrangement.spacedBy(
+                    5.dp
+                ),
             ) {
                 CenterText(
                     modifier = equalAllocationModifier
+                        .border(
+                            width = 2.dp,
+                            color = if (selected == index * 2) Colors.SelectedMenu
+                            else Colors.MenuFrame,
+                            shape = RectangleShape,
+                        )
                         .clickable {
-                            it.first.onClick()
+                            if (selected == index * 2) {
+                                pair.first.onClick()
+                            } else {
+                                selected = index * 2
+                            }
+
                         },
-                    text = it.first.text,
+                    text = pair.first.text,
                 )
 
-                it.second?.let {
+                pair.second?.let {
                     CenterText(
                         modifier = equalAllocationModifier
                             .clickable {
-                                it.onClick()
-                            },
+                                if (selected == index * 2 + 1) {
+                                    it.onClick()
+                                } else {
+                                    selected = index * 2 + 1
+                                }
+                            }
+                            .border(
+                                width = 2.dp,
+                                color = if (selected == index * 2 + 1) Colors.SelectedMenu
+                                else Colors.MenuFrame,
+                                shape = RectangleShape,
+                            ),
                         text = it.text,
                     )
                 } ?: run {
@@ -63,7 +111,6 @@ fun MainMenu(
                 }
             }
         }
-
     }
 }
 

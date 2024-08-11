@@ -1,7 +1,9 @@
 package menu.layout
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -31,12 +33,18 @@ fun StatusMenu(
         mutableStateOf(0)
     }
 
-    Row(modifier = modifier) {
+    Row(
+        modifier = modifier
+            .background(
+                color = Colors.MenuBackground,
+            )
+    ) {
         Column(
             modifier = Modifier
                 .padding(5.dp)
                 .fillMaxHeight()
                 .weight(1f),
+            verticalArrangement = Arrangement.spacedBy(5.dp),
         ) {
             for (i in 0 until 4) {
                 CenterText(
@@ -46,20 +54,11 @@ fun StatusMenu(
                         .clickable {
                             selectedId = i
                         }
-                        .then(
-                            if (i == selectedId) {
-                                Modifier.border(
-                                    width = 2.dp,
-                                    color = Colors.SelectedMenu,
-                                    shape = RectangleShape,
-                                )
-                            } else {
-                                Modifier.border(
-                                    width = 2.dp,
-                                    color = Colors.MenuFrame,
-                                    shape = RectangleShape,
-                                )
-                            }
+                        .border(
+                            width = 2.dp,
+                            color = if (i == selectedId) Colors.SelectedMenu
+                            else Colors.MenuFrame,
+                            shape = RectangleShape,
                         ),
                     text = repository.getPlayer(i).name,
                 )
