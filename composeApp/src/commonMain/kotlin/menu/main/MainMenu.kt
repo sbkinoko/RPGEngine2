@@ -1,4 +1,4 @@
-package menu.layout
+package menu.main
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -12,37 +12,20 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import common.layout.CenterText
 import common.values.Colors
-import menu.domain.MainMenuItem
 
 
 @Composable
 fun MainMenu(
+    mainMenuViewModel: MainMenuViewModel,
     modifier: Modifier = Modifier,
-    mainMenuItemList: List<MainMenuItem> = listOf(),
 ) {
-    val pairedList: MutableList<Pair<MainMenuItem, MainMenuItem?>> = mutableListOf()
-    for (cnt: Int in mainMenuItemList.indices step 2) {
-        if (cnt + 1 < mainMenuItemList.size) {
-            //　次の項目とセットで追加
-            pairedList.add(Pair(mainMenuItemList[cnt], mainMenuItemList[cnt + 1]))
-        } else {
-            // もう項目がないのでnullを入れる
-            pairedList.add(Pair(mainMenuItemList[cnt], null))
-        }
-    }
-
-    var selected: Int by remember {
-        mutableStateOf(0)
-    }
+    val selected = mainMenuViewModel.selectedFlow.collectAsState()
 
     Column(
         modifier = modifier
@@ -60,7 +43,7 @@ fun MainMenu(
             5.dp,
         )
     ) {
-        pairedList.forEachIndexed { index, pair ->
+        mainMenuViewModel.pairedList.forEachIndexed { index, pair ->
             Row(
                 modifier = equalAllocationModifier,
                 horizontalArrangement = Arrangement.spacedBy(
@@ -71,15 +54,17 @@ fun MainMenu(
                     modifier = equalAllocationModifier
                         .border(
                             width = 2.dp,
-                            color = if (selected == index * 2) Colors.SelectedMenu
+                            color = if (selected.value == index * 2) Colors.SelectedMenu
                             else Colors.MenuFrame,
                             shape = RectangleShape,
                         )
                         .clickable {
-                            if (selected == index * 2) {
+                            if (selected.value == index * 2) {
                                 pair.first.onClick()
                             } else {
-                                selected = index * 2
+                                mainMenuViewModel.setSelected(
+                                    index * 2
+                                )
                             }
 
                         },
@@ -90,15 +75,17 @@ fun MainMenu(
                     CenterText(
                         modifier = equalAllocationModifier
                             .clickable {
-                                if (selected == index * 2 + 1) {
+                                if (selected.value == index * 2 + 1) {
                                     it.onClick()
                                 } else {
-                                    selected = index * 2 + 1
+                                    mainMenuViewModel.setSelected(
+                                        index * 2 + 1
+                                    )
                                 }
                             }
                             .border(
                                 width = 2.dp,
-                                color = if (selected == index * 2 + 1) Colors.SelectedMenu
+                                color = if (selected.value == index * 2 + 1) Colors.SelectedMenu
                                 else Colors.MenuFrame,
                                 shape = RectangleShape,
                             ),

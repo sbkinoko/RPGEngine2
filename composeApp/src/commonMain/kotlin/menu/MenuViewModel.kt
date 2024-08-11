@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.SharedFlow
 import main.domain.ScreenType
 import main.repository.screentype.ScreenTypeRepository
 import menu.domain.MenuType
+import menu.main.MainMenuViewModel
 import menu.repository.menustate.MenuStateRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -14,6 +15,9 @@ class MenuViewModel : KoinComponent, ControllerCallback {
     private val screenTypeRepository: ScreenTypeRepository by inject()
 
     val menuType: SharedFlow<MenuType> = menuStateRepository.menuTypeFlow
+
+    val mainMenuViewModel: MainMenuViewModel = MainMenuViewModel()
+
     override fun moveStick(dx: Float, dy: Float) {
 
     }
