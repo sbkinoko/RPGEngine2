@@ -6,16 +6,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import common.values.Colors
 import menu.MenuViewModel
 import menu.domain.MenuType
 import menu.main.MainMenu
 import menu.main.MainMenuItem
-import menu.main.MainMenuViewModel
 
 @Composable
 fun MenuScreen(
@@ -24,12 +20,7 @@ fun MenuScreen(
 ) {
     val menuState = menuViewModel.menuType.collectAsState(MenuType.Main)
 
-
-    val mainMenuViewModel: MainMenuViewModel by remember {
-        mutableStateOf(MainMenuViewModel())
-    }
-
-    mainMenuViewModel.setItems(
+    menuViewModel.mainMenuViewModel.setItems(
         List(6) {
             MainMenuItem(
                 text = it.toMenuType().title,
@@ -44,7 +35,7 @@ fun MenuScreen(
 
     Box(modifier = modifier) {
         MainMenu(
-            mainMenuViewModel = mainMenuViewModel,
+            mainMenuViewModel = menuViewModel.mainMenuViewModel,
             modifier = menuModifier,
         )
 
