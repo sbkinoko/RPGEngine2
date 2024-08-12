@@ -12,20 +12,19 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import common.layout.CenterText
 import common.values.Colors
 
-
 @Composable
 fun MainMenu(
     mainMenuViewModel: MainMenuViewModel,
     modifier: Modifier = Modifier,
 ) {
-    val selected = mainMenuViewModel.selectedFlow.collectAsState()
+    val selected = mainMenuViewModel
+        .getSelectedAsState().value
 
     Column(
         modifier = modifier
@@ -54,12 +53,12 @@ fun MainMenu(
                     modifier = equalAllocationModifier
                         .border(
                             width = 2.dp,
-                            color = if (selected.value == index * 2) Colors.SelectedMenu
+                            color = if (selected == index * 2) Colors.SelectedMenu
                             else Colors.MenuFrame,
                             shape = RectangleShape,
                         )
                         .clickable {
-                            if (selected.value == index * 2) {
+                            if (selected == index * 2) {
                                 pair.first.onClick()
                             } else {
                                 mainMenuViewModel.setSelected(
@@ -75,7 +74,7 @@ fun MainMenu(
                     CenterText(
                         modifier = equalAllocationModifier
                             .clickable {
-                                if (selected.value == index * 2 + 1) {
+                                if (selected == index * 2 + 1) {
                                     it.onClick()
                                 } else {
                                     mainMenuViewModel.setSelected(
@@ -85,7 +84,7 @@ fun MainMenu(
                             }
                             .border(
                                 width = 2.dp,
-                                color = if (selected.value == index * 2 + 1) Colors.SelectedMenu
+                                color = if (selected == index * 2 + 1) Colors.SelectedMenu
                                 else Colors.MenuFrame,
                                 shape = RectangleShape,
                             ),
