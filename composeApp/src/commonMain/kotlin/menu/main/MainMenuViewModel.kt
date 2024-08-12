@@ -1,7 +1,7 @@
 package menu.main
 
 import common.Timer
-import controller.domain.Command
+import controller.domain.ArrowCommand
 import controller.domain.ControllerCallback
 import controller.domain.StickPosition
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -90,16 +90,16 @@ class MainMenuViewModel : ControllerCallback {
         if (!timer.isNeedTimePassed()) return
 
         when (stickPosition.toCommand()) {
-            Command.Left,
-            Command.Right -> {
+            ArrowCommand.Left,
+            ArrowCommand.Right -> {
                 moveHorizontal()
             }
 
-            Command.Up -> {
+            ArrowCommand.Up -> {
                 moveUp()
             }
 
-            Command.Down -> {
+            ArrowCommand.Down -> {
                 moveDown()
             }
 

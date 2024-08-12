@@ -4,11 +4,11 @@ import common.Timer
 import common.repository.PlayerRepository
 import common.repositoryImpl.PlayerRepositoryImpl
 import common.status.Status
-import controller.domain.Command
 import controller.domain.ControllerCallback
 import controller.domain.StickPosition
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import menu.domain.SelectManager
 
 class StatusViewModel : ControllerCallback {
     val repository: PlayerRepository = PlayerRepositoryImpl()
@@ -21,7 +21,13 @@ class StatusViewModel : ControllerCallback {
     )
     var statusFlow = mutableStatusFlow.asStateFlow()
 
+    private val selectManager = SelectManager(
+        width = 1,
+        itemNum = 4,
+    )
+
     fun setSelected(id: Int) {
+        selectManager.selected = id
         mutableSelectedFlow.value = id
         mutableStatusFlow.value = repository.getPlayer(id)
     }
@@ -35,33 +41,8 @@ class StatusViewModel : ControllerCallback {
     override fun moveStick(stickPosition: StickPosition) {
         if (!timer.isNeedTimePassed()) return
 
-        when (stickPosition.toCommand()) {
-            Command.Up -> {
-                moveUp()
-            }
-
-            Command.Down -> {
-                moveDown()
-            }
-
-            else -> Unit
-        }
-    }
-
-    private fun moveUp() {
-        if (selectedFlow.value == 0) {
-            setSelected(3)
-            return
-        }
-        setSelected(selectedFlow.value - 1)
-    }
-
-    private fun moveDown() {
-        if (selectedFlow.value == 3) {
-            setSelected(0)
-            return
-        }
-        setSelected(selectedFlow.value + 1)
+        selectManager.move(stickPosition.toCommand())
+        setSelected(selectManager.selected)
     }
 
     override var pressA: () -> Unit = {}

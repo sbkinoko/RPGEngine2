@@ -40,22 +40,22 @@ class StickPosition(
         )
     }
 
-    fun toCommand(): Command {
+    fun toCommand(): ArrowCommand {
         if (0.5 <= ratioX) {
-            return Command.Right
+            return ArrowCommand.Right
         }
         if (ratioX <= -0.5) {
-            return Command.Left
+            return ArrowCommand.Left
         }
         if (0.5 <= ratioY) {
-            return Command.Down
+            return ArrowCommand.Down
         }
 
         if (ratioY <= -0.5) {
-            return Command.Up
+            return ArrowCommand.Up
         }
 
-        return Command.None
+        return ArrowCommand.None
     }
 
 }
