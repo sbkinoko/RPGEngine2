@@ -1,4 +1,4 @@
-package menu.layout
+package menu.status
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -11,28 +11,20 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import common.layout.CenterText
-import common.repository.PlayerRepository
-import common.repositoryImpl.PlayerRepositoryImpl
 import common.values.Colors
 
 @Composable
 fun StatusMenu(
+    statusViewModel: StatusViewModel,
     modifier: Modifier = Modifier,
 ) {
-    val repository: PlayerRepository = PlayerRepositoryImpl()
-
-    var selectedId by remember {
-        mutableStateOf(0)
-    }
-
+    val selectedId = statusViewModel.selectedFlow.collectAsState().value
+    val status = statusViewModel.statusFlow.collectAsState().value
     Row(
         modifier = modifier
             .background(
@@ -52,15 +44,15 @@ fun StatusMenu(
                         .weight(1f)
                         .fillMaxWidth()
                         .clickable {
-                            selectedId = i
+                            statusViewModel.setSelected(i)
                         }
                         .border(
                             width = 2.dp,
-                            color = if (i == selectedId) Colors.SelectedMenu
+                            color = if (selectedId == i) Colors.SelectedMenu
                             else Colors.MenuFrame,
                             shape = RectangleShape,
                         ),
-                    text = repository.getPlayer(i).name,
+                    text = statusViewModel.getNameAt(i),
                 )
             }
         }
@@ -69,7 +61,6 @@ fun StatusMenu(
                 .fillMaxHeight()
                 .weight(1f),
         ) {
-            val status = repository.getPlayer(selectedId)
             Text(status.name)
             Text("HP : ${status.hp.value}/${status.hp.maxValue}")
             Text("MP : ${status.mp.value}/${status.mp.maxValue}")

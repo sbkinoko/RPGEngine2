@@ -8,6 +8,7 @@ import main.repository.screentype.ScreenTypeRepository
 import menu.domain.MenuType
 import menu.main.MainMenuViewModel
 import menu.repository.menustate.MenuStateRepository
+import menu.status.StatusViewModel
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -18,11 +19,17 @@ class MenuViewModel : KoinComponent, ControllerCallback {
     val menuType: SharedFlow<MenuType> = menuStateRepository.menuTypeFlow
 
     val mainMenuViewModel: MainMenuViewModel = MainMenuViewModel()
+    val statusViewModel: StatusViewModel = StatusViewModel()
 
     override fun moveStick(stickPosition: StickPosition) {
         when (menuStateRepository.menuType) {
             MenuType.Main -> {
                 mainMenuViewModel.moveStick(
+                    stickPosition = stickPosition,
+                )
+            }
+            MenuType.Status -> {
+                statusViewModel.moveStick(
                     stickPosition = stickPosition,
                 )
             }
