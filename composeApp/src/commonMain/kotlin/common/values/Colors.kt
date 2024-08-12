@@ -21,4 +21,8 @@ object Colors {
 
     val IsActivePlayer = black
     val NotActivePlayer = red
+
+    val SelectedMenu = red
+    val MenuFrame = blue
+    val MenuBackground = white
 }

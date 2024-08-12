@@ -1,10 +1,13 @@
 package map.viewmodel
 
 import controller.domain.ControllerCallback
+import controller.domain.StickPosition
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
+import main.domain.ScreenType
+import main.repository.screentype.ScreenTypeRepository
 import map.data.LoopMap
 import map.data.NonLoopMap
 import map.domain.BackgroundCell
@@ -47,6 +50,8 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
     private val findEventCellUseCase: FindEventCellUseCase by inject()
 
+    private val screenTypeRepository: ScreenTypeRepository by inject()
+
     val playerSquare: SharedFlow<Square> = playerRepository.playerPositionFLow
 
     private var tapPoint: Point? = null
@@ -55,8 +60,6 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
     private var backGroundVelocity: Velocity = Velocity()
     private var tentativePlayerVelocity: Velocity = Velocity()
-
-    override lateinit var pressB: () -> Unit
 
     val backgroundCells = backgroundRepository.backgroundFlow
 
@@ -237,20 +240,6 @@ class MapViewModel : ControllerCallback, KoinComponent {
         findEventCellUseCase()
     }
 
-    override fun moveStick(
-        dx: Float,
-        dy: Float,
-    ) {
-        updateVelocityByStick(
-            dx = dx,
-            dy = dy,
-        )
-    }
-
-    override var pressA: () -> Unit = {
-        //todo Aを押した時の処理を実装
-    }
-
     private var canMove = true
     private fun checkMove() {
         val square = playerRepository.getPlayerPosition().getNew()
@@ -267,6 +256,24 @@ class MapViewModel : ControllerCallback, KoinComponent {
         // 動けないので動ける最大の速度を取得
         tentativePlayerVelocity = playerMoveManageUseCase.getMovableVelocity(
             tentativePlayerVelocity = tentativePlayerVelocity,
+        )
+    }
+
+    override var pressA: () -> Unit = {
+        //todo Aを押した時の処理を実装
+    }
+
+    override lateinit var pressB: () -> Unit
+    override var pressM: () -> Unit = {
+        screenTypeRepository.screenType = ScreenType.MENU
+    }
+
+    override fun moveStick(
+        stickPosition: StickPosition
+    ) {
+        updateVelocityByStick(
+            dx = stickPosition.x.toFloat(),
+            dy = stickPosition.y.toFloat(),
         )
     }
 

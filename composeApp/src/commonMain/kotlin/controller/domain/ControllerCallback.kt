@@ -3,12 +3,13 @@ package controller.domain
 interface ControllerCallback {
 
     fun moveStick(
-        dx: Float,
-        dy: Float,
+        stickPosition: StickPosition,
     )
 
     var pressA: () -> Unit
 
     var pressB: () -> Unit
+
+    var pressM: () -> Unit
 
 }
