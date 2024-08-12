@@ -1,6 +1,7 @@
 package menu
 
 import controller.domain.ControllerCallback
+import controller.domain.StickPosition
 import kotlinx.coroutines.flow.SharedFlow
 import main.domain.ScreenType
 import main.repository.screentype.ScreenTypeRepository
@@ -18,15 +19,31 @@ class MenuViewModel : KoinComponent, ControllerCallback {
 
     val mainMenuViewModel: MainMenuViewModel = MainMenuViewModel()
 
-    override fun moveStick(dx: Float, dy: Float) {
+    override fun moveStick(stickPosition: StickPosition) {
+        when (menuStateRepository.menuType) {
+            MenuType.Main -> {
+                mainMenuViewModel.moveStick(
+                    stickPosition = stickPosition,
+                )
+            }
 
+            else -> Unit
+        }
     }
 
     fun setMenuType(menuType: MenuType) {
         menuStateRepository.menuType = menuType
     }
 
-    override var pressA: () -> Unit = {}
+    override var pressA: () -> Unit = {
+        when (menuStateRepository.menuType) {
+            MenuType.Main -> {
+                mainMenuViewModel.pressA()
+            }
+
+            else -> Unit
+        }
+    }
     override var pressB: () -> Unit = {
         if (menuStateRepository.menuType == MenuType.Main) {
             backToField()

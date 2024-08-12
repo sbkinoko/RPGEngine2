@@ -21,7 +21,7 @@ fun MenuScreen(
     val menuState = menuViewModel.menuType.collectAsState(MenuType.Main)
 
     menuViewModel.mainMenuViewModel.setItems(
-        List(6) {
+        List(5) {
             MainMenuItem(
                 text = it.toMenuType().title,
                 onClick = {

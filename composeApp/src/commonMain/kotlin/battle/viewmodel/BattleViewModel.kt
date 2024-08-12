@@ -20,6 +20,7 @@ import common.status.MonsterStatus
 import common.status.PlayerStatus
 import common.values.playerNum
 import controller.domain.ControllerCallback
+import controller.domain.StickPosition
 import getNowTime
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -165,7 +166,7 @@ class BattleViewModel :
 
     private var lastUpdateTime: Long = 0
     private val nowTime: NowTime = getNowTime()
-    override fun moveStick(dx: Float, dy: Float) {
+    override fun moveStick(stickPosition: StickPosition) {
         if (nowTime.nowTime - lastUpdateTime < 200) {
             return
         }
@@ -174,14 +175,14 @@ class BattleViewModel :
         when (commandState.value.nowState) {
             is SelectEnemyCommand -> {
                 val target = selectedEnemyState.value.selectedEnemy.first()
-                if (0.5 <= dx) {
+                if (0.5 <= stickPosition.ratioX) {
                     setTargetEnemy(
                         findTargetService.findNext(
                             target = target,
                             monsters = monsters.value,
                         )
                     )
-                } else if (dx <= -0.5) {
+                } else if (stickPosition.ratioX <= -0.5) {
                     setTargetEnemy(
                         findTargetService.findPrev(
                             target = target,

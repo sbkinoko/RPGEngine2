@@ -29,8 +29,8 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun Stick(
-    modifier: Modifier = Modifier,
     controllerCallback: ControllerCallback,
+    modifier: Modifier = Modifier,
 ) {
     //todo largeとsmallもstickにしまいたい
     var largeCircleSize: Int by remember { mutableStateOf(0) }
@@ -45,11 +45,10 @@ fun Stick(
         )
     }
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(key1 = controllerCallback) {
         while (true) {
             controllerCallback.moveStick(
-                dx = stickPosition.ratioX,
-                dy = stickPosition.ratioY,
+                stickPosition = stickPosition,
             )
             delay(30)
         }

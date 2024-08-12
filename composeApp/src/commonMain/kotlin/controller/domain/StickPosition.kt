@@ -39,4 +39,23 @@ class StickPosition(
             max = movableAreaSize,
         )
     }
+
+    fun toCommand(): Command {
+        if (0.5 <= ratioX) {
+            return Command.Right
+        }
+        if (ratioX <= -0.5) {
+            return Command.Left
+        }
+        if (0.5 <= ratioY) {
+            return Command.Down
+        }
+
+        if (ratioY <= -0.5) {
+            return Command.Up
+        }
+
+        return Command.None
+    }
+
 }
