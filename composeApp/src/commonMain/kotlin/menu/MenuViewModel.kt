@@ -35,7 +35,15 @@ class MenuViewModel : KoinComponent, ControllerCallback {
         menuStateRepository.menuType = menuType
     }
 
-    override var pressA: () -> Unit = {}
+    override var pressA: () -> Unit = {
+        when (menuStateRepository.menuType) {
+            MenuType.Main -> {
+                mainMenuViewModel.pressA()
+            }
+
+            else -> Unit
+        }
+    }
     override var pressB: () -> Unit = {
         if (menuStateRepository.menuType == MenuType.Main) {
             backToField()

@@ -20,11 +20,13 @@ class MainMenuViewModel : ControllerCallback {
     private val timer = Timer(200)
 
     lateinit var pairedList: MutableList<Pair<MainMenuItem, MainMenuItem?>>
+    lateinit var list: List<MainMenuItem>
 
     private var itemNum = 0
 
     fun setItems(items: List<MainMenuItem>) {
         itemNum = items.size
+        list = items
         pairedList = mutableListOf()
         for (cnt: Int in items.indices step 2) {
             if (cnt + 1 < items.size) {
@@ -106,7 +108,7 @@ class MainMenuViewModel : ControllerCallback {
     }
 
     override var pressA: () -> Unit = {
-
+        list[selectedFlow.value].onClick()
     }
     override var pressB: () -> Unit = {
 
