@@ -12,6 +12,7 @@ import menu.MenuViewModel
 import menu.domain.MenuType
 import menu.main.MainMenu
 import menu.main.MainMenuItem
+import menu.status.StatusMenu
 
 @Composable
 fun MenuScreen(
@@ -44,6 +45,7 @@ fun MenuScreen(
 
             MenuType.Status -> StatusMenu(
                 modifier = menuModifier,
+                statusViewModel = menuViewModel.statusViewModel,
             )
 
             else -> Text(
