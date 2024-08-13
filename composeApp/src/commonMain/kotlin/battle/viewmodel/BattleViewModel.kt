@@ -167,36 +167,35 @@ class BattleViewModel :
     private val timer: Timer = Timer(200)
 
     override fun moveStick(stickPosition: StickPosition) {
-        if (timer.isNeedTimePassed()) {
-            return
-        }
+        timer.callbackIfTimePassed {
+            when (commandState.value.nowState) {
+                is SelectEnemyCommand ->
+                    selectEnemy(stickPosition.toCommand())
 
-        when (commandState.value.nowState) {
-            is SelectEnemyCommand -> {
-                val target = selectedEnemyState.value.selectedEnemy.first()
-                when (stickPosition.toCommand()) {
-                    ArrowCommand.Right -> setTargetEnemy(
-                        findTargetService.findNext(
-                            target = target,
-                            monsters = monsters.value,
-                        )
-                    )
-
-                    ArrowCommand.Left -> {
-                        setTargetEnemy(
-                            findTargetService.findPrev(
-                                target = target,
-                                monsters = monsters.value,
-                            )
-                        )
-                    }
-
-                    else -> Unit
-                }
+                else -> Unit
             }
-
-            else -> Unit
         }
+    }
+
+    private fun selectEnemy(command: ArrowCommand) {
+        val target = selectedEnemyState.value.selectedEnemy.first()
+        val newTarget = when (command) {
+            // 右側の最初のターゲット
+            ArrowCommand.Right -> findTargetService.findNext(
+                target = target,
+                monsters = monsters.value,
+            )
+
+            // 左側の最初のターゲット
+            ArrowCommand.Left -> findTargetService.findPrev(
+                target = target,
+                monsters = monsters.value,
+            )
+
+            else -> return
+        }
+
+        setTargetEnemy(newTarget)
     }
 
     private fun setTargetEnemy(target: Int?) {
