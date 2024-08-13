@@ -1,6 +1,5 @@
 package battle.viewmodel
 
-import NowTime
 import battle.domain.AttackPhaseCommand
 import battle.domain.CommandState
 import battle.domain.MainCommand
@@ -15,6 +14,7 @@ import battle.repository.ActionRepository
 import battle.repository.BattleMonsterRepository
 import battle.service.FindTargetService
 import battle.usecase.AttackUseCase
+import common.Timer
 import common.repository.PlayerRepository
 import common.status.MonsterStatus
 import common.status.PlayerStatus
@@ -22,7 +22,6 @@ import common.values.playerNum
 import controller.domain.ArrowCommand
 import controller.domain.ControllerCallback
 import controller.domain.StickPosition
-import getNowTime
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -165,13 +164,12 @@ class BattleViewModel :
         pressB()
     }
 
-    private var lastUpdateTime: Long = 0
-    private val nowTime: NowTime = getNowTime()
+    private val timer: Timer = Timer(200)
+
     override fun moveStick(stickPosition: StickPosition) {
-        if (nowTime.nowTime - lastUpdateTime < 200) {
+        if (timer.isNeedTimePassed()) {
             return
         }
-        lastUpdateTime = nowTime.nowTime
 
         when (commandState.value.nowState) {
             is SelectEnemyCommand -> {
