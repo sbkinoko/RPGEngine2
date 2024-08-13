@@ -47,6 +47,20 @@ fun Stick(
 
     LaunchedEffect(key1 = controllerCallback) {
         while (true) {
+            // スティックを放している場合
+            if (stickPosition.isReleased) {
+                //　スティックをリセット
+                controllerCallback.moveStick(
+                    stickPosition
+                )
+
+                //　スティックを触るまで待機
+                while (stickPosition.isReleased) {
+                    delay(1)
+                }
+            }
+
+            //　スティックを触っているので呼び出し
             controllerCallback.moveStick(
                 stickPosition = stickPosition,
             )
