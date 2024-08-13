@@ -21,10 +21,10 @@ class StickPosition(
     val y: Int
         get() = tap.y.toInt()
 
-    val ratioX: Float
+    private val ratioX: Float
         get() = x / circleRadius.toFloat()
 
-    val ratioY: Float
+    private val ratioY: Float
         get() = y / circleRadius.toFloat()
 
     /**

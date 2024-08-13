@@ -1,6 +1,5 @@
 package battle.viewmodel
 
-import NowTime
 import battle.domain.AttackPhaseCommand
 import battle.domain.CommandState
 import battle.domain.MainCommand
@@ -15,13 +14,14 @@ import battle.repository.ActionRepository
 import battle.repository.BattleMonsterRepository
 import battle.service.FindTargetService
 import battle.usecase.AttackUseCase
+import common.Timer
 import common.repository.PlayerRepository
 import common.status.MonsterStatus
 import common.status.PlayerStatus
 import common.values.playerNum
+import controller.domain.ArrowCommand
 import controller.domain.ControllerCallback
 import controller.domain.StickPosition
-import getNowTime
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -164,31 +164,34 @@ class BattleViewModel :
         pressB()
     }
 
-    private var lastUpdateTime: Long = 0
-    private val nowTime: NowTime = getNowTime()
+    private val timer: Timer = Timer(200)
+
     override fun moveStick(stickPosition: StickPosition) {
-        if (nowTime.nowTime - lastUpdateTime < 200) {
+        if (timer.isNeedTimePassed()) {
             return
         }
-        lastUpdateTime = nowTime.nowTime
 
         when (commandState.value.nowState) {
             is SelectEnemyCommand -> {
                 val target = selectedEnemyState.value.selectedEnemy.first()
-                if (0.5 <= stickPosition.ratioX) {
-                    setTargetEnemy(
+                when (stickPosition.toCommand()) {
+                    ArrowCommand.Right -> setTargetEnemy(
                         findTargetService.findNext(
                             target = target,
                             monsters = monsters.value,
                         )
                     )
-                } else if (stickPosition.ratioX <= -0.5) {
-                    setTargetEnemy(
-                        findTargetService.findPrev(
-                            target = target,
-                            monsters = monsters.value,
+
+                    ArrowCommand.Left -> {
+                        setTargetEnemy(
+                            findTargetService.findPrev(
+                                target = target,
+                                monsters = monsters.value,
+                            )
                         )
-                    )
+                    }
+
+                    else -> Unit
                 }
             }
 
