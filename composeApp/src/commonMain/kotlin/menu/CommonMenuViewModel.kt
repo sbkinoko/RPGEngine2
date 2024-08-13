@@ -20,9 +20,9 @@ abstract class CommonMenuViewModel : ControllerCallback {
     }
 
     override fun moveStick(stickPosition: StickPosition) {
-        if (!timer.isNeedTimePassed()) return
-
-        selectManager.move(stickPosition.toCommand())
+        timer.callbackIfTimePassed {
+            selectManager.move(stickPosition.toCommand())
+        }
     }
 
     override var pressB: () -> Unit = {}
