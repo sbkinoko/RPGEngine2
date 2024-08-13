@@ -19,6 +19,7 @@ import common.repository.PlayerRepository
 import common.status.MonsterStatus
 import common.status.PlayerStatus
 import common.values.playerNum
+import controller.domain.ArrowCommand
 import controller.domain.ControllerCallback
 import controller.domain.StickPosition
 import getNowTime
@@ -175,20 +176,24 @@ class BattleViewModel :
         when (commandState.value.nowState) {
             is SelectEnemyCommand -> {
                 val target = selectedEnemyState.value.selectedEnemy.first()
-                if (0.5 <= stickPosition.ratioX) {
-                    setTargetEnemy(
+                when (stickPosition.toCommand()) {
+                    ArrowCommand.Right -> setTargetEnemy(
                         findTargetService.findNext(
                             target = target,
                             monsters = monsters.value,
                         )
                     )
-                } else if (stickPosition.ratioX <= -0.5) {
-                    setTargetEnemy(
-                        findTargetService.findPrev(
-                            target = target,
-                            monsters = monsters.value,
+
+                    ArrowCommand.Left -> {
+                        setTargetEnemy(
+                            findTargetService.findPrev(
+                                target = target,
+                                monsters = monsters.value,
+                            )
                         )
-                    )
+                    }
+
+                    else -> Unit
                 }
             }
 
