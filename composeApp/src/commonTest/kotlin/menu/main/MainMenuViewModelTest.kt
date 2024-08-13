@@ -1,27 +1,52 @@
 package menu.main
 
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class MainMenuViewModelTest {
-    private val viewModel = MainMenuViewModel()
+    private lateinit var viewModel: MainMenuViewModel
+
+    @BeforeTest
+    fun beforeTest() {
+        viewModel = MainMenuViewModel()
+    }
 
     @Test
     fun checkSetSelected() {
-        1.let {
-            viewModel.setSelected(it)
-            assertEquals(
-                expected = it,
-                actual = viewModel.selectedFlow.value
+        val list = List(3) {
+            MainMenuItem(
+                text = it.toString(),
+                onClick = {}
             )
         }
+        viewModel.setItems(
+            list
+        )
 
-        2.let {
-            viewModel.setSelected(it)
-            assertEquals(
-                expected = it,
-                actual = viewModel.selectedFlow.value
-            )
+        var count = 0
+        runBlocking {
+            val collectJob = launch {
+                viewModel.selectedFlow.collect {
+                    count++
+                    assertEquals(
+                        expected = count,
+                        actual = it
+                    )
+                }
+            }
+            delay(100)
+
+            viewModel.setSelected(1)
+            delay(100)
+
+            viewModel.setSelected(2)
+            delay(100)
+
+            collectJob.cancel()
         }
     }
 

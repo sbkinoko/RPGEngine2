@@ -1,6 +1,6 @@
 package controller.domain
 
-enum class Command {
+enum class ArrowCommand {
     Up,
     Down,
     Left,

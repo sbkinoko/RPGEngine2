@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
@@ -23,8 +22,7 @@ fun StatusMenu(
     statusViewModel: StatusViewModel,
     modifier: Modifier = Modifier,
 ) {
-    val selectedId = statusViewModel.selectedFlow.collectAsState().value
-    val status = statusViewModel.statusFlow.collectAsState().value
+    val selectedId = statusViewModel.getSelectedAsState().value
     Row(
         modifier = modifier
             .background(
@@ -52,7 +50,7 @@ fun StatusMenu(
                             else Colors.MenuFrame,
                             shape = RectangleShape,
                         ),
-                    text = statusViewModel.getNameAt(i),
+                    text = statusViewModel.getStatusAt(i).name,
                 )
             }
         }
@@ -61,6 +59,7 @@ fun StatusMenu(
                 .fillMaxHeight()
                 .weight(1f),
         ) {
+            val status = statusViewModel.getStatusAt(selectedId)
             Text(status.name)
             Text("HP : ${status.hp.value}/${status.hp.maxValue}")
             Text("MP : ${status.mp.value}/${status.mp.maxValue}")
