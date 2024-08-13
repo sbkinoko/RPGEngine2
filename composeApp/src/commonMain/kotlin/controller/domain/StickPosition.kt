@@ -12,6 +12,8 @@ class StickPosition(
         y = circleRadius.toFloat(),
     ),
 ) {
+    val isReleased: Boolean
+        get() = tap.x == 0f && tap.y == 0f
     private var tap: Point
 
     val x: Int
@@ -57,5 +59,4 @@ class StickPosition(
 
         return ArrowCommand.None
     }
-
 }
