@@ -1,6 +1,6 @@
 package battle.usecase
 
-import battle.repository.BattleMonsterRepository
+import battle.repository.battlemonster.BattleMonsterRepository
 import battle.service.AttackService
 import battle.service.FindTargetService
 

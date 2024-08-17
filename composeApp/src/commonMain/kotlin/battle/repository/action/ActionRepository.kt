@@ -1,4 +1,4 @@
-package battle.repository
+package battle.repository.action
 
 import battle.domain.ActionData
 

@@ -18,9 +18,10 @@ fun CommandArea(
     modifier: Modifier = Modifier,
     battleViewModel: BattleViewModel,
 ) {
-    when (val nowState = battleViewModel.commandState.collectAsState().value.nowState) {
+    when (val nowState = battleViewModel.CommandStateFlow().value) {
         is MainCommand -> MainCommand(
             modifier = modifier,
+            mainViewModel = battleViewModel.mainViewModel,
             mainCommandCallBack = battleViewModel.mainCommandCallback,
         )
 

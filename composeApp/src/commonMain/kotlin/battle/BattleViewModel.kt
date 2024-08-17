@@ -1,17 +1,22 @@
 package battle
 
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
 import battle.command.attackphase.AttackPhaseCommandCallBack
 import battle.command.main.MainCommandCallBack
+import battle.command.main.MainViewModel
 import battle.command.playeraction.PlayerActionCallBack
 import battle.command.selectenemy.SelectEnemyCallBack
 import battle.domain.AttackPhaseCommand
-import battle.domain.CommandState
+import battle.domain.CommandType
 import battle.domain.MainCommand
 import battle.domain.PlayerActionCommand
 import battle.domain.SelectEnemyCommand
 import battle.domain.SelectedEnemyState
-import battle.repository.ActionRepository
-import battle.repository.BattleMonsterRepository
+import battle.repository.action.ActionRepository
+import battle.repository.battlemonster.BattleMonsterRepository
+import battle.repository.commandstate.CommandStateRepository
 import battle.service.FindTargetService
 import battle.usecase.AttackUseCase
 import common.Timer
@@ -50,10 +55,6 @@ class BattleViewModel :
 
     override var pressM: () -> Unit = {}
 
-    private var mutableCommandState: MutableStateFlow<CommandState> =
-        MutableStateFlow(CommandState())
-    val commandState: StateFlow<CommandState> = mutableCommandState.asStateFlow()
-
     private var mutableSelectedEnemyState: MutableStateFlow<SelectedEnemyState> =
         MutableStateFlow(SelectedEnemyState(emptyList(), 0))
     val selectedEnemyState: StateFlow<SelectedEnemyState> =
@@ -63,9 +64,13 @@ class BattleViewModel :
     private val findTargetService: FindTargetService by inject()
     private val playerRepository: PlayerRepository by inject()
     private val battleMonsterRepository: BattleMonsterRepository by inject()
+    private val commandStateRepository: CommandStateRepository by inject()
+
     private val attackUseCase: AttackUseCase by inject()
 
     private val screenTypeRepository: ScreenTypeRepository by inject()
+
+    val mainViewModel = MainViewModel()
 
     val targetName: String
         get() {
@@ -83,14 +88,15 @@ class BattleViewModel :
 
     val mainCommandCallback = object : MainCommandCallBack {
         override val attack: () -> Unit = attack@{
-            if (commandState.value.nowState !is MainCommand) return@attack
-            selectMainAttack()
+            // todo returnの条件をviewModelに持たせる
+            if (commandStateRepository.nowCommandType !is MainCommand) return@attack
+            mainViewModel.goNext()
         }
     }
 
     val playerCommandCallback = object : PlayerActionCallBack {
         override val attack: () -> Unit = attack@{
-            val nowState = ((commandState.value.nowState) as? PlayerActionCommand)
+            val nowState = ((commandStateRepository.nowCommandType) as? PlayerActionCommand)
                 ?: return@attack
             selectPlayerAttack(
                 playerId = nowState.playerId,
@@ -100,7 +106,7 @@ class BattleViewModel :
 
     val attackPhaseCommandCallback = object : AttackPhaseCommandCallBack {
         override val pressA: () -> Unit = pressA@{
-            if ((commandState.value.nowState) !is AttackPhaseCommand) return@pressA
+            if ((commandStateRepository.nowCommandType) !is AttackPhaseCommand) return@pressA
             attackPhase()
         }
     }
@@ -109,6 +115,13 @@ class BattleViewModel :
         override val clickMonsterImage: (Int) -> Unit = { monsterId ->
             selectAttackMonster(monsterId)
         }
+    }
+
+    @Composable
+    fun CommandStateFlow(): State<CommandType> {
+        return commandStateRepository.commandTypeFlow.collectAsState(
+            commandStateRepository.nowCommandType
+        )
     }
 
     init {
@@ -151,7 +164,7 @@ class BattleViewModel :
 
     fun startBattle() {
         screenTypeRepository.screenType = ScreenType.BATTLE
-        mutableCommandState.value = CommandState()
+        commandStateRepository.init()
         mutableSelectedEnemyState.value = SelectedEnemyState(
             emptyList(),
             monsters.value.size,
@@ -168,7 +181,10 @@ class BattleViewModel :
 
     override fun moveStick(stickPosition: StickPosition) {
         timer.callbackIfTimePassed {
-            when (commandState.value.nowState) {
+            when (commandStateRepository.nowCommandType) {
+                is MainCommand ->
+                    mainViewModel.moveStick(stickPosition)
+
                 is SelectEnemyCommand ->
                     selectEnemy(stickPosition.toCommand())
 
@@ -213,19 +229,11 @@ class BattleViewModel :
         )
     }
 
-    fun selectMainAttack() {
-        mutableCommandState.value = commandState.value.push(
-            PlayerActionCommand(
-                playerId = 0,
-            )
-        )
-    }
-
     fun selectPlayerAttack(playerId: Int) {
         mutableSelectedEnemyState.value = mutableSelectedEnemyState.value.copy(
             selectedEnemy = actionRepository.getAction(playerId).target,
         )
-        mutableCommandState.value = commandState.value.push(
+        commandStateRepository.push(
             SelectEnemyCommand(playerId)
         )
     }
@@ -242,14 +250,14 @@ class BattleViewModel :
 
         // 次のコマンドに移動
         if (playerId < playerNum - 1) {
-            mutableCommandState.value = commandState.value.push(
+            commandStateRepository.push(
                 PlayerActionCommand(
                     playerId = playerId + 1,
                 )
             )
         } else {
             //　一周したので攻撃フェーズに移動
-            mutableCommandState.value = mutableCommandState.value.push(AttackPhaseCommand)
+            commandStateRepository.push(AttackPhaseCommand)
         }
     }
 
@@ -288,7 +296,7 @@ class BattleViewModel :
                 mutableAttackingPlayerId.value++
             } else {
                 mutableAttackingPlayerId.value = 0
-                mutableCommandState.value = CommandState()
+                commandStateRepository.init()
             }
         }
     }
@@ -301,10 +309,10 @@ class BattleViewModel :
 
     private fun goNextCommand() {
         when (
-            val nowState = commandState.value.nowState
+            val nowState = commandStateRepository.nowCommandType
         ) {
             is MainCommand -> {
-                selectMainAttack()
+                mainViewModel.goNext()
             }
 
             is PlayerActionCommand -> {

@@ -1,4 +1,4 @@
-package battle.repository
+package battle.repository.battlemonster
 
 import common.status.MonsterStatus
 import kotlinx.coroutines.flow.MutableSharedFlow
