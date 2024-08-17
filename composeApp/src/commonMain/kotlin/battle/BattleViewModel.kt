@@ -1,15 +1,15 @@
-package battle.viewmodel
+package battle
 
+import battle.command.attackphase.AttackPhaseCommandCallBack
+import battle.command.main.MainCommandCallBack
+import battle.command.playeraction.PlayerActionCallBack
+import battle.command.selectenemy.SelectEnemyCallBack
 import battle.domain.AttackPhaseCommand
 import battle.domain.CommandState
 import battle.domain.MainCommand
 import battle.domain.PlayerActionCommand
 import battle.domain.SelectEnemyCommand
 import battle.domain.SelectedEnemyState
-import battle.layout.command.AttackPhaseCommandCallBack
-import battle.layout.command.MainCommandCallBack
-import battle.layout.command.PlayerActionCallBack
-import battle.layout.command.SelectEnemyCallBack
 import battle.repository.ActionRepository
 import battle.repository.BattleMonsterRepository
 import battle.service.FindTargetService

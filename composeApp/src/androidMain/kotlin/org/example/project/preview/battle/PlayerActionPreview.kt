@@ -2,8 +2,8 @@ package org.example.project.preview.battle
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import battle.layout.command.PlayerAction
-import battle.layout.command.PlayerActionCallBack
+import battle.command.playeraction.PlayerAction
+import battle.command.playeraction.PlayerActionCallBack
 import common.status.PlayerStatus
 import common.status.param.HP
 import common.status.param.MP

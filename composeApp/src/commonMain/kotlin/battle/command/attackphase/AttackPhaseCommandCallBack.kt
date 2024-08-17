@@ -1,4 +1,4 @@
-package battle.layout.command
+package battle.command.attackphase
 
 interface AttackPhaseCommandCallBack {
     val pressA: () -> Unit

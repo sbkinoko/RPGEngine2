@@ -1,4 +1,4 @@
-package battle.layout.command
+package battle.command.main
 
 interface MainCommandCallBack {
     val attack: () -> Unit
