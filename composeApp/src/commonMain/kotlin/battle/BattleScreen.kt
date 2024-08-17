@@ -1,4 +1,4 @@
-package battle.layout
+package battle
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
@@ -10,9 +10,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
-import battle.layout.command.CommandArea
-import battle.layout.status.StatusArea
-import battle.viewmodel.BattleViewModel
+import battle.command.CommandArea
+import battle.monster.MonsterArea
+import battle.status.StatusArea
 import common.values.Colors
 import kotlinx.coroutines.delay
 

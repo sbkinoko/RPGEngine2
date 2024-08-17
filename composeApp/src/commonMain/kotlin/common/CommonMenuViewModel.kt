@@ -1,8 +1,7 @@
-package menu
+package common
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import common.Timer
 import controller.domain.ControllerCallback
 import controller.domain.StickPosition
 import menu.domain.SelectManager

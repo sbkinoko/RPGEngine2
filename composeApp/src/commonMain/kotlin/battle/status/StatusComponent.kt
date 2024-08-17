@@ -1,4 +1,4 @@
-package battle.layout.status
+package battle.status
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Text

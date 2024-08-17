@@ -1,10 +1,10 @@
 package menu.status
 
+import common.CommonMenuViewModel
 import common.Timer
 import common.repository.PlayerRepository
 import common.repositoryImpl.PlayerRepositoryImpl
 import common.status.Status
-import menu.CommonMenuViewModel
 import menu.domain.SelectManager
 
 class StatusViewModel : CommonMenuViewModel() {

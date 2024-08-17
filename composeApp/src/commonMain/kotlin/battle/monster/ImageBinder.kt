@@ -1,4 +1,4 @@
-package battle.layout
+package battle.monster
 
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi

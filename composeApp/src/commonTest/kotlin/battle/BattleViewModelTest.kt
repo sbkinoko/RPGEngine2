@@ -1,6 +1,5 @@
-package battle.viewmodel
+package battle
 
-import battle.BattleModule
 import common.CommonModule
 import common.status.MonsterStatusTest.Companion.getMonster
 import kotlinx.coroutines.runBlocking
