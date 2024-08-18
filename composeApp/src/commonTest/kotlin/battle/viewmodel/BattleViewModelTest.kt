@@ -3,6 +3,7 @@ package battle.viewmodel
 import battle.BattleModule
 import common.CommonModule
 import common.status.MonsterStatusTest.Companion.getMonster
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -44,6 +45,8 @@ class BattleViewModelTest : KoinTest {
                 }
             )
 
+            delay(100)
+
             val id = 0
             val damage = 10
 
@@ -71,6 +74,7 @@ class BattleViewModelTest : KoinTest {
                 target = id,
                 damage = damage
             )
+
             assertEquals(
                 expected = true,
                 actual = battleViewModel.isAllMonsterNotActive
