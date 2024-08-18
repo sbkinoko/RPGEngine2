@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
-import battle.viewmodel.BattleViewModel
+import battle.BattleViewModel
 import common.extension.pxToDp
 import common.status.MonsterStatus
 import common.status.param.HP

@@ -1,14 +1,17 @@
 package battle
 
-import battle.repository.ActionRepository
-import battle.repository.BattleMonsterRepository
-import battle.repositoryimpl.ActionRepositoryImpl
-import battle.repositoryimpl.BattleMonsterRepositoryImpl
+import battle.repository.action.ActionRepository
+import battle.repository.action.ActionRepositoryImpl
+import battle.repository.battlemonster.BattleMonsterRepository
+import battle.repository.battlemonster.BattleMonsterRepositoryImpl
+import battle.repository.commandstate.CommandStateRepository
+import battle.repository.commandstate.CommandStateRepositoryImpl
 import battle.service.AttackService
 import battle.service.FindTargetService
 import battle.serviceimpl.AttackMonsterService
 import battle.serviceimpl.FindTargetServiceImpl
 import battle.usecase.AttackUseCase
+import battle.usecase.IsAllMonsterNotActiveUseCase
 import org.koin.dsl.module
 
 val BattleModule = module {
@@ -28,11 +31,21 @@ val BattleModule = module {
         BattleMonsterRepositoryImpl()
     }
 
+    single<CommandStateRepository> {
+        CommandStateRepositoryImpl()
+    }
+
     single<AttackUseCase> {
         AttackUseCase(
             battleMonsterRepository = get(),
             findTargetService = get(),
             attackService = get(),
+        )
+    }
+
+    single<IsAllMonsterNotActiveUseCase> {
+        IsAllMonsterNotActiveUseCase(
+            battleMonsterRepository = get(),
         )
     }
 }

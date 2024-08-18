@@ -1,8 +1,8 @@
 package menu.main
 
 import common.Timer
+import common.menu.CommonMenuViewModel
 import kotlinx.coroutines.flow.SharedFlow
-import menu.CommonMenuViewModel
 import menu.domain.SelectManager
 
 class MainMenuViewModel : CommonMenuViewModel() {
