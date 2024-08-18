@@ -6,24 +6,21 @@ import androidx.compose.runtime.collectAsState
 import battle.command.attackphase.AttackPhaseCommandCallBack
 import battle.command.main.MainViewModel
 import battle.command.playeraction.PlayerActionViewModel
-import battle.command.selectenemy.SelectEnemyCallBack
+import battle.command.selectenemy.SelectEnemyViewModel
 import battle.domain.AttackPhaseCommand
 import battle.domain.CommandType
 import battle.domain.MainCommand
 import battle.domain.PlayerActionCommand
 import battle.domain.SelectEnemyCommand
-import battle.domain.SelectedEnemyState
 import battle.repository.action.ActionRepository
 import battle.repository.battlemonster.BattleMonsterRepository
 import battle.repository.commandstate.CommandStateRepository
-import battle.service.FindTargetService
 import battle.usecase.AttackUseCase
 import common.Timer
 import common.repository.PlayerRepository
 import common.status.MonsterStatus
 import common.status.PlayerStatus
 import common.values.playerNum
-import controller.domain.ArrowCommand
 import controller.domain.ControllerCallback
 import controller.domain.StickPosition
 import kotlinx.coroutines.CoroutineScope
@@ -54,13 +51,7 @@ class BattleViewModel :
 
     override var pressM: () -> Unit = {}
 
-    private var mutableSelectedEnemyState: MutableStateFlow<SelectedEnemyState> =
-        MutableStateFlow(SelectedEnemyState(emptyList(), 0))
-    val selectedEnemyState: StateFlow<SelectedEnemyState> =
-        mutableSelectedEnemyState.asStateFlow()
-
     private val actionRepository: ActionRepository by inject()
-    private val findTargetService: FindTargetService by inject()
     private val playerRepository: PlayerRepository by inject()
     private val battleMonsterRepository: BattleMonsterRepository by inject()
     private val commandStateRepository: CommandStateRepository by inject()
@@ -71,6 +62,7 @@ class BattleViewModel :
 
     val mainViewModel = MainViewModel()
     val playerActionViewModel = PlayerActionViewModel()
+    val selectEnemyViewModel = SelectEnemyViewModel()
 
     val targetName: String
         get() {
@@ -90,12 +82,6 @@ class BattleViewModel :
         override val pressA: () -> Unit = pressA@{
             if ((commandStateRepository.nowCommandType) !is AttackPhaseCommand) return@pressA
             attackPhase()
-        }
-    }
-
-    val selectEnemyCallBack = object : SelectEnemyCallBack {
-        override val clickMonsterImage: (Int) -> Unit = { monsterId ->
-            selectAttackMonster(monsterId)
         }
     }
 
@@ -147,10 +133,6 @@ class BattleViewModel :
     fun startBattle() {
         screenTypeRepository.screenType = ScreenType.BATTLE
         commandStateRepository.init()
-        mutableSelectedEnemyState.value = SelectedEnemyState(
-            emptyList(),
-            monsters.value.size,
-        )
         mutableAttackingPlayerId.value = 0
         actionRepository.resetTarget()
     }
@@ -171,93 +153,16 @@ class BattleViewModel :
                     playerActionViewModel.moveStick(stickPosition)
 
                 is SelectEnemyCommand ->
-                    selectEnemy(stickPosition.toCommand())
+                    selectEnemyViewModel.moveStick(stickPosition)
 
                 else -> Unit
             }
         }
     }
 
-    private fun selectEnemy(command: ArrowCommand) {
-        val target = selectedEnemyState.value.selectedEnemy.first()
-        val newTarget = when (command) {
-            // 右側の最初のターゲット
-            ArrowCommand.Right -> findTargetService.findNext(
-                target = target,
-                monsters = monsters.value,
-            )
-
-            // 左側の最初のターゲット
-            ArrowCommand.Left -> findTargetService.findPrev(
-                target = target,
-                monsters = monsters.value,
-            )
-
-            else -> return
-        }
-
-        setTargetEnemy(newTarget)
-    }
-
-    private fun setTargetEnemy(target: Int?) {
-        if (target == null) {
-            // 矢印削除
-            mutableSelectedEnemyState.value = mutableSelectedEnemyState.value.copy(
-                selectedEnemy = emptyList()
-            )
-            return
-        }
-
-        // fixme 複数選択するようになったら修正
-        mutableSelectedEnemyState.value = mutableSelectedEnemyState.value.copy(
-            selectedEnemy = listOf(target)
-        )
-    }
-
-    private fun selectAttackEnemy(playerId: Int) {
-        // 行動を保存
-        actionRepository.setAction(
-            playerId = playerId,
-            target = mutableSelectedEnemyState.value.selectedEnemy
-        )
-
-        // 矢印削除
-        setTargetEnemy(null)
-
-        // 次のコマンドに移動
-        if (playerId < playerNum - 1) {
-            commandStateRepository.push(
-                PlayerActionCommand(
-                    playerId = playerId + 1,
-                )
-            )
-        } else {
-            //　一周したので攻撃フェーズに移動
-            commandStateRepository.push(AttackPhaseCommand)
-        }
-    }
-
-    fun selectAttackMonster(monsterId: Int) {
-        //　敵を選択中以外は操作しない
-        if (selectedEnemyState.value.selectedEnemy.isEmpty()) {
-            return
-        }
-
-        // すでに選んでる敵を選んだら確定
-        if (selectedEnemyState.value.selectedEnemy.first() == monsterId) {
-            pressA()
-            return
-        }
-
-        // 別の敵を選択
-        setTargetEnemy(
-            monsterId
-        )
-    }
-
     override var pressA = {
         when (
-            val nowState = commandStateRepository.nowCommandType
+            commandStateRepository.nowCommandType
         ) {
             is MainCommand -> {
                 mainViewModel.pressA()
@@ -268,25 +173,13 @@ class BattleViewModel :
             }
 
             is SelectEnemyCommand -> {
-                selectAttackEnemy(
-                    playerId = nowState.playerId,
-                )
+                selectEnemyViewModel.pressA()
             }
 
             is AttackPhaseCommand -> {
                 attackPhase()
             }
         }
-    }
-
-    fun updateArrow() {
-        val playerId =
-            (commandStateRepository.nowCommandType as? SelectEnemyCommand)?.playerId ?: return
-        val action = actionRepository.getAction(playerId)
-        val target = action.target
-        mutableSelectedEnemyState.value = mutableSelectedEnemyState.value.copy(
-            selectedEnemy = target,
-        )
     }
 
     private val mutableAttackingPlayerId: MutableStateFlow<Int> = MutableStateFlow(0)

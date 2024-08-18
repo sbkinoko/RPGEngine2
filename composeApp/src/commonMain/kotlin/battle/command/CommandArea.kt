@@ -33,7 +33,7 @@ fun CommandArea(
 
         is SelectEnemyCommand -> {
             LaunchedEffect(Unit) {
-                battleViewModel.updateArrow()
+                battleViewModel.selectEnemyViewModel.updateArrow()
             }
             SelectEnemy(
                 modifier = modifier,
