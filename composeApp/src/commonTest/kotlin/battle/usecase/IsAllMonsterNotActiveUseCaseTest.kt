@@ -19,8 +19,8 @@ class IsAllMonsterNotActiveUseCaseTest : KoinTest {
     private val repository: BattleMonsterRepository by inject()
 
     private val attackUseCase: AttackUseCase by inject()
-    private val isAllMonsterNotActiveUseCase: IsAllMonsterNotActiveUseCase =
-        IsAllMonsterNotActiveUseCase()
+    private val isAllMonsterNotActiveUseCase: IsAllMonsterNotActiveUseCase
+            by inject()
 
     @BeforeTest
     fun beforeTest() {

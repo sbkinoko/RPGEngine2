@@ -49,6 +49,7 @@ fun CommandArea(
         }
 
         is FinishCommand -> {
+            // fixme 画像がないのでチカチカする
             battleViewModel.finishBattle()
         }
     }
