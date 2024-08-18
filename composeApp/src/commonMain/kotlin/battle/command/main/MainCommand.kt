@@ -8,13 +8,12 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import common.extension.isSelected
+import common.extension.selectable
 import common.layout.CenterText
 
 @Composable
 fun MainCommand(
     mainViewModel: MainViewModel,
-    mainCommandCallBack: MainCommandCallBack,
     modifier: Modifier = Modifier,
 ) {
     val selected = mainViewModel.getSelectedAsState().value
@@ -27,14 +26,14 @@ fun MainCommand(
             CenterText(
                 modifier = Modifier.weight(1f)
                     .fillMaxHeight()
-                    .isSelected(
+                    .selectable(
                         id = 0,
                         selected = selected,
                     ).clickable {
                         mainViewModel.onClickItem(
                             id = 0,
                         ) {
-                            mainCommandCallBack.attack.invoke()
+                            mainViewModel.goNext()
                         }
                     },
                 text = "攻撃",
@@ -43,7 +42,7 @@ fun MainCommand(
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxHeight()
-                    .isSelected(
+                    .selectable(
                         id = 1,
                         selected = selected,
                     ).clickable {

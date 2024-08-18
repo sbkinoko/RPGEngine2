@@ -6,7 +6,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import common.values.Colors
 
-fun Modifier.isSelected(
+fun Modifier.selectable(
     id: Int,
     selected: Int,
 ): Modifier {

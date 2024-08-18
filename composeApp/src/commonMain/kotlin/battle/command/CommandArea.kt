@@ -22,7 +22,6 @@ fun CommandArea(
         is MainCommand -> MainCommand(
             modifier = modifier,
             mainViewModel = battleViewModel.mainViewModel,
-            mainCommandCallBack = battleViewModel.mainCommandCallback,
         )
 
         is PlayerActionCommand -> PlayerAction(

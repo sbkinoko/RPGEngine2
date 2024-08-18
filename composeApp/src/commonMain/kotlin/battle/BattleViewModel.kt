@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import battle.command.attackphase.AttackPhaseCommandCallBack
-import battle.command.main.MainCommandCallBack
 import battle.command.main.MainViewModel
 import battle.command.playeraction.PlayerActionCallBack
 import battle.command.selectenemy.SelectEnemyCallBack
@@ -85,14 +84,6 @@ class BattleViewModel :
         get() = !battleMonsterRepository.getMonsters().any {
             it.isActive
         }
-
-    val mainCommandCallback = object : MainCommandCallBack {
-        override val attack: () -> Unit = attack@{
-            // todo returnの条件をviewModelに持たせる
-            if (commandStateRepository.nowCommandType !is MainCommand) return@attack
-            mainViewModel.goNext()
-        }
-    }
 
     val playerCommandCallback = object : PlayerActionCallBack {
         override val attack: () -> Unit = attack@{
