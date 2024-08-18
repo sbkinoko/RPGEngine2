@@ -1,36 +1,20 @@
 package battle.command.main
 
+import battle.BattleChildViewModel
+import battle.domain.CommandType
+import battle.domain.MainCommand
 import battle.domain.PlayerActionCommand
-import battle.repository.commandstate.CommandStateRepository
-import common.Timer
-import common.menu.CommonMenuViewModel
 import menu.domain.SelectManager
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
-class MainViewModel : CommonMenuViewModel(), KoinComponent {
-    private val commandStateRepository: CommandStateRepository by inject()
+class MainViewModel : BattleChildViewModel() {
+    override val boundCommand: CommandType = MainCommand
 
     override var selectManager: SelectManager = SelectManager(
         width = 2,
         itemNum = 2,
     )
 
-    fun onClickItem(
-        id: Int,
-        callback: () -> Unit,
-    ) {
-        // 選択されていたらコールバック
-        if (selectManager.selected == id) {
-            callback()
-            return
-        }
-
-        //　今クリックしたやつを選択
-        selectManager.selected = id
-    }
-
-    fun goNext() {
+    override fun goNextImpl() {
         when (selectManager.selected) {
             0 -> commandStateRepository.push(
                 PlayerActionCommand(
@@ -38,10 +22,5 @@ class MainViewModel : CommonMenuViewModel(), KoinComponent {
                 )
             )
         }
-    }
-
-    override var timer: Timer = Timer(awaitTime = 200L)
-    override var pressA: () -> Unit = {
-
     }
 }

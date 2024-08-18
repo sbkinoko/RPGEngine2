@@ -269,7 +269,7 @@ class BattleViewModel :
 
         // すでに選んでる敵を選んだら確定
         if (selectedEnemyState.value.selectedEnemy.first() == monsterId) {
-            goNextCommand()
+            pressA()
             return
         }
 
@@ -280,7 +280,29 @@ class BattleViewModel :
     }
 
     override var pressA = {
-        goNextCommand()
+        when (
+            val nowState = commandStateRepository.nowCommandType
+        ) {
+            is MainCommand -> {
+                mainViewModel.pressA()
+            }
+
+            is PlayerActionCommand -> {
+                selectPlayerAttack(
+                    playerId = nowState.playerId
+                )
+            }
+
+            is SelectEnemyCommand -> {
+                selectAttackEnemy(
+                    playerId = nowState.playerId,
+                )
+            }
+
+            is AttackPhaseCommand -> {
+                attackPhase()
+            }
+        }
     }
 
     private val mutableAttackingPlayerId: MutableStateFlow<Int> = MutableStateFlow(0)
@@ -304,32 +326,6 @@ class BattleViewModel :
     fun reloadMonster() {
         CoroutineScope(Dispatchers.IO).launch {
             battleMonsterRepository.reload()
-        }
-    }
-
-    private fun goNextCommand() {
-        when (
-            val nowState = commandStateRepository.nowCommandType
-        ) {
-            is MainCommand -> {
-                mainViewModel.goNext()
-            }
-
-            is PlayerActionCommand -> {
-                selectPlayerAttack(
-                    playerId = nowState.playerId
-                )
-            }
-
-            is SelectEnemyCommand -> {
-                selectAttackEnemy(
-                    playerId = nowState.playerId,
-                )
-            }
-
-            is AttackPhaseCommand -> {
-                attackPhase()
-            }
         }
     }
 }
