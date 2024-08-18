@@ -53,8 +53,7 @@ fun BattleScreen(
                         shape = RectangleShape,
                     ),
                 monsters = monsters,
-                selectedEnemyState = selectedEnemyState.collectAsState().value,
-                selectEnemyCallBack = selectEnemyCallBack,
+                selectEnemyViewModel = selectEnemyViewModel,
             )
         }
 

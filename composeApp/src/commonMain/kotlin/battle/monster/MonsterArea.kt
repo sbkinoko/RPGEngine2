@@ -13,12 +13,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import battle.command.selectenemy.SelectEnemyCallBack
-import battle.domain.SelectedEnemyState
+import battle.command.selectenemy.SelectEnemyViewModel
 import common.status.MonsterStatus
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
@@ -26,8 +26,7 @@ import org.jetbrains.compose.resources.painterResource
 @Composable
 fun MonsterArea(
     monsters: List<MonsterStatus>,
-    selectedEnemyState: SelectedEnemyState,
-    selectEnemyCallBack: SelectEnemyCallBack,
+    selectEnemyViewModel: SelectEnemyViewModel,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -48,14 +47,19 @@ fun MonsterArea(
                         .fillMaxWidth()
                         .height(20.dp),
                     index = index,
-                    selectedEnemyState = selectedEnemyState,
+                    selectedEnemyState = selectEnemyViewModel.selectedEnemyState.collectAsState().value,
                 )
 
                 Box(
                     contentAlignment = Alignment.Center,
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier
+                        .fillMaxSize()
                         .clickable {
-                            selectEnemyCallBack.clickMonsterImage.invoke(index)
+                            if (monsterStatus.isActive) {
+                                selectEnemyViewModel.selectAttackMonster(
+                                    monsterId = index,
+                                )
+                            }
                         },
                 ) {
                     Monster(
