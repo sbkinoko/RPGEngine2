@@ -1,7 +1,5 @@
-package battle.repositoryimpl.battlemonster
+package battle.repository.battlemonster
 
-import battle.repository.BattleMonsterRepository
-import battle.repositoryimpl.BattleMonsterRepositoryImpl
 import common.status.MonsterStatus
 import common.status.param.HP
 import common.status.param.MP

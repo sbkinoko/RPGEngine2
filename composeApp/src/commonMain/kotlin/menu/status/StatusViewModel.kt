@@ -1,7 +1,7 @@
 package menu.status
 
-import common.CommonMenuViewModel
 import common.Timer
+import common.menu.CommonMenuViewModel
 import common.repository.PlayerRepository
 import common.repositoryImpl.PlayerRepositoryImpl
 import common.status.Status

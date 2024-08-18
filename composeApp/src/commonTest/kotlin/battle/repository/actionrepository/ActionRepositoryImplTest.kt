@@ -1,6 +1,7 @@
-package battle.repositoryimpl
+package battle.repository.actionrepository
 
-import battle.repository.ActionRepository
+import battle.repository.action.ActionRepository
+import battle.repository.action.ActionRepositoryImpl
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
