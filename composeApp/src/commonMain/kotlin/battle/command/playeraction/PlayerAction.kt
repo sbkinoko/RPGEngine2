@@ -5,21 +5,23 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import common.extension.equalAllocationModifier
+import common.extension.selectable
 import common.status.PlayerStatus
 
 @Composable
 fun PlayerAction(
     playerStatus: PlayerStatus,
-    playerActionCallBack: PlayerActionCallBack,
+    playerActionViewModel: PlayerActionViewModel,
     modifier: Modifier = Modifier,
 ) {
+    val selected = playerActionViewModel.getSelectedAsState().value
     Column(modifier = modifier) {
         Text(
             modifier = Modifier
@@ -28,15 +30,16 @@ fun PlayerAction(
             text = playerStatus.name,
         )
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f),
+            modifier = equalAllocationModifier,
         ) {
             Box(
-                Modifier.weight(1f)
-                    .fillMaxHeight()
+                modifier = equalAllocationModifier
+                    .selectable(
+                        id = 0,
+                        selected = selected,
+                    )
                     .clickable {
-                        playerActionCallBack.attack.invoke()
+                        playerActionViewModel.pressA()
                     },
                 contentAlignment = Alignment.Center
             ) {
@@ -48,13 +51,15 @@ fun PlayerAction(
             }
 
             Spacer(
-                modifier = Modifier.weight(1f),
+                modifier = equalAllocationModifier
+                    .selectable(
+                        id = 1,
+                        selected = selected,
+                    ),
             )
         }
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f),
+            modifier = equalAllocationModifier,
         ) {
 
         }

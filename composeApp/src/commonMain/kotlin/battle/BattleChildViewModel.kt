@@ -8,18 +8,26 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 abstract class BattleChildViewModel : CommonMenuViewModel(), KoinComponent {
-    abstract val boundCommand: CommandType
     protected val commandStateRepository: CommandStateRepository by inject()
 
     override var timer: Timer = Timer(awaitTime = 200L)
 
+    private fun isBoundCommand(): Boolean {
+        return isBoundedImpl(
+            commandStateRepository.nowCommandType
+        )
+    }
+
+    protected abstract fun isBoundedImpl(
+        commandType: CommandType,
+    ): Boolean
+
     fun onClickItem(
         id: Int,
-        callback: () -> Unit,
     ) {
         // 選択されていたらコールバック
         if (selectManager.selected == id) {
-            callback()
+            goNextImpl()
             return
         }
 
@@ -27,14 +35,13 @@ abstract class BattleChildViewModel : CommonMenuViewModel(), KoinComponent {
         selectManager.selected = id
     }
 
-    fun goNext() {
+    private fun goNext() {
         // 別の画面状態ならなにもしない
-        if (commandStateRepository.nowCommandType != boundCommand) {
+        if (isBoundCommand().not()) {
             return
         }
 
         goNextImpl()
-
     }
 
     protected abstract fun goNextImpl()

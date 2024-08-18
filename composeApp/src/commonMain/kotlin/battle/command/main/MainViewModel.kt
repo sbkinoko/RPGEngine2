@@ -7,7 +7,9 @@ import battle.domain.PlayerActionCommand
 import menu.domain.SelectManager
 
 class MainViewModel : BattleChildViewModel() {
-    override val boundCommand: CommandType = MainCommand
+    override fun isBoundedImpl(commandType: CommandType): Boolean {
+        return commandType is MainCommand
+    }
 
     override var selectManager: SelectManager = SelectManager(
         width = 2,

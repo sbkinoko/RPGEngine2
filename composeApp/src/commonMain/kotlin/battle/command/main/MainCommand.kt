@@ -32,9 +32,7 @@ fun MainCommand(
                     ).clickable {
                         mainViewModel.onClickItem(
                             id = 0,
-                        ) {
-                            mainViewModel.goNext()
-                        }
+                        )
                     },
                 text = "攻撃",
             )
@@ -48,9 +46,7 @@ fun MainCommand(
                     ).clickable {
                         mainViewModel.onClickItem(
                             id = 1,
-                        ) {
-
-                        }
+                        )
                     },
             )
         }

@@ -1,6 +1,7 @@
 package battle.command
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import battle.BattleViewModel
@@ -26,11 +27,14 @@ fun CommandArea(
 
         is PlayerActionCommand -> PlayerAction(
             modifier = modifier,
-            playerActionCallBack = battleViewModel.playerCommandCallback,
+            playerActionViewModel = battleViewModel.playerActionViewModel,
             playerStatus = battleViewModel.players[nowState.playerId]
         )
 
         is SelectEnemyCommand -> {
+            LaunchedEffect(Unit) {
+                battleViewModel.updateArrow()
+            }
             SelectEnemy(
                 modifier = modifier,
                 playerStatus = battleViewModel.players[nowState.playerId]
