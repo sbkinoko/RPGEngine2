@@ -3,19 +3,19 @@ package battle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
-import battle.command.attackphase.AttackPhaseCommandCallBack
+import battle.command.actionphase.ActionPhaseViewModel
 import battle.command.main.MainViewModel
 import battle.command.playeraction.PlayerActionViewModel
 import battle.command.selectenemy.SelectEnemyViewModel
 import battle.domain.AttackPhaseCommand
 import battle.domain.CommandType
+import battle.domain.FinishCommand
 import battle.domain.MainCommand
 import battle.domain.PlayerActionCommand
 import battle.domain.SelectEnemyCommand
 import battle.repository.action.ActionRepository
 import battle.repository.battlemonster.BattleMonsterRepository
 import battle.repository.commandstate.CommandStateRepository
-import battle.usecase.AttackUseCase
 import common.Timer
 import common.repository.PlayerRepository
 import common.status.MonsterStatus
@@ -26,10 +26,8 @@ import controller.domain.StickPosition
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -56,34 +54,12 @@ class BattleViewModel :
     private val battleMonsterRepository: BattleMonsterRepository by inject()
     private val commandStateRepository: CommandStateRepository by inject()
 
-    private val attackUseCase: AttackUseCase by inject()
-
     private val screenTypeRepository: ScreenTypeRepository by inject()
 
     val mainViewModel = MainViewModel()
     val playerActionViewModel = PlayerActionViewModel()
     val selectEnemyViewModel = SelectEnemyViewModel()
-
-    val targetName: String
-        get() {
-            val targetId = actionRepository.getAction(attackingPlayerId.value).target.first()
-            return battleMonsterRepository.getMonster(targetId).name
-        }
-
-    /**
-     * 敵が全滅したかどうかをチェック
-     */
-    val isAllMonsterNotActive: Boolean
-        get() = !battleMonsterRepository.getMonsters().any {
-            it.isActive
-        }
-
-    val attackPhaseCommandCallback = object : AttackPhaseCommandCallBack {
-        override val pressA: () -> Unit = pressA@{
-            if ((commandStateRepository.nowCommandType) !is AttackPhaseCommand) return@pressA
-            attackPhase()
-        }
-    }
+    val actionPhaseViewModel = ActionPhaseViewModel()
 
     @Composable
     fun CommandStateFlow(): State<CommandType> {
@@ -116,28 +92,14 @@ class BattleViewModel :
         }
     }
 
-    suspend fun attack(
-        target: Int,
-        damage: Int,
-    ) {
-        attackUseCase(
-            target = target,
-            damage = damage,
-        )
-
-        if (isAllMonsterNotActive) {
-            finishBattle()
-        }
-    }
-
     fun startBattle() {
         screenTypeRepository.screenType = ScreenType.BATTLE
         commandStateRepository.init()
-        mutableAttackingPlayerId.value = 0
+        actionPhaseViewModel.init()
         actionRepository.resetTarget()
     }
 
-    private fun finishBattle() {
+    fun finishBattle() {
         pressB()
     }
 
@@ -177,26 +139,11 @@ class BattleViewModel :
             }
 
             is AttackPhaseCommand -> {
-                attackPhase()
+                actionPhaseViewModel.pressA()
             }
-        }
-    }
 
-    private val mutableAttackingPlayerId: MutableStateFlow<Int> = MutableStateFlow(0)
-    val attackingPlayerId: StateFlow<Int> = mutableAttackingPlayerId.asStateFlow()
+            is FinishCommand -> Unit
 
-    private fun attackPhase() {
-        CoroutineScope(Dispatchers.IO).launch {
-            attack(
-                target = actionRepository.getAction(attackingPlayerId.value).target.first(),
-                damage = 10,
-            )
-            if (attackingPlayerId.value < playerNum - 1) {
-                mutableAttackingPlayerId.value++
-            } else {
-                mutableAttackingPlayerId.value = 0
-                commandStateRepository.init()
-            }
         }
     }
 

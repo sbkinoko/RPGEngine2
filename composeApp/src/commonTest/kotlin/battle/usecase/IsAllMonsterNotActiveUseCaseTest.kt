@@ -1,5 +1,7 @@
-package battle
+package battle.usecase
 
+import battle.BattleModule
+import battle.repository.battlemonster.BattleMonsterRepository
 import common.CommonModule
 import common.status.MonsterStatusTest.Companion.getMonster
 import kotlinx.coroutines.delay
@@ -7,14 +9,18 @@ import kotlinx.coroutines.runBlocking
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
+import org.koin.test.inject
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class BattleViewModelTest : KoinTest {
-    private lateinit var battleViewModel: BattleViewModel
+class IsAllMonsterNotActiveUseCaseTest : KoinTest {
+    private val repository: BattleMonsterRepository by inject()
 
+    private val attackUseCase: AttackUseCase by inject()
+    private val isAllMonsterNotActiveUseCase: IsAllMonsterNotActiveUseCase
+            by inject()
 
     @BeforeTest
     fun beforeTest() {
@@ -24,9 +30,6 @@ class BattleViewModelTest : KoinTest {
                 CommonModule,
             )
         }
-
-        battleViewModel = BattleViewModel()
-        battleViewModel.pressB = {}
     }
 
     @AfterTest
@@ -34,11 +37,10 @@ class BattleViewModelTest : KoinTest {
         stopKoin()
     }
 
-
     @Test
     fun checkIsBattleFinish() {
         runBlocking {
-            battleViewModel.setMonsters(
+            repository.setMonster(
                 MutableList(3) {
                     getMonster()
                 }
@@ -49,34 +51,34 @@ class BattleViewModelTest : KoinTest {
             val id = 0
             val damage = 10
 
-            battleViewModel.attack(
+            attackUseCase(
                 target = id,
                 damage = damage
             )
             assertEquals(
                 expected = false,
-                actual = battleViewModel.isAllMonsterNotActive
+                actual = isAllMonsterNotActiveUseCase()
             )
 
             // 隣を攻撃
-            battleViewModel.attack(
+            attackUseCase(
                 target = id,
                 damage = damage
             )
             assertEquals(
                 expected = false,
-                actual = battleViewModel.isAllMonsterNotActive
+                actual = isAllMonsterNotActiveUseCase()
             )
 
             // 隣の隣を攻撃
-            battleViewModel.attack(
+            attackUseCase(
                 target = id,
                 damage = damage
             )
 
             assertEquals(
                 expected = true,
-                actual = battleViewModel.isAllMonsterNotActive
+                actual = isAllMonsterNotActiveUseCase()
             )
         }
     }
