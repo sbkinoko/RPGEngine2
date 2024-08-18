@@ -2,14 +2,14 @@ package battle.command
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import battle.BattleViewModel
-import battle.command.attackphase.AttackPhase
+import battle.command.actionphase.ActionPhase
 import battle.command.main.MainCommand
 import battle.command.playeraction.PlayerAction
 import battle.command.selectenemy.SelectEnemy
 import battle.domain.AttackPhaseCommand
+import battle.domain.FinishCommand
 import battle.domain.MainCommand
 import battle.domain.PlayerActionCommand
 import battle.domain.SelectEnemyCommand
@@ -42,12 +42,14 @@ fun CommandArea(
         }
 
         is AttackPhaseCommand -> {
-            AttackPhase(
+            ActionPhase(
                 modifier = modifier,
-                playerName = battleViewModel.players[battleViewModel.attackingPlayerId.collectAsState().value].name,
-                targetName = battleViewModel.targetName,
-                attackPhaseCallBack = battleViewModel.attackPhaseCommandCallback,
+                actionPhaseViewModel = battleViewModel.actionPhaseViewModel
             )
+        }
+
+        is FinishCommand -> {
+            battleViewModel.finishBattle()
         }
     }
 }

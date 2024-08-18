@@ -1,29 +1,31 @@
-package battle.command.attackphase
+package battle.command.actionphase
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun AttackPhase(
-    playerName: String,
-    targetName: String,
-    attackPhaseCallBack: AttackPhaseCommandCallBack,
+fun ActionPhase(
+    actionPhaseViewModel: ActionPhaseViewModel,
     modifier: Modifier = Modifier,
 ) {
+    val playerId = actionPhaseViewModel.attackingPlayerId.collectAsState().value
+
     Box(
         modifier = modifier
             .clickable {
-                attackPhaseCallBack.pressA.invoke()
+                actionPhaseViewModel.pressA()
             },
     ) {
         Text(
             modifier = Modifier
                 .align(Alignment.Center),
-            text = playerName + "の" + targetName + "への攻撃",
+            text = actionPhaseViewModel.getPlayerName(playerId) + "の" +
+                    actionPhaseViewModel.targetName + "への攻撃",
         )
     }
 }
