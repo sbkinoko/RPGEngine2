@@ -15,7 +15,7 @@ class CommandStateRepositoryImpl : CommandStateRepository {
     private var commandTypeQueue: List<CommandType> = listOf(MainCommand)
 
     override fun init() {
-        commandTypeQueue = listOf(MainCommand)
+        commandTypeQueue = listOf(CommandStateRepository.INITIAL_COMMAND_STATE)
         CoroutineScope(Dispatchers.Default).launch {
             commandTypeFlow.emit(
                 nowCommandType,
@@ -33,6 +33,10 @@ class CommandStateRepositoryImpl : CommandStateRepository {
     }
 
     override fun pop() {
+        // 大きさが1ならpopしない
+        if (commandTypeQueue.size == 1)
+            return
+
         commandTypeQueue = commandTypeQueue.dropLast(1)
         CoroutineScope(Dispatchers.Default).launch {
             commandTypeFlow.emit(
