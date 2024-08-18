@@ -11,6 +11,7 @@ import battle.service.FindTargetService
 import battle.serviceimpl.AttackMonsterService
 import battle.serviceimpl.FindTargetServiceImpl
 import battle.usecase.AttackUseCase
+import battle.usecase.IsAllMonsterNotActiveUseCase
 import org.koin.dsl.module
 
 val BattleModule = module {
@@ -39,6 +40,12 @@ val BattleModule = module {
             battleMonsterRepository = get(),
             findTargetService = get(),
             attackService = get(),
+        )
+    }
+
+    single<IsAllMonsterNotActiveUseCase> {
+        IsAllMonsterNotActiveUseCase(
+            battleMonsterRepository = get(),
         )
     }
 }

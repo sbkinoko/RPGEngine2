@@ -2,11 +2,10 @@ package battle.usecase
 
 import battle.repository.battlemonster.BattleMonsterRepository
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
-class IsAllMonsterNotActiveUseCase : KoinComponent {
-    private val battleMonsterRepository: BattleMonsterRepository by inject()
-
+class IsAllMonsterNotActiveUseCase(
+    private val battleMonsterRepository: BattleMonsterRepository
+) : KoinComponent {
     /**
      * 敵が全滅したかどうかをチェック
      */

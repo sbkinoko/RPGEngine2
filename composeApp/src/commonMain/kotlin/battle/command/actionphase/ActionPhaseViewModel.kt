@@ -26,10 +26,18 @@ class ActionPhaseViewModel : BattleChildViewModel() {
     private val playerRepository: PlayerRepository by inject()
 
     private val attackUseCase: AttackUseCase by inject()
-    private val isAllMonsterNotActiveUseCase = IsAllMonsterNotActiveUseCase()
+    private val isAllMonsterNotActiveUseCase: IsAllMonsterNotActiveUseCase by inject()
 
+    // fixme attackingPlayerは削除する
+    // 敵の攻撃が挟まってPlayerだけじゃなくなるから
     private val mutableAttackingPlayerId: MutableStateFlow<Int> = MutableStateFlow(0)
     val attackingPlayerId: StateFlow<Int> = mutableAttackingPlayerId.asStateFlow()
+
+    // 使わないので適当
+    override var selectManager: SelectManager = SelectManager(
+        width = 1,
+        itemNum = 1,
+    )
 
     val targetName: String
         get() {
@@ -38,9 +46,11 @@ class ActionPhaseViewModel : BattleChildViewModel() {
         }
 
     fun getPlayerName(id: Int): String {
-        return playerRepository.getPlayer(attackingPlayerId.value).name
+        return playerRepository.getPlayer(id).name
     }
 
+    //　fixme のちのち削除
+    // 行動順をあれこれするリポジトリをつくったら
     fun init() {
         mutableAttackingPlayerId.value = 0
     }
@@ -51,10 +61,21 @@ class ActionPhaseViewModel : BattleChildViewModel() {
 
     override fun goNextImpl() {
         CoroutineScope(Dispatchers.IO).launch {
-            attack(
+            //　攻撃
+            attackUseCase(
                 target = actionRepository.getAction(attackingPlayerId.value).target.first(),
                 damage = 10,
             )
+
+            // 敵を倒していたらバトル終了
+            if (isAllMonsterNotActiveUseCase()) {
+                commandStateRepository.push(
+                    FinishCommand
+                )
+                return@launch
+            }
+
+            //　次のプレイヤーに移動
             if (attackingPlayerId.value < playerNum - 1) {
                 mutableAttackingPlayerId.value++
             } else {
@@ -63,25 +84,4 @@ class ActionPhaseViewModel : BattleChildViewModel() {
             }
         }
     }
-
-    private suspend fun attack(
-        target: Int,
-        damage: Int,
-    ) {
-        attackUseCase(
-            target = target,
-            damage = damage,
-        )
-
-        if (isAllMonsterNotActiveUseCase()) {
-            commandStateRepository.push(
-                FinishCommand
-            )
-        }
-    }
-
-    override var selectManager: SelectManager = SelectManager(
-        width = 1,
-        itemNum = 1,
-    )
 }
