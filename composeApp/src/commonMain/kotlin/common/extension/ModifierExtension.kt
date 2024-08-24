@@ -4,6 +4,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
@@ -32,5 +33,5 @@ val RowScope.equalAllocationModifier
 
 val ColumnScope.equalAllocationModifier
     get() = Modifier
-        .fillMaxHeight()
+        .fillMaxWidth()
         .weight(1f)

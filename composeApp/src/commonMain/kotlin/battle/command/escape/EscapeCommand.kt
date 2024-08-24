@@ -1,9 +1,8 @@
-package battle.command.main
+package battle.command.escape
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import common.extension.equalAllocationModifier
@@ -11,12 +10,17 @@ import common.extension.selectable
 import common.layout.CenterText
 
 @Composable
-fun MainCommand(
-    mainViewModel: MainViewModel,
-    modifier: Modifier = Modifier,
+fun EscapeCommand(
+    modifier: Modifier,
 ) {
-    val selected = mainViewModel.getSelectedAsState().value
+    val selected = 0
     Column(modifier = modifier) {
+
+        CenterText(
+            modifier = equalAllocationModifier,
+            text = "本当に逃げますか？"
+        )
+
         Row(
             modifier = equalAllocationModifier,
         ) {
@@ -26,11 +30,9 @@ fun MainCommand(
                         id = 0,
                         selected = selected,
                     ).clickable {
-                        mainViewModel.onClickItem(
-                            id = 0,
-                        )
+
                     },
-                text = "攻撃",
+                text = "逃げる",
             )
             CenterText(
                 modifier = equalAllocationModifier
@@ -38,19 +40,10 @@ fun MainCommand(
                         id = 1,
                         selected = selected,
                     ).clickable {
-                        mainViewModel.onClickItem(
-                            id = 1,
-                        )
-                    },
-                text = "逃げる",
-            )
-        }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f),
-        ) {
 
+                    },
+                text = "戦う",
+            )
         }
     }
 }
