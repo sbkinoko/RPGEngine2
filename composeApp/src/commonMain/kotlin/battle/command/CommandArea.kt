@@ -5,10 +5,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import battle.BattleViewModel
 import battle.command.actionphase.ActionPhase
+import battle.command.escape.EscapeCommand
 import battle.command.main.MainCommand
 import battle.command.playeraction.PlayerAction
 import battle.command.selectenemy.SelectEnemy
 import battle.domain.AttackPhaseCommand
+import battle.domain.EscapeCommand
 import battle.domain.FinishCommand
 import battle.domain.MainCommand
 import battle.domain.PlayerActionCommand
@@ -45,6 +47,13 @@ fun CommandArea(
             ActionPhase(
                 modifier = modifier,
                 actionPhaseViewModel = battleViewModel.actionPhaseViewModel
+            )
+        }
+
+        is EscapeCommand -> {
+            EscapeCommand(
+                modifier = modifier,
+                escapeViewModel = battleViewModel.escapeViewModel,
             )
         }
 
