@@ -28,6 +28,9 @@ class ActionPhaseViewModel : BattleChildViewModel() {
     private val attackUseCase: AttackUseCase by inject()
     private val isAllMonsterNotActiveUseCase: IsAllMonsterNotActiveUseCase by inject()
 
+    override val canBack: Boolean
+        get() = false
+
     // fixme attackingPlayerは削除する
     // 敵の攻撃が挟まってPlayerだけじゃなくなるから
     private val mutableAttackingPlayerId: MutableStateFlow<Int> = MutableStateFlow(0)

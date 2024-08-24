@@ -33,6 +33,9 @@ class SelectEnemyViewModel : BattleChildViewModel() {
     val selectedEnemyState: StateFlow<SelectedEnemyState> =
         mutableSelectedEnemyState.asStateFlow()
 
+    override val canBack: Boolean
+        get() = true
+
     init {
         CoroutineScope(Dispatchers.Default).launch {
             commandStateRepository.commandTypeFlow.collect {
