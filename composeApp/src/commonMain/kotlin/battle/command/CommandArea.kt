@@ -53,6 +53,7 @@ fun CommandArea(
         is EscapeCommand -> {
             EscapeCommand(
                 modifier = modifier,
+                escapeViewModel = battleViewModel.escapeViewModel,
             )
         }
 

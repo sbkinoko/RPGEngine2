@@ -12,10 +12,11 @@ import common.layout.CenterText
 @Composable
 fun EscapeCommand(
     modifier: Modifier,
+    escapeViewModel: EscapeViewModel,
 ) {
-    val selected = 0
-    Column(modifier = modifier) {
+    val selected = escapeViewModel.getSelectedAsState().value
 
+    Column(modifier = modifier) {
         CenterText(
             modifier = equalAllocationModifier,
             text = "本当に逃げますか？"
@@ -27,20 +28,22 @@ fun EscapeCommand(
             CenterText(
                 modifier = equalAllocationModifier
                     .selectable(
-                        id = 0,
+                        id = escapeViewModel.escapeCommand,
                         selected = selected,
                     ).clickable {
-
+                        escapeViewModel.onClickItem(id = escapeViewModel.escapeCommand)
                     },
                 text = "逃げる",
             )
             CenterText(
                 modifier = equalAllocationModifier
                     .selectable(
-                        id = 1,
+                        id = escapeViewModel.attackCommand,
                         selected = selected,
                     ).clickable {
-
+                        escapeViewModel.onClickItem(
+                            id = escapeViewModel.attackCommand,
+                        )
                     },
                 text = "戦う",
             )

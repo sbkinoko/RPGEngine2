@@ -4,11 +4,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import battle.command.actionphase.ActionPhaseViewModel
+import battle.command.escape.EscapeViewModel
 import battle.command.main.MainViewModel
 import battle.command.playeraction.PlayerActionViewModel
 import battle.command.selectenemy.SelectEnemyViewModel
 import battle.domain.AttackPhaseCommand
 import battle.domain.CommandType
+import battle.domain.EscapeCommand
+import battle.domain.FinishCommand
 import battle.domain.MainCommand
 import battle.domain.PlayerActionCommand
 import battle.domain.SelectEnemyCommand
@@ -53,6 +56,7 @@ class BattleViewModel :
     val playerActionViewModel = PlayerActionViewModel()
     val selectEnemyViewModel = SelectEnemyViewModel()
     val actionPhaseViewModel = ActionPhaseViewModel()
+    val escapeViewModel = EscapeViewModel()
 
     @Composable
     fun CommandStateFlow(): State<CommandType> {
@@ -103,13 +107,14 @@ class BattleViewModel :
     }
 
     //todo finishViewModelを作ったらnullableをやめる
-    fun CommandType.toViewModel(): ControllerCallback? {
+    private fun CommandType.toViewModel(): ControllerCallback? {
         return when (this) {
             is MainCommand -> mainViewModel
             is PlayerActionCommand -> playerActionViewModel
             is SelectEnemyCommand -> selectEnemyViewModel
             is AttackPhaseCommand -> actionPhaseViewModel
-            else -> null
+            is EscapeCommand -> escapeViewModel
+            is FinishCommand -> null
         }
     }
 
@@ -117,18 +122,8 @@ class BattleViewModel :
 
     override fun moveStick(stickPosition: StickPosition) {
         timer.callbackIfTimePassed {
-            when (commandStateRepository.nowCommandType) {
-                is MainCommand ->
-                    mainViewModel.moveStick(stickPosition)
-
-                is PlayerActionCommand ->
-                    playerActionViewModel.moveStick(stickPosition)
-
-                is SelectEnemyCommand ->
-                    selectEnemyViewModel.moveStick(stickPosition)
-
-                else -> Unit
-            }
+            commandStateRepository.nowCommandType
+                .toViewModel()?.moveStick(stickPosition)
         }
     }
 
