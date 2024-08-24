@@ -3,18 +3,18 @@ package menu
 import controller.domain.ControllerCallback
 import controller.domain.StickPosition
 import kotlinx.coroutines.flow.SharedFlow
-import main.domain.ScreenType
-import main.repository.screentype.ScreenTypeRepository
 import menu.domain.MenuType
 import menu.main.MainMenuViewModel
 import menu.repository.menustate.MenuStateRepository
 import menu.status.StatusViewModel
+import menu.usecase.backfield.BackFieldUseCase
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class MenuViewModel : KoinComponent, ControllerCallback {
     private val menuStateRepository: MenuStateRepository by inject()
-    private val screenTypeRepository: ScreenTypeRepository by inject()
+
+    private val backFieldUseCase: BackFieldUseCase by inject()
 
     val menuType: SharedFlow<MenuType> = menuStateRepository.menuTypeFlow
 
@@ -22,49 +22,33 @@ class MenuViewModel : KoinComponent, ControllerCallback {
     val statusViewModel: StatusViewModel = StatusViewModel()
 
     override fun moveStick(stickPosition: StickPosition) {
-        when (menuStateRepository.menuType) {
-            MenuType.Main -> {
-                mainMenuViewModel.moveStick(
-                    stickPosition = stickPosition,
-                )
-            }
-            MenuType.Status -> {
-                statusViewModel.moveStick(
-                    stickPosition = stickPosition,
-                )
-            }
-
-            else -> Unit
-        }
+        menuStateRepository.menuType
+            .toViewModel()?.moveStick(
+                stickPosition
+            )
     }
 
     fun setMenuType(menuType: MenuType) {
         menuStateRepository.menuType = menuType
     }
 
-    override var pressA: () -> Unit = {
-        when (menuStateRepository.menuType) {
-            MenuType.Main -> {
-                mainMenuViewModel.pressA()
-            }
-
-            else -> Unit
-        }
-    }
-    override var pressB: () -> Unit = {
-        if (menuStateRepository.menuType == MenuType.Main) {
-            backToField()
-        } else {
-            menuStateRepository.pop()
+    private fun MenuType.toViewModel(): ControllerCallback? {
+        return when (this) {
+            MenuType.Main -> mainMenuViewModel
+            MenuType.Status -> statusViewModel
+            else -> null
         }
     }
 
-    override var pressM: () -> Unit = {
-        backToField()
+    override fun pressA() {
+        menuStateRepository.menuType.toViewModel()?.pressA()
     }
 
-    private fun backToField() {
-        screenTypeRepository.screenType = ScreenType.FIELD
-        menuStateRepository.reset()
+    override fun pressB() {
+        menuStateRepository.menuType.toViewModel()?.pressB()
+    }
+
+    override fun pressM() {
+        backFieldUseCase()
     }
 }

@@ -6,10 +6,10 @@ interface ControllerCallback {
         stickPosition: StickPosition,
     )
 
-    var pressA: () -> Unit
+    fun pressA()
 
-    var pressB: () -> Unit
+    fun pressB()
 
-    var pressM: () -> Unit
+    fun pressM()
 
 }

@@ -15,7 +15,6 @@ import battle.domain.FinishCommand
 import battle.domain.MainCommand
 import battle.domain.PlayerActionCommand
 import battle.domain.SelectEnemyCommand
-import battle.repository.action.ActionRepository
 import battle.repository.battlemonster.BattleMonsterRepository
 import battle.repository.commandstate.CommandStateRepository
 import common.Timer
@@ -45,7 +44,6 @@ class BattleViewModel :
 
     lateinit var players: List<PlayerStatus>
 
-    private val actionRepository: ActionRepository by inject()
     private val playerRepository: PlayerRepository by inject()
     private val battleMonsterRepository: BattleMonsterRepository by inject()
     private val commandStateRepository: CommandStateRepository by inject()
@@ -95,13 +93,6 @@ class BattleViewModel :
         }
     }
 
-    fun startBattle() {
-        screenTypeRepository.screenType = ScreenType.BATTLE
-        commandStateRepository.init()
-        actionPhaseViewModel.init()
-        actionRepository.resetTarget()
-    }
-
     fun finishBattle() {
         screenTypeRepository.screenType = ScreenType.FIELD
     }
@@ -127,18 +118,14 @@ class BattleViewModel :
         }
     }
 
-    override var pressA: () -> Unit = {
-        commandStateRepository.nowCommandType.toViewModel()?.let {
-            it.pressA()
-        }
+    override fun pressA() {
+        commandStateRepository.nowCommandType.toViewModel()?.pressA()
     }
 
-    override var pressB: () -> Unit = {
-        commandStateRepository.nowCommandType.toViewModel()?.let {
-            it.pressB()
-        }
+    override fun pressB() {
+        commandStateRepository.nowCommandType.toViewModel()?.pressB()
     }
 
-    override var pressM: () -> Unit = {}
+    override fun pressM() {}
 
 }

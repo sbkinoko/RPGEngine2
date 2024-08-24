@@ -4,8 +4,14 @@ import common.Timer
 import common.menu.CommonMenuViewModel
 import kotlinx.coroutines.flow.SharedFlow
 import menu.domain.SelectManager
+import menu.usecase.backfield.BackFieldUseCase
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class MainMenuViewModel : CommonMenuViewModel() {
+class MainMenuViewModel : CommonMenuViewModel(),
+    KoinComponent {
+    private val backFieldUseCase: BackFieldUseCase by inject()
+
     override lateinit var selectManager: SelectManager
     lateinit var selectedFlow: SharedFlow<Int>
 
@@ -36,13 +42,15 @@ class MainMenuViewModel : CommonMenuViewModel() {
         selectedFlow = selectManager.selectedFlow
     }
 
-    override var pressA: () -> Unit = {
+    override fun pressA() {
         list[selectManager.selected].onClick()
     }
-    override var pressB: () -> Unit = {
 
+    override fun pressB() {
+        backFieldUseCase()
     }
-    override var pressM: () -> Unit = {
+
+    override fun pressM() {
 
     }
 }

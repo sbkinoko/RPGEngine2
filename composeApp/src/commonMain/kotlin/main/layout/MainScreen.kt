@@ -19,9 +19,6 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
 import battle.BattleViewModel
 import common.extension.pxToDp
-import common.status.MonsterStatus
-import common.status.param.HP
-import common.status.param.MP
 import common.values.Colors
 import controller.layout.Controller
 import main.domain.ScreenType
@@ -29,7 +26,6 @@ import main.repository.screentype.ScreenTypeRepository
 import main.viewmodel.MainViewModel
 import map.viewmodel.MapViewModel
 import menu.MenuViewModel
-import kotlin.random.Random
 
 @Composable
 fun MainScreen() {
@@ -62,27 +58,6 @@ fun MainScreen() {
     )
 
     var screenSize: Int by remember { mutableStateOf(0) }
-
-    // fixme　viewModelの初期化時に初期化できるようにしたい
-    val bCallBack: () -> Unit = {
-        battleViewModel.setMonsters(
-            // ランダムで1~5の敵を作成
-            MutableList(Random.nextInt(5) + 1) {
-                MonsterStatus(
-                    1, "花",
-                    hp = HP(
-                        maxValue = 10,
-                    ),
-                    mp = MP(
-                        maxValue = 10,
-                    )
-                )
-            }
-        )
-
-        battleViewModel.startBattle()
-    }
-    mapViewModel.pressB = bCallBack
 
     if (screenSize == 0) {
         Box(modifier = Modifier

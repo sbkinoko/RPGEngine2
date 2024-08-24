@@ -25,6 +25,6 @@ abstract class CommonMenuViewModel : ControllerCallback {
         }
     }
 
-    override var pressB: () -> Unit = {}
-    override var pressM: () -> Unit = {}
+    override fun pressB() {}
+    override fun pressM() {}
 }

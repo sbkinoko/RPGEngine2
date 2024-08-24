@@ -27,21 +27,27 @@ fun Buttons(
 
         Button(
             modifier = buttonModifier,
-            onClick = controllerCallback.pressA,
+            onClick = {
+                controllerCallback.pressA()
+            },
         ) {
             Text(text = "A")
         }
 
         Button(
             modifier = buttonModifier,
-            onClick = controllerCallback.pressB,
+            onClick = {
+                controllerCallback.pressB()
+            },
         ) {
             Text(text = "B")
         }
 
         Button(
             modifier = buttonModifier,
-            onClick = controllerCallback.pressM,
+            onClick = {
+                controllerCallback.pressM()
+            },
         ) {
             Text(text = "M")
         }

@@ -31,6 +31,16 @@ class ActionPhaseViewModel : BattleChildViewModel() {
     override val canBack: Boolean
         get() = false
 
+    init {
+        CoroutineScope(Dispatchers.IO).launch {
+            commandStateRepository.commandTypeFlow.collect {
+                if (it is AttackPhaseCommand) {
+                    mutableAttackingPlayerId.value = 0
+                }
+            }
+        }
+    }
+
     // fixme attackingPlayerは削除する
     // 敵の攻撃が挟まってPlayerだけじゃなくなるから
     private val mutableAttackingPlayerId: MutableStateFlow<Int> = MutableStateFlow(0)
@@ -50,12 +60,6 @@ class ActionPhaseViewModel : BattleChildViewModel() {
 
     fun getPlayerName(id: Int): String {
         return playerRepository.getPlayer(id).name
-    }
-
-    //　fixme のちのち削除
-    // 行動順をあれこれするリポジトリをつくったら
-    fun init() {
-        mutableAttackingPlayerId.value = 0
     }
 
     override fun isBoundedImpl(commandType: CommandType): Boolean {
