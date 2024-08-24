@@ -41,14 +41,14 @@ class StartBattleUseCaseImplTest : KoinTest {
         startBattleUseCase = StartBattleUseCaseImpl(
             battleMonsterRepository = object : BattleMonsterRepository {
                 override val monsterListFlow: MutableSharedFlow<List<MonsterStatus>>
-                    get() = TODO("Not yet implemented")
+                    get() = throw NotImplementedError()
 
                 override fun getMonster(id: Int): MonsterStatus {
-                    TODO("Not yet implemented")
+                    throw NotImplementedError()
                 }
 
                 override fun getMonsters(): List<MonsterStatus> {
-                    TODO("Not yet implemented")
+                    throw NotImplementedError()
                 }
 
                 override suspend fun setMonster(monsters: List<MonsterStatus>) {
@@ -56,37 +56,37 @@ class StartBattleUseCaseImplTest : KoinTest {
                 }
 
                 override suspend fun reload() {
-                    TODO("Not yet implemented")
+                    throw NotImplementedError()
                 }
 
             },
             screenTypeRepository = screenTypeRepository,
             commandStateRepository = object : CommandStateRepository {
                 override val commandTypeFlow: MutableSharedFlow<CommandType>
-                    get() = TODO("Not yet implemented")
+                    get() = throw NotImplementedError()
                 override val nowCommandType: CommandType
-                    get() = TODO("Not yet implemented")
+                    get() = throw NotImplementedError()
 
                 override fun init() {
                     checkCommand++
                 }
 
                 override fun push(commandType: CommandType) {
-                    TODO("Not yet implemented")
+                    throw NotImplementedError()
                 }
 
                 override fun pop() {
-                    TODO("Not yet implemented")
+                    throw NotImplementedError()
                 }
 
             },
             actionRepository = object : ActionRepository {
                 override fun setAction(playerId: Int, target: List<Int>) {
-                    TODO("Not yet implemented")
+                    throw NotImplementedError()
                 }
 
                 override fun getAction(playerId: Int): ActionData {
-                    TODO("Not yet implemented")
+                    throw NotImplementedError()
                 }
 
                 override fun resetTarget() {
