@@ -9,7 +9,6 @@ import battle.command.playeraction.PlayerActionViewModel
 import battle.command.selectenemy.SelectEnemyViewModel
 import battle.domain.AttackPhaseCommand
 import battle.domain.CommandType
-import battle.domain.FinishCommand
 import battle.domain.MainCommand
 import battle.domain.PlayerActionCommand
 import battle.domain.SelectEnemyCommand
@@ -42,12 +41,6 @@ class BattleViewModel :
     var monsters: StateFlow<List<MonsterStatus>>
 
     lateinit var players: List<PlayerStatus>
-
-    override var pressB: () -> Unit = {
-        screenTypeRepository.screenType = ScreenType.FIELD
-    }
-
-    override var pressM: () -> Unit = {}
 
     private val actionRepository: ActionRepository by inject()
     private val playerRepository: PlayerRepository by inject()
@@ -92,6 +85,12 @@ class BattleViewModel :
         }
     }
 
+    fun reloadMonster() {
+        CoroutineScope(Dispatchers.IO).launch {
+            battleMonsterRepository.reload()
+        }
+    }
+
     fun startBattle() {
         screenTypeRepository.screenType = ScreenType.BATTLE
         commandStateRepository.init()
@@ -100,7 +99,18 @@ class BattleViewModel :
     }
 
     fun finishBattle() {
-        pressB()
+        screenTypeRepository.screenType = ScreenType.FIELD
+    }
+
+    //todo finishViewModelを作ったらnullableをやめる
+    fun CommandType.toViewModel(): ControllerCallback? {
+        return when (this) {
+            is MainCommand -> mainViewModel
+            is PlayerActionCommand -> playerActionViewModel
+            is SelectEnemyCommand -> selectEnemyViewModel
+            is AttackPhaseCommand -> actionPhaseViewModel
+            else -> null
+        }
     }
 
     private val timer: Timer = Timer(200)
@@ -122,34 +132,18 @@ class BattleViewModel :
         }
     }
 
-    override var pressA = {
-        when (
-            commandStateRepository.nowCommandType
-        ) {
-            is MainCommand -> {
-                mainViewModel.pressA()
-            }
-
-            is PlayerActionCommand -> {
-                playerActionViewModel.pressA()
-            }
-
-            is SelectEnemyCommand -> {
-                selectEnemyViewModel.pressA()
-            }
-
-            is AttackPhaseCommand -> {
-                actionPhaseViewModel.pressA()
-            }
-
-            is FinishCommand -> Unit
-
+    override var pressA: () -> Unit = {
+        commandStateRepository.nowCommandType.toViewModel()?.let {
+            it.pressA()
         }
     }
 
-    fun reloadMonster() {
-        CoroutineScope(Dispatchers.IO).launch {
-            battleMonsterRepository.reload()
+    override var pressB: () -> Unit = {
+        commandStateRepository.nowCommandType.toViewModel()?.let {
+            it.pressB()
         }
     }
+
+    override var pressM: () -> Unit = {}
+
 }

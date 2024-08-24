@@ -7,8 +7,12 @@ import common.menu.CommonMenuViewModel
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-abstract class BattleChildViewModel : CommonMenuViewModel(), KoinComponent {
+abstract class BattleChildViewModel :
+    CommonMenuViewModel(),
+    KoinComponent {
     protected val commandStateRepository: CommandStateRepository by inject()
+
+    protected abstract val canBack: Boolean
 
     override var timer: Timer = Timer(awaitTime = 200L)
 
@@ -48,5 +52,13 @@ abstract class BattleChildViewModel : CommonMenuViewModel(), KoinComponent {
 
     override var pressA: () -> Unit = {
         goNext()
+    }
+
+    override var pressB: () -> Unit = {
+        if (canBack) {
+            commandStateRepository.pop()
+        } else {
+            goNext()
+        }
     }
 }

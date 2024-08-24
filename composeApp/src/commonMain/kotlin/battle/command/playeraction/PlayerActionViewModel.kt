@@ -7,6 +7,9 @@ import battle.domain.SelectEnemyCommand
 import menu.domain.SelectManager
 
 class PlayerActionViewModel : BattleChildViewModel() {
+    override val canBack: Boolean
+        get() = true
+
     override fun isBoundedImpl(commandType: CommandType): Boolean {
         return commandType is PlayerActionCommand
     }
