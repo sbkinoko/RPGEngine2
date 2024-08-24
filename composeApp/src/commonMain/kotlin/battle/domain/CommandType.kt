@@ -6,6 +6,8 @@ data object MainCommand : CommandType()
 
 data object FinishCommand : CommandType()
 
+data object EscapeCommand : CommandType()
+
 class PlayerActionCommand(
     val playerId: Int,
 ) : CommandType()
