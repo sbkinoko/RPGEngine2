@@ -18,6 +18,8 @@ import map.usecase.PlayerMoveToUseCase
 import map.usecase.PlayerMoveUseCase
 import map.usecase.ResetBackgroundPositionUseCase
 import map.usecase.VelocityManageUseCase
+import map.usecase.startbattle.StartBattleUseCase
+import map.usecase.startbattle.StartBattleUseCaseImpl
 import map.viewmodel.MapViewModel
 import org.koin.dsl.module
 
@@ -100,6 +102,15 @@ val MapModule = module {
     single {
         IsCollidedUseCase(
             repository = get(),
+        )
+    }
+
+    single<StartBattleUseCase> {
+        StartBattleUseCaseImpl(
+            battleMonsterRepository = get(),
+            screenTypeRepository = get(),
+            commandStateRepository = get(),
+            actionRepository = get(),
         )
     }
 }

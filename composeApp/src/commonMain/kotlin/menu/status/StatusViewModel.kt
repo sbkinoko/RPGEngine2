@@ -6,9 +6,14 @@ import common.repository.PlayerRepository
 import common.repositoryImpl.PlayerRepositoryImpl
 import common.status.Status
 import menu.domain.SelectManager
+import menu.repository.menustate.MenuStateRepository
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class StatusViewModel : CommonMenuViewModel() {
+class StatusViewModel : CommonMenuViewModel(),
+    KoinComponent {
     val repository: PlayerRepository = PlayerRepositoryImpl()
+    val menuStateRepository: MenuStateRepository by inject()
 
     override var selectManager = SelectManager(
         width = 1,
@@ -21,5 +26,9 @@ class StatusViewModel : CommonMenuViewModel() {
         return repository.getPlayer(id)
     }
 
-    override var pressA: () -> Unit = {}
+    override fun pressA() {}
+
+    override fun pressB() {
+        menuStateRepository.pop()
+    }
 }

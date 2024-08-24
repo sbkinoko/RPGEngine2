@@ -29,6 +29,7 @@ import map.usecase.PlayerMoveToUseCase
 import map.usecase.PlayerMoveUseCase
 import map.usecase.ResetBackgroundPositionUseCase
 import map.usecase.VelocityManageUseCase
+import map.usecase.startbattle.StartBattleUseCase
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -37,6 +38,8 @@ class MapViewModel : ControllerCallback, KoinComponent {
     private val playerRepository: PlayerRepository by inject()
     private val playerMoveManageUseCase: PlayerMoveManageUseCase by inject()
     private val velocityManageUseCase: VelocityManageUseCase by inject()
+
+    private val screenTypeRepository: ScreenTypeRepository by inject()
 
     private val getScreenCenterUseCase: GetScreenCenterUseCase by inject()
     private val playerMoveUseCase: PlayerMoveUseCase by inject()
@@ -49,8 +52,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
     private val playerCellRepository: PlayerCellRepository by inject()
 
     private val findEventCellUseCase: FindEventCellUseCase by inject()
-
-    private val screenTypeRepository: ScreenTypeRepository by inject()
+    private val startBattleUseCase: StartBattleUseCase by inject()
 
     val playerSquare: SharedFlow<Square> = playerRepository.playerPositionFLow
 
@@ -259,12 +261,15 @@ class MapViewModel : ControllerCallback, KoinComponent {
         )
     }
 
-    override var pressA: () -> Unit = {
+    override fun pressA() {
         //todo Aを押した時の処理を実装
     }
 
-    override lateinit var pressB: () -> Unit
-    override var pressM: () -> Unit = {
+    override fun pressB() {
+        startBattleUseCase()
+    }
+
+    override fun pressM() {
         screenTypeRepository.screenType = ScreenType.MENU
     }
 

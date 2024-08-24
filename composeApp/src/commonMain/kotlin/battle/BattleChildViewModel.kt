@@ -50,11 +50,11 @@ abstract class BattleChildViewModel :
 
     protected abstract fun goNextImpl()
 
-    override var pressA: () -> Unit = {
+    override fun pressA() {
         goNext()
     }
 
-    override var pressB: () -> Unit = {
+    override fun pressB() {
         if (canBack) {
             commandStateRepository.pop()
         } else {
