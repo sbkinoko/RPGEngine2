@@ -4,6 +4,7 @@ import battle.BattleChildViewModel
 import battle.domain.CommandType
 import battle.domain.PlayerActionCommand
 import battle.domain.SelectEnemyCommand
+import battle.domain.SkillCommand
 import menu.domain.SelectManager
 
 class PlayerActionViewModel : BattleChildViewModel() {
@@ -22,10 +23,12 @@ class PlayerActionViewModel : BattleChildViewModel() {
 
         when (selectManager.selected) {
             normalAttack -> commandStateRepository.push(
-                SelectEnemyCommand(playerId)
+                SelectEnemyCommand(playerId),
             )
 
-            else -> Unit
+            skill -> commandStateRepository.push(
+                SkillCommand(playerId),
+            )
         }
     }
 

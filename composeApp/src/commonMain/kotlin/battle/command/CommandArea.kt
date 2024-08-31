@@ -9,12 +9,14 @@ import battle.command.escape.EscapeCommand
 import battle.command.main.MainCommand
 import battle.command.playeraction.PlayerAction
 import battle.command.selectenemy.SelectEnemy
+import battle.command.skill.SkillCommandWindow
 import battle.domain.AttackPhaseCommand
 import battle.domain.EscapeCommand
 import battle.domain.FinishCommand
 import battle.domain.MainCommand
 import battle.domain.PlayerActionCommand
 import battle.domain.SelectEnemyCommand
+import battle.domain.SkillCommand
 
 @Composable
 fun CommandArea(
@@ -54,6 +56,13 @@ fun CommandArea(
             EscapeCommand(
                 modifier = modifier,
                 escapeViewModel = battleViewModel.escapeViewModel,
+            )
+        }
+
+        is SkillCommand -> {
+            SkillCommandWindow(
+                modifier = modifier,
+                skillCommandViewModel = battleViewModel.skillCommandViewModel
             )
         }
 
