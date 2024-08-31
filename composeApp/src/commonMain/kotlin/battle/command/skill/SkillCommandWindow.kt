@@ -10,9 +10,9 @@ import common.layout.CenterText
 
 @Composable
 fun SkillCommandWindow(
+    skillCommandViewModel: SkillCommandViewModel,
     modifier: Modifier = Modifier,
 ) {
-    val viewModel = SkillCommandViewModel()
     Column(modifier = modifier) {
         Row(
             modifier = equalAllocationModifier,
@@ -21,7 +21,7 @@ fun SkillCommandWindow(
                 modifier = equalAllocationModifier
                     .menuItem(
                         id = 0,
-                        battleChildViewModel = viewModel,
+                        battleChildViewModel = skillCommandViewModel,
                     ),
                 text = "2体攻撃",
             )
@@ -29,7 +29,7 @@ fun SkillCommandWindow(
                 modifier = equalAllocationModifier
                     .menuItem(
                         id = 1,
-                        battleChildViewModel = viewModel,
+                        battleChildViewModel = skillCommandViewModel,
                     ),
                 text = "2体攻撃",
             )
