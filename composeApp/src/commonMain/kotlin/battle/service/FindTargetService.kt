@@ -1,16 +1,16 @@
 package battle.service
 
-import common.status.MonsterStatus
+import common.status.Status
 
 interface FindTargetService {
 
     fun findNext(
-        monsters: List<MonsterStatus>,
+        statusList: List<Status>,
         target: Int,
     ): Int
 
     fun findPrev(
-        monsters: List<MonsterStatus>,
+        statusList: List<Status>,
         target: Int,
     ): Int
 }

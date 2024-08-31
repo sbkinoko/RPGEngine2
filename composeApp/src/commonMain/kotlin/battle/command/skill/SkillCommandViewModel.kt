@@ -33,7 +33,8 @@ class SkillCommandViewModel : BattleChildViewModel() {
         actionRepository.setAction(
             actionType = ActionType.Skill,
             playerId = playerId,
-            skillId = selectManager.selected
+            skillId = selectManager.selected,
+            targetNum = 2,
         )
 
         commandStateRepository.push(
