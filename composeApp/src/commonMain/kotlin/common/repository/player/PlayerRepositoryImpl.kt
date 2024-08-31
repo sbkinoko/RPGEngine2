@@ -1,6 +1,5 @@
-package common.repositoryImpl
+package common.repository.player
 
-import common.repository.PlayerRepository
 import common.status.PlayerStatus
 import common.status.param.HP
 import common.status.param.MP
