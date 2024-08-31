@@ -1,5 +1,8 @@
 package common.repository.player
 
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
 import common.status.PlayerStatus
 import common.status.param.HP
 import common.status.param.MP
@@ -12,7 +15,14 @@ class PlayerRepositoryImpl : PlayerRepository {
     override val mutablePlayersFlow: MutableSharedFlow<List<PlayerStatus>> =
         MutableSharedFlow(replay = 1)
 
-    override var players: List<PlayerStatus>
+    @Composable
+    override fun getFlowAsState(): State<List<PlayerStatus>> {
+        return mutablePlayersFlow.collectAsState(
+            players
+        )
+    }
+
+    private var players: List<PlayerStatus>
 
     init {
         players = listOf(
