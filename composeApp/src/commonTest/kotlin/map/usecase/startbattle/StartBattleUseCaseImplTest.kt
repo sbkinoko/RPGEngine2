@@ -82,11 +82,16 @@ class StartBattleUseCaseImplTest : KoinTest {
 
             },
             actionRepository = object : ActionRepository {
-                override fun setAction(playerId: Int, actionType: ActionType, skillId: Int?) {
+                override fun setAction(
+                    playerId: Int,
+                    actionType: ActionType,
+                    targetNum: Int,
+                    skillId: Int?
+                ) {
                     throw NotImplementedError()
                 }
 
-                override fun setTarget(playerId: Int, target: List<Int>) {
+                override fun setTarget(playerId: Int, target: Int) {
                     throw NotImplementedError()
                 }
 

@@ -18,7 +18,7 @@ class AttackUseCase(
         val monsters = battleMonsterRepository.getMonsters()
         if (monsters[target].isActive.not()) {
             actualTarget = findTargetService.findNext(
-                monsters = monsters,
+                statusList = monsters,
                 target = target,
             )
         }

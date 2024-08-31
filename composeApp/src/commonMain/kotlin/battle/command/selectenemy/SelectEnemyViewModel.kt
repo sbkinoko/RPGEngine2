@@ -9,6 +9,7 @@ import battle.domain.SelectedEnemyState
 import battle.repository.action.ActionRepository
 import battle.repository.battlemonster.BattleMonsterRepository
 import battle.service.FindTargetService
+import battle.usecase.findactivetarget.FindActiveTargetUseCase
 import common.status.MonsterStatus
 import common.values.playerNum
 import controller.domain.ArrowCommand
@@ -26,10 +27,12 @@ class SelectEnemyViewModel : BattleChildViewModel() {
     private val monsterRepository: BattleMonsterRepository by inject()
     private val actionRepository: ActionRepository by inject()
 
+    private val findActiveTargetUseCase: FindActiveTargetUseCase by inject()
+
     private val findTargetService: FindTargetService by inject()
 
     private var mutableSelectedEnemyState: MutableStateFlow<SelectedEnemyState> =
-        MutableStateFlow(SelectedEnemyState(emptyList(), 0))
+        MutableStateFlow(SelectedEnemyState(emptyList()))
     val selectedEnemyState: StateFlow<SelectedEnemyState> =
         mutableSelectedEnemyState.asStateFlow()
 
@@ -61,7 +64,9 @@ class SelectEnemyViewModel : BattleChildViewModel() {
         // ターゲットを保存
         actionRepository.setTarget(
             playerId = playerId,
-            target = mutableSelectedEnemyState.value.selectedEnemy,
+            // 表示ようにリストになっていたが、保存する際は先頭だけ保存して、
+            //　実際に攻撃するときに攻撃対象を再計算する
+            target = mutableSelectedEnemyState.value.selectedEnemy.first(),
         )
 
         // 次のコマンドに移動
@@ -87,36 +92,32 @@ class SelectEnemyViewModel : BattleChildViewModel() {
         val target = selectedEnemyState.value.selectedEnemy.first()
 
         val newTarget = when (stickPosition.toCommand()) {
-            ArrowCommand.Right -> findFirstRightTarget(target)
-            ArrowCommand.Left -> findFirstLeftTarget(target)
+            ArrowCommand.Right -> findTargetService.findNext(
+                target = target,
+                statusList = monsters,
+            )
+
+            ArrowCommand.Left -> findTargetService.findPrev(
+                target = target,
+                statusList = monsters,
+            )
             else -> return
         }
 
         setTargetEnemy(newTarget)
     }
 
-    private fun findFirstRightTarget(
-        target: Int,
-    ): Int {
-        return findTargetService.findNext(
-            target = target,
-            monsters = monsters,
-        )
-    }
-
-    private fun findFirstLeftTarget(
-        target: Int,
-    ): Int {
-        return findTargetService.findPrev(
-            target = target,
-            monsters = monsters,
-        )
-    }
-
     private fun setTargetEnemy(target: Int) {
-        // fixme 複数選択するようになったら修正
+        val action = actionRepository.getAction(playerId)
+
+        val targetList = findActiveTargetUseCase(
+            target = target,
+            targetNum = action.targetNum,
+            statusList = monsters,
+        )
+
         mutableSelectedEnemyState.value = mutableSelectedEnemyState.value.copy(
-            selectedEnemy = listOf(target)
+            selectedEnemy = targetList,
         )
     }
 
@@ -151,27 +152,9 @@ class SelectEnemyViewModel : BattleChildViewModel() {
         val playerId = command.playerId
 
         val action = actionRepository.getAction(playerId)
-        val target = action.target
-        val targetNum = action.targetNum
 
-        val mutableList = mutableListOf<Int>()
-
-        var tmpTarget = target
-        for (i in 0 until targetNum) {
-            while (monsters[tmpTarget].isActive.not()) {
-                tmpTarget = findFirstRightTarget(tmpTarget)
-            }
-
-            // 同じのは複数選択しない
-            if (mutableList.contains(tmpTarget)) {
-                break
-            }
-
-            mutableList.add(tmpTarget)
-        }
-
-        mutableSelectedEnemyState.value = mutableSelectedEnemyState.value.copy(
-            selectedEnemy = listOf(target),
+        setTargetEnemy(
+            target = action.target
         )
     }
 }

@@ -139,7 +139,7 @@ class FindActiveTargetMonsterUseCaseTest : KoinTest {
             targetNum = 2,
         ).let {
             assertEquals(
-                expected = listOf(3, 0),
+                expected = listOf(2, 0),
                 actual = it,
             )
         }

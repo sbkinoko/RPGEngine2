@@ -54,7 +54,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
 
     val targetName: String
         get() {
-            val targetId = actionRepository.getAction(attackingPlayerId.value).target.first()
+            val targetId = actionRepository.getAction(attackingPlayerId.value).target
             return battleMonsterRepository.getMonster(targetId).name
         }
 
@@ -70,7 +70,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
         CoroutineScope(Dispatchers.IO).launch {
             //　攻撃
             attackUseCase(
-                target = actionRepository.getAction(attackingPlayerId.value).target.first(),
+                target = actionRepository.getAction(attackingPlayerId.value).target,
                 damage = 10,
             )
 

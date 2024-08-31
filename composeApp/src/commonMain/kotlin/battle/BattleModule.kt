@@ -52,6 +52,8 @@ val BattleModule = module {
     }
 
     single<FindActiveTargetUseCase> {
-        FindActiveTargetUseCaseImpl()
+        FindActiveTargetUseCaseImpl(
+            findTargetService = get(),
+        )
     }
 }
