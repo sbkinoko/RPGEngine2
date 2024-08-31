@@ -33,6 +33,12 @@ class SelectEnemyViewModel : BattleChildViewModel() {
     val selectedEnemyState: StateFlow<SelectedEnemyState> =
         mutableSelectedEnemyState.asStateFlow()
 
+    val playerId: Int
+        get() {
+            val command = commandStateRepository.nowCommandType as SelectEnemyCommand
+            return command.playerId
+        }
+
     override val canBack: Boolean
         get() = true
 
@@ -52,9 +58,6 @@ class SelectEnemyViewModel : BattleChildViewModel() {
     }
 
     override fun goNextImpl() {
-        val command = commandStateRepository.nowCommandType as? SelectEnemyCommand ?: return
-        val playerId = command.playerId
-
         // ターゲットを保存
         actionRepository.setTarget(
             playerId = playerId,
@@ -148,11 +151,25 @@ class SelectEnemyViewModel : BattleChildViewModel() {
         val playerId = command.playerId
 
         val action = actionRepository.getAction(playerId)
-        var target = action.target.first()
-        // fixme list返すようにする
-        while (monsters[target].isActive.not()) {
-            target = findFirstRightTarget(target)
+        val target = action.target
+        val targetNum = action.targetNum
+
+        val mutableList = mutableListOf<Int>()
+
+        var tmpTarget = target
+        for (i in 0 until targetNum) {
+            while (monsters[tmpTarget].isActive.not()) {
+                tmpTarget = findFirstRightTarget(tmpTarget)
+            }
+
+            // 同じのは複数選択しない
+            if (mutableList.contains(tmpTarget)) {
+                break
+            }
+
+            mutableList.add(tmpTarget)
         }
+
         mutableSelectedEnemyState.value = mutableSelectedEnemyState.value.copy(
             selectedEnemy = listOf(target),
         )
