@@ -66,6 +66,11 @@ class BattleViewModel :
         )
     }
 
+    @Composable
+    fun PlayerStatusFlow(): State<List<PlayerStatus>> {
+        return playerRepository.getFlowAsState()
+    }
+
     init {
         initPlayers()
         monsters =

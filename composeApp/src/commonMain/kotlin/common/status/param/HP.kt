@@ -4,7 +4,7 @@ data class HP(
     var maxValue: Int,
     var value: Int = maxValue,
 ) : Point() {
-    override var maxPoint = 10
+    override var maxPoint = maxValue
         set(value) {
             field = if (value < MIN_MAX_VALUE) {
                 MIN_MAX_VALUE
@@ -18,8 +18,8 @@ data class HP(
         }
 
     init {
-        point = value
         maxPoint = maxValue
+        point = value
     }
 
     companion object {
