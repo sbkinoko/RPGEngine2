@@ -1,6 +1,7 @@
 package battle.command.actionphase
 
 import battle.BattleChildViewModel
+import battle.domain.ActionType
 import battle.domain.AttackPhaseCommand
 import battle.domain.CommandType
 import battle.domain.FinishCommand
@@ -68,6 +69,22 @@ class ActionPhaseViewModel : BattleChildViewModel() {
 
     override fun goNextImpl() {
         CoroutineScope(Dispatchers.IO).launch {
+            when (actionRepository.getAction(attackingPlayerId.value).thisTurnAction) {
+                ActionType.Normal -> Unit
+                ActionType.Skill -> {
+                    val player = playerRepository.getPlayer(attackingPlayerId.value)
+                    val afterPlayer = player.copy(
+                        mp = player.mp.copy(
+                            value = player.mp.value - 1
+                        )
+                    )
+                    playerRepository.setPlayer(
+                        id = attackingPlayerId.value,
+                        status = afterPlayer,
+                    )
+                }
+            }
+
             //　攻撃
             attackUseCase(
                 target = actionRepository.getAction(attackingPlayerId.value).target,

@@ -40,7 +40,7 @@ fun BattleScreen(
                     color = Colors.StatusArea,
                     shape = RectangleShape,
                 ),
-            statusList = battleViewModel.players,
+            statusList = battleViewModel.PlayerStatusFlow().value,
         )
 
         battleViewModel.apply {
