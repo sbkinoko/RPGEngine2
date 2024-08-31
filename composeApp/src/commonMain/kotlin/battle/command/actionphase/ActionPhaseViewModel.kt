@@ -9,6 +9,7 @@ import battle.repository.action.ActionRepository
 import battle.repository.battlemonster.BattleMonsterRepository
 import battle.usecase.AttackUseCase
 import battle.usecase.IsAllMonsterNotActiveUseCase
+import battle.usecase.findactivetarget.FindActiveTargetUseCase
 import common.repository.player.PlayerRepository
 import common.values.playerNum
 import kotlinx.coroutines.CoroutineScope
@@ -27,6 +28,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
     private val playerRepository: PlayerRepository by inject()
 
     private val attackUseCase: AttackUseCase by inject()
+    private val findActiveTargetUseCase: FindActiveTargetUseCase by inject()
     private val isAllMonsterNotActiveUseCase: IsAllMonsterNotActiveUseCase by inject()
 
     override val canBack: Boolean
@@ -70,8 +72,16 @@ class ActionPhaseViewModel : BattleChildViewModel() {
     override fun goNextImpl() {
         CoroutineScope(Dispatchers.IO).launch {
             when (actionRepository.getAction(attackingPlayerId.value).thisTurnAction) {
-                ActionType.Normal -> Unit
+                ActionType.Normal -> {
+                    //　攻撃
+                    attackUseCase(
+                        target = actionRepository.getAction(attackingPlayerId.value).target,
+                        damage = 10,
+                    )
+                }
+
                 ActionType.Skill -> {
+                    // MP減らす
                     val player = playerRepository.getPlayer(attackingPlayerId.value)
                     val afterPlayer = player.copy(
                         mp = player.mp.copy(
@@ -82,14 +92,22 @@ class ActionPhaseViewModel : BattleChildViewModel() {
                         id = attackingPlayerId.value,
                         status = afterPlayer,
                     )
+
+                    val targetList = findActiveTargetUseCase(
+                        statusList = battleMonsterRepository.getMonsters(),
+                        target = actionRepository.getAction(attackingPlayerId.value).target,
+                        targetNum = 2,
+                    )
+
+                    //　複数の対象攻撃
+                    targetList.forEach {
+                        attackUseCase(
+                            target = it,
+                            damage = 10,
+                        )
+                    }
                 }
             }
-
-            //　攻撃
-            attackUseCase(
-                target = actionRepository.getAction(attackingPlayerId.value).target,
-                damage = 10,
-            )
 
             // 敵を倒していたらバトル終了
             if (isAllMonsterNotActiveUseCase()) {
