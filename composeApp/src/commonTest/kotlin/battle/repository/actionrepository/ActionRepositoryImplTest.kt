@@ -20,23 +20,17 @@ class ActionRepositoryImplTest {
     fun setNormal() {
         val playerID = 1
         val target = 1
-        val targetNum = 1
         val actionType = ActionType.Normal
 
         actionRepository.setAction(
             playerId = playerID,
             actionType = actionType,
-            targetNum = targetNum
         )
 
         actionRepository.getAction(playerID).apply {
             assertEquals(
                 expected = actionType,
                 actual = thisTurnAction,
-            )
-            assertEquals(
-                expected = targetNum,
-                actual = this.targetNum,
             )
         }
 
@@ -50,10 +44,6 @@ class ActionRepositoryImplTest {
                 expected = target,
                 actual = this.target,
             )
-            assertEquals(
-                expected = targetNum,
-                actual = this.targetNum,
-            )
         }
     }
 
@@ -61,12 +51,10 @@ class ActionRepositoryImplTest {
     fun setSkill() {
         val playerID = 2
         val skillID = 1
-        val targetNum = 2
         actionRepository.setAction(
             playerId = playerID,
             actionType = ActionType.Skill,
             skillId = skillID,
-            targetNum = targetNum,
         )
 
         actionRepository.getAction(playerID).apply {
@@ -78,10 +66,6 @@ class ActionRepositoryImplTest {
                 expected = skillID,
                 actual = this.skillId,
             )
-            assertEquals(
-                expected = targetNum,
-                actual = this.targetNum,
-            )
         }
     }
 
@@ -89,16 +73,13 @@ class ActionRepositoryImplTest {
     fun setNormalAfterSkill() {
         val playerID = 2
         val skillID = 1
-        val initTargetNum = 1
         val initAction = ActionType.Skill
-        val secondTargetNum = 2
         val secondAction = ActionType.Normal
 
         actionRepository.setAction(
             playerId = playerID,
             actionType = initAction,
             skillId = skillID,
-            targetNum = initTargetNum,
         )
 
         actionRepository.getAction(playerID).apply {
@@ -110,17 +91,12 @@ class ActionRepositoryImplTest {
                 expected = skillID,
                 actual = this.skillId,
             )
-            assertEquals(
-                expected = initTargetNum,
-                actual = this.targetNum,
-            )
         }
 
         actionRepository.setAction(
             playerId = playerID,
             actionType = secondAction,
             skillId = skillID,
-            targetNum = secondTargetNum,
         )
 
         actionRepository.getAction(playerID).apply {
@@ -131,10 +107,6 @@ class ActionRepositoryImplTest {
             assertEquals(
                 expected = skillID,
                 actual = this.skillId,
-            )
-            assertEquals(
-                expected = secondTargetNum,
-                actual = this.targetNum,
             )
         }
     }
@@ -157,13 +129,11 @@ class ActionRepositoryImplTest {
         val playerID = 1
         val target = 1
         val actionType = ActionType.Normal
-        val targetNum = 1
 
         // nullになっちゃうのでセットしておく
         actionRepository.setAction(
             playerId = playerID,
             actionType = actionType,
-            targetNum = targetNum
         )
 
         actionRepository.setTarget(
@@ -183,12 +153,10 @@ class ActionRepositoryImplTest {
     fun resetTargetTest() {
         val init = 1
         val playerID = 1
-        val targetNum = 1
 
         actionRepository.setAction(
             playerId = playerID,
             actionType = ActionType.Normal,
-            targetNum = targetNum,
         )
 
         actionRepository.setTarget(

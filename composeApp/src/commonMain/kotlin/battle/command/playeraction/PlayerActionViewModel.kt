@@ -41,7 +41,6 @@ class PlayerActionViewModel : BattleChildViewModel() {
                 // 行動を保存
                 actionRepository.setAction(
                     actionType = ActionType.Normal,
-                    targetNum = 1,
                     playerId = playerId,
                 )
 

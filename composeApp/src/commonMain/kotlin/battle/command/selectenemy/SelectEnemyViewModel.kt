@@ -10,6 +10,7 @@ import battle.repository.action.ActionRepository
 import battle.repository.battlemonster.BattleMonsterRepository
 import battle.service.FindTargetService
 import battle.usecase.findactivetarget.FindActiveTargetUseCase
+import battle.usecase.gettargetnum.GetTargetNumUseCase
 import common.status.MonsterStatus
 import common.values.playerNum
 import controller.domain.ArrowCommand
@@ -28,6 +29,7 @@ class SelectEnemyViewModel : BattleChildViewModel() {
     private val actionRepository: ActionRepository by inject()
 
     private val findActiveTargetUseCase: FindActiveTargetUseCase by inject()
+    private val getTargetNumUseCase: GetTargetNumUseCase by inject()
 
     private val findTargetService: FindTargetService by inject()
 
@@ -101,6 +103,7 @@ class SelectEnemyViewModel : BattleChildViewModel() {
                 target = target,
                 statusList = monsters,
             )
+
             else -> return
         }
 
@@ -108,11 +111,9 @@ class SelectEnemyViewModel : BattleChildViewModel() {
     }
 
     private fun setTargetEnemy(target: Int) {
-        val action = actionRepository.getAction(playerId)
-
         val targetList = findActiveTargetUseCase(
             target = target,
-            targetNum = action.targetNum,
+            targetNum = getTargetNumUseCase(playerId = playerId),
             statusList = monsters,
         )
 

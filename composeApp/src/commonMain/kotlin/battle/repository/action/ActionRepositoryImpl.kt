@@ -9,14 +9,12 @@ class ActionRepositoryImpl : ActionRepository {
     override fun setAction(
         playerId: Int,
         actionType: ActionType,
-        targetNum: Int,
         skillId: Int?
     ) {
         actionMap[playerId] = actionMap[playerId]?.let { actionData ->
             // 共通の更新
             actionData.copy(
                 thisTurnAction = actionType,
-                targetNum = targetNum,
             ).let {
                 when (actionType) {
                     ActionType.Normal -> it
@@ -28,7 +26,6 @@ class ActionRepositoryImpl : ActionRepository {
         } ?: ActionData(
             thisTurnAction = actionType,
             skillId = skillId,
-            targetNum = targetNum,
         )
     }
 

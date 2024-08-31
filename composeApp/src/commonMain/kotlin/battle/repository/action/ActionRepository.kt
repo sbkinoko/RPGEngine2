@@ -7,7 +7,6 @@ interface ActionRepository {
     fun setAction(
         playerId: Int,
         actionType: ActionType,
-        targetNum: Int,
         skillId: Int? = null,
     )
 
