@@ -4,7 +4,6 @@ import battle.domain.ActionData
 import battle.domain.ActionType
 
 interface ActionRepository {
-
     fun setAction(
         playerId: Int,
         actionType: ActionType,
@@ -15,7 +14,6 @@ interface ActionRepository {
         playerId: Int,
         target: List<Int>,
     )
-
 
     fun getAction(
         playerId: Int
