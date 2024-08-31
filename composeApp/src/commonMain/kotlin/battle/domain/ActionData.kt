@@ -1,19 +1,10 @@
 package battle.domain
 
 data class ActionData(
-    val thisTurnAction: ActionType,
-    val target: List<Int>,
-    val skillId: Int?,
-) {
-    companion object {
-        val default: ActionData
-            get() = ActionData(
-                thisTurnAction = ActionType.Normal,
-                target = listOf(0),
-                skillId = null
-            )
-    }
-}
+    val thisTurnAction: ActionType = ActionType.Normal,
+    val target: List<Int> = listOf(0),
+    val skillId: Int? = null,
+)
 
 enum class ActionType {
     Normal,

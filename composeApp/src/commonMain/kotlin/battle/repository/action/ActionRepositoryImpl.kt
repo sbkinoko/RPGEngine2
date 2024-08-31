@@ -9,14 +9,12 @@ class ActionRepositoryImpl : ActionRepository {
     override fun setAction(
         playerId: Int,
         actionType: ActionType,
-        target: List<Int>,
         skillId: Int?
     ) {
         actionMap[playerId] = actionMap[playerId]?.let { actionData ->
             // 共通の更新
             actionData.copy(
                 thisTurnAction = actionType,
-                target = target,
             ).let {
                 when (actionType) {
                     ActionType.Normal -> it
@@ -27,13 +25,22 @@ class ActionRepositoryImpl : ActionRepository {
             }
         } ?: ActionData(
             thisTurnAction = actionType,
-            target = target,
             skillId = skillId,
         )
     }
 
+    override fun setTarget(
+        playerId: Int,
+        target: List<Int>,
+    ) {
+        // actionが設定されているはずなのでnullにはならない
+        actionMap[playerId] = actionMap[playerId]!!.copy(
+            target = target
+        )
+    }
+
     override fun getAction(playerId: Int): ActionData {
-        return actionMap[playerId] ?: ActionData.default
+        return actionMap[playerId] ?: ActionData()
     }
 
     override fun resetTarget() {
