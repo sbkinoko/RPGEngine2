@@ -7,6 +7,9 @@ import battle.domain.SelectEnemyCommand
 import menu.domain.SelectManager
 
 class PlayerActionViewModel : BattleChildViewModel() {
+    val normalAttack = 0
+    val skill = 1
+
     override val canBack: Boolean
         get() = true
 
@@ -18,7 +21,7 @@ class PlayerActionViewModel : BattleChildViewModel() {
         val playerId = (commandStateRepository.nowCommandType as PlayerActionCommand).playerId
 
         when (selectManager.selected) {
-            0 -> commandStateRepository.push(
+            normalAttack -> commandStateRepository.push(
                 SelectEnemyCommand(playerId)
             )
 

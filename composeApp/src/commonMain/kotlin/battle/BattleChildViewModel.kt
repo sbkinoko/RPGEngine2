@@ -26,6 +26,7 @@ abstract class BattleChildViewModel :
         commandType: CommandType,
     ): Boolean
 
+    // todo 上位クラスに移動する
     fun onClickItem(
         id: Int,
     ) {
