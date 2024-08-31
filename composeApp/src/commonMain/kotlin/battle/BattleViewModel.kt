@@ -18,7 +18,7 @@ import battle.domain.SelectEnemyCommand
 import battle.repository.battlemonster.BattleMonsterRepository
 import battle.repository.commandstate.CommandStateRepository
 import common.Timer
-import common.repository.PlayerRepository
+import common.repository.player.PlayerRepository
 import common.status.MonsterStatus
 import common.status.PlayerStatus
 import common.values.playerNum
