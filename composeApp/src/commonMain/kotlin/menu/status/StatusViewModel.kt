@@ -2,8 +2,8 @@ package menu.status
 
 import common.Timer
 import common.menu.CommonMenuViewModel
-import common.repository.PlayerRepository
-import common.repositoryImpl.PlayerRepositoryImpl
+import common.repository.player.PlayerRepository
+import common.repository.player.PlayerRepositoryImpl
 import common.status.Status
 import menu.domain.SelectManager
 import menu.repository.menustate.MenuStateRepository

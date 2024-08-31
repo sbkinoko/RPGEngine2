@@ -1,4 +1,4 @@
-package common.repository
+package common.repository.player
 
 import common.status.PlayerStatus
 

@@ -8,7 +8,7 @@ import battle.repository.action.ActionRepository
 import battle.repository.battlemonster.BattleMonsterRepository
 import battle.usecase.AttackUseCase
 import battle.usecase.IsAllMonsterNotActiveUseCase
-import common.repository.PlayerRepository
+import common.repository.player.PlayerRepository
 import common.values.playerNum
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
