@@ -1,6 +1,7 @@
 package battle.command.selectenemy
 
 import battle.BattleChildViewModel
+import battle.domain.ActionType
 import battle.domain.AttackPhaseCommand
 import battle.domain.CommandType
 import battle.domain.PlayerActionCommand
@@ -57,8 +58,9 @@ class SelectEnemyViewModel : BattleChildViewModel() {
 
         // 行動を保存
         actionRepository.setAction(
+            actionType = ActionType.Normal,
             playerId = playerId,
-            target = mutableSelectedEnemyState.value.selectedEnemy
+            target = mutableSelectedEnemyState.value.selectedEnemy,
         )
 
         // 次のコマンドに移動
