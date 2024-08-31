@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import common.extension.equalAllocationModifier
@@ -18,9 +19,10 @@ fun PlayerAction(
     playerActionViewModel: PlayerActionViewModel,
     modifier: Modifier = Modifier,
 ) {
-    // todo launchedEffect入れる
+    LaunchedEffect(playerActionViewModel.playerId) {
+        playerActionViewModel.init()
+    }
 
-    val selected = playerActionViewModel.getSelectedAsState().value
     Column(modifier = modifier) {
         Text(
             modifier = Modifier
@@ -28,6 +30,7 @@ fun PlayerAction(
             textAlign = TextAlign.Start,
             text = playerStatus.name,
         )
+
         Row(
             modifier = equalAllocationModifier,
         ) {
