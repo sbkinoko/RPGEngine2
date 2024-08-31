@@ -6,6 +6,7 @@ import battle.domain.CommandType
 import battle.domain.SelectEnemyCommand
 import battle.domain.SkillCommand
 import battle.repository.action.ActionRepository
+import battle.repository.skill.SkillRepository
 import common.repository.player.PlayerRepository
 import menu.domain.SelectManager
 import org.koin.core.component.inject
@@ -13,6 +14,7 @@ import org.koin.core.component.inject
 class SkillCommandViewModel : BattleChildViewModel() {
     private val actionRepository: ActionRepository by inject()
     private val playerRepository: PlayerRepository by inject()
+    private val skillRepository: SkillRepository by inject()
 
     val playerId: Int
         get() = (commandStateRepository.nowCommandType as SkillCommand).playerId
@@ -25,25 +27,13 @@ class SkillCommandViewModel : BattleChildViewModel() {
     }
 
     fun getName(id: Int): String {
-        return when (id) {
-            0 -> "2体攻撃"
-            1 -> "つかえないよ"
-            else -> throw NotImplementedError()
-        }
+        return skillRepository.getSkill(id).name
     }
 
     fun canUse(id: Int): Boolean {
-        return when (id) {
-            0 -> {
-                playerRepository.getPlayer(playerId).mp.value >= 1
-            }
-
-            1 -> {
-                false
-            }
-
-            else -> throw NotImplementedError()
-        }
+        return skillRepository.getSkill(id).canUse(
+            playerRepository.getPlayer(playerId).mp.value
+        )
     }
 
     override val canBack: Boolean
@@ -62,7 +52,6 @@ class SkillCommandViewModel : BattleChildViewModel() {
             actionType = ActionType.Skill,
             playerId = playerId,
             skillId = selectManager.selected,
-            targetNum = 2,
         )
 
         commandStateRepository.push(
