@@ -7,6 +7,7 @@ object Colors {
     private val blue = Color(0, 0, 255, 255)
     private val white = Color(255, 255, 255, 255)
     private val black = Color(0, 0, 0, 255)
+    private val transGrey = Color(128, 128, 128, 100)
 
     val Player = red
     val BackgroundCell = blue
@@ -25,4 +26,5 @@ object Colors {
     val SelectedMenu = red
     val MenuFrame = blue
     val MenuBackground = white
+    val SkillDisabled = transGrey
 }
