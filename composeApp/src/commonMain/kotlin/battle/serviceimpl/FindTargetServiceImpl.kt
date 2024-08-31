@@ -1,43 +1,43 @@
 package battle.serviceimpl
 
 import battle.service.FindTargetService
-import common.status.MonsterStatus
+import common.status.Status
 
 class FindTargetServiceImpl : FindTargetService {
 
     override fun findNext(
-        monsters: List<MonsterStatus>,
+        statusList: List<Status>,
         target: Int,
     ): Int {
         var actualTarget = target + 1
-        if (monsters.size <= actualTarget) {
+        if (statusList.size <= actualTarget) {
             actualTarget = 0
         }
 
         //　戦闘不能じゃないtargetを探す
-        while (monsters[actualTarget].isActive.not()) {
+        while (statusList[actualTarget].isActive.not()) {
             actualTarget = collectTarget(
                 target = actualTarget + 1,
-                size = monsters.size,
+                size = statusList.size,
             )
         }
         return actualTarget
     }
 
     override fun findPrev(
-        monsters: List<MonsterStatus>,
+        statusList: List<Status>,
         target: Int,
     ): Int {
         var actualTarget = collectTarget(
             target = target - 1,
-            size = monsters.size,
+            size = statusList.size,
         )
 
         //　戦闘不能じゃないtargetを探す
-        while (monsters[actualTarget].isActive.not()) {
+        while (statusList[actualTarget].isActive.not()) {
             actualTarget = collectTarget(
                 target = actualTarget - 1,
-                size = monsters.size,
+                size = statusList.size,
             )
         }
         return actualTarget

@@ -1,4 +1,4 @@
-package org.example.project.preview.battle
+package org.example.project.preview.battle.command
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

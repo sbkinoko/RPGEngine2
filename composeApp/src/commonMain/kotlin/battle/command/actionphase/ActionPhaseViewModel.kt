@@ -1,6 +1,7 @@
 package battle.command.actionphase
 
 import battle.BattleChildViewModel
+import battle.domain.ActionType
 import battle.domain.AttackPhaseCommand
 import battle.domain.CommandType
 import battle.domain.FinishCommand
@@ -8,6 +9,8 @@ import battle.repository.action.ActionRepository
 import battle.repository.battlemonster.BattleMonsterRepository
 import battle.usecase.AttackUseCase
 import battle.usecase.IsAllMonsterNotActiveUseCase
+import battle.usecase.decmp.DecMpUseCase
+import battle.usecase.findactivetarget.FindActiveTargetUseCase
 import common.repository.player.PlayerRepository
 import common.values.playerNum
 import kotlinx.coroutines.CoroutineScope
@@ -25,7 +28,9 @@ class ActionPhaseViewModel : BattleChildViewModel() {
     private val battleMonsterRepository: BattleMonsterRepository by inject()
     private val playerRepository: PlayerRepository by inject()
 
+    private val decMpUseCase: DecMpUseCase by inject()
     private val attackUseCase: AttackUseCase by inject()
+    private val findActiveTargetUseCase: FindActiveTargetUseCase by inject()
     private val isAllMonsterNotActiveUseCase: IsAllMonsterNotActiveUseCase by inject()
 
     override val canBack: Boolean
@@ -54,7 +59,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
 
     val targetName: String
         get() {
-            val targetId = actionRepository.getAction(attackingPlayerId.value).target.first()
+            val targetId = actionRepository.getAction(attackingPlayerId.value).target
             return battleMonsterRepository.getMonster(targetId).name
         }
 
@@ -68,11 +73,37 @@ class ActionPhaseViewModel : BattleChildViewModel() {
 
     override fun goNextImpl() {
         CoroutineScope(Dispatchers.IO).launch {
-            //　攻撃
-            attackUseCase(
-                target = actionRepository.getAction(attackingPlayerId.value).target.first(),
-                damage = 10,
-            )
+            when (actionRepository.getAction(attackingPlayerId.value).thisTurnAction) {
+                ActionType.Normal -> {
+                    //　攻撃
+                    attackUseCase(
+                        target = actionRepository.getAction(attackingPlayerId.value).target,
+                        damage = 10,
+                    )
+                }
+
+                ActionType.Skill -> {
+                    // MP減らす
+                    decMpUseCase(
+                        playerId = attackingPlayerId.value,
+                        amount = 1,
+                    )
+
+                    val targetList = findActiveTargetUseCase(
+                        statusList = battleMonsterRepository.getMonsters(),
+                        target = actionRepository.getAction(attackingPlayerId.value).target,
+                        targetNum = 2,
+                    )
+
+                    //　複数の対象攻撃
+                    targetList.forEach {
+                        attackUseCase(
+                            target = it,
+                            damage = 10,
+                        )
+                    }
+                }
+            }
 
             // 敵を倒していたらバトル終了
             if (isAllMonsterNotActiveUseCase()) {

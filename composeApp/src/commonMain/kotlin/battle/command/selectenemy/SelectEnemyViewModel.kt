@@ -9,6 +9,8 @@ import battle.domain.SelectedEnemyState
 import battle.repository.action.ActionRepository
 import battle.repository.battlemonster.BattleMonsterRepository
 import battle.service.FindTargetService
+import battle.usecase.findactivetarget.FindActiveTargetUseCase
+import battle.usecase.gettargetnum.GetTargetNumUseCase
 import common.status.MonsterStatus
 import common.values.playerNum
 import controller.domain.ArrowCommand
@@ -26,12 +28,21 @@ class SelectEnemyViewModel : BattleChildViewModel() {
     private val monsterRepository: BattleMonsterRepository by inject()
     private val actionRepository: ActionRepository by inject()
 
+    private val findActiveTargetUseCase: FindActiveTargetUseCase by inject()
+    private val getTargetNumUseCase: GetTargetNumUseCase by inject()
+
     private val findTargetService: FindTargetService by inject()
 
     private var mutableSelectedEnemyState: MutableStateFlow<SelectedEnemyState> =
-        MutableStateFlow(SelectedEnemyState(emptyList(), 0))
+        MutableStateFlow(SelectedEnemyState(emptyList()))
     val selectedEnemyState: StateFlow<SelectedEnemyState> =
         mutableSelectedEnemyState.asStateFlow()
+
+    val playerId: Int
+        get() {
+            val command = commandStateRepository.nowCommandType as SelectEnemyCommand
+            return command.playerId
+        }
 
     override val canBack: Boolean
         get() = true
@@ -52,13 +63,12 @@ class SelectEnemyViewModel : BattleChildViewModel() {
     }
 
     override fun goNextImpl() {
-        val command = commandStateRepository.nowCommandType as? SelectEnemyCommand ?: return
-        val playerId = command.playerId
-
-        // 行動を保存
-        actionRepository.setAction(
+        // ターゲットを保存
+        actionRepository.setTarget(
             playerId = playerId,
-            target = mutableSelectedEnemyState.value.selectedEnemy
+            // 表示ようにリストになっていたが、保存する際は先頭だけ保存して、
+            //　実際に攻撃するときに攻撃対象を再計算する
+            target = mutableSelectedEnemyState.value.selectedEnemy.first(),
         )
 
         // 次のコマンドに移動
@@ -84,36 +94,31 @@ class SelectEnemyViewModel : BattleChildViewModel() {
         val target = selectedEnemyState.value.selectedEnemy.first()
 
         val newTarget = when (stickPosition.toCommand()) {
-            ArrowCommand.Right -> findFirstRightTarget(target)
-            ArrowCommand.Left -> findFirstLeftTarget(target)
+            ArrowCommand.Right -> findTargetService.findNext(
+                target = target,
+                statusList = monsters,
+            )
+
+            ArrowCommand.Left -> findTargetService.findPrev(
+                target = target,
+                statusList = monsters,
+            )
+
             else -> return
         }
 
         setTargetEnemy(newTarget)
     }
 
-    private fun findFirstRightTarget(
-        target: Int,
-    ): Int {
-        return findTargetService.findNext(
-            target = target,
-            monsters = monsters,
-        )
-    }
-
-    private fun findFirstLeftTarget(
-        target: Int,
-    ): Int {
-        return findTargetService.findPrev(
-            target = target,
-            monsters = monsters,
-        )
-    }
-
     private fun setTargetEnemy(target: Int) {
-        // fixme 複数選択するようになったら修正
+        val targetList = findActiveTargetUseCase(
+            target = target,
+            targetNum = getTargetNumUseCase(playerId = playerId),
+            statusList = monsters,
+        )
+
         mutableSelectedEnemyState.value = mutableSelectedEnemyState.value.copy(
-            selectedEnemy = listOf(target)
+            selectedEnemy = targetList,
         )
     }
 
@@ -148,13 +153,9 @@ class SelectEnemyViewModel : BattleChildViewModel() {
         val playerId = command.playerId
 
         val action = actionRepository.getAction(playerId)
-        var target = action.target.first()
-        // fixme list返すようにする
-        while (monsters[target].isActive.not()) {
-            target = findFirstRightTarget(target)
-        }
-        mutableSelectedEnemyState.value = mutableSelectedEnemyState.value.copy(
-            selectedEnemy = listOf(target),
+
+        setTargetEnemy(
+            target = action.target
         )
     }
 }

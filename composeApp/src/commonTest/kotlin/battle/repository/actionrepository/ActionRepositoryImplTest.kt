@@ -1,5 +1,6 @@
 package battle.repository.actionrepository
 
+import battle.domain.ActionType
 import battle.repository.action.ActionRepository
 import battle.repository.action.ActionRepositoryImpl
 import kotlin.test.BeforeTest
@@ -16,10 +17,24 @@ class ActionRepositoryImplTest {
     }
 
     @Test
-    fun setActionTest() {
+    fun setNormal() {
         val playerID = 1
-        val target = listOf(1)
+        val target = 1
+        val actionType = ActionType.Normal
+
         actionRepository.setAction(
+            playerId = playerID,
+            actionType = actionType,
+        )
+
+        actionRepository.getAction(playerID).apply {
+            assertEquals(
+                expected = actionType,
+                actual = thisTurnAction,
+            )
+        }
+
+        actionRepository.setTarget(
             playerId = playerID,
             target = target,
         )
@@ -27,60 +42,108 @@ class ActionRepositoryImplTest {
         actionRepository.getAction(playerID).apply {
             assertEquals(
                 expected = target,
-                actual = this.target,
-            )
-        }
-
-        val playerID2 = 2
-        val target2 = listOf(2)
-        actionRepository.setAction(
-            playerId = playerID2,
-            target = target2,
-        )
-
-        actionRepository.getAction(playerID2).apply {
-            assertEquals(
-                expected = target2,
                 actual = this.target,
             )
         }
     }
 
     @Test
-    fun updateActionTest() {
-        val playerID = 1
-        val target = listOf(1)
+    fun setSkill() {
+        val playerID = 2
+        val skillID = 1
         actionRepository.setAction(
             playerId = playerID,
-            target = target,
+            actionType = ActionType.Skill,
+            skillId = skillID,
         )
 
         actionRepository.getAction(playerID).apply {
             assertEquals(
-                expected = target,
-                actual = this.target,
+                expected = ActionType.Skill,
+                actual = thisTurnAction,
+            )
+            assertEquals(
+                expected = skillID,
+                actual = this.skillId,
+            )
+        }
+    }
+
+    @Test
+    fun setNormalAfterSkill() {
+        val playerID = 2
+        val skillID = 1
+        val initAction = ActionType.Skill
+        val secondAction = ActionType.Normal
+
+        actionRepository.setAction(
+            playerId = playerID,
+            actionType = initAction,
+            skillId = skillID,
+        )
+
+        actionRepository.getAction(playerID).apply {
+            assertEquals(
+                expected = initAction,
+                actual = thisTurnAction,
+            )
+            assertEquals(
+                expected = skillID,
+                actual = this.skillId,
             )
         }
 
-        val target2 = listOf(2)
         actionRepository.setAction(
             playerId = playerID,
-            target = target2,
+            actionType = secondAction,
+            skillId = skillID,
         )
 
         actionRepository.getAction(playerID).apply {
             assertEquals(
-                expected = target2,
-                actual = this.target,
+                expected = secondAction,
+                actual = thisTurnAction,
+            )
+            assertEquals(
+                expected = skillID,
+                actual = this.skillId,
             )
         }
     }
 
     @Test
     fun getNotSetPlayerId() {
-        actionRepository.getAction(1).apply {
+        val playerId = 1
+        actionRepository.getAction(
+            playerId = playerId,
+        ).apply {
             assertEquals(
-                expected = listOf(0),
+                expected = ActionRepository.INITIAL_TARGET,
+                actual = this.target,
+            )
+        }
+    }
+
+    @Test
+    fun setTargetTest() {
+        val playerID = 1
+        val target = 1
+        val actionType = ActionType.Normal
+
+        // nullになっちゃうのでセットしておく
+        actionRepository.setAction(
+            playerId = playerID,
+            actionType = actionType,
+        )
+
+        actionRepository.setTarget(
+            playerId = playerID,
+            target = target,
+        )
+
+        actionRepository.getAction(playerID).apply {
+            assertEquals(
+                expected = target,
                 actual = this.target,
             )
         }
@@ -88,17 +151,31 @@ class ActionRepositoryImplTest {
 
     @Test
     fun resetTargetTest() {
-        val init = listOf(1, 2, 3)
-        actionRepository.setAction(1, target = init)
+        val init = 1
+        val playerID = 1
+
+        actionRepository.setAction(
+            playerId = playerID,
+            actionType = ActionType.Normal,
+        )
+
+        actionRepository.setTarget(
+            playerId = playerID,
+            target = init,
+        )
         assertEquals(
             expected = init,
-            actual = actionRepository.getAction(1).target,
+            actual = actionRepository.getAction(
+                playerId = playerID
+            ).target,
         )
 
         actionRepository.resetTarget()
         assertEquals(
-            expected = listOf(0),
-            actual = actionRepository.getAction(1).target,
+            expected = ActionRepository.INITIAL_TARGET,
+            actual = actionRepository.getAction(
+                playerId = playerID,
+            ).target,
         )
     }
 }

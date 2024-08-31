@@ -1,6 +1,7 @@
 package map.usecase.startbattle
 
 import battle.domain.ActionData
+import battle.domain.ActionType
 import battle.domain.CommandType
 import battle.repository.action.ActionRepository
 import battle.repository.battlemonster.BattleMonsterRepository
@@ -81,7 +82,15 @@ class StartBattleUseCaseImplTest : KoinTest {
 
             },
             actionRepository = object : ActionRepository {
-                override fun setAction(playerId: Int, target: List<Int>) {
+                override fun setAction(
+                    playerId: Int,
+                    actionType: ActionType,
+                    skillId: Int?
+                ) {
+                    throw NotImplementedError()
+                }
+
+                override fun setTarget(playerId: Int, target: Int) {
                     throw NotImplementedError()
                 }
 

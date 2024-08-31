@@ -1,11 +1,11 @@
 package common.status.param
 
-class MP(
+data class MP(
     var maxValue: Int,
     var value: Int = maxValue,
 ) : Point() {
 
-    override var maxPoint = 10
+    override var maxPoint = maxValue
         set(value) {
             field = if (value < MIN_MAX_VALUE) {
                 MIN_MAX_VALUE
@@ -19,8 +19,8 @@ class MP(
         }
 
     init {
-        point = value
         maxPoint = maxValue
+        point = value
     }
 
     companion object {
