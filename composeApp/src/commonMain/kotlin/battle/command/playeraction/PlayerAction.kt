@@ -18,6 +18,8 @@ fun PlayerAction(
     playerActionViewModel: PlayerActionViewModel,
     modifier: Modifier = Modifier,
 ) {
+    // todo launchedEffect入れる
+
     val selected = playerActionViewModel.getSelectedAsState().value
     Column(modifier = modifier) {
         Text(

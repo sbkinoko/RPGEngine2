@@ -55,10 +55,10 @@ class SelectEnemyViewModel : BattleChildViewModel() {
         val command = commandStateRepository.nowCommandType as? SelectEnemyCommand ?: return
         val playerId = command.playerId
 
-        // 行動を保存
-        actionRepository.setAction(
+        // ターゲットを保存
+        actionRepository.setTarget(
             playerId = playerId,
-            target = mutableSelectedEnemyState.value.selectedEnemy
+            target = mutableSelectedEnemyState.value.selectedEnemy,
         )
 
         // 次のコマンドに移動

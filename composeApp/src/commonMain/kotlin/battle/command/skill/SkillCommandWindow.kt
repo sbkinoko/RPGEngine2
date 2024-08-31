@@ -3,6 +3,7 @@ package battle.command.skill
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import common.extension.equalAllocationModifier
 import common.extension.menuItem
@@ -13,6 +14,12 @@ fun SkillCommandWindow(
     skillCommandViewModel: SkillCommandViewModel,
     modifier: Modifier = Modifier,
 ) {
+    LaunchedEffect(
+        skillCommandViewModel.playerId,
+    ) {
+        skillCommandViewModel.init()
+    }
+
     Column(modifier = modifier) {
         Row(
             modifier = equalAllocationModifier,
