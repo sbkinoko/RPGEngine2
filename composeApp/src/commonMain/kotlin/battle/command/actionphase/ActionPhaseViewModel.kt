@@ -9,6 +9,7 @@ import battle.repository.action.ActionRepository
 import battle.repository.battlemonster.BattleMonsterRepository
 import battle.usecase.AttackUseCase
 import battle.usecase.IsAllMonsterNotActiveUseCase
+import battle.usecase.decmp.DecMpUseCase
 import battle.usecase.findactivetarget.FindActiveTargetUseCase
 import common.repository.player.PlayerRepository
 import common.values.playerNum
@@ -27,6 +28,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
     private val battleMonsterRepository: BattleMonsterRepository by inject()
     private val playerRepository: PlayerRepository by inject()
 
+    private val decMpUseCase: DecMpUseCase by inject()
     private val attackUseCase: AttackUseCase by inject()
     private val findActiveTargetUseCase: FindActiveTargetUseCase by inject()
     private val isAllMonsterNotActiveUseCase: IsAllMonsterNotActiveUseCase by inject()
@@ -82,15 +84,9 @@ class ActionPhaseViewModel : BattleChildViewModel() {
 
                 ActionType.Skill -> {
                     // MP減らす
-                    val player = playerRepository.getPlayer(attackingPlayerId.value)
-                    val afterPlayer = player.copy(
-                        mp = player.mp.copy(
-                            value = player.mp.value - 1
-                        )
-                    )
-                    playerRepository.setPlayer(
-                        id = attackingPlayerId.value,
-                        status = afterPlayer,
+                    decMpUseCase(
+                        playerId = attackingPlayerId.value,
+                        amount = 1,
                     )
 
                     val targetList = findActiveTargetUseCase(
