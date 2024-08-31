@@ -16,6 +16,18 @@ class PlayerActionViewModel : BattleChildViewModel() {
     val normalAttack = 0
     val skill = 1
 
+    val playerId: Int
+        get() = (commandStateRepository.nowCommandType as PlayerActionCommand).playerId
+
+    fun init() {
+        selectManager.selected = when (
+            actionRepository.getAction(playerId = playerId).thisTurnAction
+        ) {
+            ActionType.Normal -> normalAttack
+            ActionType.Skill -> skill
+        }
+    }
+
     override val canBack: Boolean
         get() = true
 
@@ -24,8 +36,6 @@ class PlayerActionViewModel : BattleChildViewModel() {
     }
 
     override fun goNextImpl() {
-        val playerId = (commandStateRepository.nowCommandType as PlayerActionCommand).playerId
-
         when (selectManager.selected) {
             normalAttack -> {
                 // 行動を保存
