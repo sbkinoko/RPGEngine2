@@ -1,12 +1,12 @@
 package map.domain
 
-import map.data.LoopMap
+import map.data.LoopTestMap
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class MapDataTest {
 
-    private val mapData = LoopMap()
+    private val mapData = LoopTestMap()
 
     @Test
     fun testGetXY() {
@@ -15,27 +15,27 @@ class MapDataTest {
             y = 0,
         ).apply {
             assertEquals(
-                1,
+                0,
                 this,
             )
         }
 
         mapData.getDataAt(
             x = 0,
-            y = 9,
+            y = 3,
         ).apply {
             assertEquals(
-                2,
+                12,
                 this,
             )
         }
 
         mapData.getDataAt(
-            x = 9,
-            y = 9,
+            x = 3,
+            y = 3,
         ).apply {
             assertEquals(
-                1,
+                15,
                 this,
             )
         }
@@ -50,7 +50,7 @@ class MapDataTest {
             )
         ).apply {
             assertEquals(
-                1,
+                0,
                 this,
             )
         }
@@ -58,23 +58,23 @@ class MapDataTest {
         mapData.getDataAt(
             MapPoint(
                 x = 0,
-                y = 9,
+                y = 3,
             )
         ).apply {
             assertEquals(
-                2,
+                12,
                 this,
             )
         }
 
         mapData.getDataAt(
             MapPoint(
-                x = 9,
-                y = 9,
+                x = 3,
+                y = 3,
             )
         ).apply {
             assertEquals(
-                1,
+                15,
                 this,
             )
         }
