@@ -9,7 +9,6 @@ class LoopMap : MapData() {
     override val height: Int
         get() = 10
     override val field: Array<Array<Int>>
-        //　todo 移動マスがないので復活させる
         get() = arrayOf(
             arrayOf(1, 1, 1, 1, 1, 2, 2, 2, 2, 2),
             arrayOf(1, 1, 1, 1, 1, 2, 2, 2, 2, 2),
@@ -20,6 +19,6 @@ class LoopMap : MapData() {
             arrayOf(1, 1, 5, 5, 5, 5, 5, 5, 1, 1),
             arrayOf(5, 5, 5, 1, 1, 5, 1, 5, 1, 1),
             arrayOf(5, 5, 5, 1, 1, 5, 5, 5, 1, 1),
-            arrayOf(1, 1, 5, 5, 1, 5, 1, 1, 1, 1),
+            arrayOf(1, 1, 5, 5, 3, 5, 1, 1, 1, 1),
         )
 }
