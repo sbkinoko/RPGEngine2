@@ -18,6 +18,8 @@ import map.usecase.PlayerMoveToUseCase
 import map.usecase.PlayerMoveUseCase
 import map.usecase.ResetBackgroundPositionUseCase
 import map.usecase.VelocityManageUseCase
+import map.usecase.decideconnectcype.DecideConnectTypeUseCase
+import map.usecase.decideconnectcype.DecideConnectTypeUseCaseImpl
 import map.usecase.startbattle.StartBattleUseCase
 import map.usecase.startbattle.StartBattleUseCaseImpl
 import map.viewmodel.MapViewModel
@@ -112,5 +114,9 @@ val MapModule = module {
             commandStateRepository = get(),
             actionRepository = get(),
         )
+    }
+
+    single<DecideConnectTypeUseCase> {
+        DecideConnectTypeUseCaseImpl()
     }
 }
