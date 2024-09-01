@@ -9,27 +9,38 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import common.extension.pxToDp
 import common.values.Colors
 import map.domain.BackgroundCell
+import map.viewmodel.MapViewModel
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-fun showBackground(
-    backgroundCell: List<List<BackgroundCell>>,
+fun Background(
+    mapViewModel: MapViewModel,
     screenRatio: Float,
 ) {
+    val backgroundCell: List<List<BackgroundCell>> = mapViewModel.backgroundCells.collectAsState(
+        listOf()
+    ).value
+
     val imageBinder = ImageBinder()
 
     Box {
         backgroundCell.forEachIndexed { row, backgroundCells ->
             backgroundCells.forEachIndexed { col, cell ->
                 cell.apply {
+                    val aroundCellId = mapViewModel.getAroundCellId(
+                        x = mapPoint.x,
+                        y = mapPoint.y,
+                    )
+
                     Box(
                         modifier = Modifier
                             .size(
@@ -53,7 +64,9 @@ fun showBackground(
                             modifier = Modifier
                                 .fillMaxSize(),
                             painter = painterResource(
-                                imageBinder.bind(imgId = imgID)
+                                imageBinder.bind(
+                                    aroundCellId = aroundCellId,
+                                )
                             ),
                             contentDescription = "background"
                         )

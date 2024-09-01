@@ -26,6 +26,26 @@ class BackgroundRepositoryImpl : BackgroundRepository {
         return background[y][x]
     }
 
+    override fun getBackgroundAround(x: Int, y: Int): Array<Array<Int>> {
+        return arrayOf(
+            arrayOf(
+                getIdAt(x = x - 1, y = y - 1),
+                getIdAt(x = x, y = y - 1),
+                getIdAt(x = x + 1, y = y - 1),
+            ),
+            arrayOf(
+                getIdAt(x = x - 1, y = y),
+                getIdAt(x = x, y = y),
+                getIdAt(x = x + 1, y = y),
+            ),
+            arrayOf(
+                getIdAt(x = x - 1, y = y + 1),
+                getIdAt(x = x, y = y + 1),
+                getIdAt(x = x + 1, y = y + 1),
+            )
+        )
+    }
+
     override suspend fun setBackground(background: List<List<BackgroundCell>>) {
         this.background = background
         backgroundFlow.emit(background)
@@ -33,5 +53,52 @@ class BackgroundRepositoryImpl : BackgroundRepository {
 
     override suspend fun reload() {
         backgroundFlow.emit(background)
+    }
+
+    private fun getIdAt(x: Int, y: Int): Int {
+        return if (mapData.isLoop) {
+            mapData.getDataAt(
+                x = correctX(x),
+                y = correctY(y)
+            )
+        } else {
+            if (isOutX(x) || isOutY(y)) {
+                0
+            } else {
+                mapData.getDataAt(x, y)
+            }
+        }
+    }
+
+    private fun isOutX(x: Int): Boolean {
+        return (x < 0 || x >= mapData.width)
+    }
+
+    private fun isOutY(y: Int): Boolean {
+        return (y < 0 || y >= mapData.height)
+    }
+
+    private fun correctX(x: Int): Int {
+        if (x < 0) {
+            return mapData.width - 1
+        }
+
+        if (x >= mapData.width) {
+            return 0
+        }
+
+        return x
+    }
+
+    private fun correctY(y: Int): Int {
+        if (y < 0) {
+            return mapData.height - 1
+        }
+
+        if (y >= mapData.height) {
+            return 0
+        }
+
+        return y
     }
 }

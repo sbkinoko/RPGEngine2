@@ -261,6 +261,13 @@ class MapViewModel : ControllerCallback, KoinComponent {
         )
     }
 
+    fun getAroundCellId(x: Int, y: Int): Array<Array<Int>> {
+        return backgroundRepository.getBackgroundAround(
+            x = x,
+            y = y,
+        )
+    }
+
     override fun pressA() {
         //todo Aを押した時の処理を実装
     }
