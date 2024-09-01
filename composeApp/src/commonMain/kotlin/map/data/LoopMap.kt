@@ -9,21 +9,16 @@ class LoopMap : MapData() {
     override val height: Int
         get() = 10
     override val field: Array<Array<Int>>
-        get() = Array(height) { y ->
-            Array(width) { x ->
-                if (
-                    x == 5 &&
-                    y == 5
-                ) {
-                    3
-                } else if (
-                    x < 5 &&
-                    5 <= y
-                ) {
-                    2
-                } else {
-                    1
-                }
-            }
-        }
+        get() = arrayOf(
+            arrayOf(1, 1, 1, 1, 1, 2, 2, 2, 2, 2),
+            arrayOf(1, 1, 1, 1, 1, 2, 2, 2, 2, 2),
+            arrayOf(1, 1, 1, 1, 1, 2, 2, 2, 2, 2),
+            arrayOf(1, 1, 1, 1, 1, 2, 2, 2, 2, 2),
+            arrayOf(1, 1, 1, 1, 1, 2, 2, 2, 2, 2),
+            arrayOf(1, 1, 1, 1, 1, 5, 1, 1, 1, 1),
+            arrayOf(1, 1, 5, 5, 5, 5, 5, 5, 1, 1),
+            arrayOf(5, 5, 5, 1, 1, 5, 1, 5, 1, 1),
+            arrayOf(5, 5, 5, 1, 1, 5, 5, 5, 1, 1),
+            arrayOf(1, 1, 5, 5, 3, 5, 1, 1, 1, 1),
+        )
 }
