@@ -71,8 +71,13 @@ class PlayerActionViewModel : BattleChildViewModel() {
     override fun pressB() {
         // アクティブなプレイヤーまで戻る
         commandStateRepository.popTo {
-            val playerId = (it as PlayerIdCommand).playerId
+            // playerActionじゃなければダメ
+            val command: PlayerIdCommand = it as? PlayerIdCommand
+                ?: return@popTo false
+
+            val playerId = command.playerId
             val player = playerRepository.getPlayer(playerId)
+
             player.isActive
         }
     }
