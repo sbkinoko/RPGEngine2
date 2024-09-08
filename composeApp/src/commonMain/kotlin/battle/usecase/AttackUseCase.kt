@@ -29,7 +29,7 @@ class AttackUseCase(
             monster = monsters[target]
         )
 
-        battleMonsterRepository.setMonster(
+        battleMonsterRepository.setMonsters(
             monsters = monsters.mapIndexed { index, monsterStatus ->
                 if (index != actualTarget) {
                     monsterStatus

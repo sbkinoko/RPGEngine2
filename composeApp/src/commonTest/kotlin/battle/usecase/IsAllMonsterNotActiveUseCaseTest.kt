@@ -40,7 +40,7 @@ class IsAllMonsterNotActiveUseCaseTest : KoinTest {
     @Test
     fun checkIsBattleFinish() {
         runBlocking {
-            repository.setMonster(
+            repository.setMonsters(
                 MutableList(3) {
                     getMonster()
                 }

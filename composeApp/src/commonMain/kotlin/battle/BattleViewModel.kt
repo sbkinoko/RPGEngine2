@@ -91,7 +91,7 @@ class BattleViewModel :
 
     fun setMonsters(monsters: List<MonsterStatus>) {
         CoroutineScope(Dispatchers.Default).launch {
-            battleMonsterRepository.setMonster(monsters.toMutableList())
+            battleMonsterRepository.setMonsters(monsters.toMutableList())
         }
     }
 

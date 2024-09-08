@@ -55,7 +55,7 @@ class BattleMonsterRepositoryImplTest {
     fun setMonsterTest() {
         // = runTest {
         runBlocking {
-            battleMonsterRepository.setMonster(
+            battleMonsterRepository.setMonsters(
                 monsters = monsterList.toMutableList()
             )
             battleMonsterRepository.getMonster(0).apply {

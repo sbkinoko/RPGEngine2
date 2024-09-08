@@ -15,7 +15,7 @@ class BattleMonsterRepositoryImpl : BattleMonsterRepository {
         return monsterList.toList()
     }
 
-    override suspend fun setMonster(monsters: List<MonsterStatus>) {
+    override suspend fun setMonsters(monsters: List<MonsterStatus>) {
         monsterList = monsters
         monsterListFlow.emit(monsterList)
     }
