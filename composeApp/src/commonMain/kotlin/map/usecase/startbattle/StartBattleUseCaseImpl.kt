@@ -36,7 +36,7 @@ class StartBattleUseCaseImpl(
         }
 
         CoroutineScope(Dispatchers.Default).launch {
-            battleMonsterRepository.setMonster(
+            battleMonsterRepository.setMonsters(
                 monsterList
             )
 

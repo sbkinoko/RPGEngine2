@@ -52,8 +52,12 @@ class StartBattleUseCaseImplTest : KoinTest {
                     throw NotImplementedError()
                 }
 
-                override suspend fun setMonster(monsters: List<MonsterStatus>) {
+                override suspend fun setMonsters(monsters: List<MonsterStatus>) {
                     checkMonster++
+                }
+
+                override suspend fun setMonster(id: Int, monster: MonsterStatus) {
+                    throw NotImplementedError()
                 }
 
                 override suspend fun reload() {
@@ -99,6 +103,10 @@ class StartBattleUseCaseImplTest : KoinTest {
                 }
 
                 override fun getAction(playerId: Int): ActionData {
+                    throw NotImplementedError()
+                }
+
+                override fun getLastSelectAction(playerId: Int): ActionType {
                     throw NotImplementedError()
                 }
 

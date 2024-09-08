@@ -1,15 +1,16 @@
-package battle.serviceimpl
+package battle.service.attack
 
-import battle.service.AttackService
 import common.status.MonsterStatus
+import common.status.Status
 
-class AttackMonsterService : AttackService {
-
+class DecMonsterHpService : DecHpService {
     override fun attack(
         target: Int,
         damage: Int,
-        monster: MonsterStatus,
-    ): MonsterStatus {
+        status: Status,
+    ): Status {
+        val monster = (status as MonsterStatus)
+
         return monster.copy(
             hp = monster.hp.copy(
                 value = monster.hp.value - damage

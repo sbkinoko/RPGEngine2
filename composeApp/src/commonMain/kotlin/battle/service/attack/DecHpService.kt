@@ -1,8 +1,8 @@
-package battle.service
+package battle.service.attack
 
-import common.status.MonsterStatus
+import common.status.Status
 
-interface AttackService {
+interface DecHpService {
 
     /**
      *  攻撃をして、攻撃後のステータスを返す
@@ -10,6 +10,6 @@ interface AttackService {
     fun attack(
         target: Int,
         damage: Int,
-        monster: MonsterStatus,
-    ): MonsterStatus
+        status: Status,
+    ): Status
 }

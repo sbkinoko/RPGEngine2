@@ -13,6 +13,8 @@ interface PlayerRepository {
 
     fun getPlayer(id: Int): PlayerStatus
 
+    fun getPlayers(): List<PlayerStatus>
+
     fun setPlayer(
         id: Int,
         status: PlayerStatus,

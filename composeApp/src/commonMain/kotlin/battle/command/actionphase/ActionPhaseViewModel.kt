@@ -1,35 +1,47 @@
 package battle.command.actionphase
 
 import battle.BattleChildViewModel
+import battle.EnemyAttackQualifier
+import battle.PlayerAttackQualifier
 import battle.domain.ActionType
 import battle.domain.AttackPhaseCommand
 import battle.domain.CommandType
 import battle.domain.FinishCommand
 import battle.repository.action.ActionRepository
 import battle.repository.battlemonster.BattleMonsterRepository
-import battle.usecase.AttackUseCase
+import battle.repository.skill.SkillRepository
 import battle.usecase.IsAllMonsterNotActiveUseCase
+import battle.usecase.attack.AttackUseCase
 import battle.usecase.decmp.DecMpUseCase
 import battle.usecase.findactivetarget.FindActiveTargetUseCase
 import common.repository.player.PlayerRepository
+import common.status.Status
 import common.values.playerNum
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import menu.domain.SelectManager
 import org.koin.core.component.inject
+import org.koin.core.qualifier.named
 
 class ActionPhaseViewModel : BattleChildViewModel() {
     private val actionRepository: ActionRepository by inject()
     private val battleMonsterRepository: BattleMonsterRepository by inject()
     private val playerRepository: PlayerRepository by inject()
+    private val skillRepository: SkillRepository by inject()
 
     private val decMpUseCase: DecMpUseCase by inject()
-    private val attackUseCase: AttackUseCase by inject()
+    private val attackFromPlayerUseCase: AttackUseCase by inject(
+        qualifier = named(PlayerAttackQualifier)
+    )
+    private val attackFromEnemyUseCase: AttackUseCase by inject(
+        qualifier = named(EnemyAttackQualifier)
+    )
     private val findActiveTargetUseCase: FindActiveTargetUseCase by inject()
     private val isAllMonsterNotActiveUseCase: IsAllMonsterNotActiveUseCase by inject()
 
@@ -59,12 +71,22 @@ class ActionPhaseViewModel : BattleChildViewModel() {
 
     val targetName: String
         get() {
-            val targetId = actionRepository.getAction(attackingPlayerId.value).target
-            return battleMonsterRepository.getMonster(targetId).name
+            return if (attackingPlayerId.value < playerNum) {
+                val targetId = actionRepository.getAction(
+                    attackingPlayerId.value
+                ).target
+                battleMonsterRepository.getMonster(targetId).name
+            } else {
+                "仲間"
+            }
         }
 
-    fun getPlayerName(id: Int): String {
-        return playerRepository.getPlayer(id).name
+    fun getActionCharacterName(id: Int): String {
+        return if (id < playerNum) {
+            playerRepository.getPlayer(id).name
+        } else {
+            battleMonsterRepository.getMonster(id - playerNum).name
+        }
     }
 
     override fun isBoundedImpl(commandType: CommandType): Boolean {
@@ -73,68 +95,124 @@ class ActionPhaseViewModel : BattleChildViewModel() {
 
     override fun goNextImpl() {
         CoroutineScope(Dispatchers.IO).launch {
-            when (actionRepository.getAction(attackingPlayerId.value).thisTurnAction) {
-                ActionType.Normal -> {
-                    //　攻撃
-                    attackUseCase(
-                        target = actionRepository.getAction(attackingPlayerId.value).target,
-                        damage = 10,
-                    )
-                }
-
-                ActionType.Skill -> {
-                    // MP減らす
-                    decMpUseCase(
-                        playerId = attackingPlayerId.value,
-                        amount = 1,
-                    )
-
-                    val targetList = findActiveTargetUseCase(
-                        statusList = battleMonsterRepository.getMonsters(),
-                        target = actionRepository.getAction(attackingPlayerId.value).target,
-                        targetNum = 2,
-                    )
-
-                    //　複数の対象攻撃
-                    targetList.forEach {
-                        attackUseCase(
-                            target = it,
-                            damage = 10,
-                        )
-                    }
-                }
-
-                ActionType.None -> Unit
+            if (attackingPlayerId.value < playerNum) {
+                playerAction()
+            } else {
+                enemyAction()
             }
 
-            // 敵を倒していたらバトル終了
-            if (isAllMonsterNotActiveUseCase()) {
-                commandStateRepository.push(
-                    FinishCommand
+            delay(100)
+
+            if (commandStateRepository.nowCommandType != FinishCommand) {
+                changeToNextCharacter()
+            }
+        }
+    }
+
+    private suspend fun playerAction() {
+        when (actionRepository.getAction(attackingPlayerId.value).thisTurnAction) {
+            ActionType.Normal -> {
+                //　攻撃
+                attackFromPlayerUseCase(
+                    target = actionRepository.getAction(attackingPlayerId.value).target,
+                    damage = 10,
                 )
-                return@launch
             }
 
-            while (true) {
-                //　次のキャラに移動
-                mutableAttackingPlayerId.value++
+            ActionType.Skill -> {
+                skillAction(
+                    skillId = actionRepository.getAction(attackingPlayerId.value).skillId
+                        ?: throw RuntimeException(),
+                    statusList = battleMonsterRepository.getMonsters(),
+                    target = actionRepository.getAction(attackingPlayerId.value).target,
+                    attackUseCase = attackFromPlayerUseCase,
+                )
+            }
 
-                // 全員行動が終わっていたら初期状態へ
-                if (mutableAttackingPlayerId.value >= playerNum) {
-                    mutableAttackingPlayerId.value = 0
-                    commandStateRepository.init()
+            ActionType.None -> Unit
+        }
+
+        // 敵を倒していたらバトル終了
+        if (isAllMonsterNotActiveUseCase()) {
+            commandStateRepository.push(
+                FinishCommand
+            )
+            return
+        }
+    }
+
+    private suspend fun enemyAction() {
+        skillAction(
+            skillId = 2,
+            statusList = playerRepository.getPlayers(),
+            target = 0,
+            attackUseCase = attackFromEnemyUseCase,
+        )
+    }
+
+    private suspend fun skillAction(
+        skillId: Int,
+        statusList: List<Status>,
+        target: Int,
+        attackUseCase: AttackUseCase,
+    ) {
+        val skill = skillRepository.getSkill(id = skillId)
+
+        // MP減らす
+        decMpUseCase.invoke(
+            playerId = attackingPlayerId.value,
+            amount = skill.needMP,
+        )
+
+        val targetList = findActiveTargetUseCase.invoke(
+            statusList = statusList,
+            target = target,
+            targetNum = skill.targetNum
+        )
+
+        //　複数の対象攻撃
+        targetList.forEach {
+            attackUseCase.invoke(
+                target = it,
+                damage = skill.damage,
+            )
+        }
+    }
+
+
+    private fun changeToNextCharacter() {
+        val totalNum = playerNum + battleMonsterRepository.getMonsters().size
+        while (true) {
+            //　次のキャラに移動
+            mutableAttackingPlayerId.value++
+
+            // 全員行動が終わっていたら初期状態へ
+            if (mutableAttackingPlayerId.value
+                >= totalNum
+            ) {
+                mutableAttackingPlayerId.value = 0
+                commandStateRepository.init()
+                break
+            }
+
+            if (mutableAttackingPlayerId.value >= playerNum) {
+                //　monsterを確認
+                if (battleMonsterRepository.getMonster(
+                        mutableAttackingPlayerId.value - playerNum
+                    ).isActive
+                ) {
                     break
                 }
-
+            } else {
                 // 行動可能なら行動する
                 if (playerRepository.getPlayer(attackingPlayerId.value).isActive &&
                     actionRepository.getAction(attackingPlayerId.value).thisTurnAction != ActionType.None
                 ) {
                     break
                 }
-
-                //行動可能ではないので次のキャラへ移動
             }
+
+            //行動可能ではないので次のキャラへ移動
         }
     }
 }

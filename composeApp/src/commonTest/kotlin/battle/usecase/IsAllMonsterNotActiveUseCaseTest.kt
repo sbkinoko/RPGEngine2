@@ -1,13 +1,16 @@
 package battle.usecase
 
 import battle.BattleModule
+import battle.PlayerAttackQualifier
 import battle.repository.battlemonster.BattleMonsterRepository
+import battle.usecase.attack.AttackUseCase
 import common.CommonModule
 import common.status.MonsterStatusTest.Companion.getMonster
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
+import org.koin.core.qualifier.named
 import org.koin.test.KoinTest
 import org.koin.test.inject
 import kotlin.test.AfterTest
@@ -18,7 +21,9 @@ import kotlin.test.assertEquals
 class IsAllMonsterNotActiveUseCaseTest : KoinTest {
     private val repository: BattleMonsterRepository by inject()
 
-    private val attackUseCase: AttackUseCase by inject()
+    private val attackUseCase: AttackUseCase by inject(
+        qualifier = named(PlayerAttackQualifier)
+    )
     private val isAllMonsterNotActiveUseCase: IsAllMonsterNotActiveUseCase
             by inject()
 
@@ -40,7 +45,7 @@ class IsAllMonsterNotActiveUseCaseTest : KoinTest {
     @Test
     fun checkIsBattleFinish() {
         runBlocking {
-            repository.setMonster(
+            repository.setMonsters(
                 MutableList(3) {
                     getMonster()
                 }
