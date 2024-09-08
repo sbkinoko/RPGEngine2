@@ -8,12 +8,15 @@ import battle.repository.commandstate.CommandStateRepository
 import battle.repository.commandstate.CommandStateRepositoryImpl
 import battle.repository.skill.SkillRepository
 import battle.repository.skill.SkillRepositoryImpl
-import battle.service.AttackService
 import battle.service.FindTargetService
-import battle.serviceimpl.AttackMonsterService
+import battle.service.attack.DecHpService
+import battle.service.attack.DecMonsterHpService
+import battle.service.attack.DecPlayerHpService
 import battle.serviceimpl.FindTargetServiceImpl
-import battle.usecase.AttackUseCase
 import battle.usecase.IsAllMonsterNotActiveUseCase
+import battle.usecase.attack.AttackFromEnemyUseCaseImpl
+import battle.usecase.attack.AttackFromPlayerUseCaseImpl
+import battle.usecase.attack.AttackUseCase
 import battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUseCase
 import battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUseCaseImpl
 import battle.usecase.decmp.DecMpUseCase
@@ -22,15 +25,29 @@ import battle.usecase.findactivetarget.FindActiveTargetUseCase
 import battle.usecase.findactivetarget.FindActiveTargetUseCaseImpl
 import battle.usecase.gettargetnum.GetTargetNumUseCase
 import battle.usecase.gettargetnum.GetTargetNumUseCaseImpl
+import common.status.MonsterStatus
+import common.status.PlayerStatus
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
+
+const val QualifierAttackFromEnemy = "EnemyAttack"
+const val QualifierAttackFromPlayer = "PlayerAttack"
 
 val BattleModule = module {
     single<ActionRepository> {
         ActionRepositoryImpl()
     }
 
-    single<AttackService> {
-        AttackMonsterService()
+    single<DecHpService<MonsterStatus>>(
+        qualifier = named(QualifierAttackFromPlayer)
+    ) {
+        DecMonsterHpService()
+    }
+
+    single<DecHpService<PlayerStatus>>(
+        qualifier = named(QualifierAttackFromEnemy)
+    ) {
+        DecPlayerHpService()
     }
 
     single<FindTargetService> {
@@ -49,11 +66,27 @@ val BattleModule = module {
         SkillRepositoryImpl()
     }
 
-    single<AttackUseCase> {
-        AttackUseCase(
+    single<AttackUseCase>(
+        qualifier = named(QualifierAttackFromPlayer),
+    ) {
+        AttackFromPlayerUseCaseImpl(
             battleMonsterRepository = get(),
             findTargetService = get(),
-            attackService = get(),
+            attackMonsterService = get(
+                qualifier = named(QualifierAttackFromPlayer)
+            ),
+        )
+    }
+
+    single<AttackUseCase>(
+        qualifier = named(QualifierAttackFromEnemy),
+    ) {
+        AttackFromEnemyUseCaseImpl(
+            playerRepository = get(),
+            findTargetService = get(),
+            attackPlayerService = get(
+                qualifier = named(QualifierAttackFromEnemy)
+            ),
         )
     }
 
@@ -72,6 +105,7 @@ val BattleModule = module {
     single<DecMpUseCase> {
         DecMpUseCaseImpl(
             playerRepository = get(),
+            battleMonsterRepository = get(),
         )
     }
 

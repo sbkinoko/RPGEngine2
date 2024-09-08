@@ -102,4 +102,8 @@ class PlayerRepositoryImpl : PlayerRepository {
     override fun getPlayer(id: Int): PlayerStatus {
         return players[id]
     }
+
+    override fun getPlayers(): List<PlayerStatus> {
+        return players
+    }
 }

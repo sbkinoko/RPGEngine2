@@ -56,6 +56,10 @@ class StartBattleUseCaseImplTest : KoinTest {
                     checkMonster++
                 }
 
+                override suspend fun setMonster(id: Int, monster: MonsterStatus) {
+                    throw NotImplementedError()
+                }
+
                 override suspend fun reload() {
                     throw NotImplementedError()
                 }

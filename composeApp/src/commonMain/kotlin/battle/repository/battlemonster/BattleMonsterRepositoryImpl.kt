@@ -20,6 +20,21 @@ class BattleMonsterRepositoryImpl : BattleMonsterRepository {
         monsterListFlow.emit(monsterList)
     }
 
+    override suspend fun setMonster(
+        id: Int,
+        monster: MonsterStatus
+    ) {
+        monsterList = monsterList.mapIndexed { index, oldMonster ->
+            if (index != id) {
+                oldMonster
+            } else {
+                monster
+            }
+        }
+        monsterListFlow.emit(monsterList)
+    }
+
+
     override suspend fun reload() {
         monsterListFlow.emit(monsterList)
     }
