@@ -1,7 +1,7 @@
 package battle.usecase
 
 import battle.BattleModule
-import battle.PlayerAttackQualifier
+import battle.QualifierAttackFromPlayer
 import battle.repository.battlemonster.BattleMonsterRepository
 import battle.usecase.attack.AttackUseCase
 import common.CommonModule
@@ -22,7 +22,7 @@ class IsAllMonsterNotActiveUseCaseTest : KoinTest {
     private val repository: BattleMonsterRepository by inject()
 
     private val attackUseCase: AttackUseCase by inject(
-        qualifier = named(PlayerAttackQualifier)
+        qualifier = named(QualifierAttackFromPlayer)
     )
     private val isAllMonsterNotActiveUseCase: IsAllMonsterNotActiveUseCase
             by inject()

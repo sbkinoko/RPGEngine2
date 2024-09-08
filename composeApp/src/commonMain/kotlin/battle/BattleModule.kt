@@ -25,22 +25,28 @@ import battle.usecase.findactivetarget.FindActiveTargetUseCase
 import battle.usecase.findactivetarget.FindActiveTargetUseCaseImpl
 import battle.usecase.gettargetnum.GetTargetNumUseCase
 import battle.usecase.gettargetnum.GetTargetNumUseCaseImpl
+import common.status.MonsterStatus
+import common.status.PlayerStatus
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-const val EnemyAttackQualifier = "EnemyAttack"
-const val PlayerAttackQualifier = "PlayerAttack"
+const val QualifierAttackFromEnemy = "EnemyAttack"
+const val QualifierAttackFromPlayer = "PlayerAttack"
 
 val BattleModule = module {
     single<ActionRepository> {
         ActionRepositoryImpl()
     }
 
-    single<DecHpService>(qualifier = named(PlayerAttackQualifier)) {
+    single<DecHpService<MonsterStatus>>(
+        qualifier = named(QualifierAttackFromPlayer)
+    ) {
         DecMonsterHpService()
     }
 
-    single<DecHpService>(qualifier = named(EnemyAttackQualifier)) {
+    single<DecHpService<PlayerStatus>>(
+        qualifier = named(QualifierAttackFromEnemy)
+    ) {
         DecPlayerHpService()
     }
 
@@ -61,25 +67,25 @@ val BattleModule = module {
     }
 
     single<AttackUseCase>(
-        qualifier = named(PlayerAttackQualifier),
+        qualifier = named(QualifierAttackFromPlayer),
     ) {
         AttackFromPlayerUseCaseImpl(
             battleMonsterRepository = get(),
             findTargetService = get(),
             attackMonsterService = get(
-                qualifier = named(PlayerAttackQualifier)
+                qualifier = named(QualifierAttackFromPlayer)
             ),
         )
     }
 
     single<AttackUseCase>(
-        qualifier = named(EnemyAttackQualifier),
+        qualifier = named(QualifierAttackFromEnemy),
     ) {
         AttackFromEnemyUseCaseImpl(
             playerRepository = get(),
             findTargetService = get(),
             attackPlayerService = get(
-                qualifier = named(EnemyAttackQualifier)
+                qualifier = named(QualifierAttackFromEnemy)
             ),
         )
     }

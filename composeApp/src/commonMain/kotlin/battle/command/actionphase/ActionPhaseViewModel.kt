@@ -1,8 +1,8 @@
 package battle.command.actionphase
 
 import battle.BattleChildViewModel
-import battle.EnemyAttackQualifier
-import battle.PlayerAttackQualifier
+import battle.QualifierAttackFromEnemy
+import battle.QualifierAttackFromPlayer
 import battle.domain.ActionType
 import battle.domain.AttackPhaseCommand
 import battle.domain.CommandType
@@ -37,10 +37,10 @@ class ActionPhaseViewModel : BattleChildViewModel() {
 
     private val decMpUseCase: DecMpUseCase by inject()
     private val attackFromPlayerUseCase: AttackUseCase by inject(
-        qualifier = named(PlayerAttackQualifier)
+        qualifier = named(QualifierAttackFromPlayer)
     )
     private val attackFromEnemyUseCase: AttackUseCase by inject(
-        qualifier = named(EnemyAttackQualifier)
+        qualifier = named(QualifierAttackFromEnemy)
     )
     private val findActiveTargetUseCase: FindActiveTargetUseCase by inject()
     private val isAllMonsterNotActiveUseCase: IsAllMonsterNotActiveUseCase by inject()

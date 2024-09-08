@@ -7,7 +7,7 @@ import common.status.PlayerStatus
 
 class AttackFromEnemyUseCaseImpl(
     private val playerRepository: PlayerRepository,
-    private val attackPlayerService: DecHpService,
+    private val attackPlayerService: DecHpService<PlayerStatus>,
     private val findTargetService: FindTargetService,
 ) : AttackUseCase {
 
@@ -28,7 +28,7 @@ class AttackFromEnemyUseCaseImpl(
             target = actualTarget,
             damage = damage,
             status = players[target]
-        ) as PlayerStatus
+        )
 
         playerRepository.setPlayer(
             id = actualTarget,
