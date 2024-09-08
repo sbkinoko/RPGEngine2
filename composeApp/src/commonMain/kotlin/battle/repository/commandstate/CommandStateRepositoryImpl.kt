@@ -52,8 +52,13 @@ class CommandStateRepositoryImpl : CommandStateRepository {
 
         commandTypeQueue = commandTypeQueue.dropLast(1)
 
+
+        while (
         // 条件を満たすcommandTypeまでさかのぼる
-        while (condition(nowCommandType).not()) {
+            condition(nowCommandType).not() &&
+            // もしくは大きさ位置になるまで
+            commandTypeQueue.size != 1
+        ) {
             commandTypeQueue = commandTypeQueue.dropLast(1)
         }
 
