@@ -9,15 +9,22 @@ data object FinishCommand : CommandType()
 data object EscapeCommand : CommandType()
 
 class PlayerActionCommand(
-    val playerId: Int,
-) : CommandType()
+    override val playerId: Int,
+) : PlayerIdCommand, CommandType()
 
 class SelectEnemyCommand(
-    val playerId: Int,
-) : CommandType()
+    override val playerId: Int,
+) : PlayerIdCommand, CommandType()
 
 class SkillCommand(
-    val playerId: Int,
-) : CommandType()
+    override val playerId: Int,
+) : PlayerIdCommand, CommandType()
 
 data object AttackPhaseCommand : CommandType()
+
+/**
+ * 選択の時に誰がプレイヤーかを気にする必要があるコマンド
+ */
+interface PlayerIdCommand {
+    val playerId: Int
+}

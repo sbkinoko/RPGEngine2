@@ -14,6 +14,8 @@ import battle.serviceimpl.AttackMonsterService
 import battle.serviceimpl.FindTargetServiceImpl
 import battle.usecase.AttackUseCase
 import battle.usecase.IsAllMonsterNotActiveUseCase
+import battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUseCase
+import battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUseCaseImpl
 import battle.usecase.decmp.DecMpUseCase
 import battle.usecase.decmp.DecMpUseCaseImpl
 import battle.usecase.findactivetarget.FindActiveTargetUseCase
@@ -77,6 +79,12 @@ val BattleModule = module {
         GetTargetNumUseCaseImpl(
             skillRepository = get(),
             actionRepository = get(),
+        )
+    }
+
+    single<ChangeSelectingActionPlayerUseCase> {
+        ChangeSelectingActionPlayerUseCaseImpl(
+            commandStateRepository = get(),
         )
     }
 }

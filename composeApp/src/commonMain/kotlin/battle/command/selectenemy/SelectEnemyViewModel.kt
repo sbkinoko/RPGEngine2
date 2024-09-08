@@ -1,18 +1,16 @@
 package battle.command.selectenemy
 
 import battle.BattleChildViewModel
-import battle.domain.AttackPhaseCommand
 import battle.domain.CommandType
-import battle.domain.PlayerActionCommand
 import battle.domain.SelectEnemyCommand
 import battle.domain.SelectedEnemyState
 import battle.repository.action.ActionRepository
 import battle.repository.battlemonster.BattleMonsterRepository
 import battle.service.FindTargetService
+import battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUseCase
 import battle.usecase.findactivetarget.FindActiveTargetUseCase
 import battle.usecase.gettargetnum.GetTargetNumUseCase
 import common.status.MonsterStatus
-import common.values.playerNum
 import controller.domain.ArrowCommand
 import controller.domain.StickPosition
 import kotlinx.coroutines.CoroutineScope
@@ -30,6 +28,7 @@ class SelectEnemyViewModel : BattleChildViewModel() {
 
     private val findActiveTargetUseCase: FindActiveTargetUseCase by inject()
     private val getTargetNumUseCase: GetTargetNumUseCase by inject()
+    private val changeSelectingActionPlayerUseCase: ChangeSelectingActionPlayerUseCase by inject()
 
     private val findTargetService: FindTargetService by inject()
 
@@ -71,17 +70,7 @@ class SelectEnemyViewModel : BattleChildViewModel() {
             target = mutableSelectedEnemyState.value.selectedEnemy.first(),
         )
 
-        // 次のコマンドに移動
-        if (playerId < playerNum - 1) {
-            commandStateRepository.push(
-                PlayerActionCommand(
-                    playerId = playerId + 1,
-                )
-            )
-        } else {
-            //　一周したので攻撃フェーズに移動
-            commandStateRepository.push(AttackPhaseCommand)
-        }
+        changeSelectingActionPlayerUseCase.invoke()
     }
 
     // 使わないので適当
