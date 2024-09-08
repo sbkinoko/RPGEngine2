@@ -44,4 +44,23 @@ class CommandStateRepositoryImpl : CommandStateRepository {
             )
         }
     }
+
+    override fun popTo(condition: (CommandType) -> Boolean) {
+        // 大きさが1ならpopしない
+        if (commandTypeQueue.size == 1)
+            return
+
+        commandTypeQueue = commandTypeQueue.dropLast(1)
+
+        // 条件を満たすcommandTypeまでさかのぼる
+        while (condition(nowCommandType).not()) {
+            commandTypeQueue = commandTypeQueue.dropLast(1)
+        }
+
+        CoroutineScope(Dispatchers.Default).launch {
+            commandTypeFlow.emit(
+                nowCommandType,
+            )
+        }
+    }
 }

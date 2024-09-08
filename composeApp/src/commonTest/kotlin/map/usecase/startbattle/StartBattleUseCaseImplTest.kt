@@ -80,6 +80,10 @@ class StartBattleUseCaseImplTest : KoinTest {
                     throw NotImplementedError()
                 }
 
+                override fun popTo(condition: (CommandType) -> Boolean) {
+                    throw NotImplementedError()
+                }
+
             },
             actionRepository = object : ActionRepository {
                 override fun setAction(

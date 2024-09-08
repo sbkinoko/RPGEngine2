@@ -14,6 +14,8 @@ interface CommandStateRepository {
 
     fun pop()
 
+    fun popTo(condition: (CommandType) -> Boolean)
+
     companion object {
         val INITIAL_COMMAND_STATE: CommandType = MainCommand
     }
