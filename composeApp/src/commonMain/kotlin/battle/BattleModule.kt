@@ -83,6 +83,8 @@ val BattleModule = module {
     }
 
     single<ChangeSelectingActionPlayerUseCase> {
-        ChangeSelectingActionPlayerUseCaseImpl()
+        ChangeSelectingActionPlayerUseCaseImpl(
+            commandStateRepository = get(),
+        )
     }
 }

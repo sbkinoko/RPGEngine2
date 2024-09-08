@@ -3,7 +3,7 @@ package battle.usecase.changeselectingactionplayer
 import battle.BattleModule
 import battle.domain.AttackPhaseCommand
 import battle.domain.PlayerActionCommand
-import battle.domain.PlayerIDCommand
+import battle.domain.PlayerIdCommand
 import battle.repository.commandstate.CommandStateRepository
 import common.values.playerNum
 import org.koin.core.context.startKoin
@@ -57,7 +57,7 @@ class ChangeSelectingActionPlayerUseCaseImplTest : KoinTest {
 
         assertEquals(
             expected = next,
-            actual = (commandStateRepository.nowCommandType as PlayerIDCommand).playerId
+            actual = (commandStateRepository.nowCommandType as PlayerIdCommand).playerId
         )
     }
 
