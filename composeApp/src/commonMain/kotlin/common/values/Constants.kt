@@ -1,3 +1,3 @@
 package common.values
 
-var playerNum = 2
+var playerNum = 3

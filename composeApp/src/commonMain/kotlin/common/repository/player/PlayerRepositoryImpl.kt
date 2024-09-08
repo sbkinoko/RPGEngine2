@@ -6,6 +6,7 @@ import androidx.compose.runtime.collectAsState
 import common.status.PlayerStatus
 import common.status.param.HP
 import common.status.param.MP
+import common.values.playerNum
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -25,52 +26,59 @@ class PlayerRepositoryImpl : PlayerRepository {
     private var players: List<PlayerStatus>
 
     init {
-        players = listOf(
-            PlayerStatus(
-                name = "test1",
-                hp = HP(
-                    maxValue = 100,
-                    value = 50,
-                ),
-                mp = MP(
-                    maxValue = 10,
-                    value = 5,
+        players = List(playerNum) {
+            when (it) {
+                0 -> PlayerStatus(
+                    name = "test1",
+                    hp = HP(
+                        maxValue = 100,
+                        value = 50,
+                    ),
+                    mp = MP(
+                        maxValue = 10,
+                        value = 5,
+                    )
                 )
-            ),
-            PlayerStatus(
-                name = "test2",
-                hp = HP(
-                    maxValue = 100,
-                    value = 0,
-                ),
-                mp = MP(
-                    maxValue = 111,
-                    value = 50,
+
+                1 -> PlayerStatus(
+                    name = "test2",
+                    hp = HP(
+                        maxValue = 100,
+                        value = 0,
+                    ),
+                    mp = MP(
+                        maxValue = 111,
+                        value = 50,
+                    )
                 )
-            ),
-//            PlayerStatus(
-//                name = "HPたくさん",
-//                hp = HP(
-//                    maxValue = 200,
-//                    value = 50,
-//                ),
-//                mp = MP(
-//                    maxValue = 10,
-//                    value = 50,
-//                )
-//            ),
-//            PlayerStatus(
-//                name = "MPたくさん",
-//                hp = HP(
-//                    maxValue = 10,
-//                    value = 50,
-//                ),
-//                mp = MP(
-//                    maxValue = 100,
-//                    value = 50,
-//                )
-//            )
-        )
+
+                2 -> PlayerStatus(
+                    name = "test3",
+                    hp = HP(
+                        maxValue = 100,
+                        value = 50,
+                    ),
+                    mp = MP(
+                        maxValue = 10,
+                        value = 10
+                    )
+                )
+
+                3 -> PlayerStatus(
+                    name = "MPたくさん",
+                    hp = HP(
+                        maxValue = 10,
+                        value = 50,
+                    ),
+                    mp = MP(
+                        maxValue = 100,
+                        value = 50,
+                    )
+                )
+
+                else -> throw IllegalStateException()
+            }
+        }
 
         CoroutineScope(Dispatchers.Default).launch {
             mutablePlayersFlow.emit(players)
