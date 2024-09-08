@@ -103,6 +103,8 @@ class ActionPhaseViewModel : BattleChildViewModel() {
                         )
                     }
                 }
+
+                ActionType.None -> Unit
             }
 
             // 敵を倒していたらバトル終了
@@ -113,12 +115,25 @@ class ActionPhaseViewModel : BattleChildViewModel() {
                 return@launch
             }
 
-            //　次のプレイヤーに移動
-            if (attackingPlayerId.value < playerNum - 1) {
+            while (true) {
+                //　次のキャラに移動
                 mutableAttackingPlayerId.value++
-            } else {
-                mutableAttackingPlayerId.value = 0
-                commandStateRepository.init()
+
+                // 全員行動が終わっていたら初期状態へ
+                if (mutableAttackingPlayerId.value >= playerNum) {
+                    mutableAttackingPlayerId.value = 0
+                    commandStateRepository.init()
+                    break
+                }
+
+                // 行動可能なら行動する
+                if (playerRepository.getPlayer(attackingPlayerId.value).isActive &&
+                    actionRepository.getAction(attackingPlayerId.value).thisTurnAction != ActionType.None
+                ) {
+                    break
+                }
+
+                //行動可能ではないので次のキャラへ移動
             }
         }
     }

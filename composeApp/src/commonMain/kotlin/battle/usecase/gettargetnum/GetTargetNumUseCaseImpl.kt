@@ -15,6 +15,8 @@ class GetTargetNumUseCaseImpl(
                 ActionType.Skill -> {
                     skillRepository.getSkill(it.skillId!!).targetNum
                 }
+
+                ActionType.None -> throw RuntimeException()
             }
         }
     }

@@ -178,4 +178,28 @@ class ActionRepositoryImplTest {
             ).target,
         )
     }
+
+    @Test
+    fun getLastSelectAction() {
+        val playerId = 1
+        actionRepository.setAction(
+            playerId = playerId,
+            actionType = ActionType.Normal,
+        )
+
+        actionRepository.setAction(
+            playerId = playerId,
+            actionType = ActionType.None,
+
+            )
+
+        val lastAction = actionRepository.getLastSelectAction(
+            playerId = playerId,
+        )
+
+        assertEquals(
+            expected = ActionType.Normal,
+            actual = lastAction,
+        )
+    }
 }

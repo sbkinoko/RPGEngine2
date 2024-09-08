@@ -28,15 +28,20 @@ class PlayerActionViewModel : BattleChildViewModel() {
     fun init() {
         // プレイヤーが行動不能なら次のキャラに移動する
         if (playerRepository.getPlayer(playerId).isActive.not()) {
+            actionRepository.setAction(
+                playerId = playerId,
+                actionType = ActionType.None,
+            )
             changeSelectingActionPlayerUseCase.invoke()
             return
         }
 
-        selectManager.selected = when (
-            actionRepository.getAction(playerId = playerId).thisTurnAction
-        ) {
+        val action = actionRepository.getLastSelectAction(playerId = playerId)
+
+        selectManager.selected = when (action) {
             ActionType.Normal -> normalAttack
             ActionType.Skill -> skill
+            ActionType.None -> throw RuntimeException()
         }
     }
 
