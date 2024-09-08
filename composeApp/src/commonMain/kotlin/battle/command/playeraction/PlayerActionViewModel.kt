@@ -4,14 +4,20 @@ import battle.BattleChildViewModel
 import battle.domain.ActionType
 import battle.domain.CommandType
 import battle.domain.PlayerActionCommand
+import battle.domain.PlayerIdCommand
 import battle.domain.SelectEnemyCommand
 import battle.domain.SkillCommand
 import battle.repository.action.ActionRepository
+import battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUseCase
+import common.repository.player.PlayerRepository
 import menu.domain.SelectManager
 import org.koin.core.component.inject
 
 class PlayerActionViewModel : BattleChildViewModel() {
     private val actionRepository: ActionRepository by inject()
+    private val playerRepository: PlayerRepository by inject()
+
+    private val changeSelectingActionPlayerUseCase: ChangeSelectingActionPlayerUseCase by inject()
 
     val normalAttack = 0
     val skill = 1
@@ -20,6 +26,12 @@ class PlayerActionViewModel : BattleChildViewModel() {
         get() = (commandStateRepository.nowCommandType as PlayerActionCommand).playerId
 
     fun init() {
+        // プレイヤーが行動不能なら次のキャラに移動する
+        if (playerRepository.getPlayer(playerId).isActive.not()) {
+            changeSelectingActionPlayerUseCase.invoke()
+            return
+        }
+
         selectManager.selected = when (
             actionRepository.getAction(playerId = playerId).thisTurnAction
         ) {
@@ -53,6 +65,20 @@ class PlayerActionViewModel : BattleChildViewModel() {
             skill -> commandStateRepository.push(
                 SkillCommand(playerId),
             )
+        }
+    }
+
+    override fun pressB() {
+        // アクティブなプレイヤーまで戻る
+        commandStateRepository.popTo {
+            // playerActionじゃなければダメ
+            val command: PlayerIdCommand = it as? PlayerIdCommand
+                ?: return@popTo false
+
+            val playerId = command.playerId
+            val player = playerRepository.getPlayer(playerId)
+
+            player.isActive
         }
     }
 

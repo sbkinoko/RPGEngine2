@@ -214,4 +214,134 @@ class CommandStateRepositoryImplTest {
             collectJob.cancel()
         }
     }
+
+    @Test
+    fun popTo() {
+        runBlocking {
+            var count = 0
+
+            val collectJob = launch {
+                repository.commandTypeFlow.collect {
+                    count++
+                }
+            }
+
+            //mainのままなのでcountに加算はなし
+            repository.init()
+
+            //1人目のアクション
+            val first = PlayerActionCommand(
+                playerId = 1,
+            )
+            repository.push(
+                first,
+            )
+
+            delay(100)
+
+            repository.push(
+                PlayerActionCommand(
+                    playerId = 2,
+                )
+            )
+
+            delay(100)
+            repository.push(
+                PlayerActionCommand(
+                    playerId = 3
+                )
+            )
+
+            delay(100)
+
+            assertEquals(
+                expected = 3,
+                actual = count,
+            )
+
+            repository.popTo {
+                it is PlayerActionCommand &&
+                        it.playerId == 1
+            }
+
+            delay(100)
+
+            assertEquals(
+                expected = 4,
+                actual = count,
+            )
+
+            assertEquals(
+                actual = first,
+                expected = repository.nowCommandType,
+            )
+
+            collectJob.cancel()
+        }
+    }
+
+    @Test
+    fun popToMain() {
+        runBlocking {
+            var count = 0
+
+            val collectJob = launch {
+                repository.commandTypeFlow.collect {
+                    count++
+                }
+            }
+
+            //mainのままなのでcountに加算はなし
+            repository.init()
+
+            //1人目のアクション
+            val first = PlayerActionCommand(
+                playerId = 1,
+            )
+            repository.push(
+                first,
+            )
+
+            delay(100)
+
+            repository.push(
+                PlayerActionCommand(
+                    playerId = 2,
+                )
+            )
+
+            delay(100)
+            repository.push(
+                PlayerActionCommand(
+                    playerId = 3
+                )
+            )
+
+            delay(100)
+
+            assertEquals(
+                expected = 3,
+                actual = count,
+            )
+
+            repository.popTo {
+                it is PlayerActionCommand &&
+                        it.playerId == 0
+            }
+
+            delay(100)
+
+            assertEquals(
+                expected = 4,
+                actual = count,
+            )
+
+            assertEquals(
+                actual = MainCommand,
+                expected = repository.nowCommandType,
+            )
+
+            collectJob.cancel()
+        }
+    }
 }
