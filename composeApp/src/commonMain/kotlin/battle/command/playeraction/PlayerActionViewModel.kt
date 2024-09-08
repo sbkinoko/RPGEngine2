@@ -4,6 +4,7 @@ import battle.BattleChildViewModel
 import battle.domain.ActionType
 import battle.domain.CommandType
 import battle.domain.PlayerActionCommand
+import battle.domain.PlayerIdCommand
 import battle.domain.SelectEnemyCommand
 import battle.domain.SkillCommand
 import battle.repository.action.ActionRepository
@@ -64,6 +65,15 @@ class PlayerActionViewModel : BattleChildViewModel() {
             skill -> commandStateRepository.push(
                 SkillCommand(playerId),
             )
+        }
+    }
+
+    override fun pressB() {
+        // アクティブなプレイヤーまで戻る
+        commandStateRepository.popTo {
+            val playerId = (it as PlayerIdCommand).playerId
+            val player = playerRepository.getPlayer(playerId)
+            player.isActive
         }
     }
 
