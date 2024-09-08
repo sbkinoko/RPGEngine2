@@ -19,6 +19,10 @@ interface ActionRepository {
         playerId: Int
     ): ActionData
 
+    fun getLastSelectAction(
+        playerId: Int
+    ): ActionType
+
     /**
      * 最後に選んだ技の状態は保存しておきたいが、
      * 対象は戦闘毎にリセットする必要がある
