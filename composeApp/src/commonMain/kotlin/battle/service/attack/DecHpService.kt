@@ -1,8 +1,6 @@
 package battle.service.attack
 
-import common.status.Status
-
-interface DecHpService {
+interface DecHpService<T> {
 
     /**
      *  攻撃をして、攻撃後のステータスを返す
@@ -10,6 +8,6 @@ interface DecHpService {
     fun attack(
         target: Int,
         damage: Int,
-        status: Status,
-    ): Status
+        status: T,
+    ): T
 }
