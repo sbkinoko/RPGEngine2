@@ -8,11 +8,12 @@ import androidx.compose.ui.Modifier
 import common.extension.equalAllocationModifier
 import common.extension.selectable
 import common.layout.CenterText
+import org.koin.compose.koinInject
 
 @Composable
 fun EscapeCommand(
     modifier: Modifier,
-    escapeViewModel: EscapeViewModel,
+    escapeViewModel: EscapeViewModel = koinInject(),
 ) {
     val selected = escapeViewModel.getSelectedAsState().value
 

@@ -5,7 +5,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import battle.command.actionphase.ActionPhaseViewModel
 import battle.command.escape.EscapeViewModel
-import battle.command.main.MainViewModel
+import battle.command.main.BattleMainViewModel
 import battle.command.playeraction.PlayerActionViewModel
 import battle.command.selectenemy.SelectEnemyViewModel
 import battle.command.skill.SkillCommandViewModel
@@ -52,12 +52,12 @@ class BattleViewModel :
 
     private val screenTypeRepository: ScreenTypeRepository by inject()
 
-    val mainViewModel = MainViewModel()
-    val playerActionViewModel = PlayerActionViewModel()
-    val selectEnemyViewModel = SelectEnemyViewModel()
-    val actionPhaseViewModel = ActionPhaseViewModel()
-    val escapeViewModel = EscapeViewModel()
-    val skillCommandViewModel = SkillCommandViewModel()
+    private val battleMainViewModel: BattleMainViewModel by inject()
+    private val playerActionViewModel: PlayerActionViewModel by inject()
+    private val selectEnemyViewModel: SelectEnemyViewModel by inject()
+    private val actionPhaseViewModel: ActionPhaseViewModel by inject()
+    private val escapeViewModel: EscapeViewModel by inject()
+    private val skillCommandViewModel: SkillCommandViewModel by inject()
 
     @Composable
     fun CommandStateFlow(): State<CommandType> {
@@ -108,7 +108,7 @@ class BattleViewModel :
     //todo finishViewModelを作ったらnullableをやめる
     private fun CommandType.toViewModel(): ControllerCallback? {
         return when (this) {
-            is MainCommand -> mainViewModel
+            is MainCommand -> battleMainViewModel
             is PlayerActionCommand -> playerActionViewModel
             is SelectEnemyCommand -> selectEnemyViewModel
             is AttackPhaseCommand -> actionPhaseViewModel

@@ -22,12 +22,13 @@ import battle.command.selectenemy.SelectEnemyViewModel
 import common.status.MonsterStatus
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import org.koin.compose.koinInject
 
 @Composable
 fun MonsterArea(
     monsters: List<MonsterStatus>,
-    selectEnemyViewModel: SelectEnemyViewModel,
     modifier: Modifier = Modifier,
+    selectEnemyViewModel: SelectEnemyViewModel = koinInject(),
 ) {
     Row(
         modifier = modifier,

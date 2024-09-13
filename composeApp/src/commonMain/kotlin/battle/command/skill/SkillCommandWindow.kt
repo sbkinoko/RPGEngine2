@@ -13,11 +13,12 @@ import common.extension.equalAllocationModifier
 import common.extension.menuItem
 import common.layout.CenterText
 import common.values.Colors
+import org.koin.compose.koinInject
 
 @Composable
 fun SkillCommandWindow(
-    skillCommandViewModel: SkillCommandViewModel,
     modifier: Modifier = Modifier,
+    skillCommandViewModel: SkillCommandViewModel = koinInject(),
 ) {
     LaunchedEffect(
         skillCommandViewModel.playerId,

@@ -7,11 +7,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import org.koin.compose.koinInject
 
 @Composable
 fun ActionPhase(
-    actionPhaseViewModel: ActionPhaseViewModel,
     modifier: Modifier = Modifier,
+    actionPhaseViewModel: ActionPhaseViewModel = koinInject(),
 ) {
     val playerId = actionPhaseViewModel.attackingPlayerId.collectAsState().value
 

@@ -54,7 +54,6 @@ fun BattleScreen(
                         shape = RectangleShape,
                     ),
                 monsters = monsters,
-                selectEnemyViewModel = selectEnemyViewModel,
             )
         }
 
