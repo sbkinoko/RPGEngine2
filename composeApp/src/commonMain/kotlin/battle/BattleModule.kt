@@ -1,5 +1,11 @@
 package battle
 
+import battle.command.actionphase.ActionPhaseViewModel
+import battle.command.escape.EscapeViewModel
+import battle.command.main.BattleMainViewModel
+import battle.command.playeraction.PlayerActionViewModel
+import battle.command.selectenemy.SelectEnemyViewModel
+import battle.command.skill.SkillCommandViewModel
 import battle.repository.action.ActionRepository
 import battle.repository.action.ActionRepositoryImpl
 import battle.repository.battlemonster.BattleMonsterRepository
@@ -34,6 +40,34 @@ const val QualifierAttackFromEnemy = "EnemyAttack"
 const val QualifierAttackFromPlayer = "PlayerAttack"
 
 val BattleModule = module {
+    single {
+        BattleViewModel()
+    }
+
+    single {
+        BattleMainViewModel()
+    }
+
+    single {
+        PlayerActionViewModel()
+    }
+
+    single {
+        SelectEnemyViewModel()
+    }
+
+    single {
+        ActionPhaseViewModel()
+    }
+
+    single {
+        EscapeViewModel()
+    }
+
+    single {
+        SkillCommandViewModel()
+    }
+
     single<ActionRepository> {
         ActionRepositoryImpl()
     }

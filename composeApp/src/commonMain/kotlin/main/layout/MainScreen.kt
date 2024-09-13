@@ -21,7 +21,7 @@ import battle.BattleViewModel
 import common.extension.pxToDp
 import common.values.Colors
 import controller.layout.Controller
-import main.domain.ScreenType
+import main.domain.toViewModel
 import main.repository.screentype.ScreenTypeRepository
 import main.viewmodel.MainViewModel
 import map.viewmodel.MapViewModel
@@ -79,9 +79,6 @@ fun MainScreen(
                     .size(size = screenSize.pxToDp()),
                 screenType = screenType.value,
                 screenSize = screenSize,
-                mapViewModel = mapViewModel,
-                battleViewModel = battleViewModel,
-                menuViewModel = menuViewModel,
             )
 
             Controller(
@@ -95,11 +92,7 @@ fun MainScreen(
                     .background(
                         Colors.ControllerArea,
                     ),
-                controllerCallback = when (screenType.value) {
-                    ScreenType.FIELD -> mapViewModel
-                    ScreenType.BATTLE -> battleViewModel
-                    ScreenType.MENU -> menuViewModel
-                },
+                controllerCallback = screenType.value.toViewModel(),
             )
         }
     }

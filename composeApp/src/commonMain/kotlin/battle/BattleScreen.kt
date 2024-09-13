@@ -15,11 +15,12 @@ import battle.monster.MonsterArea
 import battle.status.StatusArea
 import common.values.Colors
 import kotlinx.coroutines.delay
+import org.koin.compose.koinInject
 
 @Composable
 fun BattleScreen(
-    battleViewModel: BattleViewModel,
     modifier: Modifier = Modifier,
+    battleViewModel: BattleViewModel = koinInject(),
 ) {
     val monsters by battleViewModel.monsters.collectAsState()
     if (monsters.isEmpty()) {
@@ -53,7 +54,6 @@ fun BattleScreen(
                         shape = RectangleShape,
                     ),
                 monsters = monsters,
-                selectEnemyViewModel = selectEnemyViewModel,
             )
         }
 

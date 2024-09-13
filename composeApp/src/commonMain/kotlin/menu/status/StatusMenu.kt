@@ -16,11 +16,13 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import common.layout.CenterText
 import common.values.Colors
+import common.values.playerNum
+import org.koin.compose.koinInject
 
 @Composable
 fun StatusMenu(
-    statusViewModel: StatusViewModel,
     modifier: Modifier = Modifier,
+    statusViewModel: StatusViewModel = koinInject(),
 ) {
     val selectedId = statusViewModel.getSelectedAsState().value
     Row(
@@ -36,7 +38,7 @@ fun StatusMenu(
                 .weight(1f),
             verticalArrangement = Arrangement.spacedBy(5.dp),
         ) {
-            for (i in 0 until 4) {
+            for (i in 0 until playerNum) {
                 CenterText(
                     modifier = Modifier
                         .weight(1f)

@@ -13,13 +13,14 @@ import kotlinx.coroutines.delay
 import map.repository.player.PlayerRepository
 import map.viewmodel.MapViewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.koinInject
 
 @Composable
 @Preview
 fun MapScreen(
-    mapViewModel: MapViewModel,
     screenRatio: Float,
     modifier: Modifier = Modifier,
+    mapViewModel: MapViewModel = koinInject(),
 ) {
     LaunchedEffect(Unit) {
         while (true) {

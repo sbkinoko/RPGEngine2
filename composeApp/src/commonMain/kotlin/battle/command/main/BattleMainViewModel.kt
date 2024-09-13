@@ -7,7 +7,7 @@ import battle.domain.MainCommand
 import battle.domain.PlayerActionCommand
 import menu.domain.SelectManager
 
-class MainViewModel : BattleChildViewModel() {
+class BattleMainViewModel : BattleChildViewModel() {
     override val canBack: Boolean
         get() = true
 
