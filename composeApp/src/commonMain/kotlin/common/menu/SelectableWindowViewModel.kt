@@ -7,7 +7,7 @@ import controller.domain.ControllerCallback
 import controller.domain.StickPosition
 import menu.domain.SelectManager
 
-abstract class CommonMenuViewModel : ControllerCallback {
+abstract class SelectableWindowViewModel : ControllerCallback {
     protected abstract var selectManager: SelectManager
     protected abstract var timer: Timer
 
