@@ -9,13 +9,14 @@ import androidx.compose.ui.Modifier
 import common.extension.equalAllocationModifier
 import common.extension.selectable
 import common.layout.CenterText
+import org.koin.compose.koinInject
 
 @Composable
-fun MainCommand(
-    mainViewModel: MainViewModel,
+fun BattleMainCommand(
     modifier: Modifier = Modifier,
+    battleMainViewModel: BattleMainViewModel = koinInject(),
 ) {
-    val selected = mainViewModel.getSelectedAsState().value
+    val selected = battleMainViewModel.getSelectedAsState().value
     Column(modifier = modifier) {
         Row(
             modifier = equalAllocationModifier,
@@ -26,7 +27,7 @@ fun MainCommand(
                         id = 0,
                         selected = selected,
                     ).clickable {
-                        mainViewModel.onClickItem(
+                        battleMainViewModel.onClickItem(
                             id = 0,
                         )
                     },
@@ -38,7 +39,7 @@ fun MainCommand(
                         id = 1,
                         selected = selected,
                     ).clickable {
-                        mainViewModel.onClickItem(
+                        battleMainViewModel.onClickItem(
                             id = 1,
                         )
                     },

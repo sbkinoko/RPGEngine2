@@ -21,14 +21,17 @@ import battle.BattleViewModel
 import common.extension.pxToDp
 import common.values.Colors
 import controller.layout.Controller
-import main.domain.ScreenType
+import main.domain.toViewModel
 import main.repository.screentype.ScreenTypeRepository
 import main.viewmodel.MainViewModel
 import map.viewmodel.MapViewModel
 import menu.MenuViewModel
+import org.koin.compose.koinInject
 
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    mainViewModel: MainViewModel = koinInject(),
+) {
     val mapViewModel: MapViewModel by remember {
         mutableStateOf(
             MapViewModel()
@@ -38,12 +41,6 @@ fun MainScreen() {
     val battleViewModel: BattleViewModel by remember {
         mutableStateOf(
             BattleViewModel()
-        )
-    }
-
-    val mainViewModel: MainViewModel by remember {
-        mutableStateOf(
-            MainViewModel()
         )
     }
 
@@ -82,9 +79,6 @@ fun MainScreen() {
                     .size(size = screenSize.pxToDp()),
                 screenType = screenType.value,
                 screenSize = screenSize,
-                mapViewModel = mapViewModel,
-                battleViewModel = battleViewModel,
-                menuViewModel = menuViewModel,
             )
 
             Controller(
@@ -98,11 +92,7 @@ fun MainScreen() {
                     .background(
                         Colors.ControllerArea,
                     ),
-                controllerCallback = when (screenType.value) {
-                    ScreenType.FIELD -> mapViewModel
-                    ScreenType.BATTLE -> battleViewModel
-                    ScreenType.MENU -> menuViewModel
-                },
+                controllerCallback = screenType.value.toViewModel(),
             )
         }
     }
