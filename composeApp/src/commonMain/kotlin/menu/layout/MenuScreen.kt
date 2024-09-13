@@ -13,11 +13,12 @@ import menu.domain.MenuType
 import menu.main.MainMenu
 import menu.main.MainMenuItem
 import menu.status.StatusMenu
+import org.koin.compose.koinInject
 
 @Composable
 fun MenuScreen(
-    menuViewModel: MenuViewModel,
     modifier: Modifier = Modifier,
+    menuViewModel: MenuViewModel = koinInject(),
 ) {
     val menuState = menuViewModel.menuType.collectAsState(MenuType.Main)
 

@@ -34,6 +34,10 @@ const val QualifierAttackFromEnemy = "EnemyAttack"
 const val QualifierAttackFromPlayer = "PlayerAttack"
 
 val BattleModule = module {
+    single {
+        BattleViewModel()
+    }
+
     single<ActionRepository> {
         ActionRepositoryImpl()
     }

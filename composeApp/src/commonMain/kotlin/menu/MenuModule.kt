@@ -7,6 +7,10 @@ import menu.usecase.backfield.BackFieldUseCaseImpl
 import org.koin.dsl.module
 
 val MenuModule = module {
+    single {
+        MenuViewModel()
+    }
+
     single<MenuStateRepository> {
         MenuStateRepositoryImpl()
     }

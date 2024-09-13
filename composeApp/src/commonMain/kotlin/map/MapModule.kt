@@ -27,6 +27,10 @@ import org.koin.dsl.module
 
 val MapModule = module {
     single {
+        MapViewModel()
+    }
+
+    single {
         Player(
             MapViewModel.VIRTUAL_PLAYER_SIZE,
         )
