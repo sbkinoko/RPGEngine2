@@ -26,9 +26,12 @@ import main.repository.screentype.ScreenTypeRepository
 import main.viewmodel.MainViewModel
 import map.viewmodel.MapViewModel
 import menu.MenuViewModel
+import org.koin.compose.koinInject
 
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    mainViewModel: MainViewModel = koinInject(),
+) {
     val mapViewModel: MapViewModel by remember {
         mutableStateOf(
             MapViewModel()
@@ -38,12 +41,6 @@ fun MainScreen() {
     val battleViewModel: BattleViewModel by remember {
         mutableStateOf(
             BattleViewModel()
-        )
-    }
-
-    val mainViewModel: MainViewModel by remember {
-        mutableStateOf(
-            MainViewModel()
         )
     }
 
