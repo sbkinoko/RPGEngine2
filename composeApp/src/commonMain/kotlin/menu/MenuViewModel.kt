@@ -18,8 +18,8 @@ class MenuViewModel : KoinComponent, ControllerCallback {
 
     val menuType: SharedFlow<MenuType> = menuStateRepository.menuTypeFlow
 
-    val mainMenuViewModel: MainMenuViewModel = MainMenuViewModel()
-    val statusViewModel: StatusViewModel = StatusViewModel()
+    private val mainMenuViewModel: MainMenuViewModel by inject()
+    private val statusViewModel: StatusViewModel by inject()
 
     override fun moveStick(stickPosition: StickPosition) {
         menuStateRepository.menuType

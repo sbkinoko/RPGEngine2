@@ -17,11 +17,12 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import common.layout.CenterText
 import common.values.Colors
+import org.koin.compose.koinInject
 
 @Composable
 fun MainMenu(
-    mainMenuViewModel: MainMenuViewModel,
     modifier: Modifier = Modifier,
+    mainMenuViewModel: MainMenuViewModel = koinInject(),
 ) {
     val selected = mainMenuViewModel
         .getSelectedAsState().value

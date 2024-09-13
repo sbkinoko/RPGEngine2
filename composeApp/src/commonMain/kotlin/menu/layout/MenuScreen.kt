@@ -12,6 +12,7 @@ import menu.MenuViewModel
 import menu.domain.MenuType
 import menu.main.MainMenu
 import menu.main.MainMenuItem
+import menu.main.MainMenuViewModel
 import menu.status.StatusMenu
 import org.koin.compose.koinInject
 
@@ -19,10 +20,11 @@ import org.koin.compose.koinInject
 fun MenuScreen(
     modifier: Modifier = Modifier,
     menuViewModel: MenuViewModel = koinInject(),
+    mainMenuViewModel: MainMenuViewModel = koinInject()
 ) {
     val menuState = menuViewModel.menuType.collectAsState(MenuType.Main)
 
-    menuViewModel.mainMenuViewModel.setItems(
+    mainMenuViewModel.setItems(
         List(5) {
             MainMenuItem(
                 text = it.toMenuType().title,
@@ -36,17 +38,13 @@ fun MenuScreen(
     )
 
     Box(modifier = modifier) {
-        MainMenu(
-            mainMenuViewModel = menuViewModel.mainMenuViewModel,
-            modifier = menuModifier,
-        )
-
         when (val state = menuState.value) {
-            MenuType.Main -> Unit
+            MenuType.Main -> MainMenu(
+                modifier = menuModifier,
+            )
 
             MenuType.Status -> StatusMenu(
                 modifier = menuModifier,
-                statusViewModel = menuViewModel.statusViewModel,
             )
 
             else -> Text(

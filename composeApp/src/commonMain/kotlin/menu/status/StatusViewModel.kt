@@ -13,7 +13,7 @@ import org.koin.core.component.inject
 class StatusViewModel : CommonMenuViewModel(),
     KoinComponent {
     val repository: PlayerRepository = PlayerRepositoryImpl()
-    val menuStateRepository: MenuStateRepository by inject()
+    private val menuStateRepository: MenuStateRepository by inject()
 
     override var selectManager = SelectManager(
         width = 1,
