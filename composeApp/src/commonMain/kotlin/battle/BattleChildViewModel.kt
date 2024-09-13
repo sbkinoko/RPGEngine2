@@ -3,12 +3,12 @@ package battle
 import battle.domain.CommandType
 import battle.repository.commandstate.CommandStateRepository
 import common.Timer
-import common.menu.CommonMenuViewModel
+import common.menu.SelectableWindowViewModel
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 abstract class BattleChildViewModel :
-    CommonMenuViewModel(),
+    SelectableWindowViewModel(),
     KoinComponent {
     protected val commandStateRepository: CommandStateRepository by inject()
 

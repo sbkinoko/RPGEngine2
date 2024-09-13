@@ -1,14 +1,14 @@
 package menu.main
 
 import common.Timer
-import common.menu.CommonMenuViewModel
+import common.menu.SelectableWindowViewModel
 import kotlinx.coroutines.flow.SharedFlow
 import menu.domain.SelectManager
 import menu.usecase.backfield.BackFieldUseCase
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class MainMenuViewModel : CommonMenuViewModel(),
+class MainMenuViewModel : SelectableWindowViewModel(),
     KoinComponent {
     private val backFieldUseCase: BackFieldUseCase by inject()
 
