@@ -16,7 +16,11 @@ class UpdatePlayerStatusUseCase(
     }
 
     override fun incHPImpl(amount: Int, status: PlayerStatus): PlayerStatus {
-        TODO("Not yet implemented")
+        return status.copy(
+            hp = status.hp.copy(
+                value = status.hp.value + amount
+            )
+        )
     }
 
     override fun decMPImpl(amount: Int, status: PlayerStatus): PlayerStatus {
