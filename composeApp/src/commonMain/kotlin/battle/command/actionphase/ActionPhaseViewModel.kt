@@ -76,23 +76,85 @@ class ActionPhaseViewModel : BattleChildViewModel() {
         itemNum = 1,
     )
 
-    val targetName: String
-        get() {
-            return if (attackingPlayerId.value < playerNum) {
-                val targetId = actionRepository.getAction(
-                    attackingPlayerId.value
-                ).target
-                battleMonsterRepository.getStatus(targetId).name
-            } else {
-                "仲間"
-            }
-        }
+    fun getActionText(playerId: Int): String {
+        val actionStatusName = getActionCharacterName(playerId)
+        val forStatusName = getForStatusName(playerId)
 
-    fun getActionCharacterName(id: Int): String {
+        val actionStatusActionName = getActionName(playerId)
+        return actionStatusName + "の" +
+                forStatusName + "への" +
+                actionStatusActionName
+    }
+
+    private fun getActionCharacterName(id: Int): String {
         return if (id < playerNum) {
             playerRepository.getStatus(id).name
         } else {
             battleMonsterRepository.getStatus(id - playerNum).name
+        }
+    }
+
+    private enum class Type {
+        ATTACK,
+        HEAL,
+    }
+
+    private fun getForStatusName(id: Int): String {
+        return if (id < playerNum) {
+            val action = actionRepository.getAction(id)
+
+            val type = when (action.thisTurnAction) {
+                ActionType.Normal -> Type.ATTACK
+                ActionType.Skill -> when (skillRepository.getSkill(action.skillId!!)) {
+                    is AttackSkill -> Type.ATTACK
+                    is HealSkill -> Type.HEAL
+                }
+
+                ActionType.None -> throw RuntimeException("ここには来ない")
+            }
+
+            when (type) {
+                Type.ATTACK -> {
+                    val targetId = action.target
+                    battleMonsterRepository.getStatus(targetId).name
+                }
+
+                Type.HEAL -> {
+                    val targetId = action.ally
+                    playerRepository.getStatus(targetId).name
+                }
+            }
+        } else {
+            //　todo 敵の攻撃対象を保存するようにしたら修正
+            "仲間"
+        }
+    }
+
+    private fun getActionName(id: Int): String {
+
+        val action = if (id < playerNum) {
+            actionRepository.getAction(id).thisTurnAction
+        } else {
+            ActionType.Skill
+        }
+        return when (action) {
+            ActionType.Normal -> "攻撃"
+            ActionType.Skill -> {
+                val skill = if (id < playerNum) {
+                    val skillId = actionRepository.getAction(id).skillId!!
+                    skillRepository.getSkill(skillId)
+                } else {
+                    skillRepository.getSkill(2)
+                }
+                when (skill) {
+                    is AttackSkill -> "攻撃"
+                    is HealSkill -> "回復"
+                }
+            }
+
+            ActionType.None -> throw RuntimeException(
+                "ここには来ないはず"
+            )
         }
     }
 

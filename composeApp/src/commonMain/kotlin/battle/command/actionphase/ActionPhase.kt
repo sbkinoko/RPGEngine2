@@ -25,8 +25,7 @@ fun ActionPhase(
         Text(
             modifier = Modifier
                 .align(Alignment.Center),
-            text = actionPhaseViewModel.getActionCharacterName(playerId) + "の" +
-                    actionPhaseViewModel.targetName + "への攻撃",
+            text = actionPhaseViewModel.getActionText(playerId),
         )
     }
 }
