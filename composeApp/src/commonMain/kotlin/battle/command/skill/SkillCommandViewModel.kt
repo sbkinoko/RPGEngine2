@@ -32,7 +32,7 @@ class SkillCommandViewModel : BattleChildViewModel() {
 
     fun canUse(id: Int): Boolean {
         return skillRepository.getSkill(id).canUse(
-            playerRepository.getPlayer(playerId).mp.value
+            playerRepository.getStatus(playerId).mp.value
         )
     }
 

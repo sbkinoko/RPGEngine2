@@ -12,8 +12,10 @@ import battle.repository.battlemonster.BattleMonsterRepository
 import battle.repository.skill.SkillRepository
 import battle.usecase.IsAllMonsterNotActiveUseCase
 import battle.usecase.attack.AttackUseCase
-import battle.usecase.decmp.DecMpUseCase
 import battle.usecase.findactivetarget.FindActiveTargetUseCase
+import battle.usecase.updateparameter.UpdateMonsterStatusUseCase
+import battle.usecase.updateparameter.UpdatePlayerStatusUseCase
+import battle.usecase.updateparameter.UpdateStatusService
 import common.repository.player.PlayerRepository
 import common.status.Status
 import common.values.playerNum
@@ -35,7 +37,9 @@ class ActionPhaseViewModel : BattleChildViewModel() {
     private val playerRepository: PlayerRepository by inject()
     private val skillRepository: SkillRepository by inject()
 
-    private val decMpUseCase: DecMpUseCase by inject()
+    private val updatePlayerParameter: UpdatePlayerStatusUseCase by inject()
+    private val updateEnemyParameter: UpdateMonsterStatusUseCase by inject()
+
     private val attackFromPlayerUseCase: AttackUseCase by inject(
         qualifier = named(QualifierAttackFromPlayer)
     )
@@ -75,7 +79,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
                 val targetId = actionRepository.getAction(
                     attackingPlayerId.value
                 ).target
-                battleMonsterRepository.getMonster(targetId).name
+                battleMonsterRepository.getStatus(targetId).name
             } else {
                 "仲間"
             }
@@ -83,9 +87,9 @@ class ActionPhaseViewModel : BattleChildViewModel() {
 
     fun getActionCharacterName(id: Int): String {
         return if (id < playerNum) {
-            playerRepository.getPlayer(id).name
+            playerRepository.getStatus(id).name
         } else {
-            battleMonsterRepository.getMonster(id - playerNum).name
+            battleMonsterRepository.getStatus(id - playerNum).name
         }
     }
 
@@ -121,11 +125,13 @@ class ActionPhaseViewModel : BattleChildViewModel() {
 
             ActionType.Skill -> {
                 skillAction(
+                    id = attackingPlayerId.value,
                     skillId = actionRepository.getAction(attackingPlayerId.value).skillId
                         ?: throw RuntimeException(),
                     statusList = battleMonsterRepository.getMonsters(),
                     target = actionRepository.getAction(attackingPlayerId.value).target,
                     attackUseCase = attackFromPlayerUseCase,
+                    updateParameter = updatePlayerParameter,
                 )
             }
 
@@ -143,24 +149,28 @@ class ActionPhaseViewModel : BattleChildViewModel() {
 
     private suspend fun enemyAction() {
         skillAction(
+            id = attackingPlayerId.value - playerNum,
             skillId = 2,
             statusList = playerRepository.getPlayers(),
             target = 0,
             attackUseCase = attackFromEnemyUseCase,
+            updateParameter = updateEnemyParameter,
         )
     }
 
     private suspend fun skillAction(
+        id: Int,
         skillId: Int,
         statusList: List<Status>,
         target: Int,
         attackUseCase: AttackUseCase,
+        updateParameter: UpdateStatusService<*>,
     ) {
         val skill = skillRepository.getSkill(id = skillId)
 
         // MP減らす
-        decMpUseCase.invoke(
-            playerId = attackingPlayerId.value,
+        updateParameter.decMP(
+            id = id,
             amount = skill.needMP,
         )
 
@@ -197,7 +207,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
 
             if (mutableAttackingPlayerId.value >= playerNum) {
                 //　monsterを確認
-                if (battleMonsterRepository.getMonster(
+                if (battleMonsterRepository.getStatus(
                         mutableAttackingPlayerId.value - playerNum
                     ).isActive
                 ) {
@@ -205,7 +215,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
                 }
             } else {
                 // 行動可能なら行動する
-                if (playerRepository.getPlayer(attackingPlayerId.value).isActive &&
+                if (playerRepository.getStatus(attackingPlayerId.value).isActive &&
                     actionRepository.getAction(attackingPlayerId.value).thisTurnAction != ActionType.None
                 ) {
                     break

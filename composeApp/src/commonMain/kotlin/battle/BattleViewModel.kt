@@ -85,7 +85,7 @@ class BattleViewModel :
 
     private fun initPlayers() {
         players = List(playerNum) {
-            playerRepository.getPlayer(id = it)
+            playerRepository.getStatus(id = it)
         }
     }
 

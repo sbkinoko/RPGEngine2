@@ -27,7 +27,7 @@ class PlayerActionViewModel : BattleChildViewModel() {
 
     fun init() {
         // プレイヤーが行動不能なら次のキャラに移動する
-        if (playerRepository.getPlayer(playerId).isActive.not()) {
+        if (playerRepository.getStatus(playerId).isActive.not()) {
             actionRepository.setAction(
                 playerId = playerId,
                 actionType = ActionType.None,
@@ -81,7 +81,7 @@ class PlayerActionViewModel : BattleChildViewModel() {
                 ?: return@popTo false
 
             val playerId = command.playerId
-            val player = playerRepository.getPlayer(playerId)
+            val player = playerRepository.getStatus(playerId)
 
             player.isActive
         }

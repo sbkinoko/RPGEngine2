@@ -1,22 +1,16 @@
 package battle.repository.battlemonster
 
+import common.repository.status.StatusRepository
 import common.status.MonsterStatus
 import kotlinx.coroutines.flow.MutableSharedFlow
 
-interface BattleMonsterRepository {
+interface BattleMonsterRepository : StatusRepository<MonsterStatus> {
 
     val monsterListFlow: MutableSharedFlow<List<MonsterStatus>>
-
-    fun getMonster(id: Int): MonsterStatus
 
     fun getMonsters(): List<MonsterStatus>
 
     suspend fun setMonsters(monsters: List<MonsterStatus>)
-
-    suspend fun setMonster(
-        id: Int,
-        monster: MonsterStatus,
-    )
 
     suspend fun reload()
 }

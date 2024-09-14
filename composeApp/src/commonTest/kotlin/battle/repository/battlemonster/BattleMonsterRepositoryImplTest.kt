@@ -58,13 +58,13 @@ class BattleMonsterRepositoryImplTest {
             battleMonsterRepository.setMonsters(
                 monsters = monsterList.toMutableList()
             )
-            battleMonsterRepository.getMonster(0).apply {
+            battleMonsterRepository.getStatus(0).apply {
                 assertEquals(
                     expected = monster1,
                     actual = this,
                 )
             }
-            battleMonsterRepository.getMonster(1).apply {
+            battleMonsterRepository.getStatus(1).apply {
                 assertEquals(
                     expected = monster2,
                     actual = this,

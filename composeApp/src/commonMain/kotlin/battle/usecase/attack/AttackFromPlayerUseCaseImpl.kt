@@ -2,13 +2,12 @@ package battle.usecase.attack
 
 import battle.repository.battlemonster.BattleMonsterRepository
 import battle.service.FindTargetService
-import battle.service.attack.DecHpService
-import common.status.MonsterStatus
+import battle.usecase.updateparameter.UpdateMonsterStatusUseCase
 
 class AttackFromPlayerUseCaseImpl(
     private val battleMonsterRepository: BattleMonsterRepository,
     private val findTargetService: FindTargetService,
-    private val attackMonsterService: DecHpService<MonsterStatus>,
+    private val updateMonsterStatusService: UpdateMonsterStatusUseCase
 ) : AttackUseCase {
     override suspend operator fun invoke(
         target: Int,
@@ -23,20 +22,9 @@ class AttackFromPlayerUseCaseImpl(
             )
         }
 
-        val afterMonster = attackMonsterService.attack(
-            target = actualTarget,
-            damage = damage,
-            status = monsters[target],
-        )
-
-        battleMonsterRepository.setMonsters(
-            monsters = monsters.mapIndexed { index, monsterStatus ->
-                if (index != actualTarget) {
-                    monsterStatus
-                } else {
-                    afterMonster
-                }
-            }
+        updateMonsterStatusService.decHP(
+            id = actualTarget,
+            amount = damage,
         )
     }
 }

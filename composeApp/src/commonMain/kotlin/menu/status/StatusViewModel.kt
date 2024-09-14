@@ -23,7 +23,7 @@ class StatusViewModel : SelectableWindowViewModel(),
     override var timer: Timer = Timer(200)
 
     fun getStatusAt(id: Int): Status {
-        return repository.getPlayer(id)
+        return repository.getStatus(id)
     }
 
     override fun pressA() {}
