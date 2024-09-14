@@ -1,9 +1,17 @@
 package battle.domain
 
-data class Skill(
-    val name: String,
+interface Skill {
+    val name: String
+    val needMP: Int
+    val targetNum: Int
+    val canUse: (Int) -> Boolean
+}
+
+// 必要になったらattackのinterfaceを作る
+data class AttackSkill(
+    override val name: String,
+    override val needMP: Int,
+    override val targetNum: Int,
+    override val canUse: (Int) -> Boolean = { mp -> mp >= needMP },
     val damage: Int,
-    val needMP: Int,
-    val targetNum: Int,
-    val canUse: (Int) -> Boolean,
-)
+) : Skill
