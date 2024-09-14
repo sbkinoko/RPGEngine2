@@ -1,10 +1,12 @@
 package battle.status
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import common.status.Status
 import common.values.Colors
 import common.status.param.Point as StatusPoint
@@ -21,7 +23,9 @@ fun StatusComponent(
         Colors.NotActivePlayer
     }
 
-    Column(modifier = modifier) {
+    Column(
+        modifier = modifier.padding(5.dp)
+    ) {
         Text(
             text = status.name,
             color = color,

@@ -15,6 +15,11 @@ interface ActionRepository {
         target: Int,
     )
 
+    fun setAlly(
+        playerId: Int,
+        allyId: Int,
+    )
+
     fun getAction(
         playerId: Int
     ): ActionData
