@@ -13,5 +13,13 @@ data class AttackSkill(
     override val needMP: Int,
     override val targetNum: Int,
     override val canUse: (Int) -> Boolean = { mp -> mp >= needMP },
-    val damage: Int,
+    val damageAmount: Int,
+) : Skill
+
+data class HealSkill(
+    override val name: String,
+    override val needMP: Int,
+    override val targetNum: Int,
+    override val canUse: (Int) -> Boolean = { mp -> mp >= needMP },
+    val healAmount: Int,
 ) : Skill
