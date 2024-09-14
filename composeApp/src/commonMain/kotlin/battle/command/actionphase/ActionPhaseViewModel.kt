@@ -3,11 +3,13 @@ package battle.command.actionphase
 import battle.BattleChildViewModel
 import battle.QualifierAttackFromEnemy
 import battle.QualifierAttackFromPlayer
+import battle.domain.ActionData
 import battle.domain.ActionType
 import battle.domain.AttackPhaseCommand
 import battle.domain.AttackSkill
 import battle.domain.CommandType
 import battle.domain.FinishCommand
+import battle.domain.HealSkill
 import battle.repository.action.ActionRepository
 import battle.repository.battlemonster.BattleMonsterRepository
 import battle.repository.skill.SkillRepository
@@ -127,10 +129,8 @@ class ActionPhaseViewModel : BattleChildViewModel() {
             ActionType.Skill -> {
                 skillAction(
                     id = attackingPlayerId.value,
-                    skillId = actionRepository.getAction(attackingPlayerId.value).skillId
-                        ?: throw RuntimeException(),
+                    actionData = actionRepository.getAction(attackingPlayerId.value),
                     statusList = battleMonsterRepository.getMonsters(),
-                    target = actionRepository.getAction(attackingPlayerId.value).target,
                     attackUseCase = attackFromPlayerUseCase,
                     updateParameter = updatePlayerParameter,
                 )
@@ -149,11 +149,14 @@ class ActionPhaseViewModel : BattleChildViewModel() {
     }
 
     private suspend fun enemyAction() {
+
         skillAction(
             id = attackingPlayerId.value - playerNum,
-            skillId = 2,
             statusList = playerRepository.getPlayers(),
-            target = 0,
+            actionData = ActionData(
+                skillId = 2,
+                target = 0,
+            ),
             attackUseCase = attackFromEnemyUseCase,
             updateParameter = updateEnemyParameter,
         )
@@ -161,13 +164,15 @@ class ActionPhaseViewModel : BattleChildViewModel() {
 
     private suspend fun skillAction(
         id: Int,
-        skillId: Int,
+        actionData: ActionData,
         statusList: List<Status>,
-        target: Int,
         attackUseCase: AttackUseCase,
         updateParameter: UpdateStatusService<*>,
     ) {
-        val skill = skillRepository.getSkill(id = skillId)
+        val skill = skillRepository.getSkill(
+            id = actionData.skillId
+                ?: throw RuntimeException("スキルを選んでいるのでスキルが入っているはず")
+        )
 
         // MP減らす
         updateParameter.decMP(
@@ -179,7 +184,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
             is AttackSkill -> {
                 val targetList = findActiveTargetUseCase.invoke(
                     statusList = statusList,
-                    target = target,
+                    target = actionData.target,
                     targetNum = skill.targetNum
                 )
 
@@ -190,6 +195,14 @@ class ActionPhaseViewModel : BattleChildViewModel() {
                         damage = skill.damageAmount,
                     )
                 }
+            }
+
+            is HealSkill -> {
+                val target = actionData.ally
+                updateParameter.incHP(
+                    id = target,
+                    amount = skill.healAmount,
+                )
             }
         }
     }
