@@ -20,7 +20,11 @@ class UpdatePlayerStatusUseCase(
     }
 
     override fun decMPImpl(amount: Int, status: PlayerStatus): PlayerStatus {
-        TODO("Not yet implemented")
+        return status.copy(
+            mp = status.mp.copy(
+                value = status.mp.value - amount
+            )
+        )
     }
 
     override fun incMPImpl(amount: Int, status: PlayerStatus): PlayerStatus {
