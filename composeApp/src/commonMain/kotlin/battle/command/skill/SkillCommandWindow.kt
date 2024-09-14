@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import battle.repository.skill.HEAL_SKILL
 import common.extension.equalAllocationModifier
 import common.extension.menuItem
 import common.layout.CenterText
@@ -29,46 +28,50 @@ fun SkillCommandWindow(
     }
 
     Column(modifier = modifier) {
-        Row(
-            modifier = equalAllocationModifier,
-        ) {
-            SkillText(
+        for (i in 0 until 3) {
+            Row(
                 modifier = equalAllocationModifier,
-                id = 0,
-                skillCommandViewModel = skillCommandViewModel,
-            )
-            SkillText(
-                modifier = equalAllocationModifier,
-                skillCommandViewModel = skillCommandViewModel,
-                id = 1,
-            )
-        }
-        Row(
-            modifier = equalAllocationModifier,
-        ) {
-            SkillText(
-                modifier = equalAllocationModifier,
-                skillCommandViewModel = skillCommandViewModel,
-                id = HEAL_SKILL,
-            )
-            Spacer(
-                modifier = equalAllocationModifier,
-            )
-        }
+            ) {
+                SkillArea(
+                    index = 2 * i,
+                    size = skillCommandViewModel.skillList.size,
+                    modifier = equalAllocationModifier,
+                )
 
-        Row(
-            modifier = equalAllocationModifier,
-        ) {
-
+                SkillArea(
+                    index = 2 * i + 1,
+                    size = skillCommandViewModel.skillList.size,
+                    modifier = equalAllocationModifier,
+                )
+            }
         }
     }
 }
 
 @Composable
+fun SkillArea(
+    index: Int,
+    size: Int,
+    modifier: Modifier = Modifier,
+    skillCommandViewModel: SkillCommandViewModel = koinInject(),
+) {
+    if (index < size) {
+        SkillText(
+            modifier = modifier,
+            id = skillCommandViewModel.skillList[index],
+        )
+    } else {
+        Spacer(
+            modifier = modifier,
+        )
+    }
+}
+
+@Composable
 fun SkillText(
-    skillCommandViewModel: SkillCommandViewModel,
     id: Int,
     modifier: Modifier = Modifier,
+    skillCommandViewModel: SkillCommandViewModel = koinInject(),
 ) {
     Box(
         modifier = modifier
