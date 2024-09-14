@@ -94,33 +94,34 @@ class ActionPhaseViewModel : BattleChildViewModel() {
         }
     }
 
+    private val attack = 0
+    private val heal = 1
     private fun getForStatusName(id: Int): String {
         return if (id < playerNum) {
             val action = actionRepository.getAction(id)
 
-            when (action.thisTurnAction) {
-                ActionType.Normal -> {
+            val type = when (action.thisTurnAction) {
+                ActionType.Normal -> attack
+                ActionType.Skill -> when (skillRepository.getSkill(action.skillId!!)) {
+                    is AttackSkill -> attack
+                    is HealSkill -> heal
+                }
+
+                ActionType.None -> throw RuntimeException("ここには来ない")
+            }
+
+            when (type) {
+                0 -> {
                     val targetId = action.target
                     battleMonsterRepository.getStatus(targetId).name
                 }
 
-                ActionType.Skill -> {
-                    when (skillRepository.getSkill(action.skillId!!)) {
-                        is AttackSkill -> {
-                            val targetId = action.target
-                            battleMonsterRepository.getStatus(targetId).name
-                        }
-
-                        is HealSkill -> {
-                            val targetId = action.ally
-                            playerRepository.getStatus(targetId).name
-                        }
-                    }
+                1 -> {
+                    val targetId = action.ally
+                    playerRepository.getStatus(targetId).name
                 }
 
-                ActionType.None -> {
-                    throw RuntimeException("ここには来ない")
-                }
+                else -> throw RuntimeException("ここには来ない")
             }
         } else {
             //　todo 敵の攻撃対象を保存するようにしたら修正
