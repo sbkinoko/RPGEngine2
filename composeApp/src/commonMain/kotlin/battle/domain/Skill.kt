@@ -1,6 +1,6 @@
 package battle.domain
 
-interface Skill {
+sealed interface Skill {
     val name: String
     val needMP: Int
     val targetNum: Int
