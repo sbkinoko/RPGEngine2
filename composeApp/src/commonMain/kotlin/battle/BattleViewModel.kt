@@ -105,6 +105,7 @@ class BattleViewModel :
         screenTypeRepository.screenType = ScreenType.FIELD
     }
 
+    //todo 外に専用の関数として取り出す
     //todo finishViewModelを作ったらnullableをやめる
     private fun CommandType.toViewModel(): ControllerCallback? {
         return when (this) {
