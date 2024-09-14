@@ -4,6 +4,7 @@ import battle.command.actionphase.ActionPhaseViewModel
 import battle.command.escape.EscapeViewModel
 import battle.command.main.BattleMainViewModel
 import battle.command.playeraction.PlayerActionViewModel
+import battle.command.selectally.SelectAllyViewModel
 import battle.command.selectenemy.SelectEnemyViewModel
 import battle.command.skill.SkillCommandViewModel
 import battle.repository.action.ActionRepository
@@ -62,6 +63,10 @@ val BattleModule = module {
 
     single {
         SkillCommandViewModel()
+    }
+
+    single {
+        SelectAllyViewModel()
     }
 
     single<ActionRepository> {

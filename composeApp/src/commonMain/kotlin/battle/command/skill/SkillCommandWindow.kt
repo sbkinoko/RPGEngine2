@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -27,44 +28,55 @@ fun SkillCommandWindow(
     }
 
     Column(modifier = modifier) {
-        Row(
-            modifier = equalAllocationModifier,
-        ) {
-            SkillText(
+        for (i in 0 until 3) {
+            Row(
                 modifier = equalAllocationModifier,
-                id = 0,
-                skillCommandViewModel = skillCommandViewModel,
-            )
-            SkillText(
-                modifier = equalAllocationModifier,
-                skillCommandViewModel = skillCommandViewModel,
-                id = 1,
-            )
-        }
-        Row(
-            modifier = equalAllocationModifier,
-        ) {
+            ) {
+                SkillArea(
+                    index = 2 * i,
+                    size = skillCommandViewModel.skillList.size,
+                    modifier = equalAllocationModifier,
+                )
 
-        }
-
-        Row(
-            modifier = equalAllocationModifier,
-        ) {
-
+                SkillArea(
+                    index = 2 * i + 1,
+                    size = skillCommandViewModel.skillList.size,
+                    modifier = equalAllocationModifier,
+                )
+            }
         }
     }
 }
 
 @Composable
-fun SkillText(
-    skillCommandViewModel: SkillCommandViewModel,
-    id: Int,
+fun SkillArea(
+    index: Int,
+    size: Int,
     modifier: Modifier = Modifier,
 ) {
+    if (index < size) {
+        SkillText(
+            modifier = modifier,
+            position = index,
+        )
+    } else {
+        Spacer(
+            modifier = modifier,
+        )
+    }
+}
+
+@Composable
+fun SkillText(
+    position: Int,
+    modifier: Modifier = Modifier,
+    skillCommandViewModel: SkillCommandViewModel = koinInject(),
+) {
+    val id = skillCommandViewModel.skillList[position]
     Box(
         modifier = modifier
             .menuItem(
-                id = id,
+                id = position,
                 battleChildViewModel = skillCommandViewModel,
             ),
     ) {

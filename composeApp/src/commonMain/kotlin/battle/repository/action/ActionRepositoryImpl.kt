@@ -46,6 +46,16 @@ class ActionRepositoryImpl : ActionRepository {
         )
     }
 
+    override fun setAlly(
+        playerId: Int,
+        allyId: Int
+    ) {
+        // actionが設定されているはずなのでnullにはならない
+        actionMap[playerId] = actionMap[playerId]!!.copy(
+            ally = allyId
+        )
+    }
+
     override fun getAction(playerId: Int): ActionData {
         return actionMap[playerId] ?: ActionData()
     }
