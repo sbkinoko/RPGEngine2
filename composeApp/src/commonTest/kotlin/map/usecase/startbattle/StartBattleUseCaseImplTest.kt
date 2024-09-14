@@ -44,7 +44,7 @@ class StartBattleUseCaseImplTest : KoinTest {
                 override val monsterListFlow: MutableSharedFlow<List<MonsterStatus>>
                     get() = throw NotImplementedError()
 
-                override fun getMonster(id: Int): MonsterStatus {
+                override fun getStatus(id: Int): MonsterStatus {
                     throw NotImplementedError()
                 }
 
@@ -56,7 +56,7 @@ class StartBattleUseCaseImplTest : KoinTest {
                     checkMonster++
                 }
 
-                override suspend fun setMonster(id: Int, monster: MonsterStatus) {
+                override suspend fun setStatus(id: Int, status: MonsterStatus) {
                     throw NotImplementedError()
                 }
 

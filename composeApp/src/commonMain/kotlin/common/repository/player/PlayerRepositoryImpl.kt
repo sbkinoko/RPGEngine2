@@ -85,7 +85,7 @@ class PlayerRepositoryImpl : PlayerRepository {
         }
     }
 
-    override fun setPlayer(id: Int, status: PlayerStatus) {
+    override suspend fun setStatus(id: Int, status: PlayerStatus) {
         val list = players.mapIndexed { index, playerStatus ->
             if (index == id) {
                 status
@@ -94,12 +94,11 @@ class PlayerRepositoryImpl : PlayerRepository {
             }
         }
         players = list
-        CoroutineScope(Dispatchers.Default).launch {
-            mutablePlayersFlow.emit(players)
-        }
+
+        mutablePlayersFlow.emit(players)
     }
 
-    override fun getPlayer(id: Int): PlayerStatus {
+    override fun getStatus(id: Int): PlayerStatus {
         return players[id]
     }
 

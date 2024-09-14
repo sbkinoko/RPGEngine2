@@ -7,7 +7,7 @@ class BattleMonsterRepositoryImpl : BattleMonsterRepository {
     override val monsterListFlow: MutableSharedFlow<List<MonsterStatus>> = MutableSharedFlow()
     private var monsterList = listOf<MonsterStatus>()
 
-    override fun getMonster(id: Int): MonsterStatus {
+    override fun getStatus(id: Int): MonsterStatus {
         return monsterList[id]
     }
 
@@ -20,15 +20,15 @@ class BattleMonsterRepositoryImpl : BattleMonsterRepository {
         monsterListFlow.emit(monsterList)
     }
 
-    override suspend fun setMonster(
+    override suspend fun setStatus(
         id: Int,
-        monster: MonsterStatus
+        status: MonsterStatus
     ) {
         monsterList = monsterList.mapIndexed { index, oldMonster ->
             if (index != id) {
                 oldMonster
             } else {
-                monster
+                status
             }
         }
         monsterListFlow.emit(monsterList)

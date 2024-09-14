@@ -1,31 +1,29 @@
-package battle.service.attack
+package battle.service.updateparameter
 
 interface UpdateParameterService<T> {
-
     /**
      *  HPを減らして、更新後のステータスを返す
      */
-    fun decHP(
+    suspend fun decHP(
+        id: Int,
         amount: Int,
-        status: T,
-    ): T
+    )
 
     /**
      *  HPを増やして、更新後のステータスを返す
      */
-    fun incHP(
+    suspend fun incHP(
+        id: Int,
         amount: Int,
-        status: T,
-    ): T
+    )
 
-
-    fun decMP(
+    suspend fun decMP(
+        id: Int,
         amount: Int,
-        status: T,
-    ): T
+    )
 
-    fun incMP(
+    suspend fun incMP(
+        id: Int,
         amount: Int,
-        status: T,
     )
 }

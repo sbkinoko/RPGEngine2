@@ -1,14 +1,13 @@
 package battle.usecase.attack
 
 import battle.service.FindTargetService
-import battle.service.attack.UpdateParameterService
+import battle.service.updateparameter.UpdatePlayerStatusService
 import common.repository.player.PlayerRepository
-import common.status.PlayerStatus
 
 class AttackFromEnemyUseCaseImpl(
     private val playerRepository: PlayerRepository,
-    private val attackPlayerService: UpdateParameterService<PlayerStatus>,
     private val findTargetService: FindTargetService,
+    private val updatePlayerStatusService: UpdatePlayerStatusService,
 ) : AttackUseCase {
 
     override suspend fun invoke(
@@ -24,14 +23,9 @@ class AttackFromEnemyUseCaseImpl(
             )
         }
 
-        val afterPlayer = attackPlayerService.decHP(
-            amount = damage,
-            status = players[target]
-        )
-
-        playerRepository.setPlayer(
+        updatePlayerStatusService.decHP(
             id = actualTarget,
-            status = afterPlayer
+            amount = damage,
         )
     }
 }

@@ -15,9 +15,8 @@ import battle.repository.commandstate.CommandStateRepositoryImpl
 import battle.repository.skill.SkillRepository
 import battle.repository.skill.SkillRepositoryImpl
 import battle.service.FindTargetService
-import battle.service.attack.UpdateMonsterStatusService
-import battle.service.attack.UpdateParameterService
-import battle.service.attack.UpdatePlayerStatusService
+import battle.service.updateparameter.UpdateMonsterStatusService
+import battle.service.updateparameter.UpdatePlayerStatusService
 import battle.serviceimpl.FindTargetServiceImpl
 import battle.usecase.IsAllMonsterNotActiveUseCase
 import battle.usecase.attack.AttackFromEnemyUseCaseImpl
@@ -25,23 +24,16 @@ import battle.usecase.attack.AttackFromPlayerUseCaseImpl
 import battle.usecase.attack.AttackUseCase
 import battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUseCase
 import battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUseCaseImpl
-import battle.usecase.decmp.DecEnemyMpUseCaseImpl
-import battle.usecase.decmp.DecMpUseCase
-import battle.usecase.decmp.DecPlayerMpUseCaseImpl
 import battle.usecase.findactivetarget.FindActiveTargetUseCase
 import battle.usecase.findactivetarget.FindActiveTargetUseCaseImpl
 import battle.usecase.gettargetnum.GetTargetNumUseCase
 import battle.usecase.gettargetnum.GetTargetNumUseCaseImpl
-import common.status.MonsterStatus
-import common.status.PlayerStatus
+import common.repository.player.PlayerRepository
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 const val QualifierAttackFromEnemy = "EnemyAttack"
 const val QualifierAttackFromPlayer = "PlayerAttack"
-
-const val QualifierUpdateEnemyStatus = "UpdateEnemyStatus"
-const val QualifierUpdatePlayerStatus = "UpdatePlayerStatus"
 
 val BattleModule = module {
     single {
@@ -76,16 +68,16 @@ val BattleModule = module {
         ActionRepositoryImpl()
     }
 
-    single<UpdateParameterService<MonsterStatus>>(
-        qualifier = named(QualifierAttackFromPlayer)
-    ) {
-        UpdateMonsterStatusService()
+    single {
+        UpdateMonsterStatusService(
+            statusRepository = get<BattleMonsterRepository>()
+        )
     }
 
-    single<UpdateParameterService<PlayerStatus>>(
-        qualifier = named(QualifierAttackFromEnemy)
-    ) {
-        UpdatePlayerStatusService()
+    single {
+        UpdatePlayerStatusService(
+            statusRepository = get<PlayerRepository>()
+        )
     }
 
     single<FindTargetService> {
@@ -110,9 +102,7 @@ val BattleModule = module {
         AttackFromPlayerUseCaseImpl(
             battleMonsterRepository = get(),
             findTargetService = get(),
-            attackMonsterService = get(
-                qualifier = named(QualifierAttackFromPlayer)
-            ),
+            updateMonsterStatusService = get(),
         )
     }
 
@@ -122,9 +112,7 @@ val BattleModule = module {
         AttackFromEnemyUseCaseImpl(
             playerRepository = get(),
             findTargetService = get(),
-            attackPlayerService = get(
-                qualifier = named(QualifierAttackFromEnemy)
-            ),
+            updatePlayerStatusService = get(),
         )
     }
 
@@ -137,18 +125,6 @@ val BattleModule = module {
     single<FindActiveTargetUseCase> {
         FindActiveTargetUseCaseImpl(
             findTargetService = get(),
-        )
-    }
-
-    single<DecMpUseCase>(qualifier = named(QualifierUpdateEnemyStatus)) {
-        DecEnemyMpUseCaseImpl(
-            battleMonsterRepository = get(),
-        )
-    }
-
-    single<DecMpUseCase>(qualifier = named(QualifierUpdatePlayerStatus)) {
-        DecPlayerMpUseCaseImpl(
-            playerRepository = get(),
         )
     }
 

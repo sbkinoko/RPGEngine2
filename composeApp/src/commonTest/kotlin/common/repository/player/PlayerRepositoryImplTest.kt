@@ -56,7 +56,7 @@ class PlayerRepositoryImplTest : KoinTest {
                 )
             )
 
-            playerRepository.setPlayer(
+            playerRepository.setStatus(
                 id = id,
                 status = playerStatus,
             )
@@ -70,7 +70,7 @@ class PlayerRepositoryImplTest : KoinTest {
 
             assertEquals(
                 expected = playerStatus,
-                actual = playerRepository.getPlayer(id),
+                actual = playerRepository.getStatus(id),
             )
 
             collectJob.cancel()
