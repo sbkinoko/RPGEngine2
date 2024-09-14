@@ -7,6 +7,7 @@ import battle.command.actionphase.ActionPhaseViewModel
 import battle.command.escape.EscapeViewModel
 import battle.command.main.BattleMainViewModel
 import battle.command.playeraction.PlayerActionViewModel
+import battle.command.selectally.SelectAllyViewModel
 import battle.command.selectenemy.SelectEnemyViewModel
 import battle.command.skill.SkillCommandViewModel
 import battle.domain.AttackPhaseCommand
@@ -15,6 +16,7 @@ import battle.domain.EscapeCommand
 import battle.domain.FinishCommand
 import battle.domain.MainCommand
 import battle.domain.PlayerActionCommand
+import battle.domain.SelectAllyCommand
 import battle.domain.SelectEnemyCommand
 import battle.domain.SkillCommand
 import battle.repository.battlemonster.BattleMonsterRepository
@@ -58,6 +60,7 @@ class BattleViewModel :
     private val actionPhaseViewModel: ActionPhaseViewModel by inject()
     private val escapeViewModel: EscapeViewModel by inject()
     private val skillCommandViewModel: SkillCommandViewModel by inject()
+    private val selectAllyViewModel: SelectAllyViewModel by inject()
 
     @Composable
     fun CommandStateFlow(): State<CommandType> {
@@ -112,6 +115,7 @@ class BattleViewModel :
             is MainCommand -> battleMainViewModel
             is PlayerActionCommand -> playerActionViewModel
             is SelectEnemyCommand -> selectEnemyViewModel
+            is SelectAllyCommand -> selectAllyViewModel
             is AttackPhaseCommand -> actionPhaseViewModel
             is EscapeCommand -> escapeViewModel
             is FinishCommand -> null

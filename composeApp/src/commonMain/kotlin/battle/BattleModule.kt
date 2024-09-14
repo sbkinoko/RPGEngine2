@@ -64,6 +64,10 @@ val BattleModule = module {
         SkillCommandViewModel()
     }
 
+    single {
+        SelectEnemyViewModel()
+    }
+
     single<ActionRepository> {
         ActionRepositoryImpl()
     }

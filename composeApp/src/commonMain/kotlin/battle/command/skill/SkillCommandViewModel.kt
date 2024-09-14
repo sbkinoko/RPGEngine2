@@ -3,6 +3,7 @@ package battle.command.skill
 import battle.BattleChildViewModel
 import battle.domain.ActionType
 import battle.domain.CommandType
+import battle.domain.SelectAllyCommand
 import battle.domain.SelectEnemyCommand
 import battle.domain.SkillCommand
 import battle.repository.action.ActionRepository
@@ -51,21 +52,31 @@ class SkillCommandViewModel : BattleChildViewModel() {
     }
 
     override fun goNextImpl() {
+        val skillId = skillList[selectManager.selected]
+
         //　使えないので進まない
-        if (canUse(selectManager.selected).not()) {
+        if (canUse(skillId).not()) {
             return
         }
 
         actionRepository.setAction(
             actionType = ActionType.Skill,
             playerId = playerId,
-            skillId = selectManager.selected,
+            skillId = skillId,
         )
+        when (skillRepository.getSkill(skillId)) {
+            is battle.domain.AttackSkill -> {
+                commandStateRepository.push(
+                    SelectEnemyCommand(playerId),
+                )
+            }
 
-
-        commandStateRepository.push(
-            SelectEnemyCommand(playerId),
-        )
+            is battle.domain.HealSkill -> {
+                commandStateRepository.push(
+                    SelectAllyCommand(playerId),
+                )
+            }
+        }
     }
 
     override var selectManager: SelectManager = SelectManager(

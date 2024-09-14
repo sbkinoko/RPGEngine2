@@ -53,12 +53,11 @@ fun SkillArea(
     index: Int,
     size: Int,
     modifier: Modifier = Modifier,
-    skillCommandViewModel: SkillCommandViewModel = koinInject(),
 ) {
     if (index < size) {
         SkillText(
             modifier = modifier,
-            id = skillCommandViewModel.skillList[index],
+            position = index,
         )
     } else {
         Spacer(
@@ -69,14 +68,15 @@ fun SkillArea(
 
 @Composable
 fun SkillText(
-    id: Int,
+    position: Int,
     modifier: Modifier = Modifier,
     skillCommandViewModel: SkillCommandViewModel = koinInject(),
 ) {
+    val id = skillCommandViewModel.skillList[position]
     Box(
         modifier = modifier
             .menuItem(
-                id = id,
+                id = position,
                 battleChildViewModel = skillCommandViewModel,
             ),
     ) {

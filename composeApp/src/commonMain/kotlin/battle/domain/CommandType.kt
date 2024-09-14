@@ -20,6 +20,10 @@ class SkillCommand(
     override val playerId: Int,
 ) : PlayerIdCommand, CommandType()
 
+class SelectAllyCommand(
+    override val playerId: Int,
+) : PlayerIdCommand, CommandType()
+
 data object AttackPhaseCommand : CommandType()
 
 /**
