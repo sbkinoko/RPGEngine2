@@ -5,11 +5,11 @@ interface DecMpUseCase {
     /**
      * 対象のMPを減らす
      *
-     * @param playerId プレイヤーID
+     * @param id ID,リストの何番目か
      * @param amount MPを減らす量
      */
     operator fun invoke(
-        playerId: Int,
+        id: Int,
         amount: Int,
     )
 }

@@ -25,8 +25,9 @@ import battle.usecase.attack.AttackFromPlayerUseCaseImpl
 import battle.usecase.attack.AttackUseCase
 import battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUseCase
 import battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUseCaseImpl
+import battle.usecase.decmp.DecEnemyMpUseCaseImpl
 import battle.usecase.decmp.DecMpUseCase
-import battle.usecase.decmp.DecMpUseCaseImpl
+import battle.usecase.decmp.DecPlayerMpUseCaseImpl
 import battle.usecase.findactivetarget.FindActiveTargetUseCase
 import battle.usecase.findactivetarget.FindActiveTargetUseCaseImpl
 import battle.usecase.gettargetnum.GetTargetNumUseCase
@@ -38,6 +39,9 @@ import org.koin.dsl.module
 
 const val QualifierAttackFromEnemy = "EnemyAttack"
 const val QualifierAttackFromPlayer = "PlayerAttack"
+
+const val QualifierUpdateEnemyStatus = "UpdateEnemyStatus"
+const val QualifierUpdatePlayerStatus = "UpdatePlayerStatus"
 
 val BattleModule = module {
     single {
@@ -136,10 +140,15 @@ val BattleModule = module {
         )
     }
 
-    single<DecMpUseCase> {
-        DecMpUseCaseImpl(
-            playerRepository = get(),
+    single<DecMpUseCase>(qualifier = named(QualifierUpdateEnemyStatus)) {
+        DecEnemyMpUseCaseImpl(
             battleMonsterRepository = get(),
+        )
+    }
+
+    single<DecMpUseCase>(qualifier = named(QualifierUpdatePlayerStatus)) {
+        DecPlayerMpUseCaseImpl(
+            playerRepository = get(),
         )
     }
 

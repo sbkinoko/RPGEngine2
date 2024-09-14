@@ -3,6 +3,8 @@ package battle.command.actionphase
 import battle.BattleChildViewModel
 import battle.QualifierAttackFromEnemy
 import battle.QualifierAttackFromPlayer
+import battle.QualifierUpdateEnemyStatus
+import battle.QualifierUpdatePlayerStatus
 import battle.domain.ActionType
 import battle.domain.AttackPhaseCommand
 import battle.domain.CommandType
@@ -35,7 +37,13 @@ class ActionPhaseViewModel : BattleChildViewModel() {
     private val playerRepository: PlayerRepository by inject()
     private val skillRepository: SkillRepository by inject()
 
-    private val decMpUseCase: DecMpUseCase by inject()
+    private val decPlayerMpUseCase: DecMpUseCase by inject(
+        qualifier = named(QualifierUpdatePlayerStatus)
+    )
+    private val decEnemyMpUseCase: DecMpUseCase by inject(
+        qualifier = named(QualifierUpdateEnemyStatus)
+    )
+
     private val attackFromPlayerUseCase: AttackUseCase by inject(
         qualifier = named(QualifierAttackFromPlayer)
     )
@@ -121,11 +129,13 @@ class ActionPhaseViewModel : BattleChildViewModel() {
 
             ActionType.Skill -> {
                 skillAction(
+                    id = attackingPlayerId.value,
                     skillId = actionRepository.getAction(attackingPlayerId.value).skillId
                         ?: throw RuntimeException(),
                     statusList = battleMonsterRepository.getMonsters(),
                     target = actionRepository.getAction(attackingPlayerId.value).target,
                     attackUseCase = attackFromPlayerUseCase,
+                    decMpUseCase = decPlayerMpUseCase,
                 )
             }
 
@@ -143,24 +153,28 @@ class ActionPhaseViewModel : BattleChildViewModel() {
 
     private suspend fun enemyAction() {
         skillAction(
+            id = attackingPlayerId.value - playerNum,
             skillId = 2,
             statusList = playerRepository.getPlayers(),
             target = 0,
             attackUseCase = attackFromEnemyUseCase,
+            decMpUseCase = decEnemyMpUseCase,
         )
     }
 
     private suspend fun skillAction(
+        id: Int,
         skillId: Int,
         statusList: List<Status>,
         target: Int,
         attackUseCase: AttackUseCase,
+        decMpUseCase: DecMpUseCase,
     ) {
         val skill = skillRepository.getSkill(id = skillId)
 
         // MP減らす
         decMpUseCase.invoke(
-            playerId = attackingPlayerId.value,
+            id = id,
             amount = skill.needMP,
         )
 
