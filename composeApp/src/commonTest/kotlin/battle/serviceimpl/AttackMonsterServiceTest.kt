@@ -1,6 +1,6 @@
 package battle.serviceimpl
 
-import battle.service.attack.DecMonsterHpService
+import battle.service.attack.UpdateParameterService
 import common.status.MonsterStatusTest.Companion.getMonster
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -8,11 +8,11 @@ import kotlin.test.assertEquals
 
 class AttackMonsterServiceTest {
 
-    private lateinit var attackMonsterService: DecMonsterHpService
+    private lateinit var attackMonsterService: UpdateParameterService
 
     @BeforeTest
     fun beforeTest() {
-        attackMonsterService = DecMonsterHpService()
+        attackMonsterService = UpdateParameterService()
     }
 
     @Test

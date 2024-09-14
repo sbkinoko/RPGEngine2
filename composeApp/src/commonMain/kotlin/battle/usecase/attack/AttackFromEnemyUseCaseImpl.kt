@@ -1,13 +1,13 @@
 package battle.usecase.attack
 
 import battle.service.FindTargetService
-import battle.service.attack.DecHpService
+import battle.service.attack.UpdateParameterService
 import common.repository.player.PlayerRepository
 import common.status.PlayerStatus
 
 class AttackFromEnemyUseCaseImpl(
     private val playerRepository: PlayerRepository,
-    private val attackPlayerService: DecHpService<PlayerStatus>,
+    private val attackPlayerService: UpdateParameterService<PlayerStatus>,
     private val findTargetService: FindTargetService,
 ) : AttackUseCase {
 
@@ -24,9 +24,8 @@ class AttackFromEnemyUseCaseImpl(
             )
         }
 
-        val afterPlayer = attackPlayerService.attack(
-            target = actualTarget,
-            damage = damage,
+        val afterPlayer = attackPlayerService.decHP(
+            amount = damage,
             status = players[target]
         )
 

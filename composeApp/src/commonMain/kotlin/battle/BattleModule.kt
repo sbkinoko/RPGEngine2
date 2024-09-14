@@ -15,9 +15,9 @@ import battle.repository.commandstate.CommandStateRepositoryImpl
 import battle.repository.skill.SkillRepository
 import battle.repository.skill.SkillRepositoryImpl
 import battle.service.FindTargetService
-import battle.service.attack.DecHpService
-import battle.service.attack.DecMonsterHpService
-import battle.service.attack.DecPlayerHpService
+import battle.service.attack.UpdateMonsterStatusService
+import battle.service.attack.UpdateParameterService
+import battle.service.attack.UpdatePlayerStatusService
 import battle.serviceimpl.FindTargetServiceImpl
 import battle.usecase.IsAllMonsterNotActiveUseCase
 import battle.usecase.attack.AttackFromEnemyUseCaseImpl
@@ -72,16 +72,16 @@ val BattleModule = module {
         ActionRepositoryImpl()
     }
 
-    single<DecHpService<MonsterStatus>>(
+    single<UpdateParameterService<MonsterStatus>>(
         qualifier = named(QualifierAttackFromPlayer)
     ) {
-        DecMonsterHpService()
+        UpdateMonsterStatusService()
     }
 
-    single<DecHpService<PlayerStatus>>(
+    single<UpdateParameterService<PlayerStatus>>(
         qualifier = named(QualifierAttackFromEnemy)
     ) {
-        DecPlayerHpService()
+        UpdatePlayerStatusService()
     }
 
     single<FindTargetService> {
