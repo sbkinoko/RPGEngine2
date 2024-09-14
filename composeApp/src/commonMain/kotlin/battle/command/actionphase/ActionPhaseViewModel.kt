@@ -5,6 +5,7 @@ import battle.QualifierAttackFromEnemy
 import battle.QualifierAttackFromPlayer
 import battle.domain.ActionType
 import battle.domain.AttackPhaseCommand
+import battle.domain.AttackSkill
 import battle.domain.CommandType
 import battle.domain.FinishCommand
 import battle.repository.action.ActionRepository
@@ -174,18 +175,22 @@ class ActionPhaseViewModel : BattleChildViewModel() {
             amount = skill.needMP,
         )
 
-        val targetList = findActiveTargetUseCase.invoke(
-            statusList = statusList,
-            target = target,
-            targetNum = skill.targetNum
-        )
+        when (skill) {
+            is AttackSkill -> {
+                val targetList = findActiveTargetUseCase.invoke(
+                    statusList = statusList,
+                    target = target,
+                    targetNum = skill.targetNum
+                )
 
-        //　複数の対象攻撃
-        targetList.forEach {
-            attackUseCase.invoke(
-                target = it,
-                damage = skill.damage,
-            )
+                //　複数の対象攻撃
+                targetList.forEach {
+                    attackUseCase.invoke(
+                        target = it,
+                        damage = skill.damageAmount,
+                    )
+                }
+            }
         }
     }
 
