@@ -2,12 +2,12 @@ package battle.usecase.attack
 
 import battle.repository.battlemonster.BattleMonsterRepository
 import battle.service.FindTargetService
-import battle.service.updateparameter.UpdateMonsterStatusService
+import battle.usecase.updateparameter.UpdateMonsterStatusUseCase
 
 class AttackFromPlayerUseCaseImpl(
     private val battleMonsterRepository: BattleMonsterRepository,
     private val findTargetService: FindTargetService,
-    private val updateMonsterStatusService: UpdateMonsterStatusService
+    private val updateMonsterStatusService: UpdateMonsterStatusUseCase
 ) : AttackUseCase {
     override suspend operator fun invoke(
         target: Int,

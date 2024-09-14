@@ -1,11 +1,11 @@
-package battle.service.updateparameter
+package battle.usecase.updateparameter
 
 import common.repository.status.StatusRepository
 import common.status.PlayerStatus
 
-class UpdatePlayerStatusService(
+class UpdatePlayerStatusUseCase(
     override val statusRepository: StatusRepository<PlayerStatus>,
-) : AbstractUpdateParameterService<PlayerStatus>() {
+) : AbstractUpdateStatusUseCase<PlayerStatus>() {
 
     override fun decHPImpl(amount: Int, status: PlayerStatus): PlayerStatus {
         return status.copy(

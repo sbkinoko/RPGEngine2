@@ -1,6 +1,6 @@
-package battle.service.updateparameter
+package battle.usecase.updateparameter
 
-interface UpdateParameterService<T> {
+interface UpdateStatusService<T> {
     /**
      *  HPを減らして、更新後のステータスを返す
      */

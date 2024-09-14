@@ -2,7 +2,7 @@ package battle.serviceimpl
 
 import battle.BattleModule
 import battle.repository.battlemonster.BattleMonsterRepository
-import battle.service.updateparameter.UpdateMonsterStatusService
+import battle.usecase.updateparameter.UpdateMonsterStatusUseCase
 import common.status.MonsterStatusTest.Companion.getMonster
 import kotlinx.coroutines.runBlocking
 import org.koin.core.context.startKoin
@@ -16,7 +16,7 @@ import kotlin.test.assertEquals
 
 class UpdateMonsterParameterUseCaseTest : KoinTest {
 
-    private val updateMonsterParameterUseCase: UpdateMonsterStatusService by inject()
+    private val updateMonsterParameterUseCase: UpdateMonsterStatusUseCase by inject()
     private val battleMonsterRepository: BattleMonsterRepository by inject()
 
     @BeforeTest

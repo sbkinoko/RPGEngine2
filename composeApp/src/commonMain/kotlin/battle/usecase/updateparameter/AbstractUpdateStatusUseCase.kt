@@ -1,8 +1,8 @@
-package battle.service.updateparameter
+package battle.usecase.updateparameter
 
 import common.repository.status.StatusRepository
 
-abstract class AbstractUpdateParameterService<T> : UpdateParameterService<T> {
+abstract class AbstractUpdateStatusUseCase<T> : UpdateStatusService<T> {
     abstract val statusRepository: StatusRepository<T>
 
     override suspend fun decHP(

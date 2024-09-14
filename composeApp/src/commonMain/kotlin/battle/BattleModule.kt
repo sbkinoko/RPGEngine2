@@ -15,8 +15,6 @@ import battle.repository.commandstate.CommandStateRepositoryImpl
 import battle.repository.skill.SkillRepository
 import battle.repository.skill.SkillRepositoryImpl
 import battle.service.FindTargetService
-import battle.service.updateparameter.UpdateMonsterStatusService
-import battle.service.updateparameter.UpdatePlayerStatusService
 import battle.serviceimpl.FindTargetServiceImpl
 import battle.usecase.IsAllMonsterNotActiveUseCase
 import battle.usecase.attack.AttackFromEnemyUseCaseImpl
@@ -28,6 +26,8 @@ import battle.usecase.findactivetarget.FindActiveTargetUseCase
 import battle.usecase.findactivetarget.FindActiveTargetUseCaseImpl
 import battle.usecase.gettargetnum.GetTargetNumUseCase
 import battle.usecase.gettargetnum.GetTargetNumUseCaseImpl
+import battle.usecase.updateparameter.UpdateMonsterStatusUseCase
+import battle.usecase.updateparameter.UpdatePlayerStatusUseCase
 import common.repository.player.PlayerRepository
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -69,13 +69,13 @@ val BattleModule = module {
     }
 
     single {
-        UpdateMonsterStatusService(
+        UpdateMonsterStatusUseCase(
             statusRepository = get<BattleMonsterRepository>()
         )
     }
 
     single {
-        UpdatePlayerStatusService(
+        UpdatePlayerStatusUseCase(
             statusRepository = get<PlayerRepository>()
         )
     }

@@ -10,12 +10,12 @@ import battle.domain.FinishCommand
 import battle.repository.action.ActionRepository
 import battle.repository.battlemonster.BattleMonsterRepository
 import battle.repository.skill.SkillRepository
-import battle.service.updateparameter.UpdateMonsterStatusService
-import battle.service.updateparameter.UpdateParameterService
-import battle.service.updateparameter.UpdatePlayerStatusService
 import battle.usecase.IsAllMonsterNotActiveUseCase
 import battle.usecase.attack.AttackUseCase
 import battle.usecase.findactivetarget.FindActiveTargetUseCase
+import battle.usecase.updateparameter.UpdateMonsterStatusUseCase
+import battle.usecase.updateparameter.UpdatePlayerStatusUseCase
+import battle.usecase.updateparameter.UpdateStatusService
 import common.repository.player.PlayerRepository
 import common.status.Status
 import common.values.playerNum
@@ -37,8 +37,8 @@ class ActionPhaseViewModel : BattleChildViewModel() {
     private val playerRepository: PlayerRepository by inject()
     private val skillRepository: SkillRepository by inject()
 
-    private val updatePlayerParameter: UpdatePlayerStatusService by inject()
-    private val updateEnemyParameter: UpdateMonsterStatusService by inject()
+    private val updatePlayerParameter: UpdatePlayerStatusUseCase by inject()
+    private val updateEnemyParameter: UpdateMonsterStatusUseCase by inject()
 
     private val attackFromPlayerUseCase: AttackUseCase by inject(
         qualifier = named(QualifierAttackFromPlayer)
@@ -164,7 +164,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
         statusList: List<Status>,
         target: Int,
         attackUseCase: AttackUseCase,
-        updateParameter: UpdateParameterService<*>,
+        updateParameter: UpdateStatusService<*>,
     ) {
         val skill = skillRepository.getSkill(id = skillId)
 
