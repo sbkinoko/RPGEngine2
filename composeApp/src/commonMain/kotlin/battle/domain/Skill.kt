@@ -1,6 +1,6 @@
 package battle.domain
 
-import common.status.Status
+import main.status.Status
 
 sealed interface Skill {
     val name: String

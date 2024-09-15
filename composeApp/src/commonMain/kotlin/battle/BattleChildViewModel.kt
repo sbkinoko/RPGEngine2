@@ -3,7 +3,7 @@ package battle
 import battle.domain.CommandType
 import battle.repository.commandstate.CommandStateRepository
 import common.Timer
-import common.menu.SelectableWindowViewModel
+import main.menu.SelectableWindowViewModel
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 

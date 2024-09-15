@@ -1,4 +1,4 @@
-package main.layout
+package main
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -22,8 +22,8 @@ import common.extension.pxToDp
 import common.values.Colors
 import controller.layout.Controller
 import main.domain.toViewModel
+import main.layout.PlayArea
 import main.repository.screentype.ScreenTypeRepository
-import main.viewmodel.MainViewModel
 import map.viewmodel.MapViewModel
 import menu.MenuViewModel
 import org.koin.compose.koinInject

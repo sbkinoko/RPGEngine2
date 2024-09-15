@@ -14,10 +14,10 @@ import androidx.compose.ui.unit.dp
 import battle.command.selectally.SelectAllyViewModel
 import common.extension.menuItem
 import common.layout.DisableBox
-import common.status.Status
 import common.values.Colors
+import main.status.Status
 import org.koin.compose.koinInject
-import common.status.param.Point as StatusPoint
+import main.status.param.Point as StatusPoint
 
 @Composable
 fun StatusComponent(

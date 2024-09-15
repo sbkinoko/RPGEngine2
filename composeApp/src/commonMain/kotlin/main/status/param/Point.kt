@@ -1,4 +1,4 @@
-package common.status.param
+package main.status.param
 
 abstract class Point {
     var point: Int = 0

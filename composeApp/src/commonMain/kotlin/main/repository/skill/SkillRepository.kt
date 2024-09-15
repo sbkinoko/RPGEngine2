@@ -1,4 +1,4 @@
-package battle.repository.skill
+package main.repository.skill
 
 import battle.domain.Skill
 
