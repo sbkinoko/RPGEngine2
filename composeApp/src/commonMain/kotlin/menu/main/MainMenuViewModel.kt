@@ -4,7 +4,7 @@ import common.Timer
 import common.menu.SelectableWindowViewModel
 import kotlinx.coroutines.flow.SharedFlow
 import menu.domain.SelectManager
-import menu.layout.toMenuType
+import menu.domain.toMenuType
 import menu.repository.menustate.MenuStateRepository
 import menu.usecase.backfield.BackFieldUseCase
 import org.koin.core.component.KoinComponent

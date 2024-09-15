@@ -45,13 +45,3 @@ private val menuModifier = Modifier
     .background(
         color = Colors.MenuBackground,
     )
-
-fun Int.toMenuType() = when (this) {
-    0 -> MenuType.Status
-    1 -> MenuType.Item2
-    2 -> MenuType.Item3
-    3 -> MenuType.Item4
-    4 -> MenuType.Item5
-    5 -> MenuType.Item6
-    else -> throw RuntimeException()
-}
