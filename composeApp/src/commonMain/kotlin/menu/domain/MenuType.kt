@@ -7,6 +7,9 @@ enum class MenuType(
     Status(
         title = "ステータス",
     ),
+    SKILL(
+        title = "スキル"
+    ),
     Item1(title = "text1"),
     Item2(title = "text2"),
     Item3(title = "text3"),
@@ -19,7 +22,7 @@ enum class MenuType(
 // fixme 直接menuTypeを入れる
 fun Int.toMenuType() = when (this) {
     0 -> MenuType.Status
-    1 -> MenuType.Item2
+    1 -> MenuType.SKILL
     2 -> MenuType.Item3
     3 -> MenuType.Item4
     4 -> MenuType.Item5
