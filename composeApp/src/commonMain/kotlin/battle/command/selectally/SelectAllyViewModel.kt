@@ -4,6 +4,7 @@ import battle.BattleChildViewModel
 import battle.domain.CommandType
 import battle.domain.HealSkill
 import battle.domain.SelectAllyCommand
+import battle.domain.TargetType
 import battle.repository.action.ActionRepository
 import battle.repository.skill.SkillRepository
 import battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUseCase
@@ -36,6 +37,16 @@ class SelectAllyViewModel : BattleChildViewModel() {
     override val canBack: Boolean
         get() = true
 
+    val targetType: TargetType
+        get() {
+            val skillId = actionRepository.getAction(playerId).skillId!!
+            val skill = skillRepository.getSkill(skillId)
+            if (skill !is HealSkill) {
+                throw RuntimeException("Heal以外でここにいないはず")
+            }
+            return skill.targetType
+        }
+
     init {
         CoroutineScope(Dispatchers.Default).launch {
             commandStateRepository.commandTypeFlow.collect {
@@ -63,14 +74,7 @@ class SelectAllyViewModel : BattleChildViewModel() {
     }
 
     override fun moveStick(stickPosition: StickPosition) {
-        val skillId = actionRepository.getAction(playerId).skillId!!
-        val skill = skillRepository.getSkill(skillId)
-        if (skill !is HealSkill) {
-            throw RuntimeException("Heal以外でここにいないはず")
-        }
-
-        val targetType = skill.targetType
-
+        // 選択可能な対象まで移動する
         do {
             super.moveStick(stickPosition)
             val id = selectManager.selected
