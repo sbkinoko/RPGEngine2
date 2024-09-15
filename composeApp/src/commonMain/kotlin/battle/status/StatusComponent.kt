@@ -1,9 +1,6 @@
 package battle.status
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -16,6 +13,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import battle.command.selectally.SelectAllyViewModel
 import common.extension.menuItem
+import common.layout.DisableBox
 import common.status.Status
 import common.values.Colors
 import org.koin.compose.koinInject
@@ -37,15 +35,21 @@ fun StatusComponent(
 
     val isAllySelecting = selectAllyViewModel.isAllySelecting.collectAsState().value
 
-    Box(modifier = modifier) {
+    DisableBox(
+        modifier = modifier,
+        isDisable = (isAllySelecting &&
+                selectAllyViewModel.targetType.canSelect(status).not()),
+    ) {
         Column(
             modifier = Modifier.fillMaxSize().then(
                 if (isAllySelecting) {
+                    // 味方選択中は選択可能にする
                     Modifier.menuItem(
                         id = index,
                         battleChildViewModel = selectAllyViewModel,
                     )
                 } else {
+                    // ただの表示欄
                     Modifier.border(
                         width = 1.dp,
                         color = Colors.StatusComponent,
@@ -68,21 +72,6 @@ fun StatusComponent(
                 point = status.mp,
                 color = color,
             )
-        }
-        if (
-            isAllySelecting &&
-            selectAllyViewModel.targetType.canSelect(status).not()
-        ) {
-            Box(
-                modifier = Modifier.fillMaxSize()
-                    .clickable {
-
-                    }.background(
-                        color = Colors.SkillDisabled
-                    )
-            ) {
-
-            }
         }
     }
 }
