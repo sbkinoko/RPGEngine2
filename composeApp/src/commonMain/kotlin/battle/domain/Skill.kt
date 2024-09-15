@@ -1,5 +1,7 @@
 package battle.domain
 
+import common.status.Status
+
 sealed interface Skill {
     val name: String
     val needMP: Int
@@ -22,4 +24,18 @@ data class HealSkill(
     override val targetNum: Int,
     override val canUse: (Int) -> Boolean = { mp -> mp >= needMP },
     val healAmount: Int,
+    val targetType: TargetType,
 ) : Skill
+
+enum class TargetType {
+    ACTIVE {
+        override fun canSelect(status: Status): Boolean {
+            return status.isActive
+        }
+    };
+
+    /**
+     * 対象のstatusが選択可能かどうかを返す
+     */
+    abstract fun canSelect(status: Status): Boolean
+}

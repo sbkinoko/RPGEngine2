@@ -3,6 +3,7 @@ package battle.repository.skill
 import battle.domain.AttackSkill
 import battle.domain.HealSkill
 import battle.domain.Skill
+import battle.domain.TargetType
 
 const val HEAL_SKILL = 3
 
@@ -37,6 +38,7 @@ class SkillRepositoryImpl : SkillRepository {
                 healAmount = 10,
                 needMP = 1,
                 targetNum = 1,
+                targetType = TargetType.ACTIVE
             )
 
             else -> throw NotImplementedError()
