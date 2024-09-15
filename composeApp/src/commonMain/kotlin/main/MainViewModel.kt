@@ -1,4 +1,4 @@
-package main.viewmodel
+package main
 
 import main.repository.screentype.ScreenTypeRepository
 import org.koin.core.component.KoinComponent

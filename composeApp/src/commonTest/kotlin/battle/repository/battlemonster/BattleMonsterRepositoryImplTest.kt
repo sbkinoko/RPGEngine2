@@ -1,9 +1,9 @@
 package battle.repository.battlemonster
 
-import common.status.MonsterStatus
-import common.status.param.HP
-import common.status.param.MP
 import kotlinx.coroutines.runBlocking
+import main.status.MonsterStatus
+import main.status.param.HP
+import main.status.param.MP
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test

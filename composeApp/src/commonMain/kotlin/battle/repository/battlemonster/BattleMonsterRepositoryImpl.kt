@@ -1,7 +1,7 @@
 package battle.repository.battlemonster
 
-import common.status.MonsterStatus
 import kotlinx.coroutines.flow.MutableSharedFlow
+import main.status.MonsterStatus
 
 class BattleMonsterRepositoryImpl : BattleMonsterRepository {
     override val monsterListFlow: MutableSharedFlow<List<MonsterStatus>> = MutableSharedFlow()

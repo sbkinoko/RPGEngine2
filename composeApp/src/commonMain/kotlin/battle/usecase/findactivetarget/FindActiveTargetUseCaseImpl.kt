@@ -1,7 +1,7 @@
 package battle.usecase.findactivetarget
 
 import battle.service.FindTargetService
-import common.status.Status
+import main.status.Status
 
 class FindActiveTargetUseCaseImpl(
     private val findTargetService: FindTargetService,

@@ -1,7 +1,9 @@
 package common.status
 
-import common.status.param.HP
-import common.status.param.MP
+import main.status.PlayerStatus
+import main.status.Status
+import main.status.param.HP
+import main.status.param.MP
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals

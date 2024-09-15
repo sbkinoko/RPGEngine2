@@ -6,15 +6,15 @@ import battle.domain.HealSkill
 import battle.domain.SelectAllyCommand
 import battle.domain.TargetType
 import battle.repository.action.ActionRepository
-import battle.repository.skill.SkillRepository
 import battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUseCase
-import common.repository.player.PlayerRepository
 import common.values.playerNum
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import main.repository.player.PlayerRepository
+import main.repository.skill.SkillRepository
 import menu.domain.SelectManager
 import org.koin.core.component.inject
 

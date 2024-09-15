@@ -1,10 +1,9 @@
-package common.status.param
+package main.status.param
 
-data class MP(
+data class HP(
     var maxValue: Int,
     var value: Int = maxValue,
 ) : Point() {
-
     override var maxPoint = maxValue
         set(value) {
             field = if (value < MIN_MAX_VALUE) {
@@ -24,6 +23,6 @@ data class MP(
     }
 
     companion object {
-        const val MIN_MAX_VALUE = 0
+        const val MIN_MAX_VALUE = 1
     }
 }
