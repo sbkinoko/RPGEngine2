@@ -1,5 +1,6 @@
-package menu.main
+package common.menu
 
+import menu.main.MainMenuItem
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -13,7 +14,7 @@ class ToPairedListTest {
                 onClick = {}
             )
         }
-        list.toPairedList().forEachIndexed { index, pair ->
+        PairedList<MainMenuItem>().toPairedList(list).forEachIndexed { index, pair ->
             assertEquals(
                 expected = list[index * 2],
                 actual = pair.first
@@ -35,7 +36,7 @@ class ToPairedListTest {
             )
         }
 
-        list.toPairedList().forEachIndexed { index, pair ->
+        PairedList<MainMenuItem>().toPairedList(list).forEachIndexed { index, pair ->
             if (index == 0) {
                 assertEquals(
                     expected = list[index * 2],
