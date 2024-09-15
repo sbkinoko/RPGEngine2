@@ -5,6 +5,7 @@ import common.menu.SelectableWindowViewModel
 import common.repository.player.PlayerRepository
 import common.repository.player.PlayerRepositoryImpl
 import common.status.Status
+import common.values.playerNum
 import menu.domain.SelectManager
 import menu.repository.menustate.MenuStateRepository
 import org.koin.core.component.KoinComponent
@@ -17,7 +18,7 @@ class StatusViewModel : SelectableWindowViewModel(),
 
     override var selectManager = SelectManager(
         width = 1,
-        itemNum = 4,
+        itemNum = playerNum,
     )
 
     override var timer: Timer = Timer(200)
