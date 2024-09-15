@@ -1,5 +1,6 @@
 package common.menu
 
+import main.menu.PairedList
 import menu.main.MainMenuItem
 import kotlin.test.Test
 import kotlin.test.assertEquals

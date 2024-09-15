@@ -1,5 +1,6 @@
 package main.viewmodel
 
+import main.MainViewModel
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest

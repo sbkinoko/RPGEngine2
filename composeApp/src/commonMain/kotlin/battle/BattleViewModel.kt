@@ -22,9 +22,6 @@ import battle.domain.SkillCommand
 import battle.repository.battlemonster.BattleMonsterRepository
 import battle.repository.commandstate.CommandStateRepository
 import common.Timer
-import common.repository.player.PlayerRepository
-import common.status.MonsterStatus
-import common.status.PlayerStatus
 import common.values.playerNum
 import controller.domain.ControllerCallback
 import controller.domain.StickPosition
@@ -37,7 +34,10 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import main.domain.ScreenType
+import main.repository.player.PlayerRepository
 import main.repository.screentype.ScreenTypeRepository
+import main.status.MonsterStatus
+import main.status.PlayerStatus
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 

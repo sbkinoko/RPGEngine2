@@ -10,7 +10,6 @@ import battle.service.FindTargetService
 import battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUseCase
 import battle.usecase.findactivetarget.FindActiveTargetUseCase
 import battle.usecase.gettargetnum.GetTargetNumUseCase
-import common.status.MonsterStatus
 import controller.domain.ArrowCommand
 import controller.domain.StickPosition
 import kotlinx.coroutines.CoroutineScope
@@ -19,6 +18,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import main.status.MonsterStatus
 import menu.domain.SelectManager
 import org.koin.core.component.inject
 

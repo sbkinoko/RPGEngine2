@@ -5,7 +5,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import battle.command.selectenemy.SelectEnemyViewModel
 import common.layout.CenterText
-import common.status.PlayerStatus
+import main.status.PlayerStatus
 import org.koin.compose.koinInject
 
 @Composable

@@ -6,13 +6,13 @@ import battle.domain.CommandType
 import battle.repository.action.ActionRepository
 import battle.repository.battlemonster.BattleMonsterRepository
 import battle.repository.commandstate.CommandStateRepository
-import common.status.MonsterStatus
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.runBlocking
 import main.MainModule
 import main.domain.ScreenType
 import main.repository.screentype.ScreenTypeRepository
+import main.status.MonsterStatus
 import org.koin.core.context.startKoin
 import org.koin.mp.KoinPlatform.stopKoin
 import org.koin.test.KoinTest

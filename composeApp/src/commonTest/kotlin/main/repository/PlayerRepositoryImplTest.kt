@@ -1,12 +1,13 @@
-package common.repository.player
+package main.repository
 
 import common.CommonModule
-import common.status.PlayerStatus
-import common.status.param.HP
-import common.status.param.MP
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import main.repository.player.PlayerRepository
+import main.status.PlayerStatus
+import main.status.param.HP
+import main.status.param.MP
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest

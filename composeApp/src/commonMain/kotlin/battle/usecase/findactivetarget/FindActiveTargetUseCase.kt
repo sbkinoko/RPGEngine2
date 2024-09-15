@@ -1,6 +1,6 @@
 package battle.usecase.findactivetarget
 
-import common.status.Status
+import main.status.Status
 
 interface FindActiveTargetUseCase {
 

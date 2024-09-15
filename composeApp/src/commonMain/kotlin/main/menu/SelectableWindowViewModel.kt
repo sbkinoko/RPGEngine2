@@ -1,4 +1,4 @@
-package common.menu
+package main.menu
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState

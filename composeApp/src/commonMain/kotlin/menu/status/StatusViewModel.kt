@@ -1,11 +1,11 @@
 package menu.status
 
 import common.Timer
-import common.menu.SelectableWindowViewModel
-import common.repository.player.PlayerRepository
-import common.repository.player.PlayerRepositoryImpl
-import common.status.Status
 import common.values.playerNum
+import main.menu.SelectableWindowViewModel
+import main.repository.player.PlayerRepository
+import main.repository.player.PlayerRepositoryImpl
+import main.status.Status
 import menu.domain.SelectManager
 import menu.repository.menustate.MenuStateRepository
 import org.koin.core.component.KoinComponent
