@@ -26,5 +26,5 @@ object Colors {
     val SelectedMenu = red
     val MenuFrame = blue
     val MenuBackground = white
-    val SkillDisabled = transGrey
+    val Disabled = transGrey
 }

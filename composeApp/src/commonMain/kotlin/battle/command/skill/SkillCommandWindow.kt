@@ -1,8 +1,5 @@
 package battle.command.skill
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,7 +10,7 @@ import androidx.compose.ui.Modifier
 import common.extension.equalAllocationModifier
 import common.extension.menuItem
 import common.layout.CenterText
-import common.values.Colors
+import common.layout.DisableBox
 import org.koin.compose.koinInject
 
 @Composable
@@ -73,28 +70,17 @@ fun SkillText(
     skillCommandViewModel: SkillCommandViewModel = koinInject(),
 ) {
     val id = skillCommandViewModel.skillList[position]
-    Box(
+    DisableBox(
+        isDisable = skillCommandViewModel.canUse(id = id).not(),
         modifier = modifier
             .menuItem(
                 id = position,
                 battleChildViewModel = skillCommandViewModel,
-            ),
+            )
     ) {
         CenterText(
             modifier = Modifier.fillMaxSize(),
             text = skillCommandViewModel.getName(id = id),
         )
-        if (skillCommandViewModel.canUse(id = id).not()) {
-            Box(
-                modifier = Modifier.fillMaxSize()
-                    .clickable {
-
-                    }.background(
-                        color = Colors.SkillDisabled
-                    )
-            ) {
-
-            }
-        }
     }
 }
