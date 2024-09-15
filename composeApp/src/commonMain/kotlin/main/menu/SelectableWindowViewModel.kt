@@ -31,6 +31,7 @@ abstract class SelectableWindowViewModel : ControllerCallback {
         timer.callbackIfTimePassed {
             //　スティックの方向に選択可能なものまで移動
             do {
+                //todo 一度選んだやつを再度選んだ場合、ループ終了
                 selectManager.move(stickPosition.toCommand())
             } while (selectable().not())
         }
