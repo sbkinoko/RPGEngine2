@@ -1,6 +1,7 @@
 package menu.main
 
 import common.Timer
+import common.menu.PairedList
 import common.menu.SelectableWindowViewModel
 import kotlinx.coroutines.flow.SharedFlow
 import menu.domain.SelectManager
@@ -28,7 +29,8 @@ class MainMenuViewModel : SelectableWindowViewModel(),
     }
     val itemNum: Int = list.size
 
-    val pairedList: List<Pair<MainMenuItem, MainMenuItem?>> = list.toPairedList()
+    val pairedList: List<Pair<MainMenuItem, MainMenuItem?>> =
+        PairedList<MainMenuItem>().toPairedList(list)
 
     override var selectManager: SelectManager = SelectManager(
         width = 2,
@@ -43,18 +45,4 @@ class MainMenuViewModel : SelectableWindowViewModel(),
     override fun pressB() {
         backFieldUseCase()
     }
-}
-
-fun List<MainMenuItem>.toPairedList(): List<Pair<MainMenuItem, MainMenuItem?>> {
-    val pairedList: MutableList<Pair<MainMenuItem, MainMenuItem?>> = mutableListOf()
-    for (cnt: Int in this.indices step 2) {
-        if (cnt + 1 < this.size) {
-            //　次の項目とセットで追加
-            pairedList.add(Pair(this[cnt], this[cnt + 1]))
-        } else {
-            // もう項目がないのでnullを入れる
-            pairedList.add(Pair(this[cnt], null))
-        }
-    }
-    return pairedList.toList()
 }
