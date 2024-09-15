@@ -32,7 +32,11 @@ class MenuViewModel : KoinComponent, ControllerCallback {
         return when (this) {
             MenuType.Main -> mainMenuViewModel
             MenuType.Status -> statusViewModel
-            else -> null
+            MenuType.SKILL -> statusViewModel
+            MenuType.Item3 -> null
+            MenuType.Item4 -> null
+            MenuType.Item5 -> null
+            MenuType.Item6 -> null
         }
     }
 

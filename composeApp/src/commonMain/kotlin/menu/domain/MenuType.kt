@@ -10,8 +10,6 @@ enum class MenuType(
     SKILL(
         title = "スキル"
     ),
-    Item1(title = "text1"),
-    Item2(title = "text2"),
     Item3(title = "text3"),
     Item4(title = "text4"),
     Item5(title = "text5"),
