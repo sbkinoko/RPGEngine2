@@ -4,43 +4,37 @@ import common.Timer
 import common.menu.SelectableWindowViewModel
 import kotlinx.coroutines.flow.SharedFlow
 import menu.domain.SelectManager
+import menu.layout.toMenuType
+import menu.repository.menustate.MenuStateRepository
 import menu.usecase.backfield.BackFieldUseCase
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class MainMenuViewModel : SelectableWindowViewModel(),
     KoinComponent {
-    private val backFieldUseCase: BackFieldUseCase by inject()
+    private val menuStateRepository: MenuStateRepository by inject()
 
-    override lateinit var selectManager: SelectManager
-    lateinit var selectedFlow: SharedFlow<Int>
+    private val backFieldUseCase: BackFieldUseCase by inject()
 
     override var timer = Timer(200)
 
-    lateinit var pairedList: MutableList<Pair<MainMenuItem, MainMenuItem?>>
-    lateinit var list: List<MainMenuItem>
-
-    private var itemNum = 0
-
-    fun setItems(items: List<MainMenuItem>) {
-        itemNum = items.size
-        list = items
-        pairedList = mutableListOf()
-        for (cnt: Int in items.indices step 2) {
-            if (cnt + 1 < items.size) {
-                //　次の項目とセットで追加
-                pairedList.add(Pair(items[cnt], items[cnt + 1]))
-            } else {
-                // もう項目がないのでnullを入れる
-                pairedList.add(Pair(items[cnt], null))
-            }
-        }
-        selectManager = SelectManager(
-            width = 2,
-            itemNum = itemNum,
+    val list: List<MainMenuItem> = List(5) {
+        MainMenuItem(
+            text = it.toMenuType().title,
+            onClick = {
+                menuStateRepository.menuType = it.toMenuType()
+            },
         )
-        selectedFlow = selectManager.selectedFlow
     }
+    val itemNum: Int = list.size
+
+    val pairedList: List<Pair<MainMenuItem, MainMenuItem?>> = list.toPairedList()
+
+    override var selectManager: SelectManager = SelectManager(
+        width = 2,
+        itemNum = itemNum,
+    )
+    var selectedFlow: SharedFlow<Int> = selectManager.selectedFlow
 
     override fun pressA() {
         list[selectManager.selected].onClick()
@@ -53,4 +47,18 @@ class MainMenuViewModel : SelectableWindowViewModel(),
     override fun pressM() {
 
     }
+}
+
+fun List<MainMenuItem>.toPairedList(): List<Pair<MainMenuItem, MainMenuItem?>> {
+    val pairedList: MutableList<Pair<MainMenuItem, MainMenuItem?>> = mutableListOf()
+    for (cnt: Int in this.indices step 2) {
+        if (cnt + 1 < this.size) {
+            //　次の項目とセットで追加
+            pairedList.add(Pair(this[cnt], this[cnt + 1]))
+        } else {
+            // もう項目がないのでnullを入れる
+            pairedList.add(Pair(this[cnt], null))
+        }
+    }
+    return pairedList.toList()
 }

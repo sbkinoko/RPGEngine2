@@ -102,6 +102,10 @@ class StartBattleUseCaseImplTest : KoinTest {
                     throw NotImplementedError()
                 }
 
+                override fun setAlly(playerId: Int, allyId: Int) {
+                    throw NotImplementedError()
+                }
+
                 override fun getAction(playerId: Int): ActionData {
                     throw NotImplementedError()
                 }

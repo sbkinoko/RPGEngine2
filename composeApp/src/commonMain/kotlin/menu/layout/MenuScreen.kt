@@ -11,8 +11,6 @@ import common.values.Colors
 import menu.MenuViewModel
 import menu.domain.MenuType
 import menu.main.MainMenu
-import menu.main.MainMenuItem
-import menu.main.MainMenuViewModel
 import menu.status.StatusMenu
 import org.koin.compose.koinInject
 
@@ -20,22 +18,8 @@ import org.koin.compose.koinInject
 fun MenuScreen(
     modifier: Modifier = Modifier,
     menuViewModel: MenuViewModel = koinInject(),
-    mainMenuViewModel: MainMenuViewModel = koinInject()
 ) {
     val menuState = menuViewModel.menuType.collectAsState(MenuType.Main)
-
-    mainMenuViewModel.setItems(
-        List(5) {
-            MainMenuItem(
-                text = it.toMenuType().title,
-                onClick = {
-                    menuViewModel.setMenuType(
-                        it.toMenuType()
-                    )
-                },
-            )
-        }
-    )
 
     Box(modifier = modifier) {
         when (val state = menuState.value) {
