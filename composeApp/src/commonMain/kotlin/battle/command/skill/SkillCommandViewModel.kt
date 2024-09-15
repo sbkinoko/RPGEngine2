@@ -31,11 +31,18 @@ class SkillCommandViewModel : BattleChildViewModel() {
     val playerId: Int
         get() = (commandStateRepository.nowCommandType as SkillCommand).playerId
 
+    private val selectedSkillId: Int
+        get() = skillList[selectManager.selected]
+
     fun init() {
         // 最後に選ばれていたスキルを呼び出し
         selectManager.selected = actionRepository.getAction(
             playerId = playerId
         ).skillId ?: 0
+    }
+
+    override fun selectable(): Boolean {
+        return canUse(selectedSkillId)
     }
 
     fun getName(id: Int): String {
@@ -56,8 +63,7 @@ class SkillCommandViewModel : BattleChildViewModel() {
     }
 
     override fun goNextImpl() {
-        val skillId = skillList[selectManager.selected]
-
+        val skillId = selectedSkillId
         //　使えないので進まない
         if (canUse(skillId).not()) {
             return
