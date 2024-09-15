@@ -11,6 +11,14 @@ abstract class SelectableWindowViewModel : ControllerCallback {
     protected abstract var selectManager: SelectManager
     protected abstract var timer: Timer
 
+    /**
+     * selectManagerで選択可能な条件
+     * 基本的には全部選択できるはず
+     */
+    protected open fun selectable(): Boolean {
+        return true
+    }
+
     @Composable
     fun getSelectedAsState() = selectManager.selectedFlow
         .collectAsState(selectManager.selected)
@@ -21,7 +29,10 @@ abstract class SelectableWindowViewModel : ControllerCallback {
 
     override fun moveStick(stickPosition: StickPosition) {
         timer.callbackIfTimePassed {
-            selectManager.move(stickPosition.toCommand())
+            //　スティックの方向に選択可能なものまで移動
+            do {
+                selectManager.move(stickPosition.toCommand())
+            } while (selectable().not())
         }
     }
 

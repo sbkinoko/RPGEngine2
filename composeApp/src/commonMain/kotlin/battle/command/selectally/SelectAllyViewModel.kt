@@ -10,7 +10,6 @@ import battle.repository.skill.SkillRepository
 import battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUseCase
 import common.repository.player.PlayerRepository
 import common.values.playerNum
-import controller.domain.StickPosition
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -62,6 +61,12 @@ class SelectAllyViewModel : BattleChildViewModel() {
         return commandType is SelectAllyCommand
     }
 
+    override fun selectable(): Boolean {
+        val id = selectManager.selected
+        val status = playerRepository.getStatus(id)
+        return targetType.canSelect(status)
+    }
+
     override fun goNextImpl() {
         // ターゲットを保存
         actionRepository.setAlly(
@@ -71,17 +76,6 @@ class SelectAllyViewModel : BattleChildViewModel() {
             allyId = selectManager.selected,
         )
         changeSelectingActionPlayerUseCase.invoke()
-    }
-
-    override fun moveStick(stickPosition: StickPosition) {
-        // 選択可能な対象まで移動する
-        do {
-            super.moveStick(stickPosition)
-            val id = selectManager.selected
-            val status = playerRepository.getStatus(id)
-        } while (
-            targetType.canSelect(status).not()
-        )
     }
 
     override var selectManager: SelectManager = SelectManager(
