@@ -22,6 +22,9 @@ fun PlayerActionPreview() {
             mp = MP(
                 maxValue = 10,
                 value = 5,
+            ),
+            skillList = listOf(
+                0,
             )
         ),
     )

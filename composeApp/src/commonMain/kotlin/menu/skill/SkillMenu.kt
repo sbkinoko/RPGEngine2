@@ -51,7 +51,7 @@ fun SkillMenu(
                             else Colors.MenuFrame,
                             shape = RectangleShape,
                         ),
-                    text = skillViewModel.getStatusAt(i).name,
+                    text = skillViewModel.getNameAt(i),
                 )
             }
         }
@@ -61,7 +61,14 @@ fun SkillMenu(
                 .fillMaxHeight()
                 .weight(1f),
         ) {
-            //todo viewModelからスキルの情報を抽出
+            skillViewModel.getSkillAt(selectedId).forEach {
+                CenterText(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f),
+                    text = skillViewModel.getSkillName(it),
+                )
+            }
         }
     }
 }
