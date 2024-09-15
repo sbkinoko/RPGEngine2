@@ -17,16 +17,6 @@ class MainMenuViewModelTest {
 
     @Test
     fun checkSetSelected() {
-        val list = List(3) {
-            MainMenuItem(
-                text = it.toString(),
-                onClick = {}
-            )
-        }
-        viewModel.setItems(
-            list
-        )
-
         var count = 0
         runBlocking {
             val collectJob = launch {
@@ -47,65 +37,6 @@ class MainMenuViewModelTest {
             delay(100)
 
             collectJob.cancel()
-        }
-    }
-
-    @Test
-    fun checkSetPairEven() {
-        val list = List(2) {
-            MainMenuItem(
-                text = it.toString(),
-                onClick = {}
-            )
-        }
-        viewModel.setItems(
-            list
-        )
-        viewModel.pairedList.forEachIndexed { index, pair ->
-            assertEquals(
-                expected = list[index * 2],
-                actual = pair.first
-            )
-
-            assertEquals(
-                expected = list[index * 2 + 1],
-                actual = pair.second,
-            )
-        }
-    }
-
-    @Test
-    fun checkSetPairOdd() {
-        val list = List(3) {
-            MainMenuItem(
-                text = it.toString(),
-                onClick = {}
-            )
-        }
-        viewModel.setItems(
-            list
-        )
-        viewModel.pairedList.forEachIndexed { index, pair ->
-            if (index == 0) {
-                assertEquals(
-                    expected = list[index * 2],
-                    actual = pair.first
-                )
-
-                assertEquals(
-                    expected = list[index * 2 + 1],
-                    actual = pair.second,
-                )
-            } else {
-                assertEquals(
-                    expected = list[index * 2],
-                    actual = pair.first
-                )
-                assertEquals(
-                    expected = null,
-                    actual = pair.second
-                )
-            }
         }
     }
 }

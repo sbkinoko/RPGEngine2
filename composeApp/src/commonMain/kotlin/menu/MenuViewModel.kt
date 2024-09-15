@@ -28,10 +28,6 @@ class MenuViewModel : KoinComponent, ControllerCallback {
             )
     }
 
-    fun setMenuType(menuType: MenuType) {
-        menuStateRepository.menuType = menuType
-    }
-
     private fun MenuType.toViewModel(): ControllerCallback? {
         return when (this) {
             MenuType.Main -> mainMenuViewModel
