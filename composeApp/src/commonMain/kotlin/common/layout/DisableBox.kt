@@ -29,7 +29,7 @@ fun DisableBox(
                     .clickable {
 
                     }.background(
-                        color = Colors.SkillDisabled
+                        color = Colors.Disabled
                     )
             ) {
 
