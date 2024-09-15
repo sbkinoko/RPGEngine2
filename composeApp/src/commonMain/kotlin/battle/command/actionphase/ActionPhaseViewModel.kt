@@ -12,6 +12,7 @@ import battle.domain.FinishCommand
 import battle.domain.HealSkill
 import battle.repository.action.ActionRepository
 import battle.repository.battlemonster.BattleMonsterRepository
+import battle.repository.skill.ATTACK_NORMAL
 import battle.repository.skill.SkillRepository
 import battle.usecase.IsAllMonsterNotActiveUseCase
 import battle.usecase.attack.AttackUseCase
@@ -216,7 +217,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
             id = attackingPlayerId.value - playerNum,
             statusList = playerRepository.getPlayers(),
             actionData = ActionData(
-                skillId = 2,
+                skillId = ATTACK_NORMAL,
                 target = 0,
             ),
             attackUseCase = attackFromEnemyUseCase,

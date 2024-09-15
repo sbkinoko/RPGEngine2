@@ -7,6 +7,8 @@ import battle.domain.SelectAllyCommand
 import battle.domain.SelectEnemyCommand
 import battle.domain.SkillCommand
 import battle.repository.action.ActionRepository
+import battle.repository.skill.ATTACK_TO_2
+import battle.repository.skill.CANT_USE
 import battle.repository.skill.HEAL_SKILL
 import battle.repository.skill.REVIVE_SKILL
 import battle.repository.skill.SkillRepository
@@ -20,8 +22,8 @@ class SkillCommandViewModel : BattleChildViewModel() {
     private val skillRepository: SkillRepository by inject()
 
     val skillList = listOf(
-        0,
-        1,
+        ATTACK_TO_2,
+        CANT_USE,
         HEAL_SKILL,
         REVIVE_SKILL,
     )
