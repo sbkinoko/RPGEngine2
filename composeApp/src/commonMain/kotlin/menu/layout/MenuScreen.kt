@@ -11,6 +11,7 @@ import common.values.Colors
 import menu.MenuViewModel
 import menu.domain.MenuType
 import menu.main.MainMenu
+import menu.skill.SkillMenu
 import menu.status.StatusMenu
 import org.koin.compose.koinInject
 
@@ -31,7 +32,14 @@ fun MenuScreen(
                 modifier = menuModifier,
             )
 
-            else -> Text(
+            MenuType.SKILL -> SkillMenu(
+                modifier = menuModifier,
+            )
+
+            MenuType.Item3,
+            MenuType.Item4,
+            MenuType.Item5,
+            MenuType.Item6 -> Text(
                 modifier = menuModifier,
                 text = state.name
             )
