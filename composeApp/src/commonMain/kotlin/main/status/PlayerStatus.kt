@@ -1,7 +1,7 @@
-package common.status
+package main.status
 
-import common.status.param.HP
-import common.status.param.MP
+import main.status.param.HP
+import main.status.param.MP
 
 data class PlayerStatus(
     override var name: String,

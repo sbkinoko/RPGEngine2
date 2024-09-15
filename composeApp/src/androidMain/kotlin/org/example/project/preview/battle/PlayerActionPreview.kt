@@ -4,9 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import battle.command.playeraction.PlayerAction
 import battle.command.playeraction.PlayerActionViewModel
-import common.status.PlayerStatus
-import common.status.param.HP
-import common.status.param.MP
+import main.status.PlayerStatus
+import main.status.param.HP
+import main.status.param.MP
 
 @Preview
 @Composable

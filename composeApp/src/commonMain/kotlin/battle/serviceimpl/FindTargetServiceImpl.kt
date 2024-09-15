@@ -1,7 +1,7 @@
 package battle.serviceimpl
 
 import battle.service.FindTargetService
-import common.status.Status
+import main.status.Status
 
 class FindTargetServiceImpl : FindTargetService {
 

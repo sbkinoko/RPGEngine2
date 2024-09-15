@@ -1,9 +1,9 @@
 package menu.main
 
 import common.Timer
-import common.menu.PairedList
-import common.menu.SelectableWindowViewModel
 import kotlinx.coroutines.flow.SharedFlow
+import main.menu.PairedList
+import main.menu.SelectableWindowViewModel
 import menu.domain.SelectManager
 import menu.domain.toMenuType
 import menu.repository.menustate.MenuStateRepository

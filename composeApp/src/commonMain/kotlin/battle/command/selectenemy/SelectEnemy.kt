@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import common.status.PlayerStatus
+import main.status.PlayerStatus
 import org.koin.compose.koinInject
 
 @Composable

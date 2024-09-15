@@ -12,16 +12,12 @@ import battle.domain.FinishCommand
 import battle.domain.HealSkill
 import battle.repository.action.ActionRepository
 import battle.repository.battlemonster.BattleMonsterRepository
-import battle.repository.skill.ATTACK_NORMAL
-import battle.repository.skill.SkillRepository
 import battle.usecase.IsAllMonsterNotActiveUseCase
 import battle.usecase.attack.AttackUseCase
 import battle.usecase.findactivetarget.FindActiveTargetUseCase
 import battle.usecase.updateparameter.UpdateMonsterStatusUseCase
 import battle.usecase.updateparameter.UpdatePlayerStatusUseCase
 import battle.usecase.updateparameter.UpdateStatusService
-import common.repository.player.PlayerRepository
-import common.status.Status
 import common.values.playerNum
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -31,6 +27,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import main.repository.player.PlayerRepository
+import main.repository.skill.ATTACK_NORMAL
+import main.repository.skill.SkillRepository
+import main.status.Status
 import menu.domain.SelectManager
 import org.koin.core.component.inject
 import org.koin.core.qualifier.named

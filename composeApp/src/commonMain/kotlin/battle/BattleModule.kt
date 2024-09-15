@@ -13,8 +13,6 @@ import battle.repository.battlemonster.BattleMonsterRepository
 import battle.repository.battlemonster.BattleMonsterRepositoryImpl
 import battle.repository.commandstate.CommandStateRepository
 import battle.repository.commandstate.CommandStateRepositoryImpl
-import battle.repository.skill.SkillRepository
-import battle.repository.skill.SkillRepositoryImpl
 import battle.service.FindTargetService
 import battle.serviceimpl.FindTargetServiceImpl
 import battle.usecase.IsAllMonsterNotActiveUseCase
@@ -29,7 +27,9 @@ import battle.usecase.gettargetnum.GetTargetNumUseCase
 import battle.usecase.gettargetnum.GetTargetNumUseCaseImpl
 import battle.usecase.updateparameter.UpdateMonsterStatusUseCase
 import battle.usecase.updateparameter.UpdatePlayerStatusUseCase
-import common.repository.player.PlayerRepository
+import main.repository.player.PlayerRepository
+import main.repository.skill.SkillRepository
+import main.repository.skill.SkillRepositoryImpl
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 

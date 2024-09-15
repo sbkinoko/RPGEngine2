@@ -1,16 +1,16 @@
-package common.repository.player
+package main.repository.player
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
-import common.status.PlayerStatus
-import common.status.param.HP
-import common.status.param.MP
 import common.values.playerNum
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
+import main.status.PlayerStatus
+import main.status.param.HP
+import main.status.param.MP
 
 class PlayerRepositoryImpl : PlayerRepository {
     override val mutablePlayersFlow: MutableSharedFlow<List<PlayerStatus>> =

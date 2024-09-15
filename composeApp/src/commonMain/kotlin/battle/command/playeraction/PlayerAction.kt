@@ -11,7 +11,7 @@ import androidx.compose.ui.text.style.TextAlign
 import common.extension.equalAllocationModifier
 import common.extension.menuItem
 import common.layout.CenterText
-import common.status.PlayerStatus
+import main.status.PlayerStatus
 import org.koin.compose.koinInject
 
 @Composable
