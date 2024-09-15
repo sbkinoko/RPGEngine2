@@ -43,10 +43,6 @@ class MainMenuViewModel : SelectableWindowViewModel(),
     override fun pressB() {
         backFieldUseCase()
     }
-
-    override fun pressM() {
-
-    }
 }
 
 fun List<MainMenuItem>.toPairedList(): List<Pair<MainMenuItem, MainMenuItem?>> {
