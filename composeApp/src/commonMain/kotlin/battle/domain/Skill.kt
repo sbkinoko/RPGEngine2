@@ -32,7 +32,15 @@ enum class TargetType {
         override fun canSelect(status: Status): Boolean {
             return status.isActive
         }
-    };
+    },
+
+    INACTIVE {
+        override fun canSelect(status: Status): Boolean {
+            return status.isActive.not()
+        }
+    }
+
+    ;
 
     /**
      * 対象のstatusが選択可能かどうかを返す

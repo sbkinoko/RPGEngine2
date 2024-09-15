@@ -6,6 +6,7 @@ import battle.domain.Skill
 import battle.domain.TargetType
 
 const val HEAL_SKILL = 3
+const val REVIVE_SKILL = 4
 
 class SkillRepositoryImpl : SkillRepository {
 
@@ -39,6 +40,14 @@ class SkillRepositoryImpl : SkillRepository {
                 needMP = 1,
                 targetNum = 1,
                 targetType = TargetType.ACTIVE
+            )
+
+            REVIVE_SKILL -> HealSkill(
+                name = "復活",
+                healAmount = 10,
+                needMP = 1,
+                targetNum = 1,
+                targetType = TargetType.INACTIVE
             )
 
             else -> throw NotImplementedError()

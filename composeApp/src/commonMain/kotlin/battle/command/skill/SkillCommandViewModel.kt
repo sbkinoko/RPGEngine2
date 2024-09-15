@@ -8,6 +8,7 @@ import battle.domain.SelectEnemyCommand
 import battle.domain.SkillCommand
 import battle.repository.action.ActionRepository
 import battle.repository.skill.HEAL_SKILL
+import battle.repository.skill.REVIVE_SKILL
 import battle.repository.skill.SkillRepository
 import common.repository.player.PlayerRepository
 import menu.domain.SelectManager
@@ -22,6 +23,7 @@ class SkillCommandViewModel : BattleChildViewModel() {
         0,
         1,
         HEAL_SKILL,
+        REVIVE_SKILL,
     )
 
     val playerId: Int
