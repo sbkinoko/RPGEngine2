@@ -39,7 +39,7 @@ fun PlayerAction(
                 modifier = equalAllocationModifier
                     .menuItem(
                         id = playerActionViewModel.normalAttack,
-                        battleChildViewModel = playerActionViewModel,
+                        childViewModel = playerActionViewModel,
                     ),
                 text = "攻撃"
             )
@@ -48,7 +48,7 @@ fun PlayerAction(
                 modifier = equalAllocationModifier
                     .menuItem(
                         id = playerActionViewModel.skill,
-                        battleChildViewModel = playerActionViewModel,
+                        childViewModel = playerActionViewModel,
                     ),
                 text = "スキル"
             )

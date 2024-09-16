@@ -75,7 +75,7 @@ fun SkillText(
         modifier = modifier
             .menuItem(
                 id = position,
-                battleChildViewModel = skillCommandViewModel,
+                childViewModel = skillCommandViewModel,
             )
     ) {
         CenterText(
