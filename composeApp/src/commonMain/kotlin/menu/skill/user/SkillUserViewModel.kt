@@ -2,16 +2,16 @@ package menu.skill.user
 
 import common.Timer
 import common.values.playerNum
-import main.menu.SelectableWindowViewModel
 import main.repository.player.PlayerRepository
 import main.repository.skill.SkillRepository
+import menu.MenuChildViewModel
 import menu.domain.MenuType
 import menu.domain.SelectManager
 import menu.repository.menustate.MenuStateRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class SkillUserViewModel : SelectableWindowViewModel(),
+class SkillUserViewModel : MenuChildViewModel(),
     KoinComponent {
     val repository: PlayerRepository by inject()
     private val skillRepository: SkillRepository by inject()
@@ -21,8 +21,17 @@ class SkillUserViewModel : SelectableWindowViewModel(),
         width = 1,
         itemNum = playerNum,
     )
+    override val canBack: Boolean
+        get() = true
 
     override var timer: Timer = Timer(200)
+    override fun isBoundedImpl(commandType: MenuType): Boolean {
+        return commandType == MenuType.SKILL_USER
+    }
+
+    override fun goNextImpl() {
+        menuStateRepository.push(MenuType.SKILL_LST)
+    }
 
     fun getNameAt(id: Int): String {
         return repository.getStatus(id).name
@@ -34,10 +43,6 @@ class SkillUserViewModel : SelectableWindowViewModel(),
 
     fun getSkillName(id: Int): String {
         return skillRepository.getSkill(id).name
-    }
-
-    override fun pressA() {
-        menuStateRepository.push(MenuType.SKILL_LST)
     }
 
     override fun pressB() {

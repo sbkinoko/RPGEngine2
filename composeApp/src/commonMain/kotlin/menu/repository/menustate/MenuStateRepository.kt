@@ -1,17 +1,9 @@
 package menu.repository.menustate
 
-import kotlinx.coroutines.flow.MutableSharedFlow
+import main.repository.command.CommandRepository
 import menu.domain.MenuType
 
-interface MenuStateRepository {
-    val menuTypeFlow: MutableSharedFlow<MenuType>
-
-    var menuType: MenuType
-
-    fun push(menuType: MenuType)
-
-    fun pop()
-
+interface MenuStateRepository : CommandRepository<MenuType> {
     //　mを押して画面を戻った時に状態を初期化する
     fun reset()
 
