@@ -12,7 +12,7 @@ class ChangeSelectingActionPlayerUseCaseImpl(
 
     private val playerId: Int
         get() {
-            val command = commandStateRepository.nowCommandType
+            val command = commandStateRepository.nowBattleCommandType
                     as PlayerIdCommand
             return command.playerId
         }

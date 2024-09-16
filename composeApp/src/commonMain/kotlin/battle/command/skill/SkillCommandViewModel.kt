@@ -2,7 +2,7 @@ package battle.command.skill
 
 import battle.BattleChildViewModel
 import battle.domain.ActionType
-import battle.domain.CommandType
+import battle.domain.BattleCommandType
 import battle.domain.SelectAllyCommand
 import battle.domain.SelectEnemyCommand
 import battle.domain.SkillCommand
@@ -29,7 +29,7 @@ class SkillCommandViewModel : BattleChildViewModel() {
     )
 
     val playerId: Int
-        get() = (commandStateRepository.nowCommandType as SkillCommand).playerId
+        get() = (commandStateRepository.nowBattleCommandType as SkillCommand).playerId
 
     private val selectedSkillId: Int
         get() = skillList[selectManager.selected]
@@ -58,8 +58,8 @@ class SkillCommandViewModel : BattleChildViewModel() {
     override val canBack: Boolean
         get() = true
 
-    override fun isBoundedImpl(commandType: CommandType): Boolean {
-        return commandType is SkillCommand
+    override fun isBoundedImpl(battleCommandType: BattleCommandType): Boolean {
+        return battleCommandType is SkillCommand
     }
 
     override fun goNextImpl() {

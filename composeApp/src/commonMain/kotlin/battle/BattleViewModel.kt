@@ -11,7 +11,7 @@ import battle.command.selectally.SelectAllyViewModel
 import battle.command.selectenemy.SelectEnemyViewModel
 import battle.command.skill.SkillCommandViewModel
 import battle.domain.AttackPhaseCommand
-import battle.domain.CommandType
+import battle.domain.BattleCommandType
 import battle.domain.EscapeCommand
 import battle.domain.FinishCommand
 import battle.domain.MainCommand
@@ -63,9 +63,9 @@ class BattleViewModel :
     private val selectAllyViewModel: SelectAllyViewModel by inject()
 
     @Composable
-    fun CommandStateFlow(): State<CommandType> {
-        return commandStateRepository.commandTypeFlow.collectAsState(
-            commandStateRepository.nowCommandType
+    fun CommandStateFlow(): State<BattleCommandType> {
+        return commandStateRepository.battleCommandTypeFlow.collectAsState(
+            commandStateRepository.nowBattleCommandType
         )
     }
 
@@ -110,7 +110,7 @@ class BattleViewModel :
 
     //todo 外に専用の関数として取り出す
     //todo finishViewModelを作ったらnullableをやめる
-    private fun CommandType.toViewModel(): ControllerCallback? {
+    private fun BattleCommandType.toViewModel(): ControllerCallback? {
         return when (this) {
             is MainCommand -> battleMainViewModel
             is PlayerActionCommand -> playerActionViewModel
@@ -127,17 +127,17 @@ class BattleViewModel :
 
     override fun moveStick(stickPosition: StickPosition) {
         timer.callbackIfTimePassed {
-            commandStateRepository.nowCommandType
+            commandStateRepository.nowBattleCommandType
                 .toViewModel()?.moveStick(stickPosition)
         }
     }
 
     override fun pressA() {
-        commandStateRepository.nowCommandType.toViewModel()?.pressA()
+        commandStateRepository.nowBattleCommandType.toViewModel()?.pressA()
     }
 
     override fun pressB() {
-        commandStateRepository.nowCommandType.toViewModel()?.pressB()
+        commandStateRepository.nowBattleCommandType.toViewModel()?.pressB()
     }
 
     override fun pressM() {}

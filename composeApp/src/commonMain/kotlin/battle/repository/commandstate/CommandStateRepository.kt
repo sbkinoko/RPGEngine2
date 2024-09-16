@@ -1,22 +1,22 @@
 package battle.repository.commandstate
 
-import battle.domain.CommandType
+import battle.domain.BattleCommandType
 import battle.domain.MainCommand
 import kotlinx.coroutines.flow.MutableSharedFlow
 
 interface CommandStateRepository {
-    val commandTypeFlow: MutableSharedFlow<CommandType>
-    val nowCommandType: CommandType
+    val battleCommandTypeFlow: MutableSharedFlow<BattleCommandType>
+    val nowBattleCommandType: BattleCommandType
 
     fun init()
 
-    fun push(commandType: CommandType)
+    fun push(battleCommandType: BattleCommandType)
 
     fun pop()
 
-    fun popTo(condition: (CommandType) -> Boolean)
+    fun popTo(condition: (BattleCommandType) -> Boolean)
 
     companion object {
-        val INITIAL_COMMAND_STATE: CommandType = MainCommand
+        val INITIAL_COMMAND_STATE: BattleCommandType = MainCommand
     }
 }

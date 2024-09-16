@@ -1,30 +1,30 @@
 package battle.domain
 
-sealed class CommandType
+sealed class BattleCommandType
 
-data object MainCommand : CommandType()
+data object MainCommand : BattleCommandType()
 
-data object FinishCommand : CommandType()
+data object FinishCommand : BattleCommandType()
 
-data object EscapeCommand : CommandType()
+data object EscapeCommand : BattleCommandType()
 
 class PlayerActionCommand(
     override val playerId: Int,
-) : PlayerIdCommand, CommandType()
+) : PlayerIdCommand, BattleCommandType()
 
 class SelectEnemyCommand(
     override val playerId: Int,
-) : PlayerIdCommand, CommandType()
+) : PlayerIdCommand, BattleCommandType()
 
 class SkillCommand(
     override val playerId: Int,
-) : PlayerIdCommand, CommandType()
+) : PlayerIdCommand, BattleCommandType()
 
 class SelectAllyCommand(
     override val playerId: Int,
-) : PlayerIdCommand, CommandType()
+) : PlayerIdCommand, BattleCommandType()
 
-data object AttackPhaseCommand : CommandType()
+data object AttackPhaseCommand : BattleCommandType()
 
 /**
  * 選択の時に誰がプレイヤーかを気にする必要があるコマンド

@@ -1,6 +1,6 @@
 package battle.repository.commandstate
 
-import battle.domain.CommandType
+import battle.domain.BattleCommandType
 import battle.domain.MainCommand
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -8,63 +8,64 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 
 class CommandStateRepositoryImpl : CommandStateRepository {
-    override val commandTypeFlow: MutableSharedFlow<CommandType> = MutableSharedFlow(replay = 1)
-    override val nowCommandType: CommandType
-        get() = commandTypeQueue.last()
+    override val battleCommandTypeFlow: MutableSharedFlow<BattleCommandType> =
+        MutableSharedFlow(replay = 1)
+    override val nowBattleCommandType: BattleCommandType
+        get() = battleCommandTypeQueue.last()
 
-    private var commandTypeQueue: List<CommandType> = listOf(MainCommand)
+    private var battleCommandTypeQueue: List<BattleCommandType> = listOf(MainCommand)
 
     override fun init() {
-        commandTypeQueue = listOf(CommandStateRepository.INITIAL_COMMAND_STATE)
+        battleCommandTypeQueue = listOf(CommandStateRepository.INITIAL_COMMAND_STATE)
         CoroutineScope(Dispatchers.Default).launch {
-            commandTypeFlow.emit(
-                nowCommandType,
+            battleCommandTypeFlow.emit(
+                nowBattleCommandType,
             )
         }
     }
 
-    override fun push(commandType: CommandType) {
-        commandTypeQueue = commandTypeQueue + commandType
+    override fun push(battleCommandType: BattleCommandType) {
+        battleCommandTypeQueue = battleCommandTypeQueue + battleCommandType
         CoroutineScope(Dispatchers.Default).launch {
-            commandTypeFlow.emit(
-                nowCommandType,
+            battleCommandTypeFlow.emit(
+                nowBattleCommandType,
             )
         }
     }
 
     override fun pop() {
         // 大きさが1ならpopしない
-        if (commandTypeQueue.size == 1)
+        if (battleCommandTypeQueue.size == 1)
             return
 
-        commandTypeQueue = commandTypeQueue.dropLast(1)
+        battleCommandTypeQueue = battleCommandTypeQueue.dropLast(1)
         CoroutineScope(Dispatchers.Default).launch {
-            commandTypeFlow.emit(
-                nowCommandType,
+            battleCommandTypeFlow.emit(
+                nowBattleCommandType,
             )
         }
     }
 
-    override fun popTo(condition: (CommandType) -> Boolean) {
+    override fun popTo(condition: (BattleCommandType) -> Boolean) {
         // 大きさが1ならpopしない
-        if (commandTypeQueue.size == 1)
+        if (battleCommandTypeQueue.size == 1)
             return
 
-        commandTypeQueue = commandTypeQueue.dropLast(1)
+        battleCommandTypeQueue = battleCommandTypeQueue.dropLast(1)
 
 
         while (
         // 条件を満たすcommandTypeまでさかのぼる
-            condition(nowCommandType).not() &&
+            condition(nowBattleCommandType).not() &&
             // もしくは大きさ位置になるまで
-            commandTypeQueue.size != 1
+            battleCommandTypeQueue.size != 1
         ) {
-            commandTypeQueue = commandTypeQueue.dropLast(1)
+            battleCommandTypeQueue = battleCommandTypeQueue.dropLast(1)
         }
 
         CoroutineScope(Dispatchers.Default).launch {
-            commandTypeFlow.emit(
-                nowCommandType,
+            battleCommandTypeFlow.emit(
+                nowBattleCommandType,
             )
         }
     }

@@ -1,7 +1,7 @@
 package battle.command.selectally
 
 import battle.BattleChildViewModel
-import battle.domain.CommandType
+import battle.domain.BattleCommandType
 import battle.domain.HealSkill
 import battle.domain.SelectAllyCommand
 import battle.domain.TargetType
@@ -26,7 +26,7 @@ class SelectAllyViewModel : BattleChildViewModel() {
 
     private val playerId: Int
         get() {
-            val command = commandStateRepository.nowCommandType as SelectAllyCommand
+            val command = commandStateRepository.nowBattleCommandType as SelectAllyCommand
             return command.playerId
         }
 
@@ -48,7 +48,7 @@ class SelectAllyViewModel : BattleChildViewModel() {
 
     init {
         CoroutineScope(Dispatchers.Default).launch {
-            commandStateRepository.commandTypeFlow.collect {
+            commandStateRepository.battleCommandTypeFlow.collect {
                 _isAllySelecting.value = it is SelectAllyCommand
                 if (isAllySelecting.value) {
                     selectManager.selected = actionRepository.getAction(playerId).ally
@@ -57,8 +57,8 @@ class SelectAllyViewModel : BattleChildViewModel() {
         }
     }
 
-    override fun isBoundedImpl(commandType: CommandType): Boolean {
-        return commandType is SelectAllyCommand
+    override fun isBoundedImpl(battleCommandType: BattleCommandType): Boolean {
+        return battleCommandType is SelectAllyCommand
     }
 
     override fun selectable(): Boolean {
