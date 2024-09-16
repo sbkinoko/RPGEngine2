@@ -8,6 +8,8 @@ interface MenuStateRepository {
 
     var menuType: MenuType
 
+    fun push(menuType: MenuType)
+
     fun pop()
 
     //　mを押して画面を戻った時に状態を初期化する

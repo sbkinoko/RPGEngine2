@@ -6,7 +6,7 @@ import battle.BattleScreen
 import main.domain.ScreenType
 import map.layout.MapScreen
 import map.viewmodel.MapViewModel
-import menu.layout.MenuScreen
+import menu.MenuScreen
 
 @Composable
 fun PlayArea(

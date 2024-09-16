@@ -1,4 +1,4 @@
-package menu.layout
+package menu
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -8,10 +8,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import common.values.Colors
-import menu.MenuViewModel
 import menu.domain.MenuType
 import menu.main.MainMenu
-import menu.skill.SkillMenu
+import menu.skill.list.SkillListWindow
+import menu.skill.user.SkillMenu
 import menu.status.StatusMenu
 import org.koin.compose.koinInject
 
@@ -32,7 +32,11 @@ fun MenuScreen(
                 modifier = menuModifier,
             )
 
-            MenuType.SKILL -> SkillMenu(
+            MenuType.SKILL_USER -> SkillMenu(
+                modifier = menuModifier,
+            )
+
+            MenuType.SKILL_LST -> SkillListWindow(
                 modifier = menuModifier,
             )
 
