@@ -23,7 +23,7 @@ class PlayerActionViewModel : BattleChildViewModel() {
     val skill = 1
 
     val playerId: Int
-        get() = (commandStateRepository.nowBattleCommandType as PlayerActionCommand).playerId
+        get() = (commandRepository.nowCommandType as PlayerActionCommand).playerId
 
     fun init() {
         // プレイヤーが行動不能なら次のキャラに移動する
@@ -48,8 +48,8 @@ class PlayerActionViewModel : BattleChildViewModel() {
     override val canBack: Boolean
         get() = true
 
-    override fun isBoundedImpl(battleCommandType: BattleCommandType): Boolean {
-        return battleCommandType is PlayerActionCommand
+    override fun isBoundedImpl(commandType: BattleCommandType): Boolean {
+        return commandType is PlayerActionCommand
     }
 
     override fun goNextImpl() {
@@ -62,12 +62,12 @@ class PlayerActionViewModel : BattleChildViewModel() {
                 )
 
                 // 画面変更
-                commandStateRepository.push(
+                commandRepository.push(
                     SelectEnemyCommand(playerId),
                 )
             }
 
-            skill -> commandStateRepository.push(
+            skill -> commandRepository.push(
                 SkillCommand(playerId),
             )
         }
@@ -75,7 +75,7 @@ class PlayerActionViewModel : BattleChildViewModel() {
 
     override fun pressB() {
         // アクティブなプレイヤーまで戻る
-        commandStateRepository.popTo {
+        commandRepository.popTo {
             // playerActionじゃなければダメ
             val command: PlayerIdCommand = it as? PlayerIdCommand
                 ?: return@popTo false

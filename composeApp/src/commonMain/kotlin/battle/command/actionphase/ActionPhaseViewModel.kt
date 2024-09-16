@@ -58,7 +58,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
 
     init {
         CoroutineScope(Dispatchers.IO).launch {
-            commandStateRepository.battleCommandTypeFlow.collect {
+            this@ActionPhaseViewModel.commandRepository.commandTypeFlow.collect {
                 if (it is AttackPhaseCommand) {
                     mutableAttackingPlayerId.value = 0
                 }
@@ -159,8 +159,8 @@ class ActionPhaseViewModel : BattleChildViewModel() {
         }
     }
 
-    override fun isBoundedImpl(battleCommandType: BattleCommandType): Boolean {
-        return battleCommandType is AttackPhaseCommand
+    override fun isBoundedImpl(commandType: BattleCommandType): Boolean {
+        return commandType is AttackPhaseCommand
     }
 
     override fun goNextImpl() {
@@ -173,7 +173,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
 
             delay(100)
 
-            if (commandStateRepository.nowBattleCommandType != FinishCommand) {
+            if (this@ActionPhaseViewModel.commandRepository.nowCommandType != FinishCommand) {
                 changeToNextCharacter()
             }
         }
@@ -204,7 +204,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
 
         // 敵を倒していたらバトル終了
         if (isAllMonsterNotActiveUseCase()) {
-            commandStateRepository.push(
+            this.commandRepository.push(
                 FinishCommand
             )
             return
@@ -282,7 +282,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
                 >= totalNum
             ) {
                 mutableAttackingPlayerId.value = 0
-                commandStateRepository.init()
+                this.commandRepository.init()
                 break
             }
 

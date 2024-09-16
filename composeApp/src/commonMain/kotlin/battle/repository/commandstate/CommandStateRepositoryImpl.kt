@@ -8,9 +8,9 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 
 class CommandStateRepositoryImpl : CommandStateRepository {
-    override val battleCommandTypeFlow: MutableSharedFlow<BattleCommandType> =
+    override val commandTypeFlow: MutableSharedFlow<BattleCommandType> =
         MutableSharedFlow(replay = 1)
-    override val nowBattleCommandType: BattleCommandType
+    override val nowCommandType: BattleCommandType
         get() = battleCommandTypeQueue.last()
 
     private var battleCommandTypeQueue: List<BattleCommandType> = listOf(MainCommand)
@@ -18,17 +18,17 @@ class CommandStateRepositoryImpl : CommandStateRepository {
     override fun init() {
         battleCommandTypeQueue = listOf(CommandStateRepository.INITIAL_COMMAND_STATE)
         CoroutineScope(Dispatchers.Default).launch {
-            battleCommandTypeFlow.emit(
-                nowBattleCommandType,
+            commandTypeFlow.emit(
+                nowCommandType,
             )
         }
     }
 
-    override fun push(battleCommandType: BattleCommandType) {
-        battleCommandTypeQueue = battleCommandTypeQueue + battleCommandType
+    override fun push(commandType: BattleCommandType) {
+        battleCommandTypeQueue = battleCommandTypeQueue + commandType
         CoroutineScope(Dispatchers.Default).launch {
-            battleCommandTypeFlow.emit(
-                nowBattleCommandType,
+            commandTypeFlow.emit(
+                nowCommandType,
             )
         }
     }
@@ -40,8 +40,8 @@ class CommandStateRepositoryImpl : CommandStateRepository {
 
         battleCommandTypeQueue = battleCommandTypeQueue.dropLast(1)
         CoroutineScope(Dispatchers.Default).launch {
-            battleCommandTypeFlow.emit(
-                nowBattleCommandType,
+            commandTypeFlow.emit(
+                nowCommandType,
             )
         }
     }
@@ -56,7 +56,7 @@ class CommandStateRepositoryImpl : CommandStateRepository {
 
         while (
         // 条件を満たすcommandTypeまでさかのぼる
-            condition(nowBattleCommandType).not() &&
+            condition(nowCommandType).not() &&
             // もしくは大きさ位置になるまで
             battleCommandTypeQueue.size != 1
         ) {
@@ -64,8 +64,8 @@ class CommandStateRepositoryImpl : CommandStateRepository {
         }
 
         CoroutineScope(Dispatchers.Default).launch {
-            battleCommandTypeFlow.emit(
-                nowBattleCommandType,
+            commandTypeFlow.emit(
+                nowCommandType,
             )
         }
     }

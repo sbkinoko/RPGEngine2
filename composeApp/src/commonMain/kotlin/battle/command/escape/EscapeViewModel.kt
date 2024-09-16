@@ -17,14 +17,14 @@ class EscapeViewModel : BattleChildViewModel() {
     override val canBack: Boolean
         get() = true
 
-    override fun isBoundedImpl(battleCommandType: BattleCommandType): Boolean {
-        return battleCommandType == EscapeCommand
+    override fun isBoundedImpl(commandType: BattleCommandType): Boolean {
+        return commandType == EscapeCommand
     }
 
     override fun goNextImpl() {
         when (selectManager.selected) {
             attackCommand -> {
-                commandStateRepository.pop()
+                commandRepository.pop()
             }
 
             escapeCommand -> {

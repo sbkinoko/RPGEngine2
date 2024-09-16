@@ -26,7 +26,7 @@ class SelectAllyViewModel : BattleChildViewModel() {
 
     private val playerId: Int
         get() {
-            val command = commandStateRepository.nowBattleCommandType as SelectAllyCommand
+            val command = commandRepository.nowCommandType as SelectAllyCommand
             return command.playerId
         }
 
@@ -48,7 +48,7 @@ class SelectAllyViewModel : BattleChildViewModel() {
 
     init {
         CoroutineScope(Dispatchers.Default).launch {
-            commandStateRepository.battleCommandTypeFlow.collect {
+            commandRepository.commandTypeFlow.collect {
                 _isAllySelecting.value = it is SelectAllyCommand
                 if (isAllySelecting.value) {
                     selectManager.selected = actionRepository.getAction(playerId).ally
@@ -57,8 +57,8 @@ class SelectAllyViewModel : BattleChildViewModel() {
         }
     }
 
-    override fun isBoundedImpl(battleCommandType: BattleCommandType): Boolean {
-        return battleCommandType is SelectAllyCommand
+    override fun isBoundedImpl(commandType: BattleCommandType): Boolean {
+        return commandType is SelectAllyCommand
     }
 
     override fun selectable(): Boolean {
