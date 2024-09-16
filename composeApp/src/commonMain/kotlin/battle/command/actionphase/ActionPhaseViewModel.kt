@@ -7,7 +7,7 @@ import battle.domain.ActionData
 import battle.domain.ActionType
 import battle.domain.AttackPhaseCommand
 import battle.domain.AttackSkill
-import battle.domain.CommandType
+import battle.domain.BattleCommandType
 import battle.domain.FinishCommand
 import battle.domain.HealSkill
 import battle.repository.action.ActionRepository
@@ -58,7 +58,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
 
     init {
         CoroutineScope(Dispatchers.IO).launch {
-            commandStateRepository.commandTypeFlow.collect {
+            this@ActionPhaseViewModel.commandRepository.commandTypeFlow.collect {
                 if (it is AttackPhaseCommand) {
                     mutableAttackingPlayerId.value = 0
                 }
@@ -159,7 +159,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
         }
     }
 
-    override fun isBoundedImpl(commandType: CommandType): Boolean {
+    override fun isBoundedImpl(commandType: BattleCommandType): Boolean {
         return commandType is AttackPhaseCommand
     }
 
@@ -173,7 +173,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
 
             delay(100)
 
-            if (commandStateRepository.nowCommandType != FinishCommand) {
+            if (this@ActionPhaseViewModel.commandRepository.nowCommandType != FinishCommand) {
                 changeToNextCharacter()
             }
         }
@@ -204,7 +204,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
 
         // 敵を倒していたらバトル終了
         if (isAllMonsterNotActiveUseCase()) {
-            commandStateRepository.push(
+            this.commandRepository.push(
                 FinishCommand
             )
             return
@@ -282,7 +282,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
                 >= totalNum
             ) {
                 mutableAttackingPlayerId.value = 0
-                commandStateRepository.init()
+                this.commandRepository.init()
                 break
             }
 

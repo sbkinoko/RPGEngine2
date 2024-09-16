@@ -11,7 +11,7 @@ import battle.command.selectally.SelectAllyViewModel
 import battle.command.selectenemy.SelectEnemyViewModel
 import battle.command.skill.SkillCommandViewModel
 import battle.domain.AttackPhaseCommand
-import battle.domain.CommandType
+import battle.domain.BattleCommandType
 import battle.domain.EscapeCommand
 import battle.domain.FinishCommand
 import battle.domain.MainCommand
@@ -63,7 +63,7 @@ class BattleViewModel :
     private val selectAllyViewModel: SelectAllyViewModel by inject()
 
     @Composable
-    fun CommandStateFlow(): State<CommandType> {
+    fun CommandStateFlow(): State<BattleCommandType> {
         return commandStateRepository.commandTypeFlow.collectAsState(
             commandStateRepository.nowCommandType
         )
@@ -110,7 +110,7 @@ class BattleViewModel :
 
     //todo 外に専用の関数として取り出す
     //todo finishViewModelを作ったらnullableをやめる
-    private fun CommandType.toViewModel(): ControllerCallback? {
+    private fun BattleCommandType.toViewModel(): ControllerCallback? {
         return when (this) {
             is MainCommand -> battleMainViewModel
             is PlayerActionCommand -> playerActionViewModel
