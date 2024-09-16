@@ -2,7 +2,7 @@ package map.usecase.startbattle
 
 import battle.domain.ActionData
 import battle.domain.ActionType
-import battle.domain.CommandType
+import battle.domain.BattleCommandType
 import battle.repository.action.ActionRepository
 import battle.repository.battlemonster.BattleMonsterRepository
 import battle.repository.commandstate.CommandStateRepository
@@ -67,16 +67,16 @@ class StartBattleUseCaseImplTest : KoinTest {
             },
             screenTypeRepository = screenTypeRepository,
             commandStateRepository = object : CommandStateRepository {
-                override val commandTypeFlow: MutableSharedFlow<CommandType>
+                override val battleCommandTypeFlow: MutableSharedFlow<BattleCommandType>
                     get() = throw NotImplementedError()
-                override val nowCommandType: CommandType
+                override val nowBattleCommandType: BattleCommandType
                     get() = throw NotImplementedError()
 
                 override fun init() {
                     checkCommand++
                 }
 
-                override fun push(commandType: CommandType) {
+                override fun push(battleCommandType: BattleCommandType) {
                     throw NotImplementedError()
                 }
 
@@ -84,7 +84,7 @@ class StartBattleUseCaseImplTest : KoinTest {
                     throw NotImplementedError()
                 }
 
-                override fun popTo(condition: (CommandType) -> Boolean) {
+                override fun popTo(condition: (BattleCommandType) -> Boolean) {
                     throw NotImplementedError()
                 }
 

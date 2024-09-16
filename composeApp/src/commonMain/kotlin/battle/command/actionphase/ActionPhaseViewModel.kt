@@ -7,7 +7,7 @@ import battle.domain.ActionData
 import battle.domain.ActionType
 import battle.domain.AttackPhaseCommand
 import battle.domain.AttackSkill
-import battle.domain.CommandType
+import battle.domain.BattleCommandType
 import battle.domain.FinishCommand
 import battle.domain.HealSkill
 import battle.repository.action.ActionRepository
@@ -58,7 +58,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
 
     init {
         CoroutineScope(Dispatchers.IO).launch {
-            commandStateRepository.commandTypeFlow.collect {
+            commandStateRepository.battleCommandTypeFlow.collect {
                 if (it is AttackPhaseCommand) {
                     mutableAttackingPlayerId.value = 0
                 }
@@ -159,8 +159,8 @@ class ActionPhaseViewModel : BattleChildViewModel() {
         }
     }
 
-    override fun isBoundedImpl(commandType: CommandType): Boolean {
-        return commandType is AttackPhaseCommand
+    override fun isBoundedImpl(battleCommandType: BattleCommandType): Boolean {
+        return battleCommandType is AttackPhaseCommand
     }
 
     override fun goNextImpl() {
@@ -173,7 +173,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
 
             delay(100)
 
-            if (commandStateRepository.nowCommandType != FinishCommand) {
+            if (commandStateRepository.nowBattleCommandType != FinishCommand) {
                 changeToNextCharacter()
             }
         }

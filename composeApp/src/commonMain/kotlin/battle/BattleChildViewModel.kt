@@ -1,6 +1,6 @@
 package battle
 
-import battle.domain.CommandType
+import battle.domain.BattleCommandType
 import battle.repository.commandstate.CommandStateRepository
 import common.Timer
 import main.menu.SelectableWindowViewModel
@@ -18,12 +18,12 @@ abstract class BattleChildViewModel :
 
     private fun isBoundCommand(): Boolean {
         return isBoundedImpl(
-            commandStateRepository.nowCommandType
+            commandStateRepository.nowBattleCommandType
         )
     }
 
     protected abstract fun isBoundedImpl(
-        commandType: CommandType,
+        battleCommandType: BattleCommandType,
     ): Boolean
 
     // todo 上位クラスに移動する

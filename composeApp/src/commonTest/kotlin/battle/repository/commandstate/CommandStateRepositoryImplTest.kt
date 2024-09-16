@@ -21,7 +21,7 @@ class CommandStateRepositoryImplTest {
     fun initialState() {
         assertEquals(
             expected = CommandStateRepository.INITIAL_COMMAND_STATE,
-            actual = repository.nowCommandType
+            actual = repository.nowBattleCommandType
         )
     }
 
@@ -35,7 +35,7 @@ class CommandStateRepositoryImplTest {
         runBlocking {
             var count = 0
             val collectJob = launch {
-                repository.commandTypeFlow.collect {
+                repository.battleCommandTypeFlow.collect {
                     count++
                 }
             }
@@ -48,7 +48,7 @@ class CommandStateRepositoryImplTest {
 
             assertEquals(
                 expected = playerCommand,
-                actual = repository.nowCommandType
+                actual = repository.nowBattleCommandType
             )
 
             assertEquals(
@@ -69,7 +69,7 @@ class CommandStateRepositoryImplTest {
 
             assertEquals(
                 expected = playerCommand2,
-                actual = repository.nowCommandType
+                actual = repository.nowBattleCommandType
             )
 
             assertEquals(
@@ -86,7 +86,7 @@ class CommandStateRepositoryImplTest {
         runBlocking {
             var count = 0
             val collectJob = launch {
-                repository.commandTypeFlow.collect {
+                repository.battleCommandTypeFlow.collect {
                     count++
                 }
             }
@@ -128,7 +128,7 @@ class CommandStateRepositoryImplTest {
 
             assertEquals(
                 expected = playerCommand,
-                actual = repository.nowCommandType,
+                actual = repository.nowBattleCommandType,
             )
 
             repository.pop()
@@ -142,7 +142,7 @@ class CommandStateRepositoryImplTest {
 
             assertEquals(
                 expected = MainCommand,
-                actual = repository.nowCommandType,
+                actual = repository.nowBattleCommandType,
             )
 
             collectJob.cancel()
@@ -154,7 +154,7 @@ class CommandStateRepositoryImplTest {
         runBlocking {
             var count = 0
             val collectJob = launch {
-                repository.commandTypeFlow.collect {
+                repository.battleCommandTypeFlow.collect {
                     count++
                 }
             }
@@ -194,7 +194,7 @@ class CommandStateRepositoryImplTest {
 
             assertEquals(
                 expected = MainCommand,
-                actual = repository.nowCommandType,
+                actual = repository.nowBattleCommandType,
             )
 
             //　initしたあとはpopしても変化がないことを確認
@@ -208,7 +208,7 @@ class CommandStateRepositoryImplTest {
             )
             assertEquals(
                 expected = MainCommand,
-                actual = repository.nowCommandType,
+                actual = repository.nowBattleCommandType,
             )
 
             collectJob.cancel()
@@ -221,7 +221,7 @@ class CommandStateRepositoryImplTest {
             var count = 0
 
             val collectJob = launch {
-                repository.commandTypeFlow.collect {
+                repository.battleCommandTypeFlow.collect {
                     count++
                 }
             }
@@ -273,7 +273,7 @@ class CommandStateRepositoryImplTest {
 
             assertEquals(
                 actual = first,
-                expected = repository.nowCommandType,
+                expected = repository.nowBattleCommandType,
             )
 
             collectJob.cancel()
@@ -286,7 +286,7 @@ class CommandStateRepositoryImplTest {
             var count = 0
 
             val collectJob = launch {
-                repository.commandTypeFlow.collect {
+                repository.battleCommandTypeFlow.collect {
                     count++
                 }
             }
@@ -338,7 +338,7 @@ class CommandStateRepositoryImplTest {
 
             assertEquals(
                 actual = MainCommand,
-                expected = repository.nowCommandType,
+                expected = repository.nowBattleCommandType,
             )
 
             collectJob.cancel()

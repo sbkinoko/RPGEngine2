@@ -2,7 +2,7 @@ package battle.command.playeraction
 
 import battle.BattleChildViewModel
 import battle.domain.ActionType
-import battle.domain.CommandType
+import battle.domain.BattleCommandType
 import battle.domain.PlayerActionCommand
 import battle.domain.PlayerIdCommand
 import battle.domain.SelectEnemyCommand
@@ -23,7 +23,7 @@ class PlayerActionViewModel : BattleChildViewModel() {
     val skill = 1
 
     val playerId: Int
-        get() = (commandStateRepository.nowCommandType as PlayerActionCommand).playerId
+        get() = (commandStateRepository.nowBattleCommandType as PlayerActionCommand).playerId
 
     fun init() {
         // プレイヤーが行動不能なら次のキャラに移動する
@@ -48,8 +48,8 @@ class PlayerActionViewModel : BattleChildViewModel() {
     override val canBack: Boolean
         get() = true
 
-    override fun isBoundedImpl(commandType: CommandType): Boolean {
-        return commandType is PlayerActionCommand
+    override fun isBoundedImpl(battleCommandType: BattleCommandType): Boolean {
+        return battleCommandType is PlayerActionCommand
     }
 
     override fun goNextImpl() {
