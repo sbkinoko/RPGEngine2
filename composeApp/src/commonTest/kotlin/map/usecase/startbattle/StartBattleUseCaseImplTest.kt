@@ -67,9 +67,9 @@ class StartBattleUseCaseImplTest : KoinTest {
             },
             screenTypeRepository = screenTypeRepository,
             commandStateRepository = object : CommandStateRepository {
-                override val battleCommandTypeFlow: MutableSharedFlow<BattleCommandType>
+                override val commandTypeFlow: MutableSharedFlow<BattleCommandType>
                     get() = throw NotImplementedError()
-                override val nowBattleCommandType: BattleCommandType
+                override val nowCommandType: BattleCommandType
                     get() = throw NotImplementedError()
 
                 override fun init() {

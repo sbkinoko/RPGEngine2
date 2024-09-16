@@ -29,7 +29,7 @@ class SkillCommandViewModel : BattleChildViewModel() {
     )
 
     val playerId: Int
-        get() = (commandStateRepository.nowBattleCommandType as SkillCommand).playerId
+        get() = (commandStateRepository.nowCommandType as SkillCommand).playerId
 
     private val selectedSkillId: Int
         get() = skillList[selectManager.selected]

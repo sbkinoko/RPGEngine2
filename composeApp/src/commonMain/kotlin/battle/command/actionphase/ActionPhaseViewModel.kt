@@ -58,7 +58,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
 
     init {
         CoroutineScope(Dispatchers.IO).launch {
-            commandStateRepository.battleCommandTypeFlow.collect {
+            commandStateRepository.commandTypeFlow.collect {
                 if (it is AttackPhaseCommand) {
                     mutableAttackingPlayerId.value = 0
                 }
@@ -173,7 +173,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
 
             delay(100)
 
-            if (commandStateRepository.nowBattleCommandType != FinishCommand) {
+            if (commandStateRepository.nowCommandType != FinishCommand) {
                 changeToNextCharacter()
             }
         }

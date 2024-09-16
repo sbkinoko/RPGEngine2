@@ -64,8 +64,8 @@ class BattleViewModel :
 
     @Composable
     fun CommandStateFlow(): State<BattleCommandType> {
-        return commandStateRepository.battleCommandTypeFlow.collectAsState(
-            commandStateRepository.nowBattleCommandType
+        return commandStateRepository.commandTypeFlow.collectAsState(
+            commandStateRepository.nowCommandType
         )
     }
 
@@ -127,17 +127,17 @@ class BattleViewModel :
 
     override fun moveStick(stickPosition: StickPosition) {
         timer.callbackIfTimePassed {
-            commandStateRepository.nowBattleCommandType
+            commandStateRepository.nowCommandType
                 .toViewModel()?.moveStick(stickPosition)
         }
     }
 
     override fun pressA() {
-        commandStateRepository.nowBattleCommandType.toViewModel()?.pressA()
+        commandStateRepository.nowCommandType.toViewModel()?.pressA()
     }
 
     override fun pressB() {
-        commandStateRepository.nowBattleCommandType.toViewModel()?.pressB()
+        commandStateRepository.nowCommandType.toViewModel()?.pressB()
     }
 
     override fun pressM() {}

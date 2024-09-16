@@ -18,7 +18,7 @@ abstract class BattleChildViewModel :
 
     private fun isBoundCommand(): Boolean {
         return isBoundedImpl(
-            commandStateRepository.nowBattleCommandType
+            commandStateRepository.nowCommandType
         )
     }
 
