@@ -11,7 +11,7 @@ import common.values.Colors
 import menu.domain.MenuType
 import menu.main.MainMenu
 import menu.skill.list.SkillListWindow
-import menu.skill.user.SkillMenu
+import menu.skill.user.SkillUserWindow
 import menu.status.StatusMenu
 import org.koin.compose.koinInject
 
@@ -32,7 +32,7 @@ fun MenuScreen(
                 modifier = menuModifier,
             )
 
-            MenuType.SKILL_USER -> SkillMenu(
+            MenuType.SKILL_USER -> SkillUserWindow(
                 modifier = menuModifier,
             )
 
