@@ -10,20 +10,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
-import battle.BattleChildViewModel
 import common.values.Colors
+import main.menu.SelectableChildViewModel
 
 @Composable
 fun Modifier.menuItem(
     id: Int,
-    // todo 上位クラスを利用する
-    battleChildViewModel: BattleChildViewModel,
+    childViewModel: SelectableChildViewModel<*>,
 ): Modifier {
     return selectable(
         id = id,
-        selected = battleChildViewModel.getSelectedAsState().value,
+        selected = childViewModel.getSelectedAsState().value,
     ).clickable {
-        battleChildViewModel.onClickItem(
+        childViewModel.onClickItem(
             id = id,
         )
     }
