@@ -11,8 +11,8 @@ class BattleMainViewModel : BattleChildViewModel() {
     override val canBack: Boolean
         get() = true
 
-    override fun isBoundedImpl(battleCommandType: BattleCommandType): Boolean {
-        return battleCommandType is MainCommand
+    override fun isBoundedImpl(commandType: BattleCommandType): Boolean {
+        return commandType is MainCommand
     }
 
     override var selectManager: SelectManager = SelectManager(
@@ -22,12 +22,13 @@ class BattleMainViewModel : BattleChildViewModel() {
 
     override fun goNextImpl() {
         when (selectManager.selected) {
-            0 -> commandStateRepository.push(
+            0 -> commandRepository.push(
                 PlayerActionCommand(
                     playerId = 0,
                 )
             )
-            1 -> commandStateRepository.push(
+
+            1 -> commandRepository.push(
                 EscapeCommand
             )
         }

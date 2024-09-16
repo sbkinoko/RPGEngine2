@@ -39,7 +39,7 @@ class SelectEnemyViewModel : BattleChildViewModel() {
 
     val playerId: Int
         get() {
-            val command = commandStateRepository.nowCommandType as SelectEnemyCommand
+            val command = commandRepository.nowCommandType as SelectEnemyCommand
             return command.playerId
         }
 
@@ -48,7 +48,7 @@ class SelectEnemyViewModel : BattleChildViewModel() {
 
     init {
         CoroutineScope(Dispatchers.Default).launch {
-            commandStateRepository.commandTypeFlow.collect {
+            commandRepository.commandTypeFlow.collect {
                 updateArrow()
             }
         }
@@ -57,8 +57,8 @@ class SelectEnemyViewModel : BattleChildViewModel() {
     private val monsters: List<MonsterStatus>
         get() = monsterRepository.getMonsters()
 
-    override fun isBoundedImpl(battleCommandType: BattleCommandType): Boolean {
-        return battleCommandType is SelectEnemyCommand
+    override fun isBoundedImpl(commandType: BattleCommandType): Boolean {
+        return commandType is SelectEnemyCommand
     }
 
     override fun goNextImpl() {
@@ -131,7 +131,7 @@ class SelectEnemyViewModel : BattleChildViewModel() {
 
     fun updateArrow() {
         val command =
-            commandStateRepository.nowCommandType as? SelectEnemyCommand
+            commandRepository.nowCommandType as? SelectEnemyCommand
 
         if (command == null) {
             mutableSelectedEnemyState.value = mutableSelectedEnemyState.value.copy(

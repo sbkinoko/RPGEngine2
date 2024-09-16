@@ -29,7 +29,7 @@ class SkillCommandViewModel : BattleChildViewModel() {
     )
 
     val playerId: Int
-        get() = (commandStateRepository.nowCommandType as SkillCommand).playerId
+        get() = (commandRepository.nowCommandType as SkillCommand).playerId
 
     private val selectedSkillId: Int
         get() = skillList[selectManager.selected]
@@ -58,8 +58,8 @@ class SkillCommandViewModel : BattleChildViewModel() {
     override val canBack: Boolean
         get() = true
 
-    override fun isBoundedImpl(battleCommandType: BattleCommandType): Boolean {
-        return battleCommandType is SkillCommand
+    override fun isBoundedImpl(commandType: BattleCommandType): Boolean {
+        return commandType is SkillCommand
     }
 
     override fun goNextImpl() {
@@ -76,13 +76,13 @@ class SkillCommandViewModel : BattleChildViewModel() {
         )
         when (skillRepository.getSkill(skillId)) {
             is battle.domain.AttackSkill -> {
-                commandStateRepository.push(
+                commandRepository.push(
                     SelectEnemyCommand(playerId),
                 )
             }
 
             is battle.domain.HealSkill -> {
-                commandStateRepository.push(
+                commandRepository.push(
                     SelectAllyCommand(playerId),
                 )
             }
