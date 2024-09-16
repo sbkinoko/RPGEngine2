@@ -20,7 +20,8 @@ class StatusTest {
             ),
             mp = MP(
                 maxValue = 100,
-            )
+            ),
+            skillList = listOf(),
         )
     }
 

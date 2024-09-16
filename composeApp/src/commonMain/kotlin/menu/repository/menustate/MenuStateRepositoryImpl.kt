@@ -7,26 +7,19 @@ import kotlinx.coroutines.launch
 import menu.domain.MenuType
 
 class MenuStateRepositoryImpl : MenuStateRepository {
-    override val menuTypeFlow: MutableSharedFlow<MenuType> = MutableSharedFlow(replay = 1)
 
-    private var _menuType: MenuType = MenuStateRepository.INITIAL_MENU_TYPE
+    override val nowCommandType: MenuType
+        get() = mutableList.last()
 
-    override var menuType: MenuType
-        get() = _menuType
-        set(value) {
-            _menuType = value
-            mutableList.add(value)
-            CoroutineScope(Dispatchers.Default).launch {
-                menuTypeFlow.emit(value)
-            }
-        }
+    override val commandTypeFlow: MutableSharedFlow<MenuType> = MutableSharedFlow(replay = 1)
 
     private val mutableList: MutableList<MenuType> = mutableListOf(
         MenuType.Main,
     )
 
-    override fun push(menuType: MenuType) {
-        this.menuType = menuType
+    override fun push(commandType: MenuType) {
+        mutableList.add(commandType)
+        emit()
     }
 
     override fun pop() {
@@ -35,13 +28,19 @@ class MenuStateRepositoryImpl : MenuStateRepository {
             return
         }
         mutableList.removeLast()
-        menuType = mutableList.last()
+        emit()
+    }
+
+    private fun emit() {
+        CoroutineScope(Dispatchers.Default).launch {
+            this@MenuStateRepositoryImpl.commandTypeFlow.emit(nowCommandType)
+        }
     }
 
     override fun reset() {
         while (mutableList.size != 0) {
             mutableList.removeLast()
         }
-        menuType = MenuType.Main
+        push(MenuStateRepository.INITIAL_MENU_TYPE)
     }
 }

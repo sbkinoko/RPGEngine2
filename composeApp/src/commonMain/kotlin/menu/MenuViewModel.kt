@@ -18,7 +18,7 @@ class MenuViewModel : KoinComponent, ControllerCallback {
 
     private val backFieldUseCase: BackFieldUseCase by inject()
 
-    val menuType: SharedFlow<MenuType> = menuStateRepository.menuTypeFlow
+    val menuType: SharedFlow<MenuType> = menuStateRepository.commandTypeFlow
 
     private val mainMenuViewModel: MainMenuViewModel by inject()
     private val statusViewModel: StatusViewModel by inject()
@@ -26,7 +26,7 @@ class MenuViewModel : KoinComponent, ControllerCallback {
     private val skillListViewModel: SkillListViewModel by inject()
 
     override fun moveStick(stickPosition: StickPosition) {
-        menuStateRepository.menuType
+        menuStateRepository.nowCommandType
             .toViewModel()?.moveStick(
                 stickPosition
             )
@@ -46,11 +46,11 @@ class MenuViewModel : KoinComponent, ControllerCallback {
     }
 
     override fun pressA() {
-        menuStateRepository.menuType.toViewModel()?.pressA()
+        menuStateRepository.nowCommandType.toViewModel()?.pressA()
     }
 
     override fun pressB() {
-        menuStateRepository.menuType.toViewModel()?.pressB()
+        menuStateRepository.nowCommandType.toViewModel()?.pressB()
     }
 
     override fun pressM() {

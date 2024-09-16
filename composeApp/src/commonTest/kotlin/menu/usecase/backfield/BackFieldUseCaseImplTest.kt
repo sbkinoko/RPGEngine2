@@ -34,13 +34,17 @@ class BackFieldUseCaseImplTest : KoinTest {
         backFieldUseCase = BackFieldUseCaseImpl(
             screenTypeRepository = screenTypeRepository,
             menuStateRepository = object : MenuStateRepository {
-                override val menuTypeFlow: MutableSharedFlow<MenuType>
+                override val commandTypeFlow: MutableSharedFlow<MenuType>
                     get() = throw NotImplementedError()
-                override var menuType: MenuType
+                override var nowCommandType: MenuType
                     get() = throw NotImplementedError()
                     set(value) {
                         throw NotImplementedError()
                     }
+
+                override fun push(commandType: MenuType) {
+                    throw NotImplementedError()
+                }
 
                 override fun pop() {
                     throw NotImplementedError()

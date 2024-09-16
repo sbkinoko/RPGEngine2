@@ -54,7 +54,8 @@ class PlayerRepositoryImplTest : KoinTest {
                 mp = MP(
                     maxValue = 10,
                     value = 5,
-                )
+                ),
+                skillList = listOf(),
             )
 
             playerRepository.setStatus(

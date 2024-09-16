@@ -23,7 +23,7 @@ class MainMenuViewModel : SelectableWindowViewModel(),
         MainMenuItem(
             text = it.toMenuType().title,
             onClick = {
-                menuStateRepository.menuType = it.toMenuType()
+                menuStateRepository.push(it.toMenuType())
             },
         )
     }
