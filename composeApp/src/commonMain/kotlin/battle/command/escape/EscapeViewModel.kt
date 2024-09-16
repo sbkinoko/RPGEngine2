@@ -1,7 +1,7 @@
 package battle.command.escape
 
 import battle.BattleChildViewModel
-import battle.domain.CommandType
+import battle.domain.BattleCommandType
 import battle.domain.EscapeCommand
 import main.domain.ScreenType
 import main.repository.screentype.ScreenTypeRepository
@@ -17,14 +17,14 @@ class EscapeViewModel : BattleChildViewModel() {
     override val canBack: Boolean
         get() = true
 
-    override fun isBoundedImpl(commandType: CommandType): Boolean {
+    override fun isBoundedImpl(commandType: BattleCommandType): Boolean {
         return commandType == EscapeCommand
     }
 
     override fun goNextImpl() {
         when (selectManager.selected) {
             attackCommand -> {
-                commandStateRepository.pop()
+                commandRepository.pop()
             }
 
             escapeCommand -> {
