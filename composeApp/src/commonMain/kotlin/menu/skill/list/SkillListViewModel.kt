@@ -1,16 +1,17 @@
-package menu.skill
+package menu.skill.list
 
 import common.Timer
 import common.values.playerNum
 import main.menu.SelectableWindowViewModel
 import main.repository.player.PlayerRepository
 import main.repository.skill.SkillRepository
+import menu.domain.MenuType
 import menu.domain.SelectManager
 import menu.repository.menustate.MenuStateRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class SkillViewModel : SelectableWindowViewModel(),
+class SkillListViewModel : SelectableWindowViewModel(),
     KoinComponent {
     val repository: PlayerRepository by inject()
     private val skillRepository: SkillRepository by inject()
@@ -35,7 +36,9 @@ class SkillViewModel : SelectableWindowViewModel(),
         return skillRepository.getSkill(id).name
     }
 
-    override fun pressA() {}
+    override fun pressA() {
+        menuStateRepository.push(MenuType.SKILL_LST)
+    }
 
     override fun pressB() {
         menuStateRepository.pop()

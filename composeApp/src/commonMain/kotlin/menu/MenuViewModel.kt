@@ -6,6 +6,8 @@ import kotlinx.coroutines.flow.SharedFlow
 import menu.domain.MenuType
 import menu.main.MainMenuViewModel
 import menu.repository.menustate.MenuStateRepository
+import menu.skill.list.SkillListViewModel
+import menu.skill.user.SkillUserViewModel
 import menu.status.StatusViewModel
 import menu.usecase.backfield.BackFieldUseCase
 import org.koin.core.component.KoinComponent
@@ -20,6 +22,8 @@ class MenuViewModel : KoinComponent, ControllerCallback {
 
     private val mainMenuViewModel: MainMenuViewModel by inject()
     private val statusViewModel: StatusViewModel by inject()
+    private val skillUserViewModel: SkillUserViewModel by inject()
+    private val skillListViewModel: SkillListViewModel by inject()
 
     override fun moveStick(stickPosition: StickPosition) {
         menuStateRepository.menuType
@@ -32,7 +36,8 @@ class MenuViewModel : KoinComponent, ControllerCallback {
         return when (this) {
             MenuType.Main -> mainMenuViewModel
             MenuType.Status -> statusViewModel
-            MenuType.SKILL -> statusViewModel
+            MenuType.SKILL_USER -> skillUserViewModel
+            MenuType.SKILL_LST -> skillListViewModel
             MenuType.Item3 -> null
             MenuType.Item4 -> null
             MenuType.Item5 -> null

@@ -83,7 +83,7 @@ class MenuStateRepositoryImplTest : KoinTest {
             menuStateRepository.menuType = MenuType.Status
             delay(100)
 
-            menuStateRepository.menuType = MenuType.SKILL
+            menuStateRepository.menuType = MenuType.SKILL_USER
             delay(100)
 
             menuStateRepository.reset()

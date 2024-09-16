@@ -1,4 +1,4 @@
-package menu.skill
+package menu.skill.user
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -16,14 +16,15 @@ import androidx.compose.ui.unit.dp
 import common.layout.CenterText
 import common.values.Colors
 import common.values.playerNum
+import menu.skill.SkillList
 import org.koin.compose.koinInject
 
 @Composable
 fun SkillMenu(
     modifier: Modifier = Modifier,
-    skillViewModel: SkillViewModel = koinInject(),
+    skillUserViewModel: SkillUserViewModel = koinInject(),
 ) {
-    val selectedId = skillViewModel.getSelectedAsState().value
+    val selectedId = skillUserViewModel.getSelectedAsState().value
     Row(
         modifier = modifier
             .background(
@@ -43,7 +44,7 @@ fun SkillMenu(
                         .weight(1f)
                         .fillMaxWidth()
                         .clickable {
-                            skillViewModel.setSelected(i)
+                            skillUserViewModel.setSelected(i)
                         }
                         .border(
                             width = 2.dp,
@@ -51,24 +52,17 @@ fun SkillMenu(
                             else Colors.MenuFrame,
                             shape = RectangleShape,
                         ),
-                    text = skillViewModel.getNameAt(i),
+                    text = skillUserViewModel.getNameAt(i),
                 )
             }
         }
 
-        Column(
+        SkillList(
             modifier = Modifier
                 .fillMaxHeight()
                 .weight(1f),
-        ) {
-            skillViewModel.getSkillAt(selectedId).forEach {
-                CenterText(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f),
-                    text = skillViewModel.getSkillName(it),
-                )
-            }
-        }
+            skillUserViewModel = skillUserViewModel,
+            selectedId = selectedId,
+        )
     }
 }
