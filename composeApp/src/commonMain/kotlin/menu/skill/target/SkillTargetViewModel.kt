@@ -1,6 +1,7 @@
 package menu.skill.target
 
 import common.values.playerNum
+import core.confim.repository.ConfirmRepository
 import menu.MenuChildViewModel
 import menu.domain.MenuType
 import menu.domain.SelectManager
@@ -14,6 +15,8 @@ class SkillTargetViewModel : MenuChildViewModel() {
     private val skillUserRepository: SkillUserRepository by inject()
     private val useSkillIdRepository: UseSkillIdRepository by inject()
     private val targetRepository: TargetRepository by inject()
+
+    private val confirmRepository: ConfirmRepository by inject()
 
     private val getSkillExplainUseCase: GetSkillExplainUseCase by inject()
 
@@ -35,6 +38,7 @@ class SkillTargetViewModel : MenuChildViewModel() {
 
     override fun goNextImpl() {
         targetRepository.target = selectManager.selected
+        confirmRepository.push(true)
     }
 
     override var selectManager: SelectManager = SelectManager(

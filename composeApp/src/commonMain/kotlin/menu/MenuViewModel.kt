@@ -2,6 +2,8 @@ package menu
 
 import controller.domain.ControllerCallback
 import controller.domain.StickPosition
+import core.confim.ConfirmViewModel
+import core.confim.repository.ConfirmRepository
 import kotlinx.coroutines.flow.SharedFlow
 import menu.domain.MenuType
 import menu.main.MainMenuViewModel
@@ -16,6 +18,7 @@ import org.koin.core.component.inject
 
 class MenuViewModel : KoinComponent, ControllerCallback {
     private val menuStateRepository: MenuStateRepository by inject()
+    private val confirmRepository: ConfirmRepository by inject()
 
     private val backFieldUseCase: BackFieldUseCase by inject()
 
@@ -27,6 +30,8 @@ class MenuViewModel : KoinComponent, ControllerCallback {
     private val skillListViewModel: SkillListViewModel by inject()
     private val skillTargetViewModel: SkillTargetViewModel by inject()
 
+    private val confirmViewModel: ConfirmViewModel by inject()
+
     override fun moveStick(stickPosition: StickPosition) {
         menuStateRepository.nowCommandType
             .toViewModel()?.moveStick(
@@ -35,6 +40,10 @@ class MenuViewModel : KoinComponent, ControllerCallback {
     }
 
     private fun MenuType.toViewModel(): ControllerCallback? {
+        if (confirmRepository.nowCommandType) {
+            return confirmViewModel
+        }
+
         return when (this) {
             MenuType.Main -> mainMenuViewModel
             MenuType.Status -> statusViewModel

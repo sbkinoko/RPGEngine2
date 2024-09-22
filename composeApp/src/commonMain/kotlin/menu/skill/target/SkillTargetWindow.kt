@@ -3,6 +3,7 @@ package menu.skill.target
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -12,6 +13,7 @@ import common.extension.equalAllocationModifier
 import common.extension.menuItem
 import common.values.Colors
 import common.values.playerNum
+import core.confim.WithConfirmWindow
 import menu.component.StatusComponent
 import org.koin.compose.koinInject
 
@@ -20,38 +22,44 @@ fun SkillTargetWindow(
     modifier: Modifier = Modifier,
     skillTargetViewModel: SkillTargetViewModel = koinInject(),
 ) {
-    Row(
+
+    WithConfirmWindow(
         modifier = modifier,
+        callBack = {}
     ) {
-        Column(
-            modifier = equalAllocationModifier,
+        Row(
+            modifier = Modifier.fillMaxSize(),
         ) {
-            Text(
+            Column(
                 modifier = equalAllocationModifier,
-                text = skillTargetViewModel.explain
-            )
-            StatusComponent(
-                modifier = equalAllocationModifier
-                    .border(
-                        width = 1.dp,
-                        color = Colors.StatusComponent,
-                        shape = RectangleShape,
-                    ),
-                statusId = skillTargetViewModel.user,
-            )
-        }
-        Column(
-            modifier = equalAllocationModifier
-        ) {
-            for (i in 0 until playerNum) {
+            ) {
+                Text(
+                    modifier = equalAllocationModifier,
+                    text = skillTargetViewModel.explain
+                )
                 StatusComponent(
                     modifier = equalAllocationModifier
-                        .menuItem(
-                            id = i,
-                            childViewModel = skillTargetViewModel,
+                        .border(
+                            width = 1.dp,
+                            color = Colors.StatusComponent,
+                            shape = RectangleShape,
                         ),
-                    statusId = i,
+                    statusId = skillTargetViewModel.user,
                 )
+            }
+            Column(
+                modifier = equalAllocationModifier
+            ) {
+                for (i in 0 until playerNum) {
+                    StatusComponent(
+                        modifier = equalAllocationModifier
+                            .menuItem(
+                                id = i,
+                                childViewModel = skillTargetViewModel,
+                            ),
+                        statusId = i,
+                    )
+                }
             }
         }
     }

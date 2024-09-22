@@ -1,5 +1,8 @@
 package core.confim
 
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
 import core.confim.repository.ConfirmRepository
 import main.menu.SelectableChildViewModel
 import menu.domain.SelectManager
@@ -7,6 +10,13 @@ import org.koin.core.component.inject
 
 class ConfirmViewModel : SelectableChildViewModel<Boolean>() {
     override val commandRepository: ConfirmRepository by inject()
+
+    @Composable
+    fun getShowStateAsState(): State<Boolean> {
+        return commandRepository.commandTypeFlow.collectAsState(
+            false
+        )
+    }
 
     override val canBack: Boolean
         get() = true
@@ -17,7 +27,11 @@ class ConfirmViewModel : SelectableChildViewModel<Boolean>() {
         when (
             selectManager.selected
         ) {
-            ID_YES -> callBack()
+            ID_YES -> {
+                callBack()
+                commandRepository.pop()
+            }
+
             ID_NO -> pressB()
         }
     }
