@@ -27,6 +27,7 @@ class SkillListViewModel : MenuChildViewModel(),
         get() = true
 
     override var timer: Timer = Timer(200)
+
     override fun isBoundedImpl(commandType: MenuType): Boolean {
         return commandType == MenuType.SKILL_LST
     }
@@ -34,20 +35,26 @@ class SkillListViewModel : MenuChildViewModel(),
     val user: Int
         get() = skillUserRepository.skillUserId
 
+    fun init() {
+        loadSkill(user)
+    }
+
     override fun goNextImpl() {
         TODO("Not yet implemented")
     }
 
-    fun getNameAt(id: Int): String {
-        return repository.getStatus(id).name
+    private fun loadSkill(userId: Int) {
+        selectManager = SelectManager(
+            width = 1,
+            itemNum = repository.getStatus(userId).skillList.size,
+        )
+        selectManager.selected = 0
     }
 
-    fun getSkillAt(id: Int): List<Int> {
-        return repository.getStatus(id).skillList
-    }
-
-    fun getSkillName(id: Int): String {
-        return skillRepository.getSkill(id).name
+    fun getExplainAt(id: Int): String {
+        val skillId = repository.getStatus(user).skillList[id]
+        val explain = skillRepository.getSkill(skillId).name
+        return explain
     }
 
     override fun pressB() {

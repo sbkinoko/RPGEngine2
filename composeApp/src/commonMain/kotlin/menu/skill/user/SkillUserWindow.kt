@@ -18,7 +18,7 @@ import menu.skill.SkillList
 import org.koin.compose.koinInject
 
 @Composable
-fun SkillMenu(
+fun SkillUserWindow(
     modifier: Modifier = Modifier,
     skillUserViewModel: SkillUserViewModel = koinInject(),
 ) {
@@ -55,7 +55,8 @@ fun SkillMenu(
                 .fillMaxHeight()
                 .weight(1f),
             skillUserViewModel = skillUserViewModel,
-            selectedId = selectedId,
+            selectedUserId = selectedId,
+            canSelect = false,
         )
     }
 }
