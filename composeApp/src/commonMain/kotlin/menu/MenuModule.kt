@@ -3,10 +3,12 @@ package menu
 import menu.main.MainMenuViewModel
 import menu.repository.menustate.MenuStateRepository
 import menu.repository.menustate.MenuStateRepositoryImpl
-import menu.repository.skilluser.SkillUserRepository
-import menu.repository.skilluser.SkillUserRepositoryImpl
 import menu.skill.list.SkillListViewModel
+import menu.skill.repository.skilluser.SkillUserRepository
+import menu.skill.repository.skilluser.SkillUserRepositoryImpl
 import menu.skill.target.SkillTargetViewModel
+import menu.skill.usecase.GetSkillExplainUseCase
+import menu.skill.usecase.GetSkillExplainUseCaseImpl
 import menu.skill.user.SkillUserViewModel
 import menu.status.StatusViewModel
 import menu.usecase.backfield.BackFieldUseCase
@@ -50,6 +52,12 @@ val MenuModule = module {
         BackFieldUseCaseImpl(
             screenTypeRepository = get(),
             menuStateRepository = get(),
+        )
+    }
+
+    single<GetSkillExplainUseCase> {
+        GetSkillExplainUseCaseImpl(
+            skillRepository = get(),
         )
     }
 }

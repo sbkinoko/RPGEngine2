@@ -4,7 +4,7 @@ import common.values.playerNum
 import menu.MenuChildViewModel
 import menu.domain.MenuType
 import menu.domain.SelectManager
-import menu.repository.skilluser.SkillUserRepository
+import menu.skill.repository.skilluser.SkillUserRepository
 import org.koin.core.component.inject
 
 class SkillTargetViewModel : MenuChildViewModel() {
