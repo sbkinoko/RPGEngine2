@@ -14,8 +14,10 @@ import org.koin.compose.koinInject
 fun SkillListWindow(
     modifier: Modifier = Modifier,
     skillUserViewModel: SkillUserViewModel = koinInject(),
+    skillListViewModel: SkillListViewModel = koinInject(),
 ) {
-    val selectedId = skillUserViewModel.getSelectedAsState().value
+    val selectedId = skillListViewModel.user
+
     Row(
         modifier = modifier
             .background(

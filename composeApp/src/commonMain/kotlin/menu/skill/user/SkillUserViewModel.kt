@@ -8,6 +8,7 @@ import menu.MenuChildViewModel
 import menu.domain.MenuType
 import menu.domain.SelectManager
 import menu.repository.menustate.MenuStateRepository
+import menu.repository.skilluser.SkillUserRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -16,6 +17,7 @@ class SkillUserViewModel : MenuChildViewModel(),
     val repository: PlayerRepository by inject()
     private val skillRepository: SkillRepository by inject()
     private val menuStateRepository: MenuStateRepository by inject()
+    private val skillUserRepository: SkillUserRepository by inject()
 
     override var selectManager = SelectManager(
         width = 1,
@@ -30,6 +32,7 @@ class SkillUserViewModel : MenuChildViewModel(),
     }
 
     override fun goNextImpl() {
+        skillUserRepository.skillUserId = selectManager.selected
         menuStateRepository.push(MenuType.SKILL_LST)
     }
 
