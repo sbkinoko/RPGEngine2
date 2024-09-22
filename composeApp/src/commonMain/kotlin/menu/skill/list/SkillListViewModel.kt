@@ -2,7 +2,6 @@ package menu.skill.list
 
 import common.Timer
 import common.values.playerNum
-import controller.domain.StickPosition
 import main.repository.player.PlayerRepository
 import main.repository.skill.SkillRepository
 import menu.MenuChildViewModel
@@ -29,16 +28,6 @@ class SkillListViewModel : MenuChildViewModel(),
 
     override var timer: Timer = Timer(200)
 
-    private var _userId = 0
-    var userId: Int
-        get() {
-            return _userId
-        }
-        set(value) {
-            _userId = value
-            loadSkill(value)
-        }
-
     override fun isBoundedImpl(commandType: MenuType): Boolean {
         return commandType == MenuType.SKILL_LST
     }
@@ -46,13 +35,12 @@ class SkillListViewModel : MenuChildViewModel(),
     val user: Int
         get() = skillUserRepository.skillUserId
 
-    override fun goNextImpl() {
-        TODO("Not yet implemented")
+    fun init() {
+        loadSkill(user)
     }
 
-    override fun moveStick(stickPosition: StickPosition) {
-        super.moveStick(stickPosition)
-        selectManager.selected
+    override fun goNextImpl() {
+        TODO("Not yet implemented")
     }
 
     private fun loadSkill(userId: Int) {
@@ -64,7 +52,7 @@ class SkillListViewModel : MenuChildViewModel(),
     }
 
     fun getExplainAt(id: Int): String {
-        val skillId = repository.getStatus(userId).skillList[id]
+        val skillId = repository.getStatus(user).skillList[id]
         val explain = skillRepository.getSkill(skillId).name
         return explain
     }
