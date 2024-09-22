@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
+import common.extension.equalAllocationModifier
 import common.layout.CenterText
 import common.values.Colors
 import common.values.playerNum
@@ -58,9 +59,12 @@ fun StatusMenu(
         }
 
         StatusComponent(
-            modifier = Modifier
-                .fillMaxHeight()
-                .weight(1f),
+            modifier = equalAllocationModifier
+                .border(
+                    width = 1.dp,
+                    color = Colors.StatusComponent,
+                    shape = RectangleShape,
+                ),
             statusId = selectedId,
         )
     }

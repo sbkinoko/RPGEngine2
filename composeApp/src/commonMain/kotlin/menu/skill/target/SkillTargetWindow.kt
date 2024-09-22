@@ -1,11 +1,15 @@
 package menu.skill.target
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.unit.dp
 import common.extension.equalAllocationModifier
+import common.values.Colors
 import common.values.playerNum
 import menu.component.StatusComponent
 import org.koin.compose.koinInject
@@ -26,7 +30,12 @@ fun SkillTargetWindow(
                 text = skillTargetViewModel.explain
             )
             StatusComponent(
-                modifier = equalAllocationModifier,
+                modifier = equalAllocationModifier
+                    .border(
+                        width = 1.dp,
+                        color = Colors.StatusComponent,
+                        shape = RectangleShape,
+                    ),
                 statusId = skillTargetViewModel.user,
             )
         }
