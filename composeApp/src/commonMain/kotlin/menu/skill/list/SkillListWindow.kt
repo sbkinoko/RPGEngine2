@@ -9,9 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import battle.status.StatusComponent
 import common.extension.equalAllocationModifier
 import common.values.Colors
+import menu.component.StatusComponent
 import menu.skill.SkillList
 import menu.skill.user.SkillUserViewModel
 import org.koin.compose.koinInject
@@ -59,11 +59,9 @@ fun SkillListWindow(
                     id = skillId,
                 )
             )
-
             StatusComponent(
                 modifier = equalAllocationModifier,
-                status = skillListViewModel.repository.getStatus(user),
-                index = -1,
+                statusId = user,
             )
         }
     }
