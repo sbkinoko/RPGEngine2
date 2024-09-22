@@ -16,6 +16,10 @@ class ConfirmRepository : CommandRepository<Boolean> {
     }
 
     override fun push(commandType: Boolean) {
+        if (!commandType) {
+            throw RuntimeException("Confirmは必ずtrueを入れる")
+        }
+
         flg = true
         commandTypeFlow.tryEmit(true)
     }
