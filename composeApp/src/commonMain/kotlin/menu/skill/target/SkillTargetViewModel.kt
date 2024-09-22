@@ -5,6 +5,7 @@ import menu.MenuChildViewModel
 import menu.domain.MenuType
 import menu.domain.SelectManager
 import menu.skill.repository.skilluser.SkillUserRepository
+import menu.skill.repository.target.TargetRepository
 import menu.skill.repository.useid.UseSkillIdRepository
 import menu.skill.usecase.GetSkillExplainUseCase
 import org.koin.core.component.inject
@@ -12,6 +13,7 @@ import org.koin.core.component.inject
 class SkillTargetViewModel : MenuChildViewModel() {
     private val skillUserRepository: SkillUserRepository by inject()
     private val useSkillIdRepository: UseSkillIdRepository by inject()
+    private val targetRepository: TargetRepository by inject()
 
     private val getSkillExplainUseCase: GetSkillExplainUseCase by inject()
 
@@ -32,7 +34,7 @@ class SkillTargetViewModel : MenuChildViewModel() {
     }
 
     override fun goNextImpl() {
-        TODO("Not yet implemented")
+        targetRepository.target = selectManager.selected
     }
 
     override var selectManager: SelectManager = SelectManager(
