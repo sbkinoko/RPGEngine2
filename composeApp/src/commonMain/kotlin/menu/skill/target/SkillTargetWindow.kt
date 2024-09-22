@@ -23,7 +23,7 @@ fun SkillTargetWindow(
         ) {
             Text(
                 modifier = equalAllocationModifier,
-                text = "sample"
+                text = skillTargetViewModel.explain
             )
             StatusComponent(
                 modifier = equalAllocationModifier,

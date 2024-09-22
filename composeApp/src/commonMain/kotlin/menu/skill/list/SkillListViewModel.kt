@@ -8,6 +8,7 @@ import menu.domain.MenuType
 import menu.domain.SelectManager
 import menu.repository.menustate.MenuStateRepository
 import menu.skill.repository.skilluser.SkillUserRepository
+import menu.skill.repository.useid.UseSkillIdRepository
 import menu.skill.usecase.GetSkillExplainUseCase
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -17,6 +18,7 @@ class SkillListViewModel : MenuChildViewModel(),
     val repository: PlayerRepository by inject()
     private val menuStateRepository: MenuStateRepository by inject()
     private val skillUserRepository: SkillUserRepository by inject()
+    private val useSkillIdRepository: UseSkillIdRepository by inject()
 
     private val getSkillExplainUseCase: GetSkillExplainUseCase by inject()
 
@@ -41,6 +43,7 @@ class SkillListViewModel : MenuChildViewModel(),
     }
 
     override fun goNextImpl() {
+        useSkillIdRepository.skillId = selectManager.selected.toSkillId()
         menuStateRepository.push(
             MenuType.SKILL_TARGET,
         )
@@ -54,8 +57,12 @@ class SkillListViewModel : MenuChildViewModel(),
         selectManager.selected = 0
     }
 
-    fun getExplainAt(id: Int): String {
-        val skillId = repository.getStatus(user).skillList[id]
+    private fun Int.toSkillId(): Int {
+        return repository.getStatus(user).skillList[this]
+    }
+
+    fun getExplainAt(position: Int): String {
+        val skillId = position.toSkillId()
         return getSkillExplainUseCase.invoke(skillId)
     }
 
