@@ -11,6 +11,7 @@ enum class MenuType(
         title = "スキル"
     ),
     SKILL_LST,
+    SKILL_TARGET,
     Item3(title = "text3"),
     Item4(title = "text4"),
     Item5(title = "text5"),
