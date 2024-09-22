@@ -3,6 +3,8 @@ package menu
 import menu.main.MainMenuViewModel
 import menu.repository.menustate.MenuStateRepository
 import menu.repository.menustate.MenuStateRepositoryImpl
+import menu.repository.skilluser.SkillUserRepository
+import menu.repository.skilluser.SkillUserRepositoryImpl
 import menu.skill.list.SkillListViewModel
 import menu.skill.user.SkillUserViewModel
 import menu.status.StatusViewModel
@@ -33,6 +35,10 @@ val MenuModule = module {
 
     single<MenuStateRepository> {
         MenuStateRepositoryImpl()
+    }
+
+    single<SkillUserRepository> {
+        SkillUserRepositoryImpl()
     }
 
     single<BackFieldUseCase> {

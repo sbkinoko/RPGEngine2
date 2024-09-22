@@ -19,11 +19,7 @@ fun SkillListWindow(
     skillUserViewModel: SkillUserViewModel = koinInject(),
     skillListViewModel: SkillListViewModel = koinInject(),
 ) {
-    val userId = skillUserViewModel.getSelectedAsState().value
-    LaunchedEffect(userId) {
-        skillListViewModel.userId = userId
-    }
-    val selectedId = skillListViewModel.getSelectedAsState().value
+    val selectedId = skillListViewModel.user
 
     Row(
         modifier = modifier
