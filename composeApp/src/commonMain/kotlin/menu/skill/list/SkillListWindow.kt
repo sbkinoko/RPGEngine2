@@ -33,7 +33,7 @@ fun SkillListWindow(
         flg.value = false
     }
 
-    val skillId = skillListViewModel.getSelectedAsState().value
+    val selected = skillListViewModel.getSelectedAsState().value
     Row(
         modifier = modifier
             .background(
@@ -56,7 +56,7 @@ fun SkillListWindow(
             Text(
                 modifier = equalAllocationModifier,
                 text = skillListViewModel.getExplainAt(
-                    id = skillId,
+                    position = selected,
                 )
             )
             StatusComponent(
