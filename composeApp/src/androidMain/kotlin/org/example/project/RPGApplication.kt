@@ -3,6 +3,7 @@ package org.example.project
 import android.app.Application
 import battle.BattleModule
 import common.CommonModule
+import core.CoreModule
 import main.MainModule
 import map.MapModule
 import menu.MenuModule
@@ -21,6 +22,7 @@ class RPGApplication : Application() {
                 CommonModule,
                 MainModule,
                 MenuModule,
+                CoreModule,
             )
         }
     }
