@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import common.values.Colors
 import menu.skill.SkillList
@@ -32,7 +31,7 @@ fun SkillListWindow(
                 .fillMaxHeight()
                 .weight(1f),
             skillUserViewModel = skillUserViewModel,
-            selectedUserId = userId,
+            selectedUserId = selectedId,
             canSelect = true,
         )
         Column(
