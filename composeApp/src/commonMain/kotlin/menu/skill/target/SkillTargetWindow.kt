@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import common.extension.equalAllocationModifier
+import common.extension.menuItem
 import common.values.Colors
 import common.values.playerNum
 import menu.component.StatusComponent
@@ -44,7 +45,11 @@ fun SkillTargetWindow(
         ) {
             for (i in 0 until playerNum) {
                 StatusComponent(
-                    modifier = equalAllocationModifier,
+                    modifier = equalAllocationModifier
+                        .menuItem(
+                            id = i,
+                            childViewModel = skillTargetViewModel,
+                        ),
                     statusId = i,
                 )
             }
