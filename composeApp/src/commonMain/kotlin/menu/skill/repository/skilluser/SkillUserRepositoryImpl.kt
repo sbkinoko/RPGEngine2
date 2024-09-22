@@ -1,4 +1,4 @@
-package menu.repository.skilluser
+package menu.skill.repository.skilluser
 
 class SkillUserRepositoryImpl : SkillUserRepository {
     override var skillUserId: Int = 0
