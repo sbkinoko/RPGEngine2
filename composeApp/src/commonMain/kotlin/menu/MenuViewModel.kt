@@ -7,6 +7,7 @@ import menu.domain.MenuType
 import menu.main.MainMenuViewModel
 import menu.repository.menustate.MenuStateRepository
 import menu.skill.list.SkillListViewModel
+import menu.skill.target.SkillTargetViewModel
 import menu.skill.user.SkillUserViewModel
 import menu.status.StatusViewModel
 import menu.usecase.backfield.BackFieldUseCase
@@ -24,6 +25,7 @@ class MenuViewModel : KoinComponent, ControllerCallback {
     private val statusViewModel: StatusViewModel by inject()
     private val skillUserViewModel: SkillUserViewModel by inject()
     private val skillListViewModel: SkillListViewModel by inject()
+    private val skillTargetViewModel: SkillTargetViewModel by inject()
 
     override fun moveStick(stickPosition: StickPosition) {
         menuStateRepository.nowCommandType
@@ -38,6 +40,7 @@ class MenuViewModel : KoinComponent, ControllerCallback {
             MenuType.Status -> statusViewModel
             MenuType.SKILL_USER -> skillUserViewModel
             MenuType.SKILL_LST -> skillListViewModel
+            MenuType.SKILL_TARGET -> skillTargetViewModel
             MenuType.Item3 -> null
             MenuType.Item4 -> null
             MenuType.Item5 -> null
