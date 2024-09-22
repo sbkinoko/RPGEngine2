@@ -40,7 +40,9 @@ class SkillListViewModel : MenuChildViewModel(),
     }
 
     override fun goNextImpl() {
-        TODO("Not yet implemented")
+        menuStateRepository.push(
+            MenuType.SKILL_TARGET,
+        )
     }
 
     private fun loadSkill(userId: Int) {
