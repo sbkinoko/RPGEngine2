@@ -6,6 +6,8 @@ import menu.repository.menustate.MenuStateRepositoryImpl
 import menu.skill.list.SkillListViewModel
 import menu.skill.repository.skilluser.SkillUserRepository
 import menu.skill.repository.skilluser.SkillUserRepositoryImpl
+import menu.skill.repository.target.TargetRepository
+import menu.skill.repository.target.TargetRepositoryImpl
 import menu.skill.repository.useid.UseSkillIdRepository
 import menu.skill.repository.useid.UseSkillIdRepositoryImpl
 import menu.skill.target.SkillTargetViewModel
@@ -52,6 +54,10 @@ val MenuModule = module {
 
     single<UseSkillIdRepository> {
         UseSkillIdRepositoryImpl()
+    }
+
+    single<TargetRepository> {
+        TargetRepositoryImpl()
     }
 
     single<BackFieldUseCase> {
