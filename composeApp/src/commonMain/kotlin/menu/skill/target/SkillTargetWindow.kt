@@ -13,7 +13,7 @@ import common.extension.equalAllocationModifier
 import common.extension.menuItem
 import common.values.Colors
 import common.values.playerNum
-import core.confim.WithConfirmWindow
+import core.WithConfirmWindow
 import menu.component.StatusComponent
 import org.koin.compose.koinInject
 
