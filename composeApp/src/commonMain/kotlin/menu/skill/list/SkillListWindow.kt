@@ -5,6 +5,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -14,6 +15,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import common.extension.equalAllocationModifier
 import common.values.Colors
+import core.WithConfirmAndTextWindow
 import menu.component.StatusComponent
 import menu.skill.SkillList
 import menu.skill.user.SkillUserViewModel
@@ -37,40 +39,45 @@ fun SkillListWindow(
     }
 
     val selected = skillListViewModel.getSelectedAsState().value
-    Row(
-        modifier = modifier
-            .background(
-                color = Colors.MenuBackground,
-            )
+    WithConfirmAndTextWindow(
+        modifier = modifier.background(
+            color = Colors.MenuBackground,
+        ),
+        confirmCallBack = {},
+        textCallBack = {},
     ) {
-        SkillList(
-            modifier = Modifier
-                .fillMaxHeight()
-                .weight(1f),
-            skillUserViewModel = skillUserViewModel,
-            selectedUserId = user,
-            canSelect = true,
-        )
-        Column(
-            modifier = Modifier
-                .fillMaxHeight()
-                .weight(1f),
+        Row(
+            modifier = Modifier.fillMaxSize()
         ) {
-            Text(
-                modifier = equalAllocationModifier,
-                text = skillListViewModel.getExplainAt(
-                    position = selected,
+            SkillList(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .weight(1f),
+                skillUserViewModel = skillUserViewModel,
+                selectedUserId = user,
+                canSelect = true,
+            )
+            Column(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .weight(1f),
+            ) {
+                Text(
+                    modifier = equalAllocationModifier,
+                    text = skillListViewModel.getExplainAt(
+                        position = selected,
+                    )
                 )
-            )
-            StatusComponent(
-                modifier = equalAllocationModifier
-                    .border(
-                        width = 1.dp,
-                        color = Colors.StatusComponent,
-                        shape = RectangleShape,
-                    ),
-                statusId = user,
-            )
+                StatusComponent(
+                    modifier = equalAllocationModifier
+                        .border(
+                            width = 1.dp,
+                            color = Colors.StatusComponent,
+                            shape = RectangleShape,
+                        ),
+                    statusId = user,
+                )
+            }
         }
     }
 }

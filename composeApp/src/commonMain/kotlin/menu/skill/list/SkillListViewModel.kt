@@ -2,6 +2,10 @@ package menu.skill.list
 
 import common.Timer
 import common.values.playerNum
+import core.domain.AbleType
+import core.domain.Place
+import core.text.repository.TextRepository
+import core.usecase.CheckCanUseSkillUseCase
 import main.repository.player.PlayerRepository
 import menu.MenuChildViewModel
 import menu.domain.MenuType
@@ -21,6 +25,9 @@ class SkillListViewModel : MenuChildViewModel(),
     private val useSkillIdRepository: UseSkillIdRepository by inject()
 
     private val getSkillExplainUseCase: GetSkillExplainUseCase by inject()
+    private val checkCanUseSkillUseCase: CheckCanUseSkillUseCase by inject()
+
+    private val textRepository: TextRepository by inject()
 
     override var selectManager = SelectManager(
         width = 1,
@@ -43,10 +50,34 @@ class SkillListViewModel : MenuChildViewModel(),
     }
 
     override fun goNextImpl() {
-        useSkillIdRepository.skillId = selectManager.selected.toSkillId()
-        menuStateRepository.push(
-            MenuType.SKILL_TARGET,
+        val skillId = selectManager.selected.toSkillId()
+        val status = repository.getStatus(user)
+
+        val ableType = checkCanUseSkillUseCase.invoke(
+            skillId = skillId,
+            status = status,
+            here = Place.MAP,
         )
+        when (ableType) {
+            AbleType.Able -> {
+                // skillIdを保存
+                useSkillIdRepository.skillId = skillId
+                //　次の画面に遷移
+                menuStateRepository.push(
+                    MenuType.SKILL_TARGET,
+                )
+            }
+
+            AbleType.CANT_USE_BY_PLACE -> {
+                textRepository.setText("ここでは使えません")
+                textRepository.push(true)
+            }
+
+            AbleType.CANT_USE_BY_MP -> {
+                textRepository.setText("MPがたりません")
+                textRepository.push(true)
+            }
+        }
     }
 
     private fun loadSkill(userId: Int) {
