@@ -11,6 +11,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import common.extension.equalAllocationModifier
 import common.extension.menuItem
+import common.layout.DisableBox
 import common.values.Colors
 import common.values.playerNum
 import core.WithConfirmAndTextWindow
@@ -27,7 +28,9 @@ fun SkillTargetWindow(
         confirmCallBack = {
             skillTargetViewModel.selectYes()
         },
-        textCallBack = {},
+        textCallBack = {
+            // todo 一つ前の画面に戻る
+        },
     ) {
         Row(
             modifier = Modifier.fillMaxSize(),
@@ -53,14 +56,20 @@ fun SkillTargetWindow(
                 modifier = equalAllocationModifier
             ) {
                 for (i in 0 until playerNum) {
-                    StatusComponent(
-                        modifier = equalAllocationModifier
-                            .menuItem(
-                                id = i,
-                                childViewModel = skillTargetViewModel,
-                            ),
-                        statusId = i,
-                    )
+                    DisableBox(
+                        modifier = equalAllocationModifier,
+                        isDisable = skillTargetViewModel.canSelect(i).not()
+                    ) {
+                        StatusComponent(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .menuItem(
+                                    id = i,
+                                    childViewModel = skillTargetViewModel,
+                                ),
+                            statusId = i,
+                        )
+                    }
                 }
             }
         }
