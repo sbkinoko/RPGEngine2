@@ -27,8 +27,6 @@ fun ConfirmWindow(
 ) {
     confirmViewModel.callBack = callBack
 
-    val confirmFlg = confirmViewModel.getShowStateAsState().value
-
     val height = remember {
         mutableStateOf(0)
     }
@@ -41,48 +39,46 @@ fun ConfirmWindow(
         mutableStateOf(false)
     }
 
-    if (confirmFlg) {
-        Box(
-            modifier = modifier
-                .clickable {
-                    confirmViewModel.onClickItem(ConfirmViewModel.ID_NO)
-                }.onGloballyPositioned {
-                    height.value = it.size.height / 3
-                    width.value = it.size.width / 3
-                    initFlg.value = true
-                },
-            contentAlignment = Alignment.Center,
-        ) {
-            if (initFlg.value) {
-                Column(
-                    modifier = Modifier
-                        .width(
-                            width.value.pxToDp()
+    Box(
+        modifier = modifier
+            .clickable {
+                confirmViewModel.onClickItem(ConfirmViewModel.ID_NO)
+            }.onGloballyPositioned {
+                height.value = it.size.height / 3
+                width.value = it.size.width / 3
+                initFlg.value = true
+            },
+        contentAlignment = Alignment.Center,
+    ) {
+        if (initFlg.value) {
+            Column(
+                modifier = Modifier
+                    .width(
+                        width.value.pxToDp()
+                    )
+                    .height(
+                        height.value.pxToDp()
+                    ),
+            ) {
+                CenterText(
+                    modifier = equalAllocationModifier
+                        .menuItem(
+                            id = ConfirmViewModel.ID_YES,
+                            childViewModel = confirmViewModel,
                         )
-                        .height(
-                            height.value.pxToDp()
-                        ),
-                ) {
-                    CenterText(
-                        modifier = equalAllocationModifier
-                            .menuItem(
-                                id = ConfirmViewModel.ID_YES,
-                                childViewModel = confirmViewModel,
-                            )
-                            .background(color = Colors.MenuBackground),
-                        text = "Yes",
-                    )
+                        .background(color = Colors.MenuBackground),
+                    text = "Yes",
+                )
 
-                    CenterText(
-                        modifier = equalAllocationModifier
-                            .menuItem(
-                                id = ConfirmViewModel.ID_NO,
-                                childViewModel = confirmViewModel,
-                            )
-                            .background(color = Colors.MenuBackground),
-                        text = "No",
-                    )
-                }
+                CenterText(
+                    modifier = equalAllocationModifier
+                        .menuItem(
+                            id = ConfirmViewModel.ID_NO,
+                            childViewModel = confirmViewModel,
+                        )
+                        .background(color = Colors.MenuBackground),
+                    text = "No",
+                )
             }
         }
     }
