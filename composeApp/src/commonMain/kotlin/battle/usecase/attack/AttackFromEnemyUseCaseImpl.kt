@@ -2,7 +2,7 @@ package battle.usecase.attack
 
 import battle.service.FindTargetService
 import battle.usecase.updateparameter.UpdatePlayerStatusUseCase
-import main.repository.player.PlayerRepository
+import core.repository.player.PlayerRepository
 
 class AttackFromEnemyUseCaseImpl(
     private val playerRepository: PlayerRepository,

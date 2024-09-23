@@ -4,8 +4,8 @@ import battle.BattleModule
 import battle.QualifierAttackFromPlayer
 import battle.repository.battlemonster.BattleMonsterRepository
 import battle.usecase.attack.AttackUseCase
-import common.CommonModule
 import common.status.MonsterStatusTest.Companion.getMonster
+import core.CoreModule
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.koin.core.context.startKoin
@@ -32,7 +32,7 @@ class IsAllMonsterNotActiveUseCaseTest : KoinTest {
         startKoin {
             modules(
                 BattleModule,
-                CommonModule,
+                CoreModule,
             )
         }
     }

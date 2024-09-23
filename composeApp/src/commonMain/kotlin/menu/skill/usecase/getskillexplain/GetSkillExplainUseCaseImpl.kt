@@ -1,6 +1,6 @@
 package menu.skill.usecase.getskillexplain
 
-import main.repository.skill.SkillRepository
+import core.repository.skill.SkillRepository
 
 class GetSkillExplainUseCaseImpl(
     private val skillRepository: SkillRepository,

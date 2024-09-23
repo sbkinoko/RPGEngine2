@@ -1,8 +1,8 @@
 package battle.repository.battlemonster
 
+import core.domain.status.MonsterStatus
+import core.repository.status.StatusRepository
 import kotlinx.coroutines.flow.MutableSharedFlow
-import main.repository.status.StatusRepository
-import main.status.MonsterStatus
 
 interface BattleMonsterRepository : StatusRepository<MonsterStatus> {
 

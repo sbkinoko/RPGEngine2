@@ -3,11 +3,11 @@ package menu.skill.usecase.useskill
 import battle.domain.AttackSkill
 import battle.domain.HealSkill
 import battle.usecase.updateparameter.UpdatePlayerStatusUseCase
+import core.repository.skill.SkillRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
-import main.repository.skill.SkillRepository
 import menu.skill.repository.skilluser.SkillUserRepository
 import menu.skill.repository.target.TargetRepository
 import menu.skill.repository.useid.UseSkillIdRepository

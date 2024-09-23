@@ -1,7 +1,7 @@
-package main.menu
+package core.menu
 
 import common.Timer
-import main.repository.command.CommandRepository
+import core.repository.command.CommandRepository
 import org.koin.core.component.KoinComponent
 
 abstract class SelectableChildViewModel<T> :

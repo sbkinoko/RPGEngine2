@@ -27,9 +27,9 @@ import battle.usecase.gettargetnum.GetTargetNumUseCase
 import battle.usecase.gettargetnum.GetTargetNumUseCaseImpl
 import battle.usecase.updateparameter.UpdateMonsterStatusUseCase
 import battle.usecase.updateparameter.UpdatePlayerStatusUseCase
-import main.repository.player.PlayerRepository
-import main.repository.skill.SkillRepository
-import main.repository.skill.SkillRepositoryImpl
+import core.repository.player.PlayerRepository
+import core.repository.skill.SkillRepository
+import core.repository.skill.SkillRepositoryImpl
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 

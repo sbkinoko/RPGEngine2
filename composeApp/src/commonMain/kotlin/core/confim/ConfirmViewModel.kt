@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import core.confim.repository.ConfirmRepository
-import main.menu.SelectableChildViewModel
+import core.menu.SelectableChildViewModel
 import menu.domain.SelectManager
 import org.koin.core.component.inject
 

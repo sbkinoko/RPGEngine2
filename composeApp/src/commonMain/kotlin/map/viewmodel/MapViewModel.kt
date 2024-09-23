@@ -2,12 +2,12 @@ package map.viewmodel
 
 import controller.domain.ControllerCallback
 import controller.domain.StickPosition
+import core.domain.ScreenType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
-import main.domain.ScreenType
-import main.repository.screentype.ScreenTypeRepository
+import main.screentype.ScreenTypeRepository
 import map.data.LoopMap
 import map.data.NonLoopMap
 import map.domain.BackgroundCell

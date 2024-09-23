@@ -1,4 +1,4 @@
-package main.repository.status
+package core.repository.status
 
 interface StatusRepository<T> {
     /**

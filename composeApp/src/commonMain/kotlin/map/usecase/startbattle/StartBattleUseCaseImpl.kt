@@ -3,14 +3,14 @@ package map.usecase.startbattle
 import battle.repository.action.ActionRepository
 import battle.repository.battlemonster.BattleMonsterRepository
 import battle.repository.commandstate.CommandStateRepository
+import core.domain.ScreenType
+import core.domain.status.MonsterStatus
+import core.domain.status.param.HP
+import core.domain.status.param.MP
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import main.domain.ScreenType
-import main.repository.screentype.ScreenTypeRepository
-import main.status.MonsterStatus
-import main.status.param.HP
-import main.status.param.MP
+import main.screentype.ScreenTypeRepository
 import org.koin.core.component.KoinComponent
 import kotlin.random.Random
 

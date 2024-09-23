@@ -2,6 +2,8 @@ package core
 
 import core.confim.ConfirmViewModel
 import core.confim.repository.ConfirmRepository
+import core.repository.player.PlayerRepository
+import core.repository.player.PlayerRepositoryImpl
 import core.text.TextViewModel
 import core.text.repository.TextRepository
 import core.text.repository.TextRepositoryImpl
@@ -10,20 +12,24 @@ import core.usecase.CheckCanUseSkillUseCaseImpl
 import org.koin.dsl.module
 
 val CoreModule = module {
-    single<ConfirmRepository> {
-        ConfirmRepository()
-    }
-
     single<ConfirmViewModel> {
         ConfirmViewModel()
+    }
+
+    single<TextViewModel> {
+        TextViewModel()
+    }
+
+    single<ConfirmRepository> {
+        ConfirmRepository()
     }
 
     single<TextRepository> {
         TextRepositoryImpl()
     }
 
-    single<TextViewModel> {
-        TextViewModel()
+    single<PlayerRepository> {
+        PlayerRepositoryImpl()
     }
 
     single<CheckCanUseSkillUseCase> {

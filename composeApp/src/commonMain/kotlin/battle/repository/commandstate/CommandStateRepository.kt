@@ -2,7 +2,7 @@ package battle.repository.commandstate
 
 import battle.domain.BattleCommandType
 import battle.domain.MainCommand
-import main.repository.command.CommandRepository
+import core.repository.command.CommandRepository
 
 interface CommandStateRepository : CommandRepository<BattleCommandType> {
     fun init()

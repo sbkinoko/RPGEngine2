@@ -1,6 +1,6 @@
 package core.text.repository
 
-import main.repository.command.CommandRepository
+import core.repository.command.CommandRepository
 
 interface TextRepository : CommandRepository<Boolean> {
     fun getText(): String

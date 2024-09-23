@@ -1,7 +1,7 @@
-package main.status
+package core.domain.status
 
-import main.status.param.HP
-import main.status.param.MP
+import core.domain.status.param.HP
+import core.domain.status.param.MP
 
 interface Status {
     var name: String

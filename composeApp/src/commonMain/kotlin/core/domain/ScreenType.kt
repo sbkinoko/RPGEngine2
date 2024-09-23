@@ -1,4 +1,4 @@
-package main.domain
+package core.domain
 
 import androidx.compose.runtime.Composable
 import battle.BattleViewModel

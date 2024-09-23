@@ -1,7 +1,7 @@
 package menu.usecase.backfield
 
-import main.domain.ScreenType
-import main.repository.screentype.ScreenTypeRepository
+import core.domain.ScreenType
+import main.screentype.ScreenTypeRepository
 import menu.repository.menustate.MenuStateRepository
 
 class BackFieldUseCaseImpl(

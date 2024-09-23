@@ -1,7 +1,7 @@
 package core.confim.repository
 
+import core.repository.command.CommandRepository
 import kotlinx.coroutines.flow.MutableSharedFlow
-import main.repository.command.CommandRepository
 
 class ConfirmRepository : CommandRepository<Boolean> {
     override val commandTypeFlow: MutableSharedFlow<Boolean> = MutableSharedFlow(replay = 1)

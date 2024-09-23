@@ -1,6 +1,6 @@
 package common.menu
 
-import main.menu.PairedList
+import core.menu.PairedList
 import menu.main.MainMenuItem
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -12,7 +12,6 @@ class ToPairedListTest {
         val list = List(2) {
             MainMenuItem(
                 text = it.toString(),
-                onClick = {}
             )
         }
         PairedList<MainMenuItem>().toPairedList(list).forEachIndexed { index, pair ->
@@ -33,7 +32,6 @@ class ToPairedListTest {
         val list = List(3) {
             MainMenuItem(
                 text = it.toString(),
-                onClick = {}
             )
         }
 

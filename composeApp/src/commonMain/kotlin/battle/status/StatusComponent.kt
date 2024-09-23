@@ -15,9 +15,9 @@ import battle.command.selectally.SelectAllyViewModel
 import common.extension.menuItem
 import common.layout.DisableBox
 import common.values.Colors
-import main.status.Status
+import core.domain.status.Status
 import org.koin.compose.koinInject
-import main.status.param.Point as StatusPoint
+import core.domain.status.param.Point as StatusPoint
 
 @Composable
 fun StatusComponent(

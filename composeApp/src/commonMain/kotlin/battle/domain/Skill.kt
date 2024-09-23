@@ -1,7 +1,7 @@
 package battle.domain
 
 import core.domain.Place
-import main.status.Status
+import core.domain.status.Status
 
 sealed interface Skill {
     val name: String

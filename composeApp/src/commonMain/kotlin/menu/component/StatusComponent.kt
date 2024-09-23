@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import main.repository.player.PlayerRepository
+import core.repository.player.PlayerRepository
 import org.koin.compose.koinInject
 
 @Composable
