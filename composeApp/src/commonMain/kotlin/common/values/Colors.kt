@@ -27,4 +27,5 @@ object Colors {
     val MenuFrame = blue
     val MenuBackground = white
     val Disabled = transGrey
+    val OverlayMenu = transGrey
 }

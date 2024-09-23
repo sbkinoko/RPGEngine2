@@ -8,6 +8,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
+import main.repository.skill.ATTACK_TO_2
+import main.repository.skill.CANT_USE
+import main.repository.skill.HEAL_SKILL
+import main.repository.skill.REVIVE_SKILL
 import main.status.PlayerStatus
 import main.status.param.HP
 import main.status.param.MP
@@ -37,7 +41,13 @@ class PlayerRepositoryImpl : PlayerRepository {
                     mp = MP(
                         maxValue = 10,
                         value = 5,
-                    )
+                    ),
+                    skillList = listOf(
+                        ATTACK_TO_2,
+                        CANT_USE,
+                        HEAL_SKILL,
+                        REVIVE_SKILL,
+                    ),
                 )
 
                 1 -> PlayerStatus(
@@ -49,7 +59,11 @@ class PlayerRepositoryImpl : PlayerRepository {
                     mp = MP(
                         maxValue = 111,
                         value = 50,
-                    )
+                    ),
+                    skillList = listOf(
+                        ATTACK_TO_2,
+                        CANT_USE,
+                    ),
                 )
 
                 2 -> PlayerStatus(
@@ -61,7 +75,11 @@ class PlayerRepositoryImpl : PlayerRepository {
                     mp = MP(
                         maxValue = 10,
                         value = 10
-                    )
+                    ),
+                    skillList = listOf(
+                        HEAL_SKILL,
+                        REVIVE_SKILL,
+                    ),
                 )
 
                 3 -> PlayerStatus(
@@ -73,7 +91,11 @@ class PlayerRepositoryImpl : PlayerRepository {
                     mp = MP(
                         maxValue = 100,
                         value = 50,
-                    )
+                    ),
+                    skillList = listOf(
+                        HEAL_SKILL,
+                        REVIVE_SKILL,
+                    ),
                 )
 
                 else -> throw IllegalStateException()

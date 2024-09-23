@@ -88,5 +88,4 @@ abstract class AbstractUpdateStatusUseCase<T> : UpdateStatusService<T> {
         amount: Int,
         status: T,
     ): T
-
 }

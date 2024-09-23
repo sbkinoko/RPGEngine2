@@ -3,6 +3,7 @@ package main.menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import common.Timer
+import controller.domain.ArrowCommand
 import controller.domain.ControllerCallback
 import controller.domain.StickPosition
 import menu.domain.SelectManager
@@ -28,11 +29,17 @@ abstract class SelectableWindowViewModel : ControllerCallback {
     }
 
     override fun moveStick(stickPosition: StickPosition) {
+        val command = stickPosition.toCommand()
+
+        // 放したら終了
+        if (command == ArrowCommand.None)
+            return
+
         timer.callbackIfTimePassed {
             //　スティックの方向に選択可能なものまで移動
             do {
                 //todo 一度選んだやつを再度選んだ場合、ループ終了
-                selectManager.move(stickPosition.toCommand())
+                selectManager.move(command)
             } while (selectable().not())
         }
     }

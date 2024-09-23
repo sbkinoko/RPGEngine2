@@ -36,18 +36,18 @@ class MenuStateRepositoryImplTest : KoinTest {
         var count = 0
         runBlocking {
             val collectJob = launch {
-                menuStateRepository.menuTypeFlow.collect {
+                menuStateRepository.commandTypeFlow.collect {
                     count++
                 }
             }
 
-            menuStateRepository.menuType = MenuType.Status
+            menuStateRepository.push(MenuType.Status)
 
             delay(100)
 
             assertEquals(
                 expected = MenuType.Status,
-                actual = menuStateRepository.menuType
+                actual = menuStateRepository.nowCommandType
             )
             assertEquals(
                 expected = 1,
@@ -59,7 +59,7 @@ class MenuStateRepositoryImplTest : KoinTest {
             delay(100)
             assertEquals(
                 expected = MenuType.Main,
-                actual = menuStateRepository.menuType
+                actual = menuStateRepository.nowCommandType
             )
             assertEquals(
                 expected = 2,
@@ -75,15 +75,15 @@ class MenuStateRepositoryImplTest : KoinTest {
         var count = 0
         runBlocking {
             val collectJob = launch {
-                menuStateRepository.menuTypeFlow.collect {
+                menuStateRepository.commandTypeFlow.collect {
                     count++
                 }
             }
 
-            menuStateRepository.menuType = MenuType.Status
+            menuStateRepository.push(MenuType.Status)
             delay(100)
 
-            menuStateRepository.menuType = MenuType.Item1
+            menuStateRepository.push(MenuType.SKILL_USER)
             delay(100)
 
             menuStateRepository.reset()
@@ -93,7 +93,7 @@ class MenuStateRepositoryImplTest : KoinTest {
             //　リセットしたので標準状態
             assertEquals(
                 expected = MenuType.Main,
-                actual = menuStateRepository.menuType
+                actual = menuStateRepository.nowCommandType
             )
             // セット2回とリセット分
             assertEquals(
@@ -107,7 +107,7 @@ class MenuStateRepositoryImplTest : KoinTest {
 
             assertEquals(
                 expected = MenuType.Main,
-                actual = menuStateRepository.menuType
+                actual = menuStateRepository.nowCommandType
             )
             assertEquals(
                 expected = 3,

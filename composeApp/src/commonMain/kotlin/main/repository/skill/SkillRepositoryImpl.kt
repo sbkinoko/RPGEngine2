@@ -4,6 +4,7 @@ import battle.domain.AttackSkill
 import battle.domain.HealSkill
 import battle.domain.Skill
 import battle.domain.TargetType
+import core.domain.Place
 
 const val ATTACK_TO_2 = 0
 const val CANT_USE = 1
@@ -20,6 +21,7 @@ class SkillRepositoryImpl : SkillRepository {
                 damageAmount = 10,
                 needMP = 1,
                 targetNum = 2,
+                usablePlace = Place.BATTLE
             )
 
             CANT_USE -> AttackSkill(
@@ -28,6 +30,7 @@ class SkillRepositoryImpl : SkillRepository {
                 needMP = 9999,
                 targetNum = 1,
                 canUse = { false },
+                usablePlace = Place.NEITHER,
             )
 
             ATTACK_NORMAL -> AttackSkill(
@@ -35,6 +38,7 @@ class SkillRepositoryImpl : SkillRepository {
                 damageAmount = 1,
                 needMP = 0,
                 targetNum = 1,
+                usablePlace = Place.BATTLE,
             )
 
             HEAL_SKILL -> HealSkill(
@@ -42,7 +46,8 @@ class SkillRepositoryImpl : SkillRepository {
                 healAmount = 10,
                 needMP = 1,
                 targetNum = 1,
-                targetType = TargetType.ACTIVE
+                targetType = TargetType.ACTIVE,
+                usablePlace = Place.BOTH,
             )
 
             REVIVE_SKILL -> HealSkill(
@@ -50,7 +55,8 @@ class SkillRepositoryImpl : SkillRepository {
                 healAmount = 10,
                 needMP = 1,
                 targetNum = 1,
-                targetType = TargetType.INACTIVE
+                targetType = TargetType.INACTIVE,
+                usablePlace = Place.BOTH,
             )
 
             else -> throw NotImplementedError()
