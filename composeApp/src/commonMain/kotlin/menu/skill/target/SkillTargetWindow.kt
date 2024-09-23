@@ -13,7 +13,7 @@ import common.extension.equalAllocationModifier
 import common.extension.menuItem
 import common.values.Colors
 import common.values.playerNum
-import core.WithConfirmWindow
+import core.WithConfirmAndTextWindow
 import menu.component.StatusComponent
 import org.koin.compose.koinInject
 
@@ -22,10 +22,12 @@ fun SkillTargetWindow(
     modifier: Modifier = Modifier,
     skillTargetViewModel: SkillTargetViewModel = koinInject(),
 ) {
-
-    WithConfirmWindow(
+    WithConfirmAndTextWindow(
         modifier = modifier,
-        callBack = {}
+        confirmCallBack = {
+            skillTargetViewModel.showText()
+        },
+        textCallBack = {},
     ) {
         Row(
             modifier = Modifier.fillMaxSize(),

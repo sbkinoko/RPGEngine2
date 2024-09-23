@@ -7,10 +7,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import common.values.Colors
 import core.confim.ConfirmWindow
+import core.text.TextWindow
 
 @Composable
-fun WithConfirmWindow(
-    callBack: () -> Unit,
+fun WithConfirmAndTextWindow(
+    confirmCallBack: () -> Unit,
+    textCallBack: () -> Unit,
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
 ) {
@@ -23,7 +25,16 @@ fun WithConfirmWindow(
                 .background(
                     color = Colors.OverlayMenu
                 ),
-            callBack = callBack,
+            callBack = confirmCallBack,
+        )
+
+        TextWindow(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    color = Colors.OverlayMenu
+                ),
+            callBack = textCallBack,
         )
     }
 }

@@ -4,6 +4,8 @@ import controller.domain.ControllerCallback
 import controller.domain.StickPosition
 import core.confim.ConfirmViewModel
 import core.confim.repository.ConfirmRepository
+import core.text.TextViewModel
+import core.text.repository.TextRepository
 import kotlinx.coroutines.flow.SharedFlow
 import menu.domain.MenuType
 import menu.main.MainMenuViewModel
@@ -12,15 +14,13 @@ import menu.skill.list.SkillListViewModel
 import menu.skill.target.SkillTargetViewModel
 import menu.skill.user.SkillUserViewModel
 import menu.status.StatusViewModel
-import menu.usecase.backfield.BackFieldUseCase
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class MenuViewModel : KoinComponent, ControllerCallback {
     private val menuStateRepository: MenuStateRepository by inject()
     private val confirmRepository: ConfirmRepository by inject()
-
-    private val backFieldUseCase: BackFieldUseCase by inject()
+    private val textRepository: TextRepository by inject()
 
     val menuType: SharedFlow<MenuType> = menuStateRepository.commandTypeFlow
 
@@ -31,6 +31,7 @@ class MenuViewModel : KoinComponent, ControllerCallback {
     private val skillTargetViewModel: SkillTargetViewModel by inject()
 
     private val confirmViewModel: ConfirmViewModel by inject()
+    private val textViewModel: TextViewModel by inject()
 
     override fun moveStick(stickPosition: StickPosition) {
         menuStateRepository.nowCommandType
@@ -42,6 +43,10 @@ class MenuViewModel : KoinComponent, ControllerCallback {
     private fun MenuType.toViewModel(): ControllerCallback? {
         if (confirmRepository.nowCommandType) {
             return confirmViewModel
+        }
+
+        if (textRepository.nowCommandType) {
+            return textViewModel
         }
 
         return when (this) {
@@ -66,6 +71,6 @@ class MenuViewModel : KoinComponent, ControllerCallback {
     }
 
     override fun pressM() {
-        backFieldUseCase()
+        menuStateRepository.nowCommandType.toViewModel()?.pressM()
     }
 }

@@ -2,6 +2,7 @@ package menu.skill.target
 
 import common.values.playerNum
 import core.confim.repository.ConfirmRepository
+import core.text.repository.TextRepository
 import menu.MenuChildViewModel
 import menu.domain.MenuType
 import menu.domain.SelectManager
@@ -17,6 +18,7 @@ class SkillTargetViewModel : MenuChildViewModel() {
     private val targetRepository: TargetRepository by inject()
 
     private val confirmRepository: ConfirmRepository by inject()
+    private val textRepository: TextRepository by inject()
 
     private val getSkillExplainUseCase: GetSkillExplainUseCase by inject()
 
@@ -45,4 +47,8 @@ class SkillTargetViewModel : MenuChildViewModel() {
         width = 1,
         itemNum = playerNum,
     )
+
+    fun showText() {
+        textRepository.push(true)
+    }
 }
