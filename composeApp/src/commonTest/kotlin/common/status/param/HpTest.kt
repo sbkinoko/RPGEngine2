@@ -1,6 +1,6 @@
 package common.status.param
 
-import main.status.param.HP
+import core.domain.status.param.HP
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals

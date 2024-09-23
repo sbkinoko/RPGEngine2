@@ -1,6 +1,6 @@
 package battle.usecase.updateparameter
 
-import main.repository.status.StatusRepository
+import core.repository.status.StatusRepository
 
 abstract class AbstractUpdateStatusUseCase<T> : UpdateStatusService<T> {
     abstract val statusRepository: StatusRepository<T>

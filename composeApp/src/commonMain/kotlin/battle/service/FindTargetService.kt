@@ -1,6 +1,6 @@
 package battle.service
 
-import main.status.Status
+import core.domain.status.Status
 
 interface FindTargetService {
 

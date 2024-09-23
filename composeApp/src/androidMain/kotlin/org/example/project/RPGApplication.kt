@@ -2,7 +2,6 @@ package org.example.project
 
 import android.app.Application
 import battle.BattleModule
-import common.CommonModule
 import core.CoreModule
 import main.MainModule
 import map.MapModule
@@ -17,11 +16,12 @@ class RPGApplication : Application() {
         startKoin {
             androidContext(this@RPGApplication)
             modules(
+                MainModule,
+
                 MapModule,
                 BattleModule,
-                CommonModule,
-                MainModule,
                 MenuModule,
+
                 CoreModule,
             )
         }

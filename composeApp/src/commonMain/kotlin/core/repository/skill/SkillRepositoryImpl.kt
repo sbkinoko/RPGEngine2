@@ -1,4 +1,4 @@
-package main.repository.skill
+package core.repository.skill
 
 import battle.domain.AttackSkill
 import battle.domain.HealSkill

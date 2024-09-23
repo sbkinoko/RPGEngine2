@@ -3,8 +3,8 @@ package core.text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
+import core.menu.SelectableChildViewModel
 import core.text.repository.TextRepository
-import main.menu.SelectableChildViewModel
 import menu.domain.SelectManager
 import org.koin.core.component.inject
 

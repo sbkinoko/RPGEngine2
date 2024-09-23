@@ -1,6 +1,6 @@
 package menu.repository.menustate
 
-import main.repository.command.CommandRepository
+import core.repository.command.CommandRepository
 import menu.domain.MenuType
 
 interface MenuStateRepository : CommandRepository<MenuType> {

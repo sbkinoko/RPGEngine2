@@ -1,9 +1,9 @@
-package main.layout
+package main
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import battle.BattleScreen
-import main.domain.ScreenType
+import core.domain.ScreenType
 import map.layout.MapScreen
 import map.viewmodel.MapViewModel
 import menu.MenuScreen

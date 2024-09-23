@@ -1,10 +1,10 @@
 package menu.usecase.backfield
 
+import core.domain.ScreenType
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.runBlocking
 import main.MainModule
-import main.domain.ScreenType
-import main.repository.screentype.ScreenTypeRepository
+import main.screentype.ScreenTypeRepository
 import menu.domain.MenuType
 import menu.repository.menustate.MenuStateRepository
 import org.koin.core.context.startKoin

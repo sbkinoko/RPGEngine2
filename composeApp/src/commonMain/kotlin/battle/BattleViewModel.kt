@@ -25,6 +25,10 @@ import common.Timer
 import common.values.playerNum
 import controller.domain.ControllerCallback
 import controller.domain.StickPosition
+import core.domain.ScreenType
+import core.domain.status.MonsterStatus
+import core.domain.status.PlayerStatus
+import core.repository.player.PlayerRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -33,11 +37,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import main.domain.ScreenType
-import main.repository.player.PlayerRepository
-import main.repository.screentype.ScreenTypeRepository
-import main.status.MonsterStatus
-import main.status.PlayerStatus
+import main.screentype.ScreenTypeRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 

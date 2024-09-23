@@ -1,4 +1,4 @@
-package main.status.param
+package core.domain.status.param
 
 abstract class Point {
     var point: Int = 0

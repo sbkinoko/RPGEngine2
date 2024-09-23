@@ -7,12 +7,12 @@ import battle.domain.SelectAllyCommand
 import battle.domain.SelectEnemyCommand
 import battle.domain.SkillCommand
 import battle.repository.action.ActionRepository
-import main.repository.player.PlayerRepository
-import main.repository.skill.ATTACK_TO_2
-import main.repository.skill.CANT_USE
-import main.repository.skill.HEAL_SKILL
-import main.repository.skill.REVIVE_SKILL
-import main.repository.skill.SkillRepository
+import core.repository.player.PlayerRepository
+import core.repository.skill.ATTACK_TO_2
+import core.repository.skill.CANT_USE
+import core.repository.skill.HEAL_SKILL
+import core.repository.skill.REVIVE_SKILL
+import core.repository.skill.SkillRepository
 import menu.domain.SelectManager
 import org.koin.core.component.inject
 

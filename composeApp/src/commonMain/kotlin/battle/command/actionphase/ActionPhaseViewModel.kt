@@ -19,6 +19,10 @@ import battle.usecase.updateparameter.UpdateMonsterStatusUseCase
 import battle.usecase.updateparameter.UpdatePlayerStatusUseCase
 import battle.usecase.updateparameter.UpdateStatusService
 import common.values.playerNum
+import core.domain.status.Status
+import core.repository.player.PlayerRepository
+import core.repository.skill.ATTACK_NORMAL
+import core.repository.skill.SkillRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -27,10 +31,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import main.repository.player.PlayerRepository
-import main.repository.skill.ATTACK_NORMAL
-import main.repository.skill.SkillRepository
-import main.status.Status
 import menu.domain.SelectManager
 import org.koin.core.component.inject
 import org.koin.core.qualifier.named

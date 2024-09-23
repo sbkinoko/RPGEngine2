@@ -12,13 +12,13 @@ import battle.usecase.findactivetarget.FindActiveTargetUseCase
 import battle.usecase.gettargetnum.GetTargetNumUseCase
 import controller.domain.ArrowCommand
 import controller.domain.StickPosition
+import core.domain.status.MonsterStatus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import main.status.MonsterStatus
 import menu.domain.SelectManager
 import org.koin.core.component.inject
 

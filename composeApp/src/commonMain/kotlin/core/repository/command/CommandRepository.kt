@@ -1,4 +1,4 @@
-package main.repository.command
+package core.repository.command
 
 import kotlinx.coroutines.flow.MutableSharedFlow
 

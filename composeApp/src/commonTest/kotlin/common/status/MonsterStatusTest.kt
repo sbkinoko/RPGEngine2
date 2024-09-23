@@ -1,8 +1,8 @@
 package common.status
 
-import main.status.MonsterStatus
-import main.status.param.HP
-import main.status.param.MP
+import core.domain.status.MonsterStatus
+import core.domain.status.param.HP
+import core.domain.status.param.MP
 
 class MonsterStatusTest {
     companion object {

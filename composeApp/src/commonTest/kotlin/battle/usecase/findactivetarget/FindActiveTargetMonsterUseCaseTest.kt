@@ -1,9 +1,9 @@
 package battle.usecase.findactivetarget
 
 import battle.BattleModule
-import main.status.MonsterStatus
-import main.status.param.HP
-import main.status.param.MP
+import core.domain.status.MonsterStatus
+import core.domain.status.param.HP
+import core.domain.status.param.MP
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest

@@ -1,7 +1,7 @@
 package battle.usecase.updateparameter
 
-import main.repository.status.StatusRepository
-import main.status.MonsterStatus
+import core.domain.status.MonsterStatus
+import core.repository.status.StatusRepository
 
 class UpdateMonsterStatusUseCase(
     override val statusRepository: StatusRepository<MonsterStatus>,

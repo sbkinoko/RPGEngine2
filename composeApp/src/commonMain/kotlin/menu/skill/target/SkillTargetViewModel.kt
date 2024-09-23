@@ -5,10 +5,10 @@ import common.values.playerNum
 import core.confim.repository.ConfirmRepository
 import core.domain.AbleType
 import core.domain.Place
+import core.repository.player.PlayerRepository
+import core.repository.skill.SkillRepository
 import core.text.repository.TextRepository
 import core.usecase.CheckCanUseSkillUseCase
-import main.repository.player.PlayerRepository
-import main.repository.skill.SkillRepository
 import menu.MenuChildViewModel
 import menu.domain.MenuType
 import menu.domain.SelectManager

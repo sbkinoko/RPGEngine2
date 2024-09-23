@@ -2,7 +2,7 @@ package battle.usecase.gettargetnum
 
 import battle.domain.ActionType
 import battle.repository.action.ActionRepository
-import main.repository.skill.SkillRepository
+import core.repository.skill.SkillRepository
 
 class GetTargetNumUseCaseImpl(
     private val actionRepository: ActionRepository,

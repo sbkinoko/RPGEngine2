@@ -1,20 +1,20 @@
-package main.repository.player
+package core.repository.player
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import common.values.playerNum
+import core.domain.status.PlayerStatus
+import core.domain.status.param.HP
+import core.domain.status.param.MP
+import core.repository.skill.ATTACK_TO_2
+import core.repository.skill.CANT_USE
+import core.repository.skill.HEAL_SKILL
+import core.repository.skill.REVIVE_SKILL
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
-import main.repository.skill.ATTACK_TO_2
-import main.repository.skill.CANT_USE
-import main.repository.skill.HEAL_SKILL
-import main.repository.skill.REVIVE_SKILL
-import main.status.PlayerStatus
-import main.status.param.HP
-import main.status.param.MP
 
 class PlayerRepositoryImpl : PlayerRepository {
     override val mutablePlayersFlow: MutableSharedFlow<List<PlayerStatus>> =

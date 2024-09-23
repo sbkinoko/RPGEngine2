@@ -1,9 +1,10 @@
-package main.status.param
+package core.domain.status.param
 
-data class HP(
+data class MP(
     var maxValue: Int,
     var value: Int = maxValue,
 ) : Point() {
+
     override var maxPoint = maxValue
         set(value) {
             field = if (value < MIN_MAX_VALUE) {
@@ -23,6 +24,6 @@ data class HP(
     }
 
     companion object {
-        const val MIN_MAX_VALUE = 1
+        const val MIN_MAX_VALUE = 0
     }
 }

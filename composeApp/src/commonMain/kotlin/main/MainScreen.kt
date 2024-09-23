@@ -17,39 +17,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
-import battle.BattleViewModel
 import common.extension.pxToDp
 import common.values.Colors
 import controller.layout.Controller
-import main.domain.toViewModel
-import main.layout.PlayArea
-import main.repository.screentype.ScreenTypeRepository
-import map.viewmodel.MapViewModel
-import menu.MenuViewModel
+import core.domain.toViewModel
+import main.screentype.ScreenTypeRepository
 import org.koin.compose.koinInject
 
 @Composable
 fun MainScreen(
     mainViewModel: MainViewModel = koinInject(),
 ) {
-    val mapViewModel: MapViewModel by remember {
-        mutableStateOf(
-            MapViewModel()
-        )
-    }
-
-    val battleViewModel: BattleViewModel by remember {
-        mutableStateOf(
-            BattleViewModel()
-        )
-    }
-
-    val menuViewModel: MenuViewModel by remember {
-        mutableStateOf(
-            MenuViewModel()
-        )
-    }
-
     val screenType = mainViewModel.nowScreenType.collectAsState(
         ScreenTypeRepository.INITIAL_SCREEN_TYPE,
     )

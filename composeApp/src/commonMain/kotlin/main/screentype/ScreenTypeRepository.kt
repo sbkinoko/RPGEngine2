@@ -1,7 +1,7 @@
-package main.repository.screentype
+package main.screentype
 
+import core.domain.ScreenType
 import kotlinx.coroutines.flow.MutableSharedFlow
-import main.domain.ScreenType
 
 interface ScreenTypeRepository {
     val screenTypeFlow: MutableSharedFlow<ScreenType>

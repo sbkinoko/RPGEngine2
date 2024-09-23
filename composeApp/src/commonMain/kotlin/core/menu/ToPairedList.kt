@@ -1,4 +1,4 @@
-package main.menu
+package core.menu
 
 class PairedList<T> {
     fun toPairedList(list: List<T>): List<Pair<T, T?>> {

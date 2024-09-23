@@ -1,10 +1,10 @@
-package main.repository.player
+package core.repository.player
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
+import core.domain.status.PlayerStatus
+import core.repository.status.StatusRepository
 import kotlinx.coroutines.flow.MutableSharedFlow
-import main.repository.status.StatusRepository
-import main.status.PlayerStatus
 
 interface PlayerRepository : StatusRepository<PlayerStatus> {
     val mutablePlayersFlow: MutableSharedFlow<List<PlayerStatus>>

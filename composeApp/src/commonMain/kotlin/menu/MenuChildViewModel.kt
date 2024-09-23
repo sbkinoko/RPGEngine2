@@ -1,6 +1,6 @@
 package menu
 
-import main.menu.SelectableChildViewModel
+import core.menu.SelectableChildViewModel
 import menu.domain.MenuType
 import menu.repository.menustate.MenuStateRepository
 import menu.usecase.backfield.BackFieldUseCase

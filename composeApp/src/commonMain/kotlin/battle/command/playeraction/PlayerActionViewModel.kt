@@ -9,7 +9,7 @@ import battle.domain.SelectEnemyCommand
 import battle.domain.SkillCommand
 import battle.repository.action.ActionRepository
 import battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUseCase
-import main.repository.player.PlayerRepository
+import core.repository.player.PlayerRepository
 import menu.domain.SelectManager
 import org.koin.core.component.inject
 
