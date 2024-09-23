@@ -29,7 +29,7 @@ fun SkillTargetWindow(
             skillTargetViewModel.selectYes()
         },
         textCallBack = {
-            // todo 一つ前の画面に戻る
+            skillTargetViewModel.backWindow()
         },
     ) {
         Row(

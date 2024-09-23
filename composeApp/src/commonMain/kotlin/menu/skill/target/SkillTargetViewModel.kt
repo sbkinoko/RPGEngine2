@@ -101,4 +101,8 @@ class SkillTargetViewModel : MenuChildViewModel() {
         //　スキル処理実行
         useSkillUseCase.invoke()
     }
+
+    fun backWindow() {
+        commandRepository.pop()
+    }
 }
