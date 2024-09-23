@@ -21,6 +21,7 @@ class SkillCommandViewModel : BattleChildViewModel() {
     private val playerRepository: PlayerRepository by inject()
     private val skillRepository: SkillRepository by inject()
 
+    // todo playerのスキルを参照する
     val skillList = listOf(
         ATTACK_TO_2,
         CANT_USE,
@@ -50,6 +51,7 @@ class SkillCommandViewModel : BattleChildViewModel() {
     }
 
     fun canUse(id: Int): Boolean {
+        // todo checkCanUseSkillUseCase使う
         return skillRepository.getSkill(id).canUse(
             playerRepository.getStatus(playerId).mp.value
         )
