@@ -9,7 +9,7 @@ import menu.domain.SelectManager
 import menu.repository.menustate.MenuStateRepository
 import menu.skill.repository.skilluser.SkillUserRepository
 import menu.skill.repository.useid.UseSkillIdRepository
-import menu.skill.usecase.GetSkillExplainUseCase
+import menu.skill.usecase.getskillexplain.GetSkillExplainUseCase
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 

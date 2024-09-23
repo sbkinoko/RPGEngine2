@@ -25,7 +25,7 @@ fun SkillTargetWindow(
     WithConfirmAndTextWindow(
         modifier = modifier,
         confirmCallBack = {
-            skillTargetViewModel.showText()
+            skillTargetViewModel.selectYes()
         },
         textCallBack = {},
     ) {

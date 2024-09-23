@@ -9,7 +9,8 @@ import menu.domain.SelectManager
 import menu.skill.repository.skilluser.SkillUserRepository
 import menu.skill.repository.target.TargetRepository
 import menu.skill.repository.useid.UseSkillIdRepository
-import menu.skill.usecase.GetSkillExplainUseCase
+import menu.skill.usecase.getskillexplain.GetSkillExplainUseCase
+import menu.skill.usecase.useskill.UseSkillUseCase
 import org.koin.core.component.inject
 
 class SkillTargetViewModel : MenuChildViewModel() {
@@ -21,6 +22,7 @@ class SkillTargetViewModel : MenuChildViewModel() {
     private val textRepository: TextRepository by inject()
 
     private val getSkillExplainUseCase: GetSkillExplainUseCase by inject()
+    private val useSkillUseCase: UseSkillUseCase by inject()
 
     override val canBack: Boolean
         get() = true
@@ -48,7 +50,14 @@ class SkillTargetViewModel : MenuChildViewModel() {
         itemNum = playerNum,
     )
 
-    fun showText() {
+    /**
+     * confirmでYesを選んだ時の処理
+     */
+    fun selectYes() {
+        // textを表示
         textRepository.push(true)
+
+        //　スキル処理実行
+        useSkillUseCase.invoke()
     }
 }
