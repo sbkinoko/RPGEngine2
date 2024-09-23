@@ -1,4 +1,4 @@
-package menu.skill.usecase
+package menu.skill.usecase.getskillexplain
 
 import main.repository.skill.SkillRepository
 
