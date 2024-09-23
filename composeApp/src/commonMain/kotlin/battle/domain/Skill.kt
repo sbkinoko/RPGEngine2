@@ -1,5 +1,6 @@
 package battle.domain
 
+import core.domain.Place
 import main.status.Status
 
 sealed interface Skill {
@@ -7,6 +8,7 @@ sealed interface Skill {
     val needMP: Int
     val targetNum: Int
     val canUse: (Int) -> Boolean
+    val usablePlace: Place
 }
 
 // 必要になったらattackのinterfaceを作る
@@ -15,6 +17,7 @@ data class AttackSkill(
     override val needMP: Int,
     override val targetNum: Int,
     override val canUse: (Int) -> Boolean = { mp -> mp >= needMP },
+    override val usablePlace: Place,
     val damageAmount: Int,
 ) : Skill
 
@@ -23,6 +26,7 @@ data class HealSkill(
     override val needMP: Int,
     override val targetNum: Int,
     override val canUse: (Int) -> Boolean = { mp -> mp >= needMP },
+    override val usablePlace: Place,
     val healAmount: Int,
     val targetType: TargetType,
 ) : Skill

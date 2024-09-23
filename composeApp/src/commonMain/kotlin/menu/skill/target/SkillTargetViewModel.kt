@@ -56,6 +56,7 @@ class SkillTargetViewModel : MenuChildViewModel() {
     fun selectYes() {
         // textを表示
         textRepository.push(true)
+        textRepository.setText("回復しました")
 
         //　スキル処理実行
         useSkillUseCase.invoke()

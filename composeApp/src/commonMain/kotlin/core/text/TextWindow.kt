@@ -27,7 +27,6 @@ fun TextWindow(
 ) {
     textViewModel.callBack = callBack
 
-
     val height = remember {
         mutableStateOf(0)
     }

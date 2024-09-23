@@ -24,7 +24,7 @@ class TextViewModel : SelectableChildViewModel<Boolean>() {
     var callBack: () -> Unit = {}
 
     val text: String
-        get() = "回復した"
+        get() = commandRepository.getText()
 
     override fun goNextImpl() {
         callBack()
