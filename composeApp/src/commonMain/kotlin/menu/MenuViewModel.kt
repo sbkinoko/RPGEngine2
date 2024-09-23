@@ -40,6 +40,7 @@ class MenuViewModel : KoinComponent, ControllerCallback {
             )
     }
 
+    // todo 専用クラス作る
     private fun MenuType.toViewModel(): ControllerCallback? {
         if (confirmRepository.nowCommandType) {
             return confirmViewModel
