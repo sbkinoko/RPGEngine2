@@ -1,7 +1,7 @@
 package main
 
-import main.screentype.ScreenTypeRepository
-import main.screentype.ScreenTypeRepositoryImpl
+import core.repository.screentype.ScreenTypeRepository
+import core.repository.screentype.ScreenTypeRepositoryImpl
 import org.koin.dsl.module
 
 val MainModule = module {

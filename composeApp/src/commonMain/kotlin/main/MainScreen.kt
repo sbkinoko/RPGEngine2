@@ -21,7 +21,7 @@ import common.extension.pxToDp
 import common.values.Colors
 import controller.layout.Controller
 import core.domain.toViewModel
-import main.screentype.ScreenTypeRepository
+import core.repository.screentype.ScreenTypeRepository
 import org.koin.compose.koinInject
 
 @Composable

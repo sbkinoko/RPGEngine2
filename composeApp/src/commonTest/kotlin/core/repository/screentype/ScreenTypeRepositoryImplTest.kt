@@ -1,11 +1,10 @@
-package main.repository.screentype
+package core.repository.screentype
 
 import core.domain.ScreenType
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import main.MainModule
-import main.screentype.ScreenTypeRepository
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest

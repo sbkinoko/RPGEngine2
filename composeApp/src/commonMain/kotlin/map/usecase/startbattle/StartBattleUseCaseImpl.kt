@@ -7,10 +7,10 @@ import core.domain.ScreenType
 import core.domain.status.MonsterStatus
 import core.domain.status.param.HP
 import core.domain.status.param.MP
+import core.repository.screentype.ScreenTypeRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import main.screentype.ScreenTypeRepository
 import org.koin.core.component.KoinComponent
 import kotlin.random.Random
 

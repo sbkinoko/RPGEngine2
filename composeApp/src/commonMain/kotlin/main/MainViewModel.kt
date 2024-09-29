@@ -1,6 +1,6 @@
 package main
 
-import main.screentype.ScreenTypeRepository
+import core.repository.screentype.ScreenTypeRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 

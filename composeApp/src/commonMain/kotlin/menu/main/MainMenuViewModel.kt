@@ -8,7 +8,7 @@ import menu.domain.MenuType
 import menu.domain.SelectManager
 import menu.domain.toMenuType
 import menu.repository.menustate.MenuStateRepository
-import menu.usecase.backfield.BackFieldUseCase
+import menu.usecase.backfield.CloseMenuUseCase
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -16,7 +16,7 @@ class MainMenuViewModel : MenuChildViewModel(),
     KoinComponent {
     private val menuStateRepository: MenuStateRepository by inject()
 
-    private val backFieldUseCase: BackFieldUseCase by inject()
+    private val closeMenuUseCase: CloseMenuUseCase by inject()
     override val canBack: Boolean
         get() = true
 
@@ -48,6 +48,6 @@ class MainMenuViewModel : MenuChildViewModel(),
     var selectedFlow: SharedFlow<Int> = selectManager.selectedFlow
 
     override fun pressB() {
-        backFieldUseCase()
+        closeMenuUseCase.invoke()
     }
 }

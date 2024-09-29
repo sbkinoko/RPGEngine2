@@ -7,8 +7,10 @@ import core.repository.player.PlayerRepositoryImpl
 import core.text.TextViewModel
 import core.text.repository.TextRepository
 import core.text.repository.TextRepositoryImpl
-import core.usecase.CheckCanUseSkillUseCase
-import core.usecase.CheckCanUseSkillUseCaseImpl
+import core.usecase.changetomap.ChangeToMapUseCase
+import core.usecase.changetomap.ChangeToMapUseCaseImpl
+import core.usecase.checkcanuseskill.CheckCanUseSkillUseCase
+import core.usecase.checkcanuseskill.CheckCanUseSkillUseCaseImpl
 import org.koin.dsl.module
 
 val CoreModule = module {
@@ -35,6 +37,12 @@ val CoreModule = module {
     single<CheckCanUseSkillUseCase> {
         CheckCanUseSkillUseCaseImpl(
             skillRepository = get(),
+        )
+    }
+
+    single<ChangeToMapUseCase> {
+        ChangeToMapUseCaseImpl(
+            screenTypeRepository = get(),
         )
     }
 }

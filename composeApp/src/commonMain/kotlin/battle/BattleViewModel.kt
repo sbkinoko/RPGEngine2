@@ -10,10 +10,10 @@ import battle.usecase.convertscreentypetocontroller.GetControllerByCommandTypeUs
 import common.values.playerNum
 import controller.domain.ControllerCallback
 import controller.domain.StickPosition
-import core.domain.ScreenType
 import core.domain.status.MonsterStatus
 import core.domain.status.PlayerStatus
 import core.repository.player.PlayerRepository
+import core.usecase.changetomap.ChangeToMapUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -22,7 +22,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import main.screentype.ScreenTypeRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -37,9 +36,8 @@ class BattleViewModel :
     private val battleMonsterRepository: BattleMonsterRepository by inject()
     private val commandStateRepository: CommandStateRepository by inject()
 
-    private val screenTypeRepository: ScreenTypeRepository by inject()
-
     private val getControllerByCommandTypeUseCase: GetControllerByCommandTypeUseCase by inject()
+    private val changeToMapUseCase: ChangeToMapUseCase by inject()
 
     private val childController: ControllerCallback?
         get() = getControllerByCommandTypeUseCase.invoke()
@@ -87,8 +85,7 @@ class BattleViewModel :
     }
 
     fun finishBattle() {
-        //　todo useCaseにする
-        screenTypeRepository.screenType = ScreenType.FIELD
+        changeToMapUseCase.invoke()
     }
 
     override fun moveStick(stickPosition: StickPosition) {

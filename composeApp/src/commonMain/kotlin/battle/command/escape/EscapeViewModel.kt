@@ -4,7 +4,7 @@ import battle.BattleChildViewModel
 import battle.domain.BattleCommandType
 import battle.domain.EscapeCommand
 import core.domain.ScreenType
-import main.screentype.ScreenTypeRepository
+import core.repository.screentype.ScreenTypeRepository
 import menu.domain.SelectManager
 import org.koin.core.component.inject
 

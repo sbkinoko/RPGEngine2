@@ -1,4 +1,4 @@
-package main.screentype
+package core.repository.screentype
 
 import core.domain.ScreenType
 import kotlinx.coroutines.flow.MutableSharedFlow

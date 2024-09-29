@@ -1,38 +1,24 @@
 package menu.usecase.backfield
 
-import core.domain.ScreenType
+import core.usecase.changetomap.ChangeToMapUseCase
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.runBlocking
-import main.MainModule
-import main.screentype.ScreenTypeRepository
 import menu.domain.MenuType
 import menu.repository.menustate.MenuStateRepository
-import org.koin.core.context.startKoin
-import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
-import org.koin.test.inject
-import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class BackFieldUseCaseImplTest : KoinTest {
-    lateinit var backFieldUseCase: BackFieldUseCase
+    lateinit var backFieldUseCase: CloseMenuUseCase
 
-    private val screenTypeRepository: ScreenTypeRepository by inject()
-
-    private var count = 0
+    private var repositoryCount = 0
+    private var useCaseCount = 0
 
     @BeforeTest
     fun beforeTest() {
-        startKoin {
-            modules(
-                MainModule,
-            )
-        }
-
-        backFieldUseCase = BackFieldUseCaseImpl(
-            screenTypeRepository = screenTypeRepository,
+        backFieldUseCase = CloseMenuUseCaseImpl(
             menuStateRepository = object : MenuStateRepository {
                 override val commandTypeFlow: MutableSharedFlow<MenuType>
                     get() = throw NotImplementedError()
@@ -51,16 +37,17 @@ class BackFieldUseCaseImplTest : KoinTest {
                 }
 
                 override fun reset() {
-                    count++
+                    repositoryCount++
+                }
+            },
+            changeToMapUseCase = object : ChangeToMapUseCase {
+                override fun invoke() {
+                    useCaseCount++
                 }
             },
         )
     }
 
-    @AfterTest
-    fun afterTest() {
-        stopKoin()
-    }
 
     @Test
     fun checkBackField() {
@@ -69,12 +56,12 @@ class BackFieldUseCaseImplTest : KoinTest {
 
             assertEquals(
                 expected = 1,
-                actual = count,
+                actual = repositoryCount,
             )
 
             assertEquals(
-                expected = ScreenType.FIELD,
-                actual = screenTypeRepository.screenType,
+                expected = 1,
+                actual = useCaseCount,
             )
         }
     }

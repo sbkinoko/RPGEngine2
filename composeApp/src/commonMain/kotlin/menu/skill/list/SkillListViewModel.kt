@@ -6,7 +6,7 @@ import core.domain.AbleType
 import core.domain.Place
 import core.repository.player.PlayerRepository
 import core.text.repository.TextRepository
-import core.usecase.CheckCanUseSkillUseCase
+import core.usecase.checkcanuseskill.CheckCanUseSkillUseCase
 import menu.MenuChildViewModel
 import menu.domain.MenuType
 import menu.domain.SelectManager
