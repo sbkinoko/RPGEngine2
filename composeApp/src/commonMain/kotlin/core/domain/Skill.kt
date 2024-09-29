@@ -6,6 +6,8 @@ sealed interface Skill {
     val name: String
     val needMP: Int
     val targetNum: Int
+
+    // fixme コストのタイプをする
     val canUse: (Int) -> Boolean
     val usablePlace: Place
 }
