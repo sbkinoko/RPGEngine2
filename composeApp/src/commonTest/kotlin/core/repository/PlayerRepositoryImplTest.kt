@@ -1,4 +1,4 @@
-package main.repository
+package core.repository
 
 import core.CoreModule
 import core.domain.status.PlayerStatus

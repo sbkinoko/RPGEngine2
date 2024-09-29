@@ -17,8 +17,8 @@ import menu.skill.usecase.useskill.UseSkillUseCase
 import menu.skill.usecase.useskill.UseSkillUseCaseImpl
 import menu.skill.user.SkillUserViewModel
 import menu.status.StatusViewModel
-import menu.usecase.backfield.BackFieldUseCase
-import menu.usecase.backfield.BackFieldUseCaseImpl
+import menu.usecase.backfield.CloseMenuUseCase
+import menu.usecase.backfield.CloseMenuUseCaseImpl
 import menu.usecase.getviewmodelbycommandtype.GetControllerByCommandTypeUseCase
 import menu.usecase.getviewmodelbycommandtype.GetControllerByCommandTypeUseCaseImpl
 import org.koin.dsl.module
@@ -79,10 +79,10 @@ val MenuModule = module {
         )
     }
 
-    single<BackFieldUseCase> {
-        BackFieldUseCaseImpl(
-            screenTypeRepository = get(),
+    single<CloseMenuUseCase> {
+        CloseMenuUseCaseImpl(
             menuStateRepository = get(),
+            changeToMapUseCase = get(),
         )
     }
 

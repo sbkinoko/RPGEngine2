@@ -1,4 +1,4 @@
-package core.usecase
+package core.usecase.checkcanuseskill
 
 import core.domain.AbleType
 import core.domain.Place

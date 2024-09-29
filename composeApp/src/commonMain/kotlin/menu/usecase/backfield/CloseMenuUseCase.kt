@@ -1,5 +1,5 @@
 package menu.usecase.backfield
 
-interface BackFieldUseCase {
+interface CloseMenuUseCase {
     operator fun invoke()
 }
