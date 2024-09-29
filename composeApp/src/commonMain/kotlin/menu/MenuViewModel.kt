@@ -1,7 +1,7 @@
 package menu
 
 import controller.domain.ControllerCallback
-import controller.domain.StickPosition
+import controller.domain.Stick
 import kotlinx.coroutines.flow.SharedFlow
 import menu.domain.MenuType
 import menu.repository.menustate.MenuStateRepository
@@ -19,8 +19,8 @@ class MenuViewModel : KoinComponent, ControllerCallback {
     private val childController: ControllerCallback?
         get() = getControllerByCommandTypeUseCase.invoke()
 
-    override fun moveStick(stickPosition: StickPosition) {
-        childController?.moveStick(stickPosition)
+    override fun moveStick(stick: Stick) {
+        childController?.moveStick(stick)
     }
 
     override fun pressA() {

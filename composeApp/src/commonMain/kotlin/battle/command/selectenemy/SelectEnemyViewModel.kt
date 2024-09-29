@@ -10,7 +10,7 @@ import battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUse
 import battle.usecase.findactivetarget.FindActiveTargetUseCase
 import battle.usecase.gettargetnum.GetTargetNumUseCase
 import controller.domain.ArrowCommand
-import controller.domain.StickPosition
+import controller.domain.Stick
 import core.domain.status.MonsterStatus
 import core.repository.battlemonster.BattleMonsterRepository
 import kotlinx.coroutines.CoroutineScope
@@ -79,10 +79,10 @@ class SelectEnemyViewModel : BattleChildViewModel() {
         itemNum = 1,
     )
 
-    override fun moveStick(stickPosition: StickPosition) {
+    override fun moveStick(stick: Stick) {
         val target = selectedEnemyState.value.selectedEnemy.first()
 
-        val newTarget = when (stickPosition.toCommand()) {
+        val newTarget = when (stick.toCommand()) {
             ArrowCommand.Right -> findTargetService.findNext(
                 target = target,
                 statusList = monsters,
