@@ -1,6 +1,5 @@
-package battle.domain
+package core.domain
 
-import core.domain.Place
 import core.domain.status.Status
 
 sealed interface Skill {

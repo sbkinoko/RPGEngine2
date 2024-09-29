@@ -1,9 +1,9 @@
 package menu.skill.target
 
-import battle.domain.HealSkill
 import common.values.playerNum
 import core.confim.repository.ConfirmRepository
 import core.domain.AbleType
+import core.domain.HealSkill
 import core.domain.Place
 import core.repository.player.PlayerRepository
 import core.repository.skill.SkillRepository

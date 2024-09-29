@@ -1,6 +1,6 @@
 package core.repository.skill
 
-import battle.domain.Skill
+import core.domain.Skill
 
 interface SkillRepository {
 

@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import battle.domain.BattleCommandType
-import battle.repository.battlemonster.BattleMonsterRepository
 import battle.repository.commandstate.CommandStateRepository
 import battle.usecase.convertscreentypetocontroller.GetControllerByCommandTypeUseCase
 import common.values.playerNum
@@ -12,6 +11,7 @@ import controller.domain.ControllerCallback
 import controller.domain.StickPosition
 import core.domain.status.MonsterStatus
 import core.domain.status.PlayerStatus
+import core.repository.battlemonster.BattleMonsterRepository
 import core.repository.player.PlayerRepository
 import core.usecase.changetomap.ChangeToMapUseCase
 import kotlinx.coroutines.CoroutineScope

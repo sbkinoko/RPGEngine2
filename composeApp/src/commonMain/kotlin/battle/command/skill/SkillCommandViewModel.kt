@@ -8,7 +8,9 @@ import battle.domain.SelectEnemyCommand
 import battle.domain.SkillCommand
 import battle.repository.action.ActionRepository
 import core.domain.AbleType
+import core.domain.AttackSkill
 import core.domain.Const
+import core.domain.HealSkill
 import core.domain.Place
 import core.repository.player.PlayerRepository
 import core.repository.skill.SkillRepository
@@ -89,13 +91,13 @@ class SkillCommandViewModel : BattleChildViewModel() {
             skillId = skillId,
         )
         when (skillRepository.getSkill(skillId)) {
-            is battle.domain.AttackSkill -> {
+            is AttackSkill -> {
                 commandRepository.push(
                     SelectEnemyCommand(playerId),
                 )
             }
 
-            is battle.domain.HealSkill -> {
+            is HealSkill -> {
                 commandRepository.push(
                     SelectAllyCommand(playerId),
                 )

@@ -9,8 +9,6 @@ import battle.command.selectenemy.SelectEnemyViewModel
 import battle.command.skill.SkillCommandViewModel
 import battle.repository.action.ActionRepository
 import battle.repository.action.ActionRepositoryImpl
-import battle.repository.battlemonster.BattleMonsterRepository
-import battle.repository.battlemonster.BattleMonsterRepositoryImpl
 import battle.repository.commandstate.CommandStateRepository
 import battle.repository.commandstate.CommandStateRepositoryImpl
 import battle.service.FindTargetService
@@ -27,11 +25,6 @@ import battle.usecase.findactivetarget.FindActiveTargetUseCase
 import battle.usecase.findactivetarget.FindActiveTargetUseCaseImpl
 import battle.usecase.gettargetnum.GetTargetNumUseCase
 import battle.usecase.gettargetnum.GetTargetNumUseCaseImpl
-import battle.usecase.updateparameter.UpdateMonsterStatusUseCase
-import battle.usecase.updateparameter.UpdatePlayerStatusUseCase
-import core.repository.player.PlayerRepository
-import core.repository.skill.SkillRepository
-import core.repository.skill.SkillRepositoryImpl
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
@@ -75,32 +68,12 @@ val BattleModule = module {
         ActionRepositoryImpl()
     }
 
-    single {
-        UpdateMonsterStatusUseCase(
-            statusRepository = get<BattleMonsterRepository>()
-        )
-    }
-
-    single {
-        UpdatePlayerStatusUseCase(
-            statusRepository = get<PlayerRepository>()
-        )
-    }
-
     single<FindTargetService> {
         FindTargetServiceImpl()
     }
 
-    single<BattleMonsterRepository> {
-        BattleMonsterRepositoryImpl()
-    }
-
     single<CommandStateRepository> {
         CommandStateRepositoryImpl()
-    }
-
-    single<SkillRepository> {
-        SkillRepositoryImpl()
     }
 
     single<GetControllerByCommandTypeUseCase> {

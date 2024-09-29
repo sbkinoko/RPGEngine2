@@ -1,9 +1,10 @@
 package battle.serviceimpl
 
 import battle.BattleModule
-import battle.repository.battlemonster.BattleMonsterRepository
-import battle.usecase.updateparameter.UpdateMonsterStatusUseCase
 import common.status.MonsterStatusTest.Companion.getMonster
+import core.CoreModule
+import core.repository.battlemonster.BattleMonsterRepository
+import core.usecase.updateparameter.UpdateMonsterStatusUseCase
 import kotlinx.coroutines.runBlocking
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -23,6 +24,7 @@ class UpdateMonsterParameterUseCaseTest : KoinTest {
     fun beforeTest() {
         startKoin {
             modules(
+                CoreModule,
                 BattleModule,
             )
         }
