@@ -12,6 +12,7 @@ import core.repository.player.PlayerRepository
 import core.repository.skill.SkillRepository
 import menu.domain.SelectManager
 import org.koin.core.component.inject
+import kotlin.math.max
 
 class SkillCommandViewModel : BattleChildViewModel() {
     private val actionRepository: ActionRepository by inject()
@@ -33,9 +34,16 @@ class SkillCommandViewModel : BattleChildViewModel() {
 
     fun init() {
         // 最後に選ばれていたスキルを呼び出し
-        selectManager.selected = actionRepository.getAction(
+        val skillId = actionRepository.getAction(
             playerId = playerId
-        ).skillId ?: 0
+        ).skillId
+
+        // skillIdを発見できない場合は先頭を返す
+        //　それ以外はskillIdの場所を返す
+        selectManager.selected = max(
+            skillList.indexOf(skillId),
+            Const.INITIAL_PLAYER,
+        )
     }
 
     override fun selectable(): Boolean {
