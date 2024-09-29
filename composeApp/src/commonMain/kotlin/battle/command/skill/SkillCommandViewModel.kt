@@ -7,9 +7,12 @@ import battle.domain.SelectAllyCommand
 import battle.domain.SelectEnemyCommand
 import battle.domain.SkillCommand
 import battle.repository.action.ActionRepository
+import core.domain.AbleType
 import core.domain.Const
+import core.domain.Place
 import core.repository.player.PlayerRepository
 import core.repository.skill.SkillRepository
+import core.usecase.checkcanuseskill.CheckCanUseSkillUseCase
 import menu.domain.SelectManager
 import org.koin.core.component.inject
 import kotlin.math.max
@@ -18,6 +21,8 @@ class SkillCommandViewModel : BattleChildViewModel() {
     private val actionRepository: ActionRepository by inject()
     private val playerRepository: PlayerRepository by inject()
     private val skillRepository: SkillRepository by inject()
+
+    private val checkCanUseSkillUseCase: CheckCanUseSkillUseCase by inject()
 
     val skillList: List<Int>
         get() {
@@ -55,10 +60,13 @@ class SkillCommandViewModel : BattleChildViewModel() {
     }
 
     fun canUse(id: Int): Boolean {
-        // todo checkCanUseSkillUseCase使う
-        return skillRepository.getSkill(id).canUse(
-            playerRepository.getStatus(playerId).mp.value
+        val status = playerRepository.getStatus(playerId)
+        val ableType = checkCanUseSkillUseCase.invoke(
+            skillId = id,
+            status = status,
+            here = Place.BATTLE,
         )
+        return ableType == AbleType.Able
     }
 
     override val canBack: Boolean
