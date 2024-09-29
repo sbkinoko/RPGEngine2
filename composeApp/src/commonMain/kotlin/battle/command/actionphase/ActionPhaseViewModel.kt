@@ -66,7 +66,8 @@ class ActionPhaseViewModel : BattleChildViewModel() {
         }
     }
 
-    // fixme attackingPlayerは削除する
+    // fixme attackingPlayerは削除する　
+    // 行動順を変更できるようになったら修正
     // 敵の攻撃が挟まってPlayerだけじゃなくなるから
     private val mutableAttackingPlayerId: MutableStateFlow<Int> = MutableStateFlow(0)
     val attackingPlayerId: StateFlow<Int> = mutableAttackingPlayerId.asStateFlow()
@@ -126,7 +127,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
                 }
             }
         } else {
-            //　todo 敵の攻撃対象を保存するようにしたら修正
+            //　fixme 敵の攻撃対象を保存するようにしたら修正
             "仲間"
         }
     }
