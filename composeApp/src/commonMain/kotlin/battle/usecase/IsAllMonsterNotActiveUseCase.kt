@@ -1,6 +1,6 @@
 package battle.usecase
 
-import battle.repository.battlemonster.BattleMonsterRepository
+import core.repository.battlemonster.BattleMonsterRepository
 import org.koin.core.component.KoinComponent
 
 class IsAllMonsterNotActiveUseCase(

@@ -1,4 +1,4 @@
-package battle.usecase.updateparameter
+package core.usecase.updateparameter
 
 import core.repository.status.StatusRepository
 

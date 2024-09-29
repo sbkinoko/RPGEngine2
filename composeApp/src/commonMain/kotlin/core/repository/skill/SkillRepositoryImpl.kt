@@ -1,10 +1,10 @@
 package core.repository.skill
 
-import battle.domain.AttackSkill
-import battle.domain.HealSkill
-import battle.domain.Skill
-import battle.domain.TargetType
+import core.domain.AttackSkill
+import core.domain.HealSkill
 import core.domain.Place
+import core.domain.Skill
+import core.domain.TargetType
 
 const val ATTACK_TO_2 = 0
 const val CANT_USE = 1

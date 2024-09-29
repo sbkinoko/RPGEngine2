@@ -1,4 +1,4 @@
-package battle.usecase.updateparameter
+package core.usecase.updateparameter
 
 interface UpdateStatusService<T> {
     /**

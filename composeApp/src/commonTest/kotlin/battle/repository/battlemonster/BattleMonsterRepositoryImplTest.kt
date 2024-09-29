@@ -3,6 +3,8 @@ package battle.repository.battlemonster
 import core.domain.status.MonsterStatus
 import core.domain.status.param.HP
 import core.domain.status.param.MP
+import core.repository.battlemonster.BattleMonsterRepository
+import core.repository.battlemonster.BattleMonsterRepositoryImpl
 import kotlinx.coroutines.runBlocking
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest

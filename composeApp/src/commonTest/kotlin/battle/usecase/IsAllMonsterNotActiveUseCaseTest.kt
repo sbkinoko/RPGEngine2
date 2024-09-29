@@ -2,10 +2,10 @@ package battle.usecase
 
 import battle.BattleModule
 import battle.QualifierAttackFromPlayer
-import battle.repository.battlemonster.BattleMonsterRepository
 import battle.usecase.attack.AttackUseCase
 import common.status.MonsterStatusTest.Companion.getMonster
 import core.CoreModule
+import core.repository.battlemonster.BattleMonsterRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.koin.core.context.startKoin

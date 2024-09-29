@@ -1,4 +1,4 @@
-package battle.usecase.updateparameter
+package core.usecase.updateparameter
 
 import core.domain.status.MonsterStatus
 import core.repository.status.StatusRepository
@@ -16,7 +16,11 @@ class UpdateMonsterStatusUseCase(
     }
 
     override fun incHPImpl(amount: Int, status: MonsterStatus): MonsterStatus {
-        TODO("Not yet implemented")
+        return status.copy(
+            hp = status.hp.copy(
+                value = status.hp.value + amount
+            )
+        )
     }
 
     override fun decMPImpl(amount: Int, status: MonsterStatus): MonsterStatus {
@@ -28,6 +32,10 @@ class UpdateMonsterStatusUseCase(
     }
 
     override fun incMPImpl(amount: Int, status: MonsterStatus): MonsterStatus {
-        TODO("Not yet implemented")
+        return status.copy(
+            mp = status.mp.copy(
+                value = status.mp.value + amount
+            )
+        )
     }
 }
