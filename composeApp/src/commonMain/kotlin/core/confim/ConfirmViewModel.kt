@@ -18,6 +18,8 @@ class ConfirmViewModel : SelectableChildViewModel<Boolean>() {
         )
     }
 
+    // fixme 選択肢の数を増やせるようにする
+    // fixme 選択肢の順番を入れ替えたいのでBボタン/window外タップの処理をなくす
     override val canBack: Boolean
         get() = true
 
