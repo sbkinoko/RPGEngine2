@@ -8,7 +8,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import common.values.LayoutConst.Companion.BUTTON_PADDING
 import controller.domain.ControllerCallback
 
 @Composable
@@ -18,8 +18,8 @@ fun Buttons(
 ) {
     Row(
         modifier = modifier
-            .padding(5.dp),
-        horizontalArrangement = Arrangement.spacedBy(5.dp)
+            .padding(BUTTON_PADDING),
+        horizontalArrangement = Arrangement.spacedBy(BUTTON_PADDING)
     ) {
         val buttonModifier = Modifier
             .weight(1f)
