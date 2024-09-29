@@ -36,12 +36,24 @@ abstract class SelectableWindowViewModel : ControllerCallback {
             return
 
         timer.callbackIfTimePassed {
-            //　スティックの方向に選択可能なものまで移動
-            do {
-                //todo 一度選んだやつを再度選んだ場合、ループ終了
-                selectManager.move(command)
-            } while (selectable().not())
+            moveToSelectable(command)
         }
+    }
+
+    /**
+     * 選択可能なものまで移動
+     * 無理ならそのまま
+     */
+    private fun moveToSelectable(command: ArrowCommand) {
+        val init = selectManager.selected
+        do {
+            selectManager.move(command)
+        } while (
+        //　選択可能なもの
+            selectable().not() &&
+            //　一周してない
+            selectManager.selected != init
+        )
     }
 
     override fun pressB() {}
