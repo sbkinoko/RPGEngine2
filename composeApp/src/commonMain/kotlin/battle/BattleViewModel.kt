@@ -8,7 +8,7 @@ import battle.repository.commandstate.CommandStateRepository
 import battle.usecase.convertscreentypetocontroller.GetControllerByCommandTypeUseCase
 import common.values.playerNum
 import controller.domain.ControllerCallback
-import controller.domain.StickPosition
+import controller.domain.Stick
 import core.domain.status.MonsterStatus
 import core.domain.status.PlayerStatus
 import core.repository.battlemonster.BattleMonsterRepository
@@ -88,8 +88,8 @@ class BattleViewModel :
         changeToMapUseCase.invoke()
     }
 
-    override fun moveStick(stickPosition: StickPosition) {
-        childController?.moveStick(stickPosition)
+    override fun moveStick(stick: Stick) {
+        childController?.moveStick(stick)
     }
 
     override fun pressA() {

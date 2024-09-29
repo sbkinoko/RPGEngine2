@@ -1,7 +1,7 @@
 package map.viewmodel
 
 import controller.domain.ControllerCallback
-import controller.domain.StickPosition
+import controller.domain.Stick
 import core.domain.ScreenType
 import core.repository.screentype.ScreenTypeRepository
 import kotlinx.coroutines.CoroutineScope
@@ -281,11 +281,11 @@ class MapViewModel : ControllerCallback, KoinComponent {
     }
 
     override fun moveStick(
-        stickPosition: StickPosition
+        stick: Stick
     ) {
         updateVelocityByStick(
-            dx = stickPosition.x.toFloat(),
-            dy = stickPosition.y.toFloat(),
+            dx = stick.x.toFloat(),
+            dy = stick.y.toFloat(),
         )
     }
 

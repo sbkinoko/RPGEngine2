@@ -24,7 +24,7 @@ import androidx.compose.ui.util.fastAny
 import common.extension.pxToDp
 import common.values.Colors
 import controller.domain.ControllerCallback
-import controller.domain.StickPosition
+import controller.domain.Stick
 import kotlinx.coroutines.delay
 
 @Composable
@@ -32,15 +32,11 @@ fun Stick(
     controllerCallback: ControllerCallback,
     modifier: Modifier = Modifier,
 ) {
-    //todo largeとsmallもstickにしまいたい
-    var largeCircleSize: Int by remember { mutableStateOf(0) }
-    var smallCircleSize: Int by remember { mutableStateOf(0) }
-
-    var stickPosition: StickPosition by remember {
+    var stick: Stick by remember {
         mutableStateOf(
-            StickPosition(
-                circleRadius = 1,
-                stickSize = 1,
+            Stick(
+                areaRadius = 1,
+                stickRadius = 1,
             )
         )
     }
@@ -48,21 +44,21 @@ fun Stick(
     LaunchedEffect(key1 = controllerCallback) {
         while (true) {
             // スティックを放している場合
-            if (stickPosition.isReleased) {
+            if (stick.isReleased) {
                 //　スティックをリセット
                 controllerCallback.moveStick(
-                    stickPosition
+                    stick = stick,
                 )
 
                 //　スティックを触るまで待機
-                while (stickPosition.isReleased) {
+                while (stick.isReleased) {
                     delay(1)
                 }
             }
 
             //　スティックを触っているので呼び出し
             controllerCallback.moveStick(
-                stickPosition = stickPosition,
+                stick = stick,
             )
             delay(30)
         }
@@ -73,42 +69,36 @@ fun Stick(
             .padding(5.dp)
             .fillMaxSize()
             .onGloballyPositioned {
-                largeCircleSize = it.size.height
-                smallCircleSize = it.size.height / 3
-                stickPosition = StickPosition(
-                    circleRadius = largeCircleSize / 2,
-                    stickSize = smallCircleSize / 2,
+                // 初回配置なのでスティックを新規生成
+                stick = Stick(
+                    areaRadius = it.size.height / 2,
+                    stickRadius = it.size.height / 6,
                 )
             },
         contentAlignment = Alignment.Center,
     ) {
         Canvas(
             modifier = Modifier
-                .size(size = largeCircleSize.pxToDp())
+                .size(size = (stick.areaRadius * 2).pxToDp())
                 .pointerInput(Unit) {
                     awaitEachGesture {
                         val down = awaitFirstDown()
-                        stickPosition = StickPosition(
-                            circleRadius = largeCircleSize / 2,
-                            stickSize = smallCircleSize / 2,
+                        stick = stick.copy(
                             position = down.position,
                         )
 
                         do {
                             val event = awaitPointerEvent()
                             val lastPosition = event.changes.last().position
-                            stickPosition = StickPosition(
-                                circleRadius = largeCircleSize / 2,
-                                stickSize = smallCircleSize / 2,
+                            stick = stick.copy(
                                 position = lastPosition,
                             )
                         } while (
                             event.changes.fastAny { it.pressed }
                         )
 
-                        stickPosition = StickPosition(
-                            circleRadius = largeCircleSize / 2,
-                            stickSize = smallCircleSize / 2,
+                        stick = stick.copy(
+                            position = stick.center,
                         )
                     }
                 },
@@ -123,11 +113,11 @@ fun Stick(
         Canvas(
             modifier = Modifier
                 .offset(
-                    x = stickPosition.x.pxToDp(),
-                    y = stickPosition.y.pxToDp(),
+                    x = stick.x.pxToDp(),
+                    y = stick.y.pxToDp(),
                 )
                 .size(
-                    size = smallCircleSize.pxToDp()
+                    size = (stick.stickRadius * 2).pxToDp(),
                 ),
             onDraw = {
                 drawCircle(

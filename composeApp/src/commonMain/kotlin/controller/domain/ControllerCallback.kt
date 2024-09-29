@@ -3,7 +3,7 @@ package controller.domain
 interface ControllerCallback {
 
     fun moveStick(
-        stickPosition: StickPosition,
+        stick: Stick,
     )
 
     fun pressA()

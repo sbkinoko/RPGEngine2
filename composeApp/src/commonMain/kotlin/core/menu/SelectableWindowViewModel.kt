@@ -5,7 +5,7 @@ import androidx.compose.runtime.collectAsState
 import common.Timer
 import controller.domain.ArrowCommand
 import controller.domain.ControllerCallback
-import controller.domain.StickPosition
+import controller.domain.Stick
 import menu.domain.SelectManager
 
 abstract class SelectableWindowViewModel : ControllerCallback {
@@ -28,8 +28,8 @@ abstract class SelectableWindowViewModel : ControllerCallback {
         selectManager.selected = id
     }
 
-    override fun moveStick(stickPosition: StickPosition) {
-        val command = stickPosition.toCommand()
+    override fun moveStick(stick: Stick) {
+        val command = stick.toCommand()
 
         // 放したら終了
         if (command == ArrowCommand.None)

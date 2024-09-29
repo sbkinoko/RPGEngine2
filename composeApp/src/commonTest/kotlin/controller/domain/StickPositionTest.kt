@@ -7,9 +7,9 @@ import kotlin.test.assertEquals
 class StickPositionTest {
     @Test
     fun moveStickNoTap() {
-        StickPosition(
-            circleRadius = AREA_RADIUS,
-            stickSize = STICK_RADIUS,
+        Stick(
+            areaRadius = AREA_RADIUS,
+            stickRadius = STICK_RADIUS,
         ).apply {
             assertEquals(
                 expected = 0,
@@ -27,9 +27,9 @@ class StickPositionTest {
     fun moveStickInAreaTap() {
         val dx = 3f
         val dy = 4f
-        StickPosition(
-            circleRadius = AREA_RADIUS,
-            stickSize = STICK_RADIUS,
+        Stick(
+            areaRadius = AREA_RADIUS,
+            stickRadius = STICK_RADIUS,
             position = Offset(
                 x = dx + AREA_RADIUS,
                 y = dy + AREA_RADIUS,
@@ -52,9 +52,9 @@ class StickPositionTest {
         val dx = 6f
         val dy = 8f
         val areaRatio = (AREA_RADIUS - STICK_RADIUS) / AREA_RADIUS.toFloat()
-        StickPosition(
-            circleRadius = AREA_RADIUS,
-            stickSize = STICK_RADIUS,
+        Stick(
+            areaRadius = AREA_RADIUS,
+            stickRadius = STICK_RADIUS,
             position = Offset(
                 x = dx + AREA_RADIUS,
                 y = dy + AREA_RADIUS,
