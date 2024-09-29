@@ -3,25 +3,10 @@ package battle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
-import battle.command.actionphase.ActionPhaseViewModel
-import battle.command.escape.EscapeViewModel
-import battle.command.main.BattleMainViewModel
-import battle.command.playeraction.PlayerActionViewModel
-import battle.command.selectally.SelectAllyViewModel
-import battle.command.selectenemy.SelectEnemyViewModel
-import battle.command.skill.SkillCommandViewModel
-import battle.domain.AttackPhaseCommand
 import battle.domain.BattleCommandType
-import battle.domain.EscapeCommand
-import battle.domain.FinishCommand
-import battle.domain.MainCommand
-import battle.domain.PlayerActionCommand
-import battle.domain.SelectAllyCommand
-import battle.domain.SelectEnemyCommand
-import battle.domain.SkillCommand
 import battle.repository.battlemonster.BattleMonsterRepository
 import battle.repository.commandstate.CommandStateRepository
-import common.Timer
+import battle.usecase.convertscreentypetocontroller.GetControllerByCommandTypeUseCase
 import common.values.playerNum
 import controller.domain.ControllerCallback
 import controller.domain.StickPosition
@@ -54,13 +39,10 @@ class BattleViewModel :
 
     private val screenTypeRepository: ScreenTypeRepository by inject()
 
-    private val battleMainViewModel: BattleMainViewModel by inject()
-    private val playerActionViewModel: PlayerActionViewModel by inject()
-    private val selectEnemyViewModel: SelectEnemyViewModel by inject()
-    private val actionPhaseViewModel: ActionPhaseViewModel by inject()
-    private val escapeViewModel: EscapeViewModel by inject()
-    private val skillCommandViewModel: SkillCommandViewModel by inject()
-    private val selectAllyViewModel: SelectAllyViewModel by inject()
+    private val getControllerByCommandTypeUseCase: GetControllerByCommandTypeUseCase by inject()
+
+    private val childController: ControllerCallback?
+        get() = getControllerByCommandTypeUseCase.invoke()
 
     @Composable
     fun CommandStateFlow(): State<BattleCommandType> {
@@ -105,41 +87,21 @@ class BattleViewModel :
     }
 
     fun finishBattle() {
+        //　todo useCaseにする
         screenTypeRepository.screenType = ScreenType.FIELD
     }
 
-    //todo 外に専用の関数として取り出す
-    //todo finishViewModelを作ったらnullableをやめる
-    private fun BattleCommandType.toViewModel(): ControllerCallback? {
-        return when (this) {
-            is MainCommand -> battleMainViewModel
-            is PlayerActionCommand -> playerActionViewModel
-            is SelectEnemyCommand -> selectEnemyViewModel
-            is SelectAllyCommand -> selectAllyViewModel
-            is AttackPhaseCommand -> actionPhaseViewModel
-            is EscapeCommand -> escapeViewModel
-            is FinishCommand -> null
-            is SkillCommand -> skillCommandViewModel
-        }
-    }
-
-    private val timer: Timer = Timer(200)
-
     override fun moveStick(stickPosition: StickPosition) {
-        timer.callbackIfTimePassed {
-            commandStateRepository.nowCommandType
-                .toViewModel()?.moveStick(stickPosition)
-        }
+        childController?.moveStick(stickPosition)
     }
 
     override fun pressA() {
-        commandStateRepository.nowCommandType.toViewModel()?.pressA()
+        childController?.pressA()
     }
 
     override fun pressB() {
-        commandStateRepository.nowCommandType.toViewModel()?.pressB()
+        childController?.pressB()
     }
 
     override fun pressM() {}
-
 }

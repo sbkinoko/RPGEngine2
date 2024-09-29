@@ -21,6 +21,8 @@ import battle.usecase.attack.AttackFromPlayerUseCaseImpl
 import battle.usecase.attack.AttackUseCase
 import battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUseCase
 import battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUseCaseImpl
+import battle.usecase.convertscreentypetocontroller.GetControllerByCommandTypeUseCase
+import battle.usecase.convertscreentypetocontroller.GetControllerByCommandTypeUseCaseImpl
 import battle.usecase.findactivetarget.FindActiveTargetUseCase
 import battle.usecase.findactivetarget.FindActiveTargetUseCaseImpl
 import battle.usecase.gettargetnum.GetTargetNumUseCase
@@ -99,6 +101,19 @@ val BattleModule = module {
 
     single<SkillRepository> {
         SkillRepositoryImpl()
+    }
+
+    single<GetControllerByCommandTypeUseCase> {
+        GetControllerByCommandTypeUseCaseImpl(
+            commandStateRepository = get(),
+            battleMainViewModel = get(),
+            playerActionViewModel = get(),
+            selectEnemyViewModel = get(),
+            actionPhaseViewModel = get(),
+            escapeViewModel = get(),
+            skillCommandViewModel = get(),
+            selectAllyViewModel = get(),
+        )
     }
 
     single<AttackUseCase>(
