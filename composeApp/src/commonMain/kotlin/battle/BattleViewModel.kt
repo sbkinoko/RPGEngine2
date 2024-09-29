@@ -7,7 +7,6 @@ import battle.domain.BattleCommandType
 import battle.repository.battlemonster.BattleMonsterRepository
 import battle.repository.commandstate.CommandStateRepository
 import battle.usecase.convertscreentypetocontroller.GetControllerByCommandTypeUseCase
-import common.Timer
 import common.values.playerNum
 import controller.domain.ControllerCallback
 import controller.domain.StickPosition
@@ -42,7 +41,7 @@ class BattleViewModel :
 
     private val getControllerByCommandTypeUseCase: GetControllerByCommandTypeUseCase by inject()
 
-    private val childViewModel: ControllerCallback?
+    private val childController: ControllerCallback?
         get() = getControllerByCommandTypeUseCase.invoke()
 
     @Composable
@@ -92,20 +91,16 @@ class BattleViewModel :
         screenTypeRepository.screenType = ScreenType.FIELD
     }
 
-    private val timer: Timer = Timer(200)
-
     override fun moveStick(stickPosition: StickPosition) {
-        timer.callbackIfTimePassed {
-            childViewModel?.moveStick(stickPosition)
-        }
+        childController?.moveStick(stickPosition)
     }
 
     override fun pressA() {
-        childViewModel?.pressA()
+        childController?.pressA()
     }
 
     override fun pressB() {
-        childViewModel?.pressB()
+        childController?.pressB()
     }
 
     override fun pressM() {}
