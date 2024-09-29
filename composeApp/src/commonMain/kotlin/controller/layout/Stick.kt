@@ -4,7 +4,6 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -19,10 +18,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastAny
 import common.extension.pxToDp
 import common.values.Colors
+import common.values.LayoutConst
 import controller.domain.ControllerCallback
 import controller.domain.Stick
 import kotlinx.coroutines.delay
@@ -66,13 +65,12 @@ fun Stick(
 
     Box(
         modifier = modifier
-            .padding(5.dp)
-            .fillMaxSize()
+            .padding(all = LayoutConst.STICK_PADDING)
             .onGloballyPositioned {
                 // 初回配置なのでスティックを新規生成
                 stick = Stick(
                     areaRadius = it.size.height / 2,
-                    stickRadius = it.size.height / 6,
+                    stickRadius = (it.size.height / 2 * LayoutConst.STICK_SIZE_RATIO).toInt(),
                 )
             },
         contentAlignment = Alignment.Center,
