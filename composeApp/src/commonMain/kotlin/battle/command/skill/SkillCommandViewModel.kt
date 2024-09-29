@@ -7,11 +7,8 @@ import battle.domain.SelectAllyCommand
 import battle.domain.SelectEnemyCommand
 import battle.domain.SkillCommand
 import battle.repository.action.ActionRepository
+import core.domain.Const
 import core.repository.player.PlayerRepository
-import core.repository.skill.ATTACK_TO_2
-import core.repository.skill.CANT_USE
-import core.repository.skill.HEAL_SKILL
-import core.repository.skill.REVIVE_SKILL
 import core.repository.skill.SkillRepository
 import menu.domain.SelectManager
 import org.koin.core.component.inject
@@ -21,16 +18,15 @@ class SkillCommandViewModel : BattleChildViewModel() {
     private val playerRepository: PlayerRepository by inject()
     private val skillRepository: SkillRepository by inject()
 
-    // todo playerのスキルを参照する
-    val skillList = listOf(
-        ATTACK_TO_2,
-        CANT_USE,
-        HEAL_SKILL,
-        REVIVE_SKILL,
-    )
+    val skillList: List<Int>
+        get() {
+            return playerRepository.getStatus(playerId).skillList
+        }
 
     val playerId: Int
-        get() = (commandRepository.nowCommandType as SkillCommand).playerId
+        get() = (commandRepository.nowCommandType as? SkillCommand)?.playerId
+            ?: Const.INITIAL_PLAYER
+
 
     private val selectedSkillId: Int
         get() = skillList[selectManager.selected]
