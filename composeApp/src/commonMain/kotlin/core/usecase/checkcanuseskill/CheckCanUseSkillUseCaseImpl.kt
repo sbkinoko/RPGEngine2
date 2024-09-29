@@ -24,6 +24,7 @@ class CheckCanUseSkillUseCaseImpl(
             return AbleType.CANT_USE_BY_PLACE
         }
 
+        // fixme　コストのタイプで判断して、使用可否を返却する
         return if (
             skill.canUse(
                 status.mp.value

@@ -29,7 +29,6 @@ class SkillRepositoryImpl : SkillRepository {
                 damageAmount = 0,
                 needMP = 9999,
                 targetNum = 1,
-                canUse = { false },
                 usablePlace = Place.NEITHER,
             )
 

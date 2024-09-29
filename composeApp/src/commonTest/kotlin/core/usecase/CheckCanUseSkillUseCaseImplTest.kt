@@ -1,0 +1,100 @@
+package core.usecase
+
+import core.domain.HealSkill
+import core.domain.Place
+import core.domain.Skill
+import core.domain.TargetType
+import core.domain.status.PlayerStatus
+import core.domain.status.param.HP
+import core.domain.status.param.MP
+import core.repository.skill.SkillRepository
+import core.usecase.checkcanuseskill.CheckCanUseSkillUseCase
+import core.usecase.checkcanuseskill.CheckCanUseSkillUseCaseImpl
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
+
+class CheckCanUseSkillUseCaseImplTest {
+    private lateinit var checkCanUseSkillUseCase: CheckCanUseSkillUseCase
+
+    private val skill = HealSkill(
+        name = "test",
+        healAmount = 1,
+        needMP = 1,
+        targetNum = 1,
+        targetType = TargetType.ACTIVE,
+        usablePlace = Place.MAP,
+    )
+
+    private val playerStatusWithMP = PlayerStatus(
+        name = "test",
+        hp = HP(maxValue = 10, value = 10),
+        mp = MP(maxValue = 10, value = 10),
+        skillList = listOf(),
+    )
+
+    private val playerStatusNoMP = PlayerStatus(
+        name = "test",
+        hp = HP(maxValue = 10, value = 10),
+        mp = MP(maxValue = 10, value = 0),
+        skillList = listOf(),
+    )
+
+    @BeforeTest
+    fun beforeTest() {
+        val skillRepository = object : SkillRepository {
+            override fun getSkill(id: Int): Skill {
+                return skill
+            }
+        }
+        checkCanUseSkillUseCase = CheckCanUseSkillUseCaseImpl(skillRepository)
+    }
+
+    @Test
+    fun cantUseByPlace() {
+        val playerStatus = playerStatusWithMP
+
+        val result = checkCanUseSkillUseCase.invoke(
+            skillId = 1,
+            status = playerStatus,
+            here = Place.BATTLE
+        )
+
+        assertEquals(
+            expected = core.domain.AbleType.CANT_USE_BY_PLACE,
+            actual = result
+        )
+    }
+
+    @Test
+    fun cantUseByMP() {
+        val playerStatus = playerStatusNoMP
+
+        val result = checkCanUseSkillUseCase.invoke(
+            skillId = 1,
+            status = playerStatus,
+            here = Place.MAP,
+        )
+
+        assertEquals(
+            expected = core.domain.AbleType.CANT_USE_BY_MP,
+            actual = result
+        )
+    }
+
+    @Test
+    fun canUse() {
+        val playerStatus = playerStatusWithMP
+
+        val result = checkCanUseSkillUseCase.invoke(
+            skillId = 1,
+            status = playerStatus,
+            here = Place.MAP,
+        )
+
+        assertEquals(
+            expected = core.domain.AbleType.Able,
+            actual = result
+        )
+    }
+}
