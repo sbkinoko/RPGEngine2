@@ -1,4 +1,4 @@
-package battle.usecase.updateparameter
+package core.usecase.updateparameter
 
 import core.domain.status.PlayerStatus
 import core.repository.status.StatusRepository
@@ -32,6 +32,10 @@ class UpdatePlayerStatusUseCase(
     }
 
     override fun incMPImpl(amount: Int, status: PlayerStatus): PlayerStatus {
-        TODO("Not yet implemented")
+        return status.copy(
+            mp = status.mp.copy(
+                value = status.mp.value + amount
+            )
+        )
     }
 }
