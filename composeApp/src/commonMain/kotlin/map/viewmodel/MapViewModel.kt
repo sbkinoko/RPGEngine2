@@ -269,7 +269,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
     }
 
     override fun pressA() {
-        //todo Aを押した時の処理を実装
+
     }
 
     override fun pressB() {
