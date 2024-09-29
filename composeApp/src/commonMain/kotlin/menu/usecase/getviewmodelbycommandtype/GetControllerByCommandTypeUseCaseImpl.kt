@@ -23,7 +23,6 @@ class GetControllerByCommandTypeUseCaseImpl(
     private val skillUserViewModel: SkillUserViewModel,
     private val skillListViewModel: SkillListViewModel,
     private val skillTargetViewModel: SkillTargetViewModel,
-
     private val confirmViewModel: ConfirmViewModel,
     private val textViewModel: TextViewModel,
 ) : GetControllerByCommandTypeUseCase {

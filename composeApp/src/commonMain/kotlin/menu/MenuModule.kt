@@ -19,6 +19,8 @@ import menu.skill.user.SkillUserViewModel
 import menu.status.StatusViewModel
 import menu.usecase.backfield.BackFieldUseCase
 import menu.usecase.backfield.BackFieldUseCaseImpl
+import menu.usecase.getviewmodelbycommandtype.GetControllerByCommandTypeUseCase
+import menu.usecase.getviewmodelbycommandtype.GetControllerByCommandTypeUseCaseImpl
 import org.koin.dsl.module
 
 val MenuModule = module {
@@ -60,6 +62,21 @@ val MenuModule = module {
 
     single<TargetRepository> {
         TargetRepositoryImpl()
+    }
+
+    single<GetControllerByCommandTypeUseCase> {
+        GetControllerByCommandTypeUseCaseImpl(
+            confirmRepository = get(),
+            textRepository = get(),
+            menuStateRepository = get(),
+            mainMenuViewModel = get(),
+            statusViewModel = get(),
+            skillUserViewModel = get(),
+            skillListViewModel = get(),
+            skillTargetViewModel = get(),
+            confirmViewModel = get(),
+            textViewModel = get(),
+        )
     }
 
     single<BackFieldUseCase> {
