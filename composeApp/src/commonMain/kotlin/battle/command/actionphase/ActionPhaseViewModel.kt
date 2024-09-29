@@ -103,42 +103,50 @@ class ActionPhaseViewModel : BattleChildViewModel() {
 
     private fun getForStatusName(id: Int): String {
         return if (id < playerNum) {
-            val action = actionRepository.getAction(id)
-
-            val type = when (action.thisTurnAction) {
-                ActionType.Normal -> Type.ATTACK
-                ActionType.Skill -> when (skillRepository.getSkill(action.skillId!!)) {
-                    is AttackSkill -> Type.ATTACK
-                    is HealSkill -> Type.HEAL
-                }
-
-                ActionType.None -> throw RuntimeException("ここには来ない")
-            }
-
-            when (type) {
-                Type.ATTACK -> {
-                    val targetId = action.target
-                    battleMonsterRepository.getStatus(targetId).name
-                }
-
-                Type.HEAL -> {
-                    val targetId = action.ally
-                    playerRepository.getStatus(targetId).name
-                }
-            }
+            getPlayerActionTargetName(id = id)
         } else {
-            //　fixme 敵の攻撃対象を保存するようにしたら修正
-            "仲間"
+            getMonsterTargetName()
         }
     }
 
-    private fun getActionName(id: Int): String {
+    private fun getPlayerActionTargetName(id: Int): String {
+        val action = actionRepository.getAction(id)
 
+        val type = when (action.thisTurnAction) {
+            ActionType.Normal -> Type.ATTACK
+            ActionType.Skill -> when (skillRepository.getSkill(action.skillId!!)) {
+                is AttackSkill -> Type.ATTACK
+                is HealSkill -> Type.HEAL
+            }
+
+            ActionType.None -> throw RuntimeException("ここには来ない")
+        }
+
+        return when (type) {
+            Type.ATTACK -> {
+                val targetId = action.target
+                battleMonsterRepository.getStatus(targetId).name
+            }
+
+            Type.HEAL -> {
+                val targetId = action.ally
+                playerRepository.getStatus(targetId).name
+            }
+        }
+    }
+
+    private fun getMonsterTargetName(): String {
+        //　fixme 敵の攻撃対象を保存するようにしたら修正
+        return "仲間"
+    }
+
+    private fun getActionName(id: Int): String {
         val action = if (id < playerNum) {
             actionRepository.getAction(id).thisTurnAction
         } else {
             ActionType.Skill
         }
+
         return when (action) {
             ActionType.Normal -> "攻撃"
             ActionType.Skill -> {
@@ -146,7 +154,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
                     val skillId = actionRepository.getAction(id).skillId!!
                     skillRepository.getSkill(skillId)
                 } else {
-                    skillRepository.getSkill(2)
+                    skillRepository.getSkill(ATTACK_NORMAL)
                 }
                 when (skill) {
                     is AttackSkill -> "攻撃"
@@ -213,7 +221,6 @@ class ActionPhaseViewModel : BattleChildViewModel() {
     }
 
     private suspend fun enemyAction() {
-
         skillAction(
             id = attackingPlayerId.value - playerNum,
             statusList = playerRepository.getPlayers(),
@@ -271,19 +278,19 @@ class ActionPhaseViewModel : BattleChildViewModel() {
         }
     }
 
+    private val totalNum: Int
+        get() = playerNum + battleMonsterRepository.getMonsters().size
+
+    private val isAllActionEnded: Boolean
+        get() = mutableAttackingPlayerId.value >= totalNum
 
     private fun changeToNextCharacter() {
-        val totalNum = playerNum + battleMonsterRepository.getMonsters().size
         while (true) {
             //　次のキャラに移動
             mutableAttackingPlayerId.value++
 
-            // 全員行動が終わっていたら初期状態へ
-            if (mutableAttackingPlayerId.value
-                >= totalNum
-            ) {
-                mutableAttackingPlayerId.value = 0
-                this.commandRepository.init()
+            if (isAllActionEnded) {
+                initAction()
                 break
             }
 
@@ -293,18 +300,25 @@ class ActionPhaseViewModel : BattleChildViewModel() {
                         mutableAttackingPlayerId.value - playerNum
                     ).isActive
                 ) {
+                    // 行動可能なら行動する
                     break
                 }
             } else {
-                // 行動可能なら行動する
+                //　playerを確認
                 if (playerRepository.getStatus(attackingPlayerId.value).isActive &&
                     actionRepository.getAction(attackingPlayerId.value).thisTurnAction != ActionType.None
                 ) {
+                    // 行動可能なら行動する
                     break
                 }
             }
 
             //行動可能ではないので次のキャラへ移動
         }
+    }
+
+    private fun initAction() {
+        mutableAttackingPlayerId.value = 0
+        commandRepository.init()
     }
 }
