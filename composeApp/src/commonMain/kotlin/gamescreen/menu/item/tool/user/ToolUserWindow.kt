@@ -10,10 +10,8 @@ fun ToolUserWindow(
     modifier: Modifier = Modifier,
     toolUserViewModel: ToolUserViewModel = koinInject(),
 ) {
-    val selectedId = toolUserViewModel.getSelectedAsState().value
     UserWindow(
         toolUserViewModel = toolUserViewModel,
-        selectedId = selectedId,
         modifier = modifier
     )
 }
