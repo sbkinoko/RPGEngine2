@@ -19,6 +19,7 @@ abstract class SelectableChildViewModel<T> :
         )
     }
 
+    // fixme val get()で固定値以外も返せるので修正する
     protected abstract fun isBoundedImpl(
         commandType: T,
     ): Boolean
