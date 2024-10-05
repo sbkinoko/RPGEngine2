@@ -11,6 +11,7 @@ import core.repository.item.skill.ATTACK_TO_2
 import core.repository.item.skill.CANT_USE
 import core.repository.item.skill.HEAL_SKILL
 import core.repository.item.skill.REVIVE_SKILL
+import core.repository.item.tool.ToolRepositoryImpl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -48,6 +49,9 @@ class PlayerRepositoryImpl : PlayerRepository {
                         HEAL_SKILL,
                         REVIVE_SKILL,
                     ),
+                    toolList = listOf(
+                        ToolRepositoryImpl.HEAL_TOOL,
+                    )
                 )
 
                 1 -> PlayerStatus(
@@ -64,6 +68,10 @@ class PlayerRepositoryImpl : PlayerRepository {
                         ATTACK_TO_2,
                         CANT_USE,
                     ),
+                    toolList = listOf(
+                        ToolRepositoryImpl.HEAL_TOOL,
+                        ToolRepositoryImpl.HEAL_TOOL,
+                    )
                 )
 
                 2 -> PlayerStatus(
@@ -80,6 +88,11 @@ class PlayerRepositoryImpl : PlayerRepository {
                         HEAL_SKILL,
                         REVIVE_SKILL,
                     ),
+                    toolList = listOf(
+                        ToolRepositoryImpl.HEAL_TOOL,
+                        ToolRepositoryImpl.HEAL_TOOL,
+                        ToolRepositoryImpl.HEAL_TOOL,
+                    )
                 )
 
                 3 -> PlayerStatus(
@@ -96,6 +109,12 @@ class PlayerRepositoryImpl : PlayerRepository {
                         HEAL_SKILL,
                         REVIVE_SKILL,
                     ),
+                    toolList = listOf(
+                        ToolRepositoryImpl.HEAL_TOOL,
+                        ToolRepositoryImpl.HEAL_TOOL,
+                        ToolRepositoryImpl.HEAL_TOOL,
+                        ToolRepositoryImpl.HEAL_TOOL,
+                    )
                 )
 
                 else -> throw IllegalStateException()
