@@ -4,10 +4,12 @@ import core.confim.ConfirmViewModel
 import core.confim.repository.ConfirmRepository
 import core.repository.battlemonster.BattleMonsterRepository
 import core.repository.battlemonster.BattleMonsterRepositoryImpl
+import core.repository.item.skill.SkillRepository
+import core.repository.item.skill.SkillRepositoryImpl
+import core.repository.item.tool.ToolRepository
+import core.repository.item.tool.ToolRepositoryImpl
 import core.repository.player.PlayerRepository
 import core.repository.player.PlayerRepositoryImpl
-import core.repository.skill.SkillRepository
-import core.repository.skill.SkillRepositoryImpl
 import core.text.TextViewModel
 import core.text.repository.TextRepository
 import core.text.repository.TextRepositoryImpl
@@ -46,6 +48,10 @@ val CoreModule = module {
 
     single<BattleMonsterRepository> {
         BattleMonsterRepositoryImpl()
+    }
+
+    single<ToolRepository> {
+        ToolRepositoryImpl()
     }
 
     single<CheckCanUseSkillUseCase> {

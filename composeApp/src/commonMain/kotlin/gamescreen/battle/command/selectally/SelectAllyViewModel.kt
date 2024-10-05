@@ -8,8 +8,8 @@ import battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUse
 import common.values.playerNum
 import core.domain.item.TargetType
 import core.domain.item.skill.HealSkill
+import core.repository.item.skill.SkillRepository
 import core.repository.player.PlayerRepository
-import core.repository.skill.SkillRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
