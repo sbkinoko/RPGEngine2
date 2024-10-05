@@ -1,4 +1,4 @@
-package gamescreen.menu.item.itemselect
+package gamescreen.menu.item.abstract.itemselect
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -17,6 +17,7 @@ import common.extension.equalAllocationModifier
 import common.values.Colors
 import core.WithConfirmAndTextWindow
 import gamescreen.menu.component.StatusComponent
+import gamescreen.menu.item.list.SelectableItemList
 
 @Composable
 fun ItemListWindow(

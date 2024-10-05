@@ -1,4 +1,4 @@
-package gamescreen.menu.item.user
+package gamescreen.menu.item.list
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,6 +9,7 @@ import androidx.compose.ui.unit.dp
 import common.extension.menuItem
 import common.layout.CenterText
 import common.values.playerNum
+import gamescreen.menu.item.abstract.user.ItemUserViewModel
 
 @Composable
 fun UserList(

@@ -4,7 +4,7 @@ import core.domain.AbleType
 import core.repository.item.tool.ToolRepository
 import core.text.repository.TextRepository
 import gamescreen.menu.domain.MenuType
-import gamescreen.menu.item.itemselect.ItemListViewModel
+import gamescreen.menu.item.abstract.itemselect.ItemListViewModel
 import gamescreen.menu.item.repository.useitemid.UseItemIdRepository
 import gamescreen.menu.item.repository.user.UserRepository
 import org.koin.core.component.inject
