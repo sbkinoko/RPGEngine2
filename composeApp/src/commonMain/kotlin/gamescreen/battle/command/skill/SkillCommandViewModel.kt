@@ -8,10 +8,10 @@ import battle.domain.SelectEnemyCommand
 import battle.domain.SkillCommand
 import battle.repository.action.ActionRepository
 import core.domain.AbleType
-import core.domain.AttackSkill
 import core.domain.Const
-import core.domain.HealSkill
 import core.domain.Place
+import core.domain.item.skill.AttackSkill
+import core.domain.item.skill.HealSkill
 import core.repository.player.PlayerRepository
 import core.repository.skill.SkillRepository
 import core.usecase.checkcanuseskill.CheckCanUseSkillUseCase

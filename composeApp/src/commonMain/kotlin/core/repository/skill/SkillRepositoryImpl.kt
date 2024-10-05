@@ -1,10 +1,10 @@
 package core.repository.skill
 
-import core.domain.AttackSkill
-import core.domain.HealSkill
 import core.domain.Place
-import core.domain.Skill
-import core.domain.TargetType
+import core.domain.item.TargetType
+import core.domain.item.skill.AttackSkill
+import core.domain.item.skill.HealSkill
+import core.domain.item.skill.Skill
 
 const val ATTACK_TO_2 = 0
 const val CANT_USE = 1
@@ -17,6 +17,7 @@ class SkillRepositoryImpl : SkillRepository {
     override fun getSkill(id: Int): Skill {
         return when (id) {
             ATTACK_TO_2 -> AttackSkill(
+                id = id,
                 name = "２体攻撃",
                 damageAmount = 10,
                 needMP = 1,
@@ -25,6 +26,7 @@ class SkillRepositoryImpl : SkillRepository {
             )
 
             CANT_USE -> AttackSkill(
+                id = id,
                 name = "使えないよ",
                 damageAmount = 0,
                 needMP = 9999,
@@ -33,6 +35,7 @@ class SkillRepositoryImpl : SkillRepository {
             )
 
             ATTACK_NORMAL -> AttackSkill(
+                id = id,
                 name = "通常攻撃",
                 damageAmount = 1,
                 needMP = 0,
@@ -41,6 +44,7 @@ class SkillRepositoryImpl : SkillRepository {
             )
 
             HEAL_SKILL -> HealSkill(
+                id = id,
                 name = "回復",
                 healAmount = 10,
                 needMP = 1,
@@ -50,6 +54,7 @@ class SkillRepositoryImpl : SkillRepository {
             )
 
             REVIVE_SKILL -> HealSkill(
+                id = id,
                 name = "復活",
                 healAmount = 10,
                 needMP = 1,

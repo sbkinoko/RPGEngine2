@@ -1,9 +1,9 @@
 package core.usecase
 
-import core.domain.HealSkill
 import core.domain.Place
-import core.domain.Skill
-import core.domain.TargetType
+import core.domain.item.TargetType
+import core.domain.item.skill.HealSkill
+import core.domain.item.skill.Skill
 import core.domain.status.PlayerStatus
 import core.domain.status.param.HP
 import core.domain.status.param.MP
@@ -18,6 +18,7 @@ class CheckCanUseSkillUseCaseImplTest {
     private lateinit var checkCanUseSkillUseCase: CheckCanUseSkillUseCase
 
     private val skill = HealSkill(
+        id = 0,
         name = "test",
         healAmount = 1,
         needMP = 1,

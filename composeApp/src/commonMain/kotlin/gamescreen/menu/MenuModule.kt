@@ -11,8 +11,6 @@ import menu.skill.repository.target.TargetRepositoryImpl
 import menu.skill.repository.useid.UseSkillIdRepository
 import menu.skill.repository.useid.UseSkillIdRepositoryImpl
 import menu.skill.target.SkillTargetViewModel
-import menu.skill.usecase.getskillexplain.GetSkillExplainUseCase
-import menu.skill.usecase.getskillexplain.GetSkillExplainUseCaseImpl
 import menu.skill.usecase.useskill.UseSkillUseCase
 import menu.skill.usecase.useskill.UseSkillUseCaseImpl
 import menu.skill.user.SkillUserViewModel
@@ -83,12 +81,6 @@ val MenuModule = module {
         CloseMenuUseCaseImpl(
             menuStateRepository = get(),
             changeToMapUseCase = get(),
-        )
-    }
-
-    single<GetSkillExplainUseCase> {
-        GetSkillExplainUseCaseImpl(
-            skillRepository = get(),
         )
     }
 
