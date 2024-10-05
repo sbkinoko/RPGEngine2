@@ -11,13 +11,13 @@ import org.koin.core.component.inject
 
 class ToolListViewModel : ItemListViewModel() {
     override val userRepository: UserRepository by inject()
-    override val useItemIdRepository: UseItemIdRepository by inject()
     override val itemRepository: ToolRepository by inject()
     private val textRepository: TextRepository by inject()
+    private val useItemIdRepository: UseItemIdRepository by inject()
 
     override val boundedScreenType: MenuType
         get() = MenuType.TOOL_LIST
-    override val nextScreenType: MenuType
+    private val nextScreenType: MenuType
         get() = TODO("Not yet implemented")
 
     override val itemList: List<Int>
