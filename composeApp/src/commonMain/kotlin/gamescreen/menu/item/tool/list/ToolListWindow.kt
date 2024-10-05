@@ -8,7 +8,7 @@ import org.koin.compose.koinInject
 @Composable
 fun ToolListWindow(
     modifier: Modifier = Modifier,
-    toolUserViewModel: ToolListWindowViewModel = koinInject(),
+    toolUserViewModel: ToolListViewModel = koinInject(),
 ) {
     ItemListWindow(
         modifier = modifier,

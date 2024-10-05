@@ -6,6 +6,7 @@ import core.repository.player.PlayerRepository
 import gamescreen.menu.MenuChildViewModel
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.domain.SelectManager
+import gamescreen.menu.item.repository.user.UserRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 

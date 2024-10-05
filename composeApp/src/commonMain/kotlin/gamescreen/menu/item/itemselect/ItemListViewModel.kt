@@ -8,7 +8,8 @@ import gamescreen.menu.MenuChildViewModel
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.domain.SelectManager
 import gamescreen.menu.item.ItemList
-import gamescreen.menu.item.user.UserRepository
+import gamescreen.menu.item.repository.useitemid.UseItemIdRepository
+import gamescreen.menu.item.repository.user.UserRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -38,39 +39,6 @@ abstract class ItemListViewModel : MenuChildViewModel(),
 
     protected abstract val boundedScreenType: MenuType
     protected abstract val nextScreenType: MenuType
-
-//    override fun goNextImpl() {
-//        val position = selectManager.selected
-//        val id = itemList[position]
-//        val status = playerRepository.getStatus(userId)
-//
-//        val ableType = checkCanUseSkillUseCase.invoke(
-//            skillId = id,
-//            status = status,
-//            here = Place.MAP,
-//        )
-//
-//        when (ableType) {
-//            AbleType.Able -> {
-//                // skillIdを保存
-//                useItemIdRepository.itemId = id
-//                //　次の画面に遷移
-//                commandRepository.push(
-//                    nextScreenType,
-//                )
-//            }
-//
-//            AbleType.CANT_USE_BY_PLACE -> {
-//                textRepository.setText("ここでは使えません")
-//                textRepository.push(true)
-//            }
-//
-//            AbleType.CANT_USE_BY_MP -> {
-//                textRepository.setText("MPがたりません")
-//                textRepository.push(true)
-//            }
-//        }
-//    }
 
     override fun isBoundedImpl(commandType: MenuType): Boolean {
         return commandType == boundedScreenType
