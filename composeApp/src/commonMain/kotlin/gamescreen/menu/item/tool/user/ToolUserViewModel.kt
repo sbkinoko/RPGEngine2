@@ -20,10 +20,7 @@ class ToolUserViewModel : ItemUserViewModel(),
     override val nextScreenType: MenuType
         get() = TODO("Not yet implemented")
 
-
     override fun getPlayerItemListAt(id: Int): List<Int> {
-
+        return playerRepository.getStatus(id).toolList
     }
-
-
 }
