@@ -6,18 +6,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import common.extension.menuItem
 import common.layout.CenterText
-import gamescreen.menu.item.user.ItemUserViewModel
+import core.menu.SelectableChildViewModel
+import gamescreen.menu.item.ItemList
 
 @Composable
 fun SelectableItemList(
     selectedUserId: Int,
-    itemUserViewModel: ItemUserViewModel,
+    itemUserViewModel: SelectableChildViewModel<*>,
+    itemList: ItemList,
     modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier,
     ) {
-        itemUserViewModel.getPlayerItemListAt(selectedUserId)
+        itemList.getPlayerItemListAt(selectedUserId)
             .forEachIndexed { index, itemId ->
                 CenterText(
                     modifier = Modifier
@@ -27,7 +29,7 @@ fun SelectableItemList(
                             id = index,
                             childViewModel = itemUserViewModel,
                         ),
-                    text = itemUserViewModel.getItemName(itemId),
+                    text = itemList.getItemName(itemId),
                 )
             }
     }
