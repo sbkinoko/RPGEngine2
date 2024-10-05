@@ -15,7 +15,7 @@ enum class MenuType(
     TOOL_USER(
         title = "道具"
     ),
-    TOOL_LIST(),
+    TOOL_LIST,
     Item3(title = "text3"),
     Item4(title = "text4"),
     Item5(title = "text5"),

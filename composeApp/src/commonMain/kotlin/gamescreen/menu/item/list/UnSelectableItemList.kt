@@ -1,18 +1,15 @@
-package gamescreen.menu.item.itemselect
+package gamescreen.menu.item.list
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import common.extension.menuItem
+import common.extension.selectable
 import common.layout.CenterText
-import core.menu.SelectableChildViewModel
-import gamescreen.menu.item.ItemList
 
 @Composable
-fun SelectableItemList(
+fun UnSelectableItemList(
     selectedUserId: Int,
-    itemUserViewModel: SelectableChildViewModel<*>,
     itemList: ItemList,
     modifier: Modifier = Modifier,
 ) {
@@ -20,14 +17,15 @@ fun SelectableItemList(
         modifier = modifier,
     ) {
         itemList.getPlayerItemListAt(selectedUserId)
-            .forEachIndexed { index, itemId ->
+            .forEachIndexed { _, itemId ->
                 CenterText(
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1f)
-                        .menuItem(
-                            id = index,
-                            childViewModel = itemUserViewModel,
+                        .selectable(
+                            // 選択状態にならないようにしておく
+                            id = 1,
+                            selected = 2,
                         ),
                     text = itemList.getItemName(itemId),
                 )
