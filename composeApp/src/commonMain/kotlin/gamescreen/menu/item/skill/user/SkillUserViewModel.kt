@@ -1,14 +1,14 @@
-package menu.skill.user
+package gamescreen.menu.item.skill.user
 
 import common.Timer
 import common.values.playerNum
 import core.repository.player.PlayerRepository
 import core.repository.skill.SkillRepository
+import gamescreen.menu.item.skill.repository.skilluser.SkillUserRepository
 import menu.MenuChildViewModel
 import menu.domain.MenuType
 import menu.domain.SelectManager
 import menu.repository.menustate.MenuStateRepository
-import menu.skill.repository.skilluser.SkillUserRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
