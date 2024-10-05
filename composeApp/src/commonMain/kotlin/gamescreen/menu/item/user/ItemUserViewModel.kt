@@ -10,7 +10,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 abstract class ItemUserViewModel : MenuChildViewModel(), KoinComponent {
-    private val playerRepository: PlayerRepository by inject()
+    protected val playerRepository: PlayerRepository by inject()
     protected abstract val itemRepository: ItemRepository
     protected abstract val userRepository: UserRepository
 
