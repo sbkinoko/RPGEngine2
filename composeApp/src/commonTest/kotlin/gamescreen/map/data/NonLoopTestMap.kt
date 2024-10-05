@@ -1,4 +1,4 @@
-package map.data
+package gamescreen.map.data
 
 import gamescreen.map.domain.MapData
 

@@ -1,4 +1,4 @@
-package map.usecase.startbattle
+package gamescreen.map.usecase.startbattle
 
 import core.domain.ScreenType
 import core.domain.status.MonsterStatus
@@ -9,8 +9,6 @@ import gamescreen.battle.domain.ActionType
 import gamescreen.battle.domain.BattleCommandType
 import gamescreen.battle.repository.action.ActionRepository
 import gamescreen.battle.repository.commandstate.CommandStateRepository
-import gamescreen.map.usecase.startbattle.StartBattleUseCase
-import gamescreen.map.usecase.startbattle.StartBattleUseCaseImpl
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.runBlocking

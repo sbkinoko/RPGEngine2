@@ -1,10 +1,8 @@
-package menu.usecase.backfield
+package gamescreen.menu.usecase.backfield
 
 import core.usecase.changetomap.ChangeToMapUseCase
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.repository.menustate.MenuStateRepository
-import gamescreen.menu.usecase.backfield.CloseMenuUseCase
-import gamescreen.menu.usecase.backfield.CloseMenuUseCaseImpl
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.runBlocking
 import org.koin.test.KoinTest

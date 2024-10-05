@@ -1,6 +1,5 @@
-package menu.main
+package gamescreen.menu.main
 
-import gamescreen.menu.main.MainMenuViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking

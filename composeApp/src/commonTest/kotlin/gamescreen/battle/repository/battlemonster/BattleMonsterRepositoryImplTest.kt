@@ -1,4 +1,4 @@
-package battle.repository.battlemonster
+package gamescreen.battle.repository.battlemonster
 
 import core.domain.status.MonsterStatus
 import core.domain.status.param.HP

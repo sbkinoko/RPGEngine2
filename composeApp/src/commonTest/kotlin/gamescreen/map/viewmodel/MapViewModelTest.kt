@@ -1,8 +1,7 @@
-package map.viewmodel
+package gamescreen.map.viewmodel
 
 import gamescreen.map.MapModule
 import gamescreen.map.domain.Velocity
-import gamescreen.map.viewmodel.MapViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking

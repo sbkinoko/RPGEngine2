@@ -1,6 +1,8 @@
-package map.repository.background
+package gamescreen.map.repository.background
 
 import gamescreen.map.MapModule
+import gamescreen.map.data.LoopTestMap
+import gamescreen.map.data.NonLoopTestMap
 import gamescreen.map.domain.BackgroundCell
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -13,8 +15,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import map.data.LoopTestMap
-import map.data.NonLoopTestMap
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest

@@ -1,10 +1,8 @@
-package map.usecase
+package gamescreen.map.usecase
 
 import gamescreen.map.MapModule
 import gamescreen.map.domain.Velocity
 import gamescreen.map.layout.PlayerMoveSquare
-import gamescreen.map.usecase.PlayerMoveToUseCase
-import gamescreen.map.usecase.VelocityManageUseCase
 import gamescreen.map.viewmodel.MapViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking

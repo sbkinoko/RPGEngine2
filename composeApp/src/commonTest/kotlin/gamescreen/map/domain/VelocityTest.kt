@@ -1,6 +1,5 @@
-package map.domain
+package gamescreen.map.domain
 
-import gamescreen.map.domain.Velocity
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

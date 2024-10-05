@@ -1,7 +1,6 @@
-package menu.domain
+package gamescreen.menu.domain
 
 import controller.domain.ArrowCommand
-import gamescreen.menu.domain.SelectManager
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

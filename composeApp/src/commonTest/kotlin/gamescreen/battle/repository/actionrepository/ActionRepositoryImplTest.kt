@@ -1,4 +1,4 @@
-package battle.repository.actionrepository
+package gamescreen.battle.repository.actionrepository
 
 import gamescreen.battle.domain.ActionType
 import gamescreen.battle.repository.action.ActionRepository

@@ -1,9 +1,8 @@
-package map.repository.player
+package gamescreen.map.repository.player
 
 import gamescreen.map.MapModule
 import gamescreen.map.domain.Point
 import gamescreen.map.domain.collision.Square
-import gamescreen.map.repository.player.PlayerRepository
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job

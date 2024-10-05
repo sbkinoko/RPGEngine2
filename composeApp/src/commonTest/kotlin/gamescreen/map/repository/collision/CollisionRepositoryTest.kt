@@ -1,8 +1,7 @@
-package map.repository.collision
+package gamescreen.map.repository.collision
 
 import gamescreen.map.MapModule
 import gamescreen.map.domain.collision.Square
-import gamescreen.map.repository.collision.CollisionRepository
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest

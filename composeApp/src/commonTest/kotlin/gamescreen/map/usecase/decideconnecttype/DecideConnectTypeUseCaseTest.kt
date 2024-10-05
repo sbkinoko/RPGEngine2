@@ -1,4 +1,4 @@
-package map.usecase.decideconnecttype
+package gamescreen.map.usecase.decideconnecttype
 
 import gamescreen.map.MapModule
 import gamescreen.map.domain.ConnectType

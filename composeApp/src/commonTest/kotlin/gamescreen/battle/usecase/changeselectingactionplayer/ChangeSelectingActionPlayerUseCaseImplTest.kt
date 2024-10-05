@@ -1,4 +1,4 @@
-package battle.usecase.changeselectingactionplayer
+package gamescreen.battle.usecase.changeselectingactionplayer
 
 import common.values.playerNum
 import gamescreen.battle.BattleModule
@@ -6,7 +6,6 @@ import gamescreen.battle.domain.AttackPhaseCommand
 import gamescreen.battle.domain.PlayerActionCommand
 import gamescreen.battle.domain.PlayerIdCommand
 import gamescreen.battle.repository.commandstate.CommandStateRepository
-import gamescreen.battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUseCase
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest

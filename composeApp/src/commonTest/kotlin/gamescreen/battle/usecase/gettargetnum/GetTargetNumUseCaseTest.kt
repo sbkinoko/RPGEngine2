@@ -1,10 +1,9 @@
-package battle.usecase.gettargetnum
+package gamescreen.battle.usecase.gettargetnum
 
 import core.CoreModule
 import gamescreen.battle.BattleModule
 import gamescreen.battle.domain.ActionType
 import gamescreen.battle.repository.action.ActionRepository
-import gamescreen.battle.usecase.gettargetnum.GetTargetNumUseCase
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest

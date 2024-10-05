@@ -1,14 +1,12 @@
-package map.usecase
+package gamescreen.map.usecase
 
 import gamescreen.map.MapModule
+import gamescreen.map.data.NonLoopTestMap
 import gamescreen.map.domain.Velocity
 import gamescreen.map.domain.collision.Square
+import gamescreen.map.manager.CELL_NUM
+import gamescreen.map.manager.SIDE_LENGTH
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
-import gamescreen.map.usecase.MoveBackgroundUseCase
-import gamescreen.map.usecase.ResetBackgroundPositionUseCase
-import map.data.NonLoopTestMap
-import map.manager.CELL_NUM
-import map.manager.SIDE_LENGTH
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest

@@ -1,11 +1,10 @@
-package battle.usecase
+package gamescreen.battle.usecase
 
 import common.status.MonsterStatusTest.Companion.getMonster
 import core.CoreModule
 import core.repository.battlemonster.BattleMonsterRepository
 import gamescreen.battle.BattleModule
 import gamescreen.battle.QualifierAttackFromPlayer
-import gamescreen.battle.usecase.IsAllMonsterNotActiveUseCase
 import gamescreen.battle.usecase.attack.AttackUseCase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking

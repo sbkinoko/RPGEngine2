@@ -1,6 +1,5 @@
-package map.domain
+package gamescreen.map.domain
 
-import gamescreen.map.domain.Point
 import gamescreen.map.domain.collision.Square
 import kotlin.test.Test
 import kotlin.test.assertEquals

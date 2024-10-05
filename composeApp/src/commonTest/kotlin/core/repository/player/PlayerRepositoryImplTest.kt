@@ -1,10 +1,9 @@
-package core.repository
+package core.repository.player
 
 import core.CoreModule
 import core.domain.status.PlayerStatus
 import core.domain.status.param.HP
 import core.domain.status.param.MP
-import core.repository.player.PlayerRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking

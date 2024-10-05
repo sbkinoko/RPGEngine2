@@ -1,6 +1,5 @@
-package menu
+package gamescreen.menu
 
-import gamescreen.menu.MenuModule
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.repository.menustate.MenuStateRepository
 import kotlinx.coroutines.delay

@@ -1,4 +1,4 @@
-package battle.serviceimpl
+package gamescreen.battle.serviceimpl
 
 import common.status.MonsterStatusTest.Companion.getMonster
 import core.CoreModule
