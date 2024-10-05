@@ -2,8 +2,6 @@ package gamescreen.menu.item.itemselect
 
 import core.repository.item.ItemRepository
 import core.repository.player.PlayerRepository
-import core.text.repository.TextRepository
-import core.usecase.checkcanuseskill.CheckCanUseSkillUseCase
 import gamescreen.menu.MenuChildViewModel
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.domain.SelectManager
@@ -18,11 +16,7 @@ abstract class ItemListViewModel : MenuChildViewModel(),
     KoinComponent {
     protected val playerRepository: PlayerRepository by inject()
     protected abstract val userRepository: UserRepository
-    protected abstract val useItemIdRepository: UseItemIdRepository
     protected abstract val itemRepository: ItemRepository
-    private val textRepository: TextRepository by inject()
-
-    private val checkCanUseSkillUseCase: CheckCanUseSkillUseCase by inject()
 
     override var selectManager = SelectManager(
         width = 1,
@@ -38,7 +32,6 @@ abstract class ItemListViewModel : MenuChildViewModel(),
     protected abstract val itemList: List<Int>
 
     protected abstract val boundedScreenType: MenuType
-    protected abstract val nextScreenType: MenuType
 
     override fun isBoundedImpl(commandType: MenuType): Boolean {
         return commandType == boundedScreenType
