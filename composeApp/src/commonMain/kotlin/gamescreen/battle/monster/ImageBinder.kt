@@ -1,4 +1,4 @@
-package battle.monster
+package gamescreen.battle.monster
 
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi

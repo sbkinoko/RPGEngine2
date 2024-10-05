@@ -1,8 +1,8 @@
 package battle.repository.actionrepository
 
-import battle.domain.ActionType
-import battle.repository.action.ActionRepository
-import battle.repository.action.ActionRepositoryImpl
+import gamescreen.battle.domain.ActionType
+import gamescreen.battle.repository.action.ActionRepository
+import gamescreen.battle.repository.action.ActionRepositoryImpl
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals

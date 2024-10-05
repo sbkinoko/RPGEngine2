@@ -1,10 +1,10 @@
-package map.usecase
+package gamescreen.map.usecase
 
-import map.domain.BackgroundCell
-import map.domain.Velocity
-import map.domain.collision.Square
-import map.repository.backgroundcell.BackgroundRepository
-import map.repository.collision.CollisionRepository
+import gamescreen.map.domain.BackgroundCell
+import gamescreen.map.domain.Velocity
+import gamescreen.map.domain.collision.Square
+import gamescreen.map.repository.backgroundcell.BackgroundRepository
+import gamescreen.map.repository.collision.CollisionRepository
 
 class MoveBackgroundUseCase(
     private val repository: BackgroundRepository,

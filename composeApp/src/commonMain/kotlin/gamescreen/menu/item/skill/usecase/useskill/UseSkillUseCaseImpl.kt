@@ -5,12 +5,12 @@ import core.domain.item.skill.HealSkill
 import core.repository.skill.SkillRepository
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
 import gamescreen.menu.item.skill.repository.skilluser.SkillUserRepository
+import gamescreen.menu.item.skill.repository.target.TargetRepository
 import gamescreen.menu.item.skill.repository.useid.UseSkillIdRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
-import menu.skill.repository.target.TargetRepository
 
 class UseSkillUseCaseImpl(
     private val targetRepository: TargetRepository,

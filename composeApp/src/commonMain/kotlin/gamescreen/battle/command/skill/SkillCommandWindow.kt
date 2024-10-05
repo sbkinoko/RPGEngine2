@@ -1,4 +1,4 @@
-package battle.command.skill
+package gamescreen.battle.command.skill
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row

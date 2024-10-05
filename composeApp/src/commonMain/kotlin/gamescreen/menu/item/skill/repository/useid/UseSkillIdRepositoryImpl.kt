@@ -1,6 +1,4 @@
-package menu.skill.repository.useid
-
-import gamescreen.menu.item.skill.repository.useid.UseSkillIdRepository
+package gamescreen.menu.item.skill.repository.useid
 
 class UseSkillIdRepositoryImpl : UseSkillIdRepository {
     override var skillId: Int = 0

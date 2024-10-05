@@ -1,4 +1,4 @@
-package battle.status
+package gamescreen.battle.status
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight

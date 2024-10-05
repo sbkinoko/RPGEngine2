@@ -1,11 +1,8 @@
-package battle
+package gamescreen.battle
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
-import battle.domain.BattleCommandType
-import battle.repository.commandstate.CommandStateRepository
-import battle.usecase.convertscreentypetocontroller.GetControllerByCommandTypeUseCase
 import common.values.playerNum
 import controller.domain.ControllerCallback
 import controller.domain.Stick
@@ -14,6 +11,9 @@ import core.domain.status.PlayerStatus
 import core.repository.battlemonster.BattleMonsterRepository
 import core.repository.player.PlayerRepository
 import core.usecase.changetomap.ChangeToMapUseCase
+import gamescreen.battle.domain.BattleCommandType
+import gamescreen.battle.repository.commandstate.CommandStateRepository
+import gamescreen.battle.usecase.convertscreentypetocontroller.GetControllerByCommandTypeUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO

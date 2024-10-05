@@ -1,6 +1,7 @@
 package map.domain
 
-import map.domain.collision.Square
+import gamescreen.map.domain.Point
+import gamescreen.map.domain.collision.Square
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse

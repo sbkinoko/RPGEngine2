@@ -1,7 +1,7 @@
-package map.layout
+package gamescreen.map.layout
 
-import map.domain.ConnectType
-import map.usecase.decideconnectcype.DecideConnectTypeUseCase
+import gamescreen.map.domain.ConnectType
+import gamescreen.map.usecase.decideconnectcype.DecideConnectTypeUseCase
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.koin.core.component.KoinComponent

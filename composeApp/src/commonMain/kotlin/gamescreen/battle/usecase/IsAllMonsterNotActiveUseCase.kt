@@ -1,4 +1,4 @@
-package battle.usecase
+package gamescreen.battle.usecase
 
 import core.repository.battlemonster.BattleMonsterRepository
 import org.koin.core.component.KoinComponent

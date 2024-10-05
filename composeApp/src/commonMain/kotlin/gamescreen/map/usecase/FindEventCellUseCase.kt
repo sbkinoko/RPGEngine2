@@ -1,9 +1,9 @@
-package map.usecase
+package gamescreen.map.usecase
 
-import map.domain.BackgroundCell
-import map.repository.backgroundcell.BackgroundRepository
-import map.repository.player.PlayerRepository
-import map.repository.playercell.PlayerCellRepository
+import gamescreen.map.domain.BackgroundCell
+import gamescreen.map.repository.backgroundcell.BackgroundRepository
+import gamescreen.map.repository.player.PlayerRepository
+import gamescreen.map.repository.playercell.PlayerCellRepository
 
 /**
  * プレイヤーが入っているセルを更新

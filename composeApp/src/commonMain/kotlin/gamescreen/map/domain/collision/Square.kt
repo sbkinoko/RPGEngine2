@@ -1,7 +1,7 @@
-package map.domain.collision
+package gamescreen.map.domain.collision
 
 import androidx.compose.ui.graphics.Path
-import map.domain.Point
+import gamescreen.map.domain.Point
 
 open class Square(
     val displayPoint: Point = Point(),

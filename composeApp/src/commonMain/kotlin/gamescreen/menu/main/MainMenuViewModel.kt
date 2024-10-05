@@ -1,14 +1,14 @@
-package menu.main
+package gamescreen.menu.main
 
 import common.Timer
 import core.menu.PairedList
+import gamescreen.menu.MenuChildViewModel
+import gamescreen.menu.domain.MenuType
+import gamescreen.menu.domain.SelectManager
+import gamescreen.menu.domain.toMenuType
+import gamescreen.menu.repository.menustate.MenuStateRepository
+import gamescreen.menu.usecase.backfield.CloseMenuUseCase
 import kotlinx.coroutines.flow.SharedFlow
-import menu.MenuChildViewModel
-import menu.domain.MenuType
-import menu.domain.SelectManager
-import menu.domain.toMenuType
-import menu.repository.menustate.MenuStateRepository
-import menu.usecase.backfield.CloseMenuUseCase
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 

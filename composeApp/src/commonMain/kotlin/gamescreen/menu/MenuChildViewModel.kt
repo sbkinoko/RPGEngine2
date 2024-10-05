@@ -1,9 +1,9 @@
-package menu
+package gamescreen.menu
 
 import core.menu.SelectableChildViewModel
-import menu.domain.MenuType
-import menu.repository.menustate.MenuStateRepository
-import menu.usecase.backfield.CloseMenuUseCase
+import gamescreen.menu.domain.MenuType
+import gamescreen.menu.repository.menustate.MenuStateRepository
+import gamescreen.menu.usecase.backfield.CloseMenuUseCase
 import org.koin.core.component.inject
 
 abstract class MenuChildViewModel : SelectableChildViewModel<MenuType>() {

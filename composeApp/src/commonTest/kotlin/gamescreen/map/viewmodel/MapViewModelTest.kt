@@ -1,10 +1,11 @@
 package map.viewmodel
 
+import gamescreen.map.MapModule
+import gamescreen.map.domain.Velocity
+import gamescreen.map.viewmodel.MapViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import map.MapModule
-import map.domain.Velocity
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import kotlin.test.AfterTest

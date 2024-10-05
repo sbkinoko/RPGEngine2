@@ -1,4 +1,4 @@
-package battle.usecase.findactivetarget
+package gamescreen.battle.usecase.findactivetarget
 
 import core.domain.status.Status
 

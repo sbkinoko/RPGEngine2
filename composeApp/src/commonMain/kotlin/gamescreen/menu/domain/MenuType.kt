@@ -1,4 +1,4 @@
-package menu.domain
+package gamescreen.menu.domain
 
 enum class MenuType(
     val title: String = "",

@@ -2,11 +2,11 @@ package main
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import battle.BattleScreen
 import core.domain.ScreenType
-import map.layout.MapScreen
-import map.viewmodel.MapViewModel
-import menu.MenuScreen
+import gamescreen.battle.BattleScreen
+import gamescreen.map.layout.MapScreen
+import gamescreen.map.viewmodel.MapViewModel
+import gamescreen.menu.MenuScreen
 
 @Composable
 fun PlayArea(

@@ -1,7 +1,7 @@
-package map.repository.player
+package gamescreen.map.repository.player
 
+import gamescreen.map.domain.collision.Square
 import kotlinx.coroutines.flow.MutableSharedFlow
-import map.domain.collision.Square
 
 interface PlayerRepository {
     val playerPositionFLow: MutableSharedFlow<Square>

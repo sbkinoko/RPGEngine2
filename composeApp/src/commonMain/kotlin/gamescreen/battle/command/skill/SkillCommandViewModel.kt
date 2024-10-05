@@ -1,12 +1,5 @@
-package battle.command.skill
+package gamescreen.battle.command.skill
 
-import battle.BattleChildViewModel
-import battle.domain.ActionType
-import battle.domain.BattleCommandType
-import battle.domain.SelectAllyCommand
-import battle.domain.SelectEnemyCommand
-import battle.domain.SkillCommand
-import battle.repository.action.ActionRepository
 import core.domain.AbleType
 import core.domain.Const
 import core.domain.Place
@@ -15,7 +8,14 @@ import core.domain.item.skill.HealSkill
 import core.repository.player.PlayerRepository
 import core.repository.skill.SkillRepository
 import core.usecase.checkcanuseskill.CheckCanUseSkillUseCase
-import menu.domain.SelectManager
+import gamescreen.battle.BattleChildViewModel
+import gamescreen.battle.domain.ActionType
+import gamescreen.battle.domain.BattleCommandType
+import gamescreen.battle.domain.SelectAllyCommand
+import gamescreen.battle.domain.SelectEnemyCommand
+import gamescreen.battle.domain.SkillCommand
+import gamescreen.battle.repository.action.ActionRepository
+import gamescreen.menu.domain.SelectManager
 import org.koin.core.component.inject
 import kotlin.math.max
 

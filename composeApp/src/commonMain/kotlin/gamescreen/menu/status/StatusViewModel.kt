@@ -1,12 +1,12 @@
-package menu.status
+package gamescreen.menu.status
 
 import common.Timer
 import common.values.playerNum
 import core.domain.status.Status
 import core.menu.SelectableWindowViewModel
 import core.repository.player.PlayerRepository
-import menu.domain.SelectManager
-import menu.repository.menustate.MenuStateRepository
+import gamescreen.menu.domain.SelectManager
+import gamescreen.menu.repository.menustate.MenuStateRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 

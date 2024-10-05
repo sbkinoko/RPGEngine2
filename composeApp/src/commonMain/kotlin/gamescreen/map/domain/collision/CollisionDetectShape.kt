@@ -1,4 +1,4 @@
-package map.domain.collision
+package gamescreen.map.domain.collision
 
 import androidx.compose.ui.graphics.Path
 

@@ -1,4 +1,4 @@
-package battle.monster
+package gamescreen.battle.monster
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -18,8 +18,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import battle.command.selectenemy.SelectEnemyViewModel
 import core.domain.status.MonsterStatus
+import gamescreen.battle.command.selectenemy.SelectEnemyViewModel
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject

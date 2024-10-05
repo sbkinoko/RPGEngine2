@@ -1,4 +1,4 @@
-package menu.skill.list
+package gamescreen.menu.item.skill.list
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -16,10 +16,9 @@ import androidx.compose.ui.unit.dp
 import common.extension.equalAllocationModifier
 import common.values.Colors
 import core.WithConfirmAndTextWindow
+import gamescreen.menu.component.StatusComponent
 import gamescreen.menu.item.skill.SkillList
-import gamescreen.menu.item.skill.list.SkillListViewModel
 import gamescreen.menu.item.skill.user.SkillUserViewModel
-import menu.component.StatusComponent
 import org.koin.compose.koinInject
 
 @Composable

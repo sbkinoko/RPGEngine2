@@ -1,11 +1,11 @@
-package battle.command.selectally
+package gamescreen.battle.command.selectally
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import battle.command.selectenemy.SelectEnemyViewModel
 import common.layout.CenterText
 import core.domain.status.PlayerStatus
+import gamescreen.battle.command.selectenemy.SelectEnemyViewModel
 import org.koin.compose.koinInject
 
 @Composable

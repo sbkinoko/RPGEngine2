@@ -1,11 +1,11 @@
-package menu
+package gamescreen.menu
 
 import controller.domain.ControllerCallback
 import controller.domain.Stick
+import gamescreen.menu.domain.MenuType
+import gamescreen.menu.repository.menustate.MenuStateRepository
+import gamescreen.menu.usecase.getviewmodelbycommandtype.GetControllerByCommandTypeUseCase
 import kotlinx.coroutines.flow.SharedFlow
-import menu.domain.MenuType
-import menu.repository.menustate.MenuStateRepository
-import menu.usecase.getviewmodelbycommandtype.GetControllerByCommandTypeUseCase
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 

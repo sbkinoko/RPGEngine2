@@ -1,4 +1,4 @@
-package battle.usecase.attack
+package gamescreen.battle.usecase.attack
 
 interface AttackUseCase {
     suspend operator fun invoke(

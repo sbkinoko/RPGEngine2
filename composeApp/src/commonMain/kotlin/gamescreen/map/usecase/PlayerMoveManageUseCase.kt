@@ -1,8 +1,8 @@
-package map.usecase
+package gamescreen.map.usecase
 
-import map.domain.Velocity
-import map.domain.collision.Square
-import map.repository.player.PlayerRepository
+import gamescreen.map.domain.Velocity
+import gamescreen.map.domain.collision.Square
+import gamescreen.map.repository.player.PlayerRepository
 import kotlin.math.abs
 
 class PlayerMoveManageUseCase(

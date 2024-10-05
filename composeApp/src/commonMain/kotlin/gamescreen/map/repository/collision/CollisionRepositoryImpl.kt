@@ -1,7 +1,7 @@
-package map.repository.collision
+package gamescreen.map.repository.collision
 
-import map.domain.collision.CollisionDetectShape
-import map.domain.collision.Square
+import gamescreen.map.domain.collision.CollisionDetectShape
+import gamescreen.map.domain.collision.Square
 
 class CollisionRepositoryImpl : CollisionRepository {
 

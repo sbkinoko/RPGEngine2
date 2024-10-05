@@ -1,6 +1,6 @@
-package map.layout
+package gamescreen.map.layout
 
-import map.domain.collision.Square
+import gamescreen.map.domain.collision.Square
 
 class PlayerMoveSquare(
     screenSize: Int,

@@ -1,21 +1,21 @@
-package battle.command.selectally
+package gamescreen.battle.command.selectally
 
-import battle.BattleChildViewModel
-import battle.domain.BattleCommandType
-import battle.domain.SelectAllyCommand
-import battle.repository.action.ActionRepository
-import battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUseCase
 import common.values.playerNum
 import core.domain.item.TargetType
 import core.domain.item.skill.HealSkill
 import core.repository.player.PlayerRepository
 import core.repository.skill.SkillRepository
+import gamescreen.battle.BattleChildViewModel
+import gamescreen.battle.domain.BattleCommandType
+import gamescreen.battle.domain.SelectAllyCommand
+import gamescreen.battle.repository.action.ActionRepository
+import gamescreen.battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUseCase
+import gamescreen.menu.domain.SelectManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import menu.domain.SelectManager
 import org.koin.core.component.inject
 
 class SelectAllyViewModel : BattleChildViewModel() {

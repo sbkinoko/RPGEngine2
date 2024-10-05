@@ -1,7 +1,9 @@
 package battle.repository.commandstate
 
-import battle.domain.MainCommand
-import battle.domain.PlayerActionCommand
+import gamescreen.battle.domain.MainCommand
+import gamescreen.battle.domain.PlayerActionCommand
+import gamescreen.battle.repository.commandstate.CommandStateRepository
+import gamescreen.battle.repository.commandstate.CommandStateRepositoryImpl
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking

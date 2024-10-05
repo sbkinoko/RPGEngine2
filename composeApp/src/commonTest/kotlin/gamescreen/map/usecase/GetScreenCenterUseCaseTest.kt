@@ -1,10 +1,12 @@
 package map.usecase
 
-import map.MapModule
+import gamescreen.map.MapModule
+import gamescreen.map.repository.backgroundcell.BackgroundRepository
+import gamescreen.map.usecase.GetScreenCenterUseCase
+import gamescreen.map.usecase.ResetBackgroundPositionUseCase
 import map.data.LoopTestMap
 import map.manager.CELL_NUM
 import map.manager.SIDE_LENGTH
-import map.repository.backgroundcell.BackgroundRepository
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest

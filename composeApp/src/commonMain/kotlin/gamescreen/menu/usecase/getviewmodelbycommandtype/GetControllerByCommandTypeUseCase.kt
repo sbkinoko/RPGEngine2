@@ -1,4 +1,4 @@
-package menu.usecase.getviewmodelbycommandtype
+package gamescreen.menu.usecase.getviewmodelbycommandtype
 
 import controller.domain.ControllerCallback
 

@@ -1,7 +1,8 @@
 package map.repository.playercell
 
-import map.MapModule
-import map.domain.BackgroundCell
+import gamescreen.map.MapModule
+import gamescreen.map.domain.BackgroundCell
+import gamescreen.map.repository.playercell.PlayerCellRepository
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest

@@ -1,7 +1,7 @@
-package battle.repository.action
+package gamescreen.battle.repository.action
 
-import battle.domain.ActionData
-import battle.domain.ActionType
+import gamescreen.battle.domain.ActionData
+import gamescreen.battle.domain.ActionType
 
 class ActionRepositoryImpl : ActionRepository {
     private val actionMap: MutableMap<Int, ActionData> = mutableMapOf()

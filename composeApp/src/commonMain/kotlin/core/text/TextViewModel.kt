@@ -5,7 +5,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import core.menu.SelectableChildViewModel
 import core.text.repository.TextRepository
-import menu.domain.SelectManager
+import gamescreen.menu.domain.SelectManager
 import org.koin.core.component.inject
 
 class TextViewModel : SelectableChildViewModel<Boolean>() {

@@ -1,7 +1,7 @@
-package map.usecase
+package gamescreen.map.usecase
 
-import map.domain.Point
-import map.repository.backgroundcell.BackgroundRepository
+import gamescreen.map.domain.Point
+import gamescreen.map.repository.backgroundcell.BackgroundRepository
 
 class GetScreenCenterUseCase(
     private val backgroundRepository: BackgroundRepository,

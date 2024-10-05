@@ -1,8 +1,8 @@
-package battle.usecase.attack
+package gamescreen.battle.usecase.attack
 
-import battle.service.FindTargetService
 import core.repository.battlemonster.BattleMonsterRepository
 import core.usecase.updateparameter.UpdateMonsterStatusUseCase
+import gamescreen.battle.service.FindTargetService
 
 class AttackFromPlayerUseCaseImpl(
     private val battleMonsterRepository: BattleMonsterRepository,
