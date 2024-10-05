@@ -1,4 +1,4 @@
-package battle.usecase.gettargetnum
+package gamescreen.battle.usecase.gettargetnum
 
 import battle.domain.ActionType
 import battle.repository.action.ActionRepository

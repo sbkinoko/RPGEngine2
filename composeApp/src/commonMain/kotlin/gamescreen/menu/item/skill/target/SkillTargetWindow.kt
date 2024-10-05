@@ -1,4 +1,4 @@
-package menu.skill.target
+package gamescreen.menu.item.skill.target
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
@@ -15,7 +15,7 @@ import common.layout.DisableBox
 import common.values.Colors
 import common.values.playerNum
 import core.WithConfirmAndTextWindow
-import menu.component.StatusComponent
+import gamescreen.menu.component.StatusComponent
 import org.koin.compose.koinInject
 
 @Composable

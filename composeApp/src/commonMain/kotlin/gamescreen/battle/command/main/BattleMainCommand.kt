@@ -1,4 +1,4 @@
-package battle.command.main
+package gamescreen.battle.command.main
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column

@@ -1,4 +1,4 @@
-package map.domain
+package gamescreen.map.domain
 
 class Player(
     val size: Float,

@@ -1,4 +1,4 @@
-package battle.command.escape
+package gamescreen.battle.command.escape
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column

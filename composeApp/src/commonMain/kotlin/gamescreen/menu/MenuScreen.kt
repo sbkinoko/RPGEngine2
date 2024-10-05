@@ -1,4 +1,4 @@
-package menu
+package gamescreen.menu
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -8,12 +8,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import common.values.Colors
-import menu.domain.MenuType
-import menu.main.MainMenu
-import menu.skill.list.SkillListWindow
-import menu.skill.target.SkillTargetWindow
-import menu.skill.user.SkillUserWindow
-import menu.status.StatusMenu
+import gamescreen.menu.domain.MenuType
+import gamescreen.menu.item.skill.list.SkillListWindow
+import gamescreen.menu.item.skill.target.SkillTargetWindow
+import gamescreen.menu.item.skill.user.SkillUserWindow
+import gamescreen.menu.main.MainMenu
+import gamescreen.menu.status.StatusMenu
 import org.koin.compose.koinInject
 
 @Composable

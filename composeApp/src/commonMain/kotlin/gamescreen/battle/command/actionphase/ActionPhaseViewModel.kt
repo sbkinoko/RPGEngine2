@@ -1,17 +1,5 @@
-package battle.command.actionphase
+package gamescreen.battle.command.actionphase
 
-import battle.BattleChildViewModel
-import battle.QualifierAttackFromEnemy
-import battle.QualifierAttackFromPlayer
-import battle.domain.ActionData
-import battle.domain.ActionType
-import battle.domain.AttackPhaseCommand
-import battle.domain.BattleCommandType
-import battle.domain.FinishCommand
-import battle.repository.action.ActionRepository
-import battle.usecase.IsAllMonsterNotActiveUseCase
-import battle.usecase.attack.AttackUseCase
-import battle.usecase.findactivetarget.FindActiveTargetUseCase
 import common.values.playerNum
 import core.domain.item.skill.AttackSkill
 import core.domain.item.skill.HealSkill
@@ -23,6 +11,19 @@ import core.repository.player.PlayerRepository
 import core.usecase.updateparameter.UpdateMonsterStatusUseCase
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
 import core.usecase.updateparameter.UpdateStatusService
+import gamescreen.battle.BattleChildViewModel
+import gamescreen.battle.QualifierAttackFromEnemy
+import gamescreen.battle.QualifierAttackFromPlayer
+import gamescreen.battle.domain.ActionData
+import gamescreen.battle.domain.ActionType
+import gamescreen.battle.domain.AttackPhaseCommand
+import gamescreen.battle.domain.BattleCommandType
+import gamescreen.battle.domain.FinishCommand
+import gamescreen.battle.repository.action.ActionRepository
+import gamescreen.battle.usecase.IsAllMonsterNotActiveUseCase
+import gamescreen.battle.usecase.attack.AttackUseCase
+import gamescreen.battle.usecase.findactivetarget.FindActiveTargetUseCase
+import gamescreen.menu.domain.SelectManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -31,7 +32,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import menu.domain.SelectManager
 import org.koin.core.component.inject
 import org.koin.core.qualifier.named
 

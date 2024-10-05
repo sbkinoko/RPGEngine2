@@ -1,11 +1,11 @@
-package map.usecase
+package gamescreen.map.usecase
 
+import gamescreen.map.MapModule
+import gamescreen.map.domain.Velocity
+import gamescreen.map.layout.PlayerMoveSquare
+import gamescreen.map.viewmodel.MapViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
-import map.MapModule
-import map.domain.Velocity
-import map.layout.PlayerMoveSquare
-import map.viewmodel.MapViewModel
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest

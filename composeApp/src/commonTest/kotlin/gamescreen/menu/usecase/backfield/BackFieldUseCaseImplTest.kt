@@ -1,10 +1,10 @@
-package menu.usecase.backfield
+package gamescreen.menu.usecase.backfield
 
 import core.usecase.changetomap.ChangeToMapUseCase
+import gamescreen.menu.domain.MenuType
+import gamescreen.menu.repository.menustate.MenuStateRepository
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.runBlocking
-import menu.domain.MenuType
-import menu.repository.menustate.MenuStateRepository
 import org.koin.test.KoinTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -24,7 +24,7 @@ class BackFieldUseCaseImplTest : KoinTest {
                     get() = throw NotImplementedError()
                 override var nowCommandType: MenuType
                     get() = throw NotImplementedError()
-                    set(value) {
+                    set(@Suppress("UNUSED_PARAMETER") value) {
                         throw NotImplementedError()
                     }
 

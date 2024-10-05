@@ -1,4 +1,4 @@
-package battle.usecase.gettargetnum
+package gamescreen.battle.usecase.gettargetnum
 
 interface GetTargetNumUseCase {
 

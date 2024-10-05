@@ -1,4 +1,4 @@
-package menu.skill
+package gamescreen.menu.item.skill
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -7,8 +7,8 @@ import androidx.compose.ui.Modifier
 import common.extension.menuItem
 import common.extension.selectable
 import common.layout.CenterText
-import menu.skill.list.SkillListViewModel
-import menu.skill.user.SkillUserViewModel
+import gamescreen.menu.item.skill.list.SkillListViewModel
+import gamescreen.menu.item.skill.user.SkillUserViewModel
 import org.koin.compose.koinInject
 
 @Composable

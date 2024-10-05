@@ -1,4 +1,4 @@
-package map.domain
+package gamescreen.map.domain
 
 import kotlin.test.Test
 import kotlin.test.assertEquals

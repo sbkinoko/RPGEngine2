@@ -1,4 +1,4 @@
-package map.layout
+package gamescreen.map.layout
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
@@ -15,8 +15,8 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import common.extension.pxToDp
 import common.values.Colors
-import map.domain.BackgroundCell
-import map.viewmodel.MapViewModel
+import gamescreen.map.domain.BackgroundCell
+import gamescreen.map.viewmodel.MapViewModel
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 

@@ -2,7 +2,7 @@ package controller.domain
 
 import androidx.compose.ui.geometry.Offset
 import common.Normalizer
-import map.domain.Point
+import gamescreen.map.domain.Point
 
 data class Stick(
     val areaRadius: Int,

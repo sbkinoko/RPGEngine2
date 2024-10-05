@@ -1,4 +1,4 @@
-package menu.skill.usecase.useskill
+package gamescreen.menu.item.skill.usecase.useskill
 
 interface UseSkillUseCase {
     operator fun invoke()

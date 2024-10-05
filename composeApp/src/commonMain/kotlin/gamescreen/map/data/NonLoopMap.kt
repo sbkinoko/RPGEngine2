@@ -1,6 +1,6 @@
-package map.data
+package gamescreen.map.data
 
-import map.domain.MapData
+import gamescreen.map.domain.MapData
 
 class NonLoopMap : MapData() {
     override val isLoop = false

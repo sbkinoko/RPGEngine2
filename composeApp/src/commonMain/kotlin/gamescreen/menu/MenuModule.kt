@@ -1,24 +1,24 @@
-package menu
+package gamescreen.menu
 
-import menu.main.MainMenuViewModel
-import menu.repository.menustate.MenuStateRepository
-import menu.repository.menustate.MenuStateRepositoryImpl
-import menu.skill.list.SkillListViewModel
-import menu.skill.repository.skilluser.SkillUserRepository
-import menu.skill.repository.skilluser.SkillUserRepositoryImpl
-import menu.skill.repository.target.TargetRepository
-import menu.skill.repository.target.TargetRepositoryImpl
-import menu.skill.repository.useid.UseSkillIdRepository
-import menu.skill.repository.useid.UseSkillIdRepositoryImpl
-import menu.skill.target.SkillTargetViewModel
-import menu.skill.usecase.useskill.UseSkillUseCase
-import menu.skill.usecase.useskill.UseSkillUseCaseImpl
-import menu.skill.user.SkillUserViewModel
-import menu.status.StatusViewModel
-import menu.usecase.backfield.CloseMenuUseCase
-import menu.usecase.backfield.CloseMenuUseCaseImpl
-import menu.usecase.getviewmodelbycommandtype.GetControllerByCommandTypeUseCase
-import menu.usecase.getviewmodelbycommandtype.GetControllerByCommandTypeUseCaseImpl
+import gamescreen.menu.item.skill.list.SkillListViewModel
+import gamescreen.menu.item.skill.repository.skilluser.SkillUserRepository
+import gamescreen.menu.item.skill.repository.skilluser.SkillUserRepositoryImpl
+import gamescreen.menu.item.skill.repository.target.TargetRepository
+import gamescreen.menu.item.skill.repository.target.TargetRepositoryImpl
+import gamescreen.menu.item.skill.repository.useid.UseSkillIdRepository
+import gamescreen.menu.item.skill.repository.useid.UseSkillIdRepositoryImpl
+import gamescreen.menu.item.skill.target.SkillTargetViewModel
+import gamescreen.menu.item.skill.usecase.useskill.UseSkillUseCase
+import gamescreen.menu.item.skill.usecase.useskill.UseSkillUseCaseImpl
+import gamescreen.menu.item.skill.user.SkillUserViewModel
+import gamescreen.menu.main.MainMenuViewModel
+import gamescreen.menu.repository.menustate.MenuStateRepository
+import gamescreen.menu.repository.menustate.MenuStateRepositoryImpl
+import gamescreen.menu.status.StatusViewModel
+import gamescreen.menu.usecase.backfield.CloseMenuUseCase
+import gamescreen.menu.usecase.backfield.CloseMenuUseCaseImpl
+import gamescreen.menu.usecase.getviewmodelbycommandtype.GetControllerByCommandTypeUseCase
+import gamescreen.menu.usecase.getviewmodelbycommandtype.GetControllerByCommandTypeUseCaseImpl
 import org.koin.dsl.module
 
 val MenuModule = module {

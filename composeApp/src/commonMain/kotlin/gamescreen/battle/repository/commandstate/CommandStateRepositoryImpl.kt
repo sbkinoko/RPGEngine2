@@ -1,7 +1,7 @@
-package battle.repository.commandstate
+package gamescreen.battle.repository.commandstate
 
-import battle.domain.BattleCommandType
-import battle.domain.MainCommand
+import gamescreen.battle.domain.BattleCommandType
+import gamescreen.battle.domain.MainCommand
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow

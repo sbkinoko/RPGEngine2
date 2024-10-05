@@ -1,10 +1,10 @@
-package menu
+package gamescreen.menu
 
+import gamescreen.menu.domain.MenuType
+import gamescreen.menu.repository.menustate.MenuStateRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import menu.domain.MenuType
-import menu.repository.menustate.MenuStateRepository
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest

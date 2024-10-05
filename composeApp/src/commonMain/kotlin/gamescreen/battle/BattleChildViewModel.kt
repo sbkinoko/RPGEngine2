@@ -1,8 +1,8 @@
-package battle
+package gamescreen.battle
 
-import battle.domain.BattleCommandType
-import battle.repository.commandstate.CommandStateRepository
 import core.menu.SelectableChildViewModel
+import gamescreen.battle.domain.BattleCommandType
+import gamescreen.battle.repository.commandstate.CommandStateRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 

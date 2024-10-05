@@ -1,4 +1,4 @@
-package battle.usecase
+package gamescreen.battle.usecase
 
 
 class AttackUseCaseTest {

@@ -1,7 +1,7 @@
 package common.menu
 
 import core.menu.PairedList
-import menu.main.MainMenuItem
+import gamescreen.menu.main.MainMenuItem
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

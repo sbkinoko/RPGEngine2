@@ -1,17 +1,17 @@
-package menu.usecase.getviewmodelbycommandtype
+package gamescreen.menu.usecase.getviewmodelbycommandtype
 
 import controller.domain.ControllerCallback
 import core.confim.ConfirmViewModel
 import core.confim.repository.ConfirmRepository
 import core.text.TextViewModel
 import core.text.repository.TextRepository
-import menu.domain.MenuType
-import menu.main.MainMenuViewModel
-import menu.repository.menustate.MenuStateRepository
-import menu.skill.list.SkillListViewModel
-import menu.skill.target.SkillTargetViewModel
-import menu.skill.user.SkillUserViewModel
-import menu.status.StatusViewModel
+import gamescreen.menu.domain.MenuType
+import gamescreen.menu.item.skill.list.SkillListViewModel
+import gamescreen.menu.item.skill.target.SkillTargetViewModel
+import gamescreen.menu.item.skill.user.SkillUserViewModel
+import gamescreen.menu.main.MainMenuViewModel
+import gamescreen.menu.repository.menustate.MenuStateRepository
+import gamescreen.menu.status.StatusViewModel
 
 class GetControllerByCommandTypeUseCaseImpl(
     private val confirmRepository: ConfirmRepository,

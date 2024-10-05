@@ -1,10 +1,10 @@
-package map.repository.backgroundcell
+package gamescreen.map.repository.backgroundcell
 
+import gamescreen.map.data.LoopMap
+import gamescreen.map.domain.BackgroundCell
+import gamescreen.map.domain.MapData
+import gamescreen.map.viewmodel.MapViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
-import map.data.LoopMap
-import map.domain.BackgroundCell
-import map.domain.MapData
-import map.viewmodel.MapViewModel
 
 class BackgroundRepositoryImpl : BackgroundRepository {
     override val backgroundFlow: MutableSharedFlow<List<List<BackgroundCell>>> =

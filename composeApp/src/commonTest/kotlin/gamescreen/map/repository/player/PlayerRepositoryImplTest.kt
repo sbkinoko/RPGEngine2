@@ -1,5 +1,8 @@
-package map.repository.player
+package gamescreen.map.repository.player
 
+import gamescreen.map.MapModule
+import gamescreen.map.domain.Point
+import gamescreen.map.domain.collision.Square
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
@@ -10,9 +13,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import map.MapModule
-import map.domain.Point
-import map.domain.collision.Square
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest

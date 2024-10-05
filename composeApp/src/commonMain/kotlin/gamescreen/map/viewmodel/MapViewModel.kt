@@ -1,35 +1,35 @@
-package map.viewmodel
+package gamescreen.map.viewmodel
 
 import controller.domain.ControllerCallback
 import controller.domain.Stick
 import core.domain.ScreenType
 import core.repository.screentype.ScreenTypeRepository
+import gamescreen.map.data.LoopMap
+import gamescreen.map.data.NonLoopMap
+import gamescreen.map.domain.BackgroundCell
+import gamescreen.map.domain.MapData
+import gamescreen.map.domain.Player
+import gamescreen.map.domain.Point
+import gamescreen.map.domain.Velocity
+import gamescreen.map.domain.collision.Square
+import gamescreen.map.layout.PlayerMoveSquare
+import gamescreen.map.repository.backgroundcell.BackgroundRepository
+import gamescreen.map.repository.player.PlayerRepository
+import gamescreen.map.repository.playercell.PlayerCellRepository
+import gamescreen.map.usecase.FindEventCellUseCase
+import gamescreen.map.usecase.GetScreenCenterUseCase
+import gamescreen.map.usecase.IsCollidedUseCase
+import gamescreen.map.usecase.MoveBackgroundUseCase
+import gamescreen.map.usecase.PlayerMoveManageUseCase
+import gamescreen.map.usecase.PlayerMoveToUseCase
+import gamescreen.map.usecase.PlayerMoveUseCase
+import gamescreen.map.usecase.ResetBackgroundPositionUseCase
+import gamescreen.map.usecase.VelocityManageUseCase
+import gamescreen.map.usecase.startbattle.StartBattleUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
-import map.data.LoopMap
-import map.data.NonLoopMap
-import map.domain.BackgroundCell
-import map.domain.MapData
-import map.domain.Player
-import map.domain.Point
-import map.domain.Velocity
-import map.domain.collision.Square
-import map.layout.PlayerMoveSquare
-import map.repository.backgroundcell.BackgroundRepository
-import map.repository.player.PlayerRepository
-import map.repository.playercell.PlayerCellRepository
-import map.usecase.FindEventCellUseCase
-import map.usecase.GetScreenCenterUseCase
-import map.usecase.IsCollidedUseCase
-import map.usecase.MoveBackgroundUseCase
-import map.usecase.PlayerMoveManageUseCase
-import map.usecase.PlayerMoveToUseCase
-import map.usecase.PlayerMoveUseCase
-import map.usecase.ResetBackgroundPositionUseCase
-import map.usecase.VelocityManageUseCase
-import map.usecase.startbattle.StartBattleUseCase
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -58,7 +58,10 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
     private var tapPoint: Point? = null
 
-    private var playerMoveArea: Square
+    private var playerMoveArea: Square = PlayerMoveSquare(
+        screenSize = VIRTUAL_SCREEN_SIZE,
+        borderRate = MOVE_BORDER,
+    )
 
     private var backGroundVelocity: Velocity = Velocity()
     private var tentativePlayerVelocity: Velocity = Velocity()
@@ -66,10 +69,6 @@ class MapViewModel : ControllerCallback, KoinComponent {
     val backgroundCells = backgroundRepository.backgroundFlow
 
     init {
-        playerMoveArea = PlayerMoveSquare(
-            screenSize = VIRTUAL_SCREEN_SIZE,
-            borderRate = MOVE_BORDER,
-        )
         backgroundRepository.cellNum = 5
         backgroundRepository.screenSize = VIRTUAL_SCREEN_SIZE
 

@@ -1,6 +1,6 @@
-package map.usecase.decideconnectcype
+package gamescreen.map.usecase.decideconnectcype
 
-import map.domain.ConnectType
+import gamescreen.map.domain.ConnectType
 
 interface DecideConnectTypeUseCase {
 

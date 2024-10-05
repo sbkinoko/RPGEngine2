@@ -1,11 +1,11 @@
-package battle.command.escape
+package gamescreen.battle.command.escape
 
-import battle.BattleChildViewModel
-import battle.domain.BattleCommandType
-import battle.domain.EscapeCommand
 import core.domain.ScreenType
 import core.repository.screentype.ScreenTypeRepository
-import menu.domain.SelectManager
+import gamescreen.battle.BattleChildViewModel
+import gamescreen.battle.domain.BattleCommandType
+import gamescreen.battle.domain.EscapeCommand
+import gamescreen.menu.domain.SelectManager
 import org.koin.core.component.inject
 
 class EscapeViewModel : BattleChildViewModel() {

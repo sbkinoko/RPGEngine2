@@ -1,4 +1,4 @@
-package menu.skill.user
+package gamescreen.menu.item.skill.user
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -14,7 +14,7 @@ import common.extension.menuItem
 import common.layout.CenterText
 import common.values.Colors
 import common.values.playerNum
-import menu.skill.SkillList
+import gamescreen.menu.item.skill.SkillList
 import org.koin.compose.koinInject
 
 @Composable

@@ -1,6 +1,6 @@
-package map.domain
+package gamescreen.map.domain
 
-import map.data.LoopTestMap
+import gamescreen.map.data.LoopTestMap
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

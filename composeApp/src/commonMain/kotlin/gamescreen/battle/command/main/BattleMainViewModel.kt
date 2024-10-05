@@ -1,11 +1,11 @@
-package battle.command.main
+package gamescreen.battle.command.main
 
-import battle.BattleChildViewModel
-import battle.domain.BattleCommandType
-import battle.domain.EscapeCommand
-import battle.domain.MainCommand
-import battle.domain.PlayerActionCommand
-import menu.domain.SelectManager
+import gamescreen.battle.BattleChildViewModel
+import gamescreen.battle.domain.BattleCommandType
+import gamescreen.battle.domain.EscapeCommand
+import gamescreen.battle.domain.MainCommand
+import gamescreen.battle.domain.PlayerActionCommand
+import gamescreen.menu.domain.SelectManager
 
 class BattleMainViewModel : BattleChildViewModel() {
     override val canBack: Boolean

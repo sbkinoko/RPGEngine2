@@ -1,4 +1,4 @@
-package battle.command.playeraction
+package gamescreen.battle.command.playeraction
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row

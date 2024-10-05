@@ -1,10 +1,5 @@
-package battle.command.selectally
+package gamescreen.battle.command.selectally
 
-import battle.BattleChildViewModel
-import battle.domain.BattleCommandType
-import battle.domain.SelectAllyCommand
-import battle.repository.action.ActionRepository
-import battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUseCase
 import common.values.playerNum
 import core.domain.item.TargetType
 import core.domain.item.skill.HealSkill
@@ -15,7 +10,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import menu.domain.SelectManager
 import org.koin.core.component.inject
 
 class SelectAllyViewModel : BattleChildViewModel() {

@@ -1,4 +1,4 @@
-package menu.skill.user
+package gamescreen.menu.item.skill.user
 
 import common.Timer
 import common.values.playerNum

@@ -1,10 +1,10 @@
 package core.domain
 
 import androidx.compose.runtime.Composable
-import battle.BattleViewModel
 import controller.domain.ControllerCallback
-import map.viewmodel.MapViewModel
-import menu.MenuViewModel
+import gamescreen.battle.BattleViewModel
+import gamescreen.map.viewmodel.MapViewModel
+import gamescreen.menu.MenuViewModel
 import org.koin.compose.koinInject
 
 enum class ScreenType {

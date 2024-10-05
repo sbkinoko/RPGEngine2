@@ -2,11 +2,11 @@ package org.example.project.preview.battle
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import battle.command.playeraction.PlayerAction
-import battle.command.playeraction.PlayerActionViewModel
 import core.domain.status.PlayerStatus
 import core.domain.status.param.HP
 import core.domain.status.param.MP
+import gamescreen.battle.command.playeraction.PlayerAction
+import gamescreen.battle.command.playeraction.PlayerActionViewModel
 
 @Preview
 @Composable

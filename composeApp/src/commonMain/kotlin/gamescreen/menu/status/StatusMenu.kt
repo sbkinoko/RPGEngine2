@@ -1,4 +1,4 @@
-package menu.status
+package gamescreen.menu.status
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -17,7 +17,7 @@ import common.extension.equalAllocationModifier
 import common.layout.CenterText
 import common.values.Colors
 import common.values.playerNum
-import menu.component.StatusComponent
+import gamescreen.menu.component.StatusComponent
 import org.koin.compose.koinInject
 
 @Composable

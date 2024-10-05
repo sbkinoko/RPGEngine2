@@ -1,7 +1,7 @@
-package battle.command.finish
+package gamescreen.battle.command.finish
 
 import androidx.compose.runtime.Composable
-import battle.BattleViewModel
+import gamescreen.battle.BattleViewModel
 import org.koin.compose.koinInject
 
 @Composable
