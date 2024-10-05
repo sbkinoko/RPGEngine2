@@ -1,4 +1,4 @@
-package core.repository.skill
+package core.repository.item.skill
 
 import core.domain.item.skill.Skill
 

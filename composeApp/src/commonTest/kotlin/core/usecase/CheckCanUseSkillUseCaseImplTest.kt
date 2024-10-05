@@ -7,7 +7,7 @@ import core.domain.item.skill.Skill
 import core.domain.status.PlayerStatus
 import core.domain.status.param.HP
 import core.domain.status.param.MP
-import core.repository.skill.SkillRepository
+import core.repository.item.skill.SkillRepository
 import core.usecase.checkcanuseskill.CheckCanUseSkillUseCase
 import core.usecase.checkcanuseskill.CheckCanUseSkillUseCaseImpl
 import kotlin.test.BeforeTest

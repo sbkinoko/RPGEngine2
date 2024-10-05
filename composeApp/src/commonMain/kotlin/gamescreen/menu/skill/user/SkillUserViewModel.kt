@@ -2,8 +2,8 @@ package menu.skill.user
 
 import common.Timer
 import common.values.playerNum
+import core.repository.item.skill.SkillRepository
 import core.repository.player.PlayerRepository
-import core.repository.skill.SkillRepository
 import menu.MenuChildViewModel
 import menu.domain.MenuType
 import menu.domain.SelectManager

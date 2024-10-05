@@ -7,10 +7,10 @@ import common.values.playerNum
 import core.domain.status.PlayerStatus
 import core.domain.status.param.HP
 import core.domain.status.param.MP
-import core.repository.skill.ATTACK_TO_2
-import core.repository.skill.CANT_USE
-import core.repository.skill.HEAL_SKILL
-import core.repository.skill.REVIVE_SKILL
+import core.repository.item.skill.ATTACK_TO_2
+import core.repository.item.skill.CANT_USE
+import core.repository.item.skill.HEAL_SKILL
+import core.repository.item.skill.REVIVE_SKILL
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow

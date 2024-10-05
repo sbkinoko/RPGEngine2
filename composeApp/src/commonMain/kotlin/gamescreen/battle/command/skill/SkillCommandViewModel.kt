@@ -12,8 +12,8 @@ import core.domain.Const
 import core.domain.Place
 import core.domain.item.skill.AttackSkill
 import core.domain.item.skill.HealSkill
+import core.repository.item.skill.SkillRepository
 import core.repository.player.PlayerRepository
-import core.repository.skill.SkillRepository
 import core.usecase.checkcanuseskill.CheckCanUseSkillUseCase
 import menu.domain.SelectManager
 import org.koin.core.component.inject
