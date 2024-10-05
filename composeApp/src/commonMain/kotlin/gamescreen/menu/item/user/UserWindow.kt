@@ -10,9 +10,9 @@ import common.values.Colors
 @Composable
 fun UserWindow(
     toolUserViewModel: ItemUserViewModel,
-    selectedId: Int,
     modifier: Modifier = Modifier,
 ) {
+    val selectedId = toolUserViewModel.getSelectedAsState().value
     Row(
         modifier = modifier
             .background(
