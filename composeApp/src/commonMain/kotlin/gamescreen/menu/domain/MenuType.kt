@@ -12,6 +12,9 @@ enum class MenuType(
     ),
     SKILL_LST,
     SKILL_TARGET,
+    TOOL_USER(
+        title = "道具"
+    ),
     Item3(title = "text3"),
     Item4(title = "text4"),
     Item5(title = "text5"),
@@ -23,7 +26,7 @@ enum class MenuType(
 fun Int.toMenuType() = when (this) {
     0 -> MenuType.Status
     1 -> MenuType.SKILL_USER
-    2 -> MenuType.Item3
+    2 -> MenuType.TOOL_USER
     3 -> MenuType.Item4
     4 -> MenuType.Item5
     5 -> MenuType.Item6
