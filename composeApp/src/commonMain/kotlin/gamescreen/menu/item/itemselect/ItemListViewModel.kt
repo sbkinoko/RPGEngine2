@@ -57,8 +57,8 @@ abstract class ItemListViewModel : MenuChildViewModel(),
     }
 
     fun getExplainAt(position: Int): String {
-        val skillId = playerRepository.getStatus(userId).skillList[position]
-        return itemRepository.getItem(skillId).explain
+        val itemId = itemList[position]
+        return itemRepository.getItem(itemId).explain
     }
 
     override fun pressB() {
