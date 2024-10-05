@@ -25,6 +25,9 @@ fun PlayerActionPreview() {
             ),
             skillList = listOf(
                 0,
+            ),
+            toolList = listOf(
+                0,
             )
         ),
     )
