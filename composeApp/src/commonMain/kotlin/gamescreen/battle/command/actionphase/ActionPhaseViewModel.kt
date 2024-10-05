@@ -13,8 +13,8 @@ import battle.usecase.IsAllMonsterNotActiveUseCase
 import battle.usecase.attack.AttackUseCase
 import battle.usecase.findactivetarget.FindActiveTargetUseCase
 import common.values.playerNum
-import core.domain.AttackSkill
-import core.domain.HealSkill
+import core.domain.item.skill.AttackSkill
+import core.domain.item.skill.HealSkill
 import core.domain.status.Status
 import core.repository.battlemonster.BattleMonsterRepository
 import core.repository.player.PlayerRepository

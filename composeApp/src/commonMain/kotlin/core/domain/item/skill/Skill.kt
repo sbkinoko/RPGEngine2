@@ -1,28 +1,35 @@
-package core.domain
+package core.domain.item.skill
 
-import core.domain.status.Status
+import core.domain.Place
+import core.domain.item.Item
+import core.domain.item.TargetType
 
-sealed interface Skill {
-    val name: String
+sealed interface Skill : Item {
     val needMP: Int
-    val targetNum: Int
 
     // fixme コストのタイプをする
     val canUse: (Int) -> Boolean
-    val usablePlace: Place
 }
 
 // 必要になったらattackのinterfaceを作る
 data class AttackSkill(
+    override val id: Int,
     override val name: String,
     override val needMP: Int,
     override val targetNum: Int,
     override val canUse: (Int) -> Boolean = { mp -> mp >= needMP },
     override val usablePlace: Place,
     val damageAmount: Int,
-) : Skill
+) : Skill {
+    override val explain: String
+        get() {
+            return name + "\n" +
+                    "${id}番目のスキル"
+        }
+}
 
 data class HealSkill(
+    override val id: Int,
     override val name: String,
     override val needMP: Int,
     override val targetNum: Int,
@@ -30,25 +37,10 @@ data class HealSkill(
     override val usablePlace: Place,
     val healAmount: Int,
     val targetType: TargetType,
-) : Skill
-
-enum class TargetType {
-    ACTIVE {
-        override fun canSelect(status: Status): Boolean {
-            return status.isActive
+) : Skill {
+    override val explain: String
+        get() {
+            return name + "\n" +
+                    "${id}番目のスキル"
         }
-    },
-
-    INACTIVE {
-        override fun canSelect(status: Status): Boolean {
-            return status.isActive.not()
-        }
-    }
-
-    ;
-
-    /**
-     * 対象のstatusが選択可能かどうかを返す
-     */
-    abstract fun canSelect(status: Status): Boolean
 }

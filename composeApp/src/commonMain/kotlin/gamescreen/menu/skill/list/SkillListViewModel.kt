@@ -5,6 +5,7 @@ import common.values.playerNum
 import core.domain.AbleType
 import core.domain.Place
 import core.repository.player.PlayerRepository
+import core.repository.skill.SkillRepository
 import core.text.repository.TextRepository
 import core.usecase.checkcanuseskill.CheckCanUseSkillUseCase
 import menu.MenuChildViewModel
@@ -13,7 +14,6 @@ import menu.domain.SelectManager
 import menu.repository.menustate.MenuStateRepository
 import menu.skill.repository.skilluser.SkillUserRepository
 import menu.skill.repository.useid.UseSkillIdRepository
-import menu.skill.usecase.getskillexplain.GetSkillExplainUseCase
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -23,8 +23,8 @@ class SkillListViewModel : MenuChildViewModel(),
     private val menuStateRepository: MenuStateRepository by inject()
     private val skillUserRepository: SkillUserRepository by inject()
     private val useSkillIdRepository: UseSkillIdRepository by inject()
+    private val skillRepository: SkillRepository by inject()
 
-    private val getSkillExplainUseCase: GetSkillExplainUseCase by inject()
     private val checkCanUseSkillUseCase: CheckCanUseSkillUseCase by inject()
 
     private val textRepository: TextRepository by inject()
@@ -94,7 +94,7 @@ class SkillListViewModel : MenuChildViewModel(),
 
     fun getExplainAt(position: Int): String {
         val skillId = position.toSkillId()
-        return getSkillExplainUseCase.invoke(skillId)
+        return skillRepository.getSkill(skillId).explain
     }
 
     override fun pressB() {

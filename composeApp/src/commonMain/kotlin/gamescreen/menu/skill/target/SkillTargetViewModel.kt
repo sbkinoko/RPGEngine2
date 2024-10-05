@@ -3,8 +3,8 @@ package menu.skill.target
 import common.values.playerNum
 import core.confim.repository.ConfirmRepository
 import core.domain.AbleType
-import core.domain.HealSkill
 import core.domain.Place
+import core.domain.item.skill.HealSkill
 import core.repository.player.PlayerRepository
 import core.repository.skill.SkillRepository
 import core.text.repository.TextRepository
@@ -15,7 +15,6 @@ import menu.domain.SelectManager
 import menu.skill.repository.skilluser.SkillUserRepository
 import menu.skill.repository.target.TargetRepository
 import menu.skill.repository.useid.UseSkillIdRepository
-import menu.skill.usecase.getskillexplain.GetSkillExplainUseCase
 import menu.skill.usecase.useskill.UseSkillUseCase
 import org.koin.core.component.inject
 
@@ -29,7 +28,6 @@ class SkillTargetViewModel : MenuChildViewModel() {
     private val confirmRepository: ConfirmRepository by inject()
     private val textRepository: TextRepository by inject()
 
-    private val getSkillExplainUseCase: GetSkillExplainUseCase by inject()
     private val useSkillUseCase: UseSkillUseCase by inject()
     private val checkCanUseSkillUseCase: CheckCanUseSkillUseCase by inject()
 
@@ -43,7 +41,7 @@ class SkillTargetViewModel : MenuChildViewModel() {
         get() = useSkillIdRepository.skillId
 
     val explain: String
-        get() = getSkillExplainUseCase.invoke(skillId)
+        get() = skillRepository.getSkill(skillId).explain
 
     override fun isBoundedImpl(commandType: MenuType): Boolean {
         return commandType == MenuType.SKILL_TARGET

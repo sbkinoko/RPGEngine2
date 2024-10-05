@@ -1,7 +1,7 @@
 package menu.skill.usecase.useskill
 
-import core.domain.AttackSkill
-import core.domain.HealSkill
+import core.domain.item.skill.AttackSkill
+import core.domain.item.skill.HealSkill
 import core.repository.skill.SkillRepository
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
 import kotlinx.coroutines.CoroutineScope
