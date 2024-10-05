@@ -5,12 +5,12 @@ import core.confim.ConfirmViewModel
 import core.confim.repository.ConfirmRepository
 import core.text.TextViewModel
 import core.text.repository.TextRepository
+import gamescreen.menu.item.skill.list.SkillListViewModel
+import gamescreen.menu.item.skill.user.SkillUserViewModel
 import menu.domain.MenuType
 import menu.main.MainMenuViewModel
 import menu.repository.menustate.MenuStateRepository
-import menu.skill.list.SkillListViewModel
 import menu.skill.target.SkillTargetViewModel
-import menu.skill.user.SkillUserViewModel
 import menu.status.StatusViewModel
 
 class GetControllerByCommandTypeUseCaseImpl(

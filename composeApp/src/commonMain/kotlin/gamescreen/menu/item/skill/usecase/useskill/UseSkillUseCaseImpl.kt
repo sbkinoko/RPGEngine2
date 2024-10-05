@@ -1,16 +1,16 @@
-package menu.skill.usecase.useskill
+package gamescreen.menu.item.skill.usecase.useskill
 
 import core.domain.item.skill.AttackSkill
 import core.domain.item.skill.HealSkill
 import core.repository.skill.SkillRepository
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
+import gamescreen.menu.item.skill.repository.skilluser.SkillUserRepository
+import gamescreen.menu.item.skill.repository.useid.UseSkillIdRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
-import menu.skill.repository.skilluser.SkillUserRepository
 import menu.skill.repository.target.TargetRepository
-import menu.skill.repository.useid.UseSkillIdRepository
 
 class UseSkillUseCaseImpl(
     private val targetRepository: TargetRepository,

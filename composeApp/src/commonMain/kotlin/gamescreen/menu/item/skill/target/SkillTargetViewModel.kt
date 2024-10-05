@@ -9,13 +9,13 @@ import core.repository.player.PlayerRepository
 import core.repository.skill.SkillRepository
 import core.text.repository.TextRepository
 import core.usecase.checkcanuseskill.CheckCanUseSkillUseCase
+import gamescreen.menu.item.skill.repository.skilluser.SkillUserRepository
+import gamescreen.menu.item.skill.repository.useid.UseSkillIdRepository
+import gamescreen.menu.item.skill.usecase.useskill.UseSkillUseCase
 import menu.MenuChildViewModel
 import menu.domain.MenuType
 import menu.domain.SelectManager
-import menu.skill.repository.skilluser.SkillUserRepository
 import menu.skill.repository.target.TargetRepository
-import menu.skill.repository.useid.UseSkillIdRepository
-import menu.skill.usecase.useskill.UseSkillUseCase
 import org.koin.core.component.inject
 
 class SkillTargetViewModel : MenuChildViewModel() {

@@ -16,9 +16,10 @@ import androidx.compose.ui.unit.dp
 import common.extension.equalAllocationModifier
 import common.values.Colors
 import core.WithConfirmAndTextWindow
+import gamescreen.menu.item.skill.SkillList
+import gamescreen.menu.item.skill.list.SkillListViewModel
+import gamescreen.menu.item.skill.user.SkillUserViewModel
 import menu.component.StatusComponent
-import menu.skill.SkillList
-import menu.skill.user.SkillUserViewModel
 import org.koin.compose.koinInject
 
 @Composable

@@ -8,11 +8,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import common.values.Colors
+import gamescreen.menu.item.skill.target.SkillTargetWindow
+import gamescreen.menu.item.skill.user.SkillUserWindow
 import menu.domain.MenuType
 import menu.main.MainMenu
 import menu.skill.list.SkillListWindow
-import menu.skill.target.SkillTargetWindow
-import menu.skill.user.SkillUserWindow
 import menu.status.StatusMenu
 import org.koin.compose.koinInject
 
