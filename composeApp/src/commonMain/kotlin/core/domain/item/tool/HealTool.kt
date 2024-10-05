@@ -17,6 +17,6 @@ data class HealTool(
     override val explain: String
         get() {
             return name + "\n" +
-                    "${id}番目のスキル"
+                    "${id}番目のアイテム"
         }
 }
