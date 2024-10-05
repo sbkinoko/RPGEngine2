@@ -38,6 +38,7 @@ abstract class ItemUserViewModel : MenuChildViewModel(), KoinComponent {
         commandRepository.push(nextScreenType)
     }
 
+    //　fixme　袋ができたら修正する
     fun getPlayerNameAt(id: Int): String {
         return playerRepository.getStatus(id).name
     }
