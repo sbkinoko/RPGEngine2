@@ -6,7 +6,7 @@ import core.domain.item.tool.HealTool
 import core.domain.item.tool.Tool
 
 class ToolRepositoryImpl : ToolRepository {
-    override fun getTool(id: Int): Tool {
+    override fun getItem(id: Int): Tool {
         when (id) {
             HEAL_TOOL -> return HealTool(
                 id = id,
