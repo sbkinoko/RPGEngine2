@@ -1,4 +1,4 @@
-package map.domain
+package gamescreen.map.domain
 
 class Point(
     var x: Float = 0f,

@@ -1,8 +1,8 @@
-package battle.usecase.gettargetnum
+package gamescreen.battle.usecase.gettargetnum
 
-import battle.domain.ActionType
-import battle.repository.action.ActionRepository
 import core.repository.skill.SkillRepository
+import gamescreen.battle.domain.ActionType
+import gamescreen.battle.repository.action.ActionRepository
 
 class GetTargetNumUseCaseImpl(
     private val actionRepository: ActionRepository,

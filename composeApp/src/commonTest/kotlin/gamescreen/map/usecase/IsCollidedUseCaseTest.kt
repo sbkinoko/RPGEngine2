@@ -1,6 +1,6 @@
-package map.usecase
+package gamescreen.map.usecase
 
-import map.MapModule
+import gamescreen.map.MapModule
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest

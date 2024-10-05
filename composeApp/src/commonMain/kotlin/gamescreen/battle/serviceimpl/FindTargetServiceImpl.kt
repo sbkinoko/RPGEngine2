@@ -1,7 +1,7 @@
-package battle.serviceimpl
+package gamescreen.battle.serviceimpl
 
-import battle.service.FindTargetService
 import core.domain.status.Status
+import gamescreen.battle.service.FindTargetService
 
 class FindTargetServiceImpl : FindTargetService {
 

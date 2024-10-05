@@ -1,4 +1,4 @@
-package menu.skill.target
+package gamescreen.menu.item.skill.target
 
 import common.values.playerNum
 import core.confim.repository.ConfirmRepository
@@ -9,13 +9,13 @@ import core.repository.player.PlayerRepository
 import core.repository.skill.SkillRepository
 import core.text.repository.TextRepository
 import core.usecase.checkcanuseskill.CheckCanUseSkillUseCase
+import gamescreen.menu.MenuChildViewModel
+import gamescreen.menu.domain.MenuType
+import gamescreen.menu.domain.SelectManager
 import gamescreen.menu.item.skill.repository.skilluser.SkillUserRepository
+import gamescreen.menu.item.skill.repository.target.TargetRepository
 import gamescreen.menu.item.skill.repository.useid.UseSkillIdRepository
 import gamescreen.menu.item.skill.usecase.useskill.UseSkillUseCase
-import menu.MenuChildViewModel
-import menu.domain.MenuType
-import menu.domain.SelectManager
-import menu.skill.repository.target.TargetRepository
 import org.koin.core.component.inject
 
 class SkillTargetViewModel : MenuChildViewModel() {

@@ -1,4 +1,4 @@
-package menu.domain
+package gamescreen.menu.domain
 
 import controller.domain.ArrowCommand
 import kotlinx.coroutines.CoroutineScope
@@ -12,7 +12,7 @@ class SelectManager(
 ) {
     private var _selected: Int = 0
 
-    val selectedFlow: MutableSharedFlow<Int> = MutableSharedFlow<Int>(0)
+    val selectedFlow: MutableSharedFlow<Int> = MutableSharedFlow(0)
 
     var selected: Int
         get() = _selected

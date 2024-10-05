@@ -1,7 +1,7 @@
-package menu.usecase.backfield
+package gamescreen.menu.usecase.backfield
 
 import core.usecase.changetomap.ChangeToMapUseCase
-import menu.repository.menustate.MenuStateRepository
+import gamescreen.menu.repository.menustate.MenuStateRepository
 
 class CloseMenuUseCaseImpl(
     private val menuStateRepository: MenuStateRepository,

@@ -1,6 +1,6 @@
-package map.usecase
+package gamescreen.map.usecase
 
-import map.repository.player.PlayerRepository
+import gamescreen.map.repository.player.PlayerRepository
 
 class PlayerMoveToUseCase(
     private val playerRepository: PlayerRepository

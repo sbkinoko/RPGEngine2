@@ -6,7 +6,7 @@ import common.Timer
 import controller.domain.ArrowCommand
 import controller.domain.ControllerCallback
 import controller.domain.Stick
-import menu.domain.SelectManager
+import gamescreen.menu.domain.SelectManager
 
 abstract class SelectableWindowViewModel : ControllerCallback {
     protected abstract var selectManager: SelectManager

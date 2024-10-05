@@ -1,4 +1,4 @@
-package battle.status
+package gamescreen.battle.status
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
@@ -11,11 +11,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
-import battle.command.selectally.SelectAllyViewModel
 import common.extension.menuItem
 import common.layout.DisableBox
 import common.values.Colors
 import core.domain.status.Status
+import gamescreen.battle.command.selectally.SelectAllyViewModel
 import org.koin.compose.koinInject
 import core.domain.status.param.Point as StatusPoint
 

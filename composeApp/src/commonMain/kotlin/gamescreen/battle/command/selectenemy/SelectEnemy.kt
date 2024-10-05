@@ -1,4 +1,4 @@
-package battle.command.selectenemy
+package gamescreen.battle.command.selectenemy
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material.Text

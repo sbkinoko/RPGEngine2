@@ -1,10 +1,10 @@
-package map.usecase
+package gamescreen.map.usecase
 
+import gamescreen.map.domain.BackgroundCell
+import gamescreen.map.domain.MapData
+import gamescreen.map.repository.backgroundcell.BackgroundRepository
+import gamescreen.map.repository.collision.CollisionRepository
 import kotlinx.coroutines.runBlocking
-import map.domain.BackgroundCell
-import map.domain.MapData
-import map.repository.backgroundcell.BackgroundRepository
-import map.repository.collision.CollisionRepository
 
 class ResetBackgroundPositionUseCase(
     private val repository: BackgroundRepository,

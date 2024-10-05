@@ -1,8 +1,8 @@
-package battle.usecase.attack
+package gamescreen.battle.usecase.attack
 
-import battle.service.FindTargetService
 import core.repository.player.PlayerRepository
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
+import gamescreen.battle.service.FindTargetService
 
 class AttackFromEnemyUseCaseImpl(
     private val playerRepository: PlayerRepository,

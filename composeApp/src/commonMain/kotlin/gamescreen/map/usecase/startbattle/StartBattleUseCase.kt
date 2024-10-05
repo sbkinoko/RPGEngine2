@@ -1,4 +1,4 @@
-package map.usecase.startbattle
+package gamescreen.map.usecase.startbattle
 
 interface StartBattleUseCase {
     operator fun invoke()

@@ -1,6 +1,6 @@
-package map.repository.playercell
+package gamescreen.map.repository.playercell
 
-import map.domain.BackgroundCell
+import gamescreen.map.domain.BackgroundCell
 
 class PlayerCellRepositoryImpl : PlayerCellRepository {
     private var prePlayerIncludeCell: BackgroundCell? = null

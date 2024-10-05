@@ -1,22 +1,22 @@
-package battle.usecase.convertscreentypetocontroller
+package gamescreen.battle.usecase.convertscreentypetocontroller
 
-import battle.command.actionphase.ActionPhaseViewModel
-import battle.command.escape.EscapeViewModel
-import battle.command.main.BattleMainViewModel
-import battle.command.playeraction.PlayerActionViewModel
-import battle.command.selectally.SelectAllyViewModel
-import battle.command.selectenemy.SelectEnemyViewModel
-import battle.command.skill.SkillCommandViewModel
-import battle.domain.AttackPhaseCommand
-import battle.domain.EscapeCommand
-import battle.domain.FinishCommand
-import battle.domain.MainCommand
-import battle.domain.PlayerActionCommand
-import battle.domain.SelectAllyCommand
-import battle.domain.SelectEnemyCommand
-import battle.domain.SkillCommand
-import battle.repository.commandstate.CommandStateRepository
 import controller.domain.ControllerCallback
+import gamescreen.battle.command.actionphase.ActionPhaseViewModel
+import gamescreen.battle.command.escape.EscapeViewModel
+import gamescreen.battle.command.main.BattleMainViewModel
+import gamescreen.battle.command.playeraction.PlayerActionViewModel
+import gamescreen.battle.command.selectally.SelectAllyViewModel
+import gamescreen.battle.command.selectenemy.SelectEnemyViewModel
+import gamescreen.battle.command.skill.SkillCommandViewModel
+import gamescreen.battle.domain.AttackPhaseCommand
+import gamescreen.battle.domain.EscapeCommand
+import gamescreen.battle.domain.FinishCommand
+import gamescreen.battle.domain.MainCommand
+import gamescreen.battle.domain.PlayerActionCommand
+import gamescreen.battle.domain.SelectAllyCommand
+import gamescreen.battle.domain.SelectEnemyCommand
+import gamescreen.battle.domain.SkillCommand
+import gamescreen.battle.repository.commandstate.CommandStateRepository
 
 class GetControllerByCommandTypeUseCaseImpl(
     private val commandStateRepository: CommandStateRepository,

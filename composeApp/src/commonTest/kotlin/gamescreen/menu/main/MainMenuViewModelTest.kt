@@ -1,4 +1,4 @@
-package menu.main
+package gamescreen.menu.main
 
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

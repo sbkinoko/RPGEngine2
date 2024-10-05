@@ -1,4 +1,4 @@
-package menu.domain
+package gamescreen.menu.domain
 
 import controller.domain.ArrowCommand
 import kotlin.test.Test

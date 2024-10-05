@@ -1,7 +1,7 @@
-package map.domain
+package gamescreen.map.domain
 
-import map.domain.collision.CollisionDetectShape
-import map.domain.collision.Square
+import gamescreen.map.domain.collision.CollisionDetectShape
+import gamescreen.map.domain.collision.Square
 
 class BackgroundCell(
     cellSize: Float,

@@ -1,4 +1,4 @@
-package menu.component
+package gamescreen.menu.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Text

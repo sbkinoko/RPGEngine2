@@ -1,4 +1,4 @@
-package battle.domain
+package gamescreen.battle.domain
 
 data class ActionData(
     val thisTurnAction: ActionType = ActionType.Normal,

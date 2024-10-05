@@ -1,24 +1,24 @@
-package battle.command
+package gamescreen.battle.command
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import battle.BattleViewModel
-import battle.command.actionphase.ActionPhase
-import battle.command.escape.EscapeCommand
-import battle.command.finish.FinishCommandWindow
-import battle.command.main.BattleMainCommand
-import battle.command.playeraction.PlayerAction
-import battle.command.selectally.SelectAllyCommandWindow
-import battle.command.selectenemy.SelectEnemy
-import battle.command.skill.SkillCommandWindow
-import battle.domain.AttackPhaseCommand
-import battle.domain.EscapeCommand
-import battle.domain.FinishCommand
-import battle.domain.MainCommand
-import battle.domain.PlayerActionCommand
-import battle.domain.SelectAllyCommand
-import battle.domain.SelectEnemyCommand
-import battle.domain.SkillCommand
+import gamescreen.battle.BattleViewModel
+import gamescreen.battle.command.actionphase.ActionPhase
+import gamescreen.battle.command.escape.EscapeCommand
+import gamescreen.battle.command.finish.FinishCommandWindow
+import gamescreen.battle.command.main.BattleMainCommand
+import gamescreen.battle.command.playeraction.PlayerAction
+import gamescreen.battle.command.selectally.SelectAllyCommandWindow
+import gamescreen.battle.command.selectenemy.SelectEnemy
+import gamescreen.battle.command.skill.SkillCommandWindow
+import gamescreen.battle.domain.AttackPhaseCommand
+import gamescreen.battle.domain.EscapeCommand
+import gamescreen.battle.domain.FinishCommand
+import gamescreen.battle.domain.MainCommand
+import gamescreen.battle.domain.PlayerActionCommand
+import gamescreen.battle.domain.SelectAllyCommand
+import gamescreen.battle.domain.SelectEnemyCommand
+import gamescreen.battle.domain.SkillCommand
 import org.koin.compose.koinInject
 
 @Composable

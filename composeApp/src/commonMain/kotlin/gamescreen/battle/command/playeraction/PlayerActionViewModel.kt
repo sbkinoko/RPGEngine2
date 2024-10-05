@@ -1,16 +1,16 @@
-package battle.command.playeraction
+package gamescreen.battle.command.playeraction
 
-import battle.BattleChildViewModel
-import battle.domain.ActionType
-import battle.domain.BattleCommandType
-import battle.domain.PlayerActionCommand
-import battle.domain.PlayerIdCommand
-import battle.domain.SelectEnemyCommand
-import battle.domain.SkillCommand
-import battle.repository.action.ActionRepository
-import battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUseCase
 import core.repository.player.PlayerRepository
-import menu.domain.SelectManager
+import gamescreen.battle.BattleChildViewModel
+import gamescreen.battle.domain.ActionType
+import gamescreen.battle.domain.BattleCommandType
+import gamescreen.battle.domain.PlayerActionCommand
+import gamescreen.battle.domain.PlayerIdCommand
+import gamescreen.battle.domain.SelectEnemyCommand
+import gamescreen.battle.domain.SkillCommand
+import gamescreen.battle.repository.action.ActionRepository
+import gamescreen.battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUseCase
+import gamescreen.menu.domain.SelectManager
 import org.koin.core.component.inject
 
 class PlayerActionViewModel : BattleChildViewModel() {

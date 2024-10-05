@@ -1,10 +1,10 @@
-package menu.repository.menustate
+package gamescreen.menu.repository.menustate
 
+import gamescreen.menu.domain.MenuType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
-import menu.domain.MenuType
 
 class MenuStateRepositoryImpl : MenuStateRepository {
 

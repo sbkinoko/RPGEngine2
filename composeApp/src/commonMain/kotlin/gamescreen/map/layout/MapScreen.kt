@@ -1,4 +1,4 @@
-package map.layout
+package gamescreen.map.layout
 
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
@@ -9,9 +9,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.util.fastAny
+import gamescreen.map.repository.player.PlayerRepository
+import gamescreen.map.viewmodel.MapViewModel
 import kotlinx.coroutines.delay
-import map.repository.player.PlayerRepository
-import map.viewmodel.MapViewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
 

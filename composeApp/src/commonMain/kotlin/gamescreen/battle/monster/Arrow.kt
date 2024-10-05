@@ -1,11 +1,11 @@
-package battle.monster
+package gamescreen.battle.monster
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import battle.domain.SelectedEnemyState
+import gamescreen.battle.domain.SelectedEnemyState
 
 @Composable
 fun Arrow(

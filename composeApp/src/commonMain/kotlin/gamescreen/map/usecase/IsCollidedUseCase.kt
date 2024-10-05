@@ -1,7 +1,7 @@
-package map.usecase
+package gamescreen.map.usecase
 
-import map.domain.collision.Square
-import map.repository.backgroundcell.BackgroundRepository
+import gamescreen.map.domain.collision.Square
+import gamescreen.map.repository.backgroundcell.BackgroundRepository
 
 class IsCollidedUseCase(
     private val repository: BackgroundRepository

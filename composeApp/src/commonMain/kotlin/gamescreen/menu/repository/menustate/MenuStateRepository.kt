@@ -1,7 +1,7 @@
-package menu.repository.menustate
+package gamescreen.menu.repository.menustate
 
 import core.repository.command.CommandRepository
-import menu.domain.MenuType
+import gamescreen.menu.domain.MenuType
 
 interface MenuStateRepository : CommandRepository<MenuType> {
     //　mを押して画面を戻った時に状態を初期化する

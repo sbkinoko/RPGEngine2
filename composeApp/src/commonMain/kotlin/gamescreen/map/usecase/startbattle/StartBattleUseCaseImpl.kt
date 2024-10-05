@@ -1,13 +1,13 @@
-package map.usecase.startbattle
+package gamescreen.map.usecase.startbattle
 
-import battle.repository.action.ActionRepository
-import battle.repository.commandstate.CommandStateRepository
 import core.domain.ScreenType
 import core.domain.status.MonsterStatus
 import core.domain.status.param.HP
 import core.domain.status.param.MP
 import core.repository.battlemonster.BattleMonsterRepository
 import core.repository.screentype.ScreenTypeRepository
+import gamescreen.battle.repository.action.ActionRepository
+import gamescreen.battle.repository.commandstate.CommandStateRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

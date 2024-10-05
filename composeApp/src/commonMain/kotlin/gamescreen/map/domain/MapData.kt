@@ -1,4 +1,4 @@
-package map.domain
+package gamescreen.map.domain
 
 abstract class MapData {
 

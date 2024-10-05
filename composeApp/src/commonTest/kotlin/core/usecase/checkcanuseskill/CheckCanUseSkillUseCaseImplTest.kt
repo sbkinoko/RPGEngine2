@@ -1,4 +1,4 @@
-package core.usecase
+package core.usecase.checkcanuseskill
 
 import core.domain.Place
 import core.domain.item.TargetType
@@ -8,8 +8,6 @@ import core.domain.status.PlayerStatus
 import core.domain.status.param.HP
 import core.domain.status.param.MP
 import core.repository.skill.SkillRepository
-import core.usecase.checkcanuseskill.CheckCanUseSkillUseCase
-import core.usecase.checkcanuseskill.CheckCanUseSkillUseCaseImpl
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals

@@ -1,4 +1,4 @@
-package menu.main
+package gamescreen.menu.main
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

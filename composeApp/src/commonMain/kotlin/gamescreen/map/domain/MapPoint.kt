@@ -1,4 +1,4 @@
-package map.domain
+package gamescreen.map.domain
 
 class MapPoint(
     var x: Int = 0,

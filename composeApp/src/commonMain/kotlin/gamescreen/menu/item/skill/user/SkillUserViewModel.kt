@@ -4,11 +4,11 @@ import common.Timer
 import common.values.playerNum
 import core.repository.player.PlayerRepository
 import core.repository.skill.SkillRepository
+import gamescreen.menu.MenuChildViewModel
+import gamescreen.menu.domain.MenuType
+import gamescreen.menu.domain.SelectManager
 import gamescreen.menu.item.skill.repository.skilluser.SkillUserRepository
-import menu.MenuChildViewModel
-import menu.domain.MenuType
-import menu.domain.SelectManager
-import menu.repository.menustate.MenuStateRepository
+import gamescreen.menu.repository.menustate.MenuStateRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 

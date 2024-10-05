@@ -1,11 +1,11 @@
 package org.example.project
 
 import android.app.Application
-import battle.BattleModule
 import core.CoreModule
+import gamescreen.battle.BattleModule
+import gamescreen.map.MapModule
+import gamescreen.menu.MenuModule
 import main.MainModule
-import map.MapModule
-import menu.MenuModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 

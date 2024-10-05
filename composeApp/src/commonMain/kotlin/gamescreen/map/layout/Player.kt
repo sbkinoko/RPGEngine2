@@ -1,4 +1,4 @@
-package map.layout
+package gamescreen.map.layout
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import common.extension.pxToDp
 import common.values.Colors
-import map.domain.collision.Square
+import gamescreen.map.domain.collision.Square
 
 @Composable
 fun Player(

@@ -1,7 +1,7 @@
-package battle.repository.action
+package gamescreen.battle.repository.action
 
-import battle.domain.ActionData
-import battle.domain.ActionType
+import gamescreen.battle.domain.ActionData
+import gamescreen.battle.domain.ActionType
 
 interface ActionRepository {
     fun setAction(
@@ -35,6 +35,6 @@ interface ActionRepository {
     fun resetTarget()
 
     companion object {
-        val INITIAL_TARGET = 0
+        const val INITIAL_TARGET = 0
     }
 }

@@ -1,4 +1,4 @@
-package battle.domain
+package gamescreen.battle.domain
 
 sealed class BattleCommandType
 

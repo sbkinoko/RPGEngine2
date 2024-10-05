@@ -5,9 +5,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import map.domain.Point
-import map.domain.collision.Square
-import map.layout.Player
+import gamescreen.map.domain.Point
+import gamescreen.map.domain.collision.Square
+import gamescreen.map.layout.Player
 
 @Preview
 @Composable
