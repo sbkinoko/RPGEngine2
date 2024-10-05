@@ -27,12 +27,6 @@ import gamescreen.menu.usecase.getviewmodelbycommandtype.GetControllerByCommandT
 import gamescreen.menu.usecase.getviewmodelbycommandtype.GetControllerByCommandTypeUseCaseImpl
 import org.koin.dsl.module
 
-class Qualifier {
-    companion object {
-        const val TOOL_USER = "TOOL_USER"
-    }
-}
-
 val MenuModule = module {
     single {
         MenuViewModel()
