@@ -5,5 +5,4 @@ import core.repository.item.ItemRepository
 
 interface ToolRepository : ItemRepository {
     override fun getItem(id: Int): Tool
-
 }

@@ -1,55 +1,29 @@
 package gamescreen.menu.item.tool.user
 
-import common.Timer
-import common.values.playerNum
-import core.repository.item.skill.SkillRepository
-import core.repository.player.PlayerRepository
-import gamescreen.menu.MenuChildViewModel
+import core.repository.item.tool.ToolRepository
+import gamescreen.menu.Qualifier
 import gamescreen.menu.domain.MenuType
-import gamescreen.menu.domain.SelectManager
-import gamescreen.menu.item.skill.repository.skilluser.SkillUserRepository
-import gamescreen.menu.repository.menustate.MenuStateRepository
-
+import gamescreen.menu.item.user.ItemUserViewModel
+import gamescreen.menu.item.user.UserRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import org.koin.core.qualifier.named
 
-class ToolUserViewModel : MenuChildViewModel(),
+class ToolUserViewModel : ItemUserViewModel(),
     KoinComponent {
-    val repository: PlayerRepository by inject()
-    private val skillRepository: SkillRepository by inject()
-    private val menuStateRepository: MenuStateRepository by inject()
-    private val skillUserRepository: SkillUserRepository by inject()
+    override val itemRepository: ToolRepository
+            by inject()
+    override val userRepository: UserRepository
+            by inject(qualifier = named(Qualifier.TOOL_USER))
+    override val boundedScreenType: MenuType
+        get() = MenuType.TOOL_USER
+    override val nextScreenType: MenuType
+        get() = TODO("Not yet implemented")
 
-    override var selectManager = SelectManager(
-        width = 1,
-        itemNum = playerNum,
-    )
-    override val canBack: Boolean
-        get() = true
 
-    override var timer: Timer = Timer(200)
-    override fun isBoundedImpl(commandType: MenuType): Boolean {
-        return commandType == MenuType.SKILL_USER
+    override fun getPlayerItemListAt(id: Int): List<Int> {
+
     }
 
-    override fun goNextImpl() {
-        skillUserRepository.skillUserId = selectManager.selected
-        menuStateRepository.push(MenuType.SKILL_LST)
-    }
 
-    fun getNameAt(id: Int): String {
-        return repository.getStatus(id).name
-    }
-
-    fun getSkillAt(id: Int): List<Int> {
-        return repository.getStatus(id).skillList
-    }
-
-    fun getSkillName(id: Int): String {
-        return skillRepository.getSkill(id).name
-    }
-
-    override fun pressB() {
-        menuStateRepository.pop()
-    }
 }

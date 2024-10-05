@@ -44,7 +44,7 @@ fun ToolUserWindow(
                             id = i,
                             childViewModel = toolUserViewModel,
                         ),
-                    text = toolUserViewModel.getNameAt(i),
+                    text = toolUserViewModel.getPlayerNameAt(i),
                 )
             }
         }

@@ -11,7 +11,9 @@ import gamescreen.menu.item.skill.target.SkillTargetViewModel
 import gamescreen.menu.item.skill.usecase.useskill.UseSkillUseCase
 import gamescreen.menu.item.skill.usecase.useskill.UseSkillUseCaseImpl
 import gamescreen.menu.item.skill.user.SkillUserViewModel
+import gamescreen.menu.item.tool.repository.ToolUserRepository
 import gamescreen.menu.item.tool.user.ToolUserViewModel
+import gamescreen.menu.item.user.UserRepository
 import gamescreen.menu.main.MainMenuViewModel
 import gamescreen.menu.repository.menustate.MenuStateRepository
 import gamescreen.menu.repository.menustate.MenuStateRepositoryImpl
@@ -20,7 +22,14 @@ import gamescreen.menu.usecase.backfield.CloseMenuUseCase
 import gamescreen.menu.usecase.backfield.CloseMenuUseCaseImpl
 import gamescreen.menu.usecase.getviewmodelbycommandtype.GetControllerByCommandTypeUseCase
 import gamescreen.menu.usecase.getviewmodelbycommandtype.GetControllerByCommandTypeUseCaseImpl
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
+
+class Qualifier {
+    companion object {
+        const val TOOL_USER = "TOOL_USER"
+    }
+}
 
 val MenuModule = module {
     single {
@@ -65,6 +74,10 @@ val MenuModule = module {
 
     single<TargetRepository> {
         TargetRepositoryImpl()
+    }
+
+    single<UserRepository>(qualifier = named(Qualifier.TOOL_USER)) {
+        ToolUserRepository()
     }
 
     single<GetControllerByCommandTypeUseCase> {
