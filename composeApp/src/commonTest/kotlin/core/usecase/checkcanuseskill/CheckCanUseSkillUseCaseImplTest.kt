@@ -32,6 +32,7 @@ class CheckCanUseSkillUseCaseImplTest {
         hp = HP(maxValue = 10, value = 10),
         mp = MP(maxValue = 10, value = 10),
         skillList = listOf(),
+        toolList = listOf(),
     )
 
     private val playerStatusNoMP = PlayerStatus(
@@ -39,6 +40,7 @@ class CheckCanUseSkillUseCaseImplTest {
         hp = HP(maxValue = 10, value = 10),
         mp = MP(maxValue = 10, value = 0),
         skillList = listOf(),
+        toolList = listOf(),
     )
 
     @BeforeTest

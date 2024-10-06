@@ -1,6 +1,6 @@
 package core.usecase.updateparameter
 
-interface UpdateStatusService<T> {
+interface UpdateStatusUseCase<T> {
     /**
      *  HPを減らして、更新後のステータスを返す
      */

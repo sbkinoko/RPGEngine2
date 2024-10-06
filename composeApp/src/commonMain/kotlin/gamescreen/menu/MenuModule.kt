@@ -1,5 +1,6 @@
 package gamescreen.menu
 
+import core.usecase.updateparameter.UpdatePlayerStatusUseCaseImpl
 import gamescreen.menu.item.repository.useitemid.UseItemIdRepository
 import gamescreen.menu.item.repository.useitemid.UseItemIdRepositoryImpl
 import gamescreen.menu.item.repository.user.UserRepository
@@ -131,7 +132,7 @@ val MenuModule = module {
             targetRepository = get(),
             useItemIdRepository = get(),
             toolRepository = get(),
-            updateStatusService = get(),
+            updateStatusService = get<UpdatePlayerStatusUseCaseImpl>(),
         )
     }
 }

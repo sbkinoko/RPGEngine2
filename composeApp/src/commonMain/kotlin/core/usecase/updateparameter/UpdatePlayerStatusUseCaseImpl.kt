@@ -3,7 +3,7 @@ package core.usecase.updateparameter
 import core.domain.status.PlayerStatus
 import core.repository.status.StatusRepository
 
-class UpdatePlayerStatusUseCase(
+class UpdatePlayerStatusUseCaseImpl(
     override val statusRepository: StatusRepository<PlayerStatus>,
 ) : AbstractUpdateStatusUseCase<PlayerStatus>() {
 
