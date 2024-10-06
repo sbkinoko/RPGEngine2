@@ -3,48 +3,43 @@ package gamescreen.menu.item.abstract.target
 import common.values.playerNum
 import core.confim.repository.ConfirmRepository
 import core.domain.AbleType
-import core.domain.Place
-import core.domain.item.skill.HealSkill
-import core.repository.item.skill.SkillRepository
+import core.domain.item.HealItem
+import core.repository.item.ItemRepository
 import core.repository.player.PlayerRepository
-import core.text.repository.TextRepository
-import core.usecase.checkcanuseskill.CheckCanUseSkillUseCase
 import gamescreen.menu.MenuChildViewModel
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.domain.SelectManager
-import gamescreen.menu.item.skill.repository.skilluser.SkillUserRepository
+import gamescreen.menu.item.repository.useitemid.UseItemIdRepository
+import gamescreen.menu.item.repository.user.UserRepository
 import gamescreen.menu.item.skill.repository.target.TargetRepository
-import gamescreen.menu.item.skill.repository.useid.UseSkillIdRepository
-import gamescreen.menu.item.skill.usecase.useskill.UseSkillUseCase
 import org.koin.core.component.inject
 
-class ItemTargetViewModel : MenuChildViewModel() {
-    private val skillUserRepository: SkillUserRepository by inject()
-    private val useSkillIdRepository: UseSkillIdRepository by inject()
+abstract class ItemTargetViewModel : MenuChildViewModel() {
+    private val userRepository: UserRepository by inject()
+    private val useItemIdRepository: UseItemIdRepository by inject()
     private val targetRepository: TargetRepository by inject()
-    private val skillRepository: SkillRepository by inject()
     private val playerRepository: PlayerRepository by inject()
 
-    private val confirmRepository: ConfirmRepository by inject()
-    private val textRepository: TextRepository by inject()
+    protected abstract val itemRepository: ItemRepository
 
-    private val useSkillUseCase: UseSkillUseCase by inject()
-    private val checkCanUseSkillUseCase: CheckCanUseSkillUseCase by inject()
+    private val confirmRepository: ConfirmRepository by inject()
 
     override val canBack: Boolean
         get() = true
 
     val user: Int
-        get() = skillUserRepository.skillUserId
+        get() = userRepository.userId
 
     val skillId: Int
-        get() = useSkillIdRepository.skillId
+        get() = useItemIdRepository.itemId
 
     val explain: String
-        get() = skillRepository.getSkill(skillId).explain
+        get() = itemRepository.getItem(skillId).explain
+
+    protected abstract val boundedMenuType: MenuType
 
     override fun isBoundedImpl(commandType: MenuType): Boolean {
-        return commandType == MenuType.SKILL_TARGET
+        return commandType == boundedMenuType
     }
 
     override fun goNextImpl() {
@@ -63,9 +58,9 @@ class ItemTargetViewModel : MenuChildViewModel() {
 
     fun canSelect(target: Int): Boolean {
         val targetStatus = playerRepository.getStatus(id = target)
-        val skill = skillRepository.getSkill(skillId)
+        val skill = itemRepository.getItem(skillId)
 
-        if (skill !is HealSkill) {
+        if (skill !is HealItem) {
             // 回復じゃなかったら使えないはず
             return false
         }
@@ -77,28 +72,17 @@ class ItemTargetViewModel : MenuChildViewModel() {
             return false
         }
 
-        val userStatus = playerRepository.getStatus(id = user)
-
-        val ableType = checkCanUseSkillUseCase.invoke(
-            status = userStatus,
-            skillId = skillId,
-            here = Place.MAP,
-        )
+        val ableType = getAbleType()
 
         return ableType == AbleType.Able
     }
 
+    protected abstract fun getAbleType(): AbleType
+
     /**
      * confirmでYesを選んだ時の処理
      */
-    fun selectYes() {
-        // textを表示
-        textRepository.push(true)
-        textRepository.setText("回復しました")
-
-        //　スキル処理実行
-        useSkillUseCase.invoke()
-    }
+    abstract fun selectYes()
 
     fun backWindow() {
         commandRepository.pop()

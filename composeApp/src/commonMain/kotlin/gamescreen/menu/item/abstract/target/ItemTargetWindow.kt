@@ -16,12 +16,11 @@ import common.values.Colors
 import common.values.playerNum
 import core.WithConfirmAndTextWindow
 import gamescreen.menu.component.StatusComponent
-import org.koin.compose.koinInject
 
 @Composable
-fun SkillTargetWindow(
+fun TargetWindow(
     modifier: Modifier = Modifier,
-    itemTargetViewModel: ItemTargetViewModel = koinInject(),
+    itemTargetViewModel: ItemTargetViewModel,
 ) {
     WithConfirmAndTextWindow(
         modifier = modifier,
