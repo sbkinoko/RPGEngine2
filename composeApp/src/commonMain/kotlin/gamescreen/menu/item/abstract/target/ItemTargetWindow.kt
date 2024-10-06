@@ -18,7 +18,7 @@ import core.WithConfirmAndTextWindow
 import gamescreen.menu.component.StatusComponent
 
 @Composable
-fun TargetWindow(
+fun ItemTargetWindow(
     modifier: Modifier = Modifier,
     itemTargetViewModel: ItemTargetViewModel,
 ) {

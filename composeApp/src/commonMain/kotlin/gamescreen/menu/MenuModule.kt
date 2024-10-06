@@ -16,6 +16,7 @@ import gamescreen.menu.item.skill.usecase.useskill.UseSkillUseCase
 import gamescreen.menu.item.skill.usecase.useskill.UseSkillUseCaseImpl
 import gamescreen.menu.item.skill.user.SkillUserViewModel
 import gamescreen.menu.item.tool.list.ToolListViewModel
+import gamescreen.menu.item.tool.target.ToolTargetViewModel
 import gamescreen.menu.item.tool.user.ToolUserViewModel
 import gamescreen.menu.main.MainMenuViewModel
 import gamescreen.menu.repository.menustate.MenuStateRepository
@@ -60,6 +61,10 @@ val MenuModule = module {
         ToolListViewModel()
     }
 
+    single {
+        ToolTargetViewModel()
+    }
+
     single<MenuStateRepository> {
         MenuStateRepositoryImpl()
     }
@@ -96,6 +101,7 @@ val MenuModule = module {
             skillTargetViewModel = get(),
             toolUserViewModel = get(),
             toolListViewModel = get(),
+            toolTargetViewModel = get(),
             confirmViewModel = get(),
             textViewModel = get(),
         )
