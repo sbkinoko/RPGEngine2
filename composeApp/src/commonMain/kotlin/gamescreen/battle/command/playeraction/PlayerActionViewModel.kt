@@ -8,6 +8,7 @@ import gamescreen.battle.domain.PlayerActionCommand
 import gamescreen.battle.domain.PlayerIdCommand
 import gamescreen.battle.domain.SelectEnemyCommand
 import gamescreen.battle.domain.SkillCommand
+import gamescreen.battle.domain.ToolCommand
 import gamescreen.battle.repository.action.ActionRepository
 import gamescreen.battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUseCase
 import gamescreen.menu.domain.SelectManager
@@ -78,9 +79,9 @@ class PlayerActionViewModel : BattleChildViewModel() {
                 SkillCommand(playerId),
             )
 
-            tool -> {
-                // todo 画面遷移実装
-            }
+            tool -> commandRepository.push(
+                ToolCommand(playerId)
+            )
         }
     }
 
