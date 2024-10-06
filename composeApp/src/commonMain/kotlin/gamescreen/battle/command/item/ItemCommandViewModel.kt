@@ -13,7 +13,7 @@ import org.koin.core.component.inject
 import kotlin.math.max
 
 abstract class ItemCommandViewModel : BattleChildViewModel() {
-    private val actionRepository: ActionRepository by inject()
+    protected val actionRepository: ActionRepository by inject()
     protected val playerRepository: PlayerRepository by inject()
 
     protected abstract val itemRepository: ItemRepository
@@ -47,7 +47,7 @@ abstract class ItemCommandViewModel : BattleChildViewModel() {
         selectManager.selected = selected
     }
 
-    abstract fun getItemId(): Int
+    abstract fun getItemId(): Int?
 
     override fun selectable(): Boolean {
         return canUse(selectedItemId)
