@@ -6,11 +6,11 @@ import gamescreen.battle.BattleViewModel
 import gamescreen.battle.command.actionphase.ActionPhase
 import gamescreen.battle.command.escape.EscapeCommand
 import gamescreen.battle.command.finish.FinishCommandWindow
+import gamescreen.battle.command.item.skill.SkillCommandWindow
 import gamescreen.battle.command.main.BattleMainCommand
 import gamescreen.battle.command.playeraction.PlayerAction
 import gamescreen.battle.command.selectally.SelectAllyCommandWindow
 import gamescreen.battle.command.selectenemy.SelectEnemy
-import gamescreen.battle.command.skill.SkillCommandWindow
 import gamescreen.battle.domain.AttackPhaseCommand
 import gamescreen.battle.domain.EscapeCommand
 import gamescreen.battle.domain.FinishCommand
