@@ -19,8 +19,14 @@ class PlayerActionViewModel : BattleChildViewModel() {
 
     private val changeSelectingActionPlayerUseCase: ChangeSelectingActionPlayerUseCase by inject()
 
+    override var selectManager: SelectManager = SelectManager(
+        width = 2,
+        itemNum = 3,
+    )
+
     val normalAttack = 0
     val skill = 1
+    val tool = 2
 
     val playerId: Int
         get() = (commandRepository.nowCommandType as PlayerActionCommand).playerId
@@ -86,9 +92,4 @@ class PlayerActionViewModel : BattleChildViewModel() {
             player.isActive
         }
     }
-
-    override var selectManager: SelectManager = SelectManager(
-        width = 2,
-        itemNum = 2,
-    )
 }
