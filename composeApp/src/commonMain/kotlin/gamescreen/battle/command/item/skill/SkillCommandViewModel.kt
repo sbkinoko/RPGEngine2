@@ -1,4 +1,4 @@
-package gamescreen.battle.command.skill
+package gamescreen.battle.command.item.skill
 
 import core.domain.AbleType
 import core.domain.Const
@@ -50,6 +50,11 @@ class SkillCommandViewModel : BattleChildViewModel() {
         selectManager.selected = max(
             skillList.indexOf(skillId),
             Const.INITIAL_PLAYER,
+        )
+
+        selectManager = SelectManager(
+            width = 2,
+            itemNum = skillList.size,
         )
     }
 
