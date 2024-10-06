@@ -1,4 +1,4 @@
-package core.usecase.checkcanuseskill
+package core.usecase
 
 import core.domain.Place
 import core.domain.item.TargetType
@@ -7,7 +7,9 @@ import core.domain.item.skill.Skill
 import core.domain.status.PlayerStatus
 import core.domain.status.param.HP
 import core.domain.status.param.MP
-import core.repository.skill.SkillRepository
+import core.repository.item.skill.SkillRepository
+import core.usecase.checkcanuseskill.CheckCanUseSkillUseCase
+import core.usecase.checkcanuseskill.CheckCanUseSkillUseCaseImpl
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -30,6 +32,7 @@ class CheckCanUseSkillUseCaseImplTest {
         hp = HP(maxValue = 10, value = 10),
         mp = MP(maxValue = 10, value = 10),
         skillList = listOf(),
+        toolList = listOf(),
     )
 
     private val playerStatusNoMP = PlayerStatus(
@@ -37,6 +40,7 @@ class CheckCanUseSkillUseCaseImplTest {
         hp = HP(maxValue = 10, value = 10),
         mp = MP(maxValue = 10, value = 0),
         skillList = listOf(),
+        toolList = listOf(),
     )
 
     @BeforeTest

@@ -1,6 +1,6 @@
 package gamescreen.battle.usecase.gettargetnum
 
-import core.repository.skill.SkillRepository
+import core.repository.item.skill.SkillRepository
 import gamescreen.battle.domain.ActionType
 import gamescreen.battle.repository.action.ActionRepository
 

@@ -8,4 +8,5 @@ data class PlayerStatus(
     override val hp: HP,
     override val mp: MP,
     val skillList: List<Int>,
+    val toolList: List<Int>,
 ) : Status

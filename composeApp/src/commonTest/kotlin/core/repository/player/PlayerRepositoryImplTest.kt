@@ -55,6 +55,7 @@ class PlayerRepositoryImplTest : KoinTest {
                     value = 5,
                 ),
                 skillList = listOf(),
+                toolList = listOf(),
             )
 
             playerRepository.setStatus(

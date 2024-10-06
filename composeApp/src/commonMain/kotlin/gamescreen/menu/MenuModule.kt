@@ -1,5 +1,10 @@
 package gamescreen.menu
 
+import core.usecase.updateparameter.UpdatePlayerStatusUseCaseImpl
+import gamescreen.menu.item.repository.useitemid.UseItemIdRepository
+import gamescreen.menu.item.repository.useitemid.UseItemIdRepositoryImpl
+import gamescreen.menu.item.repository.user.UserRepository
+import gamescreen.menu.item.repository.user.UserRepositoryImpl
 import gamescreen.menu.item.skill.list.SkillListViewModel
 import gamescreen.menu.item.skill.repository.skilluser.SkillUserRepository
 import gamescreen.menu.item.skill.repository.skilluser.SkillUserRepositoryImpl
@@ -11,6 +16,11 @@ import gamescreen.menu.item.skill.target.SkillTargetViewModel
 import gamescreen.menu.item.skill.usecase.useskill.UseSkillUseCase
 import gamescreen.menu.item.skill.usecase.useskill.UseSkillUseCaseImpl
 import gamescreen.menu.item.skill.user.SkillUserViewModel
+import gamescreen.menu.item.tool.list.ToolListViewModel
+import gamescreen.menu.item.tool.target.ToolTargetViewModel
+import gamescreen.menu.item.tool.usecase.UseToolUseCase
+import gamescreen.menu.item.tool.usecase.UseToolUseCaseImpl
+import gamescreen.menu.item.tool.user.ToolUserViewModel
 import gamescreen.menu.main.MainMenuViewModel
 import gamescreen.menu.repository.menustate.MenuStateRepository
 import gamescreen.menu.repository.menustate.MenuStateRepositoryImpl
@@ -46,6 +56,18 @@ val MenuModule = module {
         SkillTargetViewModel()
     }
 
+    single {
+        ToolUserViewModel()
+    }
+
+    single {
+        ToolListViewModel()
+    }
+
+    single {
+        ToolTargetViewModel()
+    }
+
     single<MenuStateRepository> {
         MenuStateRepositoryImpl()
     }
@@ -62,6 +84,14 @@ val MenuModule = module {
         TargetRepositoryImpl()
     }
 
+    single<UserRepository> {
+        UserRepositoryImpl()
+    }
+
+    single<UseItemIdRepository> {
+        UseItemIdRepositoryImpl()
+    }
+
     single<GetControllerByCommandTypeUseCase> {
         GetControllerByCommandTypeUseCaseImpl(
             confirmRepository = get(),
@@ -72,6 +102,9 @@ val MenuModule = module {
             skillUserViewModel = get(),
             skillListViewModel = get(),
             skillTargetViewModel = get(),
+            toolUserViewModel = get(),
+            toolListViewModel = get(),
+            toolTargetViewModel = get(),
             confirmViewModel = get(),
             textViewModel = get(),
         )
@@ -91,6 +124,15 @@ val MenuModule = module {
             useSkillIdRepository = get(),
             skillRepository = get(),
             updateStatusService = get(),
+        )
+    }
+
+    single<UseToolUseCase> {
+        UseToolUseCaseImpl(
+            targetRepository = get(),
+            useItemIdRepository = get(),
+            toolRepository = get(),
+            updateStatusService = get<UpdatePlayerStatusUseCaseImpl>(),
         )
     }
 }

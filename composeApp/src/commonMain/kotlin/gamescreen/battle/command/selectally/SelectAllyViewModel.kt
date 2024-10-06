@@ -3,8 +3,8 @@ package gamescreen.battle.command.selectally
 import common.values.playerNum
 import core.domain.item.TargetType
 import core.domain.item.skill.HealSkill
+import core.repository.item.skill.SkillRepository
 import core.repository.player.PlayerRepository
-import core.repository.skill.SkillRepository
 import gamescreen.battle.BattleChildViewModel
 import gamescreen.battle.domain.BattleCommandType
 import gamescreen.battle.domain.SelectAllyCommand

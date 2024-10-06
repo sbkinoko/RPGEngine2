@@ -5,12 +5,12 @@ import core.domain.item.skill.AttackSkill
 import core.domain.item.skill.HealSkill
 import core.domain.status.Status
 import core.repository.battlemonster.BattleMonsterRepository
+import core.repository.item.skill.ATTACK_NORMAL
+import core.repository.item.skill.SkillRepository
 import core.repository.player.PlayerRepository
-import core.repository.skill.ATTACK_NORMAL
-import core.repository.skill.SkillRepository
 import core.usecase.updateparameter.UpdateMonsterStatusUseCase
-import core.usecase.updateparameter.UpdatePlayerStatusUseCase
-import core.usecase.updateparameter.UpdateStatusService
+import core.usecase.updateparameter.UpdatePlayerStatusUseCaseImpl
+import core.usecase.updateparameter.UpdateStatusUseCase
 import gamescreen.battle.BattleChildViewModel
 import gamescreen.battle.QualifierAttackFromEnemy
 import gamescreen.battle.QualifierAttackFromPlayer
@@ -41,7 +41,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
     private val playerRepository: PlayerRepository by inject()
     private val skillRepository: SkillRepository by inject()
 
-    private val updatePlayerParameter: UpdatePlayerStatusUseCase by inject()
+    private val updatePlayerParameter: UpdatePlayerStatusUseCaseImpl by inject()
     private val updateEnemyParameter: UpdateMonsterStatusUseCase by inject()
 
     private val attackFromPlayerUseCase: AttackUseCase by inject(
@@ -238,7 +238,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
         actionData: ActionData,
         statusList: List<Status>,
         attackUseCase: AttackUseCase,
-        updateParameter: UpdateStatusService<*>,
+        updateParameter: UpdateStatusUseCase<*>,
     ) {
         val skill = skillRepository.getSkill(
             id = actionData.skillId

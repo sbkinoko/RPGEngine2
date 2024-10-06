@@ -2,7 +2,7 @@ package core.usecase.updateparameter
 
 import core.repository.status.StatusRepository
 
-abstract class AbstractUpdateStatusUseCase<T> : UpdateStatusService<T> {
+abstract class AbstractUpdateStatusUseCase<T> : UpdateStatusUseCase<T> {
     abstract val statusRepository: StatusRepository<T>
 
     override suspend fun decHP(

@@ -5,8 +5,8 @@ import common.values.playerNum
 import core.domain.AbleType
 import core.domain.Const
 import core.domain.Place
+import core.repository.item.skill.SkillRepository
 import core.repository.player.PlayerRepository
-import core.repository.skill.SkillRepository
 import core.text.repository.TextRepository
 import core.usecase.checkcanuseskill.CheckCanUseSkillUseCase
 import gamescreen.menu.MenuChildViewModel
