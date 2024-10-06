@@ -3,7 +3,7 @@ package core.domain.item
 /**
  * 回復itemに必要な変数
  */
-interface Heal {
+interface HealItem {
     /**
      * 回復量
      */
