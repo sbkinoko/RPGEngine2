@@ -119,6 +119,10 @@ class ActionPhaseViewModel : BattleChildViewModel() {
                 is HealSkill -> Type.HEAL
             }
 
+            ActionType.TOOL -> {
+                TODO("ロジック実装")
+            }
+
             ActionType.None -> throw RuntimeException("ここには来ない")
         }
 
@@ -161,6 +165,8 @@ class ActionPhaseViewModel : BattleChildViewModel() {
                     is HealSkill -> "回復"
                 }
             }
+
+            ActionType.TOOL -> TODO()
 
             ActionType.None -> throw RuntimeException(
                 "ここには来ないはず"
@@ -207,6 +213,8 @@ class ActionPhaseViewModel : BattleChildViewModel() {
                     updateParameter = updatePlayerParameter,
                 )
             }
+
+            ActionType.TOOL -> TODO()
 
             ActionType.None -> Unit
         }

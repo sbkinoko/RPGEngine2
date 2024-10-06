@@ -26,6 +26,7 @@ class ActionRepositoryImpl : ActionRepository {
                         lastSelectedAction = actionType,
                         skillId = skillId,
                     )
+                    ActionType.TOOL -> TODO()
 
                     ActionType.None -> it
                 }
