@@ -22,6 +22,7 @@ class StatusTest {
                 maxValue = 100,
             ),
             skillList = listOf(),
+            toolList = listOf(),
         )
     }
 
