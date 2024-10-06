@@ -47,6 +47,7 @@ class PlayerActionViewModel : BattleChildViewModel() {
         selectManager.selected = when (action) {
             ActionType.Normal -> normalAttack
             ActionType.Skill -> skill
+            ActionType.TOOL -> tool
             ActionType.None -> throw RuntimeException()
         }
     }
@@ -76,6 +77,10 @@ class PlayerActionViewModel : BattleChildViewModel() {
             skill -> commandRepository.push(
                 SkillCommand(playerId),
             )
+
+            tool -> {
+                // todo 画面遷移実装
+            }
         }
     }
 

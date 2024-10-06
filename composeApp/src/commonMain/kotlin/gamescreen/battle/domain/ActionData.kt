@@ -11,5 +11,6 @@ data class ActionData(
 enum class ActionType {
     Normal,
     Skill,
+    TOOL,
     None,
 }
