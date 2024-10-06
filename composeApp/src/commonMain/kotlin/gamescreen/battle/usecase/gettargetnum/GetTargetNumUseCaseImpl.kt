@@ -16,6 +16,7 @@ class GetTargetNumUseCaseImpl(
                     skillRepository.getSkill(it.skillId!!).targetNum
                 }
 
+                ActionType.TOOL -> TODO()
                 ActionType.None -> throw RuntimeException()
             }
         }
