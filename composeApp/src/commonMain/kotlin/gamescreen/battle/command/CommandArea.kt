@@ -7,6 +7,7 @@ import gamescreen.battle.command.actionphase.ActionPhase
 import gamescreen.battle.command.escape.EscapeCommand
 import gamescreen.battle.command.finish.FinishCommandWindow
 import gamescreen.battle.command.item.skill.SkillCommandWindow
+import gamescreen.battle.command.item.tool.ToolCommandWindow
 import gamescreen.battle.command.main.BattleMainCommand
 import gamescreen.battle.command.playeraction.PlayerAction
 import gamescreen.battle.command.selectally.SelectAllyCommandWindow
@@ -19,6 +20,7 @@ import gamescreen.battle.domain.PlayerActionCommand
 import gamescreen.battle.domain.SelectAllyCommand
 import gamescreen.battle.domain.SelectEnemyCommand
 import gamescreen.battle.domain.SkillCommand
+import gamescreen.battle.domain.ToolCommand
 import org.koin.compose.koinInject
 
 @Composable
@@ -64,6 +66,12 @@ fun CommandArea(
 
         is SkillCommand -> {
             SkillCommandWindow(
+                modifier = modifier,
+            )
+        }
+
+        is ToolCommand -> {
+            ToolCommandWindow(
                 modifier = modifier,
             )
         }

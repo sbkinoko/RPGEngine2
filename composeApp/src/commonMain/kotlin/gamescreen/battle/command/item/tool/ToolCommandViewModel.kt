@@ -1,29 +1,33 @@
 package gamescreen.battle.command.item.tool
 
+import core.domain.Const
 import gamescreen.battle.command.item.ItemCommandViewModel
 import gamescreen.battle.domain.ActionType
 import gamescreen.battle.domain.BattleCommandType
+import gamescreen.battle.domain.ToolCommand
 import gamescreen.menu.domain.SelectManager
 
 class ToolCommandViewModel : ItemCommandViewModel() {
     override val itemList: List<Int>
-        get() = TODO("Not yet implemented")
+        get() = playerRepository.getStatus(playerId).toolList
     override val playerId: Int
-        get() = TODO("Not yet implemented")
-    override val actionType: ActionType
-        get() = TODO("Not yet implemented")
+        get() = (commandRepository.nowCommandType as? ToolCommand)?.playerId
+            ?: Const.INITIAL_PLAYER
 
-    override var selectManager: SelectManager
-        get() = TODO("Not yet implemented")
-        set(value) {}
+    override val actionType: ActionType
+        get() = ActionType.TOOL
+
+    override var selectManager: SelectManager = SelectManager(
+        width = 2,
+        itemNum = itemList.size,
+    )
 
     override fun canUse(id: Int): Boolean {
         return true
     }
 
     override fun isBoundedImpl(commandType: BattleCommandType): Boolean {
-        TODO("Not yet implemented")
+        return commandType is ToolCommand
     }
-
 
 }

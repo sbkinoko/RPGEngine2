@@ -4,6 +4,7 @@ import controller.domain.ControllerCallback
 import gamescreen.battle.command.actionphase.ActionPhaseViewModel
 import gamescreen.battle.command.escape.EscapeViewModel
 import gamescreen.battle.command.item.skill.SkillCommandViewModel
+import gamescreen.battle.command.item.tool.ToolCommandViewModel
 import gamescreen.battle.command.main.BattleMainViewModel
 import gamescreen.battle.command.playeraction.PlayerActionViewModel
 import gamescreen.battle.command.selectally.SelectAllyViewModel
@@ -16,6 +17,7 @@ import gamescreen.battle.domain.PlayerActionCommand
 import gamescreen.battle.domain.SelectAllyCommand
 import gamescreen.battle.domain.SelectEnemyCommand
 import gamescreen.battle.domain.SkillCommand
+import gamescreen.battle.domain.ToolCommand
 import gamescreen.battle.repository.commandstate.CommandStateRepository
 
 class GetControllerByCommandTypeUseCaseImpl(
@@ -27,6 +29,7 @@ class GetControllerByCommandTypeUseCaseImpl(
     private val actionPhaseViewModel: ActionPhaseViewModel,
     private val escapeViewModel: EscapeViewModel,
     private val skillCommandViewModel: SkillCommandViewModel,
+    private val toolCommandViewModel: ToolCommandViewModel,
     private val selectAllyViewModel: SelectAllyViewModel,
 ) : GetControllerByCommandTypeUseCase {
     override operator fun invoke(): ControllerCallback? {
@@ -39,6 +42,7 @@ class GetControllerByCommandTypeUseCaseImpl(
             is EscapeCommand -> escapeViewModel
             is FinishCommand -> null
             is SkillCommand -> skillCommandViewModel
+            is ToolCommand -> toolCommandViewModel
         }
     }
 }
