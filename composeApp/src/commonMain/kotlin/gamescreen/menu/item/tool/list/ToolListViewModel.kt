@@ -18,7 +18,7 @@ class ToolListViewModel : ItemListViewModel() {
     override val boundedScreenType: MenuType
         get() = MenuType.TOOL_LIST
     private val nextScreenType: MenuType
-        get() = TODO("Not yet implemented")
+        get() = MenuType.TOOL_TARGET
 
     override val itemList: List<Int>
         get() = playerRepository.getStatus(userId).toolList
