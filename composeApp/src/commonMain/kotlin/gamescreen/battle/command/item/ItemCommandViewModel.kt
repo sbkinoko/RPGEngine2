@@ -8,13 +8,15 @@ import gamescreen.battle.BattleChildViewModel
 import gamescreen.battle.domain.ActionType
 import gamescreen.battle.domain.SelectAllyCommand
 import gamescreen.battle.repository.action.ActionRepository
+import gamescreen.menu.domain.SelectManager
 import org.koin.core.component.inject
 import kotlin.math.max
 
 abstract class ItemCommandViewModel : BattleChildViewModel() {
     private val actionRepository: ActionRepository by inject()
-    private val itemRepository: ItemRepository by inject()
     protected val playerRepository: PlayerRepository by inject()
+
+    protected abstract val itemRepository: ItemRepository
 
     abstract val itemList: List<Int>
 
@@ -28,20 +30,24 @@ abstract class ItemCommandViewModel : BattleChildViewModel() {
     private val selectedItemId: Int
         get() = itemList[selectManager.selected]
 
-
     fun init() {
         // 最後に選ばれていたスキルを呼び出し
-        val itemId = actionRepository.getAction(
-            playerId = playerId
-        ).skillId
+        val itemId = getItemId()
 
-        // skillIdを発見できない場合は先頭を返す
-        //　それ以外はskillIdの場所を返す
-        selectManager.selected = max(
+        val selected = max(
             itemList.indexOf(itemId),
-            Const.INITIAL_PLAYER,
+            Const.INITIAL_ITEM_POSITION,
         )
+
+        selectManager = SelectManager(
+            width = 2,
+            itemNum = itemList.size,
+        )
+
+        selectManager.selected = selected
     }
+
+    abstract fun getItemId(): Int
 
     override fun selectable(): Boolean {
         return canUse(selectedItemId)

@@ -12,12 +12,11 @@ import common.extension.equalAllocationModifier
 import common.extension.menuItem
 import common.layout.CenterText
 import common.layout.DisableBox
-import org.koin.compose.koinInject
 
 @Composable
 fun ItemCommandWindow(
+    itemCommandViewModel: ItemCommandViewModel,
     modifier: Modifier = Modifier,
-    itemCommandViewModel: ItemCommandViewModel = koinInject(),
 ) {
     val flg = remember {
         mutableStateOf(true)
@@ -34,12 +33,14 @@ fun ItemCommandWindow(
                 modifier = equalAllocationModifier,
             ) {
                 ItemArea(
+                    itemCommandViewModel = itemCommandViewModel,
                     index = 2 * i,
                     size = itemCommandViewModel.itemList.size,
                     modifier = equalAllocationModifier,
                 )
 
                 ItemArea(
+                    itemCommandViewModel = itemCommandViewModel,
                     index = 2 * i + 1,
                     size = itemCommandViewModel.itemList.size,
                     modifier = equalAllocationModifier,
@@ -53,10 +54,12 @@ fun ItemCommandWindow(
 fun ItemArea(
     index: Int,
     size: Int,
+    itemCommandViewModel: ItemCommandViewModel,
     modifier: Modifier = Modifier,
 ) {
     if (index < size) {
         ItemText(
+            itemCommandViewModel = itemCommandViewModel,
             modifier = modifier,
             position = index,
         )
@@ -70,8 +73,8 @@ fun ItemArea(
 @Composable
 fun ItemText(
     position: Int,
+    itemCommandViewModel: ItemCommandViewModel,
     modifier: Modifier = Modifier,
-    itemCommandViewModel: ItemCommandViewModel = koinInject(),
 ) {
     val id = itemCommandViewModel.itemList[position]
     DisableBox(
