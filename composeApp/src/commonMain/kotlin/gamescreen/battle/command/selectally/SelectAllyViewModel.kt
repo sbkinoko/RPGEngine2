@@ -1,11 +1,13 @@
 package gamescreen.battle.command.selectally
 
 import common.values.playerNum
+import core.domain.item.HealItem
 import core.domain.item.TargetType
 import core.domain.item.skill.HealSkill
 import core.repository.item.skill.SkillRepository
 import core.repository.player.PlayerRepository
 import gamescreen.battle.BattleChildViewModel
+import gamescreen.battle.domain.ActionType
 import gamescreen.battle.domain.BattleCommandType
 import gamescreen.battle.domain.SelectAllyCommand
 import gamescreen.battle.repository.action.ActionRepository
@@ -38,12 +40,34 @@ class SelectAllyViewModel : BattleChildViewModel() {
 
     val targetType: TargetType
         get() {
-            val skillId = actionRepository.getAction(playerId).skillId!!
-            val skill = skillRepository.getSkill(skillId)
-            if (skill !is HealSkill) {
-                throw RuntimeException("Heal以外でここにいないはず")
+            val actionType = actionRepository.getAction(playerId).thisTurnAction
+            val item = when (
+                actionType
+            ) {
+                ActionType.Skill -> {
+                    val id = actionRepository.getAction(playerId).skillId
+                    skillRepository.getSkill(id)
+                }
+
+                ActionType.TOOL -> {
+                    TODO()
+                }
+
+                ActionType.Normal,
+                ActionType.None -> {
+                    throw IllegalStateException()
+                }
             }
-            return skill.targetType
+
+            if (item is HealSkill) {
+                return item.targetType
+            }
+
+            if (item is HealItem) {
+                return item.targetType
+            }
+
+            throw RuntimeException("Heal以外でここにいないはず")
         }
 
     init {

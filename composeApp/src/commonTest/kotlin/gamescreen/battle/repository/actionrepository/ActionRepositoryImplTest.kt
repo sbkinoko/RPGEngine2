@@ -54,7 +54,7 @@ class ActionRepositoryImplTest {
         actionRepository.setAction(
             playerId = playerID,
             actionType = ActionType.Skill,
-            skillId = skillID,
+            itemId = skillID,
         )
 
         actionRepository.getAction(playerID).apply {
@@ -79,7 +79,7 @@ class ActionRepositoryImplTest {
         actionRepository.setAction(
             playerId = playerID,
             actionType = initAction,
-            skillId = skillID,
+            itemId = skillID,
         )
 
         actionRepository.getAction(playerID).apply {
@@ -96,7 +96,7 @@ class ActionRepositoryImplTest {
         actionRepository.setAction(
             playerId = playerID,
             actionType = secondAction,
-            skillId = skillID,
+            itemId = skillID,
         )
 
         actionRepository.getAction(playerID).apply {

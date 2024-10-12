@@ -62,7 +62,7 @@ class GetTargetNumUseCaseTest : KoinTest {
         actionRepository.setAction(
             playerId = playerId,
             actionType = actionType,
-            skillId = 0
+            itemId = 0
         )
 
         getTargetNumUseCase(

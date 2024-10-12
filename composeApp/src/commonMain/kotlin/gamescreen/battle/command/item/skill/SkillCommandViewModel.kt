@@ -1,4 +1,4 @@
-package gamescreen.battle.command.skill
+package gamescreen.battle.command.item.skill
 
 import core.domain.AbleType
 import core.domain.Const
@@ -51,6 +51,11 @@ class SkillCommandViewModel : BattleChildViewModel() {
             skillList.indexOf(skillId),
             Const.INITIAL_PLAYER,
         )
+
+        selectManager = SelectManager(
+            width = 2,
+            itemNum = skillList.size,
+        )
     }
 
     override fun selectable(): Boolean {
@@ -88,7 +93,7 @@ class SkillCommandViewModel : BattleChildViewModel() {
         actionRepository.setAction(
             actionType = ActionType.Skill,
             playerId = playerId,
-            skillId = skillId,
+            itemId = skillId,
         )
         when (skillRepository.getSkill(skillId)) {
             is AttackSkill -> {
