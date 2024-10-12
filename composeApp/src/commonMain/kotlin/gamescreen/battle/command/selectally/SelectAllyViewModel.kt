@@ -5,6 +5,7 @@ import core.domain.item.HealItem
 import core.domain.item.TargetType
 import core.domain.item.skill.HealSkill
 import core.repository.item.skill.SkillRepository
+import core.repository.item.tool.ToolRepository
 import core.repository.player.PlayerRepository
 import gamescreen.battle.BattleChildViewModel
 import gamescreen.battle.domain.ActionType
@@ -24,6 +25,7 @@ class SelectAllyViewModel : BattleChildViewModel() {
     private val changeSelectingActionPlayerUseCase: ChangeSelectingActionPlayerUseCase by inject()
     private val actionRepository: ActionRepository by inject()
     private val skillRepository: SkillRepository by inject()
+    private val toolRepository: ToolRepository by inject()
     private val playerRepository: PlayerRepository by inject()
 
     private val playerId: Int
@@ -50,7 +52,8 @@ class SelectAllyViewModel : BattleChildViewModel() {
                 }
 
                 ActionType.TOOL -> {
-                    TODO()
+                    val id = actionRepository.getAction(playerId).toolId!!
+                    toolRepository.getItem(id)
                 }
 
                 ActionType.Normal,
