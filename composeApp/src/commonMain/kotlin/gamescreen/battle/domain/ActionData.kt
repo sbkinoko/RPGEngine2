@@ -6,6 +6,7 @@ data class ActionData(
     val target: Int = 0,
     val ally: Int = 0,
     val skillId: Int = 0,
+    val toolId: Int = 0,
 )
 
 enum class ActionType {

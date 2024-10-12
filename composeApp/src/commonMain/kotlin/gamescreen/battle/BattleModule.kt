@@ -3,6 +3,7 @@ package gamescreen.battle
 import gamescreen.battle.command.actionphase.ActionPhaseViewModel
 import gamescreen.battle.command.escape.EscapeViewModel
 import gamescreen.battle.command.item.skill.SkillCommandViewModel
+import gamescreen.battle.command.item.tool.ToolCommandViewModel
 import gamescreen.battle.command.main.BattleMainViewModel
 import gamescreen.battle.command.playeraction.PlayerActionViewModel
 import gamescreen.battle.command.selectally.SelectAllyViewModel
@@ -61,6 +62,10 @@ val BattleModule = module {
     }
 
     single {
+        ToolCommandViewModel()
+    }
+
+    single {
         SelectAllyViewModel()
     }
 
@@ -85,6 +90,7 @@ val BattleModule = module {
             actionPhaseViewModel = get(),
             escapeViewModel = get(),
             skillCommandViewModel = get(),
+            toolCommandViewModel = get(),
             selectAllyViewModel = get(),
         )
     }
