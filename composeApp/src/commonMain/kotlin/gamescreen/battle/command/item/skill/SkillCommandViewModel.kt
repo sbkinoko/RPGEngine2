@@ -93,7 +93,7 @@ class SkillCommandViewModel : BattleChildViewModel() {
         actionRepository.setAction(
             actionType = ActionType.Skill,
             playerId = playerId,
-            skillId = skillId,
+            itemId = skillId,
         )
         when (skillRepository.getSkill(skillId)) {
             is AttackSkill -> {

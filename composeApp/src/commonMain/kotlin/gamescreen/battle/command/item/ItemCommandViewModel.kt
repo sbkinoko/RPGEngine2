@@ -69,7 +69,7 @@ abstract class ItemCommandViewModel : BattleChildViewModel() {
         actionRepository.setAction(
             actionType = actionType,
             playerId = playerId,
-            skillId = itemId,
+            itemId = itemId,
         )
 
         when (itemRepository.getItem(itemId)) {
