@@ -9,7 +9,7 @@ class ActionRepositoryImpl : ActionRepository {
     override fun setAction(
         playerId: Int,
         actionType: ActionType,
-        itemId: Int?
+        itemId: Int?,
     ) {
         actionMap[playerId] = actionMap[playerId]?.let { actionData ->
             // 共通の更新
@@ -23,11 +23,11 @@ class ActionRepositoryImpl : ActionRepository {
 
                     ActionType.Skill -> it.copy(
                         lastSelectedAction = actionType,
-                        skillId = itemId,
+                        skillId = itemId!!,
                     )
                     ActionType.TOOL -> it.copy(
                         lastSelectedAction = actionType,
-                        toolId = itemId,
+                        toolId = itemId!!,
                     )
 
                     ActionType.None -> it
@@ -35,8 +35,8 @@ class ActionRepositoryImpl : ActionRepository {
             }
         } ?: ActionData(
             thisTurnAction = actionType,
-            skillId = if (actionType == ActionType.Skill) itemId else 0,
-            toolId = if (actionType == ActionType.TOOL) itemId else 0,
+            skillId = if (actionType == ActionType.Skill) itemId!! else 0,
+            toolId = if (actionType == ActionType.TOOL) itemId!! else 0,
         )
     }
 
