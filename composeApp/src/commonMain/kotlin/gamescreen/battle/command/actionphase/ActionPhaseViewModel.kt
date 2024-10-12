@@ -114,7 +114,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
 
         val type = when (action.thisTurnAction) {
             ActionType.Normal -> Type.ATTACK
-            ActionType.Skill -> when (skillRepository.getSkill(action.skillId!!)) {
+            ActionType.Skill -> when (skillRepository.getSkill(action.skillId)) {
                 is AttackSkill -> Type.ATTACK
                 is HealSkill -> Type.HEAL
             }
@@ -155,7 +155,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
             ActionType.Normal -> "攻撃"
             ActionType.Skill -> {
                 val skill = if (id < playerNum) {
-                    val skillId = actionRepository.getAction(id).skillId!!
+                    val skillId = actionRepository.getAction(id).skillId
                     skillRepository.getSkill(skillId)
                 } else {
                     skillRepository.getSkill(ATTACK_NORMAL)
@@ -250,7 +250,6 @@ class ActionPhaseViewModel : BattleChildViewModel() {
     ) {
         val skill = skillRepository.getSkill(
             id = actionData.skillId
-                ?: throw RuntimeException("スキルを選んでいるのでスキルが入っているはず")
         )
 
         // MP減らす
