@@ -1,11 +1,12 @@
-package gamescreen.battle.command.skill
+package gamescreen.battle.command.item.skill
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import common.extension.equalAllocationModifier
 import common.extension.menuItem
@@ -18,10 +19,13 @@ fun SkillCommandWindow(
     modifier: Modifier = Modifier,
     skillCommandViewModel: SkillCommandViewModel = koinInject(),
 ) {
-    LaunchedEffect(
-        skillCommandViewModel.playerId,
-    ) {
+    val flg = remember {
+        mutableStateOf(true)
+    }
+
+    if (flg.value) {
         skillCommandViewModel.init()
+        flg.value = false
     }
 
     Column(modifier = modifier) {

@@ -5,11 +5,13 @@ data class ActionData(
     val lastSelectedAction: ActionType = ActionType.Normal,
     val target: Int = 0,
     val ally: Int = 0,
-    val skillId: Int? = null,
+    val skillId: Int = 0,
+    val toolId: Int = 0,
 )
 
 enum class ActionType {
     Normal,
     Skill,
+    TOOL,
     None,
 }

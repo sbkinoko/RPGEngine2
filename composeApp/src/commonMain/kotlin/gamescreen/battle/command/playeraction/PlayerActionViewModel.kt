@@ -8,6 +8,7 @@ import gamescreen.battle.domain.PlayerActionCommand
 import gamescreen.battle.domain.PlayerIdCommand
 import gamescreen.battle.domain.SelectEnemyCommand
 import gamescreen.battle.domain.SkillCommand
+import gamescreen.battle.domain.ToolCommand
 import gamescreen.battle.repository.action.ActionRepository
 import gamescreen.battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUseCase
 import gamescreen.menu.domain.SelectManager
@@ -19,8 +20,14 @@ class PlayerActionViewModel : BattleChildViewModel() {
 
     private val changeSelectingActionPlayerUseCase: ChangeSelectingActionPlayerUseCase by inject()
 
+    override var selectManager: SelectManager = SelectManager(
+        width = 2,
+        itemNum = 3,
+    )
+
     val normalAttack = 0
     val skill = 1
+    val tool = 2
 
     val playerId: Int
         get() = (commandRepository.nowCommandType as PlayerActionCommand).playerId
@@ -41,6 +48,7 @@ class PlayerActionViewModel : BattleChildViewModel() {
         selectManager.selected = when (action) {
             ActionType.Normal -> normalAttack
             ActionType.Skill -> skill
+            ActionType.TOOL -> tool
             ActionType.None -> throw RuntimeException()
         }
     }
@@ -70,6 +78,10 @@ class PlayerActionViewModel : BattleChildViewModel() {
             skill -> commandRepository.push(
                 SkillCommand(playerId),
             )
+
+            tool -> commandRepository.push(
+                ToolCommand(playerId)
+            )
         }
     }
 
@@ -86,9 +98,4 @@ class PlayerActionViewModel : BattleChildViewModel() {
             player.isActive
         }
     }
-
-    override var selectManager: SelectManager = SelectManager(
-        width = 2,
-        itemNum = 2,
-    )
 }
