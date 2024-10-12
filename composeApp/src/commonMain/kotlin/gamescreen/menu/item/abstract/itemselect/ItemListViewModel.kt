@@ -14,7 +14,7 @@ abstract class ItemListViewModel : MenuChildViewModel(),
     ItemList,
     KoinComponent {
     protected val playerRepository: PlayerRepository by inject()
-    protected abstract val userRepository: UserRepository
+    private val userRepository: UserRepository by inject()
     protected abstract val itemRepository: ItemRepository
 
     override var selectManager = SelectManager(
@@ -28,7 +28,8 @@ abstract class ItemListViewModel : MenuChildViewModel(),
     val userId: Int
         get() = userRepository.userId
 
-    protected abstract val itemList: List<Int>
+    protected val itemList: List<Int>
+        get() = getPlayerItemListAt(userId)
 
     protected abstract val boundedScreenType: MenuType
 
@@ -37,14 +38,11 @@ abstract class ItemListViewModel : MenuChildViewModel(),
     }
 
     fun init() {
-        loadItem()
-    }
-
-    private fun loadItem() {
         selectManager = SelectManager(
             width = 1,
             itemNum = itemList.size
         )
+        // fixme 前回の選択位置を利用する
         selectManager.selected = INIT_ITEM_POSITION
     }
 

@@ -117,7 +117,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
 
         val type = when (action.thisTurnAction) {
             ActionType.Normal -> Type.ATTACK
-            ActionType.Skill -> when (skillRepository.getSkill(action.skillId)) {
+            ActionType.Skill -> when (skillRepository.getItem(action.skillId)) {
                 is AttackSkill -> Type.ATTACK
                 is HealSkill -> Type.HEAL
             }
@@ -159,9 +159,9 @@ class ActionPhaseViewModel : BattleChildViewModel() {
             ActionType.Skill -> {
                 val skill = if (id < playerNum) {
                     val skillId = actionRepository.getAction(id).skillId
-                    skillRepository.getSkill(skillId)
+                    skillRepository.getItem(skillId)
                 } else {
-                    skillRepository.getSkill(ATTACK_NORMAL)
+                    skillRepository.getItem(ATTACK_NORMAL)
                 }
                 when (skill) {
                     is AttackSkill -> "攻撃"
@@ -262,7 +262,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
         attackUseCase: AttackUseCase,
         updateParameter: UpdateStatusUseCase<*>,
     ) {
-        val skill = skillRepository.getSkill(
+        val skill = skillRepository.getItem(
             id = actionData.skillId
         )
 

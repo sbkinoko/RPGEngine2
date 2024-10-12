@@ -26,7 +26,7 @@ class UseSkillUseCaseImpl(
             val user = skillUserRepository.skillUserId
             val skillId = useSkillIdRepository.skillId
 
-            val skill = skillRepository.getSkill(
+            val skill = skillRepository.getItem(
                 id = skillId
             )
 

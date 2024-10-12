@@ -27,7 +27,7 @@ fun SkillListWindow(
     skillUserViewModel: SkillUserViewModel = koinInject(),
     skillListViewModel: SkillListViewModel = koinInject(),
 ) {
-    val user = skillListViewModel.user
+    val user = skillListViewModel.userId
 
     val flg = remember {
         mutableStateOf(true)

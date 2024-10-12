@@ -6,11 +6,9 @@ import core.text.repository.TextRepository
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.item.abstract.itemselect.ItemListViewModel
 import gamescreen.menu.item.repository.useitemid.UseItemIdRepository
-import gamescreen.menu.item.repository.user.UserRepository
 import org.koin.core.component.inject
 
 class ToolListViewModel : ItemListViewModel() {
-    override val userRepository: UserRepository by inject()
     override val itemRepository: ToolRepository by inject()
     private val textRepository: TextRepository by inject()
     private val useItemIdRepository: UseItemIdRepository by inject()
@@ -19,9 +17,6 @@ class ToolListViewModel : ItemListViewModel() {
         get() = MenuType.TOOL_LIST
     private val nextScreenType: MenuType
         get() = MenuType.TOOL_TARGET
-
-    override val itemList: List<Int>
-        get() = playerRepository.getStatus(userId).toolList
 
     override fun goNextImpl() {
         val position = selectManager.selected
@@ -45,10 +40,8 @@ class ToolListViewModel : ItemListViewModel() {
                 textRepository.push(true)
             }
 
-            AbleType.CANT_USE_BY_MP -> {
-                textRepository.setText("MPがたりません")
-                textRepository.push(true)
-            }
+            // 道具はMP消費しない
+            AbleType.CANT_USE_BY_MP -> Unit
         }
     }
 

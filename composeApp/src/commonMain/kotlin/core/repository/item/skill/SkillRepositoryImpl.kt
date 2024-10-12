@@ -14,7 +14,7 @@ const val REVIVE_SKILL = 4
 
 class SkillRepositoryImpl : SkillRepository {
 
-    override fun getSkill(id: Int): Skill {
+    override fun getItem(id: Int): Skill {
         return when (id) {
             ATTACK_TO_2 -> AttackSkill(
                 id = id,
