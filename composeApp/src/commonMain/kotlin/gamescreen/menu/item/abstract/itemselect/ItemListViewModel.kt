@@ -28,7 +28,8 @@ abstract class ItemListViewModel : MenuChildViewModel(),
     val userId: Int
         get() = userRepository.userId
 
-    protected abstract val itemList: List<Int>
+    protected val itemList: List<Int>
+        get() = getPlayerItemListAt(userId)
 
     protected abstract val boundedScreenType: MenuType
 
@@ -37,10 +38,6 @@ abstract class ItemListViewModel : MenuChildViewModel(),
     }
 
     fun init() {
-        loadItem()
-    }
-
-    private fun loadItem() {
         selectManager = SelectManager(
             width = 1,
             itemNum = itemList.size

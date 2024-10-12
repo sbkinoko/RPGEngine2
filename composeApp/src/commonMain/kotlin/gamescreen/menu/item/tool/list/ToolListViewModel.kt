@@ -18,9 +18,6 @@ class ToolListViewModel : ItemListViewModel() {
     private val nextScreenType: MenuType
         get() = MenuType.TOOL_TARGET
 
-    override val itemList: List<Int>
-        get() = playerRepository.getStatus(userId).toolList
-
     override fun goNextImpl() {
         val position = selectManager.selected
         val id = itemList[position]
@@ -43,14 +40,12 @@ class ToolListViewModel : ItemListViewModel() {
                 textRepository.push(true)
             }
 
-            AbleType.CANT_USE_BY_MP -> {
-                textRepository.setText("MPがたりません")
-                textRepository.push(true)
-            }
+            // 道具はMP消費しない
+            AbleType.CANT_USE_BY_MP -> Unit
         }
     }
 
     override fun getPlayerItemListAt(id: Int): List<Int> {
-        return playerRepository.getStatus(id).skillList
+        return playerRepository.getStatus(id).toolList
     }
 }
