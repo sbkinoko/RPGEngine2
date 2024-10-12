@@ -14,7 +14,6 @@ class ActionRepositoryImpl : ActionRepository {
         actionMap[playerId] = actionMap[playerId]?.let { actionData ->
             // 共通の更新
             actionData.copy(
-
                 thisTurnAction = actionType,
             ).let {
                 when (actionType) {
@@ -26,14 +25,18 @@ class ActionRepositoryImpl : ActionRepository {
                         lastSelectedAction = actionType,
                         skillId = itemId,
                     )
-                    ActionType.TOOL -> TODO()
+                    ActionType.TOOL -> it.copy(
+                        lastSelectedAction = actionType,
+                        toolId = itemId,
+                    )
 
                     ActionType.None -> it
                 }
             }
         } ?: ActionData(
             thisTurnAction = actionType,
-            skillId = itemId,
+            skillId = if (actionType == ActionType.Skill) itemId else 0,
+            toolId = if (actionType == ActionType.TOOL) itemId else 0,
         )
     }
 
