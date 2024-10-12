@@ -3,10 +3,12 @@ package gamescreen.battle.command.actionphase
 import common.values.playerNum
 import core.domain.item.skill.AttackSkill
 import core.domain.item.skill.HealSkill
+import core.domain.item.tool.HealTool
 import core.domain.status.Status
 import core.repository.battlemonster.BattleMonsterRepository
 import core.repository.item.skill.ATTACK_NORMAL
 import core.repository.item.skill.SkillRepository
+import core.repository.item.tool.ToolRepository
 import core.repository.player.PlayerRepository
 import core.usecase.updateparameter.UpdateMonsterStatusUseCase
 import core.usecase.updateparameter.UpdatePlayerStatusUseCaseImpl
@@ -40,6 +42,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
     private val battleMonsterRepository: BattleMonsterRepository by inject()
     private val playerRepository: PlayerRepository by inject()
     private val skillRepository: SkillRepository by inject()
+    private val toolRepository: ToolRepository by inject()
 
     private val updatePlayerParameter: UpdatePlayerStatusUseCaseImpl by inject()
     private val updateEnemyParameter: UpdateMonsterStatusUseCase by inject()
@@ -119,8 +122,8 @@ class ActionPhaseViewModel : BattleChildViewModel() {
                 is HealSkill -> Type.HEAL
             }
 
-            ActionType.TOOL -> {
-                TODO("ロジック実装")
+            ActionType.TOOL -> when (toolRepository.getItem(action.toolId)) {
+                is HealTool -> Type.HEAL
             }
 
             ActionType.None -> throw RuntimeException("ここには来ない")
@@ -166,7 +169,13 @@ class ActionPhaseViewModel : BattleChildViewModel() {
                 }
             }
 
-            ActionType.TOOL -> TODO()
+            ActionType.TOOL -> {
+                val itemId = actionRepository.getAction(id).toolId
+                val item = toolRepository.getItem(itemId)
+                when (item) {
+                    is HealTool -> "回復"
+                }
+            }
 
             ActionType.None -> throw RuntimeException(
                 "ここには来ないはず"
@@ -214,7 +223,12 @@ class ActionPhaseViewModel : BattleChildViewModel() {
                 )
             }
 
-            ActionType.TOOL -> TODO()
+            ActionType.TOOL -> {
+                toolAction(
+                    actionData = actionRepository.getAction(attackingPlayerId.value),
+                    updateParameter = updatePlayerParameter,
+                )
+            }
 
             ActionType.None -> Unit
         }
@@ -280,6 +294,25 @@ class ActionPhaseViewModel : BattleChildViewModel() {
                 updateParameter.incHP(
                     id = target,
                     amount = skill.healAmount,
+                )
+            }
+        }
+    }
+
+    private suspend fun toolAction(
+        actionData: ActionData,
+        updateParameter: UpdateStatusUseCase<*>,
+    ) {
+        val tool = toolRepository.getItem(
+            id = actionData.skillId
+        )
+
+        when (tool) {
+            is HealTool -> {
+                val target = actionData.ally
+                updateParameter.incHP(
+                    id = target,
+                    amount = tool.healAmount,
                 )
             }
         }
