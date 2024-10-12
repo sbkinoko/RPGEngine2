@@ -15,8 +15,8 @@ abstract class ItemUserViewModel : MenuChildViewModel(),
     ItemList,
     KoinComponent {
     protected val playerRepository: PlayerRepository by inject()
+    private val userRepository: UserRepository by inject()
     protected abstract val itemRepository: ItemRepository
-    protected abstract val userRepository: UserRepository
 
     override val canBack: Boolean
         get() = true

@@ -11,10 +11,10 @@ import gamescreen.menu.item.list.UserList
 
 @Composable
 fun UserWindow(
-    toolUserViewModel: ItemUserViewModel,
+    itemUserViewModel: ItemUserViewModel,
     modifier: Modifier = Modifier,
 ) {
-    val selectedId = toolUserViewModel.getSelectedAsState().value
+    val selectedId = itemUserViewModel.getSelectedAsState().value
     Row(
         modifier = modifier
             .background(
@@ -25,7 +25,7 @@ fun UserWindow(
             modifier = Modifier
                 .fillMaxHeight()
                 .weight(1f),
-            itemUserViewModel = toolUserViewModel,
+            itemUserViewModel = itemUserViewModel,
         )
 
         UnSelectableItemList(
@@ -33,7 +33,7 @@ fun UserWindow(
                 .fillMaxHeight()
                 .weight(1f),
             selectedUserId = selectedId,
-            itemList = toolUserViewModel,
+            itemList = itemUserViewModel,
         )
     }
 }
