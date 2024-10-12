@@ -46,7 +46,7 @@ class SkillUserViewModel : MenuChildViewModel(),
     }
 
     fun getSkillName(id: Int): String {
-        return skillRepository.getSkill(id).name
+        return skillRepository.getItem(id).name
     }
 
     override fun pressB() {

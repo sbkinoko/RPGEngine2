@@ -63,7 +63,7 @@ class SkillCommandViewModel : BattleChildViewModel() {
     }
 
     fun getName(id: Int): String {
-        return skillRepository.getSkill(id).name
+        return skillRepository.getItem(id).name
     }
 
     fun canUse(id: Int): Boolean {
@@ -95,7 +95,7 @@ class SkillCommandViewModel : BattleChildViewModel() {
             playerId = playerId,
             itemId = skillId,
         )
-        when (skillRepository.getSkill(skillId)) {
+        when (skillRepository.getItem(skillId)) {
             is AttackSkill -> {
                 commandRepository.push(
                     SelectEnemyCommand(playerId),

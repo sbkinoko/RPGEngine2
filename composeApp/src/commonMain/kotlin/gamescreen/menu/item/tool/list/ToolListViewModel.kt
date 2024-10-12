@@ -6,11 +6,9 @@ import core.text.repository.TextRepository
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.item.abstract.itemselect.ItemListViewModel
 import gamescreen.menu.item.repository.useitemid.UseItemIdRepository
-import gamescreen.menu.item.repository.user.UserRepository
 import org.koin.core.component.inject
 
 class ToolListViewModel : ItemListViewModel() {
-    override val userRepository: UserRepository by inject()
     override val itemRepository: ToolRepository by inject()
     private val textRepository: TextRepository by inject()
     private val useItemIdRepository: UseItemIdRepository by inject()
@@ -53,6 +51,6 @@ class ToolListViewModel : ItemListViewModel() {
     }
 
     override fun getPlayerItemListAt(id: Int): List<Int> {
-        return playerRepository.getStatus(id).toolList
+        return playerRepository.getStatus(id).skillList
     }
 }

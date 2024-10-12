@@ -46,7 +46,7 @@ class CheckCanUseSkillUseCaseImplTest {
     @BeforeTest
     fun beforeTest() {
         val skillRepository = object : SkillRepository {
-            override fun getSkill(id: Int): Skill {
+            override fun getItem(id: Int): Skill {
                 return skill
             }
         }

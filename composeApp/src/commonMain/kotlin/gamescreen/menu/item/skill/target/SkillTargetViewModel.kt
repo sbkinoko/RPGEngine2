@@ -41,7 +41,7 @@ class SkillTargetViewModel : MenuChildViewModel() {
         get() = useSkillIdRepository.skillId
 
     val explain: String
-        get() = skillRepository.getSkill(skillId).explain
+        get() = skillRepository.getItem(skillId).explain
 
     override fun isBoundedImpl(commandType: MenuType): Boolean {
         return commandType == MenuType.SKILL_TARGET
@@ -63,7 +63,7 @@ class SkillTargetViewModel : MenuChildViewModel() {
 
     fun canSelect(target: Int): Boolean {
         val targetStatus = playerRepository.getStatus(id = target)
-        val skill = skillRepository.getSkill(skillId)
+        val skill = skillRepository.getItem(skillId)
 
         if (skill !is HealSkill) {
             // 回復じゃなかったら使えないはず

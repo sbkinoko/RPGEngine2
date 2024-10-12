@@ -14,7 +14,7 @@ abstract class ItemListViewModel : MenuChildViewModel(),
     ItemList,
     KoinComponent {
     protected val playerRepository: PlayerRepository by inject()
-    protected abstract val userRepository: UserRepository
+    private val userRepository: UserRepository by inject()
     protected abstract val itemRepository: ItemRepository
 
     override var selectManager = SelectManager(
@@ -45,6 +45,7 @@ abstract class ItemListViewModel : MenuChildViewModel(),
             width = 1,
             itemNum = itemList.size
         )
+        // fixme 前回の選択位置を利用する
         selectManager.selected = INIT_ITEM_POSITION
     }
 
