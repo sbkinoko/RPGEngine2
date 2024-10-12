@@ -22,7 +22,7 @@ fun SkillList(
     Column(
         modifier = modifier,
     ) {
-        skillUserViewModel.getSkillAt(selectedUserId).forEachIndexed { index, it ->
+        skillUserViewModel.getPlayerItemListAt(selectedUserId).forEachIndexed { index, it ->
             CenterText(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -41,7 +41,7 @@ fun SkillList(
                             )
                         }
                     ),
-                text = skillUserViewModel.getSkillName(it),
+                text = skillListViewModel.getItemName(id = it),
             )
         }
     }
