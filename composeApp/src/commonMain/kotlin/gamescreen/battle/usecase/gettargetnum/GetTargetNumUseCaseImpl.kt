@@ -13,7 +13,7 @@ class GetTargetNumUseCaseImpl(
             when (it.thisTurnAction) {
                 ActionType.Normal -> 1
                 ActionType.Skill -> {
-                    skillRepository.getSkill(it.skillId!!).targetNum
+                    skillRepository.getSkill(it.skillId).targetNum
                 }
 
                 ActionType.TOOL -> TODO()
