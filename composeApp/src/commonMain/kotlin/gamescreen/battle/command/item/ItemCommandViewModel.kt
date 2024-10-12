@@ -66,7 +66,11 @@ abstract class ItemCommandViewModel : BattleChildViewModel() {
             return
         }
 
-        setAction(itemId = itemId)
+        actionRepository.setAction(
+            actionType = actionType,
+            playerId = playerId,
+            itemId = itemId,
+        )
 
         when (itemRepository.getItem(itemId)) {
             is HealItem -> {
@@ -76,6 +80,4 @@ abstract class ItemCommandViewModel : BattleChildViewModel() {
             }
         }
     }
-
-    protected abstract fun setAction(itemId: Int)
 }
