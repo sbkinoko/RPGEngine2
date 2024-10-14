@@ -29,10 +29,12 @@ class UseToolUseCaseImpl(
                 id = itemId
             )
 
-            updateStatusService.deleteToolAt(
-                index = indexRepository.index,
-                playerId = userRepository.userId
-            )
+            if (tool.isReusable.not()) {
+                updateStatusService.deleteToolAt(
+                    index = indexRepository.index,
+                    playerId = userRepository.userId
+                )
+            }
 
             when (tool) {
                 is HealTool -> {
