@@ -3,8 +3,8 @@ package gamescreen.menu.item.tool.usecase
 import core.domain.item.tool.HealTool
 import core.repository.item.tool.ToolRepository
 import core.usecase.updateparameter.UpdateStatusUseCase
+import gamescreen.menu.item.repository.target.TargetRepository
 import gamescreen.menu.item.repository.useitemid.UseItemIdRepository
-import gamescreen.menu.item.skill.repository.target.TargetRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
