@@ -3,70 +3,47 @@ package gamescreen.battle.command.item.skill
 import core.domain.AbleType
 import core.domain.Const
 import core.domain.Place
-import core.domain.item.skill.AttackSkill
-import core.domain.item.skill.HealSkill
 import core.repository.item.skill.SkillRepository
-import core.repository.player.PlayerRepository
 import core.usecase.checkcanuseskill.CheckCanUseSkillUseCase
-import gamescreen.battle.BattleChildViewModel
+import gamescreen.battle.command.item.ItemCommandViewModel
 import gamescreen.battle.domain.ActionType
 import gamescreen.battle.domain.BattleCommandType
-import gamescreen.battle.domain.SelectAllyCommand
-import gamescreen.battle.domain.SelectEnemyCommand
 import gamescreen.battle.domain.SkillCommand
-import gamescreen.battle.repository.action.ActionRepository
 import gamescreen.menu.domain.SelectManager
 import org.koin.core.component.inject
-import kotlin.math.max
 
-class SkillCommandViewModel : BattleChildViewModel() {
-    private val actionRepository: ActionRepository by inject()
-    private val playerRepository: PlayerRepository by inject()
-    private val skillRepository: SkillRepository by inject()
+class SkillCommandViewModel : ItemCommandViewModel() {
+    override val itemRepository: SkillRepository by inject()
 
     private val checkCanUseSkillUseCase: CheckCanUseSkillUseCase by inject()
 
-    val skillList: List<Int>
-        get() {
-            return playerRepository.getStatus(playerId).skillList
-        }
 
-    val playerId: Int
+    override val itemList: List<Int>
+        get() = playerRepository.getStatus(playerId).skillList
+
+    override val playerId: Int
         get() = (commandRepository.nowCommandType as? SkillCommand)?.playerId
             ?: Const.INITIAL_PLAYER
 
+    override val actionType: ActionType
+        get() = ActionType.Skill
 
-    private val selectedSkillId: Int
-        get() = skillList[selectManager.selected]
+    override var selectManager: SelectManager = SelectManager(
+        width = 2,
+        itemNum = itemList.size,
+    )
 
-    fun init() {
-        // 最後に選ばれていたスキルを呼び出し
-        val skillId = actionRepository.getAction(
+    override fun isBoundedImpl(commandType: BattleCommandType): Boolean {
+        return commandType is SkillCommand
+    }
+
+    override fun getLastSelectedItemId(): Int {
+        return actionRepository.getAction(
             playerId = playerId
         ).skillId
-
-        // skillIdを発見できない場合は先頭を返す
-        //　それ以外はskillIdの場所を返す
-        selectManager.selected = max(
-            skillList.indexOf(skillId),
-            Const.INITIAL_PLAYER,
-        )
-
-        selectManager = SelectManager(
-            width = 2,
-            itemNum = skillList.size,
-        )
     }
 
-    override fun selectable(): Boolean {
-        return canUse(selectedSkillId)
-    }
-
-    fun getName(id: Int): String {
-        return skillRepository.getItem(id).name
-    }
-
-    fun canUse(id: Int): Boolean {
+    override fun canUse(id: Int): Boolean {
         val status = playerRepository.getStatus(playerId)
         val ableType = checkCanUseSkillUseCase.invoke(
             skillId = id,
@@ -75,43 +52,4 @@ class SkillCommandViewModel : BattleChildViewModel() {
         )
         return ableType == AbleType.Able
     }
-
-    override val canBack: Boolean
-        get() = true
-
-    override fun isBoundedImpl(commandType: BattleCommandType): Boolean {
-        return commandType is SkillCommand
-    }
-
-    override fun goNextImpl() {
-        val skillId = selectedSkillId
-        //　使えないので進まない
-        if (canUse(skillId).not()) {
-            return
-        }
-
-        actionRepository.setAction(
-            actionType = ActionType.Skill,
-            playerId = playerId,
-            itemId = skillId,
-        )
-        when (skillRepository.getItem(skillId)) {
-            is AttackSkill -> {
-                commandRepository.push(
-                    SelectEnemyCommand(playerId),
-                )
-            }
-
-            is HealSkill -> {
-                commandRepository.push(
-                    SelectAllyCommand(playerId),
-                )
-            }
-        }
-    }
-
-    override var selectManager: SelectManager = SelectManager(
-        width = 2,
-        itemNum = skillList.size,
-    )
 }
