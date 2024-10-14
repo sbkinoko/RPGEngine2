@@ -13,7 +13,7 @@ class ToolRepositoryImpl : ToolRepository {
                 name = "回復",
                 targetNum = 1,
                 usablePlace = Place.BOTH,
-                isReusable = true,
+                isReusable = false,
                 isDisposable = true,
                 healAmount = 10,
                 targetType = TargetType.ACTIVE
@@ -23,7 +23,7 @@ class ToolRepositoryImpl : ToolRepository {
                 name = "回復2",
                 targetNum = 1,
                 usablePlace = Place.BOTH,
-                isReusable = true,
+                isReusable = false,
                 isDisposable = true,
                 healAmount = 10,
                 targetType = TargetType.ACTIVE

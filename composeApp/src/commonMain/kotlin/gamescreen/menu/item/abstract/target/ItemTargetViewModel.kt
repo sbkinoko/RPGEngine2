@@ -15,9 +15,9 @@ import gamescreen.menu.item.repository.user.UserRepository
 import org.koin.core.component.inject
 
 abstract class ItemTargetViewModel : MenuChildViewModel() {
-    private val userRepository: UserRepository by inject()
-    private val useItemIdRepository: UseItemIdRepository by inject()
-    private val targetRepository: TargetRepository by inject()
+    protected val userRepository: UserRepository by inject()
+    protected val useItemIdRepository: UseItemIdRepository by inject()
+    protected val targetRepository: TargetRepository by inject()
     private val playerRepository: PlayerRepository by inject()
 
     protected abstract val itemRepository: ItemRepository

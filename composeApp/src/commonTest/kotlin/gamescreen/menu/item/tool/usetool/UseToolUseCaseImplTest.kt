@@ -1,4 +1,4 @@
-package gamescreen.menu.item.tool.usecase
+package gamescreen.menu.item.tool.usetool
 
 import core.domain.Place
 import core.domain.item.TargetType
@@ -9,6 +9,8 @@ import core.domain.status.param.HP
 import core.domain.status.param.MP
 import core.repository.item.tool.ToolRepository
 import core.repository.status.StatusRepository
+import core.usecase.item.usetool.UseToolUseCase
+import core.usecase.item.usetool.UseToolUseCaseImpl
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
 import gamescreen.menu.item.repository.index.IndexRepository
 import gamescreen.menu.item.repository.target.TargetRepository
@@ -110,15 +112,16 @@ class UseToolUseCaseImplTest : KoinTest {
 
         runBlocking {
             useToolUseCase = UseToolUseCaseImpl(
-                userRepository = userRepository,
-                targetRepository = targetRepository,
-                useItemIdRepository = useItemIdRepository,
-                indexRepository = indexRepository,
                 toolRepository = toolRepository,
                 updateStatusService = updateStatusService,
             )
 
-            useToolUseCase.invoke()
+            useToolUseCase.invoke(
+                targetId = 0,
+                toolId = 0,
+                index = 0,
+                userId = 0,
+            )
 
             delay(100)
 
@@ -154,15 +157,16 @@ class UseToolUseCaseImplTest : KoinTest {
 
         runBlocking {
             useToolUseCase = UseToolUseCaseImpl(
-                userRepository = userRepository,
-                targetRepository = targetRepository,
-                useItemIdRepository = useItemIdRepository,
-                indexRepository = indexRepository,
                 toolRepository = toolRepository,
                 updateStatusService = updateStatusService,
             )
 
-            useToolUseCase.invoke()
+            useToolUseCase.invoke(
+                targetId = 0,
+                toolId = 0,
+                index = 0,
+                userId = 0,
+            )
 
             delay(100)
 

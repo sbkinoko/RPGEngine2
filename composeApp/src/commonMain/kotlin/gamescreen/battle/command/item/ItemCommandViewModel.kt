@@ -72,6 +72,7 @@ abstract class ItemCommandViewModel : BattleChildViewModel() {
             actionType = actionType,
             playerId = playerId,
             itemId = itemId,
+            itemIndex = selectManager.selected,
         )
 
         when (itemRepository.getItem(itemId)) {

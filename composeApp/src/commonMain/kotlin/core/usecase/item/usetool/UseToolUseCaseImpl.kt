@@ -1,45 +1,39 @@
-package gamescreen.menu.item.tool.usecase
+package core.usecase.item.usetool
 
 import core.domain.item.tool.HealTool
 import core.repository.item.tool.ToolRepository
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
-import gamescreen.menu.item.repository.index.IndexRepository
-import gamescreen.menu.item.repository.target.TargetRepository
-import gamescreen.menu.item.repository.useitemid.UseItemIdRepository
-import gamescreen.menu.item.repository.user.UserRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 
 class UseToolUseCaseImpl(
-    private val userRepository: UserRepository,
-    private val useItemIdRepository: UseItemIdRepository,
-    private val targetRepository: TargetRepository,
-    private val indexRepository: IndexRepository,
     private val toolRepository: ToolRepository,
     private val updateStatusService: UpdatePlayerStatusUseCase,
 ) : UseToolUseCase {
-    override fun invoke() {
+    override fun invoke(
+        userId: Int,
+        toolId: Int,
+        index: Int,
+        targetId: Int,
+    ) {
         CoroutineScope(Dispatchers.IO).launch {
-            val target = targetRepository.target
-            val itemId = useItemIdRepository.itemId
-
             val tool = toolRepository.getItem(
-                id = itemId
+                toolId
             )
 
             if (tool.isReusable.not()) {
                 updateStatusService.deleteToolAt(
-                    index = indexRepository.index,
-                    playerId = userRepository.userId
+                    index = index,
+                    playerId = userId,
                 )
             }
 
             when (tool) {
                 is HealTool -> {
                     updateStatusService.incHP(
-                        id = target,
+                        id = targetId,
                         amount = tool.healAmount,
                     )
                 }

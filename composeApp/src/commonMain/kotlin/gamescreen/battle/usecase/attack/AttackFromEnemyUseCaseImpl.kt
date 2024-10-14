@@ -1,13 +1,13 @@
 package gamescreen.battle.usecase.attack
 
 import core.repository.player.PlayerRepository
-import core.usecase.updateparameter.UpdatePlayerStatusUseCaseImpl
+import core.usecase.updateparameter.UpdatePlayerStatusUseCase
 import gamescreen.battle.service.FindTargetService
 
 class AttackFromEnemyUseCaseImpl(
     private val playerRepository: PlayerRepository,
     private val findTargetService: FindTargetService,
-    private val updatePlayerStatusService: UpdatePlayerStatusUseCaseImpl,
+    private val updatePlayerStatusService: UpdatePlayerStatusUseCase,
 ) : AttackUseCase {
 
     override suspend fun invoke(

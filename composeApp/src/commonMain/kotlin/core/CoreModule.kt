@@ -17,6 +17,8 @@ import core.usecase.changetomap.ChangeToMapUseCase
 import core.usecase.changetomap.ChangeToMapUseCaseImpl
 import core.usecase.checkcanuseskill.CheckCanUseSkillUseCase
 import core.usecase.checkcanuseskill.CheckCanUseSkillUseCaseImpl
+import core.usecase.item.usetool.UseToolUseCase
+import core.usecase.item.usetool.UseToolUseCaseImpl
 import core.usecase.updateparameter.UpdateMonsterStatusUseCase
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
 import core.usecase.updateparameter.UpdatePlayerStatusUseCaseImpl
@@ -76,6 +78,13 @@ val CoreModule = module {
     single<UpdatePlayerStatusUseCase> {
         UpdatePlayerStatusUseCaseImpl(
             statusRepository = get<PlayerRepository>()
+        )
+    }
+
+    single<UseToolUseCase> {
+        UseToolUseCaseImpl(
+            toolRepository = get(),
+            updateStatusService = get(),
         )
     }
 }
