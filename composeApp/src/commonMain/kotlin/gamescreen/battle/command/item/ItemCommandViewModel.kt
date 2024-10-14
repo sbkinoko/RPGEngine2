@@ -1,8 +1,8 @@
 package gamescreen.battle.command.item
 
 import core.domain.Const
+import core.domain.item.AttackItem
 import core.domain.item.HealItem
-import core.domain.item.skill.AttackSkill
 import core.repository.item.ItemRepository
 import core.repository.player.PlayerRepository
 import gamescreen.battle.BattleChildViewModel
@@ -75,7 +75,7 @@ abstract class ItemCommandViewModel : BattleChildViewModel() {
         )
 
         when (itemRepository.getItem(itemId)) {
-            is AttackSkill -> {
+            is AttackItem -> {
                 commandRepository.push(
                     SelectEnemyCommand(playerId),
                 )
