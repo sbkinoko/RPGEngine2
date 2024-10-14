@@ -26,17 +26,17 @@ class ToolCommandViewModel : ItemCommandViewModel() {
         itemNum = itemList.size,
     )
 
-    override fun canUse(id: Int): Boolean {
-        return true
-    }
-
     override fun isBoundedImpl(commandType: BattleCommandType): Boolean {
         return commandType is ToolCommand
     }
 
-    override fun getItemId(): Int? {
+    override fun getLastSelectedItemId(): Int {
         return actionRepository.getAction(
             playerId = playerId
         ).toolId
+    }
+
+    override fun canUse(id: Int): Boolean {
+        return true
     }
 }
