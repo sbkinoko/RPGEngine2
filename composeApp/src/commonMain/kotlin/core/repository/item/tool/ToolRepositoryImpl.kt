@@ -18,6 +18,16 @@ class ToolRepositoryImpl : ToolRepository {
                 healAmount = 10,
                 targetType = TargetType.ACTIVE
             )
+            HEAL_TOOL2 -> return HealTool(
+                id = id,
+                name = "回復2",
+                targetNum = 1,
+                usablePlace = Place.BOTH,
+                isReusable = true,
+                isDisposable = true,
+                healAmount = 10,
+                targetType = TargetType.ACTIVE
+            )
 
             else -> throw NotImplementedError()
         }
@@ -25,5 +35,6 @@ class ToolRepositoryImpl : ToolRepository {
 
     companion object {
         const val HEAL_TOOL = 0
+        const val HEAL_TOOL2 = 1
     }
 }

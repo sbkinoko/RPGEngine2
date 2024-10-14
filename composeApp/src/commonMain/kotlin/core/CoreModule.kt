@@ -18,6 +18,7 @@ import core.usecase.changetomap.ChangeToMapUseCaseImpl
 import core.usecase.checkcanuseskill.CheckCanUseSkillUseCase
 import core.usecase.checkcanuseskill.CheckCanUseSkillUseCaseImpl
 import core.usecase.updateparameter.UpdateMonsterStatusUseCase
+import core.usecase.updateparameter.UpdatePlayerStatusUseCase
 import core.usecase.updateparameter.UpdatePlayerStatusUseCaseImpl
 import org.koin.dsl.module
 
@@ -72,7 +73,7 @@ val CoreModule = module {
         )
     }
 
-    single {
+    single<UpdatePlayerStatusUseCase> {
         UpdatePlayerStatusUseCaseImpl(
             statusRepository = get<PlayerRepository>()
         )

@@ -2,19 +2,23 @@ package gamescreen.menu.item.tool.usecase
 
 import core.domain.item.tool.HealTool
 import core.repository.item.tool.ToolRepository
-import core.usecase.updateparameter.UpdateStatusUseCase
+import core.usecase.updateparameter.UpdatePlayerStatusUseCase
+import gamescreen.menu.item.repository.index.IndexRepository
 import gamescreen.menu.item.repository.target.TargetRepository
 import gamescreen.menu.item.repository.useitemid.UseItemIdRepository
+import gamescreen.menu.item.repository.user.UserRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 
 class UseToolUseCaseImpl(
-    private val targetRepository: TargetRepository,
+    private val userRepository: UserRepository,
     private val useItemIdRepository: UseItemIdRepository,
+    private val targetRepository: TargetRepository,
+    private val indexRepository: IndexRepository,
     private val toolRepository: ToolRepository,
-    private val updateStatusService: UpdateStatusUseCase<*>,
+    private val updateStatusService: UpdatePlayerStatusUseCase,
 ) : UseToolUseCase {
     override fun invoke() {
         CoroutineScope(Dispatchers.IO).launch {
@@ -23,6 +27,11 @@ class UseToolUseCaseImpl(
 
             val tool = toolRepository.getItem(
                 id = itemId
+            )
+
+            updateStatusService.deleteToolAt(
+                index = indexRepository.index,
+                playerId = userRepository.userId
             )
 
             when (tool) {
