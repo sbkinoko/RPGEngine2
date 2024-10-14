@@ -1,6 +1,8 @@
 package gamescreen.menu
 
 import core.usecase.updateparameter.UpdatePlayerStatusUseCaseImpl
+import gamescreen.menu.item.repository.index.IndexRepository
+import gamescreen.menu.item.repository.index.IndexRepositoryImpl
 import gamescreen.menu.item.repository.target.TargetRepository
 import gamescreen.menu.item.repository.target.TargetRepositoryImpl
 import gamescreen.menu.item.repository.useitemid.UseItemIdRepository
@@ -78,6 +80,10 @@ val MenuModule = module {
 
     single<TargetRepository> {
         TargetRepositoryImpl()
+    }
+
+    single<IndexRepository> {
+        IndexRepositoryImpl()
     }
 
     single<GetControllerByCommandTypeUseCase> {
