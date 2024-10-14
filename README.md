@@ -6,22 +6,15 @@
 ## package単位
 ```mermaid
 graph TD;
-  A-->B;
-  A-->C;
-  B-->D;
-  B-->E;
-  B-->F;
-  D-->G;
-  E-->G;
-  F-->G;
-  A-->G;
-  A[Main];
-  B[GameScreen];
-  C[Controller];
-  D[Map];
-  E[Menu];
-  F[Battle];
-  G[Core];
+  Main --> GameScreen;
+  Main --> Controller;
+  subgraph GameScreen;
+    Map;
+    Menu;
+    Battle;
+  end;
+  GameScreen --> Core;
+  GameScreen --> Controller;
 ```
 
 ## 各画面のレイヤ構成
