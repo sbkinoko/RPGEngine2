@@ -1,20 +1,28 @@
 package gamescreen.menu.item.abstract.itemselect
 
+import core.domain.AbleType
 import core.repository.item.ItemRepository
 import core.repository.player.PlayerRepository
+import core.text.repository.TextRepository
 import gamescreen.menu.MenuChildViewModel
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.domain.SelectManager
 import gamescreen.menu.item.list.ItemList
+import gamescreen.menu.item.repository.useitemid.UseItemIdRepository
 import gamescreen.menu.item.repository.user.UserRepository
+import gamescreen.menu.repository.menustate.MenuStateRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 abstract class ItemListViewModel : MenuChildViewModel(),
     ItemList,
     KoinComponent {
-    protected val playerRepository: PlayerRepository by inject()
     private val userRepository: UserRepository by inject()
+    private val menuStateRepository: MenuStateRepository by inject()
+    private val textRepository: TextRepository by inject()
+    private val useItemIdRepository: UseItemIdRepository by inject()
+
+    protected val playerRepository: PlayerRepository by inject()
     protected abstract val itemRepository: ItemRepository
 
     override var selectManager = SelectManager(
@@ -32,6 +40,7 @@ abstract class ItemListViewModel : MenuChildViewModel(),
         get() = getPlayerItemListAt(userId)
 
     protected abstract val boundedScreenType: MenuType
+    protected abstract val nextScreenType: MenuType
 
     override fun isBoundedImpl(commandType: MenuType): Boolean {
         return commandType == boundedScreenType
@@ -58,6 +67,33 @@ abstract class ItemListViewModel : MenuChildViewModel(),
     override fun getItemName(id: Int): String {
         return itemRepository.getItem(id).name
     }
+
+    override fun goNextImpl() {
+        val ableType = getAbleType()
+
+        when (ableType) {
+            AbleType.Able -> {
+                // skillIdを保存
+                useItemIdRepository.itemId = itemList[selectManager.selected]
+                //　次の画面に遷移
+                menuStateRepository.push(
+                    nextScreenType,
+                )
+            }
+
+            AbleType.CANT_USE_BY_PLACE -> {
+                textRepository.setText("ここでは使えません")
+                textRepository.push(true)
+            }
+
+            AbleType.CANT_USE_BY_MP -> {
+                textRepository.setText("MPがたりません")
+                textRepository.push(true)
+            }
+        }
+    }
+
+    protected abstract fun getAbleType(): AbleType
 
     companion object {
         private const val INIT_ITEM_POSITION = 0
