@@ -13,7 +13,7 @@ class CheckCanUseSkillUseCaseImpl(
         status: Status,
         here: Place,
     ): AbleType {
-        val skill = skillRepository.getSkill(skillId)
+        val skill = skillRepository.getItem(skillId)
 
         if (Place.canUsePlace(
                 here = here,

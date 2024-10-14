@@ -14,9 +14,9 @@ import org.koin.core.component.inject
 abstract class ItemUserViewModel : MenuChildViewModel(),
     ItemList,
     KoinComponent {
+    private val userRepository: UserRepository by inject()
     protected val playerRepository: PlayerRepository by inject()
     protected abstract val itemRepository: ItemRepository
-    protected abstract val userRepository: UserRepository
 
     override val canBack: Boolean
         get() = true

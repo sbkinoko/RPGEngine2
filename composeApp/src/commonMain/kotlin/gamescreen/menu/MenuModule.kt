@@ -1,17 +1,13 @@
 package gamescreen.menu
 
 import core.usecase.updateparameter.UpdatePlayerStatusUseCaseImpl
+import gamescreen.menu.item.repository.target.TargetRepository
+import gamescreen.menu.item.repository.target.TargetRepositoryImpl
 import gamescreen.menu.item.repository.useitemid.UseItemIdRepository
 import gamescreen.menu.item.repository.useitemid.UseItemIdRepositoryImpl
 import gamescreen.menu.item.repository.user.UserRepository
 import gamescreen.menu.item.repository.user.UserRepositoryImpl
 import gamescreen.menu.item.skill.list.SkillListViewModel
-import gamescreen.menu.item.skill.repository.skilluser.SkillUserRepository
-import gamescreen.menu.item.skill.repository.skilluser.SkillUserRepositoryImpl
-import gamescreen.menu.item.skill.repository.target.TargetRepository
-import gamescreen.menu.item.skill.repository.target.TargetRepositoryImpl
-import gamescreen.menu.item.skill.repository.useid.UseSkillIdRepository
-import gamescreen.menu.item.skill.repository.useid.UseSkillIdRepositoryImpl
 import gamescreen.menu.item.skill.target.SkillTargetViewModel
 import gamescreen.menu.item.skill.usecase.useskill.UseSkillUseCase
 import gamescreen.menu.item.skill.usecase.useskill.UseSkillUseCaseImpl
@@ -72,24 +68,16 @@ val MenuModule = module {
         MenuStateRepositoryImpl()
     }
 
-    single<SkillUserRepository> {
-        SkillUserRepositoryImpl()
-    }
-
-    single<UseSkillIdRepository> {
-        UseSkillIdRepositoryImpl()
-    }
-
-    single<TargetRepository> {
-        TargetRepositoryImpl()
-    }
-
     single<UserRepository> {
         UserRepositoryImpl()
     }
 
     single<UseItemIdRepository> {
         UseItemIdRepositoryImpl()
+    }
+
+    single<TargetRepository> {
+        TargetRepositoryImpl()
     }
 
     single<GetControllerByCommandTypeUseCase> {
@@ -120,8 +108,8 @@ val MenuModule = module {
     single<UseSkillUseCase> {
         UseSkillUseCaseImpl(
             targetRepository = get(),
-            skillUserRepository = get(),
-            useSkillIdRepository = get(),
+            userRepository = get(),
+            usedItemIdRepository = get(),
             skillRepository = get(),
             updateStatusService = get(),
         )

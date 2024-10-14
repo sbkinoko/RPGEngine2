@@ -1,9 +1,10 @@
 package core.repository.item.skill
 
 import core.domain.item.skill.Skill
+import core.repository.item.ItemRepository
 
-interface SkillRepository {
+interface SkillRepository : ItemRepository {
 
-    fun getSkill(id: Int): Skill
+    override fun getItem(id: Int): Skill
 
 }

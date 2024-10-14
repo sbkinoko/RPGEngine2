@@ -1,12 +1,14 @@
 package gamescreen.battle.command.item
 
 import core.domain.Const
+import core.domain.item.AttackItem
 import core.domain.item.HealItem
 import core.repository.item.ItemRepository
 import core.repository.player.PlayerRepository
 import gamescreen.battle.BattleChildViewModel
 import gamescreen.battle.domain.ActionType
 import gamescreen.battle.domain.SelectAllyCommand
+import gamescreen.battle.domain.SelectEnemyCommand
 import gamescreen.battle.repository.action.ActionRepository
 import gamescreen.menu.domain.SelectManager
 import org.koin.core.component.inject
@@ -32,7 +34,7 @@ abstract class ItemCommandViewModel : BattleChildViewModel() {
 
     fun init() {
         // 最後に選ばれていたスキルを呼び出し
-        val itemId = getItemId()
+        val itemId = getLastSelectedItemId()
 
         val selected = max(
             itemList.indexOf(itemId),
@@ -47,7 +49,7 @@ abstract class ItemCommandViewModel : BattleChildViewModel() {
         selectManager.selected = selected
     }
 
-    abstract fun getItemId(): Int?
+    abstract fun getLastSelectedItemId(): Int
 
     override fun selectable(): Boolean {
         return canUse(selectedItemId)
@@ -73,6 +75,12 @@ abstract class ItemCommandViewModel : BattleChildViewModel() {
         )
 
         when (itemRepository.getItem(itemId)) {
+            is AttackItem -> {
+                commandRepository.push(
+                    SelectEnemyCommand(playerId),
+                )
+            }
+
             is HealItem -> {
                 commandRepository.push(
                     SelectAllyCommand(playerId),

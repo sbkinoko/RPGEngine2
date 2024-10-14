@@ -48,7 +48,7 @@ class SelectAllyViewModel : BattleChildViewModel() {
             ) {
                 ActionType.Skill -> {
                     val id = actionRepository.getAction(playerId).skillId
-                    skillRepository.getSkill(id)
+                    skillRepository.getItem(id)
                 }
 
                 ActionType.TOOL -> {
