@@ -1,25 +1,19 @@
 package core.domain.item.skill
 
 import core.domain.Place
-import core.domain.item.Item
+import core.domain.item.HealItem
+import core.domain.item.TargetType
 
-sealed interface Skill : Item {
-    val needMP: Int
-
-    // fixme コストのタイプをする
-    val canUse: (Int) -> Boolean
-}
-
-// 必要になったらattackのinterfaceを作る
-data class AttackSkill(
+data class HealSkill(
     override val id: Int,
     override val name: String,
     override val needMP: Int,
     override val targetNum: Int,
     override val canUse: (Int) -> Boolean = { mp -> mp >= needMP },
     override val usablePlace: Place,
-    val damageAmount: Int,
-) : Skill {
+    override val healAmount: Int,
+    override val targetType: TargetType,
+) : Skill, HealItem {
     override val explain: String
         get() {
             return name + "\n" +
