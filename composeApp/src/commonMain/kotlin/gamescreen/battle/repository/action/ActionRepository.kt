@@ -8,6 +8,7 @@ interface ActionRepository {
         playerId: Int,
         actionType: ActionType,
         itemId: Int? = null,
+        itemIndex: Int? = null,
     )
 
     fun setTarget(

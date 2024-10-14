@@ -93,7 +93,8 @@ class StartBattleUseCaseImplTest : KoinTest {
                 override fun setAction(
                     playerId: Int,
                     actionType: ActionType,
-                    itemId: Int?
+                    itemId: Int?,
+                    itemIndex: Int?,
                 ) {
                     throw NotImplementedError()
                 }

@@ -51,6 +51,11 @@ class PlayerRepositoryImpl : PlayerRepository {
                     ),
                     toolList = listOf(
                         ToolRepositoryImpl.HEAL_TOOL,
+                        ToolRepositoryImpl.HEAL_TOOL,
+                        ToolRepositoryImpl.HEAL_TOOL2,
+                        ToolRepositoryImpl.HEAL_TOOL,
+                        ToolRepositoryImpl.HEAL_TOOL,
+                        ToolRepositoryImpl.HEAL_TOOL,
                     )
                 )
 

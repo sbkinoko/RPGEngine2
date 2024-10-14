@@ -10,8 +10,9 @@ import core.repository.item.skill.ATTACK_NORMAL
 import core.repository.item.skill.SkillRepository
 import core.repository.item.tool.ToolRepository
 import core.repository.player.PlayerRepository
+import core.usecase.item.usetool.UseToolUseCase
 import core.usecase.updateparameter.UpdateMonsterStatusUseCase
-import core.usecase.updateparameter.UpdatePlayerStatusUseCaseImpl
+import core.usecase.updateparameter.UpdatePlayerStatusUseCase
 import core.usecase.updateparameter.UpdateStatusUseCase
 import gamescreen.battle.BattleChildViewModel
 import gamescreen.battle.QualifierAttackFromEnemy
@@ -44,7 +45,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
     private val skillRepository: SkillRepository by inject()
     private val toolRepository: ToolRepository by inject()
 
-    private val updatePlayerParameter: UpdatePlayerStatusUseCaseImpl by inject()
+    private val updatePlayerParameter: UpdatePlayerStatusUseCase by inject()
     private val updateEnemyParameter: UpdateMonsterStatusUseCase by inject()
 
     private val attackFromPlayerUseCase: AttackUseCase by inject(
@@ -55,6 +56,8 @@ class ActionPhaseViewModel : BattleChildViewModel() {
     )
     private val findActiveTargetUseCase: FindActiveTargetUseCase by inject()
     private val isAllMonsterNotActiveUseCase: IsAllMonsterNotActiveUseCase by inject()
+
+    private val useToolUseCase: UseToolUseCase by inject()
 
     override val canBack: Boolean
         get() = false
@@ -224,9 +227,12 @@ class ActionPhaseViewModel : BattleChildViewModel() {
             }
 
             ActionType.TOOL -> {
+                val userID = attackingPlayerId.value
                 toolAction(
-                    actionData = actionRepository.getAction(attackingPlayerId.value),
-                    updateParameter = updatePlayerParameter,
+                    userId = userID,
+                    actionData = actionRepository.getAction(
+                        userID,
+                    ),
                 )
             }
 
@@ -249,6 +255,9 @@ class ActionPhaseViewModel : BattleChildViewModel() {
             actionData = ActionData(
                 skillId = ATTACK_NORMAL,
                 target = 0,
+                ally = 0,
+                toolId = 0,
+                toolIndex = 0,
             ),
             attackUseCase = attackFromEnemyUseCase,
             updateParameter = updateEnemyParameter,
@@ -299,23 +308,16 @@ class ActionPhaseViewModel : BattleChildViewModel() {
         }
     }
 
-    private suspend fun toolAction(
+    private fun toolAction(
+        userId: Int,
         actionData: ActionData,
-        updateParameter: UpdateStatusUseCase<*>,
     ) {
-        val tool = toolRepository.getItem(
-            id = actionData.skillId
+        useToolUseCase.invoke(
+            userId = userId,
+            toolId = actionData.toolId,
+            index = actionData.toolIndex,
+            targetId = actionData.target,
         )
-
-        when (tool) {
-            is HealTool -> {
-                val target = actionData.ally
-                updateParameter.incHP(
-                    id = target,
-                    amount = tool.healAmount,
-                )
-            }
-        }
     }
 
     private val totalNum: Int

@@ -10,6 +10,7 @@ class ActionRepositoryImpl : ActionRepository {
         playerId: Int,
         actionType: ActionType,
         itemId: Int?,
+        itemIndex: Int?,
     ) {
         actionMap[playerId] = actionMap[playerId]?.let { actionData ->
             // 共通の更新
@@ -25,9 +26,11 @@ class ActionRepositoryImpl : ActionRepository {
                         lastSelectedAction = actionType,
                         skillId = itemId!!,
                     )
+
                     ActionType.TOOL -> it.copy(
                         lastSelectedAction = actionType,
                         toolId = itemId!!,
+                        toolIndex = itemIndex!!,
                     )
 
                     ActionType.None -> it
@@ -37,6 +40,7 @@ class ActionRepositoryImpl : ActionRepository {
             thisTurnAction = actionType,
             skillId = if (actionType == ActionType.Skill) itemId!! else 0,
             toolId = if (actionType == ActionType.TOOL) itemId!! else 0,
+            toolIndex = if (actionType == ActionType.TOOL) itemIndex!! else 0,
         )
     }
 
@@ -61,12 +65,12 @@ class ActionRepositoryImpl : ActionRepository {
     }
 
     override fun getAction(playerId: Int): ActionData {
-        return actionMap[playerId] ?: ActionData()
+        return actionMap[playerId] ?: ActionData.default()
     }
 
     override fun getLastSelectAction(playerId: Int): ActionType {
         return actionMap[playerId]?.lastSelectedAction
-            ?: ActionData().lastSelectedAction
+            ?: ActionData.default().lastSelectedAction
     }
 
     override fun resetTarget() {

@@ -1,6 +1,7 @@
 package gamescreen.menu
 
-import core.usecase.updateparameter.UpdatePlayerStatusUseCaseImpl
+import gamescreen.menu.item.repository.index.IndexRepository
+import gamescreen.menu.item.repository.index.IndexRepositoryImpl
 import gamescreen.menu.item.repository.target.TargetRepository
 import gamescreen.menu.item.repository.target.TargetRepositoryImpl
 import gamescreen.menu.item.repository.useitemid.UseItemIdRepository
@@ -14,8 +15,6 @@ import gamescreen.menu.item.skill.usecase.useskill.UseSkillUseCaseImpl
 import gamescreen.menu.item.skill.user.SkillUserViewModel
 import gamescreen.menu.item.tool.list.ToolListViewModel
 import gamescreen.menu.item.tool.target.ToolTargetViewModel
-import gamescreen.menu.item.tool.usecase.UseToolUseCase
-import gamescreen.menu.item.tool.usecase.UseToolUseCaseImpl
 import gamescreen.menu.item.tool.user.ToolUserViewModel
 import gamescreen.menu.main.MainMenuViewModel
 import gamescreen.menu.repository.menustate.MenuStateRepository
@@ -80,6 +79,10 @@ val MenuModule = module {
         TargetRepositoryImpl()
     }
 
+    single<IndexRepository> {
+        IndexRepositoryImpl()
+    }
+
     single<GetControllerByCommandTypeUseCase> {
         GetControllerByCommandTypeUseCaseImpl(
             confirmRepository = get(),
@@ -112,15 +115,6 @@ val MenuModule = module {
             usedItemIdRepository = get(),
             skillRepository = get(),
             updateStatusService = get(),
-        )
-    }
-
-    single<UseToolUseCase> {
-        UseToolUseCaseImpl(
-            targetRepository = get(),
-            useItemIdRepository = get(),
-            toolRepository = get(),
-            updateStatusService = get<UpdatePlayerStatusUseCaseImpl>(),
         )
     }
 }
