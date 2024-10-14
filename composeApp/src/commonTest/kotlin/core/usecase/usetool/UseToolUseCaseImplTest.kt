@@ -1,4 +1,4 @@
-package gamescreen.menu.item.tool.usetool
+package core.usecase.usetool
 
 import core.domain.Place
 import core.domain.item.TargetType
@@ -12,10 +12,6 @@ import core.repository.status.StatusRepository
 import core.usecase.item.usetool.UseToolUseCase
 import core.usecase.item.usetool.UseToolUseCaseImpl
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
-import gamescreen.menu.item.repository.index.IndexRepository
-import gamescreen.menu.item.repository.target.TargetRepository
-import gamescreen.menu.item.repository.useitemid.UseItemIdRepository
-import gamescreen.menu.item.repository.user.UserRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.koin.test.KoinTest
@@ -38,22 +34,6 @@ class UseToolUseCaseImplTest : KoinTest {
     )
 
     private lateinit var useToolUseCase: UseToolUseCase
-
-    private val userRepository: UserRepository = object : UserRepository {
-        override var userId: Int = 0
-    }
-
-    private val targetRepository: TargetRepository = object : TargetRepository {
-        override var target: Int = 0
-    }
-
-    private val useItemIdRepository: UseItemIdRepository = object : UseItemIdRepository {
-        override var itemId: Int = 0
-    }
-
-    private val indexRepository: IndexRepository = object : IndexRepository {
-        override var index: Int = 0
-    }
 
     var count = 0
     var countDel = 0
