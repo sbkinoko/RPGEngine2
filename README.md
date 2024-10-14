@@ -15,6 +15,7 @@ graph TD;
   end;
   GameScreen --> Core;
   GameScreen --> Controller;
+  Main --> Core;
 ```
 
 ## 各画面のレイヤ構成
