@@ -1,106 +1,47 @@
 package gamescreen.menu.item.skill.target
 
-import common.values.playerNum
-import core.confim.repository.ConfirmRepository
 import core.domain.AbleType
 import core.domain.Place
-import core.domain.item.skill.HealSkill
 import core.repository.item.skill.SkillRepository
 import core.repository.player.PlayerRepository
 import core.text.repository.TextRepository
 import core.usecase.checkcanuseskill.CheckCanUseSkillUseCase
-import gamescreen.menu.MenuChildViewModel
 import gamescreen.menu.domain.MenuType
-import gamescreen.menu.domain.SelectManager
-import gamescreen.menu.item.skill.repository.skilluser.SkillUserRepository
-import gamescreen.menu.item.skill.repository.target.TargetRepository
-import gamescreen.menu.item.skill.repository.useid.UseSkillIdRepository
+import gamescreen.menu.item.abstract.target.ItemTargetViewModel
 import gamescreen.menu.item.skill.usecase.useskill.UseSkillUseCase
 import org.koin.core.component.inject
 
-class SkillTargetViewModel : MenuChildViewModel() {
-    private val skillUserRepository: SkillUserRepository by inject()
-    private val useSkillIdRepository: UseSkillIdRepository by inject()
-    private val targetRepository: TargetRepository by inject()
-    private val skillRepository: SkillRepository by inject()
+class SkillTargetViewModel : ItemTargetViewModel() {
     private val playerRepository: PlayerRepository by inject()
-
-    private val confirmRepository: ConfirmRepository by inject()
     private val textRepository: TextRepository by inject()
+
+    override val itemRepository: SkillRepository by inject()
 
     private val useSkillUseCase: UseSkillUseCase by inject()
     private val checkCanUseSkillUseCase: CheckCanUseSkillUseCase by inject()
 
-    override val canBack: Boolean
-        get() = true
+    override val boundedMenuType: MenuType
+        get() = MenuType.SKILL_TARGET
 
-    val user: Int
-        get() = skillUserRepository.skillUserId
-
-    val skillId: Int
-        get() = useSkillIdRepository.skillId
-
-    val explain: String
-        get() = skillRepository.getItem(skillId).explain
-
-    override fun isBoundedImpl(commandType: MenuType): Boolean {
-        return commandType == MenuType.SKILL_TARGET
-    }
-
-    override fun goNextImpl() {
-        targetRepository.target = selectManager.selected
-        confirmRepository.push(true)
-    }
-
-    override var selectManager: SelectManager = SelectManager(
-        width = 1,
-        itemNum = playerNum,
-    )
-
-    override fun selectable(): Boolean {
-        return canSelect(selectManager.selected)
-    }
-
-    fun canSelect(target: Int): Boolean {
-        val targetStatus = playerRepository.getStatus(id = target)
-        val skill = skillRepository.getItem(skillId)
-
-        if (skill !is HealSkill) {
-            // 回復じゃなかったら使えないはず
-            return false
-        }
-
-        val targetType = skill.targetType
-
-        if (targetType.canSelect(targetStatus).not()) {
-            // 対象にとれなかった
-            return false
-        }
-
+    override fun getAbleType(): AbleType {
         val userStatus = playerRepository.getStatus(id = user)
 
-        val ableType = checkCanUseSkillUseCase.invoke(
+        return checkCanUseSkillUseCase.invoke(
             status = userStatus,
             skillId = skillId,
             here = Place.MAP,
         )
-
-        return ableType == AbleType.Able
     }
 
     /**
      * confirmでYesを選んだ時の処理
      */
-    fun selectYes() {
+    override fun selectYes() {
         // textを表示
         textRepository.push(true)
         textRepository.setText("回復しました")
 
         //　スキル処理実行
         useSkillUseCase.invoke()
-    }
-
-    fun backWindow() {
-        commandRepository.pop()
     }
 }

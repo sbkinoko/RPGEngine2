@@ -9,9 +9,9 @@ import core.repository.player.PlayerRepository
 import gamescreen.menu.MenuChildViewModel
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.domain.SelectManager
+import gamescreen.menu.item.repository.target.TargetRepository
 import gamescreen.menu.item.repository.useitemid.UseItemIdRepository
 import gamescreen.menu.item.repository.user.UserRepository
-import gamescreen.menu.item.skill.repository.target.TargetRepository
 import org.koin.core.component.inject
 
 abstract class ItemTargetViewModel : MenuChildViewModel() {

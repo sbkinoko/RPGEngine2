@@ -7,8 +7,8 @@ import core.domain.item.tool.Tool
 import core.domain.status.PlayerStatus
 import core.repository.item.tool.ToolRepository
 import core.usecase.updateparameter.UpdateStatusUseCase
+import gamescreen.menu.item.repository.target.TargetRepository
 import gamescreen.menu.item.repository.useitemid.UseItemIdRepository
-import gamescreen.menu.item.skill.repository.target.TargetRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.koin.test.KoinTest
