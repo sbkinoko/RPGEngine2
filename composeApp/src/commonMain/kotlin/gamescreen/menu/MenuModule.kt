@@ -135,6 +135,8 @@ val MenuModule = module {
     }
 
     single<DecToolUseCase> {
-        DecToolUseCaseImpl()
+        DecToolUseCaseImpl(
+            bagRepository = get(),
+        )
     }
 }
