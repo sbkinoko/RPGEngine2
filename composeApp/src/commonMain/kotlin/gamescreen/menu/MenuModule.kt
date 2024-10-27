@@ -17,6 +17,8 @@ import gamescreen.menu.item.tool.list.ToolListViewModel
 import gamescreen.menu.item.tool.target.ToolTargetViewModel
 import gamescreen.menu.item.tool.user.ToolUserViewModel
 import gamescreen.menu.main.MainMenuViewModel
+import gamescreen.menu.repository.bag.BagRepository
+import gamescreen.menu.repository.bag.BagRepositoryImpl
 import gamescreen.menu.repository.menustate.MenuStateRepository
 import gamescreen.menu.repository.menustate.MenuStateRepositoryImpl
 import gamescreen.menu.status.StatusViewModel
@@ -81,6 +83,10 @@ val MenuModule = module {
 
     single<IndexRepository> {
         IndexRepositoryImpl()
+    }
+
+    single<BagRepository> {
+        BagRepositoryImpl()
     }
 
     single<GetControllerByCommandTypeUseCase> {
