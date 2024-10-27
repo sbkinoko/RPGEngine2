@@ -24,6 +24,8 @@ import gamescreen.menu.repository.menustate.MenuStateRepositoryImpl
 import gamescreen.menu.status.StatusViewModel
 import gamescreen.menu.usecase.backfield.CloseMenuUseCase
 import gamescreen.menu.usecase.backfield.CloseMenuUseCaseImpl
+import gamescreen.menu.usecase.bag.addtool.AddToolUseCase
+import gamescreen.menu.usecase.bag.addtool.AddToolUseCaseImpl
 import gamescreen.menu.usecase.getviewmodelbycommandtype.GetControllerByCommandTypeUseCase
 import gamescreen.menu.usecase.getviewmodelbycommandtype.GetControllerByCommandTypeUseCaseImpl
 import org.koin.dsl.module
@@ -121,6 +123,12 @@ val MenuModule = module {
             usedItemIdRepository = get(),
             skillRepository = get(),
             updateStatusService = get(),
+        )
+    }
+
+    single<AddToolUseCase> {
+        AddToolUseCaseImpl(
+            bagRepository = get(),
         )
     }
 }
