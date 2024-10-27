@@ -1,13 +1,30 @@
 package gamescreen.menu.repository.bag
 
+import gamescreen.menu.MenuModule
 import gamescreen.menu.domain.BagToolData
+import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
 import org.koin.test.inject
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class BagRepositoryImplTest : KoinTest {
     private val bagRepository: BagRepository by inject()
+
+    @BeforeTest
+    fun beforeTest() {
+        startKoin {
+            modules(MenuModule)
+        }
+    }
+
+    @AfterTest
+    fun afterTest() {
+        stopKoin()
+    }
 
     @Test
     fun setTest() {
