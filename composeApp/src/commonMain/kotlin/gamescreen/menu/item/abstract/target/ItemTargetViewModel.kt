@@ -1,6 +1,6 @@
 package gamescreen.menu.item.abstract.target
 
-import common.values.playerNum
+import common.values.Constants.Companion.playerNum
 import core.confim.repository.ConfirmRepository
 import core.domain.AbleType
 import core.domain.item.HealItem

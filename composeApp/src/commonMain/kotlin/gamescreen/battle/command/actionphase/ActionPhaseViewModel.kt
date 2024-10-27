@@ -1,6 +1,6 @@
 package gamescreen.battle.command.actionphase
 
-import common.values.playerNum
+import common.values.Constants.Companion.playerNum
 import core.domain.item.skill.AttackSkill
 import core.domain.item.skill.HealSkill
 import core.domain.item.tool.HealTool

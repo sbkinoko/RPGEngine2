@@ -13,7 +13,7 @@ import common.extension.equalAllocationModifier
 import common.extension.menuItem
 import common.layout.DisableBox
 import common.values.Colors
-import common.values.playerNum
+import common.values.Constants.Companion.playerNum
 import core.WithConfirmAndTextWindow
 import gamescreen.menu.component.StatusComponent
 

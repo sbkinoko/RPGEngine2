@@ -1,8 +1,10 @@
 package gamescreen.menu.item.skill.user
 
+import common.values.Constants
 import core.repository.item.skill.SkillRepository
 import core.repository.player.PlayerRepository
 import gamescreen.menu.domain.MenuType
+import gamescreen.menu.domain.SelectManager
 import gamescreen.menu.item.abstract.user.ItemUserViewModel
 import org.koin.core.component.inject
 
@@ -16,6 +18,19 @@ class SkillUserViewModel : ItemUserViewModel() {
         get() = MenuType.SKILL_USER
     override val nextScreenType: MenuType
         get() = MenuType.SKILL_LST
+
+    override val playerNum: Int
+        get() = Constants.playerNum
+
+    override var selectManager: SelectManager =
+        SelectManager(
+            width = 1,
+            itemNum = playerNum,
+        )
+
+    override fun getPlayerNameAt(id: Int): String {
+        return playerRepository.getStatus(id).name
+    }
 
     override fun getPlayerItemListAt(id: Int): List<Int> {
         return repository.getStatus(id).skillList

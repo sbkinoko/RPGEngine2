@@ -1,3 +1,7 @@
 package common.values
 
-var playerNum = 3
+class Constants {
+    companion object {
+        var playerNum = 3
+    }
+}
