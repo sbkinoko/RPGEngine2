@@ -1,6 +1,6 @@
 package gamescreen.battle.command.selectally
 
-import common.values.playerNum
+import common.values.Constants.Companion.playerNum
 import core.domain.item.HealItem
 import core.domain.item.TargetType
 import core.domain.item.skill.HealSkill
@@ -52,7 +52,7 @@ class SelectAllyViewModel : BattleChildViewModel() {
                 }
 
                 ActionType.TOOL -> {
-                    val id = actionRepository.getAction(playerId).toolId!!
+                    val id = actionRepository.getAction(playerId).toolId
                     toolRepository.getItem(id)
                 }
 

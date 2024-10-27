@@ -3,7 +3,7 @@ package core.repository.player
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
-import common.values.playerNum
+import common.values.Constants
 import core.domain.status.PlayerStatus
 import core.domain.status.param.HP
 import core.domain.status.param.MP
@@ -31,7 +31,7 @@ class PlayerRepositoryImpl : PlayerRepository {
     private var players: List<PlayerStatus>
 
     init {
-        players = List(playerNum) {
+        players = List(Constants.playerNum) {
             when (it) {
                 0 -> PlayerStatus(
                     name = "test1",

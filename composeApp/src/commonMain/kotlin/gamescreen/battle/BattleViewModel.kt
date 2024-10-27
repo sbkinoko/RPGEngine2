@@ -3,7 +3,7 @@ package gamescreen.battle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
-import common.values.playerNum
+import common.values.Constants
 import controller.domain.ControllerCallback
 import controller.domain.Stick
 import core.domain.status.MonsterStatus
@@ -67,7 +67,7 @@ class BattleViewModel :
     }
 
     private fun initPlayers() {
-        players = List(playerNum) {
+        players = List(Constants.playerNum) {
             playerRepository.getStatus(id = it)
         }
     }

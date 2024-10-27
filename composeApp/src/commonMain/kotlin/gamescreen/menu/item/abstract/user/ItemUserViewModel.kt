@@ -1,11 +1,9 @@
 package gamescreen.menu.item.abstract.user
 
-import common.values.playerNum
 import core.repository.item.ItemRepository
 import core.repository.player.PlayerRepository
 import gamescreen.menu.MenuChildViewModel
 import gamescreen.menu.domain.MenuType
-import gamescreen.menu.domain.SelectManager
 import gamescreen.menu.item.list.ItemList
 import gamescreen.menu.item.repository.user.UserRepository
 import org.koin.core.component.KoinComponent
@@ -25,11 +23,7 @@ abstract class ItemUserViewModel : MenuChildViewModel(),
 
     abstract val nextScreenType: MenuType
 
-    override var selectManager: SelectManager =
-        SelectManager(
-            width = 1,
-            itemNum = playerNum,
-        )
+    abstract val playerNum: Int
 
     override fun isBoundedImpl(commandType: MenuType): Boolean {
         return commandType == boundedScreenType
@@ -42,10 +36,7 @@ abstract class ItemUserViewModel : MenuChildViewModel(),
         commandRepository.push(nextScreenType)
     }
 
-    //　fixme　袋ができたら修正する
-    fun getPlayerNameAt(id: Int): String {
-        return playerRepository.getStatus(id).name
-    }
+    abstract fun getPlayerNameAt(id: Int): String
 
     override fun getItemName(id: Int): String {
         return itemRepository.getItem(id).name
