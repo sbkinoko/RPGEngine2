@@ -66,5 +66,20 @@ class DecToolUseCaseImplTest : KoinTest {
             expected = 1,
             actual = count,
         )
+
+        val id2 = 2
+        try {
+            decToolUseCase(
+                itemId = id2,
+                itemNum = num,
+            )
+        } catch (e: IllegalStateException) {
+            count++
+        }
+
+        assertEquals(
+            expected = 2,
+            actual = count,
+        )
     }
 }
