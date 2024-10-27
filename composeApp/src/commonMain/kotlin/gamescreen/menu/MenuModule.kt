@@ -127,6 +127,8 @@ val MenuModule = module {
     }
 
     single<AddToolUseCase> {
-        AddToolUseCaseImpl()
+        AddToolUseCaseImpl(
+            bagRepository = get(),
+        )
     }
 }

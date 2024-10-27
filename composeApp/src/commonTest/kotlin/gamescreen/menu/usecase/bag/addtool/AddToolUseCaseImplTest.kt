@@ -40,7 +40,9 @@ class AddToolUseCaseImplTest : KoinTest {
 
             val list = bagRepository.getList()
             assertTrue(
-                list.any { it.id == first }
+                list.any {
+                    it.id == first
+                }
             )
             val data = list.first { it.id == first }
 
@@ -60,7 +62,9 @@ class AddToolUseCaseImplTest : KoinTest {
 
             val list = bagRepository.getList()
             assertTrue(
-                list.any { it.id == first }
+                list.any {
+                    it.id == first
+                }
             )
             val data = list.first { it.id == first }
 
