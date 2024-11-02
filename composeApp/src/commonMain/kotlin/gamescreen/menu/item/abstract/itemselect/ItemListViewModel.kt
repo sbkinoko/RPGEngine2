@@ -1,6 +1,7 @@
 package gamescreen.menu.item.abstract.itemselect
 
 import core.domain.AbleType
+import core.domain.TextBoxData
 import core.repository.item.ItemRepository
 import core.repository.player.PlayerRepository
 import core.text.repository.TextRepository
@@ -87,13 +88,19 @@ abstract class ItemListViewModel : MenuChildViewModel(),
             }
 
             AbleType.CANT_USE_BY_PLACE -> {
-                textRepository.setText("ここでは使えません")
-                textRepository.push(true)
+                textRepository.push(
+                    TextBoxData(
+                        "ここでは使えません",
+                    )
+                )
             }
 
             AbleType.CANT_USE_BY_MP -> {
-                textRepository.setText("MPがたりません")
-                textRepository.push(true)
+                textRepository.push(
+                    TextBoxData(
+                        "MPがたりません",
+                    )
+                )
             }
         }
     }

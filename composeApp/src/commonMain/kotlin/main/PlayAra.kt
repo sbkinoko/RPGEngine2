@@ -1,8 +1,14 @@
 package main
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import common.values.Colors
+import core.confim.ChoiceWindow
 import core.domain.ScreenType
+import core.text.TextWindow
 import gamescreen.battle.BattleScreen
 import gamescreen.map.layout.MapScreen
 import gamescreen.map.viewmodel.MapViewModel
@@ -14,24 +20,42 @@ fun PlayArea(
     screenSize: Int,
     modifier: Modifier = Modifier,
 ) {
-    when (screenType) {
-        ScreenType.FIELD -> {
-            MapScreen(
-                modifier = modifier,
-                screenRatio = screenSize / MapViewModel.VIRTUAL_SCREEN_SIZE.toFloat()
-            )
+    Box(modifier = modifier) {
+        when (screenType) {
+            ScreenType.FIELD -> {
+                MapScreen(
+                    modifier = Modifier.fillMaxSize(),
+                    screenRatio = screenSize / MapViewModel.VIRTUAL_SCREEN_SIZE.toFloat()
+                )
+            }
+
+            ScreenType.BATTLE -> {
+                BattleScreen(
+                    modifier = Modifier.fillMaxSize(),
+                )
+            }
+
+            ScreenType.MENU -> {
+                MenuScreen(
+                    modifier = Modifier.fillMaxSize(),
+                )
+            }
         }
 
-        ScreenType.BATTLE -> {
-            BattleScreen(
-                modifier = modifier,
-            )
-        }
+        TextWindow(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    color = Colors.OverlayMenu
+                ),
+        )
 
-        ScreenType.MENU -> {
-            MenuScreen(
-                modifier = modifier,
-            )
-        }
+        ChoiceWindow(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    color = Colors.OverlayMenu
+                ),
+        )
     }
 }

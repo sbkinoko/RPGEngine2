@@ -2,6 +2,7 @@ package gamescreen.menu.item.skill.target
 
 import core.domain.AbleType
 import core.domain.Place
+import core.domain.TextBoxData
 import core.repository.item.skill.SkillRepository
 import core.repository.player.PlayerRepository
 import core.usecase.checkcanuseskill.CheckCanUseSkillUseCase
@@ -36,8 +37,12 @@ class SkillTargetViewModel : ItemTargetViewModel() {
      */
     override fun selectYes() {
         // textを表示
-        textRepository.push(true)
-        textRepository.setText("回復しました")
+        textRepository.push(
+            TextBoxData(
+                text = "回復しました",
+                callBack = { commandRepository.pop() },
+            )
+        )
 
         //　スキル処理実行
         useSkillUseCase.invoke()

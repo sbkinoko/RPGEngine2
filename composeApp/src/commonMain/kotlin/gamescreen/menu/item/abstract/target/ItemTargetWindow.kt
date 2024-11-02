@@ -14,8 +14,6 @@ import common.extension.menuItem
 import common.layout.DisableBox
 import common.values.Colors
 import common.values.playerNum
-import core.WithConfirmAndTextWindow
-import core.domain.Choice
 import gamescreen.menu.component.StatusComponent
 
 @Composable
@@ -23,65 +21,44 @@ fun ItemTargetWindow(
     modifier: Modifier = Modifier,
     itemTargetViewModel: ItemTargetViewModel,
 ) {
-    WithConfirmAndTextWindow(
-        modifier = modifier,
-        textCallBack = {
-            itemTargetViewModel.backWindow()
-        },
-        choice = arrayOf(
-            Choice(
-                text = "yes",
-                callBack = {
-                    itemTargetViewModel.selectYes()
 
-                }
-            ),
-            Choice(
-                text = "no",
-                callBack = {
-                    itemTargetViewModel.pressNo()
-                }
-            ),
-        )
+    Row(
+        modifier = modifier,
     ) {
-        Row(
-            modifier = Modifier.fillMaxSize(),
+        Column(
+            modifier = equalAllocationModifier,
         ) {
-            Column(
+            Text(
                 modifier = equalAllocationModifier,
-            ) {
-                Text(
-                    modifier = equalAllocationModifier,
-                    text = itemTargetViewModel.explain
-                )
-                StatusComponent(
-                    modifier = equalAllocationModifier
-                        .border(
-                            width = 1.dp,
-                            color = Colors.StatusComponent,
-                            shape = RectangleShape,
-                        ),
-                    statusId = itemTargetViewModel.user,
-                )
-            }
-            Column(
+                text = itemTargetViewModel.explain
+            )
+            StatusComponent(
                 modifier = equalAllocationModifier
-            ) {
-                for (i in 0 until playerNum) {
-                    DisableBox(
-                        modifier = equalAllocationModifier,
-                        isDisable = itemTargetViewModel.canSelect(i).not()
-                    ) {
-                        StatusComponent(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .menuItem(
-                                    id = i,
-                                    childViewModel = itemTargetViewModel,
-                                ),
-                            statusId = i,
-                        )
-                    }
+                    .border(
+                        width = 1.dp,
+                        color = Colors.StatusComponent,
+                        shape = RectangleShape,
+                    ),
+                statusId = itemTargetViewModel.user,
+            )
+        }
+        Column(
+            modifier = equalAllocationModifier
+        ) {
+            for (i in 0 until playerNum) {
+                DisableBox(
+                    modifier = equalAllocationModifier,
+                    isDisable = itemTargetViewModel.canSelect(i).not()
+                ) {
+                    StatusComponent(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .menuItem(
+                                id = i,
+                                childViewModel = itemTargetViewModel,
+                            ),
+                        statusId = i,
+                    )
                 }
             }
         }

@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -19,17 +18,17 @@ import common.extension.pxToDp
 import common.layout.CenterText
 import common.values.Colors
 import common.values.LayoutConst
-import core.domain.Choice
 import org.koin.compose.koinInject
 
 @Composable
 fun ChoiceWindow(
     modifier: Modifier = Modifier,
     confirmViewModel: ConfirmViewModel = koinInject(),
-    vararg choice: Choice,
 ) {
-    LaunchedEffect(Unit) {
-        confirmViewModel.choice = choice.toList()
+
+    val confirmFlg = confirmViewModel.getShowStateAsState().value
+    if (confirmFlg.not()) {
+        return
     }
 
     val height = remember {
@@ -60,7 +59,7 @@ fun ChoiceWindow(
                     )
                     .wrapContentHeight(),
             ) {
-                choice.mapIndexed { index, choice ->
+                confirmViewModel.choiceList.mapIndexed { index, choice ->
                     CenterText(
                         modifier = Modifier
                             .fillMaxWidth()

@@ -21,11 +21,14 @@ import org.koin.compose.koinInject
 
 @Composable
 fun TextWindow(
-    callBack: () -> Unit,
     modifier: Modifier = Modifier,
     textViewModel: TextViewModel = koinInject(),
 ) {
-    textViewModel.callBack = callBack
+    val textBoxData = textViewModel.getShowStateAsState()
+
+    if (textBoxData.value == null) {
+        return
+    }
 
     val height = remember {
         mutableStateOf(0)
