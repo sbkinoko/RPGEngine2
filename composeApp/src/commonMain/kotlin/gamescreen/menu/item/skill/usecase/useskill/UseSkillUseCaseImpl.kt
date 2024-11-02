@@ -3,7 +3,7 @@ package gamescreen.menu.item.skill.usecase.useskill
 import core.domain.item.skill.AttackSkill
 import core.domain.item.skill.HealSkill
 import core.repository.item.skill.SkillRepository
-import core.usecase.updateparameter.UpdatePlayerStatusUseCaseImpl
+import core.usecase.updateparameter.UpdatePlayerStatusUseCase
 import gamescreen.menu.item.repository.target.TargetRepository
 import gamescreen.menu.item.repository.useitemid.UseItemIdRepository
 import gamescreen.menu.item.repository.user.UserRepository
@@ -17,7 +17,7 @@ class UseSkillUseCaseImpl(
     private val userRepository: UserRepository,
     private val usedItemIdRepository: UseItemIdRepository,
     private val skillRepository: SkillRepository,
-    private val updateStatusService: UpdatePlayerStatusUseCaseImpl
+    private val updateStatusService: UpdatePlayerStatusUseCase
 ) : UseSkillUseCase {
     override fun invoke() {
         CoroutineScope(Dispatchers.IO).launch {
