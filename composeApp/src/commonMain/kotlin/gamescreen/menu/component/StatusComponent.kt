@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import common.values.Constants
 import core.repository.player.PlayerRepository
 import org.koin.compose.koinInject
 
@@ -18,9 +19,13 @@ fun StatusComponent(
     Column(
         modifier = modifier
     ) {
-        val status = state.value[statusId]
-        Text(status.name)
-        Text("HP : ${status.hp.value}/${status.hp.maxValue}")
-        Text("MP : ${status.mp.value}/${status.mp.maxValue}")
+        if (statusId < Constants.playerNum) {
+            val status = state.value[statusId]
+            Text(status.name)
+            Text("HP : ${status.hp.value}/${status.hp.maxValue}")
+            Text("MP : ${status.mp.value}/${status.mp.maxValue}")
+        } else {
+            Text("袋")
+        }
     }
 }
