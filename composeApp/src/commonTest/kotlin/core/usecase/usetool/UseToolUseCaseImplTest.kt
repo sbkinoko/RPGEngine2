@@ -12,6 +12,7 @@ import core.repository.status.StatusRepository
 import core.usecase.item.usetool.UseToolUseCase
 import core.usecase.item.usetool.UseToolUseCaseImpl
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
+import gamescreen.menu.usecase.bag.dectool.DecToolUseCase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.koin.test.KoinTest
@@ -37,6 +38,14 @@ class UseToolUseCaseImplTest : KoinTest {
 
     var count = 0
     var countDel = 0
+
+    var decCount = 0
+
+    private val decToolUseCase = object : DecToolUseCase {
+        override fun invoke(itemId: Int, itemNum: Int) {
+            decCount++
+        }
+    }
 
     private val updateStatusService = object : UpdatePlayerStatusUseCase() {
         override fun decHPImpl(amount: Int, status: PlayerStatus): PlayerStatus {
@@ -89,11 +98,11 @@ class UseToolUseCaseImplTest : KoinTest {
             }
         }
 
-
         runBlocking {
             useToolUseCase = UseToolUseCaseImpl(
                 toolRepository = toolRepository,
                 updateStatusService = updateStatusService,
+                decToolUseCase = decToolUseCase
             )
 
             useToolUseCase.invoke(
@@ -113,6 +122,11 @@ class UseToolUseCaseImplTest : KoinTest {
             assertEquals(
                 expected = 1,
                 actual = countDel,
+            )
+
+            assertEquals(
+                expected = 0,
+                actual = decCount,
             )
         }
     }
@@ -139,6 +153,7 @@ class UseToolUseCaseImplTest : KoinTest {
             useToolUseCase = UseToolUseCaseImpl(
                 toolRepository = toolRepository,
                 updateStatusService = updateStatusService,
+                decToolUseCase = decToolUseCase,
             )
 
             useToolUseCase.invoke(
@@ -158,6 +173,61 @@ class UseToolUseCaseImplTest : KoinTest {
             assertEquals(
                 expected = 0,
                 actual = countDel,
+            )
+
+            assertEquals(
+                expected = 0,
+                actual = decCount,
+            )
+        }
+    }
+
+    @Test
+    fun useBag() {
+        val toolRepository: ToolRepository = object : ToolRepository {
+            override fun getItem(id: Int): Tool {
+                return HealTool(
+                    id = id,
+                    name = "回復",
+                    targetNum = 1,
+                    usablePlace = Place.BOTH,
+                    isReusable = false,
+                    isDisposable = true,
+                    healAmount = 10,
+                    targetType = TargetType.ACTIVE
+                )
+            }
+        }
+
+        runBlocking {
+            useToolUseCase = UseToolUseCaseImpl(
+                toolRepository = toolRepository,
+                updateStatusService = updateStatusService,
+                decToolUseCase = decToolUseCase,
+            )
+
+            useToolUseCase.invoke(
+                targetId = 0,
+                toolId = 0,
+                index = 0,
+                userId = 99,
+            )
+
+            delay(100)
+
+            assertEquals(
+                expected = 1,
+                actual = count,
+            )
+
+            assertEquals(
+                expected = 0,
+                actual = countDel,
+            )
+
+            assertEquals(
+                expected = 1,
+                actual = decCount,
             )
         }
     }
