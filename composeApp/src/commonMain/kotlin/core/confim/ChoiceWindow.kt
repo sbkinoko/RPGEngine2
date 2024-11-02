@@ -23,7 +23,7 @@ import core.domain.Choice
 import org.koin.compose.koinInject
 
 @Composable
-fun ConfirmWindow(
+fun ChoiceWindow(
     modifier: Modifier = Modifier,
     confirmViewModel: ConfirmViewModel = koinInject(),
     vararg choice: Choice,
