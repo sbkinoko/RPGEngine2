@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import common.extension.equalAllocationModifier
 import common.layout.CenterText
 import common.values.Colors
-import common.values.playerNum
+import common.values.Constants
 import gamescreen.menu.component.StatusComponent
 import org.koin.compose.koinInject
 
@@ -39,7 +39,7 @@ fun StatusMenu(
                 .weight(1f),
             verticalArrangement = Arrangement.spacedBy(5.dp),
         ) {
-            for (i in 0 until playerNum) {
+            for (i in 0 until Constants.playerNum) {
                 CenterText(
                     modifier = Modifier
                         .weight(1f)

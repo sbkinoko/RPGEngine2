@@ -1,7 +1,7 @@
 package gamescreen.menu.status
 
 import common.Timer
-import common.values.playerNum
+import common.values.Constants
 import core.domain.status.Status
 import core.menu.SelectableWindowViewModel
 import core.repository.player.PlayerRepository
@@ -17,7 +17,7 @@ class StatusViewModel : SelectableWindowViewModel(),
 
     override var selectManager = SelectManager(
         width = 1,
-        itemNum = playerNum,
+        itemNum = Constants.playerNum,
     )
 
     override var timer: Timer = Timer(200)

@@ -8,7 +8,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import common.extension.menuItem
 import common.layout.CenterText
-import common.values.playerNum
 import gamescreen.menu.item.abstract.user.ItemUserViewModel
 
 @Composable
@@ -20,7 +19,7 @@ fun UserList(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(5.dp),
     ) {
-        for (i in 0 until playerNum) {
+        for (i in 0 until itemUserViewModel.playerNum) {
             CenterText(
                 modifier = Modifier
                     .weight(1f)

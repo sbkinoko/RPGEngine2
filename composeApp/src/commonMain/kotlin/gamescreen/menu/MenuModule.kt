@@ -17,11 +17,17 @@ import gamescreen.menu.item.tool.list.ToolListViewModel
 import gamescreen.menu.item.tool.target.ToolTargetViewModel
 import gamescreen.menu.item.tool.user.ToolUserViewModel
 import gamescreen.menu.main.MainMenuViewModel
+import gamescreen.menu.repository.bag.BagRepository
+import gamescreen.menu.repository.bag.BagRepositoryImpl
 import gamescreen.menu.repository.menustate.MenuStateRepository
 import gamescreen.menu.repository.menustate.MenuStateRepositoryImpl
 import gamescreen.menu.status.StatusViewModel
 import gamescreen.menu.usecase.backfield.CloseMenuUseCase
 import gamescreen.menu.usecase.backfield.CloseMenuUseCaseImpl
+import gamescreen.menu.usecase.bag.addtool.AddToolUseCase
+import gamescreen.menu.usecase.bag.addtool.AddToolUseCaseImpl
+import gamescreen.menu.usecase.bag.dectool.DecToolUseCase
+import gamescreen.menu.usecase.bag.dectool.DecToolUseCaseImpl
 import gamescreen.menu.usecase.getviewmodelbycommandtype.GetControllerByCommandTypeUseCase
 import gamescreen.menu.usecase.getviewmodelbycommandtype.GetControllerByCommandTypeUseCaseImpl
 import org.koin.dsl.module
@@ -83,6 +89,10 @@ val MenuModule = module {
         IndexRepositoryImpl()
     }
 
+    single<BagRepository> {
+        BagRepositoryImpl()
+    }
+
     single<GetControllerByCommandTypeUseCase> {
         GetControllerByCommandTypeUseCaseImpl(
             confirmRepository = get(),
@@ -115,6 +125,18 @@ val MenuModule = module {
             usedItemIdRepository = get(),
             skillRepository = get(),
             updateStatusService = get(),
+        )
+    }
+
+    single<AddToolUseCase> {
+        AddToolUseCaseImpl(
+            bagRepository = get(),
+        )
+    }
+
+    single<DecToolUseCase> {
+        DecToolUseCaseImpl(
+            bagRepository = get(),
         )
     }
 }

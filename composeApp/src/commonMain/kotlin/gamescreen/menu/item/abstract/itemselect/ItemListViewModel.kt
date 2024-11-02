@@ -59,7 +59,7 @@ abstract class ItemListViewModel : MenuChildViewModel(),
         selectManager.selected = INIT_ITEM_POSITION
     }
 
-    fun getExplainAt(position: Int): String {
+    open fun getExplainAt(position: Int): String {
         val itemId = itemList[position]
         return itemRepository.getItem(itemId).explain
     }

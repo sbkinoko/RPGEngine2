@@ -11,7 +11,7 @@ fun ToolUserWindow(
     toolUserViewModel: ToolUserViewModel = koinInject(),
 ) {
     UserWindow(
+        modifier = modifier,
         itemUserViewModel = toolUserViewModel,
-        modifier = modifier
     )
 }
