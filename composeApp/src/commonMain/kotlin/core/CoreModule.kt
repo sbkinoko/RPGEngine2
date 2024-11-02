@@ -4,6 +4,8 @@ import core.confim.ConfirmViewModel
 import core.confim.repository.ConfirmRepository
 import core.repository.battlemonster.BattleMonsterRepository
 import core.repository.battlemonster.BattleMonsterRepositoryImpl
+import core.repository.choice.ChoiceRepository
+import core.repository.choice.ChoiceRepositoryImpl
 import core.repository.item.skill.SkillRepository
 import core.repository.item.skill.SkillRepositoryImpl
 import core.repository.item.tool.ToolRepository
@@ -55,6 +57,10 @@ val CoreModule = module {
 
     single<ToolRepository> {
         ToolRepositoryImpl()
+    }
+
+    single<ChoiceRepository> {
+        ChoiceRepositoryImpl()
     }
 
     single<CheckCanUseSkillUseCase> {

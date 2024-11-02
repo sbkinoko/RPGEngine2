@@ -1,9 +1,9 @@
 package core.text.repository
 
+import core.domain.TextBoxData
 import core.repository.command.CommandRepository
 
-interface TextRepository : CommandRepository<Boolean> {
-    fun getText(): String
-
-    fun setText(text: String)
+interface TextRepository : CommandRepository<TextBoxData?> {
+    val callBack: () -> Unit
+    val text: String
 }

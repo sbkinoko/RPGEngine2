@@ -39,7 +39,7 @@ class GetControllerByCommandTypeUseCaseImpl(
             return confirmViewModel
         }
 
-        if (textRepository.nowCommandType) {
+        if (textRepository.nowCommandType != null) {
             return textViewModel
         }
 

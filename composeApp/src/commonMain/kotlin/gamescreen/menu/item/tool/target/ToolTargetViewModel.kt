@@ -1,6 +1,7 @@
 package gamescreen.menu.item.tool.target
 
 import core.domain.AbleType
+import core.domain.TextBoxData
 import core.repository.item.tool.ToolRepository
 import core.usecase.item.usetool.UseToolUseCase
 import gamescreen.menu.domain.MenuType
@@ -24,8 +25,12 @@ class ToolTargetViewModel : ItemTargetViewModel() {
 
     override fun selectYes() {
         // textを表示
-        textRepository.push(true)
-        textRepository.setText("回復しました")
+        textRepository.push(
+            TextBoxData(
+                text = "回復しました",
+                callBack = { commandRepository.pop() }
+            )
+        )
 
         useToolUseCase.invoke(
             userId = userRepository.userId,

@@ -4,13 +4,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import core.confim.repository.ConfirmRepository
-import core.domain.Choice
 import core.menu.SelectableChildViewModel
+import core.repository.choice.ChoiceRepository
 import gamescreen.menu.domain.SelectManager
 import org.koin.core.component.inject
 
 class ConfirmViewModel : SelectableChildViewModel<Boolean>() {
     override val commandRepository: ConfirmRepository by inject()
+    private val choiceRepository: ChoiceRepository by inject()
+
+    val choiceList
+        get() = choiceRepository.choiceList
 
     @Composable
     fun getShowStateAsState(): State<Boolean> {
@@ -24,12 +28,9 @@ class ConfirmViewModel : SelectableChildViewModel<Boolean>() {
     override val canBack: Boolean
         get() = true
 
-    var choice: List<Choice> = listOf()
-
     override fun goNextImpl() {
-        choice[selectManager.selected].callBack()
+        choiceList[selectManager.selected].callBack()
     }
-
 
     override var selectManager: SelectManager = SelectManager(
         width = 1,
