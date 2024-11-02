@@ -5,7 +5,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -15,7 +14,6 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import common.extension.equalAllocationModifier
 import common.values.Colors
-import core.WithConfirmAndTextWindow
 import gamescreen.menu.component.StatusComponent
 import gamescreen.menu.item.list.SelectableItemList
 
@@ -36,46 +34,41 @@ fun ItemListWindow(
     }
 
     val selected = itemListViewModel.getSelectedAsState().value
-    WithConfirmAndTextWindow(
+
+    Row(
         modifier = modifier.background(
             color = Colors.MenuBackground,
-        ),
-        confirmCallBack = {},
-        textCallBack = {},
+        )
     ) {
-        Row(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            SelectableItemList(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .weight(1f),
-                selectedUserId = user,
-                itemUserViewModel = itemListViewModel,
-                itemList = itemListViewModel,
-            )
+        SelectableItemList(
+            modifier = Modifier
+                .fillMaxHeight()
+                .weight(1f),
+            selectedUserId = user,
+            itemUserViewModel = itemListViewModel,
+            itemList = itemListViewModel,
+        )
 
-            Column(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .weight(1f),
-            ) {
-                Text(
-                    modifier = equalAllocationModifier,
-                    text = itemListViewModel.getExplainAt(
-                        position = selected,
-                    )
+        Column(
+            modifier = Modifier
+                .fillMaxHeight()
+                .weight(1f),
+        ) {
+            Text(
+                modifier = equalAllocationModifier,
+                text = itemListViewModel.getExplainAt(
+                    position = selected,
                 )
-                StatusComponent(
-                    modifier = equalAllocationModifier
-                        .border(
-                            width = 1.dp,
-                            color = Colors.StatusComponent,
-                            shape = RectangleShape,
-                        ),
-                    statusId = user,
-                )
-            }
+            )
+            StatusComponent(
+                modifier = equalAllocationModifier
+                    .border(
+                        width = 1.dp,
+                        color = Colors.StatusComponent,
+                        shape = RectangleShape,
+                    ),
+                statusId = user,
+            )
         }
     }
 }

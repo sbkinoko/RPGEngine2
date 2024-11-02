@@ -2,9 +2,9 @@ package gamescreen.menu.item.skill.target
 
 import core.domain.AbleType
 import core.domain.Place
+import core.domain.TextBoxData
 import core.repository.item.skill.SkillRepository
 import core.repository.player.PlayerRepository
-import core.text.repository.TextRepository
 import core.usecase.checkcanuseskill.CheckCanUseSkillUseCase
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.item.abstract.target.ItemTargetViewModel
@@ -13,7 +13,6 @@ import org.koin.core.component.inject
 
 class SkillTargetViewModel : ItemTargetViewModel() {
     private val playerRepository: PlayerRepository by inject()
-    private val textRepository: TextRepository by inject()
 
     override val itemRepository: SkillRepository by inject()
 
@@ -38,10 +37,15 @@ class SkillTargetViewModel : ItemTargetViewModel() {
      */
     override fun selectYes() {
         // textを表示
-        textRepository.push(true)
-        textRepository.setText("回復しました")
+        textRepository.push(
+            TextBoxData(
+                text = "回復しました",
+                callBack = { commandRepository.pop() },
+            )
+        )
 
         //　スキル処理実行
         useSkillUseCase.invoke()
+        confirmRepository.pop()
     }
 }

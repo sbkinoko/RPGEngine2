@@ -1,36 +1,28 @@
 package core.text.repository
 
+import core.domain.TextBoxData
 import kotlinx.coroutines.flow.MutableSharedFlow
 
 class TextRepositoryImpl : TextRepository {
-    override val commandTypeFlow: MutableSharedFlow<Boolean> = MutableSharedFlow(replay = 1)
-    override val nowCommandType: Boolean
-        get() = flg
+    override val commandTypeFlow: MutableSharedFlow<TextBoxData?> = MutableSharedFlow(replay = 1)
+    override val nowCommandType: TextBoxData?
+        get() = textBoxData
 
-    private var flg = false
+    private var textBoxData: TextBoxData? = null
 
-    private var _text: String = ""
+    override val text: String
+        get() = textBoxData?.text ?: ""
 
-    override fun getText(): String {
-        return _text
-    }
-
-    override fun setText(text: String) {
-        _text = text
-    }
+    override val callBack: () -> Unit
+        get() = textBoxData?.callBack ?: {}
 
     override fun pop() {
-        flg = false
-        commandTypeFlow.tryEmit(false)
-        _text = ""
+        commandTypeFlow.tryEmit(null)
+        textBoxData = null
     }
 
-    override fun push(commandType: Boolean) {
-        if (!commandType) {
-            throw RuntimeException("Textは必ずtrueを入れる")
-        }
-
-        flg = true
-        commandTypeFlow.tryEmit(true)
+    override fun push(commandType: TextBoxData?) {
+        textBoxData = commandType
+        commandTypeFlow.tryEmit(commandType)
     }
 }
