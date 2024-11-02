@@ -1,8 +1,10 @@
 package core.usecase.item.usetool
 
+import common.values.Constants
 import core.domain.item.tool.HealTool
 import core.repository.item.tool.ToolRepository
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
+import gamescreen.menu.usecase.bag.dectool.DecToolUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -11,6 +13,7 @@ import kotlinx.coroutines.launch
 class UseToolUseCaseImpl(
     private val toolRepository: ToolRepository,
     private val updateStatusService: UpdatePlayerStatusUseCase,
+    private val decToolUseCase: DecToolUseCase,
 ) : UseToolUseCase {
     override fun invoke(
         userId: Int,
@@ -24,10 +27,17 @@ class UseToolUseCaseImpl(
             )
 
             if (tool.isReusable.not()) {
-                updateStatusService.deleteToolAt(
-                    index = index,
-                    playerId = userId,
-                )
+                if (userId < Constants.playerNum) {
+                    updateStatusService.deleteToolAt(
+                        index = index,
+                        playerId = userId,
+                    )
+                } else {
+                    decToolUseCase.invoke(
+                        itemId = toolId,
+                        itemNum = 1
+                    )
+                }
             }
 
             when (tool) {
