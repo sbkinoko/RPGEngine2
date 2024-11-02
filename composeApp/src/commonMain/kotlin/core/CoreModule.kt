@@ -85,6 +85,7 @@ val CoreModule = module {
         UseToolUseCaseImpl(
             toolRepository = get(),
             updateStatusService = get(),
+            decToolUseCase = get(),
         )
     }
 }

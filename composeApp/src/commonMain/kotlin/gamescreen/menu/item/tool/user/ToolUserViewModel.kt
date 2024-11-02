@@ -62,7 +62,9 @@ class ToolUserViewModel : ItemUserViewModel(),
         return if (id < Constants.playerNum) {
             playerRepository.getStatus(id).toolList
         } else {
-            listOf()
+            bagRepository.getList().map {
+                it.id
+            }
         }
     }
 }
