@@ -7,13 +7,11 @@ import gamescreen.menu.domain.BagToolData
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.domain.SelectManager
 import gamescreen.menu.item.abstract.user.ItemUserViewModel
-import gamescreen.menu.item.list.BagItemList
 import gamescreen.menu.repository.bag.BagRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class ToolUserViewModel : ItemUserViewModel(),
-    BagItemList,
     KoinComponent {
     override val itemRepository: ToolRepository by inject()
     private val bagRepository: BagRepository by inject()
@@ -31,9 +29,6 @@ class ToolUserViewModel : ItemUserViewModel(),
             width = 1,
             itemNum = playerNum,
         )
-
-    override val bagItem: List<BagToolData>
-        get() = bagRepository.getList()
 
     init {
         bagRepository.setData(
