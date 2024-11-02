@@ -1,6 +1,6 @@
 package gamescreen.battle.usecase.changeselectingactionplayer
 
-import common.values.playerNum
+import common.values.Constants.Companion.playerNum
 import gamescreen.battle.BattleModule
 import gamescreen.battle.domain.AttackPhaseCommand
 import gamescreen.battle.domain.PlayerActionCommand
