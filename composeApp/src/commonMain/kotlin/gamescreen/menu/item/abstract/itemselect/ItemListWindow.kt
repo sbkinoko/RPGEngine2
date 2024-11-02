@@ -40,7 +40,7 @@ fun ItemListWindow(
         modifier = modifier.background(
             color = Colors.MenuBackground,
         ),
-        confirmCallBack = {},
+        choice = arrayOf(),
         textCallBack = {},
     ) {
         Row(
