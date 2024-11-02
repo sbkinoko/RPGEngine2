@@ -6,19 +6,20 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import common.values.Colors
+import core.confim.ChoiceWindow
 import core.confim.ConfirmViewModel
-import core.confim.ConfirmWindow
+import core.domain.Choice
 import core.text.TextViewModel
 import core.text.TextWindow
 import org.koin.compose.koinInject
 
 @Composable
 fun WithConfirmAndTextWindow(
-    confirmCallBack: () -> Unit,
     textCallBack: () -> Unit,
     modifier: Modifier = Modifier,
     confirmViewModel: ConfirmViewModel = koinInject(),
     textViewModel: TextViewModel = koinInject(),
+    vararg choice: Choice,
     content: @Composable () -> Unit,
 ) {
     Box(modifier = modifier) {
@@ -26,13 +27,13 @@ fun WithConfirmAndTextWindow(
 
         val confirmFlg = confirmViewModel.getShowStateAsState().value
         if (confirmFlg) {
-            ConfirmWindow(
+            ChoiceWindow(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(
                         color = Colors.OverlayMenu
                     ),
-                callBack = confirmCallBack,
+                choice = choice,
             )
         }
 

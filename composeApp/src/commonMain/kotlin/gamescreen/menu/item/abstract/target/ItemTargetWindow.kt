@@ -15,6 +15,7 @@ import common.layout.DisableBox
 import common.values.Colors
 import common.values.playerNum
 import core.WithConfirmAndTextWindow
+import core.domain.Choice
 import gamescreen.menu.component.StatusComponent
 
 @Composable
@@ -24,12 +25,23 @@ fun ItemTargetWindow(
 ) {
     WithConfirmAndTextWindow(
         modifier = modifier,
-        confirmCallBack = {
-            itemTargetViewModel.selectYes()
-        },
         textCallBack = {
             itemTargetViewModel.backWindow()
         },
+        choice = arrayOf(
+            Choice(
+                text = "yes",
+                callBack = {
+                    itemTargetViewModel.selectYes()
+                }
+            ),
+            Choice(
+                text = "no",
+                callBack = {
+                    itemTargetViewModel.pressB()
+                }
+            ),
+        )
     ) {
         Row(
             modifier = Modifier.fillMaxSize(),

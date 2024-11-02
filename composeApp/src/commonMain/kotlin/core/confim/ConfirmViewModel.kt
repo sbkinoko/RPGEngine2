@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import core.confim.repository.ConfirmRepository
+import core.domain.Choice
 import core.menu.SelectableChildViewModel
 import gamescreen.menu.domain.SelectManager
 import org.koin.core.component.inject
@@ -23,19 +24,10 @@ class ConfirmViewModel : SelectableChildViewModel<Boolean>() {
     override val canBack: Boolean
         get() = true
 
-    var callBack: () -> Unit = {}
+    var choice: List<Choice> = listOf()
 
     override fun goNextImpl() {
-        when (
-            selectManager.selected
-        ) {
-            ID_YES -> {
-                callBack()
-                commandRepository.pop()
-            }
-
-            ID_NO -> pressB()
-        }
+        choice[selectManager.selected].callBack()
     }
 
 
@@ -46,10 +38,5 @@ class ConfirmViewModel : SelectableChildViewModel<Boolean>() {
 
     override fun isBoundedImpl(commandType: Boolean): Boolean {
         return commandType
-    }
-
-    companion object {
-        const val ID_YES = 0
-        const val ID_NO = 1
     }
 }
