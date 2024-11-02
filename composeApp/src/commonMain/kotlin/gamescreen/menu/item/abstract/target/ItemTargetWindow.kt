@@ -33,12 +33,13 @@ fun ItemTargetWindow(
                 text = "yes",
                 callBack = {
                     itemTargetViewModel.selectYes()
+
                 }
             ),
             Choice(
                 text = "no",
                 callBack = {
-                    itemTargetViewModel.pressB()
+                    itemTargetViewModel.pressNo()
                 }
             ),
         )

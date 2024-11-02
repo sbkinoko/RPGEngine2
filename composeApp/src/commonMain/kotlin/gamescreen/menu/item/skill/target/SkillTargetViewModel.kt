@@ -4,7 +4,6 @@ import core.domain.AbleType
 import core.domain.Place
 import core.repository.item.skill.SkillRepository
 import core.repository.player.PlayerRepository
-import core.text.repository.TextRepository
 import core.usecase.checkcanuseskill.CheckCanUseSkillUseCase
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.item.abstract.target.ItemTargetViewModel
@@ -13,7 +12,6 @@ import org.koin.core.component.inject
 
 class SkillTargetViewModel : ItemTargetViewModel() {
     private val playerRepository: PlayerRepository by inject()
-    private val textRepository: TextRepository by inject()
 
     override val itemRepository: SkillRepository by inject()
 
@@ -43,5 +41,6 @@ class SkillTargetViewModel : ItemTargetViewModel() {
 
         //　スキル処理実行
         useSkillUseCase.invoke()
+        confirmRepository.pop()
     }
 }
