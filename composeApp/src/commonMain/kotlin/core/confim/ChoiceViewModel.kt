@@ -4,10 +4,7 @@ import core.confim.repository.ChoiceRepository
 import core.domain.Choice
 import core.menu.SelectableChildViewModel
 import gamescreen.menu.domain.SelectManager
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 import org.koin.core.component.inject
 
 class ChoiceViewModel : SelectableChildViewModel<List<Choice>>() {
@@ -17,14 +14,6 @@ class ChoiceViewModel : SelectableChildViewModel<List<Choice>>() {
         get() = commandRepository.nowCommandType
 
     val choiceStateFlow: StateFlow<List<Choice>> = commandRepository.commandStateFlow
-
-    init {
-        CoroutineScope(Dispatchers.Default).launch {
-            choiceStateFlow.collect {
-                println(it)
-            }
-        }
-    }
 
     override val canBack: Boolean
         get() = false
