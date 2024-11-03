@@ -1,8 +1,8 @@
 package gamescreen.menu.usecase.getviewmodelbycommandtype
 
 import controller.domain.ControllerCallback
-import core.confim.ConfirmViewModel
-import core.confim.repository.ConfirmRepository
+import core.confim.ChoiceViewModel
+import core.confim.repository.ChoiceRepository
 import core.text.TextViewModel
 import core.text.repository.TextRepository
 import gamescreen.menu.domain.MenuType
@@ -17,7 +17,7 @@ import gamescreen.menu.repository.menustate.MenuStateRepository
 import gamescreen.menu.status.StatusViewModel
 
 class GetControllerByCommandTypeUseCaseImpl(
-    private val confirmRepository: ConfirmRepository,
+    private val choiceRepository: ChoiceRepository,
     private val textRepository: TextRepository,
     private val menuStateRepository: MenuStateRepository,
 
@@ -30,13 +30,13 @@ class GetControllerByCommandTypeUseCaseImpl(
     private val toolListViewModel: ToolListViewModel,
     private val toolTargetViewModel: ToolTargetViewModel,
 
-    private val confirmViewModel: ConfirmViewModel,
+    private val choiceViewModel: ChoiceViewModel,
     private val textViewModel: TextViewModel,
 ) : GetControllerByCommandTypeUseCase {
 
     override fun invoke(): ControllerCallback? {
-        if (confirmRepository.nowCommandType) {
-            return confirmViewModel
+        if (choiceRepository.nowCommandType.isNotEmpty()) {
+            return choiceViewModel
         }
 
         if (textRepository.nowCommandType != null) {

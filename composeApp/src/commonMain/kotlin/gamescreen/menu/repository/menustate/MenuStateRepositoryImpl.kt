@@ -4,9 +4,12 @@ import gamescreen.menu.domain.MenuType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class MenuStateRepositoryImpl : MenuStateRepository {
+    override val commandStateFlow: StateFlow<MenuType>
+        get() = TODO("Not yet implemented")
 
     override val nowCommandType: MenuType
         get() = mutableList.last()
