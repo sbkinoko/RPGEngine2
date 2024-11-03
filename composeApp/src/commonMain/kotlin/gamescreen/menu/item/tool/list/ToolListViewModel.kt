@@ -1,7 +1,10 @@
 package gamescreen.menu.item.tool.list
 
 import common.values.Constants
+import core.confim.repository.ConfirmRepository
 import core.domain.AbleType
+import core.domain.Choice
+import core.repository.choice.ChoiceRepository
 import core.repository.item.tool.ToolRepository
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.item.abstract.itemselect.ItemListViewModel
@@ -11,6 +14,8 @@ import org.koin.core.component.inject
 class ToolListViewModel : ItemListViewModel() {
     override val itemRepository: ToolRepository by inject()
     private val bagRepository: BagRepository by inject()
+    private val choiceRepository: ChoiceRepository by inject()
+    private val confirmRepository: ConfirmRepository by inject()
 
     override val boundedScreenType: MenuType
         get() = MenuType.TOOL_LIST
@@ -19,6 +24,25 @@ class ToolListViewModel : ItemListViewModel() {
 
     override fun getAbleType(): AbleType {
         return AbleType.Able
+    }
+
+    override fun goNextImpl() {
+        choiceRepository.choiceList = listOf(
+            Choice(
+                text = "使う",
+                callBack = {
+                    super.goNextImpl()
+                    confirmRepository.pop()
+                }
+            ),
+            Choice(
+                text = "キャンセル",
+                callBack = {
+                    confirmRepository.pop()
+                }
+            )
+        )
+        confirmRepository.push(true)
     }
 
     override fun getExplainAt(position: Int): String {
