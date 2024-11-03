@@ -19,12 +19,12 @@ import org.koin.core.component.inject
 abstract class ItemListViewModel : MenuChildViewModel(),
     ItemList,
     KoinComponent {
-    private val menuStateRepository: MenuStateRepository by inject()
+    protected val menuStateRepository: MenuStateRepository by inject()
     private val textRepository: TextRepository by inject()
 
     private val userRepository: UserRepository by inject()
-    private val useItemIdRepository: UseItemIdRepository by inject()
-    private val indexRepository: IndexRepository by inject()
+    protected val useItemIdRepository: UseItemIdRepository by inject()
+    protected val indexRepository: IndexRepository by inject()
 
     protected val playerRepository: PlayerRepository by inject()
     protected abstract val itemRepository: ItemRepository

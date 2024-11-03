@@ -34,12 +34,30 @@ class ToolListViewModel : ItemListViewModel() {
                 }
             ),
             Choice(
+                text = "渡す",
+                callBack = {
+                    goGive()
+                    choiceRepository.pop()
+                }
+            ),
+            Choice(
                 text = "キャンセル",
                 callBack = {
                     choiceRepository.pop()
                 }
             )
         ))
+    }
+
+    private fun goGive() {
+        // itemIdを保存
+        useItemIdRepository.itemId = itemList[selectManager.selected]
+        // indexを保存
+        indexRepository.index = selectManager.selected
+        //　次の画面に遷移
+        menuStateRepository.push(
+            MenuType.TOOL_GIVE,
+        )
     }
 
     override fun getExplainAt(position: Int): String {
