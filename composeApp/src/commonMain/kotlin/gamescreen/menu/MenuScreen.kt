@@ -12,6 +12,7 @@ import gamescreen.menu.domain.MenuType
 import gamescreen.menu.item.skill.list.SkillListWindow
 import gamescreen.menu.item.skill.target.SkillTargetWindow
 import gamescreen.menu.item.skill.user.SkillUserWindow
+import gamescreen.menu.item.tool.give.ToolGiveUserWindow
 import gamescreen.menu.item.tool.list.ToolListWindow
 import gamescreen.menu.item.tool.target.ToolTargetWindow
 import gamescreen.menu.item.tool.user.ToolUserWindow
@@ -57,6 +58,10 @@ fun MenuScreen(
             )
 
             MenuType.TOOL_TARGET -> ToolTargetWindow(
+                modifier = menuModifier,
+            )
+
+            MenuType.TOOL_GIVE -> ToolGiveUserWindow(
                 modifier = menuModifier,
             )
 
