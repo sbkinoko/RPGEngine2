@@ -5,11 +5,15 @@ import gamescreen.battle.domain.MainCommand
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class CommandStateRepositoryImpl : CommandStateRepository {
     override val commandTypeFlow: MutableSharedFlow<BattleCommandType> =
         MutableSharedFlow(replay = 1)
+    override val commandStateFlow: StateFlow<BattleCommandType>
+        get() = TODO("Not yet implemented")
+
     override val nowCommandType: BattleCommandType
         get() = battleCommandTypeQueue.last()
 

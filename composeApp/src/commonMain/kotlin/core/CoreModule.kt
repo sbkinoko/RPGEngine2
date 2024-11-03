@@ -1,11 +1,8 @@
 package core
 
-import core.confim.ConfirmViewModel
-import core.confim.repository.ConfirmRepository
+import core.confim.ChoiceViewModel
 import core.repository.battlemonster.BattleMonsterRepository
 import core.repository.battlemonster.BattleMonsterRepositoryImpl
-import core.repository.choice.ChoiceRepository
-import core.repository.choice.ChoiceRepositoryImpl
 import core.repository.item.skill.SkillRepository
 import core.repository.item.skill.SkillRepositoryImpl
 import core.repository.item.tool.ToolRepository
@@ -27,16 +24,16 @@ import core.usecase.updateparameter.UpdatePlayerStatusUseCaseImpl
 import org.koin.dsl.module
 
 val CoreModule = module {
-    single<ConfirmViewModel> {
-        ConfirmViewModel()
+    single<ChoiceViewModel> {
+        ChoiceViewModel()
     }
 
     single<TextViewModel> {
         TextViewModel()
     }
 
-    single<ConfirmRepository> {
-        ConfirmRepository()
+    single<core.confim.repository.ChoiceRepository> {
+        core.confim.repository.ChoiceRepository()
     }
 
     single<TextRepository> {
@@ -57,10 +54,6 @@ val CoreModule = module {
 
     single<ToolRepository> {
         ToolRepositoryImpl()
-    }
-
-    single<ChoiceRepository> {
-        ChoiceRepositoryImpl()
     }
 
     single<CheckCanUseSkillUseCase> {
