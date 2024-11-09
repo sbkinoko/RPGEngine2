@@ -31,6 +31,8 @@ import gamescreen.menu.usecase.bag.dectool.DecToolUseCase
 import gamescreen.menu.usecase.bag.dectool.DecToolUseCaseImpl
 import gamescreen.menu.usecase.getviewmodelbycommandtype.GetControllerByCommandTypeUseCase
 import gamescreen.menu.usecase.getviewmodelbycommandtype.GetControllerByCommandTypeUseCaseImpl
+import gamescreen.menu.usecase.givetool.GiveToolUseCase
+import gamescreen.menu.usecase.givetool.GiveToolUseCaseImpl
 import org.koin.dsl.module
 
 val MenuModule = module {
@@ -144,5 +146,9 @@ val MenuModule = module {
         DecToolUseCaseImpl(
             bagRepository = get(),
         )
+    }
+
+    single<GiveToolUseCase> {
+        GiveToolUseCaseImpl()
     }
 }
