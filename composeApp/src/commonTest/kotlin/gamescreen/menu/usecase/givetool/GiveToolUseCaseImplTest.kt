@@ -61,6 +61,7 @@ class GiveToolUseCaseImplTest : KoinTest {
     @Test
     fun fullTool() {
         runBlocking {
+            //todo 袋から渡す処理を利用する
             // 渡す対象を設定
             val target = 0
             targetRepository.target = target
@@ -94,6 +95,7 @@ class GiveToolUseCaseImplTest : KoinTest {
 
             val result = giveToolUseCase.invoke()
 
+            // todo dataclassなので全部assertEqualsでやる
             assertTrue(
                 result is GiveResult.NG
             )
