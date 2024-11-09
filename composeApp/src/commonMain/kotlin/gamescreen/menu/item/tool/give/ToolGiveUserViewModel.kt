@@ -77,7 +77,6 @@ class ToolGiveUserViewModel : ItemUserViewModel(),
                                             text = "道具を渡しました",
                                             callBack = {
                                                 choiceRepository.pop()
-                                                commandRepository.pop()
                                             }
                                         ),
                                     )
