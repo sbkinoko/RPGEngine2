@@ -1,12 +1,12 @@
 package gamescreen.menu.item.skill.user
 
-import common.values.Constants
 import core.repository.item.skill.SkillRepository
 import core.repository.player.PlayerRepository
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.domain.SelectManager
 import gamescreen.menu.item.abstract.user.ItemUserViewModel
 import org.koin.core.component.inject
+import values.Constants
 
 class SkillUserViewModel : ItemUserViewModel() {
     val repository: PlayerRepository by inject()

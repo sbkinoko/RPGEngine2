@@ -1,10 +1,10 @@
 package gamescreen.battle.usecase.changeselectingactionplayer
 
-import common.values.Constants.Companion.playerNum
 import gamescreen.battle.domain.AttackPhaseCommand
 import gamescreen.battle.domain.PlayerActionCommand
 import gamescreen.battle.domain.PlayerIdCommand
 import gamescreen.battle.repository.commandstate.CommandStateRepository
+import values.Constants.Companion.playerNum
 
 class ChangeSelectingActionPlayerUseCaseImpl(
     private val commandStateRepository: CommandStateRepository,

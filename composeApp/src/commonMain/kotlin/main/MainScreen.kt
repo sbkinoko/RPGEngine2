@@ -18,11 +18,11 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
 import common.extension.pxToDp
-import common.values.Colors
 import controller.layout.Controller
 import core.domain.toViewModel
 import core.repository.screentype.ScreenTypeRepository
 import org.koin.compose.koinInject
+import values.Colors
 
 @Composable
 fun MainScreen(

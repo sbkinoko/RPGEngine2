@@ -7,7 +7,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import common.values.Colors
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.item.skill.list.SkillListWindow
 import gamescreen.menu.item.skill.target.SkillTargetWindow
@@ -19,6 +18,7 @@ import gamescreen.menu.item.tool.user.ToolUserWindow
 import gamescreen.menu.main.MainMenu
 import gamescreen.menu.status.StatusMenu
 import org.koin.compose.koinInject
+import values.Colors
 
 @Composable
 fun MenuScreen(

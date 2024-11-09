@@ -1,4 +1,4 @@
-package common.values
+package values
 
 import androidx.compose.ui.graphics.Color
 

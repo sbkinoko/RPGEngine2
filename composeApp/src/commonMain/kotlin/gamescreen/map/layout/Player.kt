@@ -7,8 +7,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import common.extension.pxToDp
-import common.values.Colors
 import gamescreen.map.domain.collision.Square
+import values.Colors
 
 @Composable
 fun Player(

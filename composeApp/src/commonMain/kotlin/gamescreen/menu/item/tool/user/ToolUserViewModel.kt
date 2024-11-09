@@ -1,6 +1,5 @@
 package gamescreen.menu.item.tool.user
 
-import common.values.Constants
 import core.repository.item.tool.ToolRepository
 import core.repository.item.tool.ToolRepositoryImpl
 import gamescreen.menu.domain.BagToolData
@@ -10,6 +9,7 @@ import gamescreen.menu.item.abstract.user.ItemUserViewModel
 import gamescreen.menu.repository.bag.BagRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import values.Constants
 
 class ToolUserViewModel : ItemUserViewModel(),
     KoinComponent {

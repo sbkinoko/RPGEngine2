@@ -1,6 +1,5 @@
 package gamescreen.menu.item.abstract.target
 
-import common.values.Constants.Companion.playerNum
 import core.domain.AbleType
 import core.domain.Choice
 import core.domain.item.HealItem
@@ -14,6 +13,7 @@ import gamescreen.menu.item.repository.target.TargetRepository
 import gamescreen.menu.item.repository.useitemid.UseItemIdRepository
 import gamescreen.menu.item.repository.user.UserRepository
 import org.koin.core.component.inject
+import values.Constants.Companion.playerNum
 
 abstract class ItemTargetViewModel : MenuChildViewModel() {
     protected val userRepository: UserRepository by inject()

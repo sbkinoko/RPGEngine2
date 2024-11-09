@@ -1,6 +1,5 @@
 package gamescreen.menu.item.tool.list
 
-import common.values.Constants
 import core.confim.repository.ChoiceRepository
 import core.domain.AbleType
 import core.domain.Choice
@@ -9,6 +8,7 @@ import gamescreen.menu.domain.MenuType
 import gamescreen.menu.item.abstract.itemselect.ItemListViewModel
 import gamescreen.menu.repository.bag.BagRepository
 import org.koin.core.component.inject
+import values.Constants
 
 class ToolListViewModel : ItemListViewModel() {
     override val itemRepository: ToolRepository by inject()

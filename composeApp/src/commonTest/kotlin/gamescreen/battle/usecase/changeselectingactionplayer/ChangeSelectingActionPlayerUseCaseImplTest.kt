@@ -1,6 +1,5 @@
 package gamescreen.battle.usecase.changeselectingactionplayer
 
-import common.values.Constants.Companion.playerNum
 import gamescreen.battle.BattleModule
 import gamescreen.battle.domain.AttackPhaseCommand
 import gamescreen.battle.domain.PlayerActionCommand
@@ -10,6 +9,7 @@ import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
 import org.koin.test.inject
+import values.Constants.Companion.playerNum
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test

@@ -1,6 +1,5 @@
 package gamescreen.battle.command.actionphase
 
-import common.values.Constants.Companion.playerNum
 import core.domain.item.skill.AttackSkill
 import core.domain.item.skill.HealSkill
 import core.domain.item.tool.HealTool
@@ -37,6 +36,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.koin.core.component.inject
 import org.koin.core.qualifier.named
+import values.Constants.Companion.playerNum
 
 class ActionPhaseViewModel : BattleChildViewModel() {
     private val actionRepository: ActionRepository by inject()
