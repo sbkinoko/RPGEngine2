@@ -3,7 +3,6 @@ package core.repository.player
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
-import common.values.Constants
 import core.domain.status.PlayerStatus
 import core.domain.status.param.HP
 import core.domain.status.param.MP
@@ -16,6 +15,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
+import values.Constants
 
 class PlayerRepositoryImpl : PlayerRepository {
     override val mutablePlayersFlow: MutableSharedFlow<List<PlayerStatus>> =

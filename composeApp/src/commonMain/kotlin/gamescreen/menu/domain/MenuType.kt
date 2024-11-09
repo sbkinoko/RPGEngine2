@@ -17,6 +17,7 @@ enum class MenuType(
     ),
     TOOL_LIST,
     TOOL_TARGET,
+    TOOL_GIVE,
     Item3(title = "text3"),
     Item4(title = "text4"),
     Item5(title = "text5"),

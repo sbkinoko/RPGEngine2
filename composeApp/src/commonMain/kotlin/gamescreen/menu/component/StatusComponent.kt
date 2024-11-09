@@ -4,9 +4,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import common.values.Constants
 import core.repository.player.PlayerRepository
 import org.koin.compose.koinInject
+import values.Constants
 
 @Composable
 fun StatusComponent(

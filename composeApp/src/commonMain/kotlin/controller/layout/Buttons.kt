@@ -8,8 +8,8 @@ import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import common.values.LayoutConst.Companion.BUTTON_PADDING
 import controller.domain.ControllerCallback
+import values.LayoutConst.Companion.BUTTON_PADDING
 
 @Composable
 fun Buttons(

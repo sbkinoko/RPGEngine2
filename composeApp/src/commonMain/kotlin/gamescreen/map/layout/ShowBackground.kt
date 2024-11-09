@@ -14,11 +14,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import common.extension.pxToDp
-import common.values.Colors
 import gamescreen.map.domain.BackgroundCell
 import gamescreen.map.viewmodel.MapViewModel
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import values.Colors
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable

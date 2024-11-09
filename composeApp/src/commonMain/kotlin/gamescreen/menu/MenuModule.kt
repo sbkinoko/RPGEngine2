@@ -13,6 +13,7 @@ import gamescreen.menu.item.skill.target.SkillTargetViewModel
 import gamescreen.menu.item.skill.usecase.useskill.UseSkillUseCase
 import gamescreen.menu.item.skill.usecase.useskill.UseSkillUseCaseImpl
 import gamescreen.menu.item.skill.user.SkillUserViewModel
+import gamescreen.menu.item.tool.give.ToolGiveUserViewModel
 import gamescreen.menu.item.tool.list.ToolListViewModel
 import gamescreen.menu.item.tool.target.ToolTargetViewModel
 import gamescreen.menu.item.tool.user.ToolUserViewModel
@@ -30,6 +31,8 @@ import gamescreen.menu.usecase.bag.dectool.DecToolUseCase
 import gamescreen.menu.usecase.bag.dectool.DecToolUseCaseImpl
 import gamescreen.menu.usecase.getviewmodelbycommandtype.GetControllerByCommandTypeUseCase
 import gamescreen.menu.usecase.getviewmodelbycommandtype.GetControllerByCommandTypeUseCaseImpl
+import gamescreen.menu.usecase.givetool.GiveToolUseCase
+import gamescreen.menu.usecase.givetool.GiveToolUseCaseImpl
 import org.koin.dsl.module
 
 val MenuModule = module {
@@ -69,6 +72,10 @@ val MenuModule = module {
         ToolTargetViewModel()
     }
 
+    single {
+        ToolGiveUserViewModel()
+    }
+
     single<MenuStateRepository> {
         MenuStateRepositoryImpl()
     }
@@ -106,6 +113,7 @@ val MenuModule = module {
             toolUserViewModel = get(),
             toolListViewModel = get(),
             toolTargetViewModel = get(),
+            toolGiveUserViewModel = get(),
             choiceViewModel = get(),
             textViewModel = get(),
         )
@@ -137,6 +145,18 @@ val MenuModule = module {
     single<DecToolUseCase> {
         DecToolUseCaseImpl(
             bagRepository = get(),
+        )
+    }
+
+    single<GiveToolUseCase> {
+        GiveToolUseCaseImpl(
+            targetRepository = get(),
+            userRepository = get(),
+            indexRepository = get(),
+            bagRepository = get(),
+            playerRepository = get(),
+            decToolUseCase = get(),
+            addToolUseCase = get(),
         )
     }
 }

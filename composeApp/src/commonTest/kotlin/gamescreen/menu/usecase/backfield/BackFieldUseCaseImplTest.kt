@@ -4,6 +4,7 @@ import core.usecase.changetomap.ChangeToMapUseCase
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.repository.menustate.MenuStateRepository
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.runBlocking
 import org.koin.test.KoinTest
 import kotlin.test.BeforeTest
@@ -22,6 +23,8 @@ class BackFieldUseCaseImplTest : KoinTest {
             menuStateRepository = object : MenuStateRepository {
                 override val commandTypeFlow: MutableSharedFlow<MenuType>
                     get() = throw NotImplementedError()
+                override val commandStateFlow: StateFlow<MenuType>
+                    get() = TODO("Not yet implemented")
                 override var nowCommandType: MenuType
                     get() = throw NotImplementedError()
                     set(@Suppress("UNUSED_PARAMETER") value) {

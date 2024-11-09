@@ -10,8 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
-import common.values.Colors
 import core.menu.SelectableChildViewModel
+import values.Colors
 
 @Composable
 fun Modifier.menuItem(

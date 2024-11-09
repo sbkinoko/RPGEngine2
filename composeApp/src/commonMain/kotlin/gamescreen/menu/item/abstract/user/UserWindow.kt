@@ -5,9 +5,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import common.values.Colors
 import gamescreen.menu.item.list.UnSelectableItemList
 import gamescreen.menu.item.list.UserList
+import values.Colors
 
 @Composable
 fun UserWindow(

@@ -20,11 +20,11 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.util.fastAny
 import common.extension.pxToDp
-import common.values.Colors
-import common.values.LayoutConst
 import controller.domain.ControllerCallback
 import controller.domain.Stick
 import kotlinx.coroutines.delay
+import values.Colors
+import values.LayoutConst
 
 @Composable
 fun Stick(

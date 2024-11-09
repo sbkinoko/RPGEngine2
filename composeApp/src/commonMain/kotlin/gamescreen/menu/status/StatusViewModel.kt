@@ -1,7 +1,6 @@
 package gamescreen.menu.status
 
 import common.Timer
-import common.values.Constants
 import core.domain.status.Status
 import core.menu.SelectableWindowViewModel
 import core.repository.player.PlayerRepository
@@ -9,6 +8,7 @@ import gamescreen.menu.domain.SelectManager
 import gamescreen.menu.repository.menustate.MenuStateRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import values.Constants
 
 class StatusViewModel : SelectableWindowViewModel(),
     KoinComponent {

@@ -15,10 +15,10 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import common.extension.equalAllocationModifier
 import common.layout.CenterText
-import common.values.Colors
-import common.values.Constants
 import gamescreen.menu.component.StatusComponent
 import org.koin.compose.koinInject
+import values.Colors
+import values.Constants
 
 @Composable
 fun StatusMenu(

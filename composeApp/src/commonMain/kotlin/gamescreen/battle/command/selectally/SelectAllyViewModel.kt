@@ -1,6 +1,5 @@
 package gamescreen.battle.command.selectally
 
-import common.values.Constants.Companion.playerNum
 import core.domain.item.HealItem
 import core.domain.item.TargetType
 import core.domain.item.skill.HealSkill
@@ -20,6 +19,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.koin.core.component.inject
+import values.Constants.Companion.playerNum
 
 class SelectAllyViewModel : BattleChildViewModel() {
     private val changeSelectingActionPlayerUseCase: ChangeSelectingActionPlayerUseCase by inject()

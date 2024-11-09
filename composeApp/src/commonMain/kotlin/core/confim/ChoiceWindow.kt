@@ -17,9 +17,9 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import common.extension.menuItem
 import common.extension.pxToDp
 import common.layout.CenterText
-import common.values.Colors
-import common.values.LayoutConst
 import org.koin.compose.koinInject
+import values.Colors
+import values.LayoutConst
 
 @Composable
 fun ChoiceWindow(
