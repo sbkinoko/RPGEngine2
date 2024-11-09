@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import common.values.Colors
+import values.Colors
 
 /**
  * 内容を表示するが、条件によって操作できなくするBox

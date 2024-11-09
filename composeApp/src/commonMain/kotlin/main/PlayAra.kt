@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import common.values.Colors
 import core.confim.ChoiceWindow
 import core.domain.ScreenType
 import core.text.TextWindow
@@ -13,6 +12,7 @@ import gamescreen.battle.BattleScreen
 import gamescreen.map.layout.MapScreen
 import gamescreen.map.viewmodel.MapViewModel
 import gamescreen.menu.MenuScreen
+import values.Colors
 
 @Composable
 fun PlayArea(

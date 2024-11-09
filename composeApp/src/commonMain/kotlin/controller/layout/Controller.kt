@@ -4,8 +4,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import common.values.LayoutConst
 import controller.domain.ControllerCallback
+import values.LayoutConst
 
 @Composable
 fun Controller(

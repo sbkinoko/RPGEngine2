@@ -1,6 +1,5 @@
 package core.usecase.item.usetool
 
-import common.values.Constants
 import core.domain.item.tool.HealTool
 import core.repository.item.tool.ToolRepository
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
@@ -9,6 +8,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
+import values.Constants
 
 class UseToolUseCaseImpl(
     private val toolRepository: ToolRepository,

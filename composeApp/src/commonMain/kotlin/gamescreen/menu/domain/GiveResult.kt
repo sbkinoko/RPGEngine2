@@ -1,6 +1,8 @@
 package gamescreen.menu.domain
 
-enum class GiveResult {
-    OK,
-    NG,
+sealed class GiveResult {
+
+    class OK(val itemId: Int) : GiveResult()
+
+    class NG(val text: String) : GiveResult()
 }

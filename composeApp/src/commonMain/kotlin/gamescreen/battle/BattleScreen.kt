@@ -10,12 +10,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
-import common.values.Colors
 import gamescreen.battle.command.CommandArea
 import gamescreen.battle.monster.MonsterArea
 import gamescreen.battle.status.StatusArea
 import kotlinx.coroutines.delay
 import org.koin.compose.koinInject
+import values.Colors
 
 @Composable
 fun BattleScreen(

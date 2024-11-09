@@ -1,6 +1,5 @@
 package gamescreen.menu.item.tool.give
 
-import common.values.Constants
 import core.confim.repository.ChoiceRepository
 import core.domain.Choice
 import core.repository.item.tool.ToolRepository
@@ -12,6 +11,7 @@ import gamescreen.menu.item.abstract.user.ItemUserViewModel
 import gamescreen.menu.repository.bag.BagRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import values.Constants
 
 class ToolGiveUserViewModel : ItemUserViewModel(),
     KoinComponent {

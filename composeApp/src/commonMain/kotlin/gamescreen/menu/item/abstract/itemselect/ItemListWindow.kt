@@ -13,9 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import common.extension.equalAllocationModifier
-import common.values.Colors
 import gamescreen.menu.component.StatusComponent
 import gamescreen.menu.item.list.SelectableItemList
+import values.Colors
 
 @Composable
 fun ItemListWindow(

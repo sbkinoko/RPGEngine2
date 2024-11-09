@@ -12,9 +12,9 @@ import androidx.compose.ui.unit.dp
 import common.extension.equalAllocationModifier
 import common.extension.menuItem
 import common.layout.DisableBox
-import common.values.Colors
-import common.values.Constants.Companion.playerNum
 import gamescreen.menu.component.StatusComponent
+import values.Colors
+import values.Constants.Companion.playerNum
 
 @Composable
 fun ItemTargetWindow(

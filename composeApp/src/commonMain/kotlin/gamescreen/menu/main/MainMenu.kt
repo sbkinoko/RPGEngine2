@@ -16,8 +16,8 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import common.extension.menuItem
 import common.layout.CenterText
-import common.values.Colors
 import org.koin.compose.koinInject
+import values.Colors
 
 @Composable
 fun MainMenu(

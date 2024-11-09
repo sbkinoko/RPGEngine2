@@ -3,7 +3,6 @@ package gamescreen.battle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
-import common.values.Constants
 import controller.domain.ControllerCallback
 import controller.domain.Stick
 import core.domain.status.MonsterStatus
@@ -24,6 +23,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import values.Constants
 
 class BattleViewModel :
     ControllerCallback,
