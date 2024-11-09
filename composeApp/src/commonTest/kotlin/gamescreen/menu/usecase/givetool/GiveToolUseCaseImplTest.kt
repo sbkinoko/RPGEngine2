@@ -118,8 +118,11 @@ class GiveToolUseCaseImplTest : KoinTest {
                 )
             )
 
-            assertTrue(
-                result is GiveResult.OK
+            assertEquals(
+                expected = GiveResult.OK(
+                    itemId = 0,
+                ),
+                actual = result
             )
 
             assertEquals(
@@ -134,7 +137,6 @@ class GiveToolUseCaseImplTest : KoinTest {
                 actual = fromPlayerStatus.toolList
             )
 
-
             // 一番下を渡す
             val result2 = moveToolFromPlayerToBag(
                 index = 2,
@@ -145,8 +147,11 @@ class GiveToolUseCaseImplTest : KoinTest {
                 )
             )
 
-            assertTrue(
-                result2 is GiveResult.OK
+            assertEquals(
+                expected = GiveResult.OK(
+                    itemId = 2,
+                ),
+                actual = result2
             )
 
             assertEquals(
@@ -204,8 +209,11 @@ class GiveToolUseCaseImplTest : KoinTest {
                 ),
                 index = 0,
             )
-            assertTrue(
-                result1 is GiveResult.OK
+            assertEquals(
+                expected = GiveResult.OK(
+                    itemId = 0,
+                ),
+                actual = result1
             )
             assertEquals(
                 expected = listOf(0),
@@ -228,8 +236,12 @@ class GiveToolUseCaseImplTest : KoinTest {
                 ),
                 index = 1,
             )
-            assertTrue(
-                result2 is GiveResult.OK
+
+            assertEquals(
+                expected = GiveResult.OK(
+                    itemId = 2,
+                ),
+                actual = result2
             )
             assertEquals(
                 expected = listOf(0, 2),
