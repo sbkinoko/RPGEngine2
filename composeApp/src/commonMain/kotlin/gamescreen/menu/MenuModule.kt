@@ -149,6 +149,14 @@ val MenuModule = module {
     }
 
     single<GiveToolUseCase> {
-        GiveToolUseCaseImpl()
+        GiveToolUseCaseImpl(
+            targetRepository = get(),
+            userRepository = get(),
+            indexRepository = get(),
+            bagRepository = get(),
+            playerRepository = get(),
+            decToolUseCase = get(),
+            addToolUseCase = get(),
+        )
     }
 }

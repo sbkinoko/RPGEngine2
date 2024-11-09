@@ -1,5 +1,6 @@
 package gamescreen.menu.usecase.givetool
 
+import core.CoreModule
 import core.repository.item.tool.ToolRepositoryImpl
 import core.repository.player.PlayerRepository
 import gamescreen.menu.MenuModule
@@ -9,10 +10,7 @@ import gamescreen.menu.item.repository.index.IndexRepository
 import gamescreen.menu.item.repository.target.TargetRepository
 import gamescreen.menu.item.repository.user.UserRepository
 import gamescreen.menu.repository.bag.BagRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import main.MainModule
+import kotlinx.coroutines.runBlocking
 import org.koin.core.component.inject
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -47,7 +45,7 @@ class GiveToolUseCaseImplTest : KoinTest {
         startKoin {
             modules(
                 MenuModule,
-                MainModule,
+                CoreModule,
             )
         }
     }
@@ -62,7 +60,7 @@ class GiveToolUseCaseImplTest : KoinTest {
      */
     @Test
     fun fullTool() {
-        CoroutineScope(Dispatchers.Default).launch {
+        runBlocking {
             // 渡す対象を設定
             val target = 0
             targetRepository.target = target
@@ -109,7 +107,7 @@ class GiveToolUseCaseImplTest : KoinTest {
 
     @Test
     fun movePlayerToBag() {
-        CoroutineScope(Dispatchers.Default).launch {
+        runBlocking {
             // 一番上を渡す
             val result = moveToolFromPlayerToBag(
                 index = 0,
@@ -193,7 +191,13 @@ class GiveToolUseCaseImplTest : KoinTest {
 
     @Test
     fun moveBagToPlayer() {
-        CoroutineScope(Dispatchers.Default).launch {
+        runBlocking {
+            playerRepository.setStatus(
+                id = toPlayer,
+                status = toPlayerStatus.copy(
+                    toolList = listOf()
+                )
+            )
             val result1 = moveFromBagToPlayer(
                 itemList = listOf(
                     BagToolData(id = 0, num = 1),
@@ -248,7 +252,7 @@ class GiveToolUseCaseImplTest : KoinTest {
         }
     }
 
-    private fun moveFromBagToPlayer(
+    private suspend fun moveFromBagToPlayer(
         itemList: List<BagToolData>,
         index: Int,
     ): GiveResult {
