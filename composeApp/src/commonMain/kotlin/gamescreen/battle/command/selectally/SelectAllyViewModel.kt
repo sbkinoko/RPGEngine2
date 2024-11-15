@@ -37,9 +37,6 @@ class SelectAllyViewModel : BattleChildViewModel() {
     private val _isAllySelecting: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val isAllySelecting = _isAllySelecting.asStateFlow()
 
-    override val canBack: Boolean
-        get() = true
-
     val targetType: TargetType
         get() {
             val actionType = actionRepository.getAction(playerId).thisTurnAction

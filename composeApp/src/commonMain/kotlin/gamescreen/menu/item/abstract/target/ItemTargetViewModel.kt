@@ -29,9 +29,6 @@ abstract class ItemTargetViewModel : MenuChildViewModel() {
 
     protected val textRepository: TextRepository by inject()
 
-    override val canBack: Boolean
-        get() = true
-
     val user: Int
         get() = userRepository.userId
 

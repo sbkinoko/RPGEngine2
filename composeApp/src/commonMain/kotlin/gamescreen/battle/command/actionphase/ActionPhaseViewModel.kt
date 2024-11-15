@@ -59,9 +59,6 @@ class ActionPhaseViewModel : BattleChildViewModel() {
 
     private val useToolUseCase: UseToolUseCase by inject()
 
-    override val canBack: Boolean
-        get() = false
-
     init {
         CoroutineScope(Dispatchers.IO).launch {
             this@ActionPhaseViewModel.commandRepository.commandTypeFlow.collect {
@@ -361,5 +358,9 @@ class ActionPhaseViewModel : BattleChildViewModel() {
     private fun initAction() {
         mutableAttackingPlayerId.value = 0
         commandRepository.init()
+    }
+
+    override fun pressB() {
+        pressA()
     }
 }

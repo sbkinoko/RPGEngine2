@@ -19,9 +19,6 @@ class TextViewModel : SelectableChildViewModel<TextBoxData?>() {
         )
     }
 
-    override val canBack: Boolean
-        get() = false
-
     override fun isBoundedImpl(commandType: TextBoxData?): Boolean {
         return commandType != null
     }
@@ -45,6 +42,11 @@ class TextViewModel : SelectableChildViewModel<TextBoxData?>() {
 
     // 直接戻りたくないのでAボタンと同じ処理
     override fun pressM() {
+        pressA()
+    }
+
+    // 直接戻りたくないのでAボタンと同じ処理
+    override fun pressB() {
         pressA()
     }
 
