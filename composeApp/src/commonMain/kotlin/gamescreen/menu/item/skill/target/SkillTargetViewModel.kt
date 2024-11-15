@@ -49,7 +49,5 @@ class SkillTargetViewModel : ItemTargetViewModel() {
             userId = userRepository.userId,
             index = indexRepository.index,
         )
-
-        confirmRepository.pop()
     }
 }

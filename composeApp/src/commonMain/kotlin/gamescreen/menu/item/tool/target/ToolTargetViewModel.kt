@@ -22,7 +22,6 @@ class ToolTargetViewModel : ItemTargetViewModel() {
         return AbleType.Able
     }
 
-
     override fun selectYes() {
         // textを表示
         textRepository.push(
@@ -37,6 +36,5 @@ class ToolTargetViewModel : ItemTargetViewModel() {
             index = indexRepository.index,
             targetId = targetRepository.target,
         )
-        confirmRepository.pop()
     }
 }

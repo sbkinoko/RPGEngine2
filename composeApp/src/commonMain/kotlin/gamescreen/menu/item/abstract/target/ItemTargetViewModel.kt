@@ -1,5 +1,6 @@
 package gamescreen.menu.item.abstract.target
 
+import core.confim.repository.ChoiceRepository
 import core.domain.AbleType
 import core.domain.Choice
 import core.domain.item.HealItem
@@ -22,9 +23,10 @@ abstract class ItemTargetViewModel : MenuChildViewModel() {
 
     private val indexRepository: IndexRepository by inject()
 
+    private val choiceRepository: ChoiceRepository by inject()
+
     protected abstract val itemRepository: ItemRepository
 
-    protected val confirmRepository: core.confim.repository.ChoiceRepository by inject()
     protected val textRepository: TextRepository by inject()
 
     override val canBack: Boolean
@@ -50,19 +52,16 @@ abstract class ItemTargetViewModel : MenuChildViewModel() {
 
     override fun goNextImpl() {
         targetRepository.target = selectManager.selected
-        confirmRepository.push(listOf(
+        choiceRepository.push(listOf(
             Choice(
                 text = "yes",
                 callBack = {
                     selectYes()
-
                 }
             ),
             Choice(
                 text = "no",
-                callBack = {
-                    confirmRepository.pop()
-                }
+                callBack = { }
             ),
         ))
     }
