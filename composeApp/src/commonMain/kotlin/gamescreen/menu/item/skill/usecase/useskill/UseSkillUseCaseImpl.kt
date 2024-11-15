@@ -3,27 +3,28 @@ package gamescreen.menu.item.skill.usecase.useskill
 import core.domain.item.skill.AttackSkill
 import core.domain.item.skill.HealSkill
 import core.repository.item.skill.SkillRepository
+import core.repository.player.PlayerRepository
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
-import gamescreen.menu.item.repository.target.TargetRepository
-import gamescreen.menu.item.repository.useitemid.UseItemIdRepository
-import gamescreen.menu.item.repository.user.UserRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 
 class UseSkillUseCaseImpl(
-    private val targetRepository: TargetRepository,
-    private val userRepository: UserRepository,
-    private val usedItemIdRepository: UseItemIdRepository,
+    private val playerRepository: PlayerRepository,
     private val skillRepository: SkillRepository,
     private val updateStatusService: UpdatePlayerStatusUseCase
 ) : UseSkillUseCase {
-    override fun invoke() {
+    override fun invoke(
+        userId: Int,
+        targetId: Int,
+        index: Int,
+    ) {
         CoroutineScope(Dispatchers.IO).launch {
-            val target = targetRepository.target
-            val user = userRepository.userId
-            val skillId = usedItemIdRepository.itemId
+            val skillId = playerRepository.getSkill(
+                playerId = userId,
+                index = index
+            )
 
             val skill = skillRepository.getItem(
                 id = skillId
@@ -31,14 +32,14 @@ class UseSkillUseCaseImpl(
 
             // MP減らす
             updateStatusService.decMP(
-                id = user,
+                id = userId,
                 amount = skill.needMP,
             )
 
             when (skill) {
                 is HealSkill -> {
                     updateStatusService.incHP(
-                        id = target,
+                        id = targetId,
                         amount = skill.healAmount,
                     )
                 }

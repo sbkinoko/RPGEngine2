@@ -50,8 +50,6 @@ class ToolListViewModel : ItemListViewModel() {
     }
 
     private fun goGive() {
-        // itemIdを保存
-        useItemIdRepository.itemId = itemList[selectManager.selected]
         // indexを保存
         indexRepository.index = selectManager.selected
         //　次の画面に遷移

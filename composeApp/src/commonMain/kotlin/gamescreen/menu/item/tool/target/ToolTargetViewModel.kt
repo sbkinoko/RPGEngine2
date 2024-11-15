@@ -34,7 +34,6 @@ class ToolTargetViewModel : ItemTargetViewModel() {
 
         useToolUseCase.invoke(
             userId = userRepository.userId,
-            toolId = useItemIdRepository.itemId,
             index = indexRepository.index,
             targetId = targetRepository.target,
         )

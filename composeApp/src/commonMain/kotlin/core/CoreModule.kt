@@ -82,6 +82,7 @@ val CoreModule = module {
 
     single<UseToolUseCase> {
         UseToolUseCaseImpl(
+            playerRepository = get(),
             toolRepository = get(),
             updateStatusService = get(),
             decToolUseCase = get(),
