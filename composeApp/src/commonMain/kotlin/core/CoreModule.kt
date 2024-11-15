@@ -1,6 +1,8 @@
 package core
 
 import core.confim.ChoiceViewModel
+import core.confim.repository.ChoiceRepository
+import core.confim.repository.ChoiceRepositoryImpl
 import core.repository.battlemonster.BattleMonsterRepository
 import core.repository.battlemonster.BattleMonsterRepositoryImpl
 import core.repository.item.skill.SkillRepository
@@ -32,8 +34,8 @@ val CoreModule = module {
         TextViewModel()
     }
 
-    single<core.confim.repository.ChoiceRepository> {
-        core.confim.repository.ChoiceRepository()
+    single<ChoiceRepository> {
+        ChoiceRepositoryImpl()
     }
 
     single<TextRepository> {

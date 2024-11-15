@@ -75,9 +75,7 @@ class ToolGiveUserViewModel : ItemUserViewModel(),
                                     textRepository.push(
                                         TextBoxData(
                                             text = "道具を渡しました",
-                                            callBack = {
-                                                choiceRepository.pop()
-                                            }
+                                            callBack = { }
                                         ),
                                     )
                                 }
@@ -95,9 +93,7 @@ class ToolGiveUserViewModel : ItemUserViewModel(),
                 ),
                 Choice(
                     text = "他の人に渡す",
-                    callBack = {
-                        choiceRepository.pop()
-                    }
+                    callBack = {}
                 ),
             )
         )

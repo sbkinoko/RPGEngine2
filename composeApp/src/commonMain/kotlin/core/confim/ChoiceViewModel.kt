@@ -20,6 +20,7 @@ class ChoiceViewModel : SelectableChildViewModel<List<Choice>>() {
 
     override fun goNextImpl() {
         choiceList[selectManager.selected].callBack()
+        commandRepository.pop()
     }
 
     override var selectManager: SelectManager = SelectManager(

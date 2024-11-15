@@ -30,21 +30,17 @@ class ToolListViewModel : ItemListViewModel() {
                 text = "使う",
                 callBack = {
                     super.goNextImpl()
-                    choiceRepository.pop()
                 }
             ),
             Choice(
                 text = "渡す",
                 callBack = {
                     goGive()
-                    choiceRepository.pop()
                 }
             ),
             Choice(
                 text = "キャンセル",
-                callBack = {
-                    choiceRepository.pop()
-                }
+                callBack = { }
             )
         ))
     }
