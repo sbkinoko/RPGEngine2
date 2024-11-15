@@ -2,7 +2,7 @@ package gamescreen.menu.usecase.givetool
 
 import core.CoreModule
 import core.repository.item.tool.ToolRepositoryImpl
-import core.repository.player.PlayerRepository
+import core.repository.player.PlayerStatusRepository
 import gamescreen.menu.MenuModule
 import gamescreen.menu.domain.BagToolData
 import gamescreen.menu.domain.GiveResult
@@ -24,7 +24,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class GiveToolUseCaseImplTest : KoinTest {
-    private val playerRepository: PlayerRepository by inject()
+    private val playerStatusRepository: PlayerStatusRepository by inject()
     private val bagRepository: BagRepository by inject()
     private val targetRepository: TargetRepository by inject()
     private val userRepository: UserRepository by inject()
@@ -34,11 +34,11 @@ class GiveToolUseCaseImplTest : KoinTest {
 
     private val fromPlayer = 0
     private val fromPlayerStatus
-        get() = playerRepository.getPlayers()[fromPlayer]
+        get() = playerStatusRepository.getPlayers()[fromPlayer]
 
     private val toPlayer = 0
     private val toPlayerStatus
-        get() = playerRepository.getPlayers()[toPlayer]
+        get() = playerStatusRepository.getPlayers()[toPlayer]
 
     @BeforeTest
     fun beforeTest() {
@@ -67,8 +67,8 @@ class GiveToolUseCaseImplTest : KoinTest {
             targetRepository.target = target
 
             //　対象の持ち物をいっぱいにする
-            val player1 = playerRepository.getPlayers()[target]
-            playerRepository.setStatus(
+            val player1 = playerStatusRepository.getPlayers()[target]
+            playerStatusRepository.setStatus(
                 id = target,
                 status = player1.copy(
                     toolList = List(Constants.MAX_TOOL_NUM) {
@@ -81,8 +81,8 @@ class GiveToolUseCaseImplTest : KoinTest {
             val from = 1
             userRepository.userId = from
 
-            val fromPlayer = playerRepository.getPlayers()[from]
-            playerRepository.setStatus(
+            val fromPlayer = playerStatusRepository.getPlayers()[from]
+            playerStatusRepository.setStatus(
                 id = from,
                 status = fromPlayer.copy(
                     toolList = List(Constants.MAX_TOOL_NUM) {
@@ -185,7 +185,7 @@ class GiveToolUseCaseImplTest : KoinTest {
         indexRepository.index = index
 
         // 道具を設定
-        playerRepository.setStatus(
+        playerStatusRepository.setStatus(
             id = fromPlayer,
             status = fromPlayerStatus.copy(
                 toolList = itemList
@@ -199,7 +199,7 @@ class GiveToolUseCaseImplTest : KoinTest {
     @Test
     fun moveBagToPlayer() {
         runBlocking {
-            playerRepository.setStatus(
+            playerStatusRepository.setStatus(
                 id = toPlayer,
                 status = toPlayerStatus.copy(
                     toolList = listOf()

@@ -4,17 +4,17 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import core.repository.player.PlayerRepository
+import core.repository.player.PlayerStatusRepository
 import org.koin.compose.koinInject
 import values.Constants
 
 @Composable
 fun StatusComponent(
     modifier: Modifier = Modifier,
-    playerRepository: PlayerRepository = koinInject(),
+    playerStatusRepository: PlayerStatusRepository = koinInject(),
     statusId: Int,
 ) {
-    val state = playerRepository.getFlowAsState()
+    val state = playerStatusRepository.getFlowAsState()
 
     Column(
         modifier = modifier

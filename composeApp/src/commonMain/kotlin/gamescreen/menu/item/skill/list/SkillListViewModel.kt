@@ -19,12 +19,12 @@ class SkillListViewModel : ItemListViewModel() {
         get() = MenuType.SKILL_TARGET
 
     override fun getPlayerItemListAt(id: Int): List<Int> {
-        return playerRepository.getStatus(id).skillList
+        return playerStatusRepository.getStatus(id).skillList
     }
 
     override fun getAbleType(): AbleType {
         val skillId = itemList[selectManager.selected]
-        val status = playerRepository.getStatus(userId)
+        val status = playerStatusRepository.getStatus(userId)
 
         return checkCanUseSkillUseCase.invoke(
             skillId = skillId,

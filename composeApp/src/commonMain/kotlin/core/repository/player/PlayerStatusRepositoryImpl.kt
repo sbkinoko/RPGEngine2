@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import values.Constants
 
-class PlayerRepositoryImpl : PlayerRepository {
+class PlayerStatusRepositoryImpl : PlayerStatusRepository {
     override val mutablePlayersFlow: MutableSharedFlow<List<PlayerStatus>> =
         MutableSharedFlow(replay = 1)
 

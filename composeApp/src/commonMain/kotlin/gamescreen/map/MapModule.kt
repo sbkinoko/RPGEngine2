@@ -5,8 +5,8 @@ import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.backgroundcell.BackgroundRepositoryImpl
 import gamescreen.map.repository.collision.CollisionRepository
 import gamescreen.map.repository.collision.CollisionRepositoryImpl
-import gamescreen.map.repository.player.PlayerRepository
-import gamescreen.map.repository.player.PlayerRepositoryImpl
+import gamescreen.map.repository.player.PlayerPositionRepository
+import gamescreen.map.repository.player.PlayerPositionRepositoryImpl
 import gamescreen.map.repository.playercell.PlayerCellRepository
 import gamescreen.map.repository.playercell.PlayerCellRepositoryImpl
 import gamescreen.map.usecase.FindEventCellUseCase
@@ -36,8 +36,8 @@ val MapModule = module {
         )
     }
 
-    single<PlayerRepository> {
-        PlayerRepositoryImpl()
+    single<PlayerPositionRepository> {
+        PlayerPositionRepositoryImpl()
     }
 
     single<BackgroundRepository> {
@@ -54,13 +54,13 @@ val MapModule = module {
 
     single {
         PlayerMoveUseCase(
-            playerRepository = get(),
+            playerPositionRepository = get(),
         )
     }
 
     single {
         PlayerMoveToUseCase(
-            playerRepository = get(),
+            playerPositionRepository = get(),
         )
     }
 
@@ -80,7 +80,7 @@ val MapModule = module {
 
     single {
         FindEventCellUseCase(
-            playerRepository = get(),
+            playerPositionRepository = get(),
             playerCellRepository = get(),
             backgroundRepository = get(),
         )
@@ -94,14 +94,14 @@ val MapModule = module {
 
     single {
         PlayerMoveManageUseCase(
-            playerRepository = get(),
+            playerPositionRepository = get(),
             isCollidedUseCase = get(),
         )
     }
 
     single {
         VelocityManageUseCase(
-            playerRepository = get(),
+            playerPositionRepository = get(),
         )
     }
 

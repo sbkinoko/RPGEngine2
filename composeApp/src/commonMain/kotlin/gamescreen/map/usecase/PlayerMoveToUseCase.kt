@@ -1,20 +1,20 @@
 package gamescreen.map.usecase
 
-import gamescreen.map.repository.player.PlayerRepository
+import gamescreen.map.repository.player.PlayerPositionRepository
 
 class PlayerMoveToUseCase(
-    private val playerRepository: PlayerRepository
+    private val playerPositionRepository: PlayerPositionRepository
 ) {
     suspend operator fun invoke(
         x: Float,
         y: Float,
     ) {
-        val square = playerRepository.getPlayerPosition().getNew()
+        val square = playerPositionRepository.getPlayerPosition().getNew()
         square.moveTo(
             x = x,
             y = y,
         )
-        playerRepository.setPlayerPosition(
+        playerPositionRepository.setPlayerPosition(
             square = square,
         )
     }

@@ -6,7 +6,7 @@ import core.domain.status.PlayerStatus
 import core.repository.status.StatusRepository
 import kotlinx.coroutines.flow.MutableSharedFlow
 
-interface PlayerRepository : StatusRepository<PlayerStatus> {
+interface PlayerStatusRepository : StatusRepository<PlayerStatus> {
     val mutablePlayersFlow: MutableSharedFlow<List<PlayerStatus>>
 
     @Composable

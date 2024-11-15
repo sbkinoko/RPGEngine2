@@ -3,7 +3,7 @@ package gamescreen.menu.status
 import common.Timer
 import core.domain.status.Status
 import core.menu.SelectableWindowViewModel
-import core.repository.player.PlayerRepository
+import core.repository.player.PlayerStatusRepository
 import gamescreen.menu.domain.SelectManager
 import gamescreen.menu.repository.menustate.MenuStateRepository
 import org.koin.core.component.KoinComponent
@@ -12,7 +12,7 @@ import values.Constants
 
 class StatusViewModel : SelectableWindowViewModel(),
     KoinComponent {
-    val repository: PlayerRepository by inject()
+    val repository: PlayerStatusRepository by inject()
     private val menuStateRepository: MenuStateRepository by inject()
 
     override var selectManager = SelectManager(

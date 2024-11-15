@@ -8,7 +8,7 @@ import controller.domain.Stick
 import core.domain.status.MonsterStatus
 import core.domain.status.PlayerStatus
 import core.repository.battlemonster.BattleMonsterRepository
-import core.repository.player.PlayerRepository
+import core.repository.player.PlayerStatusRepository
 import core.usecase.changetomap.ChangeToMapUseCase
 import gamescreen.battle.domain.BattleCommandType
 import gamescreen.battle.repository.commandstate.CommandStateRepository
@@ -32,7 +32,7 @@ class BattleViewModel :
 
     lateinit var players: List<PlayerStatus>
 
-    private val playerRepository: PlayerRepository by inject()
+    private val playerStatusRepository: PlayerStatusRepository by inject()
     private val battleMonsterRepository: BattleMonsterRepository by inject()
     private val commandStateRepository: CommandStateRepository by inject()
 
@@ -51,7 +51,7 @@ class BattleViewModel :
 
     @Composable
     fun PlayerStatusFlow(): State<List<PlayerStatus>> {
-        return playerRepository.getFlowAsState()
+        return playerStatusRepository.getFlowAsState()
     }
 
     init {
@@ -68,7 +68,7 @@ class BattleViewModel :
 
     private fun initPlayers() {
         players = List(Constants.playerNum) {
-            playerRepository.getStatus(id = it)
+            playerStatusRepository.getStatus(id = it)
         }
     }
 

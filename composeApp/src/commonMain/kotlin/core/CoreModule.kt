@@ -7,8 +7,8 @@ import core.repository.item.skill.SkillRepository
 import core.repository.item.skill.SkillRepositoryImpl
 import core.repository.item.tool.ToolRepository
 import core.repository.item.tool.ToolRepositoryImpl
-import core.repository.player.PlayerRepository
-import core.repository.player.PlayerRepositoryImpl
+import core.repository.player.PlayerStatusRepository
+import core.repository.player.PlayerStatusRepositoryImpl
 import core.text.TextViewModel
 import core.text.repository.TextRepository
 import core.text.repository.TextRepositoryImpl
@@ -40,8 +40,8 @@ val CoreModule = module {
         TextRepositoryImpl()
     }
 
-    single<PlayerRepository> {
-        PlayerRepositoryImpl()
+    single<PlayerStatusRepository> {
+        PlayerStatusRepositoryImpl()
     }
 
     single<SkillRepository> {
@@ -76,13 +76,13 @@ val CoreModule = module {
 
     single<UpdatePlayerStatusUseCase> {
         UpdatePlayerStatusUseCaseImpl(
-            statusRepository = get<PlayerRepository>()
+            statusRepository = get<PlayerStatusRepository>()
         )
     }
 
     single<UseToolUseCase> {
         UseToolUseCaseImpl(
-            playerRepository = get(),
+            playerStatusRepository = get(),
             toolRepository = get(),
             updateStatusService = get(),
             decToolUseCase = get(),

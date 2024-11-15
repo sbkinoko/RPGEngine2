@@ -22,9 +22,9 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class PlayerRepositoryImplTest : KoinTest {
+class PlayerPositionRepositoryImplTest : KoinTest {
 
-    private val repository: PlayerRepository by inject()
+    private val repository: PlayerPositionRepository by inject()
 
     @BeforeTest
     fun beforeTest() {

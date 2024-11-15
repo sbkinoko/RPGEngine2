@@ -14,7 +14,7 @@ import gamescreen.map.domain.Velocity
 import gamescreen.map.domain.collision.Square
 import gamescreen.map.layout.PlayerMoveSquare
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
-import gamescreen.map.repository.player.PlayerRepository
+import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.repository.playercell.PlayerCellRepository
 import gamescreen.map.usecase.FindEventCellUseCase
 import gamescreen.map.usecase.GetScreenCenterUseCase
@@ -35,7 +35,7 @@ import org.koin.core.component.inject
 
 class MapViewModel : ControllerCallback, KoinComponent {
     val player: Player by inject()
-    private val playerRepository: PlayerRepository by inject()
+    private val playerPositionRepository: PlayerPositionRepository by inject()
     private val playerMoveManageUseCase: PlayerMoveManageUseCase by inject()
     private val velocityManageUseCase: VelocityManageUseCase by inject()
 
@@ -54,7 +54,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
     private val findEventCellUseCase: FindEventCellUseCase by inject()
     private val startBattleUseCase: StartBattleUseCase by inject()
 
-    val playerSquare: SharedFlow<Square> = playerRepository.playerPositionFLow
+    val playerSquare: SharedFlow<Square> = playerPositionRepository.playerPositionFLow
 
     private var tapPoint: Point? = null
 
@@ -73,7 +73,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
         backgroundRepository.screenSize = VIRTUAL_SCREEN_SIZE
 
         CoroutineScope(Dispatchers.Default).launch {
-            playerRepository.setPlayerPosition(
+            playerPositionRepository.setPlayerPosition(
                 Square(size = player.size)
             )
         }
@@ -143,7 +143,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
      * タップの位置に対して速度を計算
      */
     private fun updateVelocityByTap(tapPoint: Point) {
-        val square = playerRepository.getPlayerPosition()
+        val square = playerPositionRepository.getPlayerPosition()
         val dx = (tapPoint.x) - (square.x + player.size / 2)
         val dy = (tapPoint.y) - (square.y + player.size / 2)
         tentativePlayerVelocity = Velocity(
@@ -243,7 +243,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
     private var canMove = true
     private fun checkMove() {
-        val square = playerRepository.getPlayerPosition().getNew()
+        val square = playerPositionRepository.getPlayerPosition().getNew()
         square.move(
             dx = tentativePlayerVelocity.x,
             dy = tentativePlayerVelocity.y

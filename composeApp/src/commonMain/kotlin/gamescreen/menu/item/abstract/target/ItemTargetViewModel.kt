@@ -4,7 +4,7 @@ import core.domain.AbleType
 import core.domain.Choice
 import core.domain.item.HealItem
 import core.repository.item.ItemRepository
-import core.repository.player.PlayerRepository
+import core.repository.player.PlayerStatusRepository
 import core.text.repository.TextRepository
 import gamescreen.menu.MenuChildViewModel
 import gamescreen.menu.domain.MenuType
@@ -18,7 +18,7 @@ import values.Constants.Companion.playerNum
 abstract class ItemTargetViewModel : MenuChildViewModel() {
     protected val userRepository: UserRepository by inject()
     protected val targetRepository: TargetRepository by inject()
-    protected val playerRepository: PlayerRepository by inject()
+    protected val playerStatusRepository: PlayerStatusRepository by inject()
 
     private val indexRepository: IndexRepository by inject()
 
@@ -34,7 +34,7 @@ abstract class ItemTargetViewModel : MenuChildViewModel() {
         get() = userRepository.userId
 
     val skillId: Int
-        get() = playerRepository.getSkill(
+        get() = playerStatusRepository.getSkill(
             user,
             indexRepository.index,
         )
@@ -77,7 +77,7 @@ abstract class ItemTargetViewModel : MenuChildViewModel() {
     }
 
     fun canSelect(target: Int): Boolean {
-        val targetStatus = playerRepository.getStatus(id = target)
+        val targetStatus = playerStatusRepository.getStatus(id = target)
         val skill = itemRepository.getItem(skillId)
 
         if (skill !is HealItem) {

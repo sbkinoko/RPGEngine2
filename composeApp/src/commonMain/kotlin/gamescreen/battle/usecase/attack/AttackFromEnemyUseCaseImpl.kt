@@ -1,11 +1,11 @@
 package gamescreen.battle.usecase.attack
 
-import core.repository.player.PlayerRepository
+import core.repository.player.PlayerStatusRepository
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
 import gamescreen.battle.service.FindTargetService
 
 class AttackFromEnemyUseCaseImpl(
-    private val playerRepository: PlayerRepository,
+    private val playerStatusRepository: PlayerStatusRepository,
     private val findTargetService: FindTargetService,
     private val updatePlayerStatusService: UpdatePlayerStatusUseCase,
 ) : AttackUseCase {
@@ -15,7 +15,7 @@ class AttackFromEnemyUseCaseImpl(
         damage: Int,
     ) {
         var actualTarget = target
-        val players = playerRepository.getPlayers()
+        val players = playerStatusRepository.getPlayers()
         if (players[target].isActive.not()) {
             actualTarget = findTargetService.findNext(
                 statusList = players,

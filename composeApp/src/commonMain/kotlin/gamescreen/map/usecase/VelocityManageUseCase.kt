@@ -2,10 +2,10 @@ package gamescreen.map.usecase
 
 import gamescreen.map.domain.Velocity
 import gamescreen.map.domain.collision.Square
-import gamescreen.map.repository.player.PlayerRepository
+import gamescreen.map.repository.player.PlayerPositionRepository
 
 class VelocityManageUseCase(
-    private val playerRepository: PlayerRepository,
+    private val playerPositionRepository: PlayerPositionRepository,
 ) {
     /**
      * 移動可能領域とプレイヤーの位置を比較して、どっちをどう動かすかを調整するメソッド
@@ -21,7 +21,7 @@ class VelocityManageUseCase(
         // プレイヤーの移動速度
         val vpx: Float
         val vpy: Float
-        val player = playerRepository.getPlayerPosition()
+        val player = playerPositionRepository.getPlayerPosition()
 
         if ((player.isLeft(playerMoveArea) &&
                     tentativePlayerVelocity.x < 0) ||
