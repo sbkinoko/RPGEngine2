@@ -16,9 +16,6 @@ abstract class ItemUserViewModel : MenuChildViewModel(),
     protected val playerStatusRepository: PlayerStatusRepository by inject()
     protected abstract val itemRepository: ItemRepository
 
-    override val canBack: Boolean
-        get() = true
-
     abstract val boundedScreenType: MenuType
 
     abstract val nextScreenType: MenuType

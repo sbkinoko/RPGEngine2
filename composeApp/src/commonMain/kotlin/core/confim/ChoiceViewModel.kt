@@ -15,9 +15,6 @@ class ChoiceViewModel : SelectableChildViewModel<List<Choice>>() {
 
     val choiceStateFlow: StateFlow<List<Choice>> = commandRepository.commandStateFlow
 
-    override val canBack: Boolean
-        get() = false
-
     override fun goNextImpl() {
         choiceList[selectManager.selected].callBack()
         commandRepository.pop()

@@ -17,8 +17,6 @@ class MainMenuViewModel : MenuChildViewModel(),
     private val menuStateRepository: MenuStateRepository by inject()
 
     private val closeMenuUseCase: CloseMenuUseCase by inject()
-    override val canBack: Boolean
-        get() = true
 
     override var timer = Timer(200)
     override fun isBoundedImpl(commandType: MenuType): Boolean {

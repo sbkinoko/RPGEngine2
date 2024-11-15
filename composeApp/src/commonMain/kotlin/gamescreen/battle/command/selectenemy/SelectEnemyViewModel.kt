@@ -43,9 +43,6 @@ class SelectEnemyViewModel : BattleChildViewModel() {
             return command.playerId
         }
 
-    override val canBack: Boolean
-        get() = true
-
     init {
         CoroutineScope(Dispatchers.Default).launch {
             commandRepository.commandTypeFlow.collect {

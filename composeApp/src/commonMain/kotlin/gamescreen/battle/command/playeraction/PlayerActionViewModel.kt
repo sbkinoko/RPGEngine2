@@ -53,9 +53,6 @@ class PlayerActionViewModel : BattleChildViewModel() {
         }
     }
 
-    override val canBack: Boolean
-        get() = true
-
     override fun isBoundedImpl(commandType: BattleCommandType): Boolean {
         return commandType is PlayerActionCommand
     }

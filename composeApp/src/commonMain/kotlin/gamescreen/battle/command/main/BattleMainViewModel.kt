@@ -8,8 +8,6 @@ import gamescreen.battle.domain.PlayerActionCommand
 import gamescreen.menu.domain.SelectManager
 
 class BattleMainViewModel : BattleChildViewModel() {
-    override val canBack: Boolean
-        get() = true
 
     override fun isBoundedImpl(commandType: BattleCommandType): Boolean {
         return commandType is MainCommand

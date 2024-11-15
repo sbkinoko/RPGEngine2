@@ -9,8 +9,6 @@ abstract class SelectableChildViewModel<T> :
     KoinComponent {
     protected abstract val commandRepository: CommandRepository<T>
 
-    protected abstract val canBack: Boolean
-
     override var timer: Timer = Timer(awaitTime = 200L)
 
     private fun isBoundCommand(): Boolean {
@@ -53,10 +51,6 @@ abstract class SelectableChildViewModel<T> :
     }
 
     override fun pressB() {
-        if (canBack) {
-            commandRepository.pop()
-        } else {
-            goNext()
-        }
+        commandRepository.pop()
     }
 }

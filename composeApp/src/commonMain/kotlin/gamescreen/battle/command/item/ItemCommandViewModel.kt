@@ -26,9 +26,6 @@ abstract class ItemCommandViewModel : BattleChildViewModel() {
 
     abstract val actionType: ActionType
 
-    override val canBack: Boolean
-        get() = true
-
     private val selectedItemId: Int
         get() = itemList[selectManager.selected]
 

@@ -12,8 +12,6 @@ class SkillUserViewModel : ItemUserViewModel() {
     val repository: PlayerStatusRepository by inject()
 
     override val itemRepository: SkillRepository by inject()
-    override val canBack: Boolean
-        get() = true
     override val boundedScreenType: MenuType
         get() = MenuType.SKILL_USER
     override val nextScreenType: MenuType

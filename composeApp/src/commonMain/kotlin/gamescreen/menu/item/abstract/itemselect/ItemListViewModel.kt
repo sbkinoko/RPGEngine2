@@ -32,9 +32,6 @@ abstract class ItemListViewModel : MenuChildViewModel(),
         itemNum = 1,
     )
 
-    override val canBack: Boolean
-        get() = true
-
     val userId: Int
         get() = userRepository.userId
 

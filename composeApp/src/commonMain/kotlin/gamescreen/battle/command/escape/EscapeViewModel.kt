@@ -14,9 +14,6 @@ class EscapeViewModel : BattleChildViewModel() {
     val escapeCommand = 0
     val attackCommand = 1
 
-    override val canBack: Boolean
-        get() = true
-
     override fun isBoundedImpl(commandType: BattleCommandType): Boolean {
         return commandType == EscapeCommand
     }
