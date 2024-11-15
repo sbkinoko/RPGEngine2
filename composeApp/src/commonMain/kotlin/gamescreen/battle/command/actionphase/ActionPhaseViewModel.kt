@@ -8,7 +8,7 @@ import core.repository.battlemonster.BattleMonsterRepository
 import core.repository.item.skill.ATTACK_NORMAL
 import core.repository.item.skill.SkillRepository
 import core.repository.item.tool.ToolRepository
-import core.repository.player.PlayerRepository
+import core.repository.player.PlayerStatusRepository
 import core.usecase.item.usetool.UseToolUseCase
 import core.usecase.updateparameter.UpdateMonsterStatusUseCase
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
@@ -41,7 +41,7 @@ import values.Constants.Companion.playerNum
 class ActionPhaseViewModel : BattleChildViewModel() {
     private val actionRepository: ActionRepository by inject()
     private val battleMonsterRepository: BattleMonsterRepository by inject()
-    private val playerRepository: PlayerRepository by inject()
+    private val playerStatusRepository: PlayerStatusRepository by inject()
     private val skillRepository: SkillRepository by inject()
     private val toolRepository: ToolRepository by inject()
 
@@ -96,7 +96,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
 
     private fun getActionCharacterName(id: Int): String {
         return if (id < playerNum) {
-            playerRepository.getStatus(id).name
+            playerStatusRepository.getStatus(id).name
         } else {
             battleMonsterRepository.getStatus(id - playerNum).name
         }
@@ -140,7 +140,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
 
             Type.HEAL -> {
                 val targetId = action.ally
-                playerRepository.getStatus(targetId).name
+                playerStatusRepository.getStatus(targetId).name
             }
         }
     }
@@ -251,7 +251,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
     private suspend fun enemyAction() {
         skillAction(
             id = attackingPlayerId.value - playerNum,
-            statusList = playerRepository.getPlayers(),
+            statusList = playerStatusRepository.getPlayers(),
             actionData = ActionData(
                 skillId = ATTACK_NORMAL,
                 target = 0,
@@ -346,7 +346,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
                 }
             } else {
                 //　playerを確認
-                if (playerRepository.getStatus(attackingPlayerId.value).isActive &&
+                if (playerStatusRepository.getStatus(attackingPlayerId.value).isActive &&
                     actionRepository.getAction(attackingPlayerId.value).thisTurnAction != ActionType.None
                 ) {
                     // 行動可能なら行動する

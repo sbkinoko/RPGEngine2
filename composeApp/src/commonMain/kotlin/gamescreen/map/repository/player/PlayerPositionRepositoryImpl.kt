@@ -3,10 +3,10 @@ package gamescreen.map.repository.player
 import gamescreen.map.domain.collision.Square
 import kotlinx.coroutines.flow.MutableSharedFlow
 
-class PlayerRepositoryImpl : PlayerRepository {
+class PlayerPositionRepositoryImpl : PlayerPositionRepository {
     override val playerPositionFLow: MutableSharedFlow<Square> = MutableSharedFlow(replay = 1)
 
-    private var playerPosition: Square = PlayerRepository.initialSquare
+    private var playerPosition: Square = PlayerPositionRepository.initialSquare
 
     override fun getPlayerPosition(): Square {
         return playerPosition

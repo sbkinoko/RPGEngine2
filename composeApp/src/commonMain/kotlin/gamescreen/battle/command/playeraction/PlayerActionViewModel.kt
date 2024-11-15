@@ -1,6 +1,6 @@
 package gamescreen.battle.command.playeraction
 
-import core.repository.player.PlayerRepository
+import core.repository.player.PlayerStatusRepository
 import gamescreen.battle.BattleChildViewModel
 import gamescreen.battle.domain.ActionType
 import gamescreen.battle.domain.BattleCommandType
@@ -16,7 +16,7 @@ import org.koin.core.component.inject
 
 class PlayerActionViewModel : BattleChildViewModel() {
     private val actionRepository: ActionRepository by inject()
-    private val playerRepository: PlayerRepository by inject()
+    private val playerStatusRepository: PlayerStatusRepository by inject()
 
     private val changeSelectingActionPlayerUseCase: ChangeSelectingActionPlayerUseCase by inject()
 
@@ -34,7 +34,7 @@ class PlayerActionViewModel : BattleChildViewModel() {
 
     fun init() {
         // プレイヤーが行動不能なら次のキャラに移動する
-        if (playerRepository.getStatus(playerId).isActive.not()) {
+        if (playerStatusRepository.getStatus(playerId).isActive.not()) {
             actionRepository.setAction(
                 playerId = playerId,
                 actionType = ActionType.None,
@@ -93,7 +93,7 @@ class PlayerActionViewModel : BattleChildViewModel() {
                 ?: return@popTo false
 
             val playerId = command.playerId
-            val player = playerRepository.getStatus(playerId)
+            val player = playerStatusRepository.getStatus(playerId)
 
             player.isActive
         }

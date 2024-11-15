@@ -10,7 +10,7 @@ import core.domain.status.PlayerStatus
 import core.domain.status.param.HP
 import core.domain.status.param.MP
 import core.repository.item.tool.ToolRepository
-import core.repository.player.PlayerRepository
+import core.repository.player.PlayerStatusRepository
 import core.repository.status.StatusRepository
 import core.usecase.item.usetool.UseToolUseCase
 import core.usecase.item.usetool.UseToolUseCaseImpl
@@ -38,7 +38,7 @@ class UseToolUseCaseImplTest : KoinTest {
         toolList = listOf()
     )
 
-    private val playerRepository = object : PlayerRepository {
+    private val playerStatusRepository = object : PlayerStatusRepository {
         override val mutablePlayersFlow: MutableSharedFlow<List<PlayerStatus>>
             get() = throw NotImplementedError()
 
@@ -137,7 +137,7 @@ class UseToolUseCaseImplTest : KoinTest {
                 toolRepository = toolRepository,
                 updateStatusService = updateStatusService,
                 decToolUseCase = decToolUseCase,
-                playerRepository = playerRepository,
+                playerStatusRepository = playerStatusRepository,
             )
 
             useToolUseCase.invoke(
@@ -188,7 +188,7 @@ class UseToolUseCaseImplTest : KoinTest {
                 toolRepository = toolRepository,
                 updateStatusService = updateStatusService,
                 decToolUseCase = decToolUseCase,
-                playerRepository = playerRepository,
+                playerStatusRepository = playerStatusRepository,
             )
 
             useToolUseCase.invoke(
@@ -238,7 +238,7 @@ class UseToolUseCaseImplTest : KoinTest {
                 toolRepository = toolRepository,
                 updateStatusService = updateStatusService,
                 decToolUseCase = decToolUseCase,
-                playerRepository = playerRepository,
+                playerStatusRepository = playerStatusRepository,
             )
 
             useToolUseCase.invoke(

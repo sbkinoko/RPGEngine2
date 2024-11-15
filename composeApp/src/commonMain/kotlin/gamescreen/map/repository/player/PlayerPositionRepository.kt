@@ -3,7 +3,7 @@ package gamescreen.map.repository.player
 import gamescreen.map.domain.collision.Square
 import kotlinx.coroutines.flow.MutableSharedFlow
 
-interface PlayerRepository {
+interface PlayerPositionRepository {
     val playerPositionFLow: MutableSharedFlow<Square>
 
     fun getPlayerPosition(): Square

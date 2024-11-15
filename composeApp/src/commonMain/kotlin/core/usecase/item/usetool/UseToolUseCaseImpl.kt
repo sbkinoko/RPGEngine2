@@ -2,7 +2,7 @@ package core.usecase.item.usetool
 
 import core.domain.item.tool.HealTool
 import core.repository.item.tool.ToolRepository
-import core.repository.player.PlayerRepository
+import core.repository.player.PlayerStatusRepository
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
 import gamescreen.menu.usecase.bag.dectool.DecToolUseCase
 import kotlinx.coroutines.CoroutineScope
@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import values.Constants
 
 class UseToolUseCaseImpl(
-    private val playerRepository: PlayerRepository,
+    private val playerStatusRepository: PlayerStatusRepository,
     private val toolRepository: ToolRepository,
     private val updateStatusService: UpdatePlayerStatusUseCase,
     private val decToolUseCase: DecToolUseCase,
@@ -22,7 +22,7 @@ class UseToolUseCaseImpl(
         index: Int,
         targetId: Int,
     ) {
-        val toolId = playerRepository.getTool(
+        val toolId = playerStatusRepository.getTool(
             playerId = userId,
             index = index,
         )

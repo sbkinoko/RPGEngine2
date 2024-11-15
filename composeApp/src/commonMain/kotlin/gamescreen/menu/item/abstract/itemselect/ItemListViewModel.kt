@@ -3,7 +3,7 @@ package gamescreen.menu.item.abstract.itemselect
 import core.domain.AbleType
 import core.domain.TextBoxData
 import core.repository.item.ItemRepository
-import core.repository.player.PlayerRepository
+import core.repository.player.PlayerStatusRepository
 import core.text.repository.TextRepository
 import gamescreen.menu.MenuChildViewModel
 import gamescreen.menu.domain.MenuType
@@ -24,7 +24,7 @@ abstract class ItemListViewModel : MenuChildViewModel(),
     private val userRepository: UserRepository by inject()
     protected val indexRepository: IndexRepository by inject()
 
-    protected val playerRepository: PlayerRepository by inject()
+    protected val playerStatusRepository: PlayerStatusRepository by inject()
     protected abstract val itemRepository: ItemRepository
 
     override var selectManager = SelectManager(

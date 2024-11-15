@@ -6,7 +6,7 @@ import gamescreen.map.domain.collision.Square
 import gamescreen.map.manager.CELL_NUM
 import gamescreen.map.manager.SIDE_LENGTH
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
-import gamescreen.map.repository.player.PlayerRepository
+import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.repository.playercell.PlayerCellRepository
 import kotlinx.coroutines.runBlocking
 import org.koin.core.context.startKoin
@@ -24,7 +24,7 @@ class FindPlayerCellUseCaseTest : KoinTest {
 
     private val backgroundRepository: BackgroundRepository by inject()
     private val playerCellRepository: PlayerCellRepository by inject()
-    private val playerRepository: PlayerRepository by inject()
+    private val playerPositionRepository: PlayerPositionRepository by inject()
     private val mapData = LoopTestMap()
 
     @BeforeTest
@@ -52,7 +52,7 @@ class FindPlayerCellUseCaseTest : KoinTest {
     @Test
     fun checkIncludeCell() {
         runBlocking {
-            playerRepository.setPlayerPosition(
+            playerPositionRepository.setPlayerPosition(
                 Square(
                     x = 1f,
                     y = 1f,
@@ -73,7 +73,7 @@ class FindPlayerCellUseCaseTest : KoinTest {
             }
 
             // 全身が入ってないから動いたけどnull
-            playerRepository.setPlayerPosition(
+            playerPositionRepository.setPlayerPosition(
                 Square(
                     x = 6f,
                     y = 6f,
@@ -86,7 +86,7 @@ class FindPlayerCellUseCaseTest : KoinTest {
             }
 
             // 全身が入ったからnullじゃない
-            playerRepository.setPlayerPosition(
+            playerPositionRepository.setPlayerPosition(
                 Square(
                     x = 0.5f,
                     y = 0.5f,

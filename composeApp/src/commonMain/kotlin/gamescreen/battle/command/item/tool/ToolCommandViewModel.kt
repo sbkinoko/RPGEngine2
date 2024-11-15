@@ -13,7 +13,7 @@ class ToolCommandViewModel : ItemCommandViewModel() {
     override val itemRepository: ToolRepository by inject()
 
     override val itemList: List<Int>
-        get() = playerRepository.getStatus(playerId).toolList
+        get() = playerStatusRepository.getStatus(playerId).toolList
     override val playerId: Int
         get() = (commandRepository.nowCommandType as? ToolCommand)?.playerId
             ?: Const.INITIAL_PLAYER

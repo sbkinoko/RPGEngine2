@@ -1,6 +1,6 @@
 package gamescreen.menu.usecase.givetool
 
-import core.repository.player.PlayerRepository
+import core.repository.player.PlayerStatusRepository
 import gamescreen.menu.domain.GiveResult
 import gamescreen.menu.item.repository.index.IndexRepository
 import gamescreen.menu.item.repository.target.TargetRepository
@@ -16,14 +16,14 @@ class GiveToolUseCaseImpl(
     private val userRepository: UserRepository,
     private val indexRepository: IndexRepository,
     private val bagRepository: BagRepository,
-    private val playerRepository: PlayerRepository,
+    private val playerStatusRepository: PlayerStatusRepository,
 
     private val decToolUseCase: DecToolUseCase,
     private val addToolUseCase: AddToolUseCase,
 ) : GiveToolUseCase {
     override suspend fun invoke(): GiveResult {
         if (targetRepository.target < Constants.playerNum) {
-            val targetPlayer = playerRepository.getPlayers()[targetRepository.target]
+            val targetPlayer = playerStatusRepository.getPlayers()[targetRepository.target]
             if (targetPlayer.toolList.size >= Constants.MAX_TOOL_NUM) {
                 return GiveResult.NG(
                     TextData.HAS_FULL_ITEM
@@ -33,10 +33,10 @@ class GiveToolUseCaseImpl(
 
         val itemId: Int
         if (userRepository.userId < Constants.playerNum) {
-            val player = playerRepository.getPlayers()[userRepository.userId]
+            val player = playerStatusRepository.getPlayers()[userRepository.userId]
             itemId = player.toolList[indexRepository.index]
 
-            playerRepository.setStatus(
+            playerStatusRepository.setStatus(
                 id = userRepository.userId,
                 status = player.copy(
                     // 渡した位置の道具を削除
@@ -55,8 +55,8 @@ class GiveToolUseCaseImpl(
         }
 
         if (targetRepository.target < Constants.playerNum) {
-            val player = playerRepository.getPlayers()[targetRepository.target]
-            playerRepository.setStatus(
+            val player = playerStatusRepository.getPlayers()[targetRepository.target]
+            playerStatusRepository.setStatus(
                 id = targetRepository.target,
                 status = player.copy(
                     toolList = player.toolList + itemId

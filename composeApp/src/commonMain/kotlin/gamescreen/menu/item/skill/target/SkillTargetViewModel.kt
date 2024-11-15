@@ -22,7 +22,7 @@ class SkillTargetViewModel : ItemTargetViewModel() {
         get() = MenuType.SKILL_TARGET
 
     override fun getAbleType(): AbleType {
-        val userStatus = playerRepository.getStatus(id = user)
+        val userStatus = playerStatusRepository.getStatus(id = user)
 
         return checkCanUseSkillUseCase.invoke(
             status = userStatus,

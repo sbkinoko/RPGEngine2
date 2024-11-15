@@ -19,7 +19,7 @@ class SkillCommandViewModel : ItemCommandViewModel() {
 
 
     override val itemList: List<Int>
-        get() = playerRepository.getStatus(playerId).skillList
+        get() = playerStatusRepository.getStatus(playerId).skillList
 
     override val playerId: Int
         get() = (commandRepository.nowCommandType as? SkillCommand)?.playerId
@@ -44,7 +44,7 @@ class SkillCommandViewModel : ItemCommandViewModel() {
     }
 
     override fun canUse(id: Int): Boolean {
-        val status = playerRepository.getStatus(playerId)
+        val status = playerStatusRepository.getStatus(playerId)
         val ableType = checkCanUseSkillUseCase.invoke(
             skillId = id,
             status = status,

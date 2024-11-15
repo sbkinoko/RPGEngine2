@@ -5,7 +5,7 @@ import core.domain.item.TargetType
 import core.domain.item.skill.HealSkill
 import core.repository.item.skill.SkillRepository
 import core.repository.item.tool.ToolRepository
-import core.repository.player.PlayerRepository
+import core.repository.player.PlayerStatusRepository
 import gamescreen.battle.BattleChildViewModel
 import gamescreen.battle.domain.ActionType
 import gamescreen.battle.domain.BattleCommandType
@@ -26,7 +26,7 @@ class SelectAllyViewModel : BattleChildViewModel() {
     private val actionRepository: ActionRepository by inject()
     private val skillRepository: SkillRepository by inject()
     private val toolRepository: ToolRepository by inject()
-    private val playerRepository: PlayerRepository by inject()
+    private val playerStatusRepository: PlayerStatusRepository by inject()
 
     private val playerId: Int
         get() {
@@ -90,7 +90,7 @@ class SelectAllyViewModel : BattleChildViewModel() {
 
     override fun selectable(): Boolean {
         val id = selectManager.selected
-        val status = playerRepository.getStatus(id)
+        val status = playerStatusRepository.getStatus(id)
         return targetType.canSelect(status)
     }
 

@@ -16,8 +16,8 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class PlayerRepositoryImplTest : KoinTest {
-    private val playerRepository: PlayerRepository by inject()
+class PlayerStatusRepositoryImplTest : KoinTest {
+    private val playerStatusRepository: PlayerStatusRepository by inject()
 
     @BeforeTest
     fun beforeTest() {
@@ -38,7 +38,7 @@ class PlayerRepositoryImplTest : KoinTest {
         var count = 0
         runBlocking {
             val collectJob = launch {
-                playerRepository.mutablePlayersFlow.collect {
+                playerStatusRepository.mutablePlayersFlow.collect {
                     count++
                 }
             }
@@ -58,7 +58,7 @@ class PlayerRepositoryImplTest : KoinTest {
                 toolList = listOf(),
             )
 
-            playerRepository.setStatus(
+            playerStatusRepository.setStatus(
                 id = id,
                 status = playerStatus,
             )
@@ -72,7 +72,7 @@ class PlayerRepositoryImplTest : KoinTest {
 
             assertEquals(
                 expected = playerStatus,
-                actual = playerRepository.getStatus(id),
+                actual = playerStatusRepository.getStatus(id),
             )
 
             collectJob.cancel()

@@ -122,7 +122,7 @@ val MenuModule = module {
 
     single<UseSkillUseCase> {
         UseSkillUseCaseImpl(
-            playerRepository = get(),
+            playerStatusRepository = get(),
             skillRepository = get(),
             updateStatusService = get(),
         )
@@ -146,7 +146,7 @@ val MenuModule = module {
             userRepository = get(),
             indexRepository = get(),
             bagRepository = get(),
-            playerRepository = get(),
+            playerStatusRepository = get(),
             decToolUseCase = get(),
             addToolUseCase = get(),
         )

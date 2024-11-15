@@ -109,7 +109,7 @@ val BattleModule = module {
         qualifier = named(QualifierAttackFromEnemy),
     ) {
         AttackFromEnemyUseCaseImpl(
-            playerRepository = get(),
+            playerStatusRepository = get(),
             findTargetService = get(),
             updatePlayerStatusService = get(),
         )

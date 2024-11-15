@@ -4,7 +4,7 @@ import core.domain.Const
 import core.domain.item.AttackItem
 import core.domain.item.HealItem
 import core.repository.item.ItemRepository
-import core.repository.player.PlayerRepository
+import core.repository.player.PlayerStatusRepository
 import gamescreen.battle.BattleChildViewModel
 import gamescreen.battle.domain.ActionType
 import gamescreen.battle.domain.SelectAllyCommand
@@ -16,7 +16,7 @@ import kotlin.math.max
 
 abstract class ItemCommandViewModel : BattleChildViewModel() {
     protected val actionRepository: ActionRepository by inject()
-    protected val playerRepository: PlayerRepository by inject()
+    protected val playerStatusRepository: PlayerStatusRepository by inject()
 
     protected abstract val itemRepository: ItemRepository
 

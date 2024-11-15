@@ -2,15 +2,15 @@ package gamescreen.map.usecase
 
 import gamescreen.map.domain.Velocity
 import gamescreen.map.domain.collision.Square
-import gamescreen.map.repository.player.PlayerRepository
+import gamescreen.map.repository.player.PlayerPositionRepository
 import kotlin.math.abs
 
 class PlayerMoveManageUseCase(
-    private val playerRepository: PlayerRepository,
+    private val playerPositionRepository: PlayerPositionRepository,
     private val isCollidedUseCase: IsCollidedUseCase,
 ) {
     private val playerSquare: Square
-        get() = playerRepository.getPlayerPosition().getNew()
+        get() = playerPositionRepository.getPlayerPosition().getNew()
 
     /**
      * 移動可能な速度を返す

@@ -105,7 +105,7 @@ class ToolGiveUserViewModel : ItemUserViewModel(),
 
     override fun getPlayerNameAt(id: Int): String {
         return if (id < Constants.playerNum) {
-            playerRepository.getStatus(id).name
+            playerStatusRepository.getStatus(id).name
         } else {
             "バッグ"
         }
@@ -113,7 +113,7 @@ class ToolGiveUserViewModel : ItemUserViewModel(),
 
     override fun getPlayerItemListAt(id: Int): List<Int> {
         return if (id < Constants.playerNum) {
-            playerRepository.getStatus(id).toolList
+            playerStatusRepository.getStatus(id).toolList
         } else {
             bagRepository.getList().map {
                 it.id

@@ -3,7 +3,7 @@ package gamescreen.menu.item.skill.usecase.useskill
 import core.domain.item.skill.AttackSkill
 import core.domain.item.skill.HealSkill
 import core.repository.item.skill.SkillRepository
-import core.repository.player.PlayerRepository
+import core.repository.player.PlayerStatusRepository
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -11,7 +11,7 @@ import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 
 class UseSkillUseCaseImpl(
-    private val playerRepository: PlayerRepository,
+    private val playerStatusRepository: PlayerStatusRepository,
     private val skillRepository: SkillRepository,
     private val updateStatusService: UpdatePlayerStatusUseCase
 ) : UseSkillUseCase {
@@ -21,7 +21,7 @@ class UseSkillUseCaseImpl(
         index: Int,
     ) {
         CoroutineScope(Dispatchers.IO).launch {
-            val skillId = playerRepository.getSkill(
+            val skillId = playerStatusRepository.getSkill(
                 playerId = userId,
                 index = index
             )
