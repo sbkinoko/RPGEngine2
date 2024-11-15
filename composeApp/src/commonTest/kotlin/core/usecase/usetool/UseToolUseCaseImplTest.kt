@@ -1,5 +1,7 @@
 package core.usecase.usetool
 
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import core.domain.Place
 import core.domain.item.TargetType
 import core.domain.item.tool.HealTool
@@ -8,12 +10,14 @@ import core.domain.status.PlayerStatus
 import core.domain.status.param.HP
 import core.domain.status.param.MP
 import core.repository.item.tool.ToolRepository
+import core.repository.player.PlayerRepository
 import core.repository.status.StatusRepository
 import core.usecase.item.usetool.UseToolUseCase
 import core.usecase.item.usetool.UseToolUseCaseImpl
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
 import gamescreen.menu.usecase.bag.dectool.DecToolUseCase
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.runBlocking
 import org.koin.test.KoinTest
 import kotlin.test.Test
@@ -33,6 +37,36 @@ class UseToolUseCaseImplTest : KoinTest {
         skillList = listOf(),
         toolList = listOf()
     )
+
+    private val playerRepository = object : PlayerRepository {
+        override val mutablePlayersFlow: MutableSharedFlow<List<PlayerStatus>>
+            get() = throw NotImplementedError()
+
+        @Composable
+        override fun getFlowAsState(): State<List<PlayerStatus>> {
+            throw NotImplementedError()
+        }
+
+        override fun getPlayers(): List<PlayerStatus> {
+            throw NotImplementedError()
+        }
+
+        override fun getTool(playerId: Int, index: Int): Int {
+            return 0
+        }
+
+        override fun getSkill(playerId: Int, index: Int): Int {
+            throw NotImplementedError()
+        }
+
+        override fun getStatus(id: Int): PlayerStatus {
+            throw NotImplementedError()
+        }
+
+        override suspend fun setStatus(id: Int, status: PlayerStatus) {
+            throw NotImplementedError()
+        }
+    }
 
     private lateinit var useToolUseCase: UseToolUseCase
 
@@ -102,12 +136,12 @@ class UseToolUseCaseImplTest : KoinTest {
             useToolUseCase = UseToolUseCaseImpl(
                 toolRepository = toolRepository,
                 updateStatusService = updateStatusService,
-                decToolUseCase = decToolUseCase
+                decToolUseCase = decToolUseCase,
+                playerRepository = playerRepository,
             )
 
             useToolUseCase.invoke(
                 targetId = 0,
-                toolId = 0,
                 index = 0,
                 userId = 0,
             )
@@ -154,11 +188,11 @@ class UseToolUseCaseImplTest : KoinTest {
                 toolRepository = toolRepository,
                 updateStatusService = updateStatusService,
                 decToolUseCase = decToolUseCase,
+                playerRepository = playerRepository,
             )
 
             useToolUseCase.invoke(
                 targetId = 0,
-                toolId = 0,
                 index = 0,
                 userId = 0,
             )
@@ -204,11 +238,11 @@ class UseToolUseCaseImplTest : KoinTest {
                 toolRepository = toolRepository,
                 updateStatusService = updateStatusService,
                 decToolUseCase = decToolUseCase,
+                playerRepository = playerRepository,
             )
 
             useToolUseCase.invoke(
                 targetId = 0,
-                toolId = 0,
                 index = 0,
                 userId = 99,
             )

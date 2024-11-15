@@ -151,4 +151,20 @@ class PlayerRepositoryImpl : PlayerRepository {
     override fun getPlayers(): List<PlayerStatus> {
         return players
     }
+
+    override fun getTool(
+        playerId: Int,
+        index: Int,
+    ): Int {
+        val player = players[playerId]
+        return player.toolList[index]
+    }
+
+    override fun getSkill(
+        playerId: Int,
+        index: Int,
+    ): Int {
+        val player = players[playerId]
+        return player.skillList[index]
+    }
 }

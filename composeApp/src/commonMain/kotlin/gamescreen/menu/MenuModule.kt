@@ -4,8 +4,6 @@ import gamescreen.menu.item.repository.index.IndexRepository
 import gamescreen.menu.item.repository.index.IndexRepositoryImpl
 import gamescreen.menu.item.repository.target.TargetRepository
 import gamescreen.menu.item.repository.target.TargetRepositoryImpl
-import gamescreen.menu.item.repository.useitemid.UseItemIdRepository
-import gamescreen.menu.item.repository.useitemid.UseItemIdRepositoryImpl
 import gamescreen.menu.item.repository.user.UserRepository
 import gamescreen.menu.item.repository.user.UserRepositoryImpl
 import gamescreen.menu.item.skill.list.SkillListViewModel
@@ -84,10 +82,6 @@ val MenuModule = module {
         UserRepositoryImpl()
     }
 
-    single<UseItemIdRepository> {
-        UseItemIdRepositoryImpl()
-    }
-
     single<TargetRepository> {
         TargetRepositoryImpl()
     }
@@ -128,9 +122,7 @@ val MenuModule = module {
 
     single<UseSkillUseCase> {
         UseSkillUseCaseImpl(
-            targetRepository = get(),
-            userRepository = get(),
-            usedItemIdRepository = get(),
+            playerRepository = get(),
             skillRepository = get(),
             updateStatusService = get(),
         )

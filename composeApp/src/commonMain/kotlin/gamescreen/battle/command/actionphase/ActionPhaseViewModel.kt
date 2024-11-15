@@ -314,7 +314,6 @@ class ActionPhaseViewModel : BattleChildViewModel() {
     ) {
         useToolUseCase.invoke(
             userId = userId,
-            toolId = actionData.toolId,
             index = actionData.toolIndex,
             targetId = actionData.target,
         )

@@ -9,17 +9,18 @@ import core.text.repository.TextRepository
 import gamescreen.menu.MenuChildViewModel
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.domain.SelectManager
+import gamescreen.menu.item.repository.index.IndexRepository
 import gamescreen.menu.item.repository.target.TargetRepository
-import gamescreen.menu.item.repository.useitemid.UseItemIdRepository
 import gamescreen.menu.item.repository.user.UserRepository
 import org.koin.core.component.inject
 import values.Constants.Companion.playerNum
 
 abstract class ItemTargetViewModel : MenuChildViewModel() {
     protected val userRepository: UserRepository by inject()
-    protected val useItemIdRepository: UseItemIdRepository by inject()
     protected val targetRepository: TargetRepository by inject()
-    private val playerRepository: PlayerRepository by inject()
+    protected val playerRepository: PlayerRepository by inject()
+
+    private val indexRepository: IndexRepository by inject()
 
     protected abstract val itemRepository: ItemRepository
 
@@ -33,7 +34,10 @@ abstract class ItemTargetViewModel : MenuChildViewModel() {
         get() = userRepository.userId
 
     val skillId: Int
-        get() = useItemIdRepository.itemId
+        get() = playerRepository.getSkill(
+            user,
+            indexRepository.index,
+        )
 
     val explain: String
         get() = itemRepository.getItem(skillId).explain

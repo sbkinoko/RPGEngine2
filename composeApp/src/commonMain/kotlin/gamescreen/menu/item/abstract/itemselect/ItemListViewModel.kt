@@ -10,7 +10,6 @@ import gamescreen.menu.domain.MenuType
 import gamescreen.menu.domain.SelectManager
 import gamescreen.menu.item.list.ItemList
 import gamescreen.menu.item.repository.index.IndexRepository
-import gamescreen.menu.item.repository.useitemid.UseItemIdRepository
 import gamescreen.menu.item.repository.user.UserRepository
 import gamescreen.menu.repository.menustate.MenuStateRepository
 import org.koin.core.component.KoinComponent
@@ -23,7 +22,6 @@ abstract class ItemListViewModel : MenuChildViewModel(),
     private val textRepository: TextRepository by inject()
 
     private val userRepository: UserRepository by inject()
-    protected val useItemIdRepository: UseItemIdRepository by inject()
     protected val indexRepository: IndexRepository by inject()
 
     protected val playerRepository: PlayerRepository by inject()
@@ -77,8 +75,6 @@ abstract class ItemListViewModel : MenuChildViewModel(),
 
         when (ableType) {
             AbleType.Able -> {
-                // itemIdを保存
-                useItemIdRepository.itemId = itemList[selectManager.selected]
                 // indexを保存
                 indexRepository.index = selectManager.selected
                 //　次の画面に遷移
