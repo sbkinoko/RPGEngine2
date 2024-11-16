@@ -84,18 +84,6 @@ fun Background(
                             )
                         }
 
-                        collisionList.forEach {
-                            Canvas(
-                                modifier = Modifier.fillMaxSize(),
-                                onDraw = {
-                                    drawPath(
-                                        path = it.toPath(screenRatio),
-                                        color = Colors.CollisionColor,
-                                    )
-                                }
-                            )
-                        }
-
                         Text(
                             modifier = Modifier
                                 .fillMaxSize(),
@@ -105,6 +93,27 @@ fun Background(
                                 .append("mapX:${mapPoint.x}\n")
                                 .append("mapY:${mapPoint.y}\n")
                                 .toString(),
+                        )
+                    }
+
+                    collisionList.forEach {
+                        Canvas(
+                            modifier = Modifier
+                                .size(
+                                    (cellSize * screenRatio).pxToDp()
+                                )
+                                .offset(
+                                    x = (it.baseX * screenRatio).pxToDp(),
+                                    y = (it.baseY * screenRatio).pxToDp(),
+                                ),
+                            onDraw = {
+                                drawPath(
+                                    path = it.toPath(
+                                        screenRatio,
+                                    ),
+                                    color = Colors.CollisionColor,
+                                )
+                            }
                         )
                     }
                 }
