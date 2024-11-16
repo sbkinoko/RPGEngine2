@@ -204,7 +204,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
      * 全身が入ったセルのイベントを処理する
      */
     private fun callCellEvent(backgroundCell: BackgroundCell) {
-        when (backgroundCell.imgID) {
+        when (backgroundCell.backgroundTypeID) {
             3 -> {
                 backgroundRepository.mapData = NonLoopMap()
                 reloadMapData(

@@ -22,6 +22,7 @@ import rpgengine.composeapp.generated.resources.ob_01_09
 import rpgengine.composeapp.generated.resources.ob_01_10
 import rpgengine.composeapp.generated.resources.ob_01_11
 import rpgengine.composeapp.generated.resources.ob_01_12
+import rpgengine.composeapp.generated.resources.ob_98_1
 
 class ImageBinder : KoinComponent {
     private val decideConnectTypeUseCase: DecideConnectTypeUseCase by inject()
@@ -31,7 +32,7 @@ class ImageBinder : KoinComponent {
      * @param aroundCellId 周囲のマスの背景画像のid
      */
     @OptIn(ExperimentalResourceApi::class)
-    fun bind(
+    fun bindBackGround(
         aroundCellId: Array<Array<Int>>,
     ): DrawableResource {
         val imgId = aroundCellId[1][1]
@@ -56,7 +57,27 @@ class ImageBinder : KoinComponent {
                 }
             }
 
+            6 -> Res.drawable.bg_00
+
             else -> Res.drawable.bg_null
+        }
+    }
+
+
+    /**
+     * idと画像を紐づけ
+     * @param aroundCellId 周囲のマスの背景画像のid
+     */
+    @OptIn(ExperimentalResourceApi::class)
+    fun bindObject(
+        aroundCellId: Array<Array<Int>>,
+    ): DrawableResource? {
+        val imgId = aroundCellId[1][1]
+
+        return when (imgId) {
+            6 -> Res.drawable.ob_98_1
+
+            else -> null
         }
     }
 }
