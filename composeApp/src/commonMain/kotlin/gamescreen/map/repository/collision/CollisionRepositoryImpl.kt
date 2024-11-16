@@ -1,5 +1,6 @@
 package gamescreen.map.repository.collision
 
+import core.domain.MapConst.Companion.BOX____
 import core.domain.MapConst.Companion.WATER__
 import gamescreen.map.domain.collision.CollisionDetectShape
 import gamescreen.map.domain.collision.Square
@@ -18,6 +19,15 @@ class CollisionRepositoryImpl : CollisionRepository {
                         x = square.x,
                         y = square.y,
                         size = cellSize
+                    )
+                )
+
+            BOX____ ->
+                listOf(
+                    Square(
+                        x = square.x + cellSize / 3,
+                        y = square.y + cellSize / 3,
+                        size = cellSize / 3,
                     )
                 )
 
