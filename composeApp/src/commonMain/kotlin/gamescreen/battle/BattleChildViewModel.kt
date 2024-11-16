@@ -9,6 +9,31 @@ import org.koin.core.component.inject
 abstract class BattleChildViewModel :
     SelectableChildViewModel<BattleCommandType>(),
     KoinComponent {
-    override val commandRepository: CommandStateRepository
+    val commandRepository: CommandStateRepository
             by inject()
+
+    private fun isBoundCommand(): Boolean {
+        return isBoundedImpl(
+            commandRepository.nowCommandType
+        )
+    }
+
+    protected abstract fun isBoundedImpl(
+        commandType: BattleCommandType,
+    ): Boolean
+
+    override fun goNext() {
+        // 別の画面状態ならなにもしない
+        if (isBoundCommand().not()) {
+            return
+        }
+
+        goNextImpl()
+    }
+
+    protected abstract fun goNextImpl()
+
+    override fun pressB() {
+        commandRepository.pop()
+    }
 }

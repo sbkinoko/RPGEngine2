@@ -10,7 +10,7 @@ import gamescreen.menu.domain.SelectManager
 import org.koin.core.component.inject
 
 class TextViewModel : SelectableChildViewModel<TextBoxData?>() {
-    override val commandRepository: TextRepository by inject()
+    val commandRepository: TextRepository by inject()
 
     @Composable
     fun getShowStateAsState(): State<TextBoxData?> {
@@ -19,17 +19,13 @@ class TextViewModel : SelectableChildViewModel<TextBoxData?>() {
         )
     }
 
-    override fun isBoundedImpl(commandType: TextBoxData?): Boolean {
-        return commandType != null
-    }
-
     val callBack: () -> Unit
         get() = commandRepository.callBack
 
     val text: String
         get() = commandRepository.text
 
-    override fun goNextImpl() {
+    override fun goNext() {
         callBack()
         commandRepository.pop()
     }

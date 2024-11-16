@@ -7,8 +7,33 @@ import gamescreen.menu.usecase.backfield.CloseMenuUseCase
 import org.koin.core.component.inject
 
 abstract class MenuChildViewModel : SelectableChildViewModel<MenuType>() {
-    override val commandRepository: MenuStateRepository by inject()
+    val commandRepository: MenuStateRepository by inject()
     private val closeMenuUseCase: CloseMenuUseCase by inject()
+
+    private fun isBoundCommand(): Boolean {
+        return isBoundedImpl(
+            commandRepository.nowCommandType
+        )
+    }
+
+    protected abstract fun isBoundedImpl(
+        commandType: MenuType,
+    ): Boolean
+
+    override fun goNext() {
+        // 別の画面状態ならなにもしない
+        if (isBoundCommand().not()) {
+            return
+        }
+
+        goNextImpl()
+    }
+
+    protected abstract fun goNextImpl()
+
+    override fun pressB() {
+        commandRepository.pop()
+    }
 
     override fun pressM() {
         closeMenuUseCase.invoke()

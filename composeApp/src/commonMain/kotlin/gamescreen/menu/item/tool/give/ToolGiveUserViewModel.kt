@@ -33,7 +33,7 @@ class ToolGiveUserViewModel : ItemUserViewModel(),
     private val giveToolUseCase: GiveToolUseCase by inject()
 
     override val boundedScreenType: MenuType
-        get() = MenuType.TOOL_USER
+        get() = MenuType.TOOL_GIVE
     override val nextScreenType: MenuType
         get() = MenuType.TOOL_LIST
 
@@ -68,14 +68,15 @@ class ToolGiveUserViewModel : ItemUserViewModel(),
                 Choice(
                     text = "渡す",
                     callBack = {
-                        choiceRepository.pop()
                         CoroutineScope(Dispatchers.Main).launch {
                             when (val result = giveToolUseCase.invoke()) {
                                 is GiveResult.OK -> {
                                     textRepository.push(
                                         TextBoxData(
                                             text = "道具を渡しました",
-                                            callBack = { }
+                                            callBack = {
+                                                commandRepository.pop()
+                                            }
                                         ),
                                     )
                                 }
