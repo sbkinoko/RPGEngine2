@@ -1,5 +1,11 @@
 package gamescreen.map.data
 
+
+import core.domain.MapConst.Companion.BOX____
+import core.domain.MapConst.Companion.GLASS__
+import core.domain.MapConst.Companion.ROAD___
+import core.domain.MapConst.Companion.TOWN_1I
+import core.domain.MapConst.Companion.WATER__
 import gamescreen.map.domain.MapData
 
 class LoopMap : MapData() {
@@ -10,15 +16,125 @@ class LoopMap : MapData() {
         get() = 10
     override val field: Array<Array<Int>>
         get() = arrayOf(
-            arrayOf(1, 1, 1, 1, 1, 2, 2, 2, 2, 2),
-            arrayOf(1, 1, 1, 1, 1, 2, 2, 2, 2, 2),
-            arrayOf(1, 1, 6, 1, 1, 2, 2, 2, 2, 2),
-            arrayOf(1, 1, 1, 1, 1, 2, 2, 2, 2, 2),
-            arrayOf(1, 1, 1, 1, 1, 2, 2, 2, 2, 2),
-            arrayOf(1, 1, 1, 1, 1, 5, 1, 1, 1, 1),
-            arrayOf(1, 1, 5, 5, 5, 5, 5, 5, 1, 1),
-            arrayOf(5, 5, 5, 1, 1, 5, 1, 5, 1, 1),
-            arrayOf(5, 5, 5, 1, 1, 5, 5, 5, 1, 1),
-            arrayOf(1, 1, 5, 5, 3, 5, 1, 1, 1, 1),
+            arrayOf(
+                GLASS__,
+                GLASS__,
+                GLASS__,
+                GLASS__,
+                GLASS__,
+                WATER__,
+                WATER__,
+                WATER__,
+                WATER__,
+                WATER__
+            ),
+            arrayOf(
+                GLASS__,
+                GLASS__,
+                GLASS__,
+                GLASS__,
+                GLASS__,
+                WATER__,
+                WATER__,
+                WATER__,
+                WATER__,
+                WATER__
+            ),
+            arrayOf(
+                GLASS__,
+                GLASS__,
+                BOX____,
+                GLASS__,
+                GLASS__,
+                WATER__,
+                WATER__,
+                WATER__,
+                WATER__,
+                WATER__
+            ),
+            arrayOf(
+                GLASS__,
+                GLASS__,
+                GLASS__,
+                GLASS__,
+                GLASS__,
+                WATER__,
+                WATER__,
+                WATER__,
+                WATER__,
+                WATER__
+            ),
+            arrayOf(
+                GLASS__,
+                GLASS__,
+                GLASS__,
+                GLASS__,
+                GLASS__,
+                WATER__,
+                WATER__,
+                WATER__,
+                WATER__,
+                WATER__
+            ),
+            arrayOf(
+                GLASS__,
+                GLASS__,
+                GLASS__,
+                GLASS__,
+                GLASS__,
+                ROAD___,
+                GLASS__,
+                GLASS__,
+                GLASS__,
+                GLASS__
+            ),
+            arrayOf(
+                GLASS__,
+                GLASS__,
+                ROAD___,
+                ROAD___,
+                ROAD___,
+                ROAD___,
+                ROAD___,
+                ROAD___,
+                GLASS__,
+                GLASS__
+            ),
+            arrayOf(
+                ROAD___,
+                ROAD___,
+                ROAD___,
+                GLASS__,
+                GLASS__,
+                ROAD___,
+                GLASS__,
+                ROAD___,
+                GLASS__,
+                GLASS__
+            ),
+            arrayOf(
+                ROAD___,
+                ROAD___,
+                ROAD___,
+                GLASS__,
+                GLASS__,
+                ROAD___,
+                ROAD___,
+                ROAD___,
+                GLASS__,
+                GLASS__
+            ),
+            arrayOf(
+                GLASS__,
+                GLASS__,
+                ROAD___,
+                ROAD___,
+                TOWN_1I,
+                ROAD___,
+                GLASS__,
+                GLASS__,
+                GLASS__,
+                GLASS__
+            ),
         )
 }
