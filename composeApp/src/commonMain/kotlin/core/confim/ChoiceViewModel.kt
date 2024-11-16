@@ -8,14 +8,14 @@ import kotlinx.coroutines.flow.StateFlow
 import org.koin.core.component.inject
 
 class ChoiceViewModel : SelectableChildViewModel<List<Choice>>() {
-    override val commandRepository: ChoiceRepository by inject()
+    val commandRepository: ChoiceRepository by inject()
 
     private val choiceList
         get() = commandRepository.nowCommandType
 
     val choiceStateFlow: StateFlow<List<Choice>> = commandRepository.commandStateFlow
 
-    override fun goNextImpl() {
+    override fun goNext() {
         choiceList[selectManager.selected].callBack()
         commandRepository.pop()
     }
@@ -24,10 +24,6 @@ class ChoiceViewModel : SelectableChildViewModel<List<Choice>>() {
         width = 1,
         itemNum = 2,
     )
-
-    override fun isBoundedImpl(commandType: List<Choice>): Boolean {
-        return true
-    }
 
     override fun pressB() {
         // 選択肢を選んで欲しいので何もしない

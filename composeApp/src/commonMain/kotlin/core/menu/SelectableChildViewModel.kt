@@ -1,33 +1,19 @@
 package core.menu
 
 import common.Timer
-import core.repository.command.CommandRepository
 import org.koin.core.component.KoinComponent
 
 abstract class SelectableChildViewModel<T> :
     SelectableWindowViewModel(),
     KoinComponent {
-    protected abstract val commandRepository: CommandRepository<T>
-
     override var timer: Timer = Timer(awaitTime = 200L)
-
-    private fun isBoundCommand(): Boolean {
-        return isBoundedImpl(
-            commandRepository.nowCommandType
-        )
-    }
-
-    // fixme val get()で固定値以外も返せるので修正する
-    protected abstract fun isBoundedImpl(
-        commandType: T,
-    ): Boolean
 
     fun onClickItem(
         id: Int,
     ) {
         // 選択されていたらコールバック
         if (selectManager.selected == id) {
-            goNextImpl()
+            goNext()
             return
         }
 
@@ -35,22 +21,9 @@ abstract class SelectableChildViewModel<T> :
         selectManager.selected = id
     }
 
-    private fun goNext() {
-        // 別の画面状態ならなにもしない
-        if (isBoundCommand().not()) {
-            return
-        }
-
-        goNextImpl()
-    }
-
-    protected abstract fun goNextImpl()
+    abstract fun goNext()
 
     override fun pressA() {
         goNext()
-    }
-
-    override fun pressB() {
-        commandRepository.pop()
     }
 }
