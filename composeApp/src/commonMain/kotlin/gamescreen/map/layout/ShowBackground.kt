@@ -64,12 +64,25 @@ fun Background(
                             modifier = Modifier
                                 .fillMaxSize(),
                             painter = painterResource(
-                                imageBinder.bind(
+                                imageBinder.bindBackGround(
                                     aroundCellId = aroundCellId,
                                 )
                             ),
                             contentDescription = "background"
                         )
+
+                        imageBinder.bindObject(
+                            aroundCellId = aroundCellId,
+                        )?.let {
+                            Image(
+                                modifier = Modifier
+                                    .fillMaxSize(),
+                                painter = painterResource(
+                                    it,
+                                ),
+                                contentDescription = "background"
+                            )
+                        }
 
                         collisionList.forEach {
                             Canvas(
