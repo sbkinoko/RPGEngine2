@@ -4,13 +4,15 @@ import androidx.compose.ui.graphics.Color
 
 object Colors {
     private val red = Color(255, 0, 0, 255)
+    private val transRed = Color(255, 0, 0, 100)
     private val blue = Color(0, 0, 255, 255)
     private val white = Color(255, 255, 255, 255)
     private val black = Color(0, 0, 0, 255)
     private val transGrey = Color(128, 128, 128, 100)
 
     val Player = red
-    val BackgroundCell = blue
+    val BackgroundCellBorder = blue
+    val CollisionColor = transRed
     val PlayerIncludeCell = red
     val ControllerArea = white
     val ControllerLine = black

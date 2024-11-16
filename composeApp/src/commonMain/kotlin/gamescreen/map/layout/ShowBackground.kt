@@ -55,7 +55,7 @@ fun Background(
                                 color = if (isPlayerIncludeCell) {
                                     Colors.PlayerIncludeCell
                                 } else {
-                                    Colors.BackgroundCell
+                                    Colors.BackgroundCellBorder
                                 },
                                 shape = RectangleShape,
                             )
@@ -90,7 +90,7 @@ fun Background(
                                 onDraw = {
                                     drawPath(
                                         path = it.toPath(screenRatio),
-                                        color = Colors.BackgroundCell,
+                                        color = Colors.CollisionColor,
                                     )
                                 }
                             )
