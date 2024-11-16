@@ -32,11 +32,11 @@ class ResetBackgroundPositionUseCase(
                                 x = col - (cellNum - 1) / 2 + mapX,
                                 y = row - (cellNum - 1) / 2 + mapY,
                             )
-                            backgroundTypeID = mapData.getDataAt(mapPoint)
+                            cellTypeID = mapData.getDataAt(mapPoint)
                             collisionList = collisionRepository.collisionData(
                                 cellSize = cellSize,
                                 square = square,
-                                id = backgroundTypeID,
+                                id = cellTypeID,
                             )
                         }
                     }
