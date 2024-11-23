@@ -12,15 +12,25 @@ class GetEventTypeUseCaseImpl(
         square: Square,
     ): EventConstants {
         backgroundRepository.background.forEach { rowArray ->
-            rowArray.forEach { cell ->
-                if (cell.collisionList.isNotEmpty()) {
-                    cell.collisionList.forEach {
-                        if (it.isOverlap(square)) {
-                            if (it is EventObject) {
-                                return it.eventID
-                            }
-                        }
+            for (cell in rowArray) {
+                // 物がないので次を探索
+                if (cell.collisionList.isEmpty()) {
+                    continue
+                }
+
+                for (shape in cell.collisionList) {
+                    // 重なってないので次へ
+                    if (shape.isOverlap(square).not()) {
+                        continue
                     }
+
+                    // イベントオブジェではないので次へ
+                    if (shape !is EventObject) {
+                        continue
+                    }
+
+                    //　イベントオブジェなのでIDを返す
+                    return shape.eventID
                 }
             }
         }

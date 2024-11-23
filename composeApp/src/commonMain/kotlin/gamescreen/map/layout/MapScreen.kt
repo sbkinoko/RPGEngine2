@@ -20,6 +20,7 @@ import kotlinx.coroutines.delay
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
 import values.Colors
+import values.EventConstants
 
 @Composable
 @Preview
@@ -40,6 +41,7 @@ fun MapScreen(
         PlayerPositionRepository.initialSquare
     )
     val eventSquare = mapViewModel.eventSquareFlow.collectAsState()
+    val eventType = mapViewModel.eventTypeFlow.collectAsState()
 
     Box(
         modifier = modifier
@@ -83,7 +85,13 @@ fun MapScreen(
                     y = (eventSquare.value.y * screenRatio).pxToDp(),
                 )
                 .size((eventSquare.value.size * screenRatio).pxToDp())
-                .background(Colors.EventCollision),
+                .background(
+                    if (eventType.value == EventConstants.None) {
+                        Colors.NotEventCollision
+                    } else {
+                        Colors.CanEventCollision
+                    }
+                ),
         )
     }
 }
