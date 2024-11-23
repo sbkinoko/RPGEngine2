@@ -110,6 +110,8 @@ class MapViewModel : ControllerCallback, KoinComponent {
         }
 
         if (tentativePlayerVelocity.isMoving) {
+            mutableDirFlow.value = tentativePlayerVelocity.toDir()
+
             checkMove()
             if (!canMove) {
                 return
@@ -193,7 +195,6 @@ class MapViewModel : ControllerCallback, KoinComponent {
             playerMoveArea = playerMoveArea,
         )
 
-        mutableDirFlow.value = tentativePlayerVelocity.toDir()
         player.updateVelocity(mediatedVelocity.first)
 
         backGroundVelocity = mediatedVelocity.second
@@ -255,6 +256,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
     }
 
     private var canMove = true
+
     private fun checkMove() {
         val square = playerPositionRepository.getPlayerPosition().getNew()
         square.move(
