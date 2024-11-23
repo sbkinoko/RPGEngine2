@@ -1,6 +1,6 @@
 package values
 
-enum class EventConstants {
+enum class EventType {
     None,
     Box,
 }

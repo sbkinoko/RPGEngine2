@@ -20,7 +20,7 @@ import kotlinx.coroutines.delay
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
 import values.Colors
-import values.EventConstants
+import values.EventType
 
 @Composable
 @Preview
@@ -86,7 +86,7 @@ fun MapScreen(
                 )
                 .size((eventSquare.value.size * screenRatio).pxToDp())
                 .background(
-                    if (eventType.value == EventConstants.None) {
+                    if (eventType.value == EventType.None) {
                         Colors.NotEventCollision
                     } else {
                         Colors.CanEventCollision

@@ -3,14 +3,14 @@ package gamescreen.map.usecase.collision.geteventtype
 import gamescreen.map.domain.collision.EventObject
 import gamescreen.map.domain.collision.Square
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
-import values.EventConstants
+import values.EventType
 
 class GetEventTypeUseCaseImpl(
     private val backgroundRepository: BackgroundRepository
 ) : GetEventTypeUseCase {
     override fun invoke(
         square: Square,
-    ): EventConstants {
+    ): EventType {
         backgroundRepository.background.forEach { rowArray ->
             for (cell in rowArray) {
                 // 物がないので次を探索
@@ -34,7 +34,7 @@ class GetEventTypeUseCaseImpl(
                 }
             }
         }
-        return EventConstants.None
+        return EventType.None
     }
 
 }

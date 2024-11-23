@@ -1,7 +1,7 @@
 package gamescreen.map.domain.collision
 
-import values.EventConstants
+import values.EventType
 
 interface EventObject {
-    val eventID: EventConstants
+    val eventID: EventType
 }

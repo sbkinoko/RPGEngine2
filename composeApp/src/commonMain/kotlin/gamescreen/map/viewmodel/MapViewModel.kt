@@ -38,7 +38,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import values.EventConstants
+import values.EventType
 
 class MapViewModel : ControllerCallback, KoinComponent {
     val player: Player by inject()
@@ -102,7 +102,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
     )
     val dirFlow: StateFlow<PlayerDir> = mutableDirFlow.asStateFlow()
 
-    private var eventType = EventConstants.None
+    private var eventType = EventType.None
         set(value) {
             mutableEventTypeFlow.value = value
             field = value
@@ -110,7 +110,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
     private val mutableEventTypeFlow = MutableStateFlow(
         eventType
     )
-    val eventTypeFlow: StateFlow<EventConstants> = mutableEventTypeFlow.asStateFlow()
+    val eventTypeFlow: StateFlow<EventType> = mutableEventTypeFlow.asStateFlow()
 
 
     val backgroundCells = backgroundRepository.backgroundFlow
