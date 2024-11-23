@@ -26,3 +26,7 @@ data class Velocity(
         const val MAX = 5f
     }
 }
+
+fun Velocity.toDir(): PlayerDir {
+    throw NotImplementedError()
+}
