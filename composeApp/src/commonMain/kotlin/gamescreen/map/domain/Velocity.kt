@@ -1,6 +1,7 @@
 package gamescreen.map.domain
 
 import common.Normalizer
+import kotlin.math.abs
 
 data class Velocity(
     val maxVelocity: Float = MAX,
@@ -24,5 +25,28 @@ data class Velocity(
 
     companion object {
         const val MAX = 5f
+    }
+}
+
+/**
+ * 速度から向きを返す
+ */
+fun Velocity.toDir(): PlayerDir {
+    if (!isMoving) {
+        return PlayerDir.NONE
+    }
+
+    return if (abs(x) > abs(y)) {
+        if (x > 0) {
+            PlayerDir.RIGHT
+        } else {
+            PlayerDir.LEFT
+        }
+    } else {
+        if (y > 0) {
+            PlayerDir.DOWN
+        } else {
+            PlayerDir.UP
+        }
     }
 }

@@ -9,9 +9,11 @@ import gamescreen.map.data.NonLoopMap
 import gamescreen.map.domain.BackgroundCell
 import gamescreen.map.domain.MapData
 import gamescreen.map.domain.Player
+import gamescreen.map.domain.PlayerDir
 import gamescreen.map.domain.Point
 import gamescreen.map.domain.Velocity
 import gamescreen.map.domain.collision.Square
+import gamescreen.map.domain.toDir
 import gamescreen.map.layout.PlayerMoveSquare
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.player.PlayerPositionRepository
@@ -28,7 +30,10 @@ import gamescreen.map.usecase.VelocityManageUseCase
 import gamescreen.map.usecase.startbattle.StartBattleUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -65,6 +70,11 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
     private var backGroundVelocity: Velocity = Velocity()
     private var tentativePlayerVelocity: Velocity = Velocity()
+
+    private val mutableDirFlow = MutableStateFlow<PlayerDir>(
+        PlayerDir.DOWN
+    )
+    val dirFlow: StateFlow<PlayerDir> = mutableDirFlow.asStateFlow()
 
     val backgroundCells = backgroundRepository.backgroundFlow
 
@@ -182,7 +192,10 @@ class MapViewModel : ControllerCallback, KoinComponent {
             tentativePlayerVelocity = tentativePlayerVelocity,
             playerMoveArea = playerMoveArea,
         )
+
+        mutableDirFlow.value = tentativePlayerVelocity.toDir()
         player.updateVelocity(mediatedVelocity.first)
+
         backGroundVelocity = mediatedVelocity.second
     }
 

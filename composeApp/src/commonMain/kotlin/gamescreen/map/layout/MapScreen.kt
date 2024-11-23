@@ -29,6 +29,8 @@ fun MapScreen(
         }
     }
 
+    val dir = mapViewModel.dirFlow.collectAsState()
+
     Box(
         modifier = modifier
             .pointerInput(Unit) {
@@ -61,7 +63,8 @@ fun MapScreen(
             square = mapViewModel.playerSquare.collectAsState(
                 PlayerPositionRepository.initialSquare
             ).value,
-            screenRatio = screenRatio
+            screenRatio = screenRatio,
+            dir = dir.value
         )
     }
 }
