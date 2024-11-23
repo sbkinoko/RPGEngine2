@@ -11,13 +11,16 @@ import gamescreen.map.repository.playercell.PlayerCellRepository
 import gamescreen.map.repository.playercell.PlayerCellRepositoryImpl
 import gamescreen.map.usecase.FindEventCellUseCase
 import gamescreen.map.usecase.GetScreenCenterUseCase
-import gamescreen.map.usecase.IsCollidedUseCase
 import gamescreen.map.usecase.MoveBackgroundUseCase
 import gamescreen.map.usecase.PlayerMoveManageUseCase
 import gamescreen.map.usecase.PlayerMoveToUseCase
 import gamescreen.map.usecase.PlayerMoveUseCase
 import gamescreen.map.usecase.ResetBackgroundPositionUseCase
 import gamescreen.map.usecase.VelocityManageUseCase
+import gamescreen.map.usecase.collision.geteventtype.GetEventTypeUseCase
+import gamescreen.map.usecase.collision.geteventtype.GetEventTypeUseCaseImpl
+import gamescreen.map.usecase.collision.iscollided.IsCollidedUseCase
+import gamescreen.map.usecase.collision.iscollided.IsCollidedUseCaseImpl
 import gamescreen.map.usecase.decideconnectcype.DecideConnectTypeUseCase
 import gamescreen.map.usecase.decideconnectcype.DecideConnectTypeUseCaseImpl
 import gamescreen.map.usecase.startbattle.StartBattleUseCase
@@ -105,9 +108,15 @@ val MapModule = module {
         )
     }
 
-    single {
-        IsCollidedUseCase(
+    single<IsCollidedUseCase> {
+        IsCollidedUseCaseImpl(
             repository = get(),
+        )
+    }
+
+    single<GetEventTypeUseCase> {
+        GetEventTypeUseCaseImpl(
+            backgroundRepository = get(),
         )
     }
 

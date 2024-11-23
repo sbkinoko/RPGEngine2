@@ -20,13 +20,13 @@ import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.repository.playercell.PlayerCellRepository
 import gamescreen.map.usecase.FindEventCellUseCase
 import gamescreen.map.usecase.GetScreenCenterUseCase
-import gamescreen.map.usecase.IsCollidedUseCase
 import gamescreen.map.usecase.MoveBackgroundUseCase
 import gamescreen.map.usecase.PlayerMoveManageUseCase
 import gamescreen.map.usecase.PlayerMoveToUseCase
 import gamescreen.map.usecase.PlayerMoveUseCase
 import gamescreen.map.usecase.ResetBackgroundPositionUseCase
 import gamescreen.map.usecase.VelocityManageUseCase
+import gamescreen.map.usecase.collision.iscollided.IsCollidedUseCase
 import gamescreen.map.usecase.startbattle.StartBattleUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -151,6 +151,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
             )
 
             updateEventCollision()
+            checkEvent()
             // playerが入っているマスを設定
             findEventCellUseCase()
             //　そのマスに基づいてイベントを呼び出し
@@ -207,6 +208,10 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
             PlayerDir.NONE -> Unit
         }
+    }
+
+    private fun checkEvent() {
+
     }
 
     /**
@@ -337,7 +342,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
         )
 
         // このままの速度で動けるなら移動
-        if (isCollidedUseCase(square).not()) {
+        if (isCollidedUseCase.invoke(square).not()) {
             return
         }
 
