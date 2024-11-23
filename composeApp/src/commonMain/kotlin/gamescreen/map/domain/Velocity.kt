@@ -27,6 +27,25 @@ data class Velocity(
     }
 }
 
+/**
+ * 速度から向きを返す
+ */
 fun Velocity.toDir(): PlayerDir {
-    throw NotImplementedError()
+    if (!isMoving) {
+        return PlayerDir.NONE
+    }
+
+    return if (x > y) {
+        if (x > 0) {
+            PlayerDir.RIGHT
+        } else {
+            PlayerDir.LEFT
+        }
+    } else {
+        if (y > 0) {
+            PlayerDir.DOWN
+        } else {
+            PlayerDir.UP
+        }
+    }
 }
