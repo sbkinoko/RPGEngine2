@@ -25,7 +25,7 @@ fun PlayerPreview() {
                 size = 100f,
             ),
             screenRatio = 1f,
-            dir = PlayerDir.UP
+            dir = PlayerDir.UP,
         )
     }
 }

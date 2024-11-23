@@ -27,7 +27,7 @@ fun Player(
             )
             .size((square.size * screenRatio).pxToDp())
             .background(Colors.Player),
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ) {
         Text(
             text = dir.text,
