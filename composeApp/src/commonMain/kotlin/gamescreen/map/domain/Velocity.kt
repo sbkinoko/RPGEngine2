@@ -1,6 +1,7 @@
 package gamescreen.map.domain
 
 import common.Normalizer
+import kotlin.math.abs
 
 data class Velocity(
     val maxVelocity: Float = MAX,
@@ -35,7 +36,7 @@ fun Velocity.toDir(): PlayerDir {
         return PlayerDir.NONE
     }
 
-    return if (x > y) {
+    return if (abs(x) > abs(y)) {
         if (x > 0) {
             PlayerDir.RIGHT
         } else {

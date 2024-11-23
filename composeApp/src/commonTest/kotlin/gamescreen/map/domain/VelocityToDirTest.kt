@@ -27,7 +27,7 @@ class VelocityToDirTest {
     @Test
     fun checkUp() {
         val velocity = Velocity(
-            x = 0f,
+            x = 0.1f,
             y = -1f,
         )
 
@@ -45,7 +45,7 @@ class VelocityToDirTest {
     @Test
     fun checkDown() {
         val velocity = Velocity(
-            x = 0f,
+            x = 0.1f,
             y = 1f,
         )
 
@@ -64,7 +64,7 @@ class VelocityToDirTest {
     fun checkLeft() {
         val velocity = Velocity(
             x = -1f,
-            y = 0f,
+            y = 0.1f,
         )
         val dir = velocity.toDir()
         assertEquals(
@@ -80,7 +80,7 @@ class VelocityToDirTest {
     fun checkRight() {
         val velocity = Velocity(
             x = 1f,
-            y = 0f,
+            y = 0.1f,
         )
         val dir = velocity.toDir()
         assertEquals(
