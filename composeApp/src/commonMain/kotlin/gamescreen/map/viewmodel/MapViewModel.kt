@@ -61,6 +61,23 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
     val playerSquare: SharedFlow<Square> = playerPositionRepository.playerPositionFLow
 
+    private var eventSquare: Square = Square(
+        size = VIRTUAL_PLAYER_SIZE,
+        displayPoint = Point(
+            x = playerPositionRepository.getPlayerPosition().x,
+            y = playerPositionRepository.getPlayerPosition().y
+        ),
+    )
+        set(value) {
+            mutableEventSquareFlow.value = value
+            field = value
+        }
+
+    private val mutableEventSquareFlow = MutableStateFlow(
+        eventSquare
+    )
+    val eventSquareFlow: StateFlow<Square> = mutableEventSquareFlow.asStateFlow()
+
     private var tapPoint: Point? = null
 
     private var playerMoveArea: Square = PlayerMoveSquare(
@@ -71,8 +88,13 @@ class MapViewModel : ControllerCallback, KoinComponent {
     private var backGroundVelocity: Velocity = Velocity()
     private var tentativePlayerVelocity: Velocity = Velocity()
 
+    private var dir: PlayerDir = PlayerDir.DOWN
+        set(value) {
+            field = value
+            mutableDirFlow.value = dir
+        }
     private val mutableDirFlow = MutableStateFlow<PlayerDir>(
-        PlayerDir.DOWN
+        dir
     )
     val dirFlow: StateFlow<PlayerDir> = mutableDirFlow.asStateFlow()
 
@@ -110,7 +132,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
         }
 
         if (tentativePlayerVelocity.isMoving) {
-            mutableDirFlow.value = tentativePlayerVelocity.toDir()
+            dir = tentativePlayerVelocity.toDir()
 
             checkMove()
             if (!canMove) {
@@ -128,12 +150,62 @@ class MapViewModel : ControllerCallback, KoinComponent {
                 fieldSquare = fieldSquare,
             )
 
+            updateEventCollision()
             // playerが入っているマスを設定
             findEventCellUseCase()
             //　そのマスに基づいてイベントを呼び出し
             playerCellRepository.playerIncludeCell?.let {
                 callCellEvent(it)
             }
+        }
+    }
+
+    /**
+     * イベントの当たり判定を移動させる
+     */
+    private fun updateEventCollision() {
+        when (dir) {
+            PlayerDir.UP -> {
+                eventSquare = Square(
+                    size = VIRTUAL_PLAYER_SIZE,
+                    displayPoint = Point(
+                        x = playerPositionRepository.getPlayerPosition().x,
+                        y = playerPositionRepository.getPlayerPosition().y - VIRTUAL_PLAYER_SIZE / 2
+                    ),
+                )
+            }
+
+            PlayerDir.DOWN -> {
+                eventSquare = Square(
+                    size = VIRTUAL_PLAYER_SIZE,
+                    displayPoint = Point(
+                        x = playerPositionRepository.getPlayerPosition().x,
+                        y = playerPositionRepository.getPlayerPosition().y + VIRTUAL_PLAYER_SIZE / 2
+                    ),
+                )
+            }
+
+            PlayerDir.LEFT -> {
+                eventSquare = Square(
+                    size = VIRTUAL_PLAYER_SIZE,
+                    displayPoint = Point(
+                        x = playerPositionRepository.getPlayerPosition().x - VIRTUAL_PLAYER_SIZE / 2,
+                        y = playerPositionRepository.getPlayerPosition().y
+                    ),
+                )
+            }
+
+            PlayerDir.RIGHT -> {
+                eventSquare = Square(
+                    size = VIRTUAL_PLAYER_SIZE,
+                    displayPoint = Point(
+                        x = playerPositionRepository.getPlayerPosition().x + VIRTUAL_PLAYER_SIZE / 2,
+                        y = playerPositionRepository.getPlayerPosition().y
+                    ),
+                )
+            }
+
+            PlayerDir.NONE -> Unit
         }
     }
 
