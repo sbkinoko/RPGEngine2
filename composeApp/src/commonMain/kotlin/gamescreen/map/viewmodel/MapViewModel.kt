@@ -20,13 +20,14 @@ import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.repository.playercell.PlayerCellRepository
 import gamescreen.map.usecase.FindEventCellUseCase
 import gamescreen.map.usecase.GetScreenCenterUseCase
-import gamescreen.map.usecase.IsCollidedUseCase
 import gamescreen.map.usecase.MoveBackgroundUseCase
 import gamescreen.map.usecase.PlayerMoveManageUseCase
 import gamescreen.map.usecase.PlayerMoveToUseCase
 import gamescreen.map.usecase.PlayerMoveUseCase
 import gamescreen.map.usecase.ResetBackgroundPositionUseCase
 import gamescreen.map.usecase.VelocityManageUseCase
+import gamescreen.map.usecase.collision.geteventtype.GetEventTypeUseCase
+import gamescreen.map.usecase.collision.iscollided.IsCollidedUseCase
 import gamescreen.map.usecase.startbattle.StartBattleUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -37,6 +38,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import values.EventType
 
 class MapViewModel : ControllerCallback, KoinComponent {
     val player: Player by inject()
@@ -51,6 +53,8 @@ class MapViewModel : ControllerCallback, KoinComponent {
     private val playerMoveToUseCase: PlayerMoveToUseCase by inject()
 
     private val isCollidedUseCase: IsCollidedUseCase by inject()
+    private val getEventTypeUseCase: GetEventTypeUseCase by inject()
+
     private val moveBackgroundUseCase: MoveBackgroundUseCase by inject()
     private val resetBackgroundPositionUseCase: ResetBackgroundPositionUseCase by inject()
     private val backgroundRepository: BackgroundRepository by inject()
@@ -97,6 +101,17 @@ class MapViewModel : ControllerCallback, KoinComponent {
         dir
     )
     val dirFlow: StateFlow<PlayerDir> = mutableDirFlow.asStateFlow()
+
+    private var eventType = EventType.None
+        set(value) {
+            mutableEventTypeFlow.value = value
+            field = value
+        }
+    private val mutableEventTypeFlow = MutableStateFlow(
+        eventType
+    )
+    val eventTypeFlow: StateFlow<EventType> = mutableEventTypeFlow.asStateFlow()
+
 
     val backgroundCells = backgroundRepository.backgroundFlow
 
@@ -151,6 +166,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
             )
 
             updateEventCollision()
+            checkEvent()
             // playerが入っているマスを設定
             findEventCellUseCase()
             //　そのマスに基づいてイベントを呼び出し
@@ -207,6 +223,12 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
             PlayerDir.NONE -> Unit
         }
+    }
+
+    private fun checkEvent() {
+        eventType = getEventTypeUseCase.invoke(
+            eventSquare
+        )
     }
 
     /**
@@ -337,7 +359,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
         )
 
         // このままの速度で動けるなら移動
-        if (isCollidedUseCase(square).not()) {
+        if (isCollidedUseCase.invoke(square).not()) {
             return
         }
 
