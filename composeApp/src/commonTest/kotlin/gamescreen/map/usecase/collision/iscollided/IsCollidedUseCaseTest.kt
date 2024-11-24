@@ -1,7 +1,6 @@
-package gamescreen.map.usecase
+package gamescreen.map.usecase.collision.iscollided
 
 import gamescreen.map.MapModule
-import gamescreen.map.usecase.collision.iscollided.IsCollidedUseCase
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
