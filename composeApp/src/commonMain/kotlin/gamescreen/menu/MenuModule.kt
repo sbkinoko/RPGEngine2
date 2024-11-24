@@ -96,8 +96,6 @@ val MenuModule = module {
 
     single<GetControllerByCommandTypeUseCase> {
         GetControllerByCommandTypeUseCaseImpl(
-            choiceRepository = get(),
-            textRepository = get(),
             menuStateRepository = get(),
             mainMenuViewModel = get(),
             statusViewModel = get(),
@@ -108,8 +106,6 @@ val MenuModule = module {
             toolListViewModel = get(),
             toolTargetViewModel = get(),
             toolGiveUserViewModel = get(),
-            choiceViewModel = get(),
-            textViewModel = get(),
         )
     }
 

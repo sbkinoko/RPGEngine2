@@ -19,7 +19,6 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
 import common.extension.pxToDp
 import controller.layout.Controller
-import core.domain.toViewModel
 import core.repository.screentype.ScreenTypeRepository
 import org.koin.compose.koinInject
 import values.Colors
@@ -31,6 +30,8 @@ fun MainScreen(
     val screenType = mainViewModel.nowScreenType.collectAsState(
         ScreenTypeRepository.INITIAL_SCREEN_TYPE,
     )
+
+    val controllerCallback = mainViewModel.controllerFlow.collectAsState()
 
     var screenSize: Int by remember { mutableStateOf(0) }
 
@@ -70,7 +71,7 @@ fun MainScreen(
                     .background(
                         Colors.ControllerArea,
                     ),
-                controllerCallback = screenType.value.toViewModel(),
+                controllerCallback = controllerCallback.value,
             )
         }
     }

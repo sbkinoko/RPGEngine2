@@ -23,6 +23,8 @@ import gamescreen.map.usecase.collision.iscollided.IsCollidedUseCase
 import gamescreen.map.usecase.collision.iscollided.IsCollidedUseCaseImpl
 import gamescreen.map.usecase.decideconnectcype.DecideConnectTypeUseCase
 import gamescreen.map.usecase.decideconnectcype.DecideConnectTypeUseCaseImpl
+import gamescreen.map.usecase.event.EventUseCase
+import gamescreen.map.usecase.event.EventUseCaseImpl
 import gamescreen.map.usecase.startbattle.StartBattleUseCase
 import gamescreen.map.usecase.startbattle.StartBattleUseCaseImpl
 import gamescreen.map.viewmodel.MapViewModel
@@ -126,6 +128,13 @@ val MapModule = module {
             screenTypeRepository = get(),
             commandStateRepository = get(),
             actionRepository = get(),
+        )
+    }
+
+    single<EventUseCase> {
+        EventUseCaseImpl(
+            textRepository = get(),
+            addToolUseCase = get(),
         )
     }
 
