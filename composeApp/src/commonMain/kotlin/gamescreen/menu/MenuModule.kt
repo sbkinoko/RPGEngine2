@@ -1,5 +1,7 @@
 package gamescreen.menu
 
+import core.usecase.item.useskill.UseSkillUseCase
+import core.usecase.item.useskill.UseSkillUseCaseImpl
 import gamescreen.menu.item.repository.index.IndexRepository
 import gamescreen.menu.item.repository.index.IndexRepositoryImpl
 import gamescreen.menu.item.repository.target.TargetRepository
@@ -8,8 +10,6 @@ import gamescreen.menu.item.repository.user.UserRepository
 import gamescreen.menu.item.repository.user.UserRepositoryImpl
 import gamescreen.menu.item.skill.list.SkillListViewModel
 import gamescreen.menu.item.skill.target.SkillTargetViewModel
-import gamescreen.menu.item.skill.usecase.useskill.UseSkillUseCase
-import gamescreen.menu.item.skill.usecase.useskill.UseSkillUseCaseImpl
 import gamescreen.menu.item.skill.user.SkillUserViewModel
 import gamescreen.menu.item.tool.give.ToolGiveUserViewModel
 import gamescreen.menu.item.tool.list.ToolListViewModel

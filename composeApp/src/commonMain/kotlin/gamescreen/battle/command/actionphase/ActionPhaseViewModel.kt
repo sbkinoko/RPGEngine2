@@ -278,6 +278,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
             amount = skill.needMP,
         )
 
+        // todo 敵のスキルをつくってからマップとの共通化を考える
         when (skill) {
             is AttackSkill -> {
                 val targetList = findActiveTargetUseCase.invoke(

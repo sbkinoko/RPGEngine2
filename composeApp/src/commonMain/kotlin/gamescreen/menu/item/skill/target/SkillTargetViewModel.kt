@@ -4,11 +4,11 @@ import core.domain.AbleType
 import core.domain.Place
 import core.domain.TextBoxData
 import core.repository.item.skill.SkillRepository
-import core.usecase.checkcanuseskill.CheckCanUseSkillUseCase
+import core.usecase.item.checkcanuseskill.CheckCanUseSkillUseCase
+import core.usecase.item.useskill.UseSkillUseCase
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.item.abstract.target.ItemTargetViewModel
 import gamescreen.menu.item.repository.index.IndexRepository
-import gamescreen.menu.item.skill.usecase.useskill.UseSkillUseCase
 import org.koin.core.component.inject
 
 class SkillTargetViewModel : ItemTargetViewModel() {
