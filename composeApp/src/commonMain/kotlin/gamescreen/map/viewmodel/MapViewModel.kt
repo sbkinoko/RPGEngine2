@@ -28,6 +28,7 @@ import gamescreen.map.usecase.ResetBackgroundPositionUseCase
 import gamescreen.map.usecase.VelocityManageUseCase
 import gamescreen.map.usecase.collision.geteventtype.GetEventTypeUseCase
 import gamescreen.map.usecase.collision.iscollided.IsCollidedUseCase
+import gamescreen.map.usecase.event.EventUseCase
 import gamescreen.map.usecase.startbattle.StartBattleUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -62,6 +63,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
     private val findEventCellUseCase: FindEventCellUseCase by inject()
     private val startBattleUseCase: StartBattleUseCase by inject()
+    private val eventUseCase: EventUseCase by inject()
 
     val playerSquare: SharedFlow<Square> = playerPositionRepository.playerPositionFLow
 
@@ -380,7 +382,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
     }
 
     private fun event() {
-        println("Hello")
+        eventUseCase.invoke(eventType)
     }
 
     fun touchCharacter() {
