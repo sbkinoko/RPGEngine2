@@ -3,7 +3,7 @@ package gamescreen.menu.item.skill.list
 import core.domain.AbleType
 import core.domain.Place
 import core.repository.item.skill.SkillRepository
-import core.usecase.checkcanuseskill.CheckCanUseSkillUseCase
+import core.usecase.item.checkcanuseskill.CheckCanUseSkillUseCase
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.item.abstract.itemselect.ItemListViewModel
 import org.koin.core.component.inject

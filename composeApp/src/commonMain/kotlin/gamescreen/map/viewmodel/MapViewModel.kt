@@ -143,39 +143,43 @@ class MapViewModel : ControllerCallback, KoinComponent {
      * 主人公の位置を更新
      */
     fun updatePosition() {
+        // タップしていたら位置を更新
         if (tapPoint != null) {
             updateVelocityByTap(tapPoint!!)
         }
 
-        if (tentativePlayerVelocity.isMoving) {
-            dir = tentativePlayerVelocity.toDir()
+        //速度が0なら何もしない
+        if (tentativePlayerVelocity.isMoving.not()) {
+            return
+        }
 
-            checkMove()
-            if (!canMove) {
-                return
-            }
+        dir = tentativePlayerVelocity.toDir()
 
-            mediateVelocity()
-            CoroutineScope(Dispatchers.Default).launch {
-                playerMoveUseCase(
-                    player = player,
-                )
-            }
-            moveBackgroundUseCase(
-                velocity = backGroundVelocity,
-                fieldSquare = fieldSquare,
+        checkMove()
+        if (!canMove) {
+            return
+        }
+
+        mediateVelocity()
+        CoroutineScope(Dispatchers.Default).launch {
+            playerMoveUseCase(
+                player = player,
             )
+        }
+        moveBackgroundUseCase(
+            velocity = backGroundVelocity,
+            fieldSquare = fieldSquare,
+        )
 
-            updateEventCollision()
-            checkEvent()
-            // playerが入っているマスを設定
-            updateCellContainPlayerUseCase()
-            //　そのマスに基づいてイベントを呼び出し
-            playerCellRepository.playerIncludeCell?.let {
-                cellEventUseCase.invoke(
-                    it.cellTypeID,
-                )
-            }
+        updateEventCollision()
+        checkEvent()
+        // playerが入っているマスを設定
+        updateCellContainPlayerUseCase()
+        //　そのマスに基づいてイベントを呼び出し
+        playerCellRepository.playerIncludeCell?.let {
+            cellEventUseCase.invoke(
+                it.cellTypeID,
+            )
         }
     }
 

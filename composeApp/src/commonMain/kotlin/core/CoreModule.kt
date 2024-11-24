@@ -16,8 +16,8 @@ import core.text.repository.TextRepository
 import core.text.repository.TextRepositoryImpl
 import core.usecase.changetomap.ChangeToMapUseCase
 import core.usecase.changetomap.ChangeToMapUseCaseImpl
-import core.usecase.checkcanuseskill.CheckCanUseSkillUseCase
-import core.usecase.checkcanuseskill.CheckCanUseSkillUseCaseImpl
+import core.usecase.item.checkcanuseskill.CheckCanUseSkillUseCase
+import core.usecase.item.checkcanuseskill.CheckCanUseSkillUseCaseImpl
 import core.usecase.item.usetool.UseToolUseCase
 import core.usecase.item.usetool.UseToolUseCaseImpl
 import core.usecase.updateparameter.UpdateMonsterStatusUseCase

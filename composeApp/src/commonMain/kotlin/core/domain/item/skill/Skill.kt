@@ -5,6 +5,7 @@ import core.domain.item.Item
 sealed interface Skill : Item {
     val needMP: Int
 
-    // fixme コストのタイプをする
+    // fixme コストのタイプを作成する
+    // HP MP　など
     val canUse: (Int) -> Boolean
 }

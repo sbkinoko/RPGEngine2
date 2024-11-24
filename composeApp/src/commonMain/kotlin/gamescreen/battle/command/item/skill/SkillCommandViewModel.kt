@@ -4,7 +4,7 @@ import core.domain.AbleType
 import core.domain.Const
 import core.domain.Place
 import core.repository.item.skill.SkillRepository
-import core.usecase.checkcanuseskill.CheckCanUseSkillUseCase
+import core.usecase.item.checkcanuseskill.CheckCanUseSkillUseCase
 import gamescreen.battle.command.item.ItemCommandViewModel
 import gamescreen.battle.domain.ActionType
 import gamescreen.battle.domain.BattleCommandType

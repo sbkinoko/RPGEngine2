@@ -1,4 +1,4 @@
-package gamescreen.menu.item.skill.usecase.useskill
+package core.usecase.item.useskill
 
 import core.domain.item.skill.AttackSkill
 import core.domain.item.skill.HealSkill
