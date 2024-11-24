@@ -8,7 +8,7 @@ import gamescreen.map.repository.playercell.PlayerCellRepository
 /**
  * プレイヤーが入っているセルを更新
  */
-class FindEventCellUseCase(
+class UpdateCellContainPlayerUseCase(
     private val playerPositionRepository: PlayerPositionRepository,
     private val playerCellRepository: PlayerCellRepository,
     private val backgroundRepository: BackgroundRepository,

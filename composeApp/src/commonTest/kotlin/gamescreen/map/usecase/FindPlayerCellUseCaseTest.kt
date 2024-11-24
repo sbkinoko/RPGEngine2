@@ -20,7 +20,7 @@ import kotlin.test.assertTrue
 
 class FindPlayerCellUseCaseTest : KoinTest {
     private val resetBackgroundPositionUseCase: ResetBackgroundPositionUseCase by inject()
-    private val findEventCellUseCase: FindEventCellUseCase by inject()
+    private val updateCellContainPlayerUseCase: UpdateCellContainPlayerUseCase by inject()
 
     private val backgroundRepository: BackgroundRepository by inject()
     private val playerCellRepository: PlayerCellRepository by inject()
@@ -61,13 +61,13 @@ class FindPlayerCellUseCaseTest : KoinTest {
             )
 
             // 最初に全身が入ってるからnullじゃない
-            findEventCellUseCase()
+            updateCellContainPlayerUseCase()
             assertTrue {
                 playerCellRepository.playerIncludeCell != null
             }
 
             // 前回のマスから動いてないからnull
-            findEventCellUseCase()
+            updateCellContainPlayerUseCase()
             assertTrue {
                 playerCellRepository.playerIncludeCell == null
             }
@@ -80,7 +80,7 @@ class FindPlayerCellUseCaseTest : KoinTest {
                     size = 5f,
                 )
             )
-            findEventCellUseCase()
+            updateCellContainPlayerUseCase()
             assertTrue {
                 playerCellRepository.playerIncludeCell == null
             }
@@ -93,7 +93,7 @@ class FindPlayerCellUseCaseTest : KoinTest {
                     size = 5f,
                 )
             )
-            findEventCellUseCase()
+            updateCellContainPlayerUseCase()
             assertTrue {
                 playerCellRepository.playerIncludeCell != null
             }

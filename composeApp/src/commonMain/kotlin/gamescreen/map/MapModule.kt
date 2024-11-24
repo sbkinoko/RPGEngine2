@@ -9,13 +9,13 @@ import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.repository.player.PlayerPositionRepositoryImpl
 import gamescreen.map.repository.playercell.PlayerCellRepository
 import gamescreen.map.repository.playercell.PlayerCellRepositoryImpl
-import gamescreen.map.usecase.FindEventCellUseCase
 import gamescreen.map.usecase.GetScreenCenterUseCase
 import gamescreen.map.usecase.MoveBackgroundUseCase
 import gamescreen.map.usecase.PlayerMoveManageUseCase
 import gamescreen.map.usecase.PlayerMoveToUseCase
 import gamescreen.map.usecase.PlayerMoveUseCase
 import gamescreen.map.usecase.ResetBackgroundPositionUseCase
+import gamescreen.map.usecase.UpdateCellContainPlayerUseCase
 import gamescreen.map.usecase.VelocityManageUseCase
 import gamescreen.map.usecase.collision.geteventtype.GetEventTypeUseCase
 import gamescreen.map.usecase.collision.geteventtype.GetEventTypeUseCaseImpl
@@ -23,8 +23,14 @@ import gamescreen.map.usecase.collision.iscollided.IsCollidedUseCase
 import gamescreen.map.usecase.collision.iscollided.IsCollidedUseCaseImpl
 import gamescreen.map.usecase.decideconnectcype.DecideConnectTypeUseCase
 import gamescreen.map.usecase.decideconnectcype.DecideConnectTypeUseCaseImpl
-import gamescreen.map.usecase.event.EventUseCase
-import gamescreen.map.usecase.event.EventUseCaseImpl
+import gamescreen.map.usecase.event.actionevent.ActionEventUseCase
+import gamescreen.map.usecase.event.actionevent.ActionEventUseCaseImpl
+import gamescreen.map.usecase.event.cellevent.CellEventUseCase
+import gamescreen.map.usecase.event.cellevent.CellEventUseCaseImpl
+import gamescreen.map.usecase.roadmap.RoadMapUseCase
+import gamescreen.map.usecase.roadmap.RoadMapUseCaseImpl
+import gamescreen.map.usecase.setplayercenter.SetPlayerCenterUseCase
+import gamescreen.map.usecase.setplayercenter.SetPlayerCenterUseCaseImpl
 import gamescreen.map.usecase.startbattle.StartBattleUseCase
 import gamescreen.map.usecase.startbattle.StartBattleUseCaseImpl
 import gamescreen.map.viewmodel.MapViewModel
@@ -84,7 +90,7 @@ val MapModule = module {
     }
 
     single {
-        FindEventCellUseCase(
+        UpdateCellContainPlayerUseCase(
             playerPositionRepository = get(),
             playerCellRepository = get(),
             backgroundRepository = get(),
@@ -131,12 +137,36 @@ val MapModule = module {
         )
     }
 
-    single<EventUseCase> {
-        EventUseCaseImpl(
+    single<ActionEventUseCase> {
+        ActionEventUseCaseImpl(
             textRepository = get(),
             addToolUseCase = get(),
         )
     }
+
+    single<CellEventUseCase> {
+        CellEventUseCaseImpl(
+            backgroundRepository = get(),
+            roadMapDataUseCase = get(),
+        )
+    }
+
+    single<RoadMapUseCase> {
+        RoadMapUseCaseImpl(
+            setPlayerCenterUseCase = get(),
+            resetBackgroundPositionUseCase = get(),
+            updateCellContainPlayerUseCase = get(),
+        )
+    }
+
+    single<SetPlayerCenterUseCase> {
+        SetPlayerCenterUseCaseImpl(
+            player = get(),
+            getScreenCenterUseCase = get(),
+            playerMoveToUseCase = get(),
+        )
+    }
+
 
     single<DecideConnectTypeUseCase> {
         DecideConnectTypeUseCaseImpl()
