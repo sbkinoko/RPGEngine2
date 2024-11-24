@@ -112,6 +112,9 @@ class MapViewModel : ControllerCallback, KoinComponent {
     )
     val eventTypeFlow: StateFlow<EventType> = mutableEventTypeFlow.asStateFlow()
 
+    private val canEvent: Boolean
+        get() = eventType != EventType.None
+
 
     val backgroundCells = backgroundRepository.backgroundFlow
 
@@ -376,8 +379,28 @@ class MapViewModel : ControllerCallback, KoinComponent {
         )
     }
 
-    override fun pressA() {
+    private fun event() {
+        println("Hello")
+    }
 
+    fun touchCharacter() {
+        if (canEvent) {
+            event()
+        } else {
+            showMenu()
+        }
+    }
+
+    fun touchEventSquare() {
+        if (canEvent) {
+            event()
+        }
+    }
+
+    override fun pressA() {
+        if (canEvent) {
+            event()
+        }
     }
 
     override fun pressB() {
@@ -385,6 +408,10 @@ class MapViewModel : ControllerCallback, KoinComponent {
     }
 
     override fun pressM() {
+        showMenu()
+    }
+
+    private fun showMenu() {
         screenTypeRepository.screenType = ScreenType.MENU
     }
 

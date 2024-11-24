@@ -1,6 +1,7 @@
 package gamescreen.map.layout
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.layout.Box
@@ -73,9 +74,17 @@ fun MapScreen(
 
 
         Player(
-            square = square.value,
-            screenRatio = screenRatio,
-            dir = dir.value
+            modifier = Modifier
+                .offset(
+                    x = (square.value.x * screenRatio).pxToDp(),
+                    y = (square.value.y * screenRatio).pxToDp(),
+                )
+                .size((square.value.size * screenRatio).pxToDp())
+                .background(Colors.Player)
+                .clickable {
+                    mapViewModel.touchCharacter()
+                },
+            dir = dir.value,
         )
 
         Spacer(
@@ -91,7 +100,10 @@ fun MapScreen(
                     } else {
                         Colors.CanEventCollision
                     }
-                ),
+                )
+                .clickable {
+                    mapViewModel.touchEventSquare()
+                },
         )
     }
 }
