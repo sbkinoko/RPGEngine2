@@ -5,9 +5,6 @@ import controller.domain.Stick
 import core.domain.ScreenType
 import core.repository.screentype.ScreenTypeRepository
 import gamescreen.map.data.LoopMap
-import gamescreen.map.data.NonLoopMap
-import gamescreen.map.domain.BackgroundCell
-import gamescreen.map.domain.MapData
 import gamescreen.map.domain.Player
 import gamescreen.map.domain.PlayerDir
 import gamescreen.map.domain.Point
@@ -18,17 +15,16 @@ import gamescreen.map.layout.PlayerMoveSquare
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.repository.playercell.PlayerCellRepository
-import gamescreen.map.usecase.FindEventCellUseCase
-import gamescreen.map.usecase.GetScreenCenterUseCase
 import gamescreen.map.usecase.MoveBackgroundUseCase
 import gamescreen.map.usecase.PlayerMoveManageUseCase
-import gamescreen.map.usecase.PlayerMoveToUseCase
 import gamescreen.map.usecase.PlayerMoveUseCase
-import gamescreen.map.usecase.ResetBackgroundPositionUseCase
+import gamescreen.map.usecase.UpdateCellContainPlayerUseCase
 import gamescreen.map.usecase.VelocityManageUseCase
 import gamescreen.map.usecase.collision.geteventtype.GetEventTypeUseCase
 import gamescreen.map.usecase.collision.iscollided.IsCollidedUseCase
-import gamescreen.map.usecase.event.EventUseCase
+import gamescreen.map.usecase.event.actionevent.ActionEventUseCase
+import gamescreen.map.usecase.event.cellevent.CellEventUseCase
+import gamescreen.map.usecase.roadmap.RoadMapUseCase
 import gamescreen.map.usecase.startbattle.StartBattleUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -49,21 +45,21 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
     private val screenTypeRepository: ScreenTypeRepository by inject()
 
-    private val getScreenCenterUseCase: GetScreenCenterUseCase by inject()
     private val playerMoveUseCase: PlayerMoveUseCase by inject()
-    private val playerMoveToUseCase: PlayerMoveToUseCase by inject()
 
     private val isCollidedUseCase: IsCollidedUseCase by inject()
     private val getEventTypeUseCase: GetEventTypeUseCase by inject()
 
     private val moveBackgroundUseCase: MoveBackgroundUseCase by inject()
-    private val resetBackgroundPositionUseCase: ResetBackgroundPositionUseCase by inject()
     private val backgroundRepository: BackgroundRepository by inject()
     private val playerCellRepository: PlayerCellRepository by inject()
 
-    private val findEventCellUseCase: FindEventCellUseCase by inject()
+    private val updateCellContainPlayerUseCase: UpdateCellContainPlayerUseCase by inject()
     private val startBattleUseCase: StartBattleUseCase by inject()
-    private val eventUseCase: EventUseCase by inject()
+    private val actionEventUseCase: ActionEventUseCase by inject()
+    private val cellEventUseCase: CellEventUseCase by inject()
+
+    private val roadMapUseCase: RoadMapUseCase by inject()
 
     val playerSquare: SharedFlow<Square> = playerPositionRepository.playerPositionFLow
 
@@ -130,7 +126,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
             )
         }
 
-        reloadMapData(
+        roadMapUseCase.invoke(
             mapX = 0,
             mapY = 0,
             mapData = LoopMap(),
@@ -173,10 +169,12 @@ class MapViewModel : ControllerCallback, KoinComponent {
             updateEventCollision()
             checkEvent()
             // playerが入っているマスを設定
-            findEventCellUseCase()
+            updateCellContainPlayerUseCase()
             //　そのマスに基づいてイベントを呼び出し
             playerCellRepository.playerIncludeCell?.let {
-                callCellEvent(it)
+                cellEventUseCase.invoke(
+                    it.cellTypeID,
+                )
             }
         }
     }
@@ -299,61 +297,6 @@ class MapViewModel : ControllerCallback, KoinComponent {
         backGroundVelocity = mediatedVelocity.second
     }
 
-    /**
-     * プレイヤーを中心に移動する
-     */
-    private fun setPlayerCenter() {
-        val center = getScreenCenterUseCase()
-        // 仮の移動先
-        CoroutineScope(Dispatchers.Default).launch {
-            playerMoveToUseCase(
-                x = center.x - player.size / 2,
-                y = center.y - player.size / 2,
-            )
-        }
-    }
-
-    /**
-     * 全身が入ったセルのイベントを処理する
-     */
-    private fun callCellEvent(backgroundCell: BackgroundCell) {
-        when (backgroundCell.cellTypeID) {
-            3 -> {
-                backgroundRepository.mapData = NonLoopMap()
-                reloadMapData(
-                    mapX = 0,
-                    mapY = 2,
-                    mapData = NonLoopMap(),
-                )
-            }
-
-            4 -> {
-                reloadMapData(
-                    mapX = 5,
-                    mapY = 5,
-                    mapData = LoopMap()
-                )
-            }
-        }
-    }
-
-    /**
-     * 中心を指定して背景画像を再度読み込む
-     */
-    private fun reloadMapData(
-        mapX: Int,
-        mapY: Int,
-        mapData: MapData,
-    ) {
-        setPlayerCenter()
-        resetBackgroundPositionUseCase(
-            mapData = mapData,
-            mapX = mapX,
-            mapY = mapY,
-        )
-        findEventCellUseCase()
-    }
-
     private var canMove = true
 
     private fun checkMove() {
@@ -382,7 +325,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
     }
 
     private fun event() {
-        eventUseCase.invoke(eventType)
+        actionEventUseCase.invoke(eventType)
     }
 
     fun touchCharacter() {

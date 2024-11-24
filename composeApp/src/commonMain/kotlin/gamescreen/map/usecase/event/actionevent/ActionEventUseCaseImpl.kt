@@ -1,4 +1,4 @@
-package gamescreen.map.usecase.event
+package gamescreen.map.usecase.event.actionevent
 
 import core.domain.TextBoxData
 import core.repository.item.tool.ToolRepositoryImpl
@@ -6,10 +6,10 @@ import core.text.repository.TextRepository
 import gamescreen.menu.usecase.bag.addtool.AddToolUseCase
 import values.EventType
 
-class EventUseCaseImpl(
+class ActionEventUseCaseImpl(
     private val textRepository: TextRepository,
     private val addToolUseCase: AddToolUseCase,
-) : EventUseCase {
+) : ActionEventUseCase {
     override fun invoke(
         eventType: EventType,
     ) {
