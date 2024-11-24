@@ -1,4 +1,4 @@
-package core.usecase.usetool
+package core.usecase.item.usetool
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -12,8 +12,6 @@ import core.domain.status.param.MP
 import core.repository.item.tool.ToolRepository
 import core.repository.player.PlayerStatusRepository
 import core.repository.status.StatusRepository
-import core.usecase.item.usetool.UseToolUseCase
-import core.usecase.item.usetool.UseToolUseCaseImpl
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
 import gamescreen.menu.usecase.bag.dectool.DecToolUseCase
 import kotlinx.coroutines.delay
