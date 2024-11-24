@@ -1,4 +1,4 @@
-package gamescreen.map.usecase
+package gamescreen.map.usecase.collision.iscollided
 
 import gamescreen.map.MapModule
 import org.koin.core.context.startKoin

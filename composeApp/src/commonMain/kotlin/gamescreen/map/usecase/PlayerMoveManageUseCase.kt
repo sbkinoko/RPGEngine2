@@ -3,6 +3,7 @@ package gamescreen.map.usecase
 import gamescreen.map.domain.Velocity
 import gamescreen.map.domain.collision.Square
 import gamescreen.map.repository.player.PlayerPositionRepository
+import gamescreen.map.usecase.collision.iscollided.IsCollidedUseCase
 import kotlin.math.abs
 
 class PlayerMoveManageUseCase(
@@ -25,7 +26,7 @@ class PlayerMoveManageUseCase(
             dy = 0f,
         )
         var canMoveX =
-            isCollidedUseCase(onlyMoveX).not()
+            isCollidedUseCase.invoke(onlyMoveX).not()
 
         //　y方向だけの移動ができるかチェック
         val onlyMoveY = playerSquare
@@ -34,7 +35,7 @@ class PlayerMoveManageUseCase(
             dy = tentativePlayerVelocity.y,
         )
         var canMoveY =
-            isCollidedUseCase(onlyMoveY).not()
+            isCollidedUseCase.invoke(onlyMoveY).not()
 
         // 両方に移動できる場合は速い方に動かす
         if (canMoveX && canMoveY) {
@@ -135,7 +136,7 @@ class PlayerMoveManageUseCase(
             dy,
         )
 
-        return if (isCollidedUseCase(square)) {
+        return if (isCollidedUseCase.invoke(square)) {
             // 動けないなら最大を更新
             section.copy(
                 max = section.average,

@@ -19,6 +19,12 @@ open class Square(
         size = size,
     )
 
+    override val baseX: Float
+        get() = leftSide
+
+    override val baseY: Float
+        get() = topSide
+
     val x: Float
         get() = displayPoint.x
 
@@ -115,14 +121,19 @@ open class Square(
         return true
     }
 
-    override fun toPath(screenRatio: Float): Path {
+    override fun toPath(
+        screenRatio: Float,
+    ): Path {
         val path = Path()
+        val left = 0f
+        val top = 0f
         path.moveTo(
-            0f, 0f
+            left,
+            top,
         )
-        path.lineTo(0f, size * screenRatio)
+        path.lineTo(left, size * screenRatio)
         path.lineTo(size * screenRatio, size * screenRatio)
-        path.lineTo(size * screenRatio, 0f)
+        path.lineTo(size * screenRatio, top)
         path.close()
         return path
     }

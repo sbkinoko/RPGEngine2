@@ -9,29 +9,37 @@ import gamescreen.map.data.NonLoopMap
 import gamescreen.map.domain.BackgroundCell
 import gamescreen.map.domain.MapData
 import gamescreen.map.domain.Player
+import gamescreen.map.domain.PlayerDir
 import gamescreen.map.domain.Point
 import gamescreen.map.domain.Velocity
 import gamescreen.map.domain.collision.Square
+import gamescreen.map.domain.toDir
 import gamescreen.map.layout.PlayerMoveSquare
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.repository.playercell.PlayerCellRepository
 import gamescreen.map.usecase.FindEventCellUseCase
 import gamescreen.map.usecase.GetScreenCenterUseCase
-import gamescreen.map.usecase.IsCollidedUseCase
 import gamescreen.map.usecase.MoveBackgroundUseCase
 import gamescreen.map.usecase.PlayerMoveManageUseCase
 import gamescreen.map.usecase.PlayerMoveToUseCase
 import gamescreen.map.usecase.PlayerMoveUseCase
 import gamescreen.map.usecase.ResetBackgroundPositionUseCase
 import gamescreen.map.usecase.VelocityManageUseCase
+import gamescreen.map.usecase.collision.geteventtype.GetEventTypeUseCase
+import gamescreen.map.usecase.collision.iscollided.IsCollidedUseCase
+import gamescreen.map.usecase.event.EventUseCase
 import gamescreen.map.usecase.startbattle.StartBattleUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import values.EventType
 
 class MapViewModel : ControllerCallback, KoinComponent {
     val player: Player by inject()
@@ -46,6 +54,8 @@ class MapViewModel : ControllerCallback, KoinComponent {
     private val playerMoveToUseCase: PlayerMoveToUseCase by inject()
 
     private val isCollidedUseCase: IsCollidedUseCase by inject()
+    private val getEventTypeUseCase: GetEventTypeUseCase by inject()
+
     private val moveBackgroundUseCase: MoveBackgroundUseCase by inject()
     private val resetBackgroundPositionUseCase: ResetBackgroundPositionUseCase by inject()
     private val backgroundRepository: BackgroundRepository by inject()
@@ -53,8 +63,26 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
     private val findEventCellUseCase: FindEventCellUseCase by inject()
     private val startBattleUseCase: StartBattleUseCase by inject()
+    private val eventUseCase: EventUseCase by inject()
 
     val playerSquare: SharedFlow<Square> = playerPositionRepository.playerPositionFLow
+
+    private var eventSquare: Square = Square(
+        size = VIRTUAL_PLAYER_SIZE,
+        displayPoint = Point(
+            x = playerPositionRepository.getPlayerPosition().x,
+            y = playerPositionRepository.getPlayerPosition().y
+        ),
+    )
+        set(value) {
+            mutableEventSquareFlow.value = value
+            field = value
+        }
+
+    private val mutableEventSquareFlow = MutableStateFlow(
+        eventSquare
+    )
+    val eventSquareFlow: StateFlow<Square> = mutableEventSquareFlow.asStateFlow()
 
     private var tapPoint: Point? = null
 
@@ -65,6 +93,30 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
     private var backGroundVelocity: Velocity = Velocity()
     private var tentativePlayerVelocity: Velocity = Velocity()
+
+    private var dir: PlayerDir = PlayerDir.DOWN
+        set(value) {
+            field = value
+            mutableDirFlow.value = dir
+        }
+    private val mutableDirFlow = MutableStateFlow<PlayerDir>(
+        dir
+    )
+    val dirFlow: StateFlow<PlayerDir> = mutableDirFlow.asStateFlow()
+
+    private var eventType = EventType.None
+        set(value) {
+            mutableEventTypeFlow.value = value
+            field = value
+        }
+    private val mutableEventTypeFlow = MutableStateFlow(
+        eventType
+    )
+    val eventTypeFlow: StateFlow<EventType> = mutableEventTypeFlow.asStateFlow()
+
+    private val canEvent: Boolean
+        get() = eventType != EventType.None
+
 
     val backgroundCells = backgroundRepository.backgroundFlow
 
@@ -100,6 +152,8 @@ class MapViewModel : ControllerCallback, KoinComponent {
         }
 
         if (tentativePlayerVelocity.isMoving) {
+            dir = tentativePlayerVelocity.toDir()
+
             checkMove()
             if (!canMove) {
                 return
@@ -116,6 +170,8 @@ class MapViewModel : ControllerCallback, KoinComponent {
                 fieldSquare = fieldSquare,
             )
 
+            updateEventCollision()
+            checkEvent()
             // playerが入っているマスを設定
             findEventCellUseCase()
             //　そのマスに基づいてイベントを呼び出し
@@ -123,6 +179,61 @@ class MapViewModel : ControllerCallback, KoinComponent {
                 callCellEvent(it)
             }
         }
+    }
+
+    /**
+     * イベントの当たり判定を移動させる
+     */
+    private fun updateEventCollision() {
+        when (dir) {
+            PlayerDir.UP -> {
+                eventSquare = Square(
+                    size = VIRTUAL_PLAYER_SIZE,
+                    displayPoint = Point(
+                        x = playerPositionRepository.getPlayerPosition().x,
+                        y = playerPositionRepository.getPlayerPosition().y - VIRTUAL_PLAYER_SIZE / 2
+                    ),
+                )
+            }
+
+            PlayerDir.DOWN -> {
+                eventSquare = Square(
+                    size = VIRTUAL_PLAYER_SIZE,
+                    displayPoint = Point(
+                        x = playerPositionRepository.getPlayerPosition().x,
+                        y = playerPositionRepository.getPlayerPosition().y + VIRTUAL_PLAYER_SIZE / 2
+                    ),
+                )
+            }
+
+            PlayerDir.LEFT -> {
+                eventSquare = Square(
+                    size = VIRTUAL_PLAYER_SIZE,
+                    displayPoint = Point(
+                        x = playerPositionRepository.getPlayerPosition().x - VIRTUAL_PLAYER_SIZE / 2,
+                        y = playerPositionRepository.getPlayerPosition().y
+                    ),
+                )
+            }
+
+            PlayerDir.RIGHT -> {
+                eventSquare = Square(
+                    size = VIRTUAL_PLAYER_SIZE,
+                    displayPoint = Point(
+                        x = playerPositionRepository.getPlayerPosition().x + VIRTUAL_PLAYER_SIZE / 2,
+                        y = playerPositionRepository.getPlayerPosition().y
+                    ),
+                )
+            }
+
+            PlayerDir.NONE -> Unit
+        }
+    }
+
+    private fun checkEvent() {
+        eventType = getEventTypeUseCase.invoke(
+            eventSquare
+        )
     }
 
     /**
@@ -182,7 +293,9 @@ class MapViewModel : ControllerCallback, KoinComponent {
             tentativePlayerVelocity = tentativePlayerVelocity,
             playerMoveArea = playerMoveArea,
         )
+
         player.updateVelocity(mediatedVelocity.first)
+
         backGroundVelocity = mediatedVelocity.second
     }
 
@@ -204,7 +317,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
      * 全身が入ったセルのイベントを処理する
      */
     private fun callCellEvent(backgroundCell: BackgroundCell) {
-        when (backgroundCell.imgID) {
+        when (backgroundCell.cellTypeID) {
             3 -> {
                 backgroundRepository.mapData = NonLoopMap()
                 reloadMapData(
@@ -242,6 +355,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
     }
 
     private var canMove = true
+
     private fun checkMove() {
         val square = playerPositionRepository.getPlayerPosition().getNew()
         square.move(
@@ -250,7 +364,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
         )
 
         // このままの速度で動けるなら移動
-        if (isCollidedUseCase(square).not()) {
+        if (isCollidedUseCase.invoke(square).not()) {
             return
         }
 
@@ -267,8 +381,28 @@ class MapViewModel : ControllerCallback, KoinComponent {
         )
     }
 
-    override fun pressA() {
+    private fun event() {
+        eventUseCase.invoke(eventType)
+    }
 
+    fun touchCharacter() {
+        if (canEvent) {
+            event()
+        } else {
+            showMenu()
+        }
+    }
+
+    fun touchEventSquare() {
+        if (canEvent) {
+            event()
+        }
+    }
+
+    override fun pressA() {
+        if (canEvent) {
+            event()
+        }
     }
 
     override fun pressB() {
@@ -276,6 +410,10 @@ class MapViewModel : ControllerCallback, KoinComponent {
     }
 
     override fun pressM() {
+        showMenu()
+    }
+
+    private fun showMenu() {
         screenTypeRepository.screenType = ScreenType.MENU
     }
 

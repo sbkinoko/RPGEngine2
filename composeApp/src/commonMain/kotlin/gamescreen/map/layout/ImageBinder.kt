@@ -1,5 +1,11 @@
 package gamescreen.map.layout
 
+import core.domain.MapConst.Companion.BOX____
+import core.domain.MapConst.Companion.GLASS__
+import core.domain.MapConst.Companion.ROAD___
+import core.domain.MapConst.Companion.TOWN_1I
+import core.domain.MapConst.Companion.TOWN_1O
+import core.domain.MapConst.Companion.WATER__
 import gamescreen.map.domain.ConnectType
 import gamescreen.map.usecase.decideconnectcype.DecideConnectTypeUseCase
 import org.jetbrains.compose.resources.DrawableResource
@@ -22,6 +28,7 @@ import rpgengine.composeapp.generated.resources.ob_01_09
 import rpgengine.composeapp.generated.resources.ob_01_10
 import rpgengine.composeapp.generated.resources.ob_01_11
 import rpgengine.composeapp.generated.resources.ob_01_12
+import rpgengine.composeapp.generated.resources.ob_98_1
 
 class ImageBinder : KoinComponent {
     private val decideConnectTypeUseCase: DecideConnectTypeUseCase by inject()
@@ -31,16 +38,16 @@ class ImageBinder : KoinComponent {
      * @param aroundCellId 周囲のマスの背景画像のid
      */
     @OptIn(ExperimentalResourceApi::class)
-    fun bind(
+    fun bindBackGround(
         aroundCellId: Array<Array<Int>>,
     ): DrawableResource {
         val imgId = aroundCellId[1][1]
 
         return when (imgId) {
-            1 -> Res.drawable.bg_00
-            2 -> Res.drawable.bg_02
-            3, 4 -> Res.drawable.bg_20
-            5 -> {
+            GLASS__ -> Res.drawable.bg_00
+            WATER__ -> Res.drawable.bg_02
+            TOWN_1I, TOWN_1O -> Res.drawable.bg_20
+            ROAD___ -> {
                 when (decideConnectTypeUseCase(aroundCellId)) {
                     ConnectType.Vertical -> Res.drawable.ob_01_01
                     ConnectType.Horizontal -> Res.drawable.ob_01_02
@@ -56,7 +63,27 @@ class ImageBinder : KoinComponent {
                 }
             }
 
+            BOX____ -> Res.drawable.bg_00
+
             else -> Res.drawable.bg_null
+        }
+    }
+
+
+    /**
+     * idと画像を紐づけ
+     * @param aroundCellId 周囲のマスの背景画像のid
+     */
+    @OptIn(ExperimentalResourceApi::class)
+    fun bindObject(
+        aroundCellId: Array<Array<Int>>,
+    ): DrawableResource? {
+        val imgId = aroundCellId[1][1]
+
+        return when (imgId) {
+            BOX____ -> Res.drawable.ob_98_1
+
+            else -> null
         }
     }
 }

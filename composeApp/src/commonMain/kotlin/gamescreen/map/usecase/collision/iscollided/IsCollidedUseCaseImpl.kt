@@ -1,21 +1,17 @@
-package gamescreen.map.usecase
+package gamescreen.map.usecase.collision.iscollided
 
 import gamescreen.map.domain.collision.Square
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 
-class IsCollidedUseCase(
+class IsCollidedUseCaseImpl(
     private val repository: BackgroundRepository
-) {
-
-    /**
-     * 障害物と衝突しているかどうかをチェック
-     */
-    operator fun invoke(square: Square): Boolean {
+) : IsCollidedUseCase {
+    override fun invoke(playerSquare: Square): Boolean {
         repository.background.forEach { rowArray ->
             rowArray.forEach { cell ->
                 if (cell.collisionList.isNotEmpty()) {
                     cell.collisionList.forEach {
-                        if (it.isOverlap(square)) {
+                        if (it.isOverlap(playerSquare)) {
                             return true
                         }
                     }

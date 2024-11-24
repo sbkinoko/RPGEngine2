@@ -1,7 +1,11 @@
 package gamescreen.map.repository.collision
 
+import core.domain.MapConst.Companion.BOX____
+import core.domain.MapConst.Companion.WATER__
 import gamescreen.map.domain.collision.CollisionDetectShape
+import gamescreen.map.domain.collision.EventSquare
 import gamescreen.map.domain.collision.Square
+import values.EventType
 
 class CollisionRepositoryImpl : CollisionRepository {
 
@@ -10,16 +14,27 @@ class CollisionRepositoryImpl : CollisionRepository {
         cellSize: Float,
         square: Square,
     ): List<CollisionDetectShape> {
-        return if (id == 2) {
-            listOf(
-                Square(
-                    x = square.x,
-                    y = square.y,
-                    size = cellSize
+        return when (id) {
+            WATER__ ->
+                listOf(
+                    Square(
+                        x = square.x,
+                        y = square.y,
+                        size = cellSize
+                    )
                 )
-            )
-        } else {
-            emptyList()
+
+            BOX____ ->
+                listOf(
+                    EventSquare(
+                        x = square.x + cellSize / 3,
+                        y = square.y + cellSize / 3,
+                        size = cellSize / 3,
+                        eventID = EventType.Box
+                    )
+                )
+
+            else -> emptyList()
         }
     }
 }

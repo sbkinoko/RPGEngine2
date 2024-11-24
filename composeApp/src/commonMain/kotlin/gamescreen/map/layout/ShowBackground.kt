@@ -55,7 +55,7 @@ fun Background(
                                 color = if (isPlayerIncludeCell) {
                                     Colors.PlayerIncludeCell
                                 } else {
-                                    Colors.BackgroundCell
+                                    Colors.BackgroundCellBorder
                                 },
                                 shape = RectangleShape,
                             )
@@ -64,22 +64,23 @@ fun Background(
                             modifier = Modifier
                                 .fillMaxSize(),
                             painter = painterResource(
-                                imageBinder.bind(
+                                imageBinder.bindBackGround(
                                     aroundCellId = aroundCellId,
                                 )
                             ),
                             contentDescription = "background"
                         )
 
-                        collisionList.forEach {
-                            Canvas(
-                                modifier = Modifier.fillMaxSize(),
-                                onDraw = {
-                                    drawPath(
-                                        path = it.toPath(screenRatio),
-                                        color = Colors.BackgroundCell,
-                                    )
-                                }
+                        imageBinder.bindObject(
+                            aroundCellId = aroundCellId,
+                        )?.let {
+                            Image(
+                                modifier = Modifier
+                                    .fillMaxSize(),
+                                painter = painterResource(
+                                    it,
+                                ),
+                                contentDescription = "background"
                             )
                         }
 
@@ -92,6 +93,27 @@ fun Background(
                                 .append("mapX:${mapPoint.x}\n")
                                 .append("mapY:${mapPoint.y}\n")
                                 .toString(),
+                        )
+                    }
+
+                    collisionList.forEach {
+                        Canvas(
+                            modifier = Modifier
+                                .size(
+                                    (cellSize * screenRatio).pxToDp()
+                                )
+                                .offset(
+                                    x = (it.baseX * screenRatio).pxToDp(),
+                                    y = (it.baseY * screenRatio).pxToDp(),
+                                ),
+                            onDraw = {
+                                drawPath(
+                                    path = it.toPath(
+                                        screenRatio,
+                                    ),
+                                    color = Colors.CollisionColor,
+                                )
+                            }
                         )
                     }
                 }
