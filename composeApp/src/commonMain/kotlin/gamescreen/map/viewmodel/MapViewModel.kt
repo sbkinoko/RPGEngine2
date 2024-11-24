@@ -5,7 +5,6 @@ import controller.domain.Stick
 import core.domain.ScreenType
 import core.repository.screentype.ScreenTypeRepository
 import gamescreen.map.data.LoopMap
-import gamescreen.map.domain.BackgroundCell
 import gamescreen.map.domain.Player
 import gamescreen.map.domain.PlayerDir
 import gamescreen.map.domain.Point
@@ -173,7 +172,9 @@ class MapViewModel : ControllerCallback, KoinComponent {
             updateCellContainPlayerUseCase()
             //　そのマスに基づいてイベントを呼び出し
             playerCellRepository.playerIncludeCell?.let {
-                callCellEvent(it)
+                cellEventUseCase.invoke(
+                    it.cellTypeID,
+                )
             }
         }
     }
@@ -294,15 +295,6 @@ class MapViewModel : ControllerCallback, KoinComponent {
         player.updateVelocity(mediatedVelocity.first)
 
         backGroundVelocity = mediatedVelocity.second
-    }
-
-    /**
-     * 全身が入ったセルのイベントを処理する
-     */
-    private fun callCellEvent(backgroundCell: BackgroundCell) {
-        cellEventUseCase.invoke(
-            backgroundCell.cellTypeID,
-        )
     }
 
     private var canMove = true
