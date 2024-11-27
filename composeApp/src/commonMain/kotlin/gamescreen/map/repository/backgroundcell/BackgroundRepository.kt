@@ -5,6 +5,7 @@ import gamescreen.map.domain.MapData
 import kotlinx.coroutines.flow.MutableSharedFlow
 
 interface BackgroundRepository {
+    // fixme stateFlowにしたい
     val backgroundFlow: MutableSharedFlow<List<List<BackgroundCell>>>
 
     var background: List<List<BackgroundCell>>

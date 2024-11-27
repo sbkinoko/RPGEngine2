@@ -12,7 +12,7 @@ import core.repository.player.PlayerStatusRepository
 import core.usecase.changetomap.ChangeToMapUseCase
 import gamescreen.battle.domain.BattleCommandType
 import gamescreen.battle.repository.commandstate.CommandStateRepository
-import gamescreen.battle.usecase.convertscreentypetocontroller.GetControllerByCommandTypeUseCase
+import gamescreen.battle.usecase.getcontrollerbyscreentype.GetControllerByCommandTypeUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO

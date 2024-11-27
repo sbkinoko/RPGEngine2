@@ -1,4 +1,4 @@
-package gamescreen.battle.usecase.convertscreentypetocontroller
+package gamescreen.battle.usecase.getcontrollerbyscreentype
 
 import controller.domain.ControllerCallback
 

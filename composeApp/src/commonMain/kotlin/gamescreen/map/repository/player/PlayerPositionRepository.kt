@@ -4,6 +4,7 @@ import gamescreen.map.domain.collision.Square
 import kotlinx.coroutines.flow.MutableSharedFlow
 
 interface PlayerPositionRepository {
+    // fixme stateFlowにしたい
     val playerPositionFLow: MutableSharedFlow<Square>
 
     fun getPlayerPosition(): Square

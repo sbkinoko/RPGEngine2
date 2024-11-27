@@ -1,7 +1,6 @@
-package gamescreen.battle.serviceimpl
+package gamescreen.battle.service
 
 import core.domain.status.Status
-import gamescreen.battle.service.FindTargetService
 
 class FindTargetServiceImpl : FindTargetService {
 
