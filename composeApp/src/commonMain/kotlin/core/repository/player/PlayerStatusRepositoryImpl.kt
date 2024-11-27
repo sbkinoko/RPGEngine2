@@ -1,8 +1,5 @@
 package core.repository.player
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
-import androidx.compose.runtime.collectAsState
 import core.domain.status.PlayerStatus
 import core.domain.status.param.HP
 import core.domain.status.param.MP
@@ -11,27 +8,32 @@ import core.repository.item.skill.CANT_USE
 import core.repository.item.skill.HEAL_SKILL
 import core.repository.item.skill.REVIVE_SKILL
 import core.repository.item.tool.ToolRepositoryImpl
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import values.Constants
 
 class PlayerStatusRepositoryImpl : PlayerStatusRepository {
-    override val mutablePlayersFlow: MutableSharedFlow<List<PlayerStatus>> =
-        MutableSharedFlow(replay = 1)
+    private val mutableStatusListFlow: MutableStateFlow<List<PlayerStatus>>
 
-    @Composable
-    override fun getFlowAsState(): State<List<PlayerStatus>> {
-        return mutablePlayersFlow.collectAsState(
-            players
-        )
-    }
+    override val playerStatusFlow: StateFlow<List<PlayerStatus>>
+
 
     private var players: List<PlayerStatus>
 
     init {
-        players = List(Constants.playerNum) {
+        players = initialPlayer()
+
+        mutableStatusListFlow =
+            MutableStateFlow(
+                players
+            )
+
+        playerStatusFlow = mutableStatusListFlow.asStateFlow()
+    }
+
+    private fun initialPlayer(): List<PlayerStatus> {
+        return List(Constants.playerNum) {
             when (it) {
                 0 -> PlayerStatus(
                     name = "test1",
@@ -125,23 +127,20 @@ class PlayerStatusRepositoryImpl : PlayerStatusRepository {
                 else -> throw IllegalStateException()
             }
         }
-
-        CoroutineScope(Dispatchers.Default).launch {
-            mutablePlayersFlow.emit(players)
-        }
     }
 
     override suspend fun setStatus(id: Int, status: PlayerStatus) {
-        val list = players.mapIndexed { index, playerStatus ->
-            if (index == id) {
-                status
-            } else {
-                playerStatus
+        val list = players
+            .mapIndexed { index, playerStatus ->
+                if (index == id) {
+                    status
+                } else {
+                    playerStatus
+                }
             }
-        }
         players = list
 
-        mutablePlayersFlow.emit(players)
+        mutableStatusListFlow.emit(players)
     }
 
     override fun getStatus(id: Int): PlayerStatus {

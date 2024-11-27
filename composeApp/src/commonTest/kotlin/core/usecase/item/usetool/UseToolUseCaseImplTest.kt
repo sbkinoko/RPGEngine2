@@ -1,7 +1,5 @@
 package core.usecase.item.usetool
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import core.domain.Place
 import core.domain.item.TargetType
 import core.domain.item.tool.HealTool
@@ -15,7 +13,7 @@ import core.repository.status.StatusRepository
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
 import gamescreen.menu.usecase.bag.dectool.DecToolUseCase
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.runBlocking
 import org.koin.test.KoinTest
 import kotlin.test.Test
@@ -37,13 +35,8 @@ class UseToolUseCaseImplTest : KoinTest {
     )
 
     private val playerStatusRepository = object : PlayerStatusRepository {
-        override val mutablePlayersFlow: MutableSharedFlow<List<PlayerStatus>>
+        override val playerStatusFlow: StateFlow<List<PlayerStatus>>
             get() = throw NotImplementedError()
-
-        @Composable
-        override fun getFlowAsState(): State<List<PlayerStatus>> {
-            throw NotImplementedError()
-        }
 
         override fun getPlayers(): List<PlayerStatus> {
             throw NotImplementedError()

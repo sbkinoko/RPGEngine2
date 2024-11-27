@@ -23,6 +23,10 @@ fun BattleScreen(
     battleViewModel: BattleViewModel = koinInject(),
 ) {
     val monsters by battleViewModel.monsters.collectAsState()
+    val playerStatusList = battleViewModel
+        .playerStatusFlow
+        .collectAsState()
+
     if (monsters.isEmpty()) {
         LaunchedEffect(Unit) {
             delay(10)
@@ -41,7 +45,7 @@ fun BattleScreen(
                     color = Colors.StatusArea,
                     shape = RectangleShape,
                 ),
-            statusList = battleViewModel.PlayerStatusFlow().value,
+            statusList = playerStatusList.value,
         )
 
         battleViewModel.apply {

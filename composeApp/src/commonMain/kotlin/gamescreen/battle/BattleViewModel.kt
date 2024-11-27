@@ -49,10 +49,8 @@ class BattleViewModel :
         )
     }
 
-    @Composable
-    fun PlayerStatusFlow(): State<List<PlayerStatus>> {
-        return playerStatusRepository.getFlowAsState()
-    }
+    val playerStatusFlow: StateFlow<List<PlayerStatus>> = playerStatusRepository.playerStatusFlow
+
 
     init {
         initPlayers()
