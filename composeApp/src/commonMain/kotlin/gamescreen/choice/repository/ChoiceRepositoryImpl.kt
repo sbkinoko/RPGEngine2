@@ -1,4 +1,4 @@
-package core.confim.repository
+package gamescreen.choice.repository
 
 import core.domain.Choice
 import kotlinx.coroutines.CoroutineScope

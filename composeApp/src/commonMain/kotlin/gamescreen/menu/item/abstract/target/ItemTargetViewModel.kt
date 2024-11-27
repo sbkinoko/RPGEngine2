@@ -1,18 +1,18 @@
 package gamescreen.menu.item.abstract.target
 
-import core.confim.repository.ChoiceRepository
 import core.domain.AbleType
 import core.domain.Choice
 import core.domain.item.HealItem
 import core.repository.item.ItemRepository
 import core.repository.player.PlayerStatusRepository
-import core.text.repository.TextRepository
+import gamescreen.choice.repository.ChoiceRepository
 import gamescreen.menu.MenuChildViewModel
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.domain.SelectManager
 import gamescreen.menu.item.repository.index.IndexRepository
 import gamescreen.menu.item.repository.target.TargetRepository
 import gamescreen.menu.item.repository.user.UserRepository
+import gamescreen.text.repository.TextRepository
 import org.koin.core.component.inject
 import values.Constants.Companion.playerNum
 

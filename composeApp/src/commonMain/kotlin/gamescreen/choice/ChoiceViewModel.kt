@@ -1,8 +1,8 @@
-package core.confim
+package gamescreen.choice
 
-import core.confim.repository.ChoiceRepository
 import core.domain.Choice
 import core.menu.SelectableChildViewModel
+import gamescreen.choice.repository.ChoiceRepository
 import gamescreen.menu.domain.SelectManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

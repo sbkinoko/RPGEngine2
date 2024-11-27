@@ -5,7 +5,7 @@ import core.repository.status.StatusRepository
 import kotlinx.coroutines.flow.MutableSharedFlow
 
 interface BattleMonsterRepository : StatusRepository<MonsterStatus> {
-
+    // fixme stateFlowにしたい
     val monsterListFlow: MutableSharedFlow<List<MonsterStatus>>
 
     fun getMonsters(): List<MonsterStatus>

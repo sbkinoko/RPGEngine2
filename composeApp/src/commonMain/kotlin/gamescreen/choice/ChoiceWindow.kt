@@ -1,4 +1,4 @@
-package core.confim
+package gamescreen.choice
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

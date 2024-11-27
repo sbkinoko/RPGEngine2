@@ -1,12 +1,12 @@
-package core.text
+package gamescreen.text
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import core.domain.TextBoxData
 import core.menu.SelectableChildViewModel
-import core.text.repository.TextRepository
 import gamescreen.menu.domain.SelectManager
+import gamescreen.text.repository.TextRepository
 import org.koin.core.component.inject
 
 class TextViewModel : SelectableChildViewModel<TextBoxData?>() {

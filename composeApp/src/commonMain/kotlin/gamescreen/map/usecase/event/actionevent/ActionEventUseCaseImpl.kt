@@ -2,8 +2,8 @@ package gamescreen.map.usecase.event.actionevent
 
 import core.domain.TextBoxData
 import core.repository.item.tool.ToolRepositoryImpl
-import core.text.repository.TextRepository
 import gamescreen.menu.usecase.bag.addtool.AddToolUseCase
+import gamescreen.text.repository.TextRepository
 import values.EventType
 
 class ActionEventUseCaseImpl(

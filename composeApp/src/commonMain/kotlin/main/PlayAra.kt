@@ -5,13 +5,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import core.confim.ChoiceWindow
 import core.domain.ScreenType
-import core.text.TextWindow
 import gamescreen.battle.BattleScreen
+import gamescreen.choice.ChoiceWindow
 import gamescreen.map.layout.MapScreen
 import gamescreen.map.viewmodel.MapViewModel
 import gamescreen.menu.MenuScreen
+import gamescreen.text.TextWindow
 import values.Colors
 
 @Composable

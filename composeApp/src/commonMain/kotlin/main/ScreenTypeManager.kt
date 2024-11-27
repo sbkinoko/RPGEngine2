@@ -1,15 +1,15 @@
 package main
 
 import controller.domain.ControllerCallback
-import core.confim.ChoiceViewModel
-import core.confim.repository.ChoiceRepository
 import core.domain.ScreenType
 import core.repository.screentype.ScreenTypeRepository
-import core.text.TextViewModel
-import core.text.repository.TextRepository
 import gamescreen.battle.BattleViewModel
+import gamescreen.choice.ChoiceViewModel
+import gamescreen.choice.repository.ChoiceRepository
 import gamescreen.map.viewmodel.MapViewModel
 import gamescreen.menu.MenuViewModel
+import gamescreen.text.TextViewModel
+import gamescreen.text.repository.TextRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
