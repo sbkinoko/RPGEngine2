@@ -1,9 +1,8 @@
-package gamescreen.battle.serviceimpl
+package core.usecase.updateparameter
 
 import common.status.MonsterStatusTest.Companion.getMonster
 import core.CoreModule
 import core.repository.battlemonster.BattleMonsterRepository
-import core.usecase.updateparameter.UpdateMonsterStatusUseCase
 import gamescreen.battle.BattleModule
 import kotlinx.coroutines.runBlocking
 import org.koin.core.context.startKoin

@@ -18,6 +18,7 @@ class BattleMainViewModel : BattleChildViewModel() {
         itemNum = 2,
     )
 
+    // fixme 定数化
     override fun goNextImpl() {
         when (selectManager.selected) {
             0 -> commandRepository.push(

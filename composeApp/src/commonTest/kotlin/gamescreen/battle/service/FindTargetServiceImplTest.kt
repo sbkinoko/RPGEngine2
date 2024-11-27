@@ -1,7 +1,6 @@
-package gamescreen.battle.serviceimpl
+package gamescreen.battle.service
 
 import common.status.MonsterStatusTest
-import gamescreen.battle.service.FindTargetService
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
