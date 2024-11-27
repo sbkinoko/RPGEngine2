@@ -1,11 +1,10 @@
 package gamescreen.menu.item.tool.give
 
-import core.confim.repository.ChoiceRepository
 import core.domain.Choice
 import core.domain.TextBoxData
 import core.repository.item.tool.ToolRepository
 import core.repository.item.tool.ToolRepositoryImpl
-import core.text.repository.TextRepository
+import gamescreen.choice.repository.ChoiceRepository
 import gamescreen.menu.domain.BagToolData
 import gamescreen.menu.domain.GiveResult
 import gamescreen.menu.domain.MenuType
@@ -14,6 +13,7 @@ import gamescreen.menu.item.abstract.user.ItemUserViewModel
 import gamescreen.menu.item.repository.target.TargetRepository
 import gamescreen.menu.repository.bag.BagRepository
 import gamescreen.menu.usecase.givetool.GiveToolUseCase
+import gamescreen.text.repository.TextRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

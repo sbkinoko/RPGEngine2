@@ -1,4 +1,4 @@
-package core.text.repository
+package gamescreen.text.repository
 
 import core.domain.TextBoxData
 import core.repository.command.CommandRepository

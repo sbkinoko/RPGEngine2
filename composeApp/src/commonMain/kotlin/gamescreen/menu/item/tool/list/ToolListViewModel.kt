@@ -1,9 +1,9 @@
 package gamescreen.menu.item.tool.list
 
-import core.confim.repository.ChoiceRepository
 import core.domain.AbleType
 import core.domain.Choice
 import core.repository.item.tool.ToolRepository
+import gamescreen.choice.repository.ChoiceRepository
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.item.abstract.itemselect.ItemListViewModel
 import gamescreen.menu.repository.bag.BagRepository
