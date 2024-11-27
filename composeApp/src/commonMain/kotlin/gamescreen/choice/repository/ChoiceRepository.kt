@@ -1,6 +1,6 @@
 package gamescreen.choice.repository
 
-import core.domain.Choice
 import core.repository.command.CommandRepository
+import gamescreen.choice.Choice
 
 interface ChoiceRepository : CommandRepository<List<Choice>>

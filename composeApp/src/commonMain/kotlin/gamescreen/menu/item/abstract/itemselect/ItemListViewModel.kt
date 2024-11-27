@@ -1,7 +1,6 @@
 package gamescreen.menu.item.abstract.itemselect
 
 import core.domain.AbleType
-import core.domain.TextBoxData
 import core.repository.item.ItemRepository
 import core.repository.player.PlayerStatusRepository
 import gamescreen.menu.MenuChildViewModel
@@ -11,6 +10,7 @@ import gamescreen.menu.item.list.ItemList
 import gamescreen.menu.item.repository.index.IndexRepository
 import gamescreen.menu.item.repository.user.UserRepository
 import gamescreen.menu.repository.menustate.MenuStateRepository
+import gamescreen.text.TextBoxData
 import gamescreen.text.repository.TextRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
