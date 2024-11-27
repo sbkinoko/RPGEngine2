@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -30,6 +31,10 @@ fun MonsterArea(
     modifier: Modifier = Modifier,
     selectEnemyViewModel: SelectEnemyViewModel = koinInject(),
 ) {
+    val selectEnemyState by selectEnemyViewModel
+        .selectedEnemyState
+        .collectAsState()
+
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.Center,
@@ -48,7 +53,7 @@ fun MonsterArea(
                         .fillMaxWidth()
                         .height(20.dp),
                     index = index,
-                    selectedEnemyState = selectEnemyViewModel.selectedEnemyState.collectAsState().value,
+                    selectedEnemyState = selectEnemyState,
                 )
 
                 Box(

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
@@ -26,12 +27,15 @@ fun Background(
     mapViewModel: MapViewModel,
     screenRatio: Float,
 ) {
-    val backgroundCell: List<List<BackgroundCell>> = mapViewModel.backgroundCells.collectAsState(
-        listOf()
-    ).value
+    val backgroundCell: List<List<BackgroundCell>> by mapViewModel
+        .backgroundCells
+        .collectAsState(
+            listOf()
+        )
 
     val imageBinder = ImageBinder()
 
+    // fixme 背景が動いてない場合はリロードしない
     Box {
         backgroundCell.forEachIndexed { row, backgroundCells ->
             backgroundCells.forEachIndexed { col, cell ->

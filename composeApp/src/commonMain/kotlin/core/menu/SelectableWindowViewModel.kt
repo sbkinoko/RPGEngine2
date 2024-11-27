@@ -20,6 +20,7 @@ abstract class SelectableWindowViewModel : ControllerCallback {
         return true
     }
 
+    // fixme stateFlowを返すようにする
     @Composable
     fun getSelectedAsState() = selectManager.selectedFlow
         .collectAsState(selectManager.selected)

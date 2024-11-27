@@ -12,6 +12,7 @@ import org.koin.core.component.inject
 class TextViewModel : SelectableChildViewModel<TextBoxData?>() {
     val commandRepository: TextRepository by inject()
 
+    // fixme stateFlowを返すようにする
     @Composable
     fun getShowStateAsState(): State<TextBoxData?> {
         return commandRepository.commandTypeFlow.collectAsState(
