@@ -38,7 +38,7 @@ class PlayerStatusRepositoryImplTest : KoinTest {
         var count = 0
         runBlocking {
             val collectJob = launch {
-                playerStatusRepository.mutablePlayersFlow.collect {
+                playerStatusRepository.playerStatusFlow.collect {
                     count++
                 }
             }

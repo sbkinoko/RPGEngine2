@@ -3,18 +3,20 @@ package gamescreen.menu.component
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import core.repository.player.PlayerStatusRepository
 import org.koin.compose.koinInject
 import values.Constants
 
 @Composable
 fun StatusComponent(
-    modifier: Modifier = Modifier,
-    playerStatusRepository: PlayerStatusRepository = koinInject(),
     statusId: Int,
+    modifier: Modifier = Modifier,
+    statusComponentViewModel: StatusComponentViewModel = koinInject(),
 ) {
-    val state = playerStatusRepository.getFlowAsState()
+    val state = statusComponentViewModel
+        .statusFlow
+        .collectAsState()
 
     Column(
         modifier = modifier
