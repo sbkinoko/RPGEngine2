@@ -23,9 +23,9 @@ graph TD;
 ```mermaid
 graph TD;
   A-->B;
-  A-->D;
   B-->C;
   B-->D;
+  C-->C;
   C-->D;
   A[View];
   B[ViewModel];
