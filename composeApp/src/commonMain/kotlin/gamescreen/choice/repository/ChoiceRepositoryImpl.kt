@@ -1,6 +1,6 @@
 package gamescreen.choice.repository
 
-import core.domain.Choice
+import gamescreen.choice.Choice
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow

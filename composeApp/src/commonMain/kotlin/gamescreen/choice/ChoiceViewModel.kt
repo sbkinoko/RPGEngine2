@@ -1,6 +1,5 @@
 package gamescreen.choice
 
-import core.domain.Choice
 import core.menu.SelectableChildViewModel
 import gamescreen.choice.repository.ChoiceRepository
 import gamescreen.menu.domain.SelectManager

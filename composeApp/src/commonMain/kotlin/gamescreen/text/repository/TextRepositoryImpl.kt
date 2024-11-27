@@ -1,6 +1,6 @@
 package gamescreen.text.repository
 
-import core.domain.TextBoxData
+import gamescreen.text.TextBoxData
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.StateFlow
 

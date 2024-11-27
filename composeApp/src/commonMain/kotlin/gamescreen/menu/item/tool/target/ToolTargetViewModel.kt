@@ -1,12 +1,12 @@
 package gamescreen.menu.item.tool.target
 
 import core.domain.AbleType
-import core.domain.TextBoxData
 import core.repository.item.tool.ToolRepository
 import core.usecase.item.usetool.UseToolUseCase
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.item.abstract.target.ItemTargetViewModel
 import gamescreen.menu.item.repository.index.IndexRepository
+import gamescreen.text.TextBoxData
 import org.koin.core.component.inject
 
 class ToolTargetViewModel : ItemTargetViewModel() {
