@@ -4,6 +4,7 @@ import core.domain.ScreenType
 import kotlinx.coroutines.flow.MutableSharedFlow
 
 interface ScreenTypeRepository {
+    // fixme stateFlowにする
     val screenTypeFlow: MutableSharedFlow<ScreenType>
 
     var screenType: ScreenType

@@ -61,6 +61,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
     private val roadMapUseCase: RoadMapUseCase by inject()
 
+    // fixme stateFlowにする
     val playerSquare: SharedFlow<Square> = playerPositionRepository.playerPositionFLow
 
     private var eventSquare: Square = Square(

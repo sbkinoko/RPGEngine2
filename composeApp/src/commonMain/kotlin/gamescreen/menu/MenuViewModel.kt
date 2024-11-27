@@ -14,6 +14,7 @@ class MenuViewModel : KoinComponent, ControllerCallback {
 
     private val getControllerByCommandTypeUseCase: GetControllerByCommandTypeUseCase by inject()
 
+    // fixme stateFlowにする
     val menuType: SharedFlow<MenuType> = menuStateRepository.commandTypeFlow
 
     private val childController: ControllerCallback?
