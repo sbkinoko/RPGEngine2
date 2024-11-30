@@ -2,9 +2,6 @@ package gamescreen.map.data
 
 
 import core.domain.mapcell.CellType
-import core.domain.mapcell.MapConst.Companion.BOX____
-import core.domain.mapcell.MapConst.Companion.ROAD___
-import core.domain.mapcell.MapConst.Companion.TOWN_1I
 import gamescreen.map.domain.MapData
 
 class LoopMap : MapData() {
@@ -42,7 +39,7 @@ class LoopMap : MapData() {
             arrayOf(
                 CellType.Glass,
                 CellType.Glass,
-                BOX____,
+                CellType.Box,
                 CellType.Glass,
                 CellType.Glass,
                 CellType.Water,
@@ -81,7 +78,7 @@ class LoopMap : MapData() {
                 CellType.Glass,
                 CellType.Glass,
                 CellType.Glass,
-                ROAD___,
+                CellType.Road,
                 CellType.Glass,
                 CellType.Glass,
                 CellType.Glass,
@@ -90,46 +87,46 @@ class LoopMap : MapData() {
             arrayOf(
                 CellType.Glass,
                 CellType.Glass,
-                ROAD___,
-                ROAD___,
-                ROAD___,
-                ROAD___,
-                ROAD___,
-                ROAD___,
+                CellType.Road,
+                CellType.Road,
+                CellType.Road,
+                CellType.Road,
+                CellType.Road,
+                CellType.Road,
                 CellType.Glass,
                 CellType.Glass
             ),
             arrayOf(
-                ROAD___,
-                ROAD___,
-                ROAD___,
+                CellType.Road,
+                CellType.Road,
+                CellType.Road,
                 CellType.Glass,
                 CellType.Glass,
-                ROAD___,
+                CellType.Road,
                 CellType.Glass,
-                ROAD___,
-                CellType.Glass,
-                CellType.Glass
-            ),
-            arrayOf(
-                ROAD___,
-                ROAD___,
-                ROAD___,
-                CellType.Glass,
-                CellType.Glass,
-                ROAD___,
-                ROAD___,
-                ROAD___,
+                CellType.Road,
                 CellType.Glass,
                 CellType.Glass
             ),
             arrayOf(
+                CellType.Road,
+                CellType.Road,
+                CellType.Road,
                 CellType.Glass,
                 CellType.Glass,
-                ROAD___,
-                ROAD___,
-                TOWN_1I,
-                ROAD___,
+                CellType.Road,
+                CellType.Road,
+                CellType.Road,
+                CellType.Glass,
+                CellType.Glass
+            ),
+            arrayOf(
+                CellType.Glass,
+                CellType.Glass,
+                CellType.Road,
+                CellType.Road,
+                CellType.Town1I,
+                CellType.Road,
                 CellType.Glass,
                 CellType.Glass,
                 CellType.Glass,
