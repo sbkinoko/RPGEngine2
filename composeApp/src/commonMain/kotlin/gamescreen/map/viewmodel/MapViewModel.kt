@@ -163,6 +163,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
         }
 
         mediateVelocity()
+        // fixme テストに影響がありそうなので確認する
         CoroutineScope(Dispatchers.Default).launch {
             playerMoveUseCase(
                 player = player,

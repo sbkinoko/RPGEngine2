@@ -4,30 +4,38 @@ import gamescreen.map.data.BoxId
 
 sealed class CellType {
 
+    //whenのelseを使わないようにしたいが、全列挙していると数が多くなってしまう
+    //対策として列挙の数を減らすためのマーカーインターフェースを作成
 
     /**
      * 全身が入ったらイベントが起きるマス
      */
-    // どうにもならなくなったらinterfaceにすることも視野に入れておく
-    sealed class EventCell : CellType()
+    sealed interface EventCell
 
     /**
-     * 当たり判定を持つオブジェクトを持つマス
+     * 当たり判定を持つを持つマス
      */
-    // どうにもならなくなったらinterfaceにすることも視野に入れておく
-    sealed class CollisionCell : CellType()
+    sealed interface CollisionCell
+
+    /**
+     * オブジェクト画像を持つマス
+     */
+    sealed interface ObjectCell
+
 
     data object Glass : CellType()
-    data object Water : CollisionCell()
+    data object Water : CollisionCell, CellType()
 
-    data object Town1I : EventCell()
-    data object Town1O : EventCell()
+    data object Town1I : EventCell, CellType()
+    data object Town1O : EventCell, CellType()
 
 
     data object Road : CellType()
     class Box(
         val id: BoxId,
-    ) : CollisionCell()
+    ) : CollisionCell,
+        ObjectCell,
+        CellType()
 
     data object Null : CellType()
 
