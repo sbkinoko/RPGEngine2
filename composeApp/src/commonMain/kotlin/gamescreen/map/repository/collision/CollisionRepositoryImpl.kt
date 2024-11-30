@@ -13,6 +13,10 @@ class CollisionRepositoryImpl : CollisionRepository {
         cellSize: Float,
         square: Square,
     ): List<CollisionDetectShape> {
+        if (cellType !is CellType.CollisionCell) {
+            return emptyList()
+        }
+
         return when (cellType) {
             CellType.Water ->
                 listOf(
@@ -32,8 +36,6 @@ class CollisionRepositoryImpl : CollisionRepository {
                         eventID = EventType.Box
                     )
                 )
-
-            else -> emptyList()
         }
     }
 }
