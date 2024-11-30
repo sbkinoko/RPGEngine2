@@ -1,5 +1,6 @@
 package gamescreen.map.repository.backgroundcell
 
+import core.domain.mapcell.CellType
 import gamescreen.map.data.LoopMap
 import gamescreen.map.domain.BackgroundCell
 import gamescreen.map.domain.MapData
@@ -26,7 +27,7 @@ class BackgroundRepositoryImpl : BackgroundRepository {
         return background[y][x]
     }
 
-    override fun getBackgroundAround(x: Int, y: Int): Array<Array<Int>> {
+    override fun getBackgroundAround(x: Int, y: Int): Array<Array<CellType>> {
         return arrayOf(
             arrayOf(
                 getIdAt(x = x - 1, y = y - 1),
@@ -55,7 +56,7 @@ class BackgroundRepositoryImpl : BackgroundRepository {
         backgroundFlow.emit(background)
     }
 
-    private fun getIdAt(x: Int, y: Int): Int {
+    private fun getIdAt(x: Int, y: Int): CellType {
         return if (mapData.isLoop) {
             mapData.getDataAt(
                 x = correctX(x),
@@ -63,7 +64,7 @@ class BackgroundRepositoryImpl : BackgroundRepository {
             )
         } else {
             if (isOutX(x) || isOutY(y)) {
-                0
+                CellType.Null
             } else {
                 mapData.getDataAt(x, y)
             }

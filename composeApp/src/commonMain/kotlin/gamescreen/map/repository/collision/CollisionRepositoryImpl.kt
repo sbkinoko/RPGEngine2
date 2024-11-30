@@ -1,7 +1,6 @@
 package gamescreen.map.repository.collision
 
-import core.domain.MapConst.Companion.BOX____
-import core.domain.MapConst.Companion.WATER__
+import core.domain.mapcell.CellType
 import gamescreen.map.domain.collision.CollisionDetectShape
 import gamescreen.map.domain.collision.EventSquare
 import gamescreen.map.domain.collision.Square
@@ -10,12 +9,16 @@ import values.EventType
 class CollisionRepositoryImpl : CollisionRepository {
 
     override fun collisionData(
-        id: Int,
+        cellType: CellType,
         cellSize: Float,
         square: Square,
     ): List<CollisionDetectShape> {
-        return when (id) {
-            WATER__ ->
+        if (cellType !is CellType.CollisionCell) {
+            return emptyList()
+        }
+
+        return when (cellType) {
+            CellType.Water ->
                 listOf(
                     Square(
                         x = square.x,
@@ -24,7 +27,7 @@ class CollisionRepositoryImpl : CollisionRepository {
                     )
                 )
 
-            BOX____ ->
+            CellType.Box ->
                 listOf(
                     EventSquare(
                         x = square.x + cellSize / 3,
@@ -33,8 +36,6 @@ class CollisionRepositoryImpl : CollisionRepository {
                         eventID = EventType.Box
                     )
                 )
-
-            else -> emptyList()
         }
     }
 }

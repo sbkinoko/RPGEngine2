@@ -1,5 +1,6 @@
 package gamescreen.map.usecase.decideconnectcype
 
+import core.domain.mapcell.CellType
 import gamescreen.map.domain.ConnectType
 
 interface DecideConnectTypeUseCase {
@@ -8,6 +9,6 @@ interface DecideConnectTypeUseCase {
      * 3*3のフィールドを受け取って接続の種類をチェックする
      */
     operator fun invoke(
-        array: Array<Array<Int>>
+        array: Array<Array<CellType>>
     ): ConnectType
 }

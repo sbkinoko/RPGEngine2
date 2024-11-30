@@ -1,11 +1,7 @@
 package gamescreen.map.data
 
 
-import core.domain.MapConst.Companion.BOX____
-import core.domain.MapConst.Companion.GLASS__
-import core.domain.MapConst.Companion.ROAD___
-import core.domain.MapConst.Companion.TOWN_1I
-import core.domain.MapConst.Companion.WATER__
+import core.domain.mapcell.CellType
 import gamescreen.map.domain.MapData
 
 class LoopMap : MapData() {
@@ -14,127 +10,127 @@ class LoopMap : MapData() {
         get() = 10
     override val height: Int
         get() = 10
-    override val field: Array<Array<Int>>
+    override val field: Array<Array<CellType>>
         get() = arrayOf(
             arrayOf(
-                GLASS__,
-                GLASS__,
-                GLASS__,
-                GLASS__,
-                GLASS__,
-                WATER__,
-                WATER__,
-                WATER__,
-                WATER__,
-                WATER__
+                CellType.Glass,
+                CellType.Glass,
+                CellType.Glass,
+                CellType.Glass,
+                CellType.Glass,
+                CellType.Water,
+                CellType.Water,
+                CellType.Water,
+                CellType.Water,
+                CellType.Water
             ),
             arrayOf(
-                GLASS__,
-                GLASS__,
-                GLASS__,
-                GLASS__,
-                GLASS__,
-                WATER__,
-                WATER__,
-                WATER__,
-                WATER__,
-                WATER__
+                CellType.Glass,
+                CellType.Glass,
+                CellType.Glass,
+                CellType.Glass,
+                CellType.Glass,
+                CellType.Water,
+                CellType.Water,
+                CellType.Water,
+                CellType.Water,
+                CellType.Water
             ),
             arrayOf(
-                GLASS__,
-                GLASS__,
-                BOX____,
-                GLASS__,
-                GLASS__,
-                WATER__,
-                WATER__,
-                WATER__,
-                WATER__,
-                WATER__
+                CellType.Glass,
+                CellType.Glass,
+                CellType.Box,
+                CellType.Glass,
+                CellType.Glass,
+                CellType.Water,
+                CellType.Water,
+                CellType.Water,
+                CellType.Water,
+                CellType.Water
             ),
             arrayOf(
-                GLASS__,
-                GLASS__,
-                GLASS__,
-                GLASS__,
-                GLASS__,
-                WATER__,
-                WATER__,
-                WATER__,
-                WATER__,
-                WATER__
+                CellType.Glass,
+                CellType.Glass,
+                CellType.Glass,
+                CellType.Glass,
+                CellType.Glass,
+                CellType.Water,
+                CellType.Water,
+                CellType.Water,
+                CellType.Water,
+                CellType.Water
             ),
             arrayOf(
-                GLASS__,
-                GLASS__,
-                GLASS__,
-                GLASS__,
-                GLASS__,
-                WATER__,
-                WATER__,
-                WATER__,
-                WATER__,
-                WATER__
+                CellType.Glass,
+                CellType.Glass,
+                CellType.Glass,
+                CellType.Glass,
+                CellType.Glass,
+                CellType.Water,
+                CellType.Water,
+                CellType.Water,
+                CellType.Water,
+                CellType.Water
             ),
             arrayOf(
-                GLASS__,
-                GLASS__,
-                GLASS__,
-                GLASS__,
-                GLASS__,
-                ROAD___,
-                GLASS__,
-                GLASS__,
-                GLASS__,
-                GLASS__
+                CellType.Glass,
+                CellType.Glass,
+                CellType.Glass,
+                CellType.Glass,
+                CellType.Glass,
+                CellType.Road,
+                CellType.Glass,
+                CellType.Glass,
+                CellType.Glass,
+                CellType.Glass
             ),
             arrayOf(
-                GLASS__,
-                GLASS__,
-                ROAD___,
-                ROAD___,
-                ROAD___,
-                ROAD___,
-                ROAD___,
-                ROAD___,
-                GLASS__,
-                GLASS__
+                CellType.Glass,
+                CellType.Glass,
+                CellType.Road,
+                CellType.Road,
+                CellType.Road,
+                CellType.Road,
+                CellType.Road,
+                CellType.Road,
+                CellType.Glass,
+                CellType.Glass
             ),
             arrayOf(
-                ROAD___,
-                ROAD___,
-                ROAD___,
-                GLASS__,
-                GLASS__,
-                ROAD___,
-                GLASS__,
-                ROAD___,
-                GLASS__,
-                GLASS__
+                CellType.Road,
+                CellType.Road,
+                CellType.Road,
+                CellType.Glass,
+                CellType.Glass,
+                CellType.Road,
+                CellType.Glass,
+                CellType.Road,
+                CellType.Glass,
+                CellType.Glass
             ),
             arrayOf(
-                ROAD___,
-                ROAD___,
-                ROAD___,
-                GLASS__,
-                GLASS__,
-                ROAD___,
-                ROAD___,
-                ROAD___,
-                GLASS__,
-                GLASS__
+                CellType.Road,
+                CellType.Road,
+                CellType.Road,
+                CellType.Glass,
+                CellType.Glass,
+                CellType.Road,
+                CellType.Road,
+                CellType.Road,
+                CellType.Glass,
+                CellType.Glass
             ),
             arrayOf(
-                GLASS__,
-                GLASS__,
-                ROAD___,
-                ROAD___,
-                TOWN_1I,
-                ROAD___,
-                GLASS__,
-                GLASS__,
-                GLASS__,
-                GLASS__
+                CellType.Glass,
+                CellType.Glass,
+                CellType.Road,
+                CellType.Road,
+                CellType.Town1I,
+                CellType.Road,
+                CellType.Glass,
+                CellType.Glass,
+                CellType.Glass,
+                CellType.Glass
             ),
         )
 }

@@ -3,6 +3,7 @@ package gamescreen.map.viewmodel
 import controller.domain.ControllerCallback
 import controller.domain.Stick
 import core.domain.ScreenType
+import core.domain.mapcell.CellType
 import core.repository.screentype.ScreenTypeRepository
 import gamescreen.map.data.LoopMap
 import gamescreen.map.domain.Player
@@ -179,7 +180,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
         //　そのマスに基づいてイベントを呼び出し
         playerCellRepository.playerIncludeCell?.let {
             cellEventUseCase.invoke(
-                it.cellTypeID,
+                it.cellType,
             )
         }
     }
@@ -322,7 +323,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
         )
     }
 
-    fun getAroundCellId(x: Int, y: Int): Array<Array<Int>> {
+    fun getAroundCellId(x: Int, y: Int): Array<Array<CellType>> {
         return backgroundRepository.getBackgroundAround(
             x = x,
             y = y,

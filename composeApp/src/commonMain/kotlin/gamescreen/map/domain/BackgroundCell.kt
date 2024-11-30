@@ -1,5 +1,6 @@
 package gamescreen.map.domain
 
+import core.domain.mapcell.CellType
 import gamescreen.map.domain.collision.CollisionDetectShape
 import gamescreen.map.domain.collision.Square
 
@@ -20,7 +21,7 @@ class BackgroundCell(
 
     var collisionList: List<CollisionDetectShape> = emptyList()
 
-    var cellTypeID: Int = 0
+    var cellType: CellType = CellType.Null
 
     var isPlayerIncludeCell = false
 

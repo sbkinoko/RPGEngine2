@@ -78,11 +78,11 @@ class MoveBackgroundUseCase(
                     y = mapY,
                 )
 
-                cellTypeID = getDataAt(mapPoint)
+                cellType = getDataAt(mapPoint)
                 collisionList = collisionRepository.collisionData(
                     cellSize = cellSize,
                     square = square,
-                    id = cellTypeID,
+                    cellType = cellType,
                 )
             }
         }

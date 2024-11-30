@@ -1,11 +1,6 @@
 package gamescreen.map.layout
 
-import core.domain.MapConst.Companion.BOX____
-import core.domain.MapConst.Companion.GLASS__
-import core.domain.MapConst.Companion.ROAD___
-import core.domain.MapConst.Companion.TOWN_1I
-import core.domain.MapConst.Companion.TOWN_1O
-import core.domain.MapConst.Companion.WATER__
+import core.domain.mapcell.CellType
 import gamescreen.map.domain.ConnectType
 import gamescreen.map.usecase.decideconnectcype.DecideConnectTypeUseCase
 import org.jetbrains.compose.resources.DrawableResource
@@ -39,16 +34,16 @@ class ImageBinder : KoinComponent {
      */
     @OptIn(ExperimentalResourceApi::class)
     fun bindBackGround(
-        aroundCellId: Array<Array<Int>>,
+        aroundCellId: Array<Array<CellType>>,
     ): DrawableResource {
         val imgId = aroundCellId[1][1]
 
         return when (imgId) {
-            GLASS__ -> Res.drawable.bg_00
-            WATER__ -> Res.drawable.bg_02
-            TOWN_1I, TOWN_1O -> Res.drawable.bg_20
-            ROAD___ -> {
-                when (decideConnectTypeUseCase(aroundCellId)) {
+            CellType.Glass -> Res.drawable.bg_00
+            CellType.Water -> Res.drawable.bg_02
+            CellType.Town1I, CellType.Town1O -> Res.drawable.bg_20
+            CellType.Road -> {
+                when (decideConnectTypeUseCase.invoke(aroundCellId)) {
                     ConnectType.Vertical -> Res.drawable.ob_01_01
                     ConnectType.Horizontal -> Res.drawable.ob_01_02
                     ConnectType.Cross -> Res.drawable.ob_01_03
@@ -63,9 +58,10 @@ class ImageBinder : KoinComponent {
                 }
             }
 
-            BOX____ -> Res.drawable.bg_00
+            CellType.Box -> Res.drawable.bg_00
 
-            else -> Res.drawable.bg_null
+            CellType.Null,
+            is CellType.TextCell -> Res.drawable.bg_null
         }
     }
 
@@ -76,14 +72,21 @@ class ImageBinder : KoinComponent {
      */
     @OptIn(ExperimentalResourceApi::class)
     fun bindObject(
-        aroundCellId: Array<Array<Int>>,
+        aroundCellId: Array<Array<CellType>>,
     ): DrawableResource? {
         val imgId = aroundCellId[1][1]
 
         return when (imgId) {
-            BOX____ -> Res.drawable.ob_98_1
+            CellType.Box -> Res.drawable.ob_98_1
 
-            else -> null
+            CellType.Glass,
+            CellType.Null,
+            CellType.Road,
+            CellType.Town1I,
+            CellType.Town1O,
+            CellType.Water,
+            is CellType.TextCell,
+            -> null
         }
     }
 }
