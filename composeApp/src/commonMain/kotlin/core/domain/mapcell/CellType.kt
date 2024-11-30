@@ -10,9 +10,15 @@ sealed class CellType {
     sealed interface EventCell
 
     /**
-     * 当たり判定を持つオブジェクトを持つマス
+     * 当たり判定を持つを持つマス
      */
     sealed interface CollisionCell
+
+    /**
+     * オブジェクト画像を持つマス
+     */
+    sealed interface ObjectCell
+
 
     data object Glass : CellType()
     data object Water : CollisionCell, CellType()
@@ -24,7 +30,9 @@ sealed class CellType {
     data object Road : CellType()
     class Box(
         val id: BoxId,
-    ) : CollisionCell, CellType()
+    ) : CollisionCell,
+        ObjectCell,
+        CellType()
 
     data object Null : CellType()
 

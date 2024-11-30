@@ -75,25 +75,20 @@ class ImageBinder : KoinComponent {
     fun bindObject(
         aroundCellId: Array<Array<CellType>>,
     ): DrawableResource? {
-        val imgId = aroundCellId[1][1]
+        val cellType = aroundCellId[1][1]
 
-        return when (imgId) {
+        if (cellType !is CellType.ObjectCell) {
+            return null
+        }
+
+        return when (cellType) {
             is CellType.Box -> {
-                if (imgId.id.hasItem) {
+                if (cellType.id.hasItem) {
                     Res.drawable.ob_98_1
                 } else {
                     Res.drawable.ob_98_0
                 }
             }
-
-            CellType.Glass,
-            CellType.Null,
-            CellType.Road,
-            CellType.Town1I,
-            CellType.Town1O,
-            CellType.Water,
-            is CellType.TextCell,
-            -> null
         }
     }
 }
