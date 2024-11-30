@@ -39,7 +39,9 @@ class LoopMap : MapData() {
             arrayOf(
                 CellType.Glass,
                 CellType.Glass,
-                CellType.Box,
+                CellType.Box(
+                    id = BoxId.Box1,
+                ),
                 CellType.Glass,
                 CellType.Glass,
                 CellType.Water,
@@ -51,7 +53,9 @@ class LoopMap : MapData() {
             arrayOf(
                 CellType.Glass,
                 CellType.Glass,
-                CellType.Glass,
+                CellType.Box(
+                    id = BoxId.Box2,
+                ),
                 CellType.Glass,
                 CellType.Glass,
                 CellType.Water,

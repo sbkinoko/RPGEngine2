@@ -1,5 +1,7 @@
 package core.domain.mapcell
 
+import gamescreen.map.data.BoxId
+
 sealed class CellType {
 
 
@@ -23,7 +25,9 @@ sealed class CellType {
 
 
     data object Road : CellType()
-    data object Box : CollisionCell()
+    class Box(
+        val id: BoxId,
+    ) : CollisionCell()
 
     data object Null : CellType()
 
