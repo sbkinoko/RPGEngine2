@@ -1,5 +1,6 @@
 package gamescreen.map.repository.background
 
+import core.domain.mapcell.CellType
 import gamescreen.map.MapModule
 import gamescreen.map.data.LoopTestMap
 import gamescreen.map.data.NonLoopTestMap
@@ -128,41 +129,40 @@ class BackgroundRepositoryImplTest : KoinTest {
         ).apply {
             assertEquals(
                 expected = 0,
-                actual = this[0][0],
+                actual = (this[0][0] as CellType.TextCell).id,
             )
             assertEquals(
                 expected = 1,
-                actual = this[0][1],
+                actual = (this[0][1] as CellType.TextCell).id,
             )
             assertEquals(
                 expected = 2,
-                actual = this[0][2],
+                actual = (this[0][2] as CellType.TextCell).id,
             )
             assertEquals(
                 expected = 4,
-                actual = this[1][0],
+                actual = (this[1][0] as CellType.TextCell).id,
             )
             assertEquals(
                 expected = 5,
-                actual = this[1][1],
+                actual = (this[1][1] as CellType.TextCell).id,
             )
             assertEquals(
                 expected = 6,
-                actual = this[1][2],
+                actual = (this[1][2] as CellType.TextCell).id,
             )
             assertEquals(
                 expected = 8,
-                actual = this[2][0],
+                actual = (this[2][0] as CellType.TextCell).id,
             )
             assertEquals(
                 expected = 9,
-                actual = this[2][1],
+                actual = (this[2][1] as CellType.TextCell).id,
             )
             assertEquals(
                 expected = 10,
-                actual = this[2][2],
+                actual = (this[2][2] as CellType.TextCell).id,
             )
-
         }
     }
 
@@ -175,43 +175,43 @@ class BackgroundRepositoryImplTest : KoinTest {
             y = 0,
         ).apply {
             assertEquals(
-                expected = 0,
+                expected = CellType.Null,
                 actual = this[0][0],
             )
             assertEquals(
-                expected = 0,
+                expected = CellType.Null,
                 actual = this[0][1],
             )
             assertEquals(
-                expected = 0,
+                expected = CellType.Null,
                 actual = this[0][2],
             )
 
             assertEquals(
-                expected = 0,
+                expected = CellType.Null,
                 actual = this[1][0],
             )
             assertEquals(
                 expected = 0,
-                actual = this[1][1],
+                actual = (this[1][1] as CellType.TextCell).id,
             )
             assertEquals(
                 expected = 1,
-                actual = this[1][2],
+                actual = (this[1][2] as CellType.TextCell).id,
             )
 
             assertEquals(
-                expected = 0,
+                expected = CellType.Null,
                 actual = this[2][0],
             )
 
             assertEquals(
                 expected = 4,
-                actual = this[2][1],
+                actual = (this[2][1] as CellType.TextCell).id,
             )
             assertEquals(
                 expected = 5,
-                actual = this[2][2],
+                actual = (this[2][2] as CellType.TextCell).id,
             )
         }
     }
@@ -226,39 +226,39 @@ class BackgroundRepositoryImplTest : KoinTest {
         ).apply {
             assertEquals(
                 expected = 15,
-                actual = this[0][0],
+                actual = (this[0][0] as CellType.TextCell).id,
             )
             assertEquals(
                 expected = 12,
-                actual = this[0][1],
+                actual = (this[0][1] as CellType.TextCell).id,
             )
             assertEquals(
                 expected = 13,
-                actual = this[0][2],
+                actual = (this[0][2] as CellType.TextCell).id,
             )
             assertEquals(
                 expected = 3,
-                actual = this[1][0],
+                actual = (this[1][0] as CellType.TextCell).id,
             )
             assertEquals(
                 expected = 0,
-                actual = this[1][1],
+                actual = (this[1][1] as CellType.TextCell).id,
             )
             assertEquals(
                 expected = 1,
-                actual = this[1][2],
+                actual = (this[1][2] as CellType.TextCell).id,
             )
             assertEquals(
                 expected = 7,
-                actual = this[2][0],
+                actual = (this[2][0] as CellType.TextCell).id,
             )
             assertEquals(
                 expected = 4,
-                actual = this[2][1],
+                actual = (this[2][1] as CellType.TextCell).id,
             )
             assertEquals(
                 expected = 5,
-                actual = this[2][2],
+                actual = (this[2][2] as CellType.TextCell).id,
             )
         }
     }

@@ -7,4 +7,9 @@ sealed class CellType {
     data object Town1O : CellType()
     data object Road : CellType()
     data object Box : CellType()
+    data object Null : CellType()
+
+    class TextCell(
+        val id: Int,
+    ) : CellType()
 }

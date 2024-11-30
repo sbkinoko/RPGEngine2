@@ -34,7 +34,7 @@ class ImageBinder : KoinComponent {
      */
     @OptIn(ExperimentalResourceApi::class)
     fun bindBackGround(
-        aroundCellId: Array<Array<Any>>,
+        aroundCellId: Array<Array<CellType>>,
     ): DrawableResource {
         val imgId = aroundCellId[1][1]
 
@@ -60,7 +60,8 @@ class ImageBinder : KoinComponent {
 
             CellType.Box -> Res.drawable.bg_00
 
-            else -> Res.drawable.bg_null
+            CellType.Null,
+            is CellType.TextCell -> Res.drawable.bg_null
         }
     }
 
@@ -71,14 +72,21 @@ class ImageBinder : KoinComponent {
      */
     @OptIn(ExperimentalResourceApi::class)
     fun bindObject(
-        aroundCellId: Array<Array<Any>>,
+        aroundCellId: Array<Array<CellType>>,
     ): DrawableResource? {
         val imgId = aroundCellId[1][1]
 
         return when (imgId) {
             CellType.Box -> Res.drawable.ob_98_1
 
-            else -> null
+            CellType.Glass,
+            CellType.Null,
+            CellType.Road,
+            CellType.Town1I,
+            CellType.Town1O,
+            CellType.Water,
+            is CellType.TextCell,
+            -> null
         }
     }
 }

@@ -1,5 +1,6 @@
 package gamescreen.map.domain
 
+import core.domain.mapcell.CellType
 import gamescreen.map.data.LoopTestMap
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -16,7 +17,7 @@ class MapDataTest {
         ).apply {
             assertEquals(
                 0,
-                this,
+                (this as CellType.TextCell).id,
             )
         }
 
@@ -26,7 +27,7 @@ class MapDataTest {
         ).apply {
             assertEquals(
                 12,
-                this,
+                (this as CellType.TextCell).id,
             )
         }
 
@@ -36,7 +37,7 @@ class MapDataTest {
         ).apply {
             assertEquals(
                 15,
-                this,
+                (this as CellType.TextCell).id,
             )
         }
     }
@@ -51,7 +52,7 @@ class MapDataTest {
         ).apply {
             assertEquals(
                 0,
-                this,
+                (this as CellType.TextCell).id,
             )
         }
 
@@ -63,7 +64,7 @@ class MapDataTest {
         ).apply {
             assertEquals(
                 12,
-                this,
+                (this as CellType.TextCell).id,
             )
         }
 
@@ -75,7 +76,7 @@ class MapDataTest {
         ).apply {
             assertEquals(
                 15,
-                this,
+                (this as CellType.TextCell).id,
             )
         }
     }
