@@ -8,6 +8,7 @@ class BoxData {
             // 何も取得しないための0
             0,
             ToolRepositoryImpl.HEAL_TOOL2,
+            ToolRepositoryImpl.HEAL_TOOL,
         )
     }
 }
