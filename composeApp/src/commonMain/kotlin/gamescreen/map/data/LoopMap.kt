@@ -10,7 +10,7 @@ class LoopMap : MapData() {
         get() = 10
     override val height: Int
         get() = 10
-    override val field: Array<Array<Any>>
+    override val field: Array<Array<CellType>>
         get() = arrayOf(
             arrayOf(
                 CellType.Glass,

@@ -1,5 +1,7 @@
 package gamescreen.map.domain
 
+import core.domain.mapcell.CellType
+
 abstract class MapData {
 
     abstract val isLoop: Boolean
@@ -8,22 +10,22 @@ abstract class MapData {
 
     abstract val height: Int
 
-    abstract val field: Array<Array<Any>>
+    abstract val field: Array<Array<CellType>>
 
     fun getDataAt(
         x: Int,
         y: Int,
-    ): Any {
+    ): CellType {
         if (y < 0 || field.size <= y ||
             x < 0 || field[0].size <= x
         ) {
-            return 0
+            return CellType.Null
         }
 
         return field[y][x]
     }
 
-    fun getDataAt(point: MapPoint): Any {
+    fun getDataAt(point: MapPoint): CellType {
         return getDataAt(
             x = point.x,
             y = point.y,

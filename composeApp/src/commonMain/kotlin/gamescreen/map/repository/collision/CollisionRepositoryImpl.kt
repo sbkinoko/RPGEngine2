@@ -9,7 +9,7 @@ import values.EventType
 class CollisionRepositoryImpl : CollisionRepository {
 
     override fun collisionData(
-        cellType: Any,
+        cellType: CellType,
         cellSize: Float,
         square: Square,
     ): List<CollisionDetectShape> {

@@ -1,5 +1,6 @@
 package gamescreen.map.repository.backgroundcell
 
+import core.domain.mapcell.CellType
 import gamescreen.map.domain.BackgroundCell
 import gamescreen.map.domain.MapData
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -22,7 +23,7 @@ interface BackgroundRepository {
 
     fun getBackgroundAt(x: Int, y: Int): BackgroundCell
 
-    fun getBackgroundAround(x: Int, y: Int): Array<Array<Any>>
+    fun getBackgroundAround(x: Int, y: Int): Array<Array<CellType>>
 
     suspend fun setBackground(background: List<List<BackgroundCell>>)
 

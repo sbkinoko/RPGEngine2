@@ -10,7 +10,9 @@ class CellEventUseCaseImpl(
     private val backgroundRepository: BackgroundRepository,
     private val roadMapDataUseCase: RoadMapUseCase,
 ) : CellEventUseCase {
-    override fun invoke(cellId: Any) {
+    override fun invoke(
+        cellId: CellType,
+    ) {
         when (cellId) {
             CellType.Town1I -> {
                 backgroundRepository.mapData = NonLoopMap()
@@ -28,6 +30,14 @@ class CellEventUseCaseImpl(
                     mapData = LoopMap()
                 )
             }
+
+            CellType.Box,
+            CellType.Glass,
+            CellType.Null,
+            CellType.Road,
+            CellType.Water,
+            is CellType.TextCell,
+            -> Unit
         }
     }
 }

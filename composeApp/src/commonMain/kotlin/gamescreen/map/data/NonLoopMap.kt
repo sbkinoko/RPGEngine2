@@ -9,7 +9,7 @@ class NonLoopMap : MapData() {
         get() = 10
     override val height: Int
         get() = 10
-    override val field: Array<Array<Any>>
+    override val field: Array<Array<CellType>>
         get() = Array(height) { y ->
             Array(width) { x ->
                 if (x == 0 && y == 2) {
