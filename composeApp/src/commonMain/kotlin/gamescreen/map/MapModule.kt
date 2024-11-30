@@ -141,6 +141,7 @@ val MapModule = module {
         ActionEventUseCaseImpl(
             textRepository = get(),
             addToolUseCase = get(),
+            backgroundRepository = get(),
         )
     }
 

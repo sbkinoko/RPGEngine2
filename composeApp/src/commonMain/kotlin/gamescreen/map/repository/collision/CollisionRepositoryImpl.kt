@@ -33,9 +33,13 @@ class CollisionRepositoryImpl : CollisionRepository {
                         x = square.x + cellSize / 3,
                         y = square.y + cellSize / 3,
                         size = cellSize / 3,
-                        eventID = EventType.Box(
-                            id = cellType.id
-                        )
+                        eventID = if (cellType.id.hasItem) {
+                            EventType.Box(
+                                id = cellType.id
+                            )
+                        } else {
+                            EventType.None
+                        }
                     )
                 )
         }
