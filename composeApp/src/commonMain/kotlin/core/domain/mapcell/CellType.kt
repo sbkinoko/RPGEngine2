@@ -4,30 +4,27 @@ import gamescreen.map.data.BoxId
 
 sealed class CellType {
 
-
     /**
      * 全身が入ったらイベントが起きるマス
      */
-    // どうにもならなくなったらinterfaceにすることも視野に入れておく
-    sealed class EventCell : CellType()
+    sealed interface EventCell
 
     /**
      * 当たり判定を持つオブジェクトを持つマス
      */
-    // どうにもならなくなったらinterfaceにすることも視野に入れておく
-    sealed class CollisionCell : CellType()
+    sealed interface CollisionCell
 
     data object Glass : CellType()
-    data object Water : CollisionCell()
+    data object Water : CollisionCell, CellType()
 
-    data object Town1I : EventCell()
-    data object Town1O : EventCell()
+    data object Town1I : EventCell, CellType()
+    data object Town1O : EventCell, CellType()
 
 
     data object Road : CellType()
     class Box(
         val id: BoxId,
-    ) : CollisionCell()
+    ) : CollisionCell, CellType()
 
     data object Null : CellType()
 
