@@ -1,11 +1,11 @@
 package gamescreen.map.layout
 
-import core.domain.MapConst.Companion.BOX____
-import core.domain.MapConst.Companion.GLASS__
-import core.domain.MapConst.Companion.ROAD___
-import core.domain.MapConst.Companion.TOWN_1I
-import core.domain.MapConst.Companion.TOWN_1O
-import core.domain.MapConst.Companion.WATER__
+import core.domain.mapcell.MapConst.Companion.BOX____
+import core.domain.mapcell.MapConst.Companion.GLASS__
+import core.domain.mapcell.MapConst.Companion.ROAD___
+import core.domain.mapcell.MapConst.Companion.TOWN_1I
+import core.domain.mapcell.MapConst.Companion.TOWN_1O
+import core.domain.mapcell.MapConst.Companion.WATER__
 import gamescreen.map.domain.ConnectType
 import gamescreen.map.usecase.decideconnectcype.DecideConnectTypeUseCase
 import org.jetbrains.compose.resources.DrawableResource
@@ -39,7 +39,7 @@ class ImageBinder : KoinComponent {
      */
     @OptIn(ExperimentalResourceApi::class)
     fun bindBackGround(
-        aroundCellId: Array<Array<Int>>,
+        aroundCellId: Array<Array<Any>>,
     ): DrawableResource {
         val imgId = aroundCellId[1][1]
 
@@ -48,7 +48,7 @@ class ImageBinder : KoinComponent {
             WATER__ -> Res.drawable.bg_02
             TOWN_1I, TOWN_1O -> Res.drawable.bg_20
             ROAD___ -> {
-                when (decideConnectTypeUseCase(aroundCellId)) {
+                when (decideConnectTypeUseCase.invoke(aroundCellId)) {
                     ConnectType.Vertical -> Res.drawable.ob_01_01
                     ConnectType.Horizontal -> Res.drawable.ob_01_02
                     ConnectType.Cross -> Res.drawable.ob_01_03
@@ -76,7 +76,7 @@ class ImageBinder : KoinComponent {
      */
     @OptIn(ExperimentalResourceApi::class)
     fun bindObject(
-        aroundCellId: Array<Array<Int>>,
+        aroundCellId: Array<Array<Any>>,
     ): DrawableResource? {
         val imgId = aroundCellId[1][1]
 

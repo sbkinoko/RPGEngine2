@@ -5,6 +5,6 @@ interface CellEventUseCase {
      * 対応するマスのイベントを発火
      */
     operator fun invoke(
-        cellId: Int,
+        cellId: Any,
     )
 }

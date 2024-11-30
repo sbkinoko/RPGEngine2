@@ -1,7 +1,7 @@
 package gamescreen.map.usecase.event.cellevent
 
-import core.domain.MapConst.Companion.TOWN_1I
-import core.domain.MapConst.Companion.TOWN_1O
+import core.domain.mapcell.MapConst.Companion.TOWN_1I
+import core.domain.mapcell.MapConst.Companion.TOWN_1O
 import gamescreen.map.data.LoopMap
 import gamescreen.map.data.NonLoopMap
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
@@ -11,7 +11,7 @@ class CellEventUseCaseImpl(
     private val backgroundRepository: BackgroundRepository,
     private val roadMapDataUseCase: RoadMapUseCase,
 ) : CellEventUseCase {
-    override fun invoke(cellId: Int) {
+    override fun invoke(cellId: Any) {
         when (cellId) {
             TOWN_1I -> {
                 backgroundRepository.mapData = NonLoopMap()

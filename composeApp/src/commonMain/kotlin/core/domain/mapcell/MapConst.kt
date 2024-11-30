@@ -1,4 +1,4 @@
-package core.domain
+package core.domain.mapcell
 
 class MapConst {
     companion object {

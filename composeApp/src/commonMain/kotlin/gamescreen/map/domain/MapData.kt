@@ -8,12 +8,12 @@ abstract class MapData {
 
     abstract val height: Int
 
-    abstract val field: Array<Array<Int>>
+    abstract val field: Array<Array<Any>>
 
     fun getDataAt(
         x: Int,
         y: Int,
-    ): Int {
+    ): Any {
         if (y < 0 || field.size <= y ||
             x < 0 || field[0].size <= x
         ) {
@@ -23,7 +23,7 @@ abstract class MapData {
         return field[y][x]
     }
 
-    fun getDataAt(point: MapPoint): Int {
+    fun getDataAt(point: MapPoint): Any {
         return getDataAt(
             x = point.x,
             y = point.y,

@@ -20,7 +20,7 @@ class BackgroundCell(
 
     var collisionList: List<CollisionDetectShape> = emptyList()
 
-    var cellTypeID: Int = 0
+    var cellType: Any = 0
 
     var isPlayerIncludeCell = false
 
