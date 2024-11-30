@@ -31,7 +31,7 @@ class CollisionRepositoryTest : KoinTest {
     @Test
     fun getData_0() {
         collisionRepository.collisionData(
-            id = 0,
+            cellType = 0,
             cellSize = 10f,
             square = Square(
                 x = 0f,
@@ -49,7 +49,7 @@ class CollisionRepositoryTest : KoinTest {
     @Test
     fun getData_1() {
         collisionRepository.collisionData(
-            id = 2,
+            cellType = 2,
             cellSize = 10f,
             square = Square(
                 x = 0f,

@@ -3,7 +3,7 @@ package gamescreen.map.usecase.decideconnectcype
 import gamescreen.map.domain.ConnectType
 
 class DecideConnectTypeUseCaseImpl : DecideConnectTypeUseCase {
-    override fun invoke(array: Array<Array<Int>>): ConnectType {
+    override fun invoke(array: Array<Array<Any>>): ConnectType {
         if (array.size != 3) {
             throw RuntimeException()
         }

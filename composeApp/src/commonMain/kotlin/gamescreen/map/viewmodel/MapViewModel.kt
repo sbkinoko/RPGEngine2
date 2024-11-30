@@ -179,7 +179,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
         //　そのマスに基づいてイベントを呼び出し
         playerCellRepository.playerIncludeCell?.let {
             cellEventUseCase.invoke(
-                it.cellTypeID,
+                it.cellType,
             )
         }
     }
@@ -322,7 +322,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
         )
     }
 
-    fun getAroundCellId(x: Int, y: Int): Array<Array<Int>> {
+    fun getAroundCellId(x: Int, y: Int): Array<Array<Any>> {
         return backgroundRepository.getBackgroundAround(
             x = x,
             y = y,

@@ -30,7 +30,7 @@ class DecideConnectTypeUseCaseTest : KoinTest {
 
     @Test
     fun type1() {
-        val list = arrayOf(
+        val list: Array<Array<Any>> = arrayOf(
             arrayOf(0, 1, 0),
             arrayOf(0, 1, 0),
             arrayOf(0, 0, 0),
@@ -44,7 +44,7 @@ class DecideConnectTypeUseCaseTest : KoinTest {
 
     @Test
     fun type2() {
-        val list = arrayOf(
+        val list: Array<Array<Any>> = arrayOf(
             arrayOf(0, 0, 0),
             arrayOf(1, 1, 0),
             arrayOf(0, 0, 0),
@@ -58,7 +58,7 @@ class DecideConnectTypeUseCaseTest : KoinTest {
 
     @Test
     fun type3() {
-        val list = arrayOf(
+        val list: Array<Array<Any>> = arrayOf(
             arrayOf(0, 1, 0),
             arrayOf(1, 1, 0),
             arrayOf(0, 0, 0),
@@ -72,7 +72,7 @@ class DecideConnectTypeUseCaseTest : KoinTest {
 
     @Test
     fun type4() {
-        val list = arrayOf(
+        val list: Array<Array<Any>> = arrayOf(
             arrayOf(0, 0, 0),
             arrayOf(0, 1, 1),
             arrayOf(0, 0, 0),
@@ -86,7 +86,7 @@ class DecideConnectTypeUseCaseTest : KoinTest {
 
     @Test
     fun type5() {
-        val list = arrayOf(
+        val list: Array<Array<Any>> = arrayOf(
             arrayOf(0, 1, 0),
             arrayOf(0, 1, 1),
             arrayOf(0, 0, 0),
@@ -100,7 +100,7 @@ class DecideConnectTypeUseCaseTest : KoinTest {
 
     @Test
     fun type6() {
-        val list = arrayOf(
+        val list: Array<Array<Any>> = arrayOf(
             arrayOf(0, 0, 0),
             arrayOf(1, 1, 1),
             arrayOf(0, 0, 0),
@@ -114,7 +114,7 @@ class DecideConnectTypeUseCaseTest : KoinTest {
 
     @Test
     fun type7() {
-        val list = arrayOf(
+        val list: Array<Array<Any>> = arrayOf(
             arrayOf(0, 1, 0),
             arrayOf(1, 1, 1),
             arrayOf(0, 0, 0),
@@ -128,7 +128,7 @@ class DecideConnectTypeUseCaseTest : KoinTest {
 
     @Test
     fun type8() {
-        val list = arrayOf(
+        val list: Array<Array<Any>> = arrayOf(
             arrayOf(0, 0, 0),
             arrayOf(0, 1, 0),
             arrayOf(0, 1, 0),
@@ -142,7 +142,7 @@ class DecideConnectTypeUseCaseTest : KoinTest {
 
     @Test
     fun type9() {
-        val list = arrayOf(
+        val list: Array<Array<Any>> = arrayOf(
             arrayOf(0, 1, 0),
             arrayOf(0, 1, 0),
             arrayOf(0, 1, 0),
@@ -156,7 +156,7 @@ class DecideConnectTypeUseCaseTest : KoinTest {
 
     @Test
     fun type10() {
-        val list = arrayOf(
+        val list: Array<Array<Any>> = arrayOf(
             arrayOf(0, 0, 0),
             arrayOf(1, 1, 0),
             arrayOf(0, 1, 0),
@@ -170,7 +170,7 @@ class DecideConnectTypeUseCaseTest : KoinTest {
 
     @Test
     fun type11() {
-        val list = arrayOf(
+        val list: Array<Array<Any>> = arrayOf(
             arrayOf(0, 1, 0),
             arrayOf(1, 1, 0),
             arrayOf(0, 1, 0),
@@ -184,7 +184,7 @@ class DecideConnectTypeUseCaseTest : KoinTest {
 
     @Test
     fun type12() {
-        val list = arrayOf(
+        val list: Array<Array<Any>> = arrayOf(
             arrayOf(0, 0, 0),
             arrayOf(0, 1, 1),
             arrayOf(0, 1, 0),
@@ -198,7 +198,7 @@ class DecideConnectTypeUseCaseTest : KoinTest {
 
     @Test
     fun type13() {
-        val list = arrayOf(
+        val list: Array<Array<Any>> = arrayOf(
             arrayOf(0, 1, 0),
             arrayOf(0, 1, 1),
             arrayOf(0, 1, 0),
@@ -212,7 +212,7 @@ class DecideConnectTypeUseCaseTest : KoinTest {
 
     @Test
     fun type14() {
-        val list = arrayOf(
+        val list: Array<Array<Any>> = arrayOf(
             arrayOf(0, 0, 0),
             arrayOf(1, 1, 1),
             arrayOf(0, 1, 0),
@@ -226,7 +226,7 @@ class DecideConnectTypeUseCaseTest : KoinTest {
 
     @Test
     fun type15() {
-        val list = arrayOf(
+        val list: Array<Array<Any>> = arrayOf(
             arrayOf(0, 1, 0),
             arrayOf(1, 1, 1),
             arrayOf(0, 1, 0),
@@ -240,7 +240,7 @@ class DecideConnectTypeUseCaseTest : KoinTest {
 
     @Test
     fun type15_2() {
-        val list = arrayOf(
+        val list: Array<Array<Any>> = arrayOf(
             arrayOf(0, 2, 0),
             arrayOf(2, 2, 2),
             arrayOf(0, 2, 0),

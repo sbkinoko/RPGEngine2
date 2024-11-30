@@ -1,11 +1,11 @@
 package gamescreen.map.data
 
 
-import core.domain.MapConst.Companion.BOX____
-import core.domain.MapConst.Companion.GLASS__
-import core.domain.MapConst.Companion.ROAD___
-import core.domain.MapConst.Companion.TOWN_1I
-import core.domain.MapConst.Companion.WATER__
+import core.domain.mapcell.MapConst.Companion.BOX____
+import core.domain.mapcell.MapConst.Companion.GLASS__
+import core.domain.mapcell.MapConst.Companion.ROAD___
+import core.domain.mapcell.MapConst.Companion.TOWN_1I
+import core.domain.mapcell.MapConst.Companion.WATER__
 import gamescreen.map.domain.MapData
 
 class LoopMap : MapData() {
@@ -14,7 +14,7 @@ class LoopMap : MapData() {
         get() = 10
     override val height: Int
         get() = 10
-    override val field: Array<Array<Int>>
+    override val field: Array<Array<Any>>
         get() = arrayOf(
             arrayOf(
                 GLASS__,
