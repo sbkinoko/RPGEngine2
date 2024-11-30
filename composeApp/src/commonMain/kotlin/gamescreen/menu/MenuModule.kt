@@ -2,6 +2,7 @@ package gamescreen.menu
 
 import core.usecase.item.useskill.UseSkillUseCase
 import core.usecase.item.useskill.UseSkillUseCaseImpl
+import gamescreen.menu.component.StatusComponentViewModel
 import gamescreen.menu.item.repository.index.IndexRepository
 import gamescreen.menu.item.repository.index.IndexRepositoryImpl
 import gamescreen.menu.item.repository.target.TargetRepository
@@ -44,6 +45,10 @@ val MenuModule = module {
 
     single {
         StatusViewModel()
+    }
+
+    single {
+        StatusComponentViewModel()
     }
 
     single {
