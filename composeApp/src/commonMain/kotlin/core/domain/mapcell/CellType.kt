@@ -23,7 +23,9 @@ sealed class CellType {
 
 
     data object Road : CellType()
-    data object Box : CollisionCell()
+    class Box(
+        val id: Int,
+    ) : CollisionCell()
 
     data object Null : CellType()
 

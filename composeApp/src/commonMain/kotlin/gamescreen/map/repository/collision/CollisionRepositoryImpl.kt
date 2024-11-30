@@ -27,13 +27,15 @@ class CollisionRepositoryImpl : CollisionRepository {
                     )
                 )
 
-            CellType.Box ->
+            is CellType.Box ->
                 listOf(
                     EventSquare(
                         x = square.x + cellSize / 3,
                         y = square.y + cellSize / 3,
                         size = cellSize / 3,
-                        eventID = EventType.Box
+                        eventID = EventType.Box(
+                            id = cellType.id
+                        )
                     )
                 )
         }

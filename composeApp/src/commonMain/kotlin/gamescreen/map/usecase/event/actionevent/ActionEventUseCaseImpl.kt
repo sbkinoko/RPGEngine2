@@ -1,6 +1,6 @@
 package gamescreen.map.usecase.event.actionevent
 
-import core.repository.item.tool.ToolRepositoryImpl
+import gamescreen.map.data.BoxData
 import gamescreen.menu.usecase.bag.addtool.AddToolUseCase
 import gamescreen.text.TextBoxData
 import gamescreen.text.repository.TextRepository
@@ -17,7 +17,7 @@ class ActionEventUseCaseImpl(
             eventType
         ) {
             EventType.None -> Unit
-            EventType.Box -> {
+            is EventType.Box -> {
                 textRepository.push(
                     TextBoxData(
                         text = "宝箱を開けた",
@@ -25,7 +25,7 @@ class ActionEventUseCaseImpl(
                 )
                 addToolUseCase.invoke(
                     toolNum = 1,
-                    toolId = ToolRepositoryImpl.HEAL_TOOL2,
+                    toolId = BoxData.list[eventType.id],
                 )
             }
         }

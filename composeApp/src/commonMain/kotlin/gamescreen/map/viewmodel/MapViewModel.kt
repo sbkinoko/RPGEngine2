@@ -102,7 +102,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
     )
     val dirFlow: StateFlow<PlayerDir> = mutableDirFlow.asStateFlow()
 
-    private var eventType = EventType.None
+    private var eventType: EventType = EventType.None
         set(value) {
             mutableEventTypeFlow.value = value
             field = value

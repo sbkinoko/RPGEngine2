@@ -58,7 +58,7 @@ class ImageBinder : KoinComponent {
                 }
             }
 
-            CellType.Box -> Res.drawable.bg_00
+            is CellType.Box -> Res.drawable.bg_00
 
             CellType.Null,
             is CellType.TextCell -> Res.drawable.bg_null
@@ -77,7 +77,7 @@ class ImageBinder : KoinComponent {
         val imgId = aroundCellId[1][1]
 
         return when (imgId) {
-            CellType.Box -> Res.drawable.ob_98_1
+            is CellType.Box -> Res.drawable.ob_98_1
 
             CellType.Glass,
             CellType.Null,
