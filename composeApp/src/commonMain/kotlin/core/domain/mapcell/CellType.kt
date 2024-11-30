@@ -4,6 +4,9 @@ import gamescreen.map.data.BoxId
 
 sealed class CellType {
 
+    //whenのelseを使わないようにしたいが、全列挙していると数が多くなってしまう
+    //対策として列挙の数を減らすためのマーカーインターフェースを作成
+
     /**
      * 全身が入ったらイベントが起きるマス
      */
