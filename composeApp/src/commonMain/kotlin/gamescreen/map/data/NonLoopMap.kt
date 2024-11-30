@@ -13,7 +13,7 @@ class NonLoopMap : MapData() {
         get() = Array(height) { y ->
             Array(width) { x ->
                 if (x == 0 && y == 2) {
-                    4
+                    CellType.Town1O
                 } else if (x == 0 || x == 9 ||
                     y == 0 || y == 9
                 ) {
