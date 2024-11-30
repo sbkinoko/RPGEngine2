@@ -23,6 +23,7 @@ import rpgengine.composeapp.generated.resources.ob_01_09
 import rpgengine.composeapp.generated.resources.ob_01_10
 import rpgengine.composeapp.generated.resources.ob_01_11
 import rpgengine.composeapp.generated.resources.ob_01_12
+import rpgengine.composeapp.generated.resources.ob_98_0
 import rpgengine.composeapp.generated.resources.ob_98_1
 
 class ImageBinder : KoinComponent {
@@ -77,7 +78,13 @@ class ImageBinder : KoinComponent {
         val imgId = aroundCellId[1][1]
 
         return when (imgId) {
-            is CellType.Box -> Res.drawable.ob_98_1
+            is CellType.Box -> {
+                if (imgId.id.hasItem) {
+                    Res.drawable.ob_98_1
+                } else {
+                    Res.drawable.ob_98_0
+                }
+            }
 
             CellType.Glass,
             CellType.Null,
