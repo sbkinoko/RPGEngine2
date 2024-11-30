@@ -13,6 +13,11 @@ class CellEventUseCaseImpl(
     override fun invoke(
         cellId: CellType,
     ) {
+        // セルがイベントでなければ何もしない
+        if (cellId !is CellType.EventCell) {
+            return
+        }
+
         when (cellId) {
             CellType.Town1I -> {
                 backgroundRepository.mapData = NonLoopMap()
@@ -30,14 +35,6 @@ class CellEventUseCaseImpl(
                     mapData = LoopMap()
                 )
             }
-
-            CellType.Box,
-            CellType.Glass,
-            CellType.Null,
-            CellType.Road,
-            CellType.Water,
-            is CellType.TextCell,
-            -> Unit
         }
     }
 }
