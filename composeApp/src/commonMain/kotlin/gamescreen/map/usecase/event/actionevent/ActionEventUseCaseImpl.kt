@@ -25,7 +25,9 @@ class ActionEventUseCaseImpl(
                 )
                 addToolUseCase.invoke(
                     toolNum = 1,
-                    toolId = BoxData.list[eventType.id],
+                    toolId = BoxData.getItem(
+                        id = eventType.id,
+                    ),
                 )
             }
         }
