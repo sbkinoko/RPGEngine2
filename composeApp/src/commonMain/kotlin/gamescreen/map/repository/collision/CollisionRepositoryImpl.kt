@@ -1,7 +1,6 @@
 package gamescreen.map.repository.collision
 
-import core.domain.mapcell.MapConst.Companion.BOX____
-import core.domain.mapcell.MapConst.Companion.WATER__
+import core.domain.mapcell.CellType
 import gamescreen.map.domain.collision.CollisionDetectShape
 import gamescreen.map.domain.collision.EventSquare
 import gamescreen.map.domain.collision.Square
@@ -15,7 +14,7 @@ class CollisionRepositoryImpl : CollisionRepository {
         square: Square,
     ): List<CollisionDetectShape> {
         return when (cellType) {
-            WATER__ ->
+            CellType.Water ->
                 listOf(
                     Square(
                         x = square.x,
@@ -24,7 +23,7 @@ class CollisionRepositoryImpl : CollisionRepository {
                     )
                 )
 
-            BOX____ ->
+            CellType.Box ->
                 listOf(
                     EventSquare(
                         x = square.x + cellSize / 3,

@@ -1,5 +1,6 @@
 package gamescreen.map.repository.collision
 
+import core.domain.mapcell.CellType
 import gamescreen.map.MapModule
 import gamescreen.map.domain.collision.Square
 import org.koin.core.context.startKoin
@@ -28,10 +29,11 @@ class CollisionRepositoryTest : KoinTest {
         stopKoin()
     }
 
+    // 当たり判定を含まないマスであることを確認
     @Test
     fun getData_0() {
         collisionRepository.collisionData(
-            cellType = 0,
+            cellType = CellType.Glass,
             cellSize = 10f,
             square = Square(
                 x = 0f,
@@ -46,10 +48,12 @@ class CollisionRepositoryTest : KoinTest {
         }
     }
 
+
+    // 当たり判定を含むマスであることを確認
     @Test
     fun getData_1() {
         collisionRepository.collisionData(
-            cellType = 2,
+            cellType = CellType.Water,
             cellSize = 10f,
             square = Square(
                 x = 0f,
