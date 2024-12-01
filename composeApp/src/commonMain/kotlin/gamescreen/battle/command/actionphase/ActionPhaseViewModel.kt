@@ -59,6 +59,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
 
     private val useToolUseCase: UseToolUseCase by inject()
 
+
     init {
         CoroutineScope(Dispatchers.IO).launch {
             this@ActionPhaseViewModel.commandRepository.commandTypeFlow.collect {
@@ -72,7 +73,9 @@ class ActionPhaseViewModel : BattleChildViewModel() {
     // fixme attackingPlayerは削除する　
     // 行動順を変更できるようになったら修正
     // 敵の攻撃が挟まってPlayerだけじゃなくなるから
-    private val mutableAttackingPlayerId: MutableStateFlow<Int> = MutableStateFlow(-1)
+    private val mutableAttackingPlayerId: MutableStateFlow<Int> = MutableStateFlow(
+        NONE_PLAYER
+    )
     val attackingPlayerId: StateFlow<Int> = mutableAttackingPlayerId.asStateFlow()
 
     // 使わないので適当
@@ -382,10 +385,14 @@ class ActionPhaseViewModel : BattleChildViewModel() {
     }
 
     private fun resetAttackingPlayer() {
-        updateAttackingPlayer(-1)
+        updateAttackingPlayer(NONE_PLAYER)
     }
 
     override fun pressB() {
         pressA()
+    }
+
+    companion object {
+        private const val NONE_PLAYER = -1
     }
 }
