@@ -27,13 +27,11 @@ graph TD;
 
 ```mermaid
 graph TD;
-  A-->B;
-  B-->C;
-  B-->D;
-  C-->C;
-  C-->D;
-  A[View];
-  B[ViewModel];
-  C[UseCase];
-  D[Repository];
+  View-->ViewModel;
+  ViewModel --> UseCase;
+  ViewModel --> Repository;
+  ViewModel --> Service;
+  UseCase --> UseCase;
+  UseCase --> Service;
+  UseCase --> Repository;
 ```
