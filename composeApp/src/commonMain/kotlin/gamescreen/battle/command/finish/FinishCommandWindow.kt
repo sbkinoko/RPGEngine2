@@ -6,18 +6,17 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import gamescreen.battle.BattleViewModel
 import org.koin.compose.koinInject
 
 @Composable
 fun FinishCommandWindow(
     modifier: Modifier = Modifier,
-    battleViewModel: BattleViewModel = koinInject(),
+    battleFinishViewModel: BattleFinishViewModel = koinInject(),
 ) {
     Box(
         modifier = modifier
             .clickable {
-                battleViewModel.finishBattle()
+                battleFinishViewModel.pressA()
             },
     ) {
         Text(
