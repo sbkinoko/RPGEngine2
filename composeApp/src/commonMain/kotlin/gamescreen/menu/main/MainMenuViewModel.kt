@@ -8,7 +8,6 @@ import gamescreen.menu.domain.SelectManager
 import gamescreen.menu.domain.toMenuType
 import gamescreen.menu.repository.menustate.MenuStateRepository
 import gamescreen.menu.usecase.backfield.CloseMenuUseCase
-import kotlinx.coroutines.flow.SharedFlow
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -43,7 +42,6 @@ class MainMenuViewModel : MenuChildViewModel(),
         width = 2,
         itemNum = itemNum,
     )
-    var selectedFlow: SharedFlow<Int> = selectManager.selectedFlow
 
     override fun pressB() {
         closeMenuUseCase.invoke()

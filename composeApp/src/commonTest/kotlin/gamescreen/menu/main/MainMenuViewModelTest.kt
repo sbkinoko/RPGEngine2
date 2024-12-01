@@ -20,12 +20,12 @@ class MainMenuViewModelTest {
         var count = 0
         runBlocking {
             val collectJob = launch {
-                viewModel.selectedFlow.collect {
-                    count++
+                viewModel.selectedFlowState.collect {
                     assertEquals(
                         expected = count,
                         actual = it
                     )
+                    count++
                 }
             }
             delay(100)

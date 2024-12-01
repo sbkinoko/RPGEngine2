@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
@@ -18,9 +20,11 @@ fun Modifier.menuItem(
     id: Int,
     childViewModel: SelectableChildViewModel<*>,
 ): Modifier {
+    val selected by childViewModel.selectedFlowState.collectAsState()
+
     return selectable(
         id = id,
-        selected = childViewModel.getSelectedAsState().value,
+        selected = selected,
     ).clickable {
         childViewModel.onClickItem(
             id = id,

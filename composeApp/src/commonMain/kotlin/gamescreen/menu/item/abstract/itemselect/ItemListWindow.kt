@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -33,7 +35,7 @@ fun ItemListWindow(
         flg.value = false
     }
 
-    val selected = itemListViewModel.getSelectedAsState().value
+    val selected by itemListViewModel.selectedFlowState.collectAsState()
 
     Row(
         modifier = modifier.background(
