@@ -2,7 +2,7 @@ package gamescreen.battle.usecase.attack
 
 import core.repository.battlemonster.BattleMonsterRepository
 import core.usecase.updateparameter.UpdateMonsterStatusUseCase
-import gamescreen.battle.service.FindTargetService
+import gamescreen.battle.service.findtarget.FindTargetService
 
 class AttackFromPlayerUseCaseImpl(
     private val battleMonsterRepository: BattleMonsterRepository,

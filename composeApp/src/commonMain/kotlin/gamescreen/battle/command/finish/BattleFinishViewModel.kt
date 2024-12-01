@@ -18,9 +18,16 @@ class BattleFinishViewModel : BattleChildViewModel() {
 
     private var contentType: ContentType = ContentType.None
 
-    fun init() {
-        mutableTextFLow.value = "戦闘に勝利した"
-        contentType = ContentType.Win
+    fun init(
+        isWin: Boolean,
+    ) {
+        if (isWin) {
+            mutableTextFLow.value = "戦闘に勝利した"
+            contentType = ContentType.Win
+        } else {
+            mutableTextFLow.value = "戦闘に敗北した"
+            contentType = ContentType.Lose
+        }
     }
 
     override fun isBoundedImpl(commandType: BattleCommandType): Boolean {
@@ -46,12 +53,20 @@ class BattleFinishViewModel : BattleChildViewModel() {
             }
 
             ContentType.Exp -> {
-                changeToMapUseCase.invoke()
-                mutableTextFLow.value = ""
-                contentType = ContentType.None
+                finishBattle()
+            }
+
+            ContentType.Lose -> {
+                finishBattle()
             }
 
             ContentType.None -> Unit
         }
+    }
+
+    private fun finishBattle() {
+        changeToMapUseCase.invoke()
+        mutableTextFLow.value = ""
+        contentType = ContentType.None
     }
 }

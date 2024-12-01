@@ -4,7 +4,9 @@ sealed class BattleCommandType
 
 data object MainCommand : BattleCommandType()
 
-data object FinishCommand : BattleCommandType()
+class FinishCommand(
+    val isWin: Boolean,
+) : BattleCommandType()
 
 data object EscapeCommand : BattleCommandType()
 

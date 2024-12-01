@@ -9,7 +9,7 @@ import gamescreen.battle.domain.BattleCommandType
 import gamescreen.battle.domain.SelectEnemyCommand
 import gamescreen.battle.domain.SelectedEnemyState
 import gamescreen.battle.repository.action.ActionRepository
-import gamescreen.battle.service.FindTargetService
+import gamescreen.battle.service.findtarget.FindTargetService
 import gamescreen.battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUseCase
 import gamescreen.battle.usecase.findactivetarget.FindActiveTargetUseCase
 import gamescreen.battle.usecase.gettargetnum.GetTargetNumUseCase

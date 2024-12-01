@@ -1,7 +1,7 @@
 package gamescreen.battle.usecase.findactivetarget
 
 import core.domain.status.Status
-import gamescreen.battle.service.FindTargetService
+import gamescreen.battle.service.findtarget.FindTargetService
 
 class FindActiveTargetUseCaseImpl(
     private val findTargetService: FindTargetService,

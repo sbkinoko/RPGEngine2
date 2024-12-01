@@ -13,13 +13,16 @@ import org.koin.compose.koinInject
 
 @Composable
 fun FinishCommandWindow(
+    isWin: Boolean,
     modifier: Modifier = Modifier,
     battleFinishViewModel: BattleFinishViewModel = koinInject(),
 ) {
     val textFlow by battleFinishViewModel.textFlow.collectAsState()
 
     LaunchedEffect(Unit) {
-        battleFinishViewModel.init()
+        battleFinishViewModel.init(
+            isWin = isWin
+        )
     }
 
     Box(
