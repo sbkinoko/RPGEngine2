@@ -1,4 +1,4 @@
-package gamescreen.battle.service
+package gamescreen.battle.service.findtarget
 
 import core.domain.status.Status
 

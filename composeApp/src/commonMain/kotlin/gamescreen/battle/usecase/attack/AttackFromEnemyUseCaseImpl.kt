@@ -2,7 +2,7 @@ package gamescreen.battle.usecase.attack
 
 import core.repository.player.PlayerStatusRepository
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
-import gamescreen.battle.service.FindTargetService
+import gamescreen.battle.service.findtarget.FindTargetService
 
 class AttackFromEnemyUseCaseImpl(
     private val playerStatusRepository: PlayerStatusRepository,

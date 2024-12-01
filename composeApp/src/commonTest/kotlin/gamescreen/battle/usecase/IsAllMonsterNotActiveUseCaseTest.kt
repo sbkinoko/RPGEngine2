@@ -5,6 +5,7 @@ import core.CoreModule
 import core.repository.battlemonster.BattleMonsterRepository
 import gamescreen.battle.BattleModule
 import gamescreen.battle.QualifierAttackFromPlayer
+import gamescreen.battle.service.isactivesomeone.IsAnnihilationService
 import gamescreen.battle.usecase.attack.AttackUseCase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
@@ -24,8 +25,8 @@ class IsAllMonsterNotActiveUseCaseTest : KoinTest {
     private val attackUseCase: AttackUseCase by inject(
         qualifier = named(QualifierAttackFromPlayer)
     )
-    private val isAllMonsterNotActiveUseCase: IsAllMonsterNotActiveUseCase
-            by inject()
+
+    private val isAnnihilationService: IsAnnihilationService by inject()
 
     @BeforeTest
     fun beforeTest() {
@@ -62,7 +63,9 @@ class IsAllMonsterNotActiveUseCaseTest : KoinTest {
             )
             assertEquals(
                 expected = false,
-                actual = isAllMonsterNotActiveUseCase()
+                actual = isAnnihilationService(
+                    repository.getMonsters()
+                )
             )
 
             // 隣を攻撃
@@ -72,7 +75,9 @@ class IsAllMonsterNotActiveUseCaseTest : KoinTest {
             )
             assertEquals(
                 expected = false,
-                actual = isAllMonsterNotActiveUseCase()
+                actual = isAnnihilationService(
+                    repository.getMonsters()
+                )
             )
 
             // 隣の隣を攻撃
@@ -83,7 +88,9 @@ class IsAllMonsterNotActiveUseCaseTest : KoinTest {
 
             assertEquals(
                 expected = true,
-                actual = isAllMonsterNotActiveUseCase()
+                actual = isAnnihilationService(
+                    repository.getMonsters()
+                )
             )
         }
     }

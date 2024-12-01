@@ -3,6 +3,7 @@ package gamescreen.battle.usecase.getcontrollerbyscreentype
 import controller.domain.ControllerCallback
 import gamescreen.battle.command.actionphase.ActionPhaseViewModel
 import gamescreen.battle.command.escape.EscapeViewModel
+import gamescreen.battle.command.finish.BattleFinishViewModel
 import gamescreen.battle.command.item.skill.SkillCommandViewModel
 import gamescreen.battle.command.item.tool.ToolCommandViewModel
 import gamescreen.battle.command.main.BattleMainViewModel
@@ -31,8 +32,10 @@ class GetControllerByCommandTypeUseCaseImpl(
     private val skillCommandViewModel: SkillCommandViewModel,
     private val toolCommandViewModel: ToolCommandViewModel,
     private val selectAllyViewModel: SelectAllyViewModel,
+
+    private val battleFinishViewModel: BattleFinishViewModel,
 ) : GetControllerByCommandTypeUseCase {
-    override operator fun invoke(): ControllerCallback? {
+    override operator fun invoke(): ControllerCallback {
         return when (commandStateRepository.nowCommandType) {
             is MainCommand -> battleMainViewModel
             is PlayerActionCommand -> playerActionViewModel
@@ -40,7 +43,7 @@ class GetControllerByCommandTypeUseCaseImpl(
             is SelectAllyCommand -> selectAllyViewModel
             is AttackPhaseCommand -> actionPhaseViewModel
             is EscapeCommand -> escapeViewModel
-            is FinishCommand -> null
+            is FinishCommand -> battleFinishViewModel
             is SkillCommand -> skillCommandViewModel
             is ToolCommand -> toolCommandViewModel
         }

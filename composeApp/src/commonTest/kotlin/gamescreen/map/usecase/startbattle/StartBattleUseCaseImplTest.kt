@@ -11,6 +11,7 @@ import gamescreen.battle.repository.action.ActionRepository
 import gamescreen.battle.repository.commandstate.CommandStateRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.runBlocking
 import main.MainModule
 import org.koin.core.context.startKoin
@@ -68,6 +69,8 @@ class StartBattleUseCaseImplTest : KoinTest {
             screenTypeRepository = screenTypeRepository,
             commandStateRepository = object : CommandStateRepository {
                 override val commandTypeFlow: MutableSharedFlow<BattleCommandType>
+                    get() = throw NotImplementedError()
+                override val commandStateFlow: StateFlow<BattleCommandType>
                     get() = throw NotImplementedError()
                 override val nowCommandType: BattleCommandType
                     get() = throw NotImplementedError()
