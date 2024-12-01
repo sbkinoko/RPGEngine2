@@ -77,7 +77,9 @@ fun CommandArea(
         }
 
         is FinishCommand -> {
-            FinishCommandWindow()
+            FinishCommandWindow(
+                modifier = modifier,
+            )
         }
     }
 }
