@@ -37,7 +37,7 @@ class SkillRepositoryImpl : SkillRepository {
             ATTACK_NORMAL -> AttackSkill(
                 id = id,
                 name = "通常攻撃",
-                damageAmount = 1,
+                damageAmount = 20,
                 needMP = 0,
                 targetNum = 1,
                 usablePlace = Place.BATTLE,
