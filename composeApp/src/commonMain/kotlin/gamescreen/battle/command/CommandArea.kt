@@ -79,6 +79,7 @@ fun CommandArea(
         is FinishCommand -> {
             FinishCommandWindow(
                 modifier = modifier,
+                isWin = nowState.isWin
             )
         }
     }

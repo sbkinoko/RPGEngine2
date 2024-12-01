@@ -13,9 +13,10 @@ import gamescreen.battle.repository.action.ActionRepository
 import gamescreen.battle.repository.action.ActionRepositoryImpl
 import gamescreen.battle.repository.commandstate.CommandStateRepository
 import gamescreen.battle.repository.commandstate.CommandStateRepositoryImpl
-import gamescreen.battle.service.FindTargetService
-import gamescreen.battle.service.FindTargetServiceImpl
-import gamescreen.battle.usecase.IsAllMonsterNotActiveUseCase
+import gamescreen.battle.service.findtarget.FindTargetService
+import gamescreen.battle.service.findtarget.FindTargetServiceImpl
+import gamescreen.battle.service.isactivesomeone.IsAnnihilationService
+import gamescreen.battle.service.isactivesomeone.IsAnnihilationServiceImpl
 import gamescreen.battle.usecase.attack.AttackFromEnemyUseCaseImpl
 import gamescreen.battle.usecase.attack.AttackFromPlayerUseCaseImpl
 import gamescreen.battle.usecase.attack.AttackUseCase
@@ -82,6 +83,10 @@ val BattleModule = module {
         FindTargetServiceImpl()
     }
 
+    single<IsAnnihilationService> {
+        IsAnnihilationServiceImpl()
+    }
+
     single<CommandStateRepository> {
         CommandStateRepositoryImpl()
     }
@@ -118,12 +123,6 @@ val BattleModule = module {
             playerStatusRepository = get(),
             findTargetService = get(),
             updatePlayerStatusService = get(),
-        )
-    }
-
-    single<IsAllMonsterNotActiveUseCase> {
-        IsAllMonsterNotActiveUseCase(
-            battleMonsterRepository = get(),
         )
     }
 

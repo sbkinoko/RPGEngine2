@@ -4,5 +4,6 @@ enum class ContentType {
     Win,
     Money,
     Exp,
+    Lose,
     None,
 }

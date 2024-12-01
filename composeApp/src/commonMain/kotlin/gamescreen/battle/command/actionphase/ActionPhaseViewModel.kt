@@ -22,7 +22,7 @@ import gamescreen.battle.domain.AttackPhaseCommand
 import gamescreen.battle.domain.BattleCommandType
 import gamescreen.battle.domain.FinishCommand
 import gamescreen.battle.repository.action.ActionRepository
-import gamescreen.battle.usecase.IsAllMonsterNotActiveUseCase
+import gamescreen.battle.service.isactivesomeone.IsAnnihilationService
 import gamescreen.battle.usecase.attack.AttackUseCase
 import gamescreen.battle.usecase.findactivetarget.FindActiveTargetUseCase
 import gamescreen.menu.domain.SelectManager
@@ -55,7 +55,8 @@ class ActionPhaseViewModel : BattleChildViewModel() {
         qualifier = named(QualifierAttackFromEnemy)
     )
     private val findActiveTargetUseCase: FindActiveTargetUseCase by inject()
-    private val isAllMonsterNotActiveUseCase: IsAllMonsterNotActiveUseCase by inject()
+
+    private val isAnnihilationService: IsAnnihilationService by inject()
 
     private val useToolUseCase: UseToolUseCase by inject()
 
@@ -137,10 +138,9 @@ class ActionPhaseViewModel : BattleChildViewModel() {
                 is HealTool -> Type.HEAL
             }
 
-            ActionType.None -> {
-                //throw RuntimeException("ここには来ない")
-                return ""
-            }
+            ActionType.None ->
+                throw RuntimeException("ここには来ない")
+
         }
 
         return when (type) {
@@ -213,7 +213,8 @@ class ActionPhaseViewModel : BattleChildViewModel() {
 
             delay(100)
 
-            if (this@ActionPhaseViewModel.commandRepository.nowCommandType != FinishCommand) {
+            // アクションをしてもまだ戦闘中なら次のキャラへ
+            if (this@ActionPhaseViewModel.commandRepository.nowCommandType !is FinishCommand) {
                 changeToNextCharacter()
             }
         }
@@ -253,13 +254,25 @@ class ActionPhaseViewModel : BattleChildViewModel() {
         }
 
         // 敵を倒していたらバトル終了
-        if (isAllMonsterNotActiveUseCase()) {
+        if (isMonsterAnnihilated) {
             this.commandRepository.push(
-                FinishCommand
+                FinishCommand(
+                    isWin = true
+                )
             )
             return
         }
     }
+
+    private val isMonsterAnnihilated: Boolean
+        get() = isAnnihilationService(
+            battleMonsterRepository.getMonsters()
+        )
+
+    private val isPlayerAnnihilated: Boolean
+        get() = isAnnihilationService(
+            playerStatusRepository.getPlayers()
+        )
 
     private suspend fun enemyAction() {
         skillAction(
@@ -275,6 +288,15 @@ class ActionPhaseViewModel : BattleChildViewModel() {
             attackUseCase = attackFromEnemyUseCase,
             updateParameter = updateEnemyParameter,
         )
+
+        if (isPlayerAnnihilated) {
+            this.commandRepository.push(
+                FinishCommand(
+                    isWin = false
+                )
+            )
+            return
+        }
     }
 
     private suspend fun skillAction(
