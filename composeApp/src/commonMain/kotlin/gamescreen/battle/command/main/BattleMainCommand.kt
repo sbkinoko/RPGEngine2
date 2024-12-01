@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import common.extension.equalAllocationModifier
 import common.extension.selectable
@@ -16,7 +18,8 @@ fun BattleMainCommand(
     modifier: Modifier = Modifier,
     battleMainViewModel: BattleMainViewModel = koinInject(),
 ) {
-    val selected = battleMainViewModel.getSelectedAsState().value
+    val selected by battleMainViewModel.selectedFlowState.collectAsState()
+
     Column(modifier = modifier) {
         Row(
             modifier = equalAllocationModifier,

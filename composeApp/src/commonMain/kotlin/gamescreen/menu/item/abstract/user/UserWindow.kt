@@ -4,6 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import gamescreen.menu.item.list.UnSelectableItemList
 import gamescreen.menu.item.list.UserList
@@ -14,7 +16,8 @@ fun UserWindow(
     itemUserViewModel: ItemUserViewModel,
     modifier: Modifier = Modifier,
 ) {
-    val selectedId = itemUserViewModel.getSelectedAsState().value
+    val selectedId by itemUserViewModel.selectedFlowState.collectAsState()
+
     Row(
         modifier = modifier
             .background(

@@ -1,7 +1,5 @@
 package core.menu
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import common.Timer
 import controller.domain.ArrowCommand
 import controller.domain.ControllerCallback
@@ -20,10 +18,8 @@ abstract class SelectableWindowViewModel : ControllerCallback {
         return true
     }
 
-    // fixme stateFlowを返すようにする
-    @Composable
-    fun getSelectedAsState() = selectManager.selectedFlow
-        .collectAsState(selectManager.selected)
+    val selectedFlowState
+        get() = selectManager.selectedFlowState
 
     fun setSelected(id: Int) {
         selectManager.selected = id

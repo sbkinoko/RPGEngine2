@@ -1,26 +1,24 @@
 package gamescreen.menu.domain
 
 import controller.domain.ArrowCommand
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class SelectManager(
     val width: Int,
     private val itemNum: Int,
 ) {
-    private var _selected: Int = 0
+    private var _selected: Int = FIRST_SELECTED
 
-    val selectedFlow: MutableSharedFlow<Int> = MutableSharedFlow(0)
+    private val mutableSelectedStateFlow =
+        MutableStateFlow<Int>(FIRST_SELECTED)
+    val selectedFlowState = mutableSelectedStateFlow.asStateFlow()
 
     var selected: Int
         get() = _selected
         set(value) {
             _selected = value
-            CoroutineScope(Dispatchers.Default).launch {
-                selectedFlow.emit(_selected)
-            }
+            mutableSelectedStateFlow.value = _selected
         }
 
     fun move(command: ArrowCommand) {
@@ -80,5 +78,9 @@ class SelectManager(
                 selected = itemNum - itemNum % width
             }
         }
+    }
+
+    companion object {
+        const val FIRST_SELECTED = 0
     }
 }
