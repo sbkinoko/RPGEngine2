@@ -58,6 +58,17 @@ class ActionPhaseViewModel : BattleChildViewModel() {
 
     private val isAnnihilationService: IsAnnihilationService by inject()
 
+    private val isMonsterAnnihilated: Boolean
+        get() = isAnnihilationService(
+            battleMonsterRepository.getMonsters()
+        )
+
+    private val isPlayerAnnihilated: Boolean
+        get() = isAnnihilationService(
+            playerStatusRepository.getPlayers()
+        )
+
+
     private val useToolUseCase: UseToolUseCase by inject()
 
 
@@ -264,15 +275,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
         }
     }
 
-    private val isMonsterAnnihilated: Boolean
-        get() = isAnnihilationService(
-            battleMonsterRepository.getMonsters()
-        )
 
-    private val isPlayerAnnihilated: Boolean
-        get() = isAnnihilationService(
-            playerStatusRepository.getPlayers()
-        )
 
     private suspend fun enemyAction() {
         skillAction(
