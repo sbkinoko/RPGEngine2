@@ -22,7 +22,7 @@ import gamescreen.battle.domain.AttackPhaseCommand
 import gamescreen.battle.domain.BattleCommandType
 import gamescreen.battle.domain.FinishCommand
 import gamescreen.battle.repository.action.ActionRepository
-import gamescreen.battle.service.isactivesomeone.IsAnnihilationService
+import gamescreen.battle.service.isannihilation.IsAnnihilationService
 import gamescreen.battle.usecase.attack.AttackUseCase
 import gamescreen.battle.usecase.findactivetarget.FindActiveTargetUseCase
 import gamescreen.menu.domain.SelectManager

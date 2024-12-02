@@ -1,4 +1,4 @@
-package gamescreen.battle.service.isactivesomeone
+package gamescreen.battle.service.isannihilation
 
 import core.domain.status.Status
 
