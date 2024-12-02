@@ -4,7 +4,7 @@ import core.domain.item.tool.HealTool
 import core.repository.item.tool.ToolRepository
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
 import gamescreen.menu.usecase.bag.dectool.DecToolUseCase
-import gamescreen.menu.usecase.getoolid.GetToolIdUseCase
+import gamescreen.menu.usecase.gettoolid.GetToolIdUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO

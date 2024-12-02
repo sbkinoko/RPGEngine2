@@ -9,6 +9,10 @@ class BagRepositoryImpl : BagRepository {
         return bagToolDataList
     }
 
+    override fun getItemIdAt(index: Int): Int {
+        return bagToolDataList[index].id
+    }
+
     override fun setData(data: BagToolData) {
         bagToolDataList = if (
             bagToolDataList.any { it.id == data.id }

@@ -28,18 +28,28 @@ class BagRepositoryImplTest : KoinTest {
 
     @Test
     fun setTest() {
-        val data1 = BagToolData(1, 1)
+        val first = 1
+        val data1 = BagToolData(first, 1)
         bagRepository.setData(data1)
         assertEquals(
             actual = bagRepository.getList(),
             expected = listOf(data1)
         )
+        assertEquals(
+            actual = bagRepository.getItemIdAt(0),
+            expected = first
+        )
 
-        val data2 = BagToolData(2, 2)
+        val second = 2
+        val data2 = BagToolData(second, 2)
         bagRepository.setData(data2)
         assertEquals(
             actual = bagRepository.getList(),
             expected = listOf(data1, data2),
+        )
+        assertEquals(
+            actual = bagRepository.getItemIdAt(1),
+            expected = second
         )
 
         val data3 = BagToolData(1, 3)
