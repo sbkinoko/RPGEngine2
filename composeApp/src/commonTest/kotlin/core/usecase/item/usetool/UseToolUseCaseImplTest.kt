@@ -8,13 +8,11 @@ import core.domain.status.PlayerStatus
 import core.domain.status.param.HP
 import core.domain.status.param.MP
 import core.repository.item.tool.ToolRepository
-import core.repository.player.PlayerStatusRepository
 import core.repository.status.StatusRepository
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
 import gamescreen.menu.usecase.bag.dectool.DecToolUseCase
 import gamescreen.menu.usecase.getoolid.GetToolIdUseCase
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.runBlocking
 import org.koin.test.KoinTest
 import kotlin.test.Test
@@ -35,46 +33,22 @@ class UseToolUseCaseImplTest : KoinTest {
         toolList = listOf()
     )
 
-    private val playerStatusRepository = object : PlayerStatusRepository {
-        override val playerStatusFlow: StateFlow<List<PlayerStatus>>
-            get() = throw NotImplementedError()
-
-        override fun getPlayers(): List<PlayerStatus> {
-            throw NotImplementedError()
-        }
-
-        override fun getTool(playerId: Int, index: Int): Int {
-            return 0
-        }
-
-        override fun getSkill(playerId: Int, index: Int): Int {
-            throw NotImplementedError()
-        }
-
-        override fun getStatus(id: Int): PlayerStatus {
-            throw NotImplementedError()
-        }
-
-        override suspend fun setStatus(id: Int, status: PlayerStatus) {
-            throw NotImplementedError()
-        }
-    }
-
     private lateinit var useToolUseCase: UseToolUseCase
 
-    var count = 0
-    var countDel = 0
+    var countIncHP = 0
+    var countDelTool = 0
 
-    var decCount = 0
+    var countDecItem = 0
     private val decToolUseCase = object : DecToolUseCase {
         override fun invoke(itemId: Int, itemNum: Int) {
-            decCount++
+            countDecItem++
         }
     }
 
     private var countGetToolId = 0
     private val getToolIdUseCase = object : GetToolIdUseCase {
         override fun invoke(userId: Int, index: Int): Int {
+            countGetToolId++
             return 0
         }
     }
@@ -85,7 +59,7 @@ class UseToolUseCaseImplTest : KoinTest {
         }
 
         override fun incHPImpl(amount: Int, status: PlayerStatus): PlayerStatus {
-            count++
+            countIncHP++
             return status
         }
 
@@ -98,7 +72,7 @@ class UseToolUseCaseImplTest : KoinTest {
         }
 
         override suspend fun deleteToolAt(playerId: Int, index: Int) {
-            countDel++
+            countDelTool++
         }
 
         override val statusRepository: StatusRepository<PlayerStatus>
@@ -148,17 +122,17 @@ class UseToolUseCaseImplTest : KoinTest {
 
             assertEquals(
                 expected = 1,
-                actual = count,
+                actual = countIncHP,
             )
 
             assertEquals(
                 expected = 1,
-                actual = countDel,
+                actual = countDelTool,
             )
 
             assertEquals(
                 expected = 0,
-                actual = decCount,
+                actual = countDecItem,
             )
 
             assertEquals(
@@ -209,17 +183,17 @@ class UseToolUseCaseImplTest : KoinTest {
 
             assertEquals(
                 expected = 1,
-                actual = count,
+                actual = countIncHP,
             )
 
             assertEquals(
                 expected = 0,
-                actual = countDel,
+                actual = countDelTool,
             )
 
             assertEquals(
                 expected = 0,
-                actual = decCount,
+                actual = countDecItem,
             )
         }
     }
@@ -264,17 +238,17 @@ class UseToolUseCaseImplTest : KoinTest {
 
             assertEquals(
                 expected = 1,
-                actual = count,
+                actual = countIncHP,
             )
 
             assertEquals(
                 expected = 0,
-                actual = countDel,
+                actual = countDelTool,
             )
 
             assertEquals(
                 expected = 1,
-                actual = decCount,
+                actual = countDecItem,
             )
         }
     }
