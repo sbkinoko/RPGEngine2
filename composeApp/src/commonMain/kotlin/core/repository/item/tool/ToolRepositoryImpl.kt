@@ -7,8 +7,8 @@ import core.domain.item.tool.Tool
 
 class ToolRepositoryImpl : ToolRepository {
     override fun getItem(id: Int): Tool {
-        when (id) {
-            HEAL_TOOL -> return HealTool(
+        return when (id) {
+            HEAL_TOOL -> HealTool(
                 id = id,
                 name = "回復",
                 targetNum = 1,
@@ -18,7 +18,8 @@ class ToolRepositoryImpl : ToolRepository {
                 healAmount = 10,
                 targetType = TargetType.ACTIVE
             )
-            HEAL_TOOL2 -> return HealTool(
+
+            HEAL_TOOL2 -> HealTool(
                 id = id,
                 name = "回復2",
                 targetNum = 1,

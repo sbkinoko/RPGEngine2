@@ -21,12 +21,18 @@ class SkillTargetViewModel : ItemTargetViewModel() {
     override val boundedMenuType: MenuType
         get() = MenuType.SKILL_TARGET
 
+    override val itemId: Int
+        get() = playerStatusRepository.getSkill(
+            user,
+            indexRepository.index,
+        )
+
     override fun getAbleType(): AbleType {
         val userStatus = playerStatusRepository.getStatus(id = user)
 
         return checkCanUseSkillUseCase.invoke(
             status = userStatus,
-            skillId = skillId,
+            skillId = itemId,
             here = Place.MAP,
         )
     }

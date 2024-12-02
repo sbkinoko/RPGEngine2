@@ -6,6 +6,7 @@ import core.usecase.item.usetool.UseToolUseCase
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.item.abstract.target.ItemTargetViewModel
 import gamescreen.menu.item.repository.index.IndexRepository
+import gamescreen.menu.usecase.getoolid.GetToolIdUseCase
 import gamescreen.text.TextBoxData
 import org.koin.core.component.inject
 
@@ -14,9 +15,16 @@ class ToolTargetViewModel : ItemTargetViewModel() {
     private val indexRepository: IndexRepository by inject()
 
     private val useToolUseCase: UseToolUseCase by inject()
+    private val getToolIdUseCase: GetToolIdUseCase by inject()
 
     override val boundedMenuType: MenuType
         get() = MenuType.TOOL_TARGET
+
+    override val itemId: Int
+        get() = getToolIdUseCase.invoke(
+            userId = userRepository.userId,
+            index = indexRepository.index,
+        )
 
     override fun getAbleType(): AbleType {
         return AbleType.Able

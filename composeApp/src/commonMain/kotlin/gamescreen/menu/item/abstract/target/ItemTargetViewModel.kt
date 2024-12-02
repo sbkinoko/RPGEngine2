@@ -9,7 +9,6 @@ import gamescreen.choice.repository.ChoiceRepository
 import gamescreen.menu.MenuChildViewModel
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.domain.SelectManager
-import gamescreen.menu.item.repository.index.IndexRepository
 import gamescreen.menu.item.repository.target.TargetRepository
 import gamescreen.menu.item.repository.user.UserRepository
 import gamescreen.text.repository.TextRepository
@@ -21,8 +20,6 @@ abstract class ItemTargetViewModel : MenuChildViewModel() {
     protected val targetRepository: TargetRepository by inject()
     protected val playerStatusRepository: PlayerStatusRepository by inject()
 
-    private val indexRepository: IndexRepository by inject()
-
     private val choiceRepository: ChoiceRepository by inject()
 
     protected abstract val itemRepository: ItemRepository
@@ -32,14 +29,10 @@ abstract class ItemTargetViewModel : MenuChildViewModel() {
     val user: Int
         get() = userRepository.userId
 
-    val skillId: Int
-        get() = playerStatusRepository.getSkill(
-            user,
-            indexRepository.index,
-        )
+    abstract val itemId: Int
 
     val explain: String
-        get() = itemRepository.getItem(skillId).explain
+        get() = itemRepository.getItem(itemId).explain
 
     protected abstract val boundedMenuType: MenuType
 
@@ -74,7 +67,7 @@ abstract class ItemTargetViewModel : MenuChildViewModel() {
 
     fun canSelect(target: Int): Boolean {
         val targetStatus = playerStatusRepository.getStatus(id = target)
-        val skill = itemRepository.getItem(skillId)
+        val skill = itemRepository.getItem(itemId)
 
         if (skill !is HealItem) {
             // 回復じゃなかったら使えないはず
