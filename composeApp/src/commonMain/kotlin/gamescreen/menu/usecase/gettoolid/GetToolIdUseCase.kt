@@ -1,4 +1,4 @@
-package gamescreen.menu.usecase.getoolid
+package gamescreen.menu.usecase.gettoolid
 
 interface GetToolIdUseCase {
     operator fun invoke(

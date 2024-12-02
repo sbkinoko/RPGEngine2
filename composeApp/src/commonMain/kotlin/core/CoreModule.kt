@@ -17,8 +17,8 @@ import core.usecase.item.usetool.UseToolUseCaseImpl
 import core.usecase.updateparameter.UpdateMonsterStatusUseCase
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
 import core.usecase.updateparameter.UpdatePlayerStatusUseCaseImpl
-import gamescreen.menu.usecase.getoolid.GetToolIdUseCase
-import gamescreen.menu.usecase.getoolid.GetToolIdUseCaseImpl
+import gamescreen.menu.usecase.gettoolid.GetToolIdUseCase
+import gamescreen.menu.usecase.gettoolid.GetToolIdUseCaseImpl
 import org.koin.dsl.module
 
 val CoreModule = module {

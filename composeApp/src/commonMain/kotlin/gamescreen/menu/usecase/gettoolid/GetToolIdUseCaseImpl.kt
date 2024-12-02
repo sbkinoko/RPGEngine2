@@ -1,4 +1,4 @@
-package gamescreen.menu.usecase.getoolid
+package gamescreen.menu.usecase.gettoolid
 
 import core.repository.player.PlayerStatusRepository
 import gamescreen.menu.repository.bag.BagRepository
@@ -18,7 +18,7 @@ class GetToolIdUseCaseImpl(
                 index,
             )
         } else {
-            bagRepository.getList()[index].id
+            bagRepository.getItemIdAt(index)
         }
     }
 }

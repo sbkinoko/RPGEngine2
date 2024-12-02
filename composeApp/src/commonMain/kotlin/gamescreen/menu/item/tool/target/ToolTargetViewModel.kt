@@ -6,7 +6,7 @@ import core.usecase.item.usetool.UseToolUseCase
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.item.abstract.target.ItemTargetViewModel
 import gamescreen.menu.item.repository.index.IndexRepository
-import gamescreen.menu.usecase.getoolid.GetToolIdUseCase
+import gamescreen.menu.usecase.gettoolid.GetToolIdUseCase
 import gamescreen.text.TextBoxData
 import org.koin.core.component.inject
 
