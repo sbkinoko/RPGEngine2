@@ -15,8 +15,8 @@ import gamescreen.battle.repository.commandstate.CommandStateRepository
 import gamescreen.battle.repository.commandstate.CommandStateRepositoryImpl
 import gamescreen.battle.service.findtarget.FindTargetService
 import gamescreen.battle.service.findtarget.FindTargetServiceImpl
-import gamescreen.battle.service.isactivesomeone.IsAnnihilationService
-import gamescreen.battle.service.isactivesomeone.IsAnnihilationServiceImpl
+import gamescreen.battle.service.isannihilation.IsAnnihilationService
+import gamescreen.battle.service.isannihilation.IsAnnihilationServiceImpl
 import gamescreen.battle.usecase.attack.AttackFromEnemyUseCaseImpl
 import gamescreen.battle.usecase.attack.AttackFromPlayerUseCaseImpl
 import gamescreen.battle.usecase.attack.AttackUseCase
