@@ -17,6 +17,8 @@ import core.usecase.item.usetool.UseToolUseCaseImpl
 import core.usecase.updateparameter.UpdateMonsterStatusUseCase
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
 import core.usecase.updateparameter.UpdatePlayerStatusUseCaseImpl
+import gamescreen.menu.usecase.getoolid.GetToolIdUseCase
+import gamescreen.menu.usecase.getoolid.GetToolIdUseCaseImpl
 import org.koin.dsl.module
 
 val CoreModule = module {
@@ -62,10 +64,17 @@ val CoreModule = module {
 
     single<UseToolUseCase> {
         UseToolUseCaseImpl(
-            playerStatusRepository = get(),
             toolRepository = get(),
             updateStatusService = get(),
             decToolUseCase = get(),
+            getToolIdUseCase = get(),
+        )
+    }
+
+    single<GetToolIdUseCase> {
+        GetToolIdUseCaseImpl(
+            playerStatusRepository = get(),
+            bagRepository = get(),
         )
     }
 }

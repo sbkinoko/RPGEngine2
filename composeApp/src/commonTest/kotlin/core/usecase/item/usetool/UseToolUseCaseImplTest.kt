@@ -12,6 +12,7 @@ import core.repository.player.PlayerStatusRepository
 import core.repository.status.StatusRepository
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
 import gamescreen.menu.usecase.bag.dectool.DecToolUseCase
+import gamescreen.menu.usecase.getoolid.GetToolIdUseCase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.runBlocking
@@ -65,10 +66,16 @@ class UseToolUseCaseImplTest : KoinTest {
     var countDel = 0
 
     var decCount = 0
-
     private val decToolUseCase = object : DecToolUseCase {
         override fun invoke(itemId: Int, itemNum: Int) {
             decCount++
+        }
+    }
+
+    private var countGetToolId = 0
+    private val getToolIdUseCase = object : GetToolIdUseCase {
+        override fun invoke(userId: Int, index: Int): Int {
+            return 0
         }
     }
 
@@ -128,7 +135,7 @@ class UseToolUseCaseImplTest : KoinTest {
                 toolRepository = toolRepository,
                 updateStatusService = updateStatusService,
                 decToolUseCase = decToolUseCase,
-                playerStatusRepository = playerStatusRepository,
+                getToolIdUseCase = getToolIdUseCase,
             )
 
             useToolUseCase.invoke(
@@ -152,6 +159,11 @@ class UseToolUseCaseImplTest : KoinTest {
             assertEquals(
                 expected = 0,
                 actual = decCount,
+            )
+
+            assertEquals(
+                expected = 1,
+                actual = countGetToolId,
             )
         }
     }
@@ -179,7 +191,7 @@ class UseToolUseCaseImplTest : KoinTest {
                 toolRepository = toolRepository,
                 updateStatusService = updateStatusService,
                 decToolUseCase = decToolUseCase,
-                playerStatusRepository = playerStatusRepository,
+                getToolIdUseCase = getToolIdUseCase,
             )
 
             useToolUseCase.invoke(
@@ -189,6 +201,11 @@ class UseToolUseCaseImplTest : KoinTest {
             )
 
             delay(100)
+
+            assertEquals(
+                expected = 1,
+                actual = countGetToolId,
+            )
 
             assertEquals(
                 expected = 1,
@@ -229,7 +246,7 @@ class UseToolUseCaseImplTest : KoinTest {
                 toolRepository = toolRepository,
                 updateStatusService = updateStatusService,
                 decToolUseCase = decToolUseCase,
-                playerStatusRepository = playerStatusRepository,
+                getToolIdUseCase = getToolIdUseCase,
             )
 
             useToolUseCase.invoke(
@@ -239,6 +256,11 @@ class UseToolUseCaseImplTest : KoinTest {
             )
 
             delay(100)
+
+            assertEquals(
+                expected = 1,
+                actual = countGetToolId,
+            )
 
             assertEquals(
                 expected = 1,
