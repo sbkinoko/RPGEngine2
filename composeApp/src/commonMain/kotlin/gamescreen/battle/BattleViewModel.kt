@@ -36,6 +36,9 @@ class BattleViewModel :
     private val childController: ControllerCallback
         get() = getControllerByCommandTypeUseCase.invoke()
 
+    val commandStateFlow =
+        commandStateRepository.commandStateFlow
+
     @Composable
     fun CommandStateFlow(): State<BattleCommandType> {
         return commandStateRepository.commandTypeFlow.collectAsState(
