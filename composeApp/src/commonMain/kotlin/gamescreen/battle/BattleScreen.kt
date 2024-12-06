@@ -22,7 +22,10 @@ fun BattleScreen(
     modifier: Modifier = Modifier,
     battleViewModel: BattleViewModel = koinInject(),
 ) {
-    val monsters by battleViewModel.monsters.collectAsState()
+    val monsters by battleViewModel
+        .monsterStatusFlow
+        .collectAsState()
+
     val playerStatusList = battleViewModel
         .playerStatusFlow
         .collectAsState()
