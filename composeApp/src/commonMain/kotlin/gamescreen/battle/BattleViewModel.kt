@@ -9,7 +9,6 @@ import core.domain.status.MonsterStatus
 import core.domain.status.PlayerStatus
 import core.repository.battlemonster.BattleMonsterRepository
 import core.repository.player.PlayerStatusRepository
-import core.usecase.changetomap.ChangeToMapUseCase
 import gamescreen.battle.domain.BattleCommandType
 import gamescreen.battle.repository.commandstate.CommandStateRepository
 import gamescreen.battle.usecase.getcontrollerbyscreentype.GetControllerByCommandTypeUseCase
@@ -33,9 +32,8 @@ class BattleViewModel :
     private val commandStateRepository: CommandStateRepository by inject()
 
     private val getControllerByCommandTypeUseCase: GetControllerByCommandTypeUseCase by inject()
-    private val changeToMapUseCase: ChangeToMapUseCase by inject()
 
-    private val childController: ControllerCallback?
+    private val childController: ControllerCallback
         get() = getControllerByCommandTypeUseCase.invoke()
 
     @Composable
@@ -60,32 +58,22 @@ class BattleViewModel :
         }
     }
 
-    fun setMonsters(monsters: List<MonsterStatus>) {
-        CoroutineScope(Dispatchers.Default).launch {
-            battleMonsterRepository.setMonsters(monsters.toMutableList())
-        }
-    }
-
     fun reloadMonster() {
         CoroutineScope(Dispatchers.IO).launch {
             battleMonsterRepository.reload()
         }
     }
 
-    fun finishBattle() {
-        changeToMapUseCase.invoke()
-    }
-
     override fun moveStick(stick: Stick) {
-        childController?.moveStick(stick)
+        childController.moveStick(stick)
     }
 
     override fun pressA() {
-        childController?.pressA()
+        childController.pressA()
     }
 
     override fun pressB() {
-        childController?.pressB()
+        childController.pressB()
     }
 
     override fun pressM() {}
