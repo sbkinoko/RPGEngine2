@@ -10,7 +10,7 @@ interface BattleMonsterRepository : StatusRepository<MonsterStatus> {
 
     fun getMonsters(): List<MonsterStatus>
 
-    suspend fun setMonsters(monsters: List<MonsterStatus>)
+    fun setMonsters(monsters: List<MonsterStatus>)
 
-    suspend fun reload()
+    fun reload()
 }

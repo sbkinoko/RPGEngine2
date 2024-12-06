@@ -42,7 +42,7 @@ class StartBattleUseCaseImplTest : KoinTest {
 
         startBattleUseCase = StartBattleUseCaseImpl(
             battleMonsterRepository = object : BattleMonsterRepository {
-                override val monsterListFlow: MutableSharedFlow<List<MonsterStatus>>
+                override val monsterListStateFLow: StateFlow<List<MonsterStatus>>
                     get() = throw NotImplementedError()
 
                 override fun getStatus(id: Int): MonsterStatus {
@@ -53,7 +53,7 @@ class StartBattleUseCaseImplTest : KoinTest {
                     throw NotImplementedError()
                 }
 
-                override suspend fun setMonsters(monsters: List<MonsterStatus>) {
+                override fun setMonsters(monsters: List<MonsterStatus>) {
                     checkMonster++
                 }
 
@@ -61,7 +61,7 @@ class StartBattleUseCaseImplTest : KoinTest {
                     throw NotImplementedError()
                 }
 
-                override suspend fun reload() {
+                override fun reload() {
                     throw NotImplementedError()
                 }
 

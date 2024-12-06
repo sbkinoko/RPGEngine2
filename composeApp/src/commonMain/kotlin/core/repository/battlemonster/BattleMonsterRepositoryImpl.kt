@@ -26,7 +26,7 @@ class BattleMonsterRepositoryImpl : BattleMonsterRepository {
         return monsterList.toList()
     }
 
-    override suspend fun setMonsters(monsters: List<MonsterStatus>) {
+    override fun setMonsters(monsters: List<MonsterStatus>) {
         monsterList = monsters
     }
 
@@ -43,7 +43,7 @@ class BattleMonsterRepositoryImpl : BattleMonsterRepository {
         }
     }
 
-    override suspend fun reload() {
+    override fun reload() {
         monsterList = monsterList.toList()
     }
 }
