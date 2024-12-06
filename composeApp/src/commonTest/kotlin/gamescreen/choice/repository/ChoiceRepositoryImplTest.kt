@@ -42,6 +42,10 @@ class ChoiceRepositoryImplTest : KoinTest {
         )
     }
 
+    /**
+     * 入力した値に更新されているか確認
+     * flowが流れているか確認
+     */
     @Test
     fun pushState() {
         runBlocking {
