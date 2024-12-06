@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 class ChoiceRepositoryImpl : ChoiceRepository {
     override val commandTypeFlow: MutableSharedFlow<List<Choice>> = MutableSharedFlow(replay = 1)
 
+    //todo MutableStateFlowを利用
     override val commandStateFlow: StateFlow<List<Choice>> = commandTypeFlow.stateIn(
         scope = CoroutineScope(Dispatchers.Default),
         started = kotlinx.coroutines.flow.SharingStarted.WhileSubscribed(),
