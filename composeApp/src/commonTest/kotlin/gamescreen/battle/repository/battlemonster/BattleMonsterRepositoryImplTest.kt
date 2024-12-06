@@ -1,21 +1,25 @@
 package gamescreen.battle.repository.battlemonster
 
+import core.CoreModule
 import core.domain.status.MonsterStatus
 import core.domain.status.param.HP
 import core.domain.status.param.MP
 import core.repository.battlemonster.BattleMonsterRepository
-import core.repository.battlemonster.BattleMonsterRepositoryImpl
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
+import org.koin.test.KoinTest
+import org.koin.test.inject
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-// todo　coroutine.testを利用してテストするようにする
-//@OptIn(ExperimentalCoroutinesApi::class)
-class BattleMonsterRepositoryImplTest {
-    private lateinit var battleMonsterRepository: BattleMonsterRepository
-//    private val testDispatcher = StandardTestDispatcher()
+
+class BattleMonsterRepositoryImplTest : KoinTest {
+    private val battleMonsterRepository: BattleMonsterRepository by inject()
 
     private val monster1 = MonsterStatus(
         imgId = 1,
@@ -37,6 +41,7 @@ class BattleMonsterRepositoryImplTest {
             maxValue = 10,
         )
     )
+
     private val monsterList = listOf(
         monster1,
         monster2,
@@ -44,19 +49,36 @@ class BattleMonsterRepositoryImplTest {
 
     @BeforeTest
     fun beforeTest() {
-        battleMonsterRepository = BattleMonsterRepositoryImpl()
-//        Dispatchers.setMain(testDispatcher)
+        startKoin {
+            modules(
+                CoreModule,
+            )
+        }
     }
 
     @AfterTest
     fun afterTest() {
-//        Dispatchers.resetMain()
+        stopKoin()
     }
 
+    /**
+     * モンスターリストの更新テスト
+     */
     @Test
     fun setMonsterTest() {
-        // = runTest {
         runBlocking {
+            var count = 0
+            val collectJob = launch {
+                battleMonsterRepository.monsterListStateFLow.collect {
+                    assertEquals(
+                        expected = monsterList,
+                        actual = it,
+                    )
+
+                    count++
+                }
+            }
+
             battleMonsterRepository.setMonsters(
                 monsters = monsterList.toMutableList()
             )
@@ -72,41 +94,15 @@ class BattleMonsterRepositoryImplTest {
                     actual = this,
                 )
             }
+
+            delay(100)
+
+            assertEquals(
+                expected = 1,
+                actual = count,
+            )
+
+            collectJob.cancel()
         }
     }
-
-//    @Test
-//    fun checkFlow() {
-//        val collectValue: MutableList<MutableList<MonsterStatus>> = mutableListOf()
-//
-//        var collectJob: Job = Job()
-//        CoroutineScope(Dispatchers.IO).launch {
-//            collectJob = launch {
-//                battleMonsterRepository.monsterListFlow.collect {
-//                    collectValue.add(it.toMutableList())
-//                }
-//            }
-//        }
-//
-//        runBlocking {
-//            battleMonsterRepository.setMonster(
-//                monsters = monsterList.toMutableList(),
-//            )
-//
-//            battleMonsterRepository.setMonster(
-//                monsters = monsterList.toMutableList(),
-//            )
-//
-//            collectJob.cancel()
-//
-//            assertEquals(
-//                expected = 1,
-//                actual = collectValue.size
-//            )
-//            assertEquals(
-//                expected = monsterList,
-//                actual = collectValue[0],
-//            )
-//        }
-//    }
 }

@@ -16,10 +16,7 @@ import gamescreen.battle.usecase.getcontrollerbyscreentype.GetControllerByComman
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -28,7 +25,6 @@ import values.Constants
 class BattleViewModel :
     ControllerCallback,
     KoinComponent {
-    var monsters: StateFlow<List<MonsterStatus>>
 
     lateinit var players: List<PlayerStatus>
 
@@ -51,17 +47,11 @@ class BattleViewModel :
 
     val playerStatusFlow: StateFlow<List<PlayerStatus>> = playerStatusRepository.playerStatusFlow
 
+    val monsterStatusFlow: StateFlow<List<MonsterStatus>> =
+        battleMonsterRepository.monsterListStateFLow
 
     init {
         initPlayers()
-        monsters =
-            battleMonsterRepository.monsterListFlow.map {
-                it
-            }.stateIn(
-                scope = CoroutineScope(Dispatchers.IO),
-                started = SharingStarted.WhileSubscribed(5000),
-                initialValue = emptyList()
-            )
     }
 
     private fun initPlayers() {

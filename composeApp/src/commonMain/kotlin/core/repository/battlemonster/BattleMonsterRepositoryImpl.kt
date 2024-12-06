@@ -1,11 +1,22 @@
 package core.repository.battlemonster
 
 import core.domain.status.MonsterStatus
-import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class BattleMonsterRepositoryImpl : BattleMonsterRepository {
-    override val monsterListFlow: MutableSharedFlow<List<MonsterStatus>> = MutableSharedFlow()
     private var monsterList = listOf<MonsterStatus>()
+        set(value) {
+            field = value
+            mutableMonsterListStateFLow.value = value
+        }
+
+    private val mutableMonsterListStateFLow =
+        MutableStateFlow(monsterList)
+    override val monsterListStateFLow: StateFlow<List<MonsterStatus>> =
+        mutableMonsterListStateFLow.asStateFlow()
+
 
     override fun getStatus(id: Int): MonsterStatus {
         return monsterList[id]
@@ -17,7 +28,6 @@ class BattleMonsterRepositoryImpl : BattleMonsterRepository {
 
     override suspend fun setMonsters(monsters: List<MonsterStatus>) {
         monsterList = monsters
-        monsterListFlow.emit(monsterList)
     }
 
     override suspend fun setStatus(
@@ -31,11 +41,9 @@ class BattleMonsterRepositoryImpl : BattleMonsterRepository {
                 status
             }
         }
-        monsterListFlow.emit(monsterList)
     }
 
-
     override suspend fun reload() {
-        monsterListFlow.emit(monsterList)
+        monsterList = monsterList.toList()
     }
 }
