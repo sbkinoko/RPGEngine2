@@ -45,7 +45,7 @@ class SelectEnemyViewModel : BattleChildViewModel() {
 
     init {
         CoroutineScope(Dispatchers.Default).launch {
-            commandRepository.commandTypeFlow.collect {
+            commandRepository.commandStateFlow.collect {
                 updateArrow()
             }
         }

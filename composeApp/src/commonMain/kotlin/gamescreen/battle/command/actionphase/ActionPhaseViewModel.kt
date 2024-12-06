@@ -74,7 +74,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
 
     init {
         CoroutineScope(Dispatchers.IO).launch {
-            this@ActionPhaseViewModel.commandRepository.commandTypeFlow.collect {
+            this@ActionPhaseViewModel.commandRepository.commandStateFlow.collect {
                 if (it is AttackPhaseCommand) {
                     resetAttackingPlayer()
                 }
