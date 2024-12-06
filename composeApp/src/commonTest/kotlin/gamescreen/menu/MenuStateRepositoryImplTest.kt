@@ -34,16 +34,10 @@ class MenuStateRepositoryImplTest : KoinTest {
     @Test
     fun checkSet() {
         runBlocking {
-            var count1 = 0
-            val collectJob1 = launch {
+            var count = 0
+            val collectJob = launch {
                 menuStateRepository.commandTypeFlow.collect {
-                    count1++
-                }
-            }
-            var count2 = 0
-            val collectJob2 = launch {
-                menuStateRepository.commandStateFlow.collect {
-                    count2++
+                    count++
                 }
             }
 
@@ -57,11 +51,7 @@ class MenuStateRepositoryImplTest : KoinTest {
             )
             assertEquals(
                 expected = 1,
-                actual = count1
-            )
-            assertEquals(
-                expected = 1,
-                actual = count2
+                actual = count
             )
 
             menuStateRepository.pop()
@@ -73,32 +63,20 @@ class MenuStateRepositoryImplTest : KoinTest {
             )
             assertEquals(
                 expected = 2,
-                actual = count1
-            )
-            assertEquals(
-                expected = 2,
-                actual = count2
+                actual = count
             )
 
-            collectJob1.cancel()
-            collectJob2.cancel()
+            collectJob.cancel()
         }
     }
 
     @Test
     fun checkReset() {
         runBlocking {
-            var count1 = 0
-            val collectJob1 = launch {
+            var count = 0
+            val collectJob = launch {
                 menuStateRepository.commandTypeFlow.collect {
-                    count1++
-                }
-            }
-
-            var count2 = 0
-            val collectJob2 = launch {
-                menuStateRepository.commandStateFlow.collect {
-                    count2++
+                    count++
                 }
             }
 
@@ -120,11 +98,7 @@ class MenuStateRepositoryImplTest : KoinTest {
             // セット2回とリセット分
             assertEquals(
                 expected = 3,
-                actual = count1
-            )
-            assertEquals(
-                expected = 1,
-                actual = count2
+                actual = count
             )
 
             // popできないことを確認
@@ -137,15 +111,11 @@ class MenuStateRepositoryImplTest : KoinTest {
             )
             assertEquals(
                 expected = 3,
-                actual = count1
-            )
-            assertEquals(
-                expected = 1,
-                actual = count2
+                actual = count
             )
 
-            collectJob1.cancel()
-            collectJob2.cancel()
+            collectJob.cancel()
+
         }
     }
 }
