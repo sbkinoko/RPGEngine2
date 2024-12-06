@@ -1,20 +1,35 @@
 package gamescreen.battle.repository.commandstate
 
+import gamescreen.battle.BattleModule
 import gamescreen.battle.domain.MainCommand
 import gamescreen.battle.domain.PlayerActionCommand
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
+import org.koin.test.KoinTest
+import org.koin.test.inject
+import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class CommandStateRepositoryImplTest {
-    private lateinit var repository: CommandStateRepository
+class CommandStateRepositoryImplTest : KoinTest {
+    private val repository: CommandStateRepository by inject()
 
     @BeforeTest
     fun beforeTest() {
-        repository = CommandStateRepositoryImpl()
+        startKoin {
+            modules(
+                BattleModule,
+            )
+        }
+    }
+
+    @AfterTest
+    fun afterTest() {
+        stopKoin()
     }
 
     @Test
