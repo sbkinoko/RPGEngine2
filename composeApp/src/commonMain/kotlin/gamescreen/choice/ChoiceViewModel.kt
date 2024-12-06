@@ -12,18 +12,18 @@ import org.koin.core.component.inject
 class ChoiceViewModel : SelectableChildViewModel<List<Choice>>() {
     val commandRepository: ChoiceRepository by inject()
 
-    private val choiceList
-        get() = commandRepository.nowCommandType
+    private var choiceList: List<Choice> = emptyList()
 
-    val choiceStateFlow: StateFlow<List<Choice>> = commandRepository.commandStateFlow
+    val choiceStateFlow: StateFlow<List<Choice>> = commandRepository.choiceListStateFlow
 
     init {
         CoroutineScope(Dispatchers.Main).launch {
-            commandRepository.commandTypeFlow.collect {
+            commandRepository.choiceListStateFlow.collect {
                 selectManager = SelectManager(
                     width = 1,
                     itemNum = choiceList.size,
                 )
+                choiceList = it
             }
         }
     }

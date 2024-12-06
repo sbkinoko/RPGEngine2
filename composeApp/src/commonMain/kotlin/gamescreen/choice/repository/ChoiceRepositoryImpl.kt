@@ -1,39 +1,21 @@
 package gamescreen.choice.repository
 
 import gamescreen.choice.Choice
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.asStateFlow
 
 class ChoiceRepositoryImpl : ChoiceRepository {
-    override val commandTypeFlow: MutableSharedFlow<List<Choice>> = MutableSharedFlow(replay = 1)
-
-    //todo MutableStateFlowを利用
-    override val commandStateFlow: StateFlow<List<Choice>> = commandTypeFlow.stateIn(
-        scope = CoroutineScope(Dispatchers.Default),
-        started = kotlinx.coroutines.flow.SharingStarted.WhileSubscribed(),
-        initialValue = emptyList()
-    )
-
-    override val nowCommandType: List<Choice>
-        get() = flg
-
-    private var flg: List<Choice> = emptyList()
-        set(value) {
-            field = value
-            CoroutineScope(Dispatchers.Default).launch {
-                commandTypeFlow.emit(field)
-            }
-        }
+    private val mutableCommandStateFlow: MutableStateFlow<List<Choice>> =
+        MutableStateFlow(emptyList())
+    override val choiceListStateFlow: StateFlow<List<Choice>> =
+        mutableCommandStateFlow.asStateFlow()
 
     override fun pop() {
-        flg = emptyList()
+        mutableCommandStateFlow.value = emptyList()
     }
 
     override fun push(commandType: List<Choice>) {
-        flg = commandType
+        mutableCommandStateFlow.value = commandType
     }
 }

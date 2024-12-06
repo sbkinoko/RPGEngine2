@@ -1,6 +1,12 @@
 package gamescreen.choice.repository
 
-import core.repository.command.CommandRepository
 import gamescreen.choice.Choice
+import kotlinx.coroutines.flow.StateFlow
 
-interface ChoiceRepository : CommandRepository<List<Choice>>
+interface ChoiceRepository {
+    val choiceListStateFlow: StateFlow<List<Choice>>
+
+    fun push(commandType: List<Choice>)
+
+    fun pop()
+}
