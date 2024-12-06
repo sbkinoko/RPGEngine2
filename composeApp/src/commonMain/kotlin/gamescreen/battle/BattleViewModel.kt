@@ -1,22 +1,14 @@
 package gamescreen.battle
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
-import androidx.compose.runtime.collectAsState
 import controller.domain.ControllerCallback
 import controller.domain.Stick
 import core.domain.status.MonsterStatus
 import core.domain.status.PlayerStatus
 import core.repository.battlemonster.BattleMonsterRepository
 import core.repository.player.PlayerStatusRepository
-import gamescreen.battle.domain.BattleCommandType
 import gamescreen.battle.repository.commandstate.CommandStateRepository
 import gamescreen.battle.usecase.getcontrollerbyscreentype.GetControllerByCommandTypeUseCase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import values.Constants
@@ -39,13 +31,6 @@ class BattleViewModel :
     val commandStateFlow =
         commandStateRepository.commandStateFlow
 
-    @Composable
-    fun CommandStateFlow(): State<BattleCommandType> {
-        return commandStateRepository.commandTypeFlow.collectAsState(
-            commandStateRepository.nowCommandType
-        )
-    }
-
     val playerStatusFlow: StateFlow<List<PlayerStatus>> = playerStatusRepository.playerStatusFlow
 
     val monsterStatusFlow: StateFlow<List<MonsterStatus>> =
@@ -62,9 +47,7 @@ class BattleViewModel :
     }
 
     fun reloadMonster() {
-        CoroutineScope(Dispatchers.IO).launch {
-            battleMonsterRepository.reload()
-        }
+        battleMonsterRepository.reload()
     }
 
     override fun moveStick(stick: Stick) {
