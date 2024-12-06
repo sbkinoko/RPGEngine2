@@ -4,6 +4,7 @@ import controller.domain.ControllerCallback
 import core.domain.ScreenType
 import core.repository.screentype.ScreenTypeRepository
 import gamescreen.battle.BattleViewModel
+import gamescreen.choice.Choice
 import gamescreen.choice.ChoiceViewModel
 import gamescreen.choice.repository.ChoiceRepository
 import gamescreen.map.viewmodel.MapViewModel
@@ -36,6 +37,7 @@ class ScreenTypeManager(
         )
     val controllerFlow = mutableControllerFlow.asStateFlow()
 
+    private var choiceList: List<Choice> = emptyList()
 
     init {
         CoroutineScope(Dispatchers.Main).launch {
@@ -45,7 +47,8 @@ class ScreenTypeManager(
         }
 
         CoroutineScope(Dispatchers.Main).launch {
-            choiceRepository.commandStateFlow.collect {
+            choiceRepository.choiceListStateFlow.collect {
+                choiceList = it
                 updateScreenType()
             }
         }
@@ -58,7 +61,7 @@ class ScreenTypeManager(
     }
 
     private fun updateScreenType() {
-        if (choiceRepository.nowCommandType.isNotEmpty()) {
+        if (choiceList.isNotEmpty()) {
             mutableControllerFlow.value = choiceViewModel
             return
         }
