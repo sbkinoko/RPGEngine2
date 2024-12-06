@@ -2,8 +2,6 @@ package gamescreen.battle.service.isannihilation
 
 import common.status.MonsterStatusTest.Companion.getMonster
 import common.status.MonsterStatusTest.Companion.getNotActiveMonster
-import common.status.PlayerStatusTest.Companion.getInActivePlayer
-import common.status.PlayerStatusTest.Companion.getPlayer
 import gamescreen.battle.BattleModule
 import kotlinx.coroutines.runBlocking
 import org.koin.core.context.startKoin
@@ -15,7 +13,7 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class IsAnnihilationServiceImplTest : KoinTest {
+class MonsterIsAnnihilationServiceImplTest : KoinTest {
     private val isAnnihilationService: IsAnnihilationService by inject()
 
     @BeforeTest
@@ -32,6 +30,9 @@ class IsAnnihilationServiceImplTest : KoinTest {
         stopKoin()
     }
 
+    /**
+     * モンスターがすべてactiveの場合の全滅チェック
+     */
     @Test
     fun checkMonsterActive() {
         runBlocking {
@@ -50,6 +51,30 @@ class IsAnnihilationServiceImplTest : KoinTest {
         }
     }
 
+    /**
+     * モンスターがactiveとinactiveの場合の全滅チェック
+     */
+    @Test
+    fun checkMonsterActiveAndNotActive() {
+        runBlocking {
+            val activeMonsterList = listOf(
+                getMonster(),
+                getNotActiveMonster(),
+                getNotActiveMonster(),
+            )
+
+            assertEquals(
+                expected = false,
+                actual = isAnnihilationService(
+                    activeMonsterList
+                )
+            )
+        }
+    }
+
+    /**
+     * モンスターがすべてinactiveの場合の全滅チェック
+     */
     @Test
     fun checkMonsterInActive() {
         runBlocking {
@@ -63,42 +88,6 @@ class IsAnnihilationServiceImplTest : KoinTest {
                 expected = true,
                 actual = isAnnihilationService(
                     activeMonsterList
-                )
-            )
-        }
-    }
-
-    @Test
-    fun checkPlayerActive() {
-        runBlocking {
-            val activePlayerList = listOf(
-                getPlayer(),
-                getPlayer(),
-                getPlayer(),
-            )
-
-            assertEquals(
-                expected = false,
-                actual = isAnnihilationService(
-                    activePlayerList,
-                )
-            )
-        }
-    }
-
-    @Test
-    fun checkPlayerInActive() {
-        runBlocking {
-            val activePlayerList = listOf(
-                getInActivePlayer(),
-                getInActivePlayer(),
-                getInActivePlayer(),
-            )
-
-            assertEquals(
-                expected = true,
-                actual = isAnnihilationService(
-                    activePlayerList,
                 )
             )
         }
