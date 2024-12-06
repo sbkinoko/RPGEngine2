@@ -1,10 +1,9 @@
-package gamescreen.battle.repository.battlemonster
+package core.repository.battlemonster
 
 import core.CoreModule
 import core.domain.status.MonsterStatus
 import core.domain.status.param.HP
 import core.domain.status.param.MP
-import core.repository.battlemonster.BattleMonsterRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
