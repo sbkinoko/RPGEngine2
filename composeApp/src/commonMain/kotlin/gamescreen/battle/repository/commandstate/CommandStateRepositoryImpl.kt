@@ -12,17 +12,6 @@ import kotlinx.coroutines.launch
 
 class CommandStateRepositoryImpl : CommandStateRepository {
 
-    override val commandTypeFlow: MutableSharedFlow<BattleCommandType> =
-        MutableSharedFlow(replay = 1)
-
-    private val mutableCommandStateFlow =
-        MutableStateFlow(nowCommandType)
-    override val commandStateFlow: StateFlow<BattleCommandType> =
-        mutableCommandStateFlow.asStateFlow()
-
-    override val nowCommandType: BattleCommandType
-        get() = battleCommandTypeQueue.last()
-
     private var battleCommandTypeQueue: List<BattleCommandType> = listOf(MainCommand)
         set(value) {
             field = value
@@ -33,6 +22,17 @@ class CommandStateRepositoryImpl : CommandStateRepository {
                 )
             }
         }
+
+    override val nowCommandType: BattleCommandType
+        get() = battleCommandTypeQueue.last()
+
+    override val commandTypeFlow: MutableSharedFlow<BattleCommandType> =
+        MutableSharedFlow(replay = 1)
+
+    private val mutableCommandStateFlow =
+        MutableStateFlow(nowCommandType)
+    override val commandStateFlow: StateFlow<BattleCommandType> =
+        mutableCommandStateFlow.asStateFlow()
 
     override fun init() {
         battleCommandTypeQueue = listOf(CommandStateRepository.INITIAL_COMMAND_STATE)
