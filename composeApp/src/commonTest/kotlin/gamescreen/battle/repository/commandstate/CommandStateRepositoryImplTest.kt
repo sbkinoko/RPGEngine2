@@ -288,7 +288,6 @@ class CommandStateRepositoryImplTest {
                 }
             }
 
-
             //mainのままなのでcountに加算はなし
             repository.init()
 
@@ -320,6 +319,10 @@ class CommandStateRepositoryImplTest {
             assertEquals(
                 expected = 3,
                 actual = count1,
+            )
+            assertEquals(
+                expected = 3,
+                actual = count2,
             )
 
             repository.popTo {
@@ -360,7 +363,7 @@ class CommandStateRepositoryImplTest {
 
             var count2 = 0
             val collectJob2 = launch {
-                repository.commandTypeFlow.collect {
+                repository.commandStateFlow.collect {
                     count2++
                 }
             }
