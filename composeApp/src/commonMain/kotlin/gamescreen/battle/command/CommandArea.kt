@@ -1,6 +1,8 @@
 package gamescreen.battle.command
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import gamescreen.battle.BattleViewModel
 import gamescreen.battle.command.actionphase.ActionPhase
@@ -28,7 +30,11 @@ fun CommandArea(
     modifier: Modifier = Modifier,
     battleViewModel: BattleViewModel = koinInject(),
 ) {
-    when (val nowState = battleViewModel.CommandStateFlow().value) {
+    val state by battleViewModel
+        .commandStateFlow
+        .collectAsState()
+
+    when (val nowState = state) {
         is MainCommand -> BattleMainCommand(
             modifier = modifier,
         )

@@ -33,8 +33,8 @@ class MenuStateRepositoryImplTest : KoinTest {
 
     @Test
     fun checkSet() {
-        var count = 0
         runBlocking {
+            var count = 0
             val collectJob = launch {
                 menuStateRepository.commandTypeFlow.collect {
                     count++
@@ -72,8 +72,8 @@ class MenuStateRepositoryImplTest : KoinTest {
 
     @Test
     fun checkReset() {
-        var count = 0
         runBlocking {
+            var count = 0
             val collectJob = launch {
                 menuStateRepository.commandTypeFlow.collect {
                     count++
@@ -115,6 +115,7 @@ class MenuStateRepositoryImplTest : KoinTest {
             )
 
             collectJob.cancel()
+
         }
     }
 }

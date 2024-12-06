@@ -33,10 +33,17 @@ class CommandStateRepositoryImplTest {
         )
 
         runBlocking {
-            var count = 0
+            var count1 = 0
             val collectJob = launch {
                 repository.commandTypeFlow.collect {
-                    count++
+                    count1++
+                }
+            }
+
+            var count2 = 0
+            val collectJob2 = launch {
+                repository.commandStateFlow.collect {
+                    count2++
                 }
             }
 
@@ -53,7 +60,11 @@ class CommandStateRepositoryImplTest {
 
             assertEquals(
                 expected = 1,
-                actual = count
+                actual = count1
+            )
+            assertEquals(
+                expected = 1,
+                actual = count2
             )
 
             val playerID2 = 2
@@ -74,20 +85,32 @@ class CommandStateRepositoryImplTest {
 
             assertEquals(
                 expected = 2,
-                actual = count
+                actual = count1
+            )
+            assertEquals(
+                expected = 2,
+                actual = count2
             )
 
             collectJob.cancel()
+            collectJob2.cancel()
         }
     }
 
     @Test
     fun popState() {
         runBlocking {
-            var count = 0
+            var count1 = 0
             val collectJob = launch {
                 repository.commandTypeFlow.collect {
-                    count++
+                    count1++
+                }
+            }
+
+            var count2 = 0
+            val collectJob2 = launch {
+                repository.commandStateFlow.collect {
+                    count2++
                 }
             }
 
@@ -114,7 +137,11 @@ class CommandStateRepositoryImplTest {
 
             assertEquals(
                 expected = 2,
-                actual = count,
+                actual = count1,
+            )
+            assertEquals(
+                expected = 2,
+                actual = count2,
             )
 
             repository.pop()
@@ -123,7 +150,11 @@ class CommandStateRepositoryImplTest {
 
             assertEquals(
                 expected = 3,
-                actual = count,
+                actual = count1,
+            )
+            assertEquals(
+                expected = 3,
+                actual = count2,
             )
 
             assertEquals(
@@ -137,7 +168,11 @@ class CommandStateRepositoryImplTest {
 
             assertEquals(
                 expected = 4,
-                actual = count
+                actual = count1
+            )
+            assertEquals(
+                expected = 4,
+                actual = count2
             )
 
             assertEquals(
@@ -146,16 +181,23 @@ class CommandStateRepositoryImplTest {
             )
 
             collectJob.cancel()
+            collectJob2.cancel()
         }
     }
 
     @Test
     fun checkInit() {
         runBlocking {
-            var count = 0
+            var count1 = 0
             val collectJob = launch {
                 repository.commandTypeFlow.collect {
-                    count++
+                    count1++
+                }
+            }
+            var count2 = 0
+            val collectJob2 = launch {
+                repository.commandStateFlow.collect {
+                    count2++
                 }
             }
 
@@ -180,7 +222,11 @@ class CommandStateRepositoryImplTest {
 
             assertEquals(
                 expected = 2,
-                actual = count,
+                actual = count1,
+            )
+            assertEquals(
+                expected = 2,
+                actual = count2,
             )
 
             repository.init()
@@ -189,7 +235,11 @@ class CommandStateRepositoryImplTest {
             //　initで変化したことを確認
             assertEquals(
                 expected = 3,
-                actual = count,
+                actual = count1,
+            )
+            assertEquals(
+                expected = 3,
+                actual = count2,
             )
 
             assertEquals(
@@ -204,25 +254,37 @@ class CommandStateRepositoryImplTest {
 
             assertEquals(
                 expected = 3,
-                actual = count,
+                actual = count1,
             )
+            assertEquals(
+                expected = 3,
+                actual = count2,
+            )
+
             assertEquals(
                 expected = MainCommand,
                 actual = repository.nowCommandType,
             )
 
             collectJob.cancel()
+            collectJob2.cancel()
         }
     }
 
     @Test
     fun popTo() {
         runBlocking {
-            var count = 0
-
+            var count1 = 0
             val collectJob = launch {
                 repository.commandTypeFlow.collect {
-                    count++
+                    count1++
+                }
+            }
+
+            var count2 = 0
+            val collectJob2 = launch {
+                repository.commandStateFlow.collect {
+                    count2++
                 }
             }
 
@@ -256,7 +318,11 @@ class CommandStateRepositoryImplTest {
 
             assertEquals(
                 expected = 3,
-                actual = count,
+                actual = count1,
+            )
+            assertEquals(
+                expected = 3,
+                actual = count2,
             )
 
             repository.popTo {
@@ -268,7 +334,11 @@ class CommandStateRepositoryImplTest {
 
             assertEquals(
                 expected = 4,
-                actual = count,
+                actual = count1,
+            )
+            assertEquals(
+                expected = 4,
+                actual = count2,
             )
 
             assertEquals(
@@ -277,17 +347,24 @@ class CommandStateRepositoryImplTest {
             )
 
             collectJob.cancel()
+            collectJob2.cancel()
         }
     }
 
     @Test
     fun popToMain() {
         runBlocking {
-            var count = 0
-
+            var count1 = 0
             val collectJob = launch {
                 repository.commandTypeFlow.collect {
-                    count++
+                    count1++
+                }
+            }
+
+            var count2 = 0
+            val collectJob2 = launch {
+                repository.commandStateFlow.collect {
+                    count2++
                 }
             }
 
@@ -321,7 +398,11 @@ class CommandStateRepositoryImplTest {
 
             assertEquals(
                 expected = 3,
-                actual = count,
+                actual = count1,
+            )
+            assertEquals(
+                expected = 3,
+                actual = count2,
             )
 
             repository.popTo {
@@ -333,7 +414,11 @@ class CommandStateRepositoryImplTest {
 
             assertEquals(
                 expected = 4,
-                actual = count,
+                actual = count1,
+            )
+            assertEquals(
+                expected = 4,
+                actual = count2,
             )
 
             assertEquals(
@@ -342,6 +427,7 @@ class CommandStateRepositoryImplTest {
             )
 
             collectJob.cancel()
+            collectJob2.cancel()
         }
     }
 }
