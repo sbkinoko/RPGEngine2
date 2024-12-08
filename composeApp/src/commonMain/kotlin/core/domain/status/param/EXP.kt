@@ -1,5 +1,7 @@
 package core.domain.status.param
 
+import values.TextData.Companion.NEED_EXP_MAX_LEVEL
+
 class EXP(list: List<Int>) {
 
     private val totalList: List<Int>
@@ -17,7 +19,7 @@ class EXP(list: List<Int>) {
     val needExp: String
         get() {
             if (totalList.size + 1 <= level) {
-                return "最大レベル"
+                return NEED_EXP_MAX_LEVEL
             }
 
             return (totalList[level - 1] - exp).toString()
