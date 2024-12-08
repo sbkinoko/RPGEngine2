@@ -1,5 +1,7 @@
 package core.domain.status.param
 
+import values.TextData.Companion.NEED_EXP_MAX_LEVEL
+
 class EXP(list: List<Int>) {
 
     private val totalList: List<Int>
@@ -11,7 +13,16 @@ class EXP(list: List<Int>) {
     var exp: Int = INITIAL_EXP
         set(value) {
             field = value
-            _level = getLevel(value)
+            _level = calcLevel()
+        }
+
+    val needExp: String
+        get() {
+            if (totalList.size + 1 <= level) {
+                return NEED_EXP_MAX_LEVEL
+            }
+
+            return (totalList[level - 1] - exp).toString()
         }
 
     init {
@@ -20,14 +31,14 @@ class EXP(list: List<Int>) {
             sum += i
             sum
         }
+        exp = INITIAL_EXP
     }
 
-    private fun getLevel(
-        totalExp: Int,
+    private fun calcLevel(
     ): Int {
         //現在の経験値で到達しているレベル
         totalList.mapIndexed { index, exp ->
-            if (totalExp < exp) {
+            if (this.exp < exp) {
                 return index + 1
             }
         }
@@ -37,7 +48,7 @@ class EXP(list: List<Int>) {
     }
 
     companion object {
-        const val INITIAL_LEVEL = 0
+        const val INITIAL_LEVEL = 1
         const val INITIAL_EXP = 0
 
         val type1 = listOf(
