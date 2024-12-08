@@ -1,18 +1,35 @@
 package gamescreen.menu.main
 
+import core.CoreModule
+import gamescreen.menu.MenuModule
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
+import org.koin.test.KoinTest
+import org.koin.test.inject
+import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class MainMenuViewModelTest {
-    private lateinit var viewModel: MainMenuViewModel
+class MainMenuViewModelTest : KoinTest {
+    private val viewModel: MainMenuViewModel by inject()
 
     @BeforeTest
     fun beforeTest() {
-        viewModel = MainMenuViewModel()
+        startKoin {
+            modules(
+                CoreModule,
+                MenuModule,
+            )
+        }
+    }
+
+    @AfterTest
+    fun afterTest() {
+        stopKoin()
     }
 
     @Test
@@ -28,6 +45,7 @@ class MainMenuViewModelTest {
                     count++
                 }
             }
+
             delay(100)
 
             viewModel.setSelected(1)

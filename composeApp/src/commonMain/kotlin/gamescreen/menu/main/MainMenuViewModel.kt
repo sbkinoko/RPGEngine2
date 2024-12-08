@@ -22,9 +22,6 @@ class MainMenuViewModel : MenuChildViewModel(),
     val moneyStateFlow = moneyRepository.moneyStateFLow
 
     override var timer = Timer(200)
-    override fun isBoundedImpl(commandType: MenuType): Boolean {
-        return commandType == MenuType.Main
-    }
 
     val list: List<MainMenuItem> = List(5) {
         MainMenuItem(
@@ -41,13 +38,15 @@ class MainMenuViewModel : MenuChildViewModel(),
         itemNum = itemNum,
     )
 
+    override fun isBoundedImpl(commandType: MenuType): Boolean {
+        return commandType == MenuType.Main
+    }
+
     override fun goNextImpl() {
         menuStateRepository.push(
             selectManager.selected.toMenuType()
         )
     }
-
-
 
     override fun pressB() {
         closeMenuUseCase.invoke()
