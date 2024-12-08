@@ -31,6 +31,14 @@ class MoneyRepositoryImplTest : KoinTest {
     }
 
     @Test
+    fun initial() {
+        assertEquals(
+            expected = MoneyRepository.INITIAL_MONEY,
+            actual = moneyRepository.moneyStateFLow.value
+        )
+    }
+
+    @Test
     fun setMoney() {
         runBlocking {
             var count = 0

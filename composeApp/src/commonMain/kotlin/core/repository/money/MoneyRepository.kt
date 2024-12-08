@@ -6,4 +6,8 @@ interface MoneyRepository {
     val moneyStateFLow: StateFlow<Int>
 
     fun setMoney(money: Int)
+
+    companion object {
+        const val INITIAL_MONEY = 0
+    }
 }
