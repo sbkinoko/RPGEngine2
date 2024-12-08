@@ -1,6 +1,7 @@
 package core.usecase.updateparameter
 
 import core.domain.status.PlayerStatus
+import core.domain.status.param.EXP
 import core.domain.status.param.HP
 import core.domain.status.param.MP
 import core.repository.status.StatusRepository
@@ -21,6 +22,9 @@ class UpdatePlayerStatusUseCaseImplTest {
         ),
         skillList = listOf(),
         toolList = listOf(1, 2, 3, 4, 5),
+        exp = EXP(
+            EXP.type1,
+        ),
     )
 
     private val statusRepository: StatusRepository<PlayerStatus> =

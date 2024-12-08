@@ -1,6 +1,7 @@
 package core.repository.player
 
 import core.domain.status.PlayerStatus
+import core.domain.status.param.EXP
 import core.domain.status.param.HP
 import core.domain.status.param.MP
 import core.repository.item.skill.ATTACK_TO_2
@@ -58,7 +59,10 @@ class PlayerStatusRepositoryImpl : PlayerStatusRepository {
                         ToolRepositoryImpl.HEAL_TOOL,
                         ToolRepositoryImpl.HEAL_TOOL,
                         ToolRepositoryImpl.HEAL_TOOL,
-                    )
+                    ),
+                    exp = EXP(
+                        EXP.type1,
+                    ),
                 )
 
                 1 -> PlayerStatus(
@@ -78,7 +82,10 @@ class PlayerStatusRepositoryImpl : PlayerStatusRepository {
                     toolList = listOf(
                         ToolRepositoryImpl.HEAL_TOOL,
                         ToolRepositoryImpl.HEAL_TOOL,
-                    )
+                    ),
+                    exp = EXP(
+                        EXP.type1,
+                    ),
                 )
 
                 2 -> PlayerStatus(
@@ -99,7 +106,10 @@ class PlayerStatusRepositoryImpl : PlayerStatusRepository {
                         ToolRepositoryImpl.HEAL_TOOL,
                         ToolRepositoryImpl.HEAL_TOOL,
                         ToolRepositoryImpl.HEAL_TOOL,
-                    )
+                    ),
+                    exp = EXP(
+                        EXP.type1,
+                    ),
                 )
 
                 3 -> PlayerStatus(
@@ -121,7 +131,10 @@ class PlayerStatusRepositoryImpl : PlayerStatusRepository {
                         ToolRepositoryImpl.HEAL_TOOL,
                         ToolRepositoryImpl.HEAL_TOOL,
                         ToolRepositoryImpl.HEAL_TOOL,
-                    )
+                    ),
+                    exp = EXP(
+                        EXP.type1,
+                    ),
                 )
 
                 else -> throw IllegalStateException()

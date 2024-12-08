@@ -5,6 +5,7 @@ import core.domain.item.TargetType
 import core.domain.item.skill.HealSkill
 import core.domain.item.skill.Skill
 import core.domain.status.PlayerStatus
+import core.domain.status.param.EXP
 import core.domain.status.param.HP
 import core.domain.status.param.MP
 import core.repository.item.skill.SkillRepository
@@ -31,6 +32,9 @@ class CheckCanUseSkillUseCaseImplTest {
         mp = MP(maxValue = 10, value = 10),
         skillList = listOf(),
         toolList = listOf(),
+        exp = EXP(
+            EXP.type1,
+        ),
     )
 
     private val playerStatusNoMP = PlayerStatus(
@@ -39,6 +43,9 @@ class CheckCanUseSkillUseCaseImplTest {
         mp = MP(maxValue = 10, value = 0),
         skillList = listOf(),
         toolList = listOf(),
+        exp = EXP(
+            EXP.type1,
+        ),
     )
 
     @BeforeTest

@@ -2,6 +2,7 @@ package common.status
 
 import core.domain.status.PlayerStatus
 import core.domain.status.Status
+import core.domain.status.param.EXP
 import core.domain.status.param.HP
 import core.domain.status.param.MP
 import kotlin.test.BeforeTest
@@ -23,6 +24,9 @@ class StatusTest {
             ),
             skillList = listOf(),
             toolList = listOf(),
+            exp = EXP(
+                EXP.type1,
+            ),
         )
     }
 
