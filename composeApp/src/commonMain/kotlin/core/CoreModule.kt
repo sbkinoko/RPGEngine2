@@ -6,6 +6,8 @@ import core.repository.item.skill.SkillRepository
 import core.repository.item.skill.SkillRepositoryImpl
 import core.repository.item.tool.ToolRepository
 import core.repository.item.tool.ToolRepositoryImpl
+import core.repository.money.MoneyRepository
+import core.repository.money.MoneyRepositoryImpl
 import core.repository.player.PlayerStatusRepository
 import core.repository.player.PlayerStatusRepositoryImpl
 import core.usecase.changetomap.ChangeToMapUseCase
@@ -36,6 +38,10 @@ val CoreModule = module {
 
     single<ToolRepository> {
         ToolRepositoryImpl()
+    }
+
+    single<MoneyRepository> {
+        MoneyRepositoryImpl()
     }
 
     single<CheckCanUseSkillUseCase> {
