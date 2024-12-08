@@ -10,7 +10,10 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
@@ -24,6 +27,10 @@ fun MainMenu(
     modifier: Modifier = Modifier,
     mainMenuViewModel: MainMenuViewModel = koinInject(),
 ) {
+    val money by mainMenuViewModel
+        .moneyStateFlow
+        .collectAsState()
+
     Column(
         modifier = modifier
             .background(
@@ -72,6 +79,10 @@ fun MainMenu(
                 }
             }
         }
+
+        Text(
+            "所持金:$money"
+        )
     }
 }
 

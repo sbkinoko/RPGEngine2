@@ -2,6 +2,7 @@ package gamescreen.menu.main
 
 import common.Timer
 import core.menu.PairedList
+import core.repository.money.MoneyRepository
 import gamescreen.menu.MenuChildViewModel
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.domain.SelectManager
@@ -17,16 +18,10 @@ class MainMenuViewModel : MenuChildViewModel(),
 
     private val closeMenuUseCase: CloseMenuUseCase by inject()
 
-    override var timer = Timer(200)
-    override fun isBoundedImpl(commandType: MenuType): Boolean {
-        return commandType == MenuType.Main
-    }
+    private val moneyRepository: MoneyRepository by inject()
+    val moneyStateFlow = moneyRepository.moneyStateFLow
 
-    override fun goNextImpl() {
-        menuStateRepository.push(
-            selectManager.selected.toMenuType()
-        )
-    }
+    override var timer = Timer(200)
 
     val list: List<MainMenuItem> = List(5) {
         MainMenuItem(
@@ -42,6 +37,16 @@ class MainMenuViewModel : MenuChildViewModel(),
         width = 2,
         itemNum = itemNum,
     )
+
+    override fun isBoundedImpl(commandType: MenuType): Boolean {
+        return commandType == MenuType.Main
+    }
+
+    override fun goNextImpl() {
+        menuStateRepository.push(
+            selectManager.selected.toMenuType()
+        )
+    }
 
     override fun pressB() {
         closeMenuUseCase.invoke()
