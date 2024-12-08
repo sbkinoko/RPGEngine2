@@ -1,6 +1,7 @@
 package common.status
 
 import core.domain.status.PlayerStatus
+import core.domain.status.param.EXP
 import core.domain.status.param.HP
 import core.domain.status.param.MP
 
@@ -20,6 +21,9 @@ class PlayerStatusTest {
             ),
             skillList = listOf(),
             toolList = listOf(),
+            exp = EXP(
+                EXP.type1,
+            ),
         )
 
         fun getInActivePlayer() = getPlayer().copy(

@@ -3,6 +3,7 @@ package org.example.project.preview.battle
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import core.domain.status.PlayerStatus
+import core.domain.status.param.EXP
 import core.domain.status.param.HP
 import core.domain.status.param.MP
 import gamescreen.battle.command.playeraction.PlayerAction
@@ -28,7 +29,10 @@ fun PlayerActionPreview() {
             ),
             toolList = listOf(
                 0,
-            )
+            ),
+            exp = EXP(
+                EXP.type1,
+            ),
         ),
     )
 }

@@ -5,6 +5,7 @@ import core.domain.item.TargetType
 import core.domain.item.tool.HealTool
 import core.domain.item.tool.Tool
 import core.domain.status.PlayerStatus
+import core.domain.status.param.EXP
 import core.domain.status.param.HP
 import core.domain.status.param.MP
 import core.repository.item.tool.ToolRepository
@@ -30,7 +31,10 @@ class UseToolUseCaseImplTest : KoinTest {
             value = 5,
         ),
         skillList = listOf(),
-        toolList = listOf()
+        toolList = listOf(),
+        exp = EXP(
+            EXP.type1,
+        ),
     )
 
     private lateinit var useToolUseCase: UseToolUseCase
