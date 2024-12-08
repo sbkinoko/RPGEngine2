@@ -9,6 +9,7 @@ class EXPTest {
         1
     }
 
+
     @Test
     fun initial() {
         val exp = EXP(expList)
@@ -49,6 +50,47 @@ class EXPTest {
         assertEquals(
             expected = MAX_LEVEL,
             actual = exp.level
+        )
+    }
+
+    @Test
+    fun needExp() {
+        val exp = EXP(
+            listOf(
+                10,
+                10,
+            )
+        )
+        //0なので10必要
+        assertEquals(
+            expected = "10",
+            actual = exp.needExp
+        )
+
+        exp.exp = 9
+        assertEquals(
+            expected = "1",
+            actual = exp.needExp
+        )
+        exp.exp = 10
+        assertEquals(
+            expected = "10",
+            actual = exp.needExp
+        )
+        exp.exp = 19
+        assertEquals(
+            expected = "1",
+            actual = exp.needExp
+        )
+        exp.exp = 20
+        assertEquals(
+            expected = "最大レベル",
+            actual = exp.needExp
+        )
+        exp.exp = 21
+        assertEquals(
+            expected = "最大レベル",
+            actual = exp.needExp
         )
     }
 }
