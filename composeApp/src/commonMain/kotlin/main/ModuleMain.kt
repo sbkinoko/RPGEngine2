@@ -4,7 +4,7 @@ import core.repository.screentype.ScreenTypeRepository
 import core.repository.screentype.ScreenTypeRepositoryImpl
 import org.koin.dsl.module
 
-val MainModule = module {
+val ModuleMain = module {
     single<MainViewModel> {
         MainViewModel()
     }

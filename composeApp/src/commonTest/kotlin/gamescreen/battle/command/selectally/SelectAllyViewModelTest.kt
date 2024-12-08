@@ -1,6 +1,6 @@
 package gamescreen.battle.command.selectally
 
-import gamescreen.battle.BattleModule
+import gamescreen.battle.ModuleBattle
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
@@ -14,7 +14,7 @@ class SelectAllyViewModelTest : KoinTest {
     fun beforeTest() {
         startKoin {
             modules(
-                BattleModule,
+                ModuleBattle,
             )
         }
     }

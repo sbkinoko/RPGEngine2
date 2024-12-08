@@ -1,9 +1,9 @@
 package core.usecase.updateparameter
 
 import common.status.MonsterStatusTest.Companion.getMonster
-import core.CoreModule
+import core.ModuleCore
 import core.repository.battlemonster.BattleMonsterRepository
-import gamescreen.battle.BattleModule
+import gamescreen.battle.ModuleBattle
 import kotlinx.coroutines.runBlocking
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -23,8 +23,8 @@ class UpdateMonsterParameterUseCaseTest : KoinTest {
     fun beforeTest() {
         startKoin {
             modules(
-                CoreModule,
-                BattleModule,
+                ModuleCore,
+                ModuleBattle,
             )
         }
     }

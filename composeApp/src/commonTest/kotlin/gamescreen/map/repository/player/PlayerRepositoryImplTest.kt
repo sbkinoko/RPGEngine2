@@ -1,6 +1,6 @@
 package gamescreen.map.repository.player
 
-import gamescreen.map.MapModule
+import gamescreen.map.ModuleMap
 import gamescreen.map.domain.Point
 import gamescreen.map.domain.collision.Square
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -30,7 +30,7 @@ class PlayerPositionRepositoryImplTest : KoinTest {
     fun beforeTest() {
         startKoin {
             modules(
-                MapModule
+                ModuleMap
             )
         }
     }

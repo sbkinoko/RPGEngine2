@@ -12,7 +12,7 @@ class ChoiceViewModelTest : KoinTest {
     @BeforeTest
     fun beforeTest() {
         startKoin {
-            modules(ChoiceModule)
+            modules(ModuleChoice)
         }
     }
 

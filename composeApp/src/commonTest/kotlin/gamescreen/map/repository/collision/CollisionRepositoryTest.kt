@@ -1,7 +1,7 @@
 package gamescreen.map.repository.collision
 
 import core.domain.mapcell.CellType
-import gamescreen.map.MapModule
+import gamescreen.map.ModuleMap
 import gamescreen.map.domain.collision.Square
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -19,7 +19,7 @@ class CollisionRepositoryTest : KoinTest {
     fun beforeTest() {
         startKoin {
             modules(
-                MapModule,
+                ModuleMap,
             )
         }
     }

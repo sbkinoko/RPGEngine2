@@ -4,7 +4,7 @@ import core.domain.ScreenType
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import main.MainModule
+import main.ModuleMain
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
@@ -21,7 +21,7 @@ class ScreenTypeRepositoryImplTest : KoinTest {
     fun beforeTest() {
         startKoin {
             modules(
-                MainModule,
+                ModuleMain,
             )
         }
     }

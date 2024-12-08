@@ -1,6 +1,6 @@
 package gamescreen.map.repository.playercell
 
-import gamescreen.map.MapModule
+import gamescreen.map.ModuleMap
 import gamescreen.map.domain.BackgroundCell
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -18,7 +18,7 @@ class PlayerRepositoryImplTest : KoinTest {
     fun beforeTest() {
         startKoin {
             modules(
-                MapModule,
+                ModuleMap,
             )
         }
     }

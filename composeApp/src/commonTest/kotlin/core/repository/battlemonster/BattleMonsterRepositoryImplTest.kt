@@ -1,6 +1,6 @@
 package core.repository.battlemonster
 
-import core.CoreModule
+import core.ModuleCore
 import core.domain.status.MonsterStatus
 import core.domain.status.param.HP
 import core.domain.status.param.MP
@@ -50,7 +50,7 @@ class BattleMonsterRepositoryImplTest : KoinTest {
     fun beforeTest() {
         startKoin {
             modules(
-                CoreModule,
+                ModuleCore,
             )
         }
     }

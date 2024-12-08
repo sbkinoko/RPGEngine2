@@ -23,7 +23,7 @@ import gamescreen.menu.usecase.gettoolid.GetToolIdUseCase
 import gamescreen.menu.usecase.gettoolid.GetToolIdUseCaseImpl
 import org.koin.dsl.module
 
-val CoreModule = module {
+val ModuleCore = module {
     single<PlayerStatusRepository> {
         PlayerStatusRepositoryImpl()
     }

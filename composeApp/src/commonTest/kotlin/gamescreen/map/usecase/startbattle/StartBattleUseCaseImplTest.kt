@@ -13,7 +13,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.runBlocking
-import main.MainModule
+import main.ModuleMain
 import org.koin.core.context.startKoin
 import org.koin.mp.KoinPlatform.stopKoin
 import org.koin.test.KoinTest
@@ -36,7 +36,7 @@ class StartBattleUseCaseImplTest : KoinTest {
     fun beforeTest() {
         startKoin {
             modules(
-                MainModule,
+                ModuleMain,
             )
         }
 

@@ -1,6 +1,6 @@
 package gamescreen.menu.usecase.bag.dectool
 
-import gamescreen.menu.MenuModule
+import gamescreen.menu.ModuleMenu
 import gamescreen.menu.domain.BagToolData
 import gamescreen.menu.repository.bag.BagRepository
 import org.koin.core.context.startKoin
@@ -20,7 +20,7 @@ class DecToolUseCaseImplTest : KoinTest {
     fun beforeTest() {
         startKoin {
             modules(
-                MenuModule,
+                ModuleMenu,
             )
         }
     }

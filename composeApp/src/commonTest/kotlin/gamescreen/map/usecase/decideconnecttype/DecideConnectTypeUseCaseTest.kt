@@ -1,7 +1,7 @@
 package gamescreen.map.usecase.decideconnecttype
 
 import core.domain.mapcell.CellType
-import gamescreen.map.MapModule
+import gamescreen.map.ModuleMap
 import gamescreen.map.domain.ConnectType
 import gamescreen.map.usecase.decideconnectcype.DecideConnectTypeUseCase
 import org.koin.core.context.startKoin
@@ -20,7 +20,7 @@ class DecideConnectTypeUseCaseTest : KoinTest {
     @BeforeTest
     fun beforeTest() {
         startKoin {
-            modules(MapModule)
+            modules(ModuleMap)
         }
     }
 

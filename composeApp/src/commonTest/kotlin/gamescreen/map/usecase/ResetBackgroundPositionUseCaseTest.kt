@@ -1,6 +1,6 @@
 package gamescreen.map.usecase
 
-import gamescreen.map.MapModule
+import gamescreen.map.ModuleMap
 import gamescreen.map.data.LoopTestMap
 import gamescreen.map.manager.CELL_NUM
 import gamescreen.map.manager.SIDE_LENGTH
@@ -25,7 +25,7 @@ class ResetBackgroundPositionUseCaseTest : KoinTest {
     fun beforeTest() {
         startKoin {
             modules(
-                MapModule
+                ModuleMap
             )
         }
 

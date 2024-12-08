@@ -1,6 +1,6 @@
 package gamescreen.map.viewmodel
 
-import gamescreen.map.MapModule
+import gamescreen.map.ModuleMap
 import gamescreen.map.domain.Velocity
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -18,7 +18,7 @@ class MapViewModelTest {
     @BeforeTest
     fun beforeTest() {
         startKoin {
-            modules(MapModule)
+            modules(ModuleMap)
         }
         mapViewModel = MapViewModel()
     }

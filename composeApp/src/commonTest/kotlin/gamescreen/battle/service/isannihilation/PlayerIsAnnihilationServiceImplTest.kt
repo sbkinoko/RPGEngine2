@@ -2,7 +2,7 @@ package gamescreen.battle.service.isannihilation
 
 import common.status.PlayerStatusTest.Companion.getInActivePlayer
 import common.status.PlayerStatusTest.Companion.getPlayer
-import gamescreen.battle.BattleModule
+import gamescreen.battle.ModuleBattle
 import kotlinx.coroutines.runBlocking
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -20,7 +20,7 @@ class PlayerIsAnnihilationServiceImplTest : KoinTest {
     fun beforeTest() {
         startKoin {
             modules(
-                BattleModule,
+                ModuleBattle,
             )
         }
     }

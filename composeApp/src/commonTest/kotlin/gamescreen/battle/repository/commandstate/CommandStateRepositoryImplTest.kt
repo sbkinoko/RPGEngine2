@@ -1,6 +1,6 @@
 package gamescreen.battle.repository.commandstate
 
-import gamescreen.battle.BattleModule
+import gamescreen.battle.ModuleBattle
 import gamescreen.battle.domain.MainCommand
 import gamescreen.battle.domain.PlayerActionCommand
 import kotlinx.coroutines.delay
@@ -22,7 +22,7 @@ class CommandStateRepositoryImplTest : KoinTest {
     fun beforeTest() {
         startKoin {
             modules(
-                BattleModule,
+                ModuleBattle,
             )
         }
     }

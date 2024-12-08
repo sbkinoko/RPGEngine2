@@ -2,7 +2,7 @@ package gamescreen.battle.service.isannihilation
 
 import common.status.MonsterStatusTest.Companion.getMonster
 import common.status.MonsterStatusTest.Companion.getNotActiveMonster
-import gamescreen.battle.BattleModule
+import gamescreen.battle.ModuleBattle
 import kotlinx.coroutines.runBlocking
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -20,7 +20,7 @@ class MonsterIsAnnihilationServiceImplTest : KoinTest {
     fun beforeTest() {
         startKoin {
             modules(
-                BattleModule,
+                ModuleBattle,
             )
         }
     }

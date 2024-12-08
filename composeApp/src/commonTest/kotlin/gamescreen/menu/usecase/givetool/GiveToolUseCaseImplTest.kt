@@ -1,9 +1,9 @@
 package gamescreen.menu.usecase.givetool
 
-import core.CoreModule
+import core.ModuleCore
 import core.repository.item.tool.ToolRepositoryImpl
 import core.repository.player.PlayerStatusRepository
-import gamescreen.menu.MenuModule
+import gamescreen.menu.ModuleMenu
 import gamescreen.menu.domain.BagToolData
 import gamescreen.menu.domain.GiveResult
 import gamescreen.menu.item.repository.index.IndexRepository
@@ -44,8 +44,8 @@ class GiveToolUseCaseImplTest : KoinTest {
     fun beforeTest() {
         startKoin {
             modules(
-                MenuModule,
-                CoreModule,
+                ModuleMenu,
+                ModuleCore,
             )
         }
     }

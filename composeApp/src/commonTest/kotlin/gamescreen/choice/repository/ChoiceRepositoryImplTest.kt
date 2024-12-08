@@ -1,7 +1,7 @@
 package gamescreen.choice.repository
 
 import gamescreen.choice.Choice
-import gamescreen.choice.ChoiceModule
+import gamescreen.choice.ModuleChoice
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -21,7 +21,7 @@ class ChoiceRepositoryImplTest : KoinTest {
     fun beforeTest() {
         startKoin {
             modules(
-                ChoiceModule,
+                ModuleChoice,
             )
         }
     }

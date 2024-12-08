@@ -1,6 +1,6 @@
 package core.repository.money
 
-import core.CoreModule
+import core.ModuleCore
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -20,7 +20,7 @@ class MoneyRepositoryImplTest : KoinTest {
     fun beforeTest() {
         startKoin {
             modules(
-                CoreModule,
+                ModuleCore,
             )
         }
     }

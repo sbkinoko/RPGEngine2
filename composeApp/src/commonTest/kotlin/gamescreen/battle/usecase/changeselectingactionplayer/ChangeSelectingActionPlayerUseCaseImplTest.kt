@@ -1,6 +1,6 @@
 package gamescreen.battle.usecase.changeselectingactionplayer
 
-import gamescreen.battle.BattleModule
+import gamescreen.battle.ModuleBattle
 import gamescreen.battle.domain.AttackPhaseCommand
 import gamescreen.battle.domain.PlayerActionCommand
 import gamescreen.battle.domain.PlayerIdCommand
@@ -24,7 +24,7 @@ class ChangeSelectingActionPlayerUseCaseImplTest : KoinTest {
     @BeforeTest
     fun beforeTest() {
         startKoin {
-            modules(BattleModule)
+            modules(ModuleBattle)
         }
     }
 
