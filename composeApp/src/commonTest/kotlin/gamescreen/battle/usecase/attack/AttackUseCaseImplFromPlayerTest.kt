@@ -1,6 +1,6 @@
 package gamescreen.battle.usecase.attack
 
-import gamescreen.battle.BattleModule
+import gamescreen.battle.ModuleBattle
 import gamescreen.battle.QualifierAttackFromPlayer
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -22,7 +22,7 @@ class AttackUseCaseImplFromPlayerTest : KoinTest {
     fun beforeTest() {
         startKoin {
             modules(
-                BattleModule,
+                ModuleBattle,
             )
         }
     }

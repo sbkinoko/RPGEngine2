@@ -1,6 +1,6 @@
 package core.repository.player
 
-import core.CoreModule
+import core.ModuleCore
 import core.domain.status.PlayerStatus
 import core.domain.status.param.EXP
 import core.domain.status.param.HP
@@ -24,7 +24,7 @@ class PlayerStatusRepositoryImplTest : KoinTest {
     fun beforeTest() {
         startKoin {
             modules(
-                CoreModule
+                ModuleCore
             )
         }
     }

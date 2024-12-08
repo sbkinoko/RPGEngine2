@@ -1,6 +1,6 @@
 package gamescreen.menu.usecase.bag.addtool
 
-import gamescreen.menu.MenuModule
+import gamescreen.menu.ModuleMenu
 import gamescreen.menu.repository.bag.BagRepository
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -18,7 +18,7 @@ class AddToolUseCaseImplTest : KoinTest {
     @BeforeTest
     fun beforeTest() {
         startKoin {
-            modules(MenuModule)
+            modules(ModuleMenu)
         }
     }
 

@@ -1,6 +1,6 @@
 package gamescreen.menu.repository.bag
 
-import gamescreen.menu.MenuModule
+import gamescreen.menu.ModuleMenu
 import gamescreen.menu.domain.BagToolData
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -17,7 +17,7 @@ class BagRepositoryImplTest : KoinTest {
     @BeforeTest
     fun beforeTest() {
         startKoin {
-            modules(MenuModule)
+            modules(ModuleMenu)
         }
     }
 

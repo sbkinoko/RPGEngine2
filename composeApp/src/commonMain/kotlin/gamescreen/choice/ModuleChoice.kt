@@ -6,7 +6,7 @@ import gamescreen.text.repository.TextRepository
 import gamescreen.text.repository.TextRepositoryImpl
 import org.koin.dsl.module
 
-val ChoiceModule = module {
+val ModuleChoice = module {
     single<ChoiceRepository> {
         ChoiceRepositoryImpl()
     }

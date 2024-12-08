@@ -36,7 +36,7 @@ import gamescreen.map.usecase.startbattle.StartBattleUseCaseImpl
 import gamescreen.map.viewmodel.MapViewModel
 import org.koin.dsl.module
 
-val MapModule = module {
+val ModuleMap = module {
     single {
         MapViewModel()
     }

@@ -1,6 +1,6 @@
 package gamescreen.map.usecase
 
-import gamescreen.map.MapModule
+import gamescreen.map.ModuleMap
 import gamescreen.map.data.LoopTestMap
 import gamescreen.map.domain.collision.Square
 import gamescreen.map.manager.CELL_NUM
@@ -31,7 +31,7 @@ class FindPlayerCellUseCaseTest : KoinTest {
     fun beforeTest() {
         startKoin {
             modules(
-                MapModule
+                ModuleMap
             )
         }
 

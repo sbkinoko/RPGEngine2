@@ -1,7 +1,7 @@
 package gamescreen.menu.main
 
-import core.CoreModule
-import gamescreen.menu.MenuModule
+import core.ModuleCore
+import gamescreen.menu.ModuleMenu
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -21,8 +21,8 @@ class MainMenuViewModelTest : KoinTest {
     fun beforeTest() {
         startKoin {
             modules(
-                CoreModule,
-                MenuModule,
+                ModuleCore,
+                ModuleMenu,
             )
         }
     }

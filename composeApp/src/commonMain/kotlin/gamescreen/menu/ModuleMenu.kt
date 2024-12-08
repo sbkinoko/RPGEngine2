@@ -34,7 +34,7 @@ import gamescreen.menu.usecase.givetool.GiveToolUseCase
 import gamescreen.menu.usecase.givetool.GiveToolUseCaseImpl
 import org.koin.dsl.module
 
-val MenuModule = module {
+val ModuleMenu = module {
     single {
         MenuViewModel()
     }

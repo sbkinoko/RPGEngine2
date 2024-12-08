@@ -12,7 +12,7 @@ class TextViewModelTest : KoinTest {
     @BeforeTest
     fun beforeTest() {
         startKoin {
-            modules(TextModule)
+            modules(ModuleText)
         }
     }
 

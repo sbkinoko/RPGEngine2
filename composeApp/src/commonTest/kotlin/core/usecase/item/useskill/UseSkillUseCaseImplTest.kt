@@ -1,6 +1,6 @@
 package core.usecase.item.useskill
 
-import core.CoreModule
+import core.ModuleCore
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
@@ -15,7 +15,7 @@ class UseSkillUseCaseImplTest : KoinTest {
     fun beforeTest() {
         startKoin {
             modules(
-                CoreModule,
+                ModuleCore,
             )
         }
     }

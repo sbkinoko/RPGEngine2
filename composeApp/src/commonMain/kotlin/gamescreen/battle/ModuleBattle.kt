@@ -34,7 +34,7 @@ import org.koin.dsl.module
 const val QualifierAttackFromEnemy = "EnemyAttack"
 const val QualifierAttackFromPlayer = "PlayerAttack"
 
-val BattleModule = module {
+val ModuleBattle = module {
     single {
         BattleViewModel()
     }

@@ -1,6 +1,6 @@
 package gamescreen.map.usecase
 
-import gamescreen.map.MapModule
+import gamescreen.map.ModuleMap
 import gamescreen.map.data.LoopTestMap
 import gamescreen.map.domain.BackgroundCell
 import gamescreen.map.domain.Velocity
@@ -28,7 +28,7 @@ class MoveBackgroundUseCaseTestLoop : KoinTest {
     fun beforeTest() {
         startKoin {
             modules(
-                MapModule,
+                ModuleMap,
             )
         }
 

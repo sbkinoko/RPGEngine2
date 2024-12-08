@@ -14,7 +14,7 @@ class BattleViewModelTest : KoinTest {
     fun beforeTest() {
         startKoin {
             modules(
-                BattleModule,
+                ModuleBattle,
             )
         }
     }

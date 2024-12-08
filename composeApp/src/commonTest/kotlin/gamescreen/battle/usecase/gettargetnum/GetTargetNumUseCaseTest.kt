@@ -1,7 +1,7 @@
 package gamescreen.battle.usecase.gettargetnum
 
-import core.CoreModule
-import gamescreen.battle.BattleModule
+import core.ModuleCore
+import gamescreen.battle.ModuleBattle
 import gamescreen.battle.domain.ActionType
 import gamescreen.battle.repository.action.ActionRepository
 import org.koin.core.context.startKoin
@@ -23,8 +23,8 @@ class GetTargetNumUseCaseTest : KoinTest {
     fun beforeTest() {
         startKoin {
             modules(
-                BattleModule,
-                CoreModule,
+                ModuleBattle,
+                ModuleCore,
             )
         }
     }

@@ -1,13 +1,13 @@
 package org.example.project
 
 import android.app.Application
-import core.CoreModule
-import gamescreen.battle.BattleModule
-import gamescreen.choice.ChoiceModule
-import gamescreen.map.MapModule
-import gamescreen.menu.MenuModule
-import gamescreen.text.TextModule
-import main.MainModule
+import core.ModuleCore
+import gamescreen.battle.ModuleBattle
+import gamescreen.choice.ModuleChoice
+import gamescreen.map.ModuleMap
+import gamescreen.menu.ModuleMenu
+import gamescreen.text.ModuleText
+import main.ModuleMain
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -18,15 +18,15 @@ class RPGApplication : Application() {
         startKoin {
             androidContext(this@RPGApplication)
             modules(
-                MainModule,
+                ModuleMain,
 
-                MapModule,
-                BattleModule,
-                MenuModule,
-                TextModule,
-                ChoiceModule,
+                ModuleMap,
+                ModuleBattle,
+                ModuleMenu,
+                ModuleText,
+                ModuleChoice,
 
-                CoreModule,
+                ModuleCore,
             )
         }
     }

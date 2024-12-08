@@ -1,6 +1,6 @@
 package gamescreen.map.usecase
 
-import gamescreen.map.MapModule
+import gamescreen.map.ModuleMap
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
@@ -16,7 +16,7 @@ class PlayerMoveManageUseCaseTest : KoinTest {
     fun beforeTest() {
         startKoin {
             modules(
-                MapModule,
+                ModuleMap,
             )
         }
 

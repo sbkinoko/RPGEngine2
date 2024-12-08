@@ -1,7 +1,7 @@
 package gamescreen.map.repository.background
 
 import core.domain.mapcell.CellType
-import gamescreen.map.MapModule
+import gamescreen.map.ModuleMap
 import gamescreen.map.data.LoopTestMap
 import gamescreen.map.data.NonLoopTestMap
 import gamescreen.map.domain.BackgroundCell
@@ -44,7 +44,7 @@ class BackgroundRepositoryImplTest : KoinTest {
     fun beforeTest() {
         startKoin {
             modules(
-                MapModule
+                ModuleMap
             )
         }
     }

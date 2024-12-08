@@ -21,7 +21,7 @@ class MenuStateRepositoryImplTest : KoinTest {
     fun beforeTest() {
         startKoin {
             modules(
-                MenuModule,
+                ModuleMenu,
             )
         }
     }

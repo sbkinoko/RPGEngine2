@@ -1,6 +1,6 @@
 package gamescreen.battle.usecase.getcontrollerbyscreentype
 
-import gamescreen.battle.BattleModule
+import gamescreen.battle.ModuleBattle
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
@@ -15,7 +15,7 @@ class GetControllerByCommandTypeUseCaseImplTest : KoinTest {
     fun beforeTest() {
         startKoin {
             modules(
-                BattleModule,
+                ModuleBattle,
             )
         }
     }

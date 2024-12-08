@@ -1,6 +1,6 @@
 package gamescreen.map.usecase
 
-import gamescreen.map.MapModule
+import gamescreen.map.ModuleMap
 import gamescreen.map.domain.Velocity
 import gamescreen.map.layout.PlayerMoveSquare
 import gamescreen.map.viewmodel.MapViewModel
@@ -24,7 +24,7 @@ class VelocityManagerUseCaseTest : KoinTest {
     fun beforeTest() {
         startKoin {
             modules(
-                MapModule
+                ModuleMap
             )
         }
     }
