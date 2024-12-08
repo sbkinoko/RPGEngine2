@@ -10,7 +10,6 @@ class EXPTest {
         1
     }
 
-
     @Test
     fun initial() {
         val exp = EXP(expList)
@@ -73,21 +72,25 @@ class EXPTest {
             expected = "1",
             actual = exp.needExp
         )
+
         exp.exp = 10
         assertEquals(
             expected = "10",
             actual = exp.needExp
         )
+
         exp.exp = 19
         assertEquals(
             expected = "1",
             actual = exp.needExp
         )
+
         exp.exp = 20
         assertEquals(
             expected = NEED_EXP_MAX_LEVEL,
             actual = exp.needExp
         )
+
         exp.exp = 21
         assertEquals(
             expected = NEED_EXP_MAX_LEVEL,
