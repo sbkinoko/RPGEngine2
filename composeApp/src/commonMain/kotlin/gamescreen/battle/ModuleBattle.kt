@@ -26,6 +26,8 @@ import gamescreen.battle.usecase.findactivetarget.FindActiveTargetUseCase
 import gamescreen.battle.usecase.findactivetarget.FindActiveTargetUseCaseImpl
 import gamescreen.battle.usecase.getcontrollerbyscreentype.GetControllerByCommandTypeUseCase
 import gamescreen.battle.usecase.getcontrollerbyscreentype.GetControllerByCommandTypeUseCaseImpl
+import gamescreen.battle.usecase.getmoney.GetMoneyUseCase
+import gamescreen.battle.usecase.getmoney.GetMoneyUseCaseImpl
 import gamescreen.battle.usecase.gettargetnum.GetTargetNumUseCase
 import gamescreen.battle.usecase.gettargetnum.GetTargetNumUseCaseImpl
 import org.koin.core.qualifier.named
@@ -142,6 +144,12 @@ val ModuleBattle = module {
     single<ChangeSelectingActionPlayerUseCase> {
         ChangeSelectingActionPlayerUseCaseImpl(
             commandStateRepository = get(),
+        )
+    }
+
+    single<GetMoneyUseCase> {
+        GetMoneyUseCaseImpl(
+            moneyRepository = get(),
         )
     }
 }
