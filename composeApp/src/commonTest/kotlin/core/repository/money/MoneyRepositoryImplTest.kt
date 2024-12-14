@@ -30,6 +30,9 @@ class MoneyRepositoryImplTest : KoinTest {
         stopKoin()
     }
 
+    /**
+     * 初期状態のテスト
+     */
     @Test
     fun initial() {
         assertEquals(
@@ -38,6 +41,9 @@ class MoneyRepositoryImplTest : KoinTest {
         )
     }
 
+    /**
+     * 値の反映のテスト
+     */
     @Test
     fun setMoney() {
         runBlocking {
@@ -47,6 +53,7 @@ class MoneyRepositoryImplTest : KoinTest {
 
             val collectJob = launch {
                 moneyRepository.moneyStateFLow.collect {
+                    //想定した変更か確認
                     assertEquals(
                         expected = money,
                         actual = it
@@ -59,6 +66,7 @@ class MoneyRepositoryImplTest : KoinTest {
 
             delay(100)
 
+            //変更が行われたことを確認
             assertEquals(
                 expected = 1,
                 actual = count
@@ -68,6 +76,9 @@ class MoneyRepositoryImplTest : KoinTest {
         }
     }
 
+    /**
+     * お金の加算処理
+     */
     @Test
     fun addMoney() {
         runBlocking {
@@ -90,6 +101,7 @@ class MoneyRepositoryImplTest : KoinTest {
 
             delay(100)
 
+            //更新が1回であることを確認
             assertEquals(
                 expected = 1,
                 actual = count,
@@ -100,7 +112,7 @@ class MoneyRepositoryImplTest : KoinTest {
     }
 
     /**
-     * お金の減産処理
+     * お金の減算処理
      * 0より大きい
      */
     @Test
@@ -118,13 +130,23 @@ class MoneyRepositoryImplTest : KoinTest {
             val money = 5
             val collectJob = launch {
                 moneyRepository.moneyStateFLow.collect {
-                    assertEquals(
-                        expected = startMoney - money,
-                        actual = it
-                    )
+                    when (count) {
+                        0 -> assertEquals(
+                            expected = startMoney,
+                            actual = it
+                        )
+
+                        1 -> assertEquals(
+                            expected = startMoney - money,
+                            actual = it
+                        )
+                    }
+
                     count++
                 }
             }
+
+            delay(100)
 
             moneyRepository.decMoney(
                 money,
@@ -132,8 +154,9 @@ class MoneyRepositoryImplTest : KoinTest {
 
             delay(100)
 
+            //初期値と減算の2回
             assertEquals(
-                expected = 1,
+                expected = 2,
                 actual = count,
             )
 
@@ -183,6 +206,7 @@ class MoneyRepositoryImplTest : KoinTest {
 
             delay(100)
 
+            //初期値と減算の2回
             assertEquals(
                 expected = 2,
                 actual = count,
