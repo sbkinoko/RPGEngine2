@@ -148,8 +148,6 @@ val ModuleBattle = module {
     }
 
     single<GetMoneyUseCase> {
-        GetMoneyUseCaseImpl(
-            moneyRepository = get(),
-        )
+        GetMoneyUseCaseImpl()
     }
 }
