@@ -6,20 +6,11 @@ data class EXP(
     val list: List<Int>,
     val value: Int = INITIAL_EXP,
 ) {
-
     private val totalList: List<Int>
 
     val level: Int
 
-
     val needExp: String
-        get() {
-            if (totalList.size + 1 <= level) {
-                return NEED_EXP_MAX_LEVEL
-            }
-
-            return (totalList[level - 1] - value).toString()
-        }
 
     init {
         var sum = 0
@@ -28,6 +19,8 @@ data class EXP(
             sum
         }
         level = calcLevel()
+
+        needExp = calcNeedExp()
     }
 
     private fun calcLevel(): Int {
@@ -40,6 +33,14 @@ data class EXP(
 
         //最大レベル
         return totalList.size + 1
+    }
+
+    private fun calcNeedExp(): String {
+        return if (totalList.size + 1 <= level) {
+            NEED_EXP_MAX_LEVEL
+        } else {
+            (totalList[level - 1] - value).toString()
+        }
     }
 
     companion object {
