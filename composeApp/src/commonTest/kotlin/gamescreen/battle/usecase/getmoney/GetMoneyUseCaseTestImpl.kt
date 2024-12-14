@@ -8,7 +8,7 @@ class GetMoneyUseCaseTestImpl : KoinTest {
     private lateinit var getMoneyUseCase: GetMoneyUseCase
 
     /**
-     * 加算処理のテスト
+     * 入手金額のテスト
      */
     @Test
     fun getMoneyTest() {
