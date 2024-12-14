@@ -17,4 +17,16 @@ class MoneyRepositoryImpl : MoneyRepository {
     override fun setMoney(money: Int) {
         mutableMoneyStateFLow.value = money
     }
+
+    override fun addMoney(money: Int) {
+        mutableMoneyStateFLow.value += money
+    }
+
+    override fun decMoney(money: Int) {
+        if (mutableMoneyStateFLow.value < money) {
+            throw MoneyLackException()
+        }
+
+        mutableMoneyStateFLow.value -= money
+    }
 }
