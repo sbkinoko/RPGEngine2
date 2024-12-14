@@ -13,4 +13,10 @@ class TextData {
             return "お金を $money 手に入れた"
         }
     }
+
+    object BattleFinishExp {
+        fun getText(exp: Int): String {
+            return "expを $exp 手に入れた"
+        }
+    }
 }

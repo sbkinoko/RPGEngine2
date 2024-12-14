@@ -27,7 +27,7 @@ fun StatusComponent(
             Text("HP : ${status.hp.value}/${status.hp.maxValue}")
             Text("MP : ${status.mp.value}/${status.mp.maxValue}")
             Text("レベル : ${status.exp.level}")
-            Text("経験値 : ${status.exp.exp}")
+            Text("経験値 : ${status.exp.value}")
             Text("次のレベルまで : ${status.exp.needExp}")
         } else {
             Text("袋")

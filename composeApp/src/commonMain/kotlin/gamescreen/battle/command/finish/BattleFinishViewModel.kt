@@ -1,14 +1,19 @@
 package gamescreen.battle.command.finish
 
 import core.repository.money.MoneyRepository
+import core.repository.player.PlayerStatusRepository
 import core.usecase.changetomap.ChangeToMapUseCase
 import gamescreen.battle.BattleChildViewModel
 import gamescreen.battle.domain.BattleCommandType
 import gamescreen.battle.domain.FinishCommand
+import gamescreen.battle.usecase.getExp.GetExpUseCase
 import gamescreen.battle.usecase.getmoney.GetMoneyUseCase
 import gamescreen.menu.domain.SelectManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import org.koin.core.component.inject
 import values.TextData
 
@@ -21,6 +26,9 @@ class BattleFinishViewModel : BattleChildViewModel() {
 
     private val getMoneyUseCase: GetMoneyUseCase by inject()
     private val moneyRepository: MoneyRepository by inject()
+
+    private val getExpUseCase: GetExpUseCase by inject()
+    private val playerStatusRepository: PlayerStatusRepository by inject()
 
     private var contentType: ContentType = ContentType.None
 
@@ -54,14 +62,32 @@ class BattleFinishViewModel : BattleChildViewModel() {
                 mutableTextFLow.value = TextData
                     .BattleFinishMoney
                     .getText(
-                        money,
+                        money = money,
                     )
                 contentType = ContentType.Money
 
             }
 
             ContentType.Money -> {
-                mutableTextFLow.value = "経験値を手に入れた"
+                val exp = getExpUseCase.invoke()
+                mutableTextFLow.value = TextData.BattleFinishExp.getText(
+                    exp = exp
+                )
+
+                CoroutineScope(Dispatchers.Default).launch {
+                    playerStatusRepository.getPlayers().mapIndexed { index, it ->
+                        // レベルアップの表示をしたいのならなんかしらの管理が必要
+                        playerStatusRepository.setStatus(
+                            id = index,
+                            status = it.copy(
+                                exp = it.exp.copy(
+                                    value = it.exp.value + exp
+                                )
+                            ),
+                        )
+                    }
+                }
+
                 contentType = ContentType.Exp
             }
 
