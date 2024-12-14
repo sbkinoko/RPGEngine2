@@ -16,11 +16,11 @@ class GetExpUseCaseTestImpl : KoinTest {
     fun getExpTest() {
         getExpUseCase = GetExpUseCaseImpl()
 
-        val money = getExpUseCase.invoke()
+        val exp = getExpUseCase.invoke()
 
         assertEquals(
             expected = 10,
-            actual = money,
+            actual = exp,
         )
     }
 }
