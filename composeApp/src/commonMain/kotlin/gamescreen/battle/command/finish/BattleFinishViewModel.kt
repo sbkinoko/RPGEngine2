@@ -1,10 +1,10 @@
 package gamescreen.battle.command.finish
 
-import core.repository.money.MoneyRepository
 import core.usecase.changetomap.ChangeToMapUseCase
 import gamescreen.battle.BattleChildViewModel
 import gamescreen.battle.domain.BattleCommandType
 import gamescreen.battle.domain.FinishCommand
+import gamescreen.battle.usecase.getmoney.GetMoneyUseCase
 import gamescreen.menu.domain.SelectManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,7 +17,7 @@ class BattleFinishViewModel : BattleChildViewModel() {
     private val mutableTextFLow = MutableStateFlow("")
     val textFlow = mutableTextFLow.asStateFlow()
 
-    private val moneyRepository: MoneyRepository by inject()
+    private val getMoneyUseCase: GetMoneyUseCase by inject()
 
     private var contentType: ContentType = ContentType.None
 
@@ -48,7 +48,7 @@ class BattleFinishViewModel : BattleChildViewModel() {
             ContentType.Win -> {
                 mutableTextFLow.value = "お金を手に入れた"
                 contentType = ContentType.Money
-                moneyRepository.addMoney(10)
+                getMoneyUseCase.invoke()
             }
 
             ContentType.Money -> {
