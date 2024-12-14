@@ -1,5 +1,6 @@
 package gamescreen.battle.command.finish
 
+import core.repository.money.MoneyRepository
 import core.usecase.changetomap.ChangeToMapUseCase
 import gamescreen.battle.BattleChildViewModel
 import gamescreen.battle.domain.BattleCommandType
@@ -15,6 +16,8 @@ class BattleFinishViewModel : BattleChildViewModel() {
 
     private val mutableTextFLow = MutableStateFlow("")
     val textFlow = mutableTextFLow.asStateFlow()
+
+    private val moneyRepository: MoneyRepository by inject()
 
     private var contentType: ContentType = ContentType.None
 
@@ -45,6 +48,7 @@ class BattleFinishViewModel : BattleChildViewModel() {
             ContentType.Win -> {
                 mutableTextFLow.value = "お金を手に入れた"
                 contentType = ContentType.Money
+                moneyRepository.addMoney(10)
             }
 
             ContentType.Money -> {
