@@ -1,5 +1,6 @@
 package gamescreen.battle.command.finish
 
+import core.repository.money.MoneyRepository
 import core.usecase.changetomap.ChangeToMapUseCase
 import gamescreen.battle.BattleChildViewModel
 import gamescreen.battle.domain.BattleCommandType
@@ -9,6 +10,7 @@ import gamescreen.menu.domain.SelectManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import org.koin.core.component.inject
+import values.TextData
 
 class BattleFinishViewModel : BattleChildViewModel() {
 
@@ -18,6 +20,7 @@ class BattleFinishViewModel : BattleChildViewModel() {
     val textFlow = mutableTextFLow.asStateFlow()
 
     private val getMoneyUseCase: GetMoneyUseCase by inject()
+    private val moneyRepository: MoneyRepository by inject()
 
     private var contentType: ContentType = ContentType.None
 
@@ -46,9 +49,15 @@ class BattleFinishViewModel : BattleChildViewModel() {
     override fun goNextImpl() {
         when (contentType) {
             ContentType.Win -> {
-                mutableTextFLow.value = "お金を手に入れた"
+                val money = getMoneyUseCase.invoke()
+                moneyRepository.addMoney(money)
+                mutableTextFLow.value = TextData
+                    .BattleFinishMoney
+                    .getText(
+                        money,
+                    )
                 contentType = ContentType.Money
-                getMoneyUseCase.invoke()
+
             }
 
             ContentType.Money -> {
