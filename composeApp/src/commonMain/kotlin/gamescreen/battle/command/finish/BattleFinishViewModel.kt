@@ -57,6 +57,10 @@ class BattleFinishViewModel : BattleChildViewModel() {
     override fun goNextImpl() {
         when (contentType) {
             ContentType.Win -> {
+                contentType = ContentType.Money
+            }
+
+            ContentType.Money -> {
                 val money = getMoneyUseCase.invoke()
                 moneyRepository.addMoney(money)
                 mutableTextFLow.value = TextData
@@ -64,11 +68,11 @@ class BattleFinishViewModel : BattleChildViewModel() {
                     .getText(
                         money = money,
                     )
-                contentType = ContentType.Money
 
+                contentType = ContentType.Exp
             }
 
-            ContentType.Money -> {
+            ContentType.Exp -> {
                 val exp = getExpUseCase.invoke()
                 mutableTextFLow.value = TextData.BattleFinishExp.getText(
                     exp = exp
@@ -88,10 +92,6 @@ class BattleFinishViewModel : BattleChildViewModel() {
                     }
                 }
 
-                contentType = ContentType.Exp
-            }
-
-            ContentType.Exp -> {
                 finishBattle()
             }
 
