@@ -1,5 +1,9 @@
 package gamescreen.battle.usecase.getdroptool
 
 interface GetDropToolUseCase {
-    operator fun invoke(): Int
+
+    /**
+     * 戦闘終了時のドロップアイテムを手に入れる処理
+     */
+    operator fun invoke(): Int?
 }

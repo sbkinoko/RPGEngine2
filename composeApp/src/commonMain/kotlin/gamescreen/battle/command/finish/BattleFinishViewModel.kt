@@ -85,6 +85,13 @@ class BattleFinishViewModel : BattleChildViewModel() {
 
                     ContentType.Tool -> {
                         val toolId = getDropToolUseCase.invoke()
+
+                        //道具の入手がないので次の画面へ
+                        if (toolId == null) {
+                            goNext()
+                            return@collect
+                        }
+
                         val name = toolRepository.getItem(
                             toolId
                         ).name

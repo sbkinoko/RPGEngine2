@@ -7,7 +7,7 @@ import org.koin.core.context.stopKoin
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
-import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class GetDropToolUseCaseImplTest {
 
@@ -29,11 +29,15 @@ class GetDropToolUseCaseImplTest {
     fun getDropTool() {
         val getDropToolUseCase: GetDropToolUseCase = GetDropToolUseCaseImpl()
 
-        val id = getDropToolUseCase.invoke()
+        val idList = List(10) {
+            getDropToolUseCase.invoke()
+        }
 
-        assertEquals(
-            expected = ToolRepositoryImpl.HEAL_TOOL,
-            actual = id,
+        assertTrue(
+            actual = idList.contains(ToolRepositoryImpl.HEAL_TOOL)
+        )
+        assertTrue(
+            actual = idList.contains(null)
         )
     }
 }
