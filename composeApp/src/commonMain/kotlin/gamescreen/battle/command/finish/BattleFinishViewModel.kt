@@ -1,14 +1,17 @@
 package gamescreen.battle.command.finish
 
+import core.repository.item.tool.ToolRepository
 import core.repository.money.MoneyRepository
 import core.repository.player.PlayerStatusRepository
 import core.usecase.changetomap.ChangeToMapUseCase
 import gamescreen.battle.BattleChildViewModel
 import gamescreen.battle.domain.BattleCommandType
 import gamescreen.battle.domain.FinishCommand
-import gamescreen.battle.usecase.getExp.GetExpUseCase
+import gamescreen.battle.usecase.getdroptool.GetDropToolUseCase
+import gamescreen.battle.usecase.getexp.GetExpUseCase
 import gamescreen.battle.usecase.getmoney.GetMoneyUseCase
 import gamescreen.menu.domain.SelectManager
+import gamescreen.menu.usecase.bag.addtool.AddToolUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,6 +33,9 @@ class BattleFinishViewModel : BattleChildViewModel() {
     private val getExpUseCase: GetExpUseCase by inject()
     private val playerStatusRepository: PlayerStatusRepository by inject()
 
+    private val addToolUseCase: AddToolUseCase by inject()
+    private val toolRepository: ToolRepository by inject()
+    private val getDropToolUseCase: GetDropToolUseCase by inject()
 
     private var contentType: MutableStateFlow<ContentType> =
         MutableStateFlow(ContentType.None)
@@ -77,6 +83,24 @@ class BattleFinishViewModel : BattleChildViewModel() {
                             )
                     }
 
+                    ContentType.Tool -> {
+                        val toolId = getDropToolUseCase.invoke()
+                        val name = toolRepository.getItem(
+                            toolId
+                        ).name
+
+                        mutableTextFLow.value = TextData
+                            .BattleFinishTool
+                            .getText(
+                                name = name,
+                            )
+
+                        addToolUseCase.invoke(
+                            toolId = toolId,
+                            toolNum = 1,
+                        )
+                    }
+
                     ContentType.None -> {
                         mutableTextFLow.value = ""
                     }
@@ -117,6 +141,10 @@ class BattleFinishViewModel : BattleChildViewModel() {
             }
 
             ContentType.Exp -> {
+                contentType.value = ContentType.Tool
+            }
+
+            ContentType.Tool -> {
                 finishBattle()
             }
 

@@ -24,10 +24,12 @@ import gamescreen.battle.usecase.changeselectingactionplayer.ChangeSelectingActi
 import gamescreen.battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUseCaseImpl
 import gamescreen.battle.usecase.findactivetarget.FindActiveTargetUseCase
 import gamescreen.battle.usecase.findactivetarget.FindActiveTargetUseCaseImpl
-import gamescreen.battle.usecase.getExp.GetExpUseCase
-import gamescreen.battle.usecase.getExp.GetExpUseCaseImpl
 import gamescreen.battle.usecase.getcontrollerbyscreentype.GetControllerByCommandTypeUseCase
 import gamescreen.battle.usecase.getcontrollerbyscreentype.GetControllerByCommandTypeUseCaseImpl
+import gamescreen.battle.usecase.getdroptool.GetDropToolUseCase
+import gamescreen.battle.usecase.getdroptool.GetDropToolUseCaseImpl
+import gamescreen.battle.usecase.getexp.GetExpUseCase
+import gamescreen.battle.usecase.getexp.GetExpUseCaseImpl
 import gamescreen.battle.usecase.getmoney.GetMoneyUseCase
 import gamescreen.battle.usecase.getmoney.GetMoneyUseCaseImpl
 import gamescreen.battle.usecase.gettargetnum.GetTargetNumUseCase
@@ -159,5 +161,9 @@ val ModuleBattle = module {
         GetExpUseCaseImpl(
             battleMonsterRepository = get(),
         )
+    }
+
+    single<GetDropToolUseCase> {
+        GetDropToolUseCaseImpl()
     }
 }
