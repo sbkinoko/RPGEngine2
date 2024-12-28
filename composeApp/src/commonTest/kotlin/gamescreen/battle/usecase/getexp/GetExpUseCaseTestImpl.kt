@@ -1,6 +1,6 @@
 package gamescreen.battle.usecase.getexp
 
-import common.status.MonsterStatusTest
+import common.status.MonsterStatusTest.Companion.getTestMonster
 import core.domain.status.MonsterStatus
 import core.repository.battlemonster.TestBattleMonsterRepository
 import gamescreen.battle.usecase.getExp.GetExpUseCase
@@ -12,8 +12,6 @@ import kotlin.test.assertEquals
 class GetExpUseCaseTestImpl : KoinTest {
     private lateinit var getExpUseCase: GetExpUseCase
 
-    private val testMonster: MonsterStatus
-        get() = MonsterStatusTest.getTestMonster()
 
     /**
      * 入手経験値のテスト1
@@ -27,10 +25,10 @@ class GetExpUseCaseTestImpl : KoinTest {
         val battleMonsterRepository = object : TestBattleMonsterRepository {
             override fun getMonsters(): List<MonsterStatus> {
                 return listOf(
-                    testMonster.copy(
+                    getTestMonster().copy(
                         exp = exp1,
                     ),
-                    testMonster.copy(
+                    getTestMonster().copy(
                         exp = exp2,
                     )
                 )
@@ -58,13 +56,13 @@ class GetExpUseCaseTestImpl : KoinTest {
         val battleMonsterRepository = object : TestBattleMonsterRepository {
             override fun getMonsters(): List<MonsterStatus> {
                 return listOf(
-                    testMonster.copy(
+                    getTestMonster().copy(
                         exp = exp1,
                     ),
-                    testMonster.copy(
+                    getTestMonster().copy(
                         exp = exp2,
                     ),
-                    testMonster.copy(
+                    getTestMonster().copy(
                         exp = exp3,
                     )
                 )
