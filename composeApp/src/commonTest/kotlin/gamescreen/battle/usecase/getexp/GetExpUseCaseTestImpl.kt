@@ -1,82 +1,83 @@
-package gamescreen.battle.usecase.getmoney
+package gamescreen.battle.usecase.getexp
 
 import common.status.MonsterStatusTest.Companion.getTestMonster
 import core.domain.status.MonsterStatus
 import core.repository.battlemonster.TestBattleMonsterRepository
+import gamescreen.battle.usecase.getExp.GetExpUseCase
+import gamescreen.battle.usecase.getExp.GetExpUseCaseImpl
 import org.koin.test.KoinTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class GetMoneyUseCaseTestImpl : KoinTest {
-    private lateinit var getMoneyUseCase: GetMoneyUseCase
+class GetExpUseCaseTestImpl : KoinTest {
+    private lateinit var getExpUseCase: GetExpUseCase
+
 
     /**
-     * 入手金額のテスト1
+     * 入手経験値のテスト1
      */
     @Test
-    fun getMoneyTest1() {
-        val money1 = 1
-        val money2 = 2
+    fun getExpTest1() {
+
+        val exp1 = 1
+        val exp2 = 2
 
         val battleMonsterRepository = object : TestBattleMonsterRepository {
             override fun getMonsters(): List<MonsterStatus> {
                 return listOf(
                     getTestMonster().copy(
-                        money = money1,
+                        exp = exp1,
                     ),
                     getTestMonster().copy(
-                        money = money2,
+                        exp = exp2,
                     )
                 )
             }
         }
 
-        getMoneyUseCase = GetMoneyUseCaseImpl(
+        getExpUseCase = GetExpUseCaseImpl(
             battleMonsterRepository = battleMonsterRepository,
         )
 
-        val money = getMoneyUseCase.invoke()
+        val exp = getExpUseCase.invoke()
 
         assertEquals(
-            expected = money1 + money2,
-            actual = money,
+            expected = exp1 + exp2,
+            actual = exp,
         )
     }
 
-    /**
-     * 入手金額のテスト2
-     */
     @Test
-    fun getMoneyTest2() {
-        val money1 = 2
-        val money2 = 5
-        val money3 = 7
+    fun getExpTest2() {
+        val exp1 = 2
+        val exp2 = 5
+        val exp3 = 7
 
         val battleMonsterRepository = object : TestBattleMonsterRepository {
             override fun getMonsters(): List<MonsterStatus> {
                 return listOf(
                     getTestMonster().copy(
-                        money = money1,
+                        exp = exp1,
                     ),
                     getTestMonster().copy(
-                        money = money2,
+                        exp = exp2,
                     ),
                     getTestMonster().copy(
-                        money = money3,
+                        exp = exp3,
                     )
                 )
             }
         }
 
-        getMoneyUseCase = GetMoneyUseCaseImpl(
+        getExpUseCase = GetExpUseCaseImpl(
             battleMonsterRepository = battleMonsterRepository,
         )
 
-        val money = getMoneyUseCase.invoke()
+        val exp = getExpUseCase.invoke()
 
         assertEquals(
-            expected = money1 + money2 + money3,
-            actual = money,
+            expected = exp1 + exp2 + exp3,
+            actual = exp,
         )
     }
 }

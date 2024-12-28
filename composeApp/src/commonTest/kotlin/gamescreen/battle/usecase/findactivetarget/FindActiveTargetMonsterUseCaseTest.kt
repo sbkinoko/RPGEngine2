@@ -183,7 +183,9 @@ class FindActiveTargetMonsterUseCaseTest : KoinTest {
                 maxValue = 100,
             ),
             imgId = 1,
-            name = ""
+            name = "",
+            money = 1,
+            exp = 1,
         )
     }
 

@@ -9,4 +9,6 @@ data class MonsterStatus(
     override var name: String,
     override val hp: HP,
     override val mp: MP,
+    val exp: Int,
+    val money: Int,
 ) : Status

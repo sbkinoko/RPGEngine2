@@ -28,7 +28,9 @@ class BattleMonsterRepositoryImplTest : KoinTest {
         ),
         mp = MP(
             maxValue = 10,
-        )
+        ),
+        money = 1,
+        exp = 1,
     )
     private val monster2 = MonsterStatus(
         imgId = 1,
@@ -38,7 +40,9 @@ class BattleMonsterRepositoryImplTest : KoinTest {
         ),
         mp = MP(
             maxValue = 10,
-        )
+        ),
+        money = 1,
+        exp = 1,
     )
 
     private val monsterList = listOf(
