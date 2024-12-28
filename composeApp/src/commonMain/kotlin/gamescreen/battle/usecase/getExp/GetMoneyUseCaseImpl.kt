@@ -1,8 +1,16 @@
 package gamescreen.battle.usecase.getExp
 
-class GetExpUseCaseImpl : GetExpUseCase {
+import core.repository.battlemonster.BattleMonsterRepository
+
+class GetExpUseCaseImpl(
+    private val battleMonsterRepository: BattleMonsterRepository,
+) : GetExpUseCase {
     override fun invoke(): Int {
-        // todo モンスターによって入手する経験値を変えられるようにする
-        return 10
+
+        return battleMonsterRepository
+            .getMonsters()
+            .sumOf {
+                it.exp
+            }
     }
 }

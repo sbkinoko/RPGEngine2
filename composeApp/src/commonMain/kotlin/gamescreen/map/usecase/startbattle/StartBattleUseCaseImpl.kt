@@ -12,6 +12,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
+import kotlin.random.Random
 
 class StartBattleUseCaseImpl(
     private val battleMonsterRepository: BattleMonsterRepository,
@@ -23,8 +24,7 @@ class StartBattleUseCaseImpl(
     override operator fun invoke() {
         // ランダムで1~5の敵を作成
         val monsterList = List(
-            5
-            //    Random.nextInt(5) + 1,
+            Random.nextInt(5) + 1,
         ) {
             MonsterStatus(
                 1, "花",
@@ -33,7 +33,9 @@ class StartBattleUseCaseImpl(
                 ),
                 mp = MP(
                     maxValue = 10,
-                )
+                ),
+                exp = 2,
+                money = 1,
             )
         }
 

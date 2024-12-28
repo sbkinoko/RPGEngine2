@@ -150,10 +150,14 @@ val ModuleBattle = module {
     }
 
     single<GetMoneyUseCase> {
-        GetMoneyUseCaseImpl()
+        GetMoneyUseCaseImpl(
+            battleMonsterRepository = get()
+        )
     }
 
     single<GetExpUseCase> {
-        GetExpUseCaseImpl()
+        GetExpUseCaseImpl(
+            battleMonsterRepository = get(),
+        )
     }
 }

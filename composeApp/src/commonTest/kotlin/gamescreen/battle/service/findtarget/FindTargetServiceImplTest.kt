@@ -17,9 +17,9 @@ class FindTargetServiceImplTest {
     fun attackTo1When1IsNotActive() {
         val monsters = List(2) {
             if (it == 0) {
-                MonsterStatusTest.getNotActiveMonster()
+                MonsterStatusTest.getNotActiveTestMonster()
             } else {
-                MonsterStatusTest.getMonster()
+                MonsterStatusTest.getTestMonster()
             }
         }
 
@@ -42,9 +42,9 @@ class FindTargetServiceImplTest {
     fun attackTo2When2IsNotActive() {
         val monsters = List(2) {
             if (it == 1) {
-                MonsterStatusTest.getNotActiveMonster()
+                MonsterStatusTest.getNotActiveTestMonster()
             } else {
-                MonsterStatusTest.getMonster()
+                MonsterStatusTest.getTestMonster()
             }
         }
 
@@ -70,9 +70,9 @@ class FindTargetServiceImplTest {
         val activeId = 2
         val monsters = List(3) {
             if (it != 2) {
-                MonsterStatusTest.getNotActiveMonster()
+                MonsterStatusTest.getNotActiveTestMonster()
             } else {
-                MonsterStatusTest.getMonster()
+                MonsterStatusTest.getTestMonster()
             }
         }
 

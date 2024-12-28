@@ -1,6 +1,6 @@
 package core.usecase.updateparameter
 
-import common.status.MonsterStatusTest.Companion.getMonster
+import common.status.MonsterStatusTest.Companion.getTestMonster
 import core.ModuleCore
 import core.repository.battlemonster.BattleMonsterRepository
 import gamescreen.battle.ModuleBattle
@@ -37,7 +37,7 @@ class UpdateMonsterParameterUseCaseTest : KoinTest {
     @Test
     fun attackTo1() {
         runBlocking {
-            val monster = getMonster()
+            val monster = getTestMonster()
             battleMonsterRepository.setMonsters(
                 listOf(
                     monster,
