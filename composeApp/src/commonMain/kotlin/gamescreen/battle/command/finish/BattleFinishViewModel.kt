@@ -30,17 +30,69 @@ class BattleFinishViewModel : BattleChildViewModel() {
     private val getExpUseCase: GetExpUseCase by inject()
     private val playerStatusRepository: PlayerStatusRepository by inject()
 
-    private var contentType: ContentType = ContentType.None
+
+    private var contentType: MutableStateFlow<ContentType> =
+        MutableStateFlow(ContentType.None)
+
+    init {
+        CoroutineScope(Dispatchers.Default).launch {
+            contentType.collect {
+                when (it) {
+                    ContentType.Win -> {
+                        mutableTextFLow.value = "戦闘に勝利した"
+                    }
+
+                    ContentType.Lose -> {
+                        mutableTextFLow.value = "戦闘に敗北した"
+                    }
+
+                    ContentType.Exp -> {
+                        val exp = getExpUseCase.invoke()
+                        mutableTextFLow.value = TextData.BattleFinishExp.getText(
+                            exp = exp
+                        )
+
+                        CoroutineScope(Dispatchers.Default).launch {
+                            playerStatusRepository.getPlayers().mapIndexed { index, it ->
+                                // レベルアップの表示をしたいのならなんかしらの管理が必要
+                                playerStatusRepository.setStatus(
+                                    id = index,
+                                    status = it.copy(
+                                        exp = it.exp.copy(
+                                            value = it.exp.value + exp
+                                        )
+                                    ),
+                                )
+                            }
+                        }
+                    }
+
+                    ContentType.Money -> {
+                        val money = getMoneyUseCase.invoke()
+                        moneyRepository.addMoney(money)
+                        mutableTextFLow.value = TextData
+                            .BattleFinishMoney
+                            .getText(
+                                money = money,
+                            )
+                    }
+
+                    ContentType.None -> {
+                        mutableTextFLow.value = ""
+                    }
+                }
+            }
+        }
+    }
+
 
     fun init(
         isWin: Boolean,
     ) {
-        if (isWin) {
-            mutableTextFLow.value = "戦闘に勝利した"
-            contentType = ContentType.Win
+        contentType.value = if (isWin) {
+            ContentType.Win
         } else {
-            mutableTextFLow.value = "戦闘に敗北した"
-            contentType = ContentType.Lose
+            ContentType.Lose
         }
     }
 
@@ -55,43 +107,16 @@ class BattleFinishViewModel : BattleChildViewModel() {
     )
 
     override fun goNextImpl() {
-        when (contentType) {
+        when (contentType.value) {
             ContentType.Win -> {
-                contentType = ContentType.Money
+                contentType.value = ContentType.Money
             }
 
             ContentType.Money -> {
-                val money = getMoneyUseCase.invoke()
-                moneyRepository.addMoney(money)
-                mutableTextFLow.value = TextData
-                    .BattleFinishMoney
-                    .getText(
-                        money = money,
-                    )
-
-                contentType = ContentType.Exp
+                contentType.value = ContentType.Exp
             }
 
             ContentType.Exp -> {
-                val exp = getExpUseCase.invoke()
-                mutableTextFLow.value = TextData.BattleFinishExp.getText(
-                    exp = exp
-                )
-
-                CoroutineScope(Dispatchers.Default).launch {
-                    playerStatusRepository.getPlayers().mapIndexed { index, it ->
-                        // レベルアップの表示をしたいのならなんかしらの管理が必要
-                        playerStatusRepository.setStatus(
-                            id = index,
-                            status = it.copy(
-                                exp = it.exp.copy(
-                                    value = it.exp.value + exp
-                                )
-                            ),
-                        )
-                    }
-                }
-
                 finishBattle()
             }
 
@@ -105,7 +130,6 @@ class BattleFinishViewModel : BattleChildViewModel() {
 
     private fun finishBattle() {
         changeToMapUseCase.invoke()
-        mutableTextFLow.value = ""
-        contentType = ContentType.None
+        contentType.value = ContentType.None
     }
 }
