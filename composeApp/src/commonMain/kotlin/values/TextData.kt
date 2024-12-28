@@ -19,4 +19,10 @@ class TextData {
             return "expを $exp 手に入れた"
         }
     }
+
+    object BattleFinishTool {
+        fun getText(name: String): String {
+            return "$name を手に入れた"
+        }
+    }
 }

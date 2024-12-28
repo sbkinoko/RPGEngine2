@@ -1,4 +1,4 @@
-package gamescreen.battle.usecase.getExp
+package gamescreen.battle.usecase.getexp
 
 import core.repository.battlemonster.BattleMonsterRepository
 

@@ -3,8 +3,6 @@ package gamescreen.battle.usecase.getexp
 import common.status.MonsterStatusTest.Companion.getTestMonster
 import core.domain.status.MonsterStatus
 import core.repository.battlemonster.TestBattleMonsterRepository
-import gamescreen.battle.usecase.getExp.GetExpUseCase
-import gamescreen.battle.usecase.getExp.GetExpUseCaseImpl
 import org.koin.test.KoinTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
