@@ -1,11 +1,9 @@
 package gamescreen.map.usecase.startbattle
 
 import core.domain.ScreenType
-import core.domain.status.MonsterStatus
-import core.domain.status.param.HP
-import core.domain.status.param.MP
 import core.repository.battlemonster.BattleMonsterRepository
 import core.repository.screentype.ScreenTypeRepository
+import data.monster.MonsterRepository
 import gamescreen.battle.repository.action.ActionRepository
 import gamescreen.battle.repository.commandstate.CommandStateRepository
 import kotlinx.coroutines.CoroutineScope
@@ -19,24 +17,16 @@ class StartBattleUseCaseImpl(
     private val screenTypeRepository: ScreenTypeRepository,
     private val commandStateRepository: CommandStateRepository,
     private val actionRepository: ActionRepository,
+    private val monsterRepository: MonsterRepository,
 ) : StartBattleUseCase, KoinComponent {
 
     override operator fun invoke() {
+        // fixme マスによって出現モンスターを変える
         // ランダムで1~5の敵を作成
         val monsterList = List(
             Random.nextInt(5) + 1,
         ) {
-            MonsterStatus(
-                1, "花",
-                hp = HP(
-                    maxValue = 10,
-                ),
-                mp = MP(
-                    maxValue = 10,
-                ),
-                exp = 2,
-                money = 1,
-            )
+            monsterRepository.getMonster(1)
         }
 
         CoroutineScope(Dispatchers.Default).launch {
