@@ -90,8 +90,9 @@ class BattleFinishViewModel : BattleChildViewModel() {
 
                         dropItemList.value = dropToolList
 
-                        dropItemProcess()
-
+                        if (tryNextForTool()) {
+                            return@collect
+                        }
                     }
 
                     ContentType.None -> {
@@ -108,42 +109,42 @@ class BattleFinishViewModel : BattleChildViewModel() {
                     return@collect
                 }
 
-                dropItemProcess {
-                    //最初の道具の取得処理
-                    val toolId = it.first()
-                    val name = toolRepository.getItem(
-                        toolId
-                    ).name
-
-                    mutableTextFLow.value = TextData
-                        .BattleFinishTool
-                        .getText(
-                            name = name,
-                        )
-
-                    addToolUseCase.invoke(
-                        toolId = toolId,
-                        toolNum = 1,
-                    )
+                if (tryNextForTool()) {
+                    return@collect
                 }
+
+                //最初の道具の取得処理
+                val toolId = it.first()
+                val name = toolRepository.getItem(
+                    toolId
+                ).name
+
+                mutableTextFLow.value = TextData
+                    .BattleFinishTool
+                    .getText(
+                        name = name,
+                    )
+
+                addToolUseCase.invoke(
+                    toolId = toolId,
+                    toolNum = 1,
+                )
             }
         }
     }
 
     /**
-     * 空なら処理はせずに次の処理へ
+     * 道具から次の画面に進むかどうかの関数
      */
-    private fun dropItemProcess(
-        process: () -> Unit = {},
-    ) {
+    private fun tryNextForTool(): Boolean {
+        // 道具が空なら次の処理へ
         if (dropItemList.value.isEmpty()) {
             finishBattle()
-            return
+            return true
+        } else {
+            return false
         }
-
-        process.invoke()
     }
-
 
     fun init(
         isWin: Boolean,
