@@ -90,9 +90,7 @@ class BattleFinishViewModel : BattleChildViewModel() {
 
                         dropItemList.value = dropToolList
 
-                        if (tryNextForTool()) {
-                            return@collect
-                        }
+                        tryNextForTool()
                     }
 
                     ContentType.None -> {
