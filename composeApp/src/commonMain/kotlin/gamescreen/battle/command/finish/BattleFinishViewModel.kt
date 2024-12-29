@@ -40,6 +40,8 @@ class BattleFinishViewModel : BattleChildViewModel() {
     private var contentType: MutableStateFlow<ContentType> =
         MutableStateFlow(ContentType.None)
 
+    private val dropItemList: MutableStateFlow<List<Int>> = MutableStateFlow(listOf())
+
     init {
         CoroutineScope(Dispatchers.Default).launch {
             contentType.collect {
@@ -84,28 +86,11 @@ class BattleFinishViewModel : BattleChildViewModel() {
                     }
 
                     ContentType.Tool -> {
-                        val toolId = getDropToolUseCase.invoke()
+                        val dropToolList = getDropToolUseCase.invoke()
 
-                        //道具の入手がないので次の画面へ
-                        if (toolId == null) {
-                            goNext()
-                            return@collect
-                        }
+                        dropItemList.value = dropToolList
 
-                        val name = toolRepository.getItem(
-                            toolId
-                        ).name
-
-                        mutableTextFLow.value = TextData
-                            .BattleFinishTool
-                            .getText(
-                                name = name,
-                            )
-
-                        addToolUseCase.invoke(
-                            toolId = toolId,
-                            toolNum = 1,
-                        )
+                        tryNextForTool()
                     }
 
                     ContentType.None -> {
@@ -114,8 +99,51 @@ class BattleFinishViewModel : BattleChildViewModel() {
                 }
             }
         }
+
+        CoroutineScope(Dispatchers.Default).launch {
+            dropItemList.collect {
+                //道具画面じゃないので何もしない
+                if (contentType.value != ContentType.Tool) {
+                    return@collect
+                }
+
+                // 次の画面に遷移するのであれば何もしない
+                if (tryNextForTool()) {
+                    return@collect
+                }
+
+                //最初の道具の取得処理
+                val toolId = it.first()
+                val name = toolRepository.getItem(
+                    toolId
+                ).name
+
+                mutableTextFLow.value = TextData
+                    .BattleFinishTool
+                    .getText(
+                        name = name,
+                    )
+
+                addToolUseCase.invoke(
+                    toolId = toolId,
+                    toolNum = 1,
+                )
+            }
+        }
     }
 
+    /**
+     * 道具から次の画面に進むかどうかの関数
+     */
+    private fun tryNextForTool(): Boolean {
+        // 道具が空なら次の処理へ
+        if (dropItemList.value.isEmpty()) {
+            finishBattle()
+            return true
+        } else {
+            return false
+        }
+    }
 
     fun init(
         isWin: Boolean,
@@ -152,7 +180,8 @@ class BattleFinishViewModel : BattleChildViewModel() {
             }
 
             ContentType.Tool -> {
-                finishBattle()
+                // 最初の道具は削除
+                dropItemList.value = dropItemList.value.drop(1)
             }
 
             ContentType.Lose -> {

@@ -7,16 +7,19 @@ class GetDropToolUseCaseImpl(
     private val battleMonsterRepository: BattleMonsterRepository,
 ) : GetDropToolUseCase {
 
-    override fun invoke(): Int? {
+    override fun invoke(): List<Int> {
+        // ドロップアイテムの情報を格納するリスト
+        val dropList: MutableList<Int> = mutableListOf()
+
         battleMonsterRepository.getMonsters().map { monster ->
             monster.dropInfoList.map {
                 val rnd = Random.nextInt(100)
                 if (rnd < it.probability) {
-                    return it.itemId
+                    dropList.add(it.itemId)
                 }
             }
         }
 
-        return null
+        return dropList
     }
 }
