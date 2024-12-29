@@ -57,7 +57,8 @@ class GetDropToolUseCaseImplTest {
 
         assertTrue(
             actual = idList.any {
-                it.isEmpty().not()
+                it.size == 1 &&
+                        it.contains(itemId)
             }
         )
         assertTrue(
@@ -96,7 +97,8 @@ class GetDropToolUseCaseImplTest {
 
         assertTrue(
             actual = idList.all {
-                it.first() == itemId
+                it.size == 1 &&
+                        it.contains(itemId)
             }
         )
     }
@@ -178,14 +180,16 @@ class GetDropToolUseCaseImplTest {
         //1だけ
         assertTrue(
             actual = idList.any {
-                it.contains(itemId1) && !it.contains(itemId2)
+                it.size == 1 &&
+                        it.contains(itemId1)
             }
         )
 
         //2だけ
         assertTrue(
             actual = idList.any {
-                !it.contains(itemId1) && it.contains(itemId2)
+                it.size == 1 &&
+                        it.contains(itemId2)
             }
         )
 
@@ -193,7 +197,9 @@ class GetDropToolUseCaseImplTest {
         //どっちも
         assertTrue(
             actual = idList.any {
-                it.size == 2
+                it.size == 2 &&
+                        it.contains(itemId1) &&
+                        it.contains(itemId2)
             }
         )
     }
@@ -245,22 +251,25 @@ class GetDropToolUseCaseImplTest {
         //1だけ
         assertTrue(
             actual = idList.any {
-                it.contains(itemId1) && !it.contains(itemId2)
+                it.size == 1 &&
+                        it.contains(itemId1)
             }
         )
 
         //2だけ
         assertTrue(
             actual = idList.any {
-                !it.contains(itemId1) && it.contains(itemId2)
+                it.size == 1 &&
+                        it.contains(itemId2)
             }
         )
-
 
         //どっちも
         assertTrue(
             actual = idList.any {
-                it.size == 2
+                it.size == 2 &&
+                        it.contains(itemId1) &&
+                        it.contains(itemId2)
             }
         )
     }
