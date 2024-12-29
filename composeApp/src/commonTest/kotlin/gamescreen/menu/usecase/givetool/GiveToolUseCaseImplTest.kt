@@ -39,9 +39,6 @@ class GiveToolUseCaseImplTest : KoinTest {
     private val toPlayerStatus
         get() = playerStatusRepository.getPlayers()[toPlayer]
 
-    private val itemId1 = 1
-    private val itemId2 = 2
-
     @BeforeTest
     fun beforeTest() {
         startKoin {
@@ -68,13 +65,15 @@ class GiveToolUseCaseImplTest : KoinTest {
             val target = 0
             targetRepository.target = target
 
+            val itemId = 1
+
             //　対象の持ち物をいっぱいにする
             val player1 = playerStatusRepository.getPlayers()[target]
             playerStatusRepository.setStatus(
                 id = target,
                 status = player1.copy(
                     toolList = List(Constants.MAX_TOOL_NUM) {
-                        itemId1
+                        itemId
                     }
                 ),
             )
@@ -88,7 +87,7 @@ class GiveToolUseCaseImplTest : KoinTest {
                 id = from,
                 status = fromPlayer.copy(
                     toolList = List(Constants.MAX_TOOL_NUM) {
-                        itemId1
+                        itemId
                     }
                 )
             )
