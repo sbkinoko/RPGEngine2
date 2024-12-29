@@ -56,10 +56,14 @@ class GetDropToolUseCaseImplTest {
         }
 
         assertTrue(
-            actual = idList.contains(itemId)
+            actual = idList.any {
+                it.isEmpty().not()
+            }
         )
         assertTrue(
-            actual = idList.contains(null)
+            actual = idList.any {
+                it.isEmpty()
+            }
         )
     }
 
@@ -92,7 +96,7 @@ class GetDropToolUseCaseImplTest {
 
         assertTrue(
             actual = idList.all {
-                it == itemId
+                it.first() == itemId
             }
         )
     }
@@ -126,7 +130,137 @@ class GetDropToolUseCaseImplTest {
 
         assertTrue(
             actual = idList.all {
-                it == null
+                it.isEmpty()
+            }
+        )
+    }
+
+    /**
+     * 複数の道具をドロップする場合のテスト
+     */
+    @Test
+    fun dropToolSomeTool() {
+        val itemId1 = 1
+        val itemId2 = 2
+
+        val getDropToolUseCase: GetDropToolUseCase = GetDropToolUseCaseImpl(
+            battleMonsterRepository = object : TestBattleMonsterRepository {
+                override fun getMonsters(): List<MonsterStatus> {
+                    return listOf(
+                        getTestMonster().copy(
+                            dropInfoList = listOf(
+                                DropItemInfo(
+                                    itemId = itemId1,
+                                    probability = 50,
+                                ),
+                                DropItemInfo(
+                                    itemId = itemId2,
+                                    probability = 50,
+                                )
+                            )
+                        )
+                    )
+                }
+            }
+        )
+
+        val idList = List(20) {
+            getDropToolUseCase.invoke()
+        }
+
+        // 空
+        assertTrue(
+            actual = idList.any {
+                it.isEmpty()
+            }
+        )
+
+        //1だけ
+        assertTrue(
+            actual = idList.any {
+                it.contains(itemId1) && !it.contains(itemId2)
+            }
+        )
+
+        //2だけ
+        assertTrue(
+            actual = idList.any {
+                !it.contains(itemId1) && it.contains(itemId2)
+            }
+        )
+
+
+        //どっちも
+        assertTrue(
+            actual = idList.any {
+                it.size == 2
+            }
+        )
+    }
+
+    /**
+     * 複数のモンスターが道具をドロップする場合のテスト
+     */
+    @Test
+    fun dropToolSomeEnemy() {
+        val itemId1 = 1
+        val itemId2 = 2
+
+        val getDropToolUseCase: GetDropToolUseCase = GetDropToolUseCaseImpl(
+            battleMonsterRepository = object : TestBattleMonsterRepository {
+                override fun getMonsters(): List<MonsterStatus> {
+                    return listOf(
+                        getTestMonster().copy(
+                            dropInfoList = listOf(
+                                DropItemInfo(
+                                    itemId = itemId1,
+                                    probability = 50,
+                                ),
+                            )
+                        ),
+                        getTestMonster().copy(
+                            dropInfoList = listOf(
+                                DropItemInfo(
+                                    itemId = itemId2,
+                                    probability = 50,
+                                )
+                            )
+                        ),
+                    )
+                }
+            }
+        )
+
+        val idList = List(20) {
+            getDropToolUseCase.invoke()
+        }
+
+        // 空
+        assertTrue(
+            actual = idList.any {
+                it.isEmpty()
+            }
+        )
+
+        //1だけ
+        assertTrue(
+            actual = idList.any {
+                it.contains(itemId1) && !it.contains(itemId2)
+            }
+        )
+
+        //2だけ
+        assertTrue(
+            actual = idList.any {
+                !it.contains(itemId1) && it.contains(itemId2)
+            }
+        )
+
+
+        //どっちも
+        assertTrue(
+            actual = idList.any {
+                it.size == 2
             }
         )
     }
