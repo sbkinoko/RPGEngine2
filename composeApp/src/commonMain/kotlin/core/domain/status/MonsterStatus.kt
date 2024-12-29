@@ -11,4 +11,5 @@ data class MonsterStatus(
     override val mp: MP,
     val exp: Int,
     val money: Int,
+    val dropInfoList: List<DropItemInfo>,
 ) : Status

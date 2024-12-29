@@ -1,5 +1,6 @@
 package common.status
 
+import core.domain.status.DropItemInfo
 import core.domain.status.MonsterStatus
 import core.domain.status.param.HP
 import core.domain.status.param.MP
@@ -20,6 +21,12 @@ class MonsterStatusTest {
             ),
             money = 1,
             exp = 1,
+            dropInfoList = listOf(
+                DropItemInfo(
+                    itemId = 1,
+                    probability = 1,
+                )
+            )
         )
 
         // HPが0のモンスターを作成
