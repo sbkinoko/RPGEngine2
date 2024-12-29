@@ -3,8 +3,8 @@ package gamescreen.battle.command.item
 import core.domain.Const
 import core.domain.item.AttackItem
 import core.domain.item.HealItem
-import core.repository.item.ItemRepository
 import core.repository.player.PlayerStatusRepository
+import data.item.ItemRepository
 import gamescreen.battle.BattleChildViewModel
 import gamescreen.battle.domain.ActionType
 import gamescreen.battle.domain.SelectAllyCommand

@@ -1,7 +1,7 @@
 package gamescreen.menu.item.tool.user
 
-import core.repository.item.tool.ToolRepository
-import core.repository.item.tool.ToolRepositoryImpl
+import data.item.tool.ToolRepository
+import data.item.tool.ToolRepositoryImpl
 import gamescreen.menu.domain.BagToolData
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.domain.SelectManager

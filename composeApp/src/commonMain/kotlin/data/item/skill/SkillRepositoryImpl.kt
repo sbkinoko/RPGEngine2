@@ -1,4 +1,4 @@
-package core.repository.item.skill
+package data.item.skill
 
 import core.domain.Place
 import core.domain.item.TargetType

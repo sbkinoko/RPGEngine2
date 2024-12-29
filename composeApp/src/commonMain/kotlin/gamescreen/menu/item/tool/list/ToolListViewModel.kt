@@ -1,7 +1,7 @@
 package gamescreen.menu.item.tool.list
 
 import core.domain.AbleType
-import core.repository.item.tool.ToolRepository
+import data.item.tool.ToolRepository
 import gamescreen.choice.Choice
 import gamescreen.choice.repository.ChoiceRepository
 import gamescreen.menu.domain.MenuType

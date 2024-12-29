@@ -1,4 +1,4 @@
-package core.repository.item.tool
+package data.item.tool
 
 import core.domain.Place
 import core.domain.item.TargetType

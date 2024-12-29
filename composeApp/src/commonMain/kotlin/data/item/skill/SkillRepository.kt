@@ -1,7 +1,7 @@
-package core.repository.item.skill
+package data.item.skill
 
 import core.domain.item.skill.Skill
-import core.repository.item.ItemRepository
+import data.item.ItemRepository
 
 interface SkillRepository : ItemRepository {
 

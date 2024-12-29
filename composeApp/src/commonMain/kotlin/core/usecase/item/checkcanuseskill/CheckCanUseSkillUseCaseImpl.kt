@@ -3,7 +3,7 @@ package core.usecase.item.checkcanuseskill
 import core.domain.AbleType
 import core.domain.Place
 import core.domain.status.Status
-import core.repository.item.skill.SkillRepository
+import data.item.skill.SkillRepository
 
 class CheckCanUseSkillUseCaseImpl(
     private val skillRepository: SkillRepository,

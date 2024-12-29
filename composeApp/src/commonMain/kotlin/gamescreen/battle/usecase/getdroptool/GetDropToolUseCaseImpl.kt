@@ -1,6 +1,6 @@
 package gamescreen.battle.usecase.getdroptool
 
-import core.repository.item.tool.ToolRepositoryImpl
+import data.item.tool.ToolRepositoryImpl
 import kotlin.random.Random
 
 class GetDropToolUseCaseImpl : GetDropToolUseCase {

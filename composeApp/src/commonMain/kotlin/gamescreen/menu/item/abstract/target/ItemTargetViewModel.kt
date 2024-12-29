@@ -2,8 +2,8 @@ package gamescreen.menu.item.abstract.target
 
 import core.domain.AbleType
 import core.domain.item.HealItem
-import core.repository.item.ItemRepository
 import core.repository.player.PlayerStatusRepository
+import data.item.ItemRepository
 import gamescreen.choice.Choice
 import gamescreen.choice.repository.ChoiceRepository
 import gamescreen.menu.MenuChildViewModel

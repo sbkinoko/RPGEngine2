@@ -2,6 +2,7 @@ package org.example.project
 
 import android.app.Application
 import core.ModuleCore
+import data.ModuleData
 import gamescreen.battle.ModuleBattle
 import gamescreen.choice.ModuleChoice
 import gamescreen.map.ModuleMap
@@ -27,6 +28,7 @@ class RPGApplication : Application() {
                 ModuleChoice,
 
                 ModuleCore,
+                ModuleData,
             )
         }
     }

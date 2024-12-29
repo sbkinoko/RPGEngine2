@@ -1,7 +1,7 @@
 package gamescreen.menu.item.skill.user
 
-import core.repository.item.skill.SkillRepository
 import core.repository.player.PlayerStatusRepository
+import data.item.skill.SkillRepository
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.domain.SelectManager
 import gamescreen.menu.item.abstract.user.ItemUserViewModel
