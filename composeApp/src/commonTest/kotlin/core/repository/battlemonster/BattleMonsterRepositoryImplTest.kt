@@ -1,6 +1,7 @@
 package core.repository.battlemonster
 
 import core.ModuleCore
+import core.domain.status.DropItemInfo
 import core.domain.status.MonsterStatus
 import core.domain.status.param.HP
 import core.domain.status.param.MP
@@ -20,6 +21,7 @@ import kotlin.test.assertEquals
 class BattleMonsterRepositoryImplTest : KoinTest {
     private val battleMonsterRepository: BattleMonsterRepository by inject()
 
+    // fixme test用のデータを流用する
     private val monster1 = MonsterStatus(
         imgId = 1,
         name = "monster1",
@@ -31,6 +33,12 @@ class BattleMonsterRepositoryImplTest : KoinTest {
         ),
         money = 1,
         exp = 1,
+        dropInfoList = listOf(
+            DropItemInfo(
+                itemId = 1,
+                probability = 1,
+            )
+        )
     )
     private val monster2 = MonsterStatus(
         imgId = 1,
@@ -43,6 +51,12 @@ class BattleMonsterRepositoryImplTest : KoinTest {
         ),
         money = 1,
         exp = 1,
+        dropInfoList = listOf(
+            DropItemInfo(
+                itemId = 1,
+                probability = 1,
+            )
+        )
     )
 
     private val monsterList = listOf(
