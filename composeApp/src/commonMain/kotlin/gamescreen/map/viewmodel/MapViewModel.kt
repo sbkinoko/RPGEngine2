@@ -21,12 +21,13 @@ import gamescreen.map.usecase.PlayerMoveManageUseCase
 import gamescreen.map.usecase.PlayerMoveUseCase
 import gamescreen.map.usecase.UpdateCellContainPlayerUseCase
 import gamescreen.map.usecase.VelocityManageUseCase
+import gamescreen.map.usecase.battledecidemonster.DecideBattleMonsterUseCase
+import gamescreen.map.usecase.battlestart.StartBattleUseCase
 import gamescreen.map.usecase.collision.geteventtype.GetEventTypeUseCase
 import gamescreen.map.usecase.collision.iscollided.IsCollidedUseCase
 import gamescreen.map.usecase.event.actionevent.ActionEventUseCase
 import gamescreen.map.usecase.event.cellevent.CellEventUseCase
 import gamescreen.map.usecase.roadmap.RoadMapUseCase
-import gamescreen.map.usecase.startbattle.StartBattleUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -56,9 +57,12 @@ class MapViewModel : ControllerCallback, KoinComponent {
     private val playerCellRepository: PlayerCellRepository by inject()
 
     private val updateCellContainPlayerUseCase: UpdateCellContainPlayerUseCase by inject()
-    private val startBattleUseCase: StartBattleUseCase by inject()
+
     private val actionEventUseCase: ActionEventUseCase by inject()
     private val cellEventUseCase: CellEventUseCase by inject()
+
+    private val decideBattleMonsterUseCase: DecideBattleMonsterUseCase by inject()
+    private val startBattleUseCase: StartBattleUseCase by inject()
 
     private val roadMapUseCase: RoadMapUseCase by inject()
 
@@ -356,7 +360,11 @@ class MapViewModel : ControllerCallback, KoinComponent {
     }
 
     override fun pressB() {
-        startBattleUseCase()
+        val monsterList = decideBattleMonsterUseCase.invoke()
+
+        startBattleUseCase.invoke(
+            monsterList = monsterList,
+        )
     }
 
     override fun pressM() {

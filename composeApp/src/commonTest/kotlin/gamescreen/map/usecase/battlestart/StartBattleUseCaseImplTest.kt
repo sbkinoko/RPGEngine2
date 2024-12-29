@@ -1,5 +1,6 @@
-package gamescreen.map.usecase.startbattle
+package gamescreen.map.usecase.battlestart
 
+import common.status.MonsterStatusTest.Companion.getTestMonster
 import core.domain.ScreenType
 import core.domain.status.MonsterStatus
 import core.repository.battlemonster.BattleMonsterRepository
@@ -132,9 +133,12 @@ class StartBattleUseCaseImplTest : KoinTest {
 
     @Test
     fun checkStart() {
-
         runBlocking {
-            startBattleUseCase()
+            startBattleUseCase(
+                monsterList = listOf(
+                    getTestMonster(),
+                )
+            )
 
             delay(100)
 

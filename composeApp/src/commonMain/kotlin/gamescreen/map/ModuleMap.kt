@@ -17,6 +17,10 @@ import gamescreen.map.usecase.PlayerMoveUseCase
 import gamescreen.map.usecase.ResetBackgroundPositionUseCase
 import gamescreen.map.usecase.UpdateCellContainPlayerUseCase
 import gamescreen.map.usecase.VelocityManageUseCase
+import gamescreen.map.usecase.battledecidemonster.DecideBattleMonsterUseCase
+import gamescreen.map.usecase.battledecidemonster.DecideBattleMonsterUseCaseImpl
+import gamescreen.map.usecase.battlestart.StartBattleUseCase
+import gamescreen.map.usecase.battlestart.StartBattleUseCaseImpl
 import gamescreen.map.usecase.collision.geteventtype.GetEventTypeUseCase
 import gamescreen.map.usecase.collision.geteventtype.GetEventTypeUseCaseImpl
 import gamescreen.map.usecase.collision.iscollided.IsCollidedUseCase
@@ -31,8 +35,6 @@ import gamescreen.map.usecase.roadmap.RoadMapUseCase
 import gamescreen.map.usecase.roadmap.RoadMapUseCaseImpl
 import gamescreen.map.usecase.setplayercenter.SetPlayerCenterUseCase
 import gamescreen.map.usecase.setplayercenter.SetPlayerCenterUseCaseImpl
-import gamescreen.map.usecase.startbattle.StartBattleUseCase
-import gamescreen.map.usecase.startbattle.StartBattleUseCaseImpl
 import gamescreen.map.viewmodel.MapViewModel
 import org.koin.dsl.module
 
@@ -125,6 +127,12 @@ val ModuleMap = module {
     single<GetEventTypeUseCase> {
         GetEventTypeUseCaseImpl(
             backgroundRepository = get(),
+        )
+    }
+
+    single<DecideBattleMonsterUseCase> {
+        DecideBattleMonsterUseCaseImpl(
+            monsterRepository = get(),
         )
     }
 
