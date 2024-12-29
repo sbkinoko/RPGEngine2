@@ -1,11 +1,10 @@
-package gamescreen.map.usecase.startbattle
+package gamescreen.map.usecase.battlestart
 
 import common.status.MonsterStatusTest.Companion.getTestMonster
 import core.domain.ScreenType
 import core.domain.status.MonsterStatus
 import core.repository.battlemonster.BattleMonsterRepository
 import core.repository.screentype.ScreenTypeRepository
-import data.monster.MonsterRepository
 import gamescreen.battle.domain.ActionData
 import gamescreen.battle.domain.ActionType
 import gamescreen.battle.domain.BattleCommandType
@@ -124,11 +123,6 @@ class StartBattleUseCaseImplTest : KoinTest {
                     checkAction++
                 }
             },
-            monsterRepository = object : MonsterRepository {
-                override fun getMonster(id: Int): MonsterStatus {
-                    return getTestMonster()
-                }
-            }
         )
     }
 
@@ -139,9 +133,12 @@ class StartBattleUseCaseImplTest : KoinTest {
 
     @Test
     fun checkStart() {
-
         runBlocking {
-            startBattleUseCase()
+            startBattleUseCase(
+                monsterList = listOf(
+                    getTestMonster(),
+                )
+            )
 
             delay(100)
 
