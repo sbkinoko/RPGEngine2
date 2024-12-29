@@ -133,7 +133,6 @@ class StartBattleUseCaseImplTest : KoinTest {
 
     @Test
     fun checkStart() {
-
         runBlocking {
             startBattleUseCase(
                 monsterList = listOf(
