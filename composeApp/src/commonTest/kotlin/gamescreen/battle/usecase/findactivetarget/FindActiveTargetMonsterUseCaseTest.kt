@@ -1,5 +1,6 @@
 package gamescreen.battle.usecase.findactivetarget
 
+import core.domain.status.DropItemInfo
 import core.domain.status.MonsterStatus
 import core.domain.status.param.HP
 import core.domain.status.param.MP
@@ -168,6 +169,7 @@ class FindActiveTargetMonsterUseCaseTest : KoinTest {
         }
     }
 
+    // fixme testデータを流用するようにする
     private fun monster(isActive: Boolean): MonsterStatus {
         return MonsterStatus(
             mp = MP(
@@ -186,6 +188,12 @@ class FindActiveTargetMonsterUseCaseTest : KoinTest {
             name = "",
             money = 1,
             exp = 1,
+            dropInfoList = listOf(
+                DropItemInfo(
+                    itemId = 1,
+                    probability = 1,
+                )
+            )
         )
     }
 
