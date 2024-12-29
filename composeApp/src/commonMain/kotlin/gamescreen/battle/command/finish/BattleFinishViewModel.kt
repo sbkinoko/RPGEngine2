@@ -107,6 +107,7 @@ class BattleFinishViewModel : BattleChildViewModel() {
                     return@collect
                 }
 
+                // 次の画面に遷移するのであれば何もしない
                 if (tryNextForTool()) {
                     return@collect
                 }
