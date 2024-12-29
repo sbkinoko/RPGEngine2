@@ -1,7 +1,10 @@
 package gamescreen.battle.usecase.getdroptool
 
+import common.status.MonsterStatusTest.Companion.getTestMonster
 import core.ModuleCore
-import data.item.tool.ToolRepositoryImpl
+import core.domain.status.DropItemInfo
+import core.domain.status.MonsterStatus
+import core.repository.battlemonster.TestBattleMonsterRepository
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import kotlin.test.AfterTest
@@ -27,17 +30,101 @@ class GetDropToolUseCaseImplTest {
 
     @Test
     fun getDropTool() {
-        val getDropToolUseCase: GetDropToolUseCase = GetDropToolUseCaseImpl()
+        val itemId = 1
+        val getDropToolUseCase: GetDropToolUseCase = GetDropToolUseCaseImpl(
+            battleMonsterRepository = object : TestBattleMonsterRepository {
+                override fun getMonsters(): List<MonsterStatus> {
+                    return listOf(
+                        getTestMonster().copy(
+                            dropInfoList = listOf(
+                                DropItemInfo(
+                                    itemId = itemId,
+                                    probability = 50,
+                                )
+                            )
+                        )
+                    )
+                }
+            }
+        )
 
         val idList = List(10) {
             getDropToolUseCase.invoke()
         }
 
         assertTrue(
-            actual = idList.contains(ToolRepositoryImpl.HEAL_TOOL)
+            actual = idList.contains(itemId)
         )
         assertTrue(
             actual = idList.contains(null)
+        )
+    }
+
+    /**
+     * 必ず道具を落とす場合のテスト
+     */
+    @Test
+    fun dropToolABS() {
+        val itemId = 1
+        val getDropToolUseCase: GetDropToolUseCase = GetDropToolUseCaseImpl(
+            battleMonsterRepository = object : TestBattleMonsterRepository {
+                override fun getMonsters(): List<MonsterStatus> {
+                    return listOf(
+                        getTestMonster().copy(
+                            dropInfoList = listOf(
+                                DropItemInfo(
+                                    itemId = itemId,
+                                    probability = 100,
+                                )
+                            )
+                        )
+                    )
+                }
+            }
+        )
+
+        val idList = List(10) {
+            getDropToolUseCase.invoke()
+        }
+
+        assertTrue(
+            actual = idList.all {
+                it == itemId
+            }
+        )
+    }
+
+    /**
+     * 必ず道具を落とす場合のテスト
+     */
+    @Test
+    fun notDropToolABS() {
+        val itemId = 1
+        val getDropToolUseCase: GetDropToolUseCase = GetDropToolUseCaseImpl(
+            battleMonsterRepository = object : TestBattleMonsterRepository {
+                override fun getMonsters(): List<MonsterStatus> {
+                    return listOf(
+                        getTestMonster().copy(
+                            dropInfoList = listOf(
+                                DropItemInfo(
+                                    itemId = itemId,
+                                    probability = 0,
+                                )
+                            )
+                        )
+                    )
+                }
+            }
+        )
+
+        val idList = List(10) {
+            getDropToolUseCase.invoke()
+        }
+
+        assertTrue(
+            actual = idList.all {
+                it == null
+            }
         )
     }
 }

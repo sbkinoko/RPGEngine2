@@ -164,6 +164,8 @@ val ModuleBattle = module {
     }
 
     single<GetDropToolUseCase> {
-        GetDropToolUseCaseImpl()
+        GetDropToolUseCaseImpl(
+            battleMonsterRepository = get(),
+        )
     }
 }
