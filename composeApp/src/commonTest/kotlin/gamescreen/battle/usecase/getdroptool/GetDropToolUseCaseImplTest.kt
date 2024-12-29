@@ -28,8 +28,11 @@ class GetDropToolUseCaseImplTest {
         stopKoin()
     }
 
+    /**
+     * 道具を確率で落とす場合のテスト
+     */
     @Test
-    fun getDropTool() {
+    fun dropToolPROB() {
         val itemId = 1
         val getDropToolUseCase: GetDropToolUseCase = GetDropToolUseCaseImpl(
             battleMonsterRepository = object : TestBattleMonsterRepository {
@@ -95,7 +98,7 @@ class GetDropToolUseCaseImplTest {
     }
 
     /**
-     * 必ず道具を落とす場合のテスト
+     * 必ず道具を落とさない場合のテスト
      */
     @Test
     fun notDropToolABS() {
