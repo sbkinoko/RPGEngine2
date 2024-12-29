@@ -3,9 +3,9 @@ package gamescreen.battle.command.selectally
 import core.domain.item.HealItem
 import core.domain.item.TargetType
 import core.domain.item.skill.HealSkill
-import core.repository.item.skill.SkillRepository
-import core.repository.item.tool.ToolRepository
 import core.repository.player.PlayerStatusRepository
+import data.item.skill.SkillRepository
+import data.item.tool.ToolRepository
 import gamescreen.battle.BattleChildViewModel
 import gamescreen.battle.domain.ActionType
 import gamescreen.battle.domain.BattleCommandType

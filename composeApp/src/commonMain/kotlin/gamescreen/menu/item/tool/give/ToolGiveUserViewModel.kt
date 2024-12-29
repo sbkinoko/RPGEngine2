@@ -1,7 +1,7 @@
 package gamescreen.menu.item.tool.give
 
-import core.repository.item.tool.ToolRepository
-import core.repository.item.tool.ToolRepositoryImpl
+import data.item.tool.ToolRepository
+import data.item.tool.ToolRepositoryImpl
 import gamescreen.choice.Choice
 import gamescreen.choice.repository.ChoiceRepository
 import gamescreen.menu.domain.BagToolData

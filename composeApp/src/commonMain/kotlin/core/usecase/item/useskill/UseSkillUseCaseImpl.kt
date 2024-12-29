@@ -2,9 +2,9 @@ package core.usecase.item.useskill
 
 import core.domain.item.skill.AttackSkill
 import core.domain.item.skill.HealSkill
-import core.repository.item.skill.SkillRepository
 import core.repository.player.PlayerStatusRepository
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
+import data.item.skill.SkillRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO

@@ -1,7 +1,7 @@
 package gamescreen.battle.usecase.getdroptool
 
 import core.ModuleCore
-import core.repository.item.tool.ToolRepositoryImpl
+import data.item.tool.ToolRepositoryImpl
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import kotlin.test.AfterTest

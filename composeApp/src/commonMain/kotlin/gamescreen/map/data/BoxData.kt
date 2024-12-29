@@ -1,6 +1,6 @@
 package gamescreen.map.data
 
-import core.repository.item.tool.ToolRepositoryImpl
+import data.item.tool.ToolRepositoryImpl
 
 class BoxData {
     companion object {

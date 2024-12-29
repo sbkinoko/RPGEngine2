@@ -1,4 +1,4 @@
-package core.repository.item
+package data.item
 
 import core.domain.item.Item
 

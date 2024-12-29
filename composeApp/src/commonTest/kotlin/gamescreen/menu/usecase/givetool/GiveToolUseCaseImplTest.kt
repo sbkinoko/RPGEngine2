@@ -1,7 +1,6 @@
 package gamescreen.menu.usecase.givetool
 
 import core.ModuleCore
-import core.repository.item.tool.ToolRepositoryImpl
 import core.repository.player.PlayerStatusRepository
 import gamescreen.menu.ModuleMenu
 import gamescreen.menu.domain.BagToolData
@@ -66,13 +65,15 @@ class GiveToolUseCaseImplTest : KoinTest {
             val target = 0
             targetRepository.target = target
 
+            val itemId = 1
+
             //　対象の持ち物をいっぱいにする
             val player1 = playerStatusRepository.getPlayers()[target]
             playerStatusRepository.setStatus(
                 id = target,
                 status = player1.copy(
                     toolList = List(Constants.MAX_TOOL_NUM) {
-                        ToolRepositoryImpl.HEAL_TOOL
+                        itemId
                     }
                 ),
             )
@@ -86,7 +87,7 @@ class GiveToolUseCaseImplTest : KoinTest {
                 id = from,
                 status = fromPlayer.copy(
                     toolList = List(Constants.MAX_TOOL_NUM) {
-                        ToolRepositoryImpl.HEAL_TOOL
+                        itemId
                     }
                 )
             )

@@ -8,7 +8,7 @@ import core.domain.status.PlayerStatus
 import core.domain.status.param.EXP
 import core.domain.status.param.HP
 import core.domain.status.param.MP
-import core.repository.item.skill.SkillRepository
+import data.item.skill.SkillRepository
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals

@@ -1,12 +1,12 @@
 package gamescreen.battle.usecase.gettargetnum
 
-import core.repository.item.skill.SkillRepository
+import data.item.skill.SkillRepository
 import gamescreen.battle.domain.ActionType
 import gamescreen.battle.repository.action.ActionRepository
 
 class GetTargetNumUseCaseImpl(
     private val actionRepository: ActionRepository,
-    private val skillRepository: SkillRepository
+    private val skillRepository: SkillRepository,
 ) : GetTargetNumUseCase {
     override fun invoke(playerId: Int): Int {
         return actionRepository.getAction(playerId).let {

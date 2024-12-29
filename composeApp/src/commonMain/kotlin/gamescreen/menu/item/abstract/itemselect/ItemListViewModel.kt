@@ -1,8 +1,8 @@
 package gamescreen.menu.item.abstract.itemselect
 
 import core.domain.AbleType
-import core.repository.item.ItemRepository
 import core.repository.player.PlayerStatusRepository
+import data.item.ItemRepository
 import gamescreen.menu.MenuChildViewModel
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.domain.SelectManager
