@@ -69,7 +69,7 @@ class PlayerStatusRepositoryImpl : PlayerStatusRepository {
                     name = "test2",
                     hp = HP(
                         maxValue = 100,
-                        value = 0,
+                        value = 100,
                     ),
                     mp = MP(
                         maxValue = 111,

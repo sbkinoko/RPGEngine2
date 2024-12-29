@@ -1,16 +1,22 @@
 package gamescreen.battle.usecase.getdroptool
 
-import data.item.tool.ToolRepositoryImpl
+import core.repository.battlemonster.BattleMonsterRepository
 import kotlin.random.Random
 
-class GetDropToolUseCaseImpl : GetDropToolUseCase {
-    override fun invoke(): Int? {
+class GetDropToolUseCaseImpl(
+    private val battleMonsterRepository: BattleMonsterRepository,
+) : GetDropToolUseCase {
 
-        // fixme 敵の種類によってドロップ内容を変更する
-        return if (Random.nextInt(2) % 2 == 0) {
-            ToolRepositoryImpl.HEAL_TOOL
-        } else {
-            null
+    override fun invoke(): Int? {
+        battleMonsterRepository.getMonsters().map { monster ->
+            monster.dropInfoList.map {
+                val rnd = Random.nextInt(100)
+                if (rnd < it.probability) {
+                    return it.itemId
+                }
+            }
         }
+
+        return null
     }
 }
