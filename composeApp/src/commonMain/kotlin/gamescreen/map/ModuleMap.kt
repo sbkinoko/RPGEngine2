@@ -134,6 +134,7 @@ val ModuleMap = module {
             screenTypeRepository = get(),
             commandStateRepository = get(),
             actionRepository = get(),
+            monsterRepository = get()
         )
     }
 
