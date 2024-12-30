@@ -20,14 +20,17 @@ class AddExpUseCaseImpl(
                 )
             )
 
-            // レベルが上がっていたら表示用リストに追加
+            // レベルが上がっていたら
             if (it.exp.level != after.exp.level) {
+                //表示用リストに追加
                 levelUpList.add(it.name)
 
+                //上がったステータスを取得して
                 statusRepository.getStatus(
                     id = index,
                     level = after.exp.level
                 ).apply {
+                    //ステータスに反映する
                     after = after.copy(
                         hp = after.hp.copy(
                             maxValue = hp.maxValue
