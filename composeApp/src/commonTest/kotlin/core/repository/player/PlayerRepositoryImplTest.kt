@@ -5,6 +5,7 @@ import core.domain.status.PlayerStatus
 import core.domain.status.param.EXP
 import core.domain.status.param.HP
 import core.domain.status.param.MP
+import data.ModuleData
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -24,7 +25,8 @@ class PlayerStatusRepositoryImplTest : KoinTest {
     fun beforeTest() {
         startKoin {
             modules(
-                ModuleCore
+                ModuleCore,
+                ModuleData,
             )
         }
     }

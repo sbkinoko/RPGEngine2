@@ -2,6 +2,7 @@ package gamescreen.menu.usecase.givetool
 
 import core.ModuleCore
 import core.repository.player.PlayerStatusRepository
+import data.ModuleData
 import gamescreen.menu.ModuleMenu
 import gamescreen.menu.domain.BagToolData
 import gamescreen.menu.domain.GiveResult
@@ -45,6 +46,7 @@ class GiveToolUseCaseImplTest : KoinTest {
             modules(
                 ModuleMenu,
                 ModuleCore,
+                ModuleData,
             )
         }
     }
