@@ -10,15 +10,17 @@ abstract class StatusRepositoryAbstract : StatusRepository {
         val playerStatus = statusBaseList[id]
         var statusSum = playerStatus
 
-        statusUpList[id].first().apply {
-            statusSum = statusSum.copy(
-                hp = HP(
-                    statusSum.hp.maxValue + hp,
-                ),
-                mp = MP(
-                    statusSum.mp.maxValue + mp,
+        for (lv: Int in 0 until level) {
+            statusUpList[id][lv].apply {
+                statusSum = statusSum.copy(
+                    hp = HP(
+                        statusSum.hp.maxValue + hp,
+                    ),
+                    mp = MP(
+                        statusSum.mp.maxValue + mp,
+                    )
                 )
-            )
+            }
         }
 
         return statusSum

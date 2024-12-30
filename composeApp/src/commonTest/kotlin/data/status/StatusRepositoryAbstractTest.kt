@@ -7,9 +7,12 @@ import core.domain.status.param.MP
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-abstract class StatusRepositoryAbstractTest {
+class StatusRepositoryAbstractTest {
     private val lv1HP = 10
     private val lv1MP = 11
+
+    private val lv2HP = 11
+    private val lv2MP = 12
 
     private val skillListValue = listOf(1)
     private val toolListValue = listOf(2)
@@ -29,6 +32,10 @@ abstract class StatusRepositoryAbstractTest {
                     StatusIncrease(
                         hp = lv1HP,
                         mp = lv1MP,
+                    ),
+                    StatusIncrease(
+                        hp = lv2HP,
+                        mp = lv2MP,
                     )
                 )
             )
@@ -65,6 +72,41 @@ abstract class StatusRepositoryAbstractTest {
 
             assertEquals(
                 expected = lv1MP,
+                actual = mp.maxValue,
+            )
+
+            assertEquals(
+                expected = toolListValue,
+                actual = toolList,
+            )
+
+            assertEquals(
+                expected = skillListValue,
+                actual = skillList,
+            )
+
+            assertEquals(
+                expected = expValue,
+                actual = exp,
+            )
+        }
+    }
+
+    @Test
+    fun lv2Param() {
+        val status = testRepository.getStatus(
+            id = 0,
+            level = 2,
+        )
+
+        status.apply {
+            assertEquals(
+                expected = lv1HP + lv2HP,
+                actual = hp.maxValue,
+            )
+
+            assertEquals(
+                expected = lv1MP + lv2MP,
                 actual = mp.maxValue,
             )
 
