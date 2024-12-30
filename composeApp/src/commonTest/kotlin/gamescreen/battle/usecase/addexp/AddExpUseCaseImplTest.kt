@@ -11,6 +11,7 @@ import data.status.StatusRepositoryAbstract
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import values.Constants
+import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -42,6 +43,11 @@ class AddExpUseCaseImplTest {
             playerStatusRepository = playerStatusRepository,
             statusRepository = statusRepository,
         )
+    }
+
+    @AfterTest
+    fun afterTest() {
+        Constants.playerNum = 3
     }
 
     private val statusRepository = object : StatusRepositoryAbstract() {
