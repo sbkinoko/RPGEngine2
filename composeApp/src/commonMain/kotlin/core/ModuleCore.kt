@@ -21,7 +21,9 @@ import org.koin.dsl.module
 
 val ModuleCore = module {
     single<PlayerStatusRepository> {
-        PlayerStatusRepositoryImpl()
+        PlayerStatusRepositoryImpl(
+            statusRepository = get(),
+        )
     }
 
     single<BattleMonsterRepository> {
