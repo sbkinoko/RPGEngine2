@@ -2,9 +2,10 @@ package gamescreen.battle.command.finish
 
 enum class ContentType {
     Win,
-    Money,
-    Exp,
-    Tool,
     Lose,
+    Exp,
+    LevelUp,
+    Money,
+    Tool,
     None,
 }

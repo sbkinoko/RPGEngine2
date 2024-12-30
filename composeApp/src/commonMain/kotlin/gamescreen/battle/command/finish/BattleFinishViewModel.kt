@@ -40,7 +40,12 @@ class BattleFinishViewModel : BattleChildViewModel() {
     private var contentType: MutableStateFlow<ContentType> =
         MutableStateFlow(ContentType.None)
 
-    private val dropItemList: MutableStateFlow<List<Int>> = MutableStateFlow(listOf())
+    private val dropItemList: MutableStateFlow<List<Int>> =
+        MutableStateFlow(listOf())
+
+    private var levelUpList: MutableList<String> = mutableListOf()
+    private val mutableLevelUpListStateFlow: MutableStateFlow<List<String>> =
+        MutableStateFlow(listOf())
 
     init {
         CoroutineScope(Dispatchers.Default).launch {
@@ -61,16 +66,25 @@ class BattleFinishViewModel : BattleChildViewModel() {
                         )
 
                         CoroutineScope(Dispatchers.Default).launch {
+                            levelUpList = mutableListOf()
                             playerStatusRepository.getPlayers().mapIndexed { index, it ->
-                                // レベルアップの表示をしたいのならなんかしらの管理が必要
+                                //経験値の加算
+                                val after = it.copy(
+                                    exp = it.exp.copy(
+                                        value = it.exp.value + exp
+                                    )
+                                )
+
+                                //保存
                                 playerStatusRepository.setStatus(
                                     id = index,
-                                    status = it.copy(
-                                        exp = it.exp.copy(
-                                            value = it.exp.value + exp
-                                        )
-                                    ),
+                                    status = after,
                                 )
+
+                                // レベルが上がっていたら表示用リストに追加
+                                if (it.exp.level != after.exp.level) {
+                                    levelUpList.add(it.name)
+                                }
                             }
                         }
                     }
@@ -87,10 +101,13 @@ class BattleFinishViewModel : BattleChildViewModel() {
 
                     ContentType.Tool -> {
                         val dropToolList = getDropToolUseCase.invoke()
-
                         dropItemList.value = dropToolList
-
                         tryNextForTool()
+                    }
+
+                    ContentType.LevelUp -> {
+                        mutableLevelUpListStateFlow.value = levelUpList.toList()
+                        tryNextForLevelUp()
                     }
 
                     ContentType.None -> {
@@ -130,18 +147,24 @@ class BattleFinishViewModel : BattleChildViewModel() {
                 )
             }
         }
-    }
 
-    /**
-     * 道具から次の画面に進むかどうかの関数
-     */
-    private fun tryNextForTool(): Boolean {
-        // 道具が空なら次の処理へ
-        if (dropItemList.value.isEmpty()) {
-            finishBattle()
-            return true
-        } else {
-            return false
+        CoroutineScope(Dispatchers.Default).launch {
+            mutableLevelUpListStateFlow.collect {
+                if (contentType.value != ContentType.LevelUp) {
+                    return@collect
+                }
+
+                if (tryNextForLevelUp()) {
+                    return@collect
+                }
+
+                val name = it.first()
+                mutableTextFLow.value = TextData
+                    .BattleFinishLevelUp
+                    .getText(
+                        name = name,
+                    )
+            }
         }
     }
 
@@ -168,14 +191,21 @@ class BattleFinishViewModel : BattleChildViewModel() {
     override fun goNextImpl() {
         when (contentType.value) {
             ContentType.Win -> {
-                contentType.value = ContentType.Money
-            }
-
-            ContentType.Money -> {
                 contentType.value = ContentType.Exp
             }
 
             ContentType.Exp -> {
+                contentType.value = ContentType.LevelUp
+            }
+
+            ContentType.LevelUp -> {
+                mutableLevelUpListStateFlow.value =
+                    mutableLevelUpListStateFlow
+                        .value
+                        .drop(1)
+            }
+
+            ContentType.Money -> {
                 contentType.value = ContentType.Tool
             }
 
@@ -192,8 +222,37 @@ class BattleFinishViewModel : BattleChildViewModel() {
         }
     }
 
+    /**
+     * 道具から次の画面に進むかどうかの関数
+     */
+    private fun tryNextForTool(): Boolean {
+        // 道具が空なら次の処理へ
+        if (dropItemList.value.isEmpty()) {
+            finishBattle()
+            return true
+        } else {
+            return false
+        }
+    }
+
+    /**
+     * レベルアップから次の画面に進むかどうかの確認
+     */
+    private fun tryNextForLevelUp(): Boolean {
+        if (mutableLevelUpListStateFlow.value.isEmpty()) {
+            contentType.value = ContentType.Money
+            return true
+        } else {
+            return false
+        }
+    }
+
     private fun finishBattle() {
         changeToMapUseCase.invoke()
         contentType.value = ContentType.None
+    }
+
+    override fun pressB() {
+        // NOP
     }
 }
