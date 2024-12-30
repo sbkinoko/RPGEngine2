@@ -17,6 +17,8 @@ import gamescreen.battle.service.findtarget.FindTargetService
 import gamescreen.battle.service.findtarget.FindTargetServiceImpl
 import gamescreen.battle.service.isannihilation.IsAnnihilationService
 import gamescreen.battle.service.isannihilation.IsAnnihilationServiceImpl
+import gamescreen.battle.usecase.addexp.AddExpUseCase
+import gamescreen.battle.usecase.addexp.AddExpUseCaseImpl
 import gamescreen.battle.usecase.attack.AttackFromEnemyUseCaseImpl
 import gamescreen.battle.usecase.attack.AttackFromPlayerUseCaseImpl
 import gamescreen.battle.usecase.attack.AttackUseCase
@@ -166,6 +168,13 @@ val ModuleBattle = module {
     single<GetDropToolUseCase> {
         GetDropToolUseCaseImpl(
             battleMonsterRepository = get(),
+        )
+    }
+
+    single<AddExpUseCase> {
+        AddExpUseCaseImpl(
+            playerStatusRepository = get(),
+            statusRepository = get(),
         )
     }
 }

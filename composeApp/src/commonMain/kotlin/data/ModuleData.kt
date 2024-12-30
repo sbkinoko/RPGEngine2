@@ -6,6 +6,8 @@ import data.item.tool.ToolRepository
 import data.item.tool.ToolRepositoryImpl
 import data.monster.MonsterRepository
 import data.monster.MonsterRepositoryImpl
+import data.status.StatusRepository
+import data.status.StatusRepositoryImpl
 import org.koin.dsl.module
 
 val ModuleData = module {
@@ -19,5 +21,9 @@ val ModuleData = module {
 
     single<MonsterRepository> {
         MonsterRepositoryImpl()
+    }
+
+    single<StatusRepository> {
+        StatusRepositoryImpl()
     }
 }
