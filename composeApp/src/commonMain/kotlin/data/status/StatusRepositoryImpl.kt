@@ -28,7 +28,11 @@ class StatusRepositoryImpl : StatusRepositoryAbstract() {
                 StatusIncrease(
                     hp = 100,
                     mp = 10,
-                )
+                ),
+                StatusIncrease(
+                    hp = 100,
+                    mp = 10,
+                ),
             )
 
             1 -> listOf(

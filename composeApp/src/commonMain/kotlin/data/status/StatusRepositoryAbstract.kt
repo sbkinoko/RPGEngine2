@@ -11,6 +11,10 @@ abstract class StatusRepositoryAbstract : StatusRepository {
         var statusSum = playerStatus
 
         for (lv: Int in 0 until level) {
+            // fixme 本来はいらないがテスト段階では必要
+            if (statusUpList[id].size <= lv) {
+                break
+            }
             statusUpList[id][lv].apply {
                 statusSum = statusSum.copy(
                     hp = HP(
