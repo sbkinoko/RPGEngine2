@@ -2,5 +2,5 @@ package gamescreen.battle.usecase.addexp
 
 interface AddExpUseCase {
 
-    operator fun invoke(exp: Int): Boolean
+    operator fun invoke(exp: Int): List<String>
 }

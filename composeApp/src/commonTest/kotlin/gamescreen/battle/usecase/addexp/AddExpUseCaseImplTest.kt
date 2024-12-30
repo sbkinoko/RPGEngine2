@@ -12,7 +12,6 @@ import values.Constants.Companion.playerNum
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class AddExpUseCaseImplTest {
@@ -22,6 +21,8 @@ class AddExpUseCaseImplTest {
 
     private val lv2Hp = 20
     private val lv2Mp = 21
+
+    private val name = "test"
 
     @BeforeTest
     fun beforeTest() {
@@ -45,7 +46,7 @@ class AddExpUseCaseImplTest {
         override val statusBaseList: List<PlayerStatus>
             get() = listOf(
                 PlayerStatus(
-                    name = "",
+                    name = name,
                     hp = HP(0),
                     mp = MP(0),
                     toolList = listOf(),
@@ -75,8 +76,8 @@ class AddExpUseCaseImplTest {
                 exp = 0,
             )
 
-            assertFalse {
-                result
+            assertTrue() {
+                result.isEmpty()
             }
         }
     }
@@ -89,8 +90,13 @@ class AddExpUseCaseImplTest {
             )
 
             assertTrue {
-                result
+                result.isNotEmpty()
             }
+
+            assertEquals(
+                expected = name,
+                actual = result.first()
+            )
 
             playerStatusRepository.getStatus(0).apply {
                 assertEquals(
@@ -115,4 +121,6 @@ class AddExpUseCaseImplTest {
             }
         }
     }
+
+    //fixme 複数人がレベルアップした場合のテストを作る
 }

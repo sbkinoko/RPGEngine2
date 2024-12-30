@@ -7,7 +7,7 @@ class AddExpUseCaseImpl(
     private val playerStatusRepository: PlayerStatusRepository,
     private val statusRepository: StatusRepository,
 ) : AddExpUseCase {
-    override fun invoke(exp: Int): Boolean {
+    override fun invoke(exp: Int): List<String> {
         TODO("Not yet implemented")
     }
 }
