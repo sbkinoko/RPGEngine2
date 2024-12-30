@@ -86,7 +86,6 @@ class BattleFinishViewModel : BattleChildViewModel() {
                                     levelUpList.add(it.name)
                                 }
                             }
-                            mutableLevelUpListStateFlow.value = levelUpList
                         }
                     }
 
@@ -107,7 +106,7 @@ class BattleFinishViewModel : BattleChildViewModel() {
                     }
 
                     ContentType.LevelUp -> {
-                        mutableLevelUpListStateFlow.value = levelUpList
+                        mutableLevelUpListStateFlow.value = levelUpList.toList()
                         tryNextForLevelUp()
                     }
 
@@ -160,7 +159,8 @@ class BattleFinishViewModel : BattleChildViewModel() {
                 }
 
                 val name = it.first()
-                mutableTextFLow.value = TextData.BattleFinishLevelUp
+                mutableTextFLow.value = TextData
+                    .BattleFinishLevelUp
                     .getText(
                         name = name,
                     )
@@ -250,5 +250,9 @@ class BattleFinishViewModel : BattleChildViewModel() {
     private fun finishBattle() {
         changeToMapUseCase.invoke()
         contentType.value = ContentType.None
+    }
+
+    override fun pressB() {
+        // NOP
     }
 }
