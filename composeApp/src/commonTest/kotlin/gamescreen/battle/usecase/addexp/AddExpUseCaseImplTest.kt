@@ -27,29 +27,6 @@ class AddExpUseCaseImplTest {
 
     private val name = "test"
 
-    private lateinit var playerStatusRepository: PlayerStatusRepository
-    private lateinit var addExpUseCase: AddExpUseCase
-
-    @BeforeTest
-    fun beforeTest() {
-        Constants.playerNum = 1
-
-
-        playerStatusRepository = PlayerStatusRepositoryImpl(
-            statusRepository = statusRepository,
-        )
-
-        addExpUseCase = AddExpUseCaseImpl(
-            playerStatusRepository = playerStatusRepository,
-            statusRepository = statusRepository,
-        )
-    }
-
-    @AfterTest
-    fun afterTest() {
-        Constants.playerNum = 3
-    }
-
     private val statusRepository = object : StatusRepositoryAbstract() {
         override val statusUpList: List<List<StatusIncrease>>
             get() = listOf(
@@ -81,6 +58,28 @@ class AddExpUseCaseImplTest {
             )
     }
 
+    private lateinit var playerStatusRepository: PlayerStatusRepository
+    private lateinit var addExpUseCase: AddExpUseCase
+
+    @BeforeTest
+    fun beforeTest() {
+        Constants.playerNum = 1
+
+
+        playerStatusRepository = PlayerStatusRepositoryImpl(
+            statusRepository = statusRepository,
+        )
+
+        addExpUseCase = AddExpUseCaseImpl(
+            playerStatusRepository = playerStatusRepository,
+            statusRepository = statusRepository,
+        )
+    }
+
+    @AfterTest
+    fun afterTest() {
+        Constants.playerNum = 3
+    }
 
     @Test
     fun notLvUp() {
