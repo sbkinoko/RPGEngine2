@@ -25,4 +25,10 @@ class TextData {
             return "$name を手に入れた"
         }
     }
+
+    object BattleFinishLevelUp {
+        fun getText(name: String): String {
+            return "$name はレベルアップした"
+        }
+    }
 }
