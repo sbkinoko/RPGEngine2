@@ -7,6 +7,7 @@ import data.item.tool.ToolRepository
 import gamescreen.battle.BattleChildViewModel
 import gamescreen.battle.domain.BattleCommandType
 import gamescreen.battle.domain.FinishCommand
+import gamescreen.battle.usecase.addexp.AddExpUseCase
 import gamescreen.battle.usecase.getdroptool.GetDropToolUseCase
 import gamescreen.battle.usecase.getexp.GetExpUseCase
 import gamescreen.battle.usecase.getmoney.GetMoneyUseCase
@@ -43,7 +44,8 @@ class BattleFinishViewModel : BattleChildViewModel() {
     private val dropItemList: MutableStateFlow<List<Int>> =
         MutableStateFlow(listOf())
 
-    private var levelUpList: MutableList<String> = mutableListOf()
+    private val addExpUseCase: AddExpUseCase by inject()
+    private var levelUpList: List<String> = mutableListOf()
     private val mutableLevelUpListStateFlow: MutableStateFlow<List<String>> =
         MutableStateFlow(listOf())
 
@@ -66,26 +68,9 @@ class BattleFinishViewModel : BattleChildViewModel() {
                         )
 
                         CoroutineScope(Dispatchers.Default).launch {
-                            levelUpList = mutableListOf()
-                            playerStatusRepository.getPlayers().mapIndexed { index, it ->
-                                //経験値の加算
-                                val after = it.copy(
-                                    exp = it.exp.copy(
-                                        value = it.exp.value + exp
-                                    )
-                                )
-
-                                //保存
-                                playerStatusRepository.setStatus(
-                                    id = index,
-                                    status = after,
-                                )
-
-                                // レベルが上がっていたら表示用リストに追加
-                                if (it.exp.level != after.exp.level) {
-                                    levelUpList.add(it.name)
-                                }
-                            }
+                            levelUpList = addExpUseCase.invoke(
+                                exp = exp,
+                            )
                         }
                     }
 
