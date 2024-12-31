@@ -1,6 +1,8 @@
 package data.status
 
 import core.domain.status.PlayerStatus
+import core.domain.status.StatusIncrease
+import core.domain.status.StatusIncreaseTest
 import core.domain.status.param.EXP
 import core.domain.status.param.HP
 import core.domain.status.param.MP
@@ -8,12 +10,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class StatusRepositoryAbstractTest {
-    private val lv1HP = 10
-    private val lv1MP = 11
-
-    private val lv2HP = 11
-    private val lv2MP = 12
-
     private val skillListValue = listOf(1)
     private val toolListValue = listOf(2)
 
@@ -28,16 +24,7 @@ class StatusRepositoryAbstractTest {
     private val testRepository: StatusRepository = object : StatusRepositoryAbstract() {
         override val statusUpList: List<List<StatusIncrease>>
             get() = listOf(
-                listOf(
-                    StatusIncrease(
-                        hp = lv1HP,
-                        mp = lv1MP,
-                    ),
-                    StatusIncrease(
-                        hp = lv2HP,
-                        mp = lv2MP,
-                    )
-                )
+                StatusIncreaseTest.testStatusUpList
             )
 
         override val statusBaseList: List<PlayerStatus>
@@ -66,12 +53,12 @@ class StatusRepositoryAbstractTest {
 
         status.apply {
             assertEquals(
-                expected = lv1HP,
+                expected = StatusIncreaseTest.TEST_LV1_HP,
                 actual = hp.maxValue,
             )
 
             assertEquals(
-                expected = lv1MP,
+                expected = StatusIncreaseTest.TEST_LV1_MP,
                 actual = mp.maxValue,
             )
 
@@ -101,12 +88,12 @@ class StatusRepositoryAbstractTest {
 
         status.apply {
             assertEquals(
-                expected = lv1HP + lv2HP,
+                expected = StatusIncreaseTest.TEST_LV1_HP + StatusIncreaseTest.TEST_LV2_HP,
                 actual = hp.maxValue,
             )
 
             assertEquals(
-                expected = lv1MP + lv2MP,
+                expected = StatusIncreaseTest.TEST_LV1_MP + StatusIncreaseTest.TEST_LV2_MP,
                 actual = mp.maxValue,
             )
 

@@ -1,6 +1,7 @@
 package data.status
 
 import core.domain.status.PlayerStatus
+import core.domain.status.StatusIncrease
 import core.domain.status.param.HP
 import core.domain.status.param.MP
 
