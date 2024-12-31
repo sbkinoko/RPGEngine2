@@ -2,9 +2,10 @@ package gamescreen.battle.usecase.addexp
 
 import core.domain.status.PlayerStatus
 import core.domain.status.PlayerStatusTest.Companion.testPlayerStatus
+import core.domain.status.StatusIncrease
+import core.domain.status.StatusIncreaseTest.Companion.testStatusUpList
 import core.repository.player.PlayerStatusRepository
 import core.repository.player.PlayerStatusRepositoryImpl
-import data.status.StatusIncrease
 import data.status.StatusRepositoryAbstract
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
@@ -16,27 +17,14 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class AddExpUseCaseImplFor2PlayerTest {
-    private val lv1Hp = 10
-    private val lv1Mp = 11
-
     private val name1 = "test1"
     private val name2 = "test2"
 
     private val statusRepository = object : StatusRepositoryAbstract() {
         override val statusUpList: List<List<StatusIncrease>>
             get() = listOf(
-                listOf(
-                    StatusIncrease(
-                        hp = lv1Hp,
-                        mp = lv1Mp,
-                    ),
-                ),
-                listOf(
-                    StatusIncrease(
-                        hp = lv1Hp,
-                        mp = lv1Mp,
-                    ),
-                ),
+                testStatusUpList,
+                testStatusUpList,
             )
         override val statusBaseList: List<PlayerStatus>
             get() = listOf(

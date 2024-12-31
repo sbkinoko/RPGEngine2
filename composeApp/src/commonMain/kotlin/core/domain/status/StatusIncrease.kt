@@ -1,4 +1,4 @@
-package data.status
+package core.domain.status
 
 data class StatusIncrease(
     val hp: Int,
