@@ -1,7 +1,6 @@
 package core.repository.battlemonster
 
 import core.ModuleCore
-import core.domain.status.DropItemInfo
 import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -19,23 +18,8 @@ import kotlin.test.assertEquals
 class BattleMonsterRepositoryImplTest : KoinTest {
     private val battleMonsterRepository: BattleMonsterRepository by inject()
 
-    private val monster1 = TestActiveMonster.copy(
-        dropInfoList = listOf(
-            DropItemInfo(
-                itemId = 1,
-                probability = 1,
-            )
-        )
-    )
-    private val monster2 = TestActiveMonster.copy(
-        dropInfoList = listOf(
-            DropItemInfo(
-                itemId = 1,
-                probability = 1,
-            )
-        )
-    )
-
+    private val monster1 = TestActiveMonster
+    private val monster2 = TestActiveMonster
     private val monsterList = listOf(
         monster1,
         monster2,
