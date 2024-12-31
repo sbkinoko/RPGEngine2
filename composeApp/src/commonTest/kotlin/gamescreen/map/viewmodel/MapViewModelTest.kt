@@ -110,15 +110,15 @@ class MapViewModelTest {
             )
 
             mapViewModel.updatePosition()
-            delay(200)
+            delay(100)
 
             mapViewModel.updatePosition()
-            delay(200)
+            delay(100)
 
             // 値が更新されないことを確認
             mapViewModel.resetTapPoint()
             mapViewModel.updatePosition()
-            delay(200)
+            delay(100)
 
             collectJob.cancel()
             // updateは3回しているが、値の更新は2回なのでcollectは2回しか呼ばれない

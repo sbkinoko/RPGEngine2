@@ -30,6 +30,7 @@ class ActionEventUseCaseImpl(
                     ),
                 )
                 eventType.id.hasItem = false
+                //fixme 画面にすぐ反映できるようにする
             }
         }
     }
