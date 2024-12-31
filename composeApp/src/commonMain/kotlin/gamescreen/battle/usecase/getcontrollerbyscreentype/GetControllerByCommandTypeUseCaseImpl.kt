@@ -36,7 +36,7 @@ class GetControllerByCommandTypeUseCaseImpl(
     private val battleFinishViewModel: BattleFinishViewModel,
 ) : GetControllerByCommandTypeUseCase {
     override operator fun invoke(): ControllerCallback {
-        return when (commandStateRepository.nowCommandType) {
+        return when (commandStateRepository.nowBattleCommandType) {
             is MainCommand -> battleMainViewModel
             is PlayerActionCommand -> playerActionViewModel
             is SelectEnemyCommand -> selectEnemyViewModel

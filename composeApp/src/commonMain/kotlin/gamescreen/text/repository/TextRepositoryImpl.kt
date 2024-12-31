@@ -1,32 +1,31 @@
 package gamescreen.text.repository
 
 import gamescreen.text.TextBoxData
-import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class TextRepositoryImpl : TextRepository {
-    override val commandTypeFlow: MutableSharedFlow<TextBoxData?> = MutableSharedFlow(replay = 1)
-    override val commandStateFlow: StateFlow<TextBoxData?>
-        get() = TODO("Not yet implemented")
+    private val mutableTextDataFlow =
+        MutableStateFlow<TextBoxData?>(null)
+    override val textDataStateFlow: StateFlow<TextBoxData?>
+        get() = mutableTextDataFlow.asStateFlow()
 
-    override val nowCommandType: TextBoxData?
-        get() = textBoxData
+    override val nowTextData: TextBoxData?
+        get() = textDataStateFlow.value
 
-    private var textBoxData: TextBoxData? = null
 
     override val text: String
-        get() = textBoxData?.text ?: ""
+        get() = nowTextData?.text ?: ""
 
     override val callBack: () -> Unit
-        get() = textBoxData?.callBack ?: {}
+        get() = nowTextData?.callBack ?: {}
 
     override fun pop() {
-        commandTypeFlow.tryEmit(null)
-        textBoxData = null
+        mutableTextDataFlow.value = null
     }
 
-    override fun push(commandType: TextBoxData?) {
-        textBoxData = commandType
-        commandTypeFlow.tryEmit(commandType)
+    override fun push(textBoxData: TextBoxData?) {
+        mutableTextDataFlow.value = textBoxData
     }
 }

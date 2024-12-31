@@ -1,11 +1,18 @@
 package gamescreen.battle.repository.commandstate
 
-import core.repository.command.CommandRepository
 import gamescreen.battle.domain.BattleCommandType
 import gamescreen.battle.domain.MainCommand
+import kotlinx.coroutines.flow.StateFlow
 
-interface CommandStateRepository : CommandRepository<BattleCommandType> {
+interface CommandStateRepository {
+    val commandStateFlow: StateFlow<BattleCommandType>
+    val nowBattleCommandType: BattleCommandType
+
     fun init()
+
+    fun push(battleCommandType: BattleCommandType)
+
+    fun pop()
 
     fun popTo(condition: (BattleCommandType) -> Boolean)
 

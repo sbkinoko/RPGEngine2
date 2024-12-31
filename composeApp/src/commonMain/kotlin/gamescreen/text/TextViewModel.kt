@@ -1,33 +1,26 @@
 package gamescreen.text
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
-import androidx.compose.runtime.collectAsState
 import core.menu.SelectableChildViewModel
 import gamescreen.menu.domain.SelectManager
 import gamescreen.text.repository.TextRepository
 import org.koin.core.component.inject
 
 class TextViewModel : SelectableChildViewModel<TextBoxData?>() {
-    val commandRepository: TextRepository by inject()
+    val textRepository: TextRepository by inject()
 
-    // fixme stateFlowを返すようにする
-    @Composable
-    fun getShowStateAsState(): State<TextBoxData?> {
-        return commandRepository.commandTypeFlow.collectAsState(
-            null
-        )
-    }
+    val showState
+        get() = textRepository.textDataStateFlow
+
 
     val callBack: () -> Unit
-        get() = commandRepository.callBack
+        get() = textRepository.callBack
 
     val text: String
-        get() = commandRepository.text
+        get() = textRepository.text
 
     override fun goNext() {
         callBack()
-        commandRepository.pop()
+        textRepository.pop()
     }
 
     // スティック操作に反応しないように1にする

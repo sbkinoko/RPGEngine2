@@ -30,7 +30,7 @@ class GetControllerByCommandTypeUseCaseImpl(
 ) : GetControllerByCommandTypeUseCase {
 
     override fun invoke(): ControllerCallback? {
-        return when (menuStateRepository.nowCommandType) {
+        return when (menuStateRepository.nowMenuType) {
             MenuType.Main -> mainMenuViewModel
             MenuType.Status -> statusViewModel
             MenuType.SKILL_USER -> skillUserViewModel

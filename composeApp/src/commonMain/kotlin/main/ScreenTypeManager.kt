@@ -45,7 +45,7 @@ class ScreenTypeManager(
 
     init {
         CoroutineScope(Dispatchers.Main).launch {
-            textRepository.commandTypeFlow.collect {
+            textRepository.textDataStateFlow.collect {
                 textBoxData = it
                 updateScreenType()
             }

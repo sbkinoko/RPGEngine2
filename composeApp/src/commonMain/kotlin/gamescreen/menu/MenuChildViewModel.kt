@@ -12,7 +12,7 @@ abstract class MenuChildViewModel : SelectableChildViewModel<MenuType>() {
 
     private fun isBoundCommand(): Boolean {
         return isBoundedImpl(
-            commandRepository.nowCommandType
+            commandRepository.nowMenuType
         )
     }
 

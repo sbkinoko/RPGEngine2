@@ -5,7 +5,7 @@ import controller.domain.Stick
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.repository.menustate.MenuStateRepository
 import gamescreen.menu.usecase.getviewmodelbycommandtype.GetControllerByCommandTypeUseCase
-import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -14,8 +14,7 @@ class MenuViewModel : KoinComponent, ControllerCallback {
 
     private val getControllerByCommandTypeUseCase: GetControllerByCommandTypeUseCase by inject()
 
-    // fixme stateFlowにする
-    val menuType: SharedFlow<MenuType> = menuStateRepository.commandTypeFlow
+    val menuType: StateFlow<MenuType> = menuStateRepository.menuTypeStateFlow
 
     private val childController: ControllerCallback?
         get() = getControllerByCommandTypeUseCase.invoke()

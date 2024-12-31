@@ -30,7 +30,7 @@ class PlayerActionViewModel : BattleChildViewModel() {
     val tool = 2
 
     val playerId: Int
-        get() = (commandRepository.nowCommandType as PlayerActionCommand).playerId
+        get() = (commandRepository.nowBattleCommandType as PlayerActionCommand).playerId
 
     fun init() {
         // プレイヤーが行動不能なら次のキャラに移動する

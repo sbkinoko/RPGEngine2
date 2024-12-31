@@ -36,7 +36,7 @@ class CommandStateRepositoryImplTest : KoinTest {
     fun initialState() {
         assertEquals(
             expected = CommandStateRepository.INITIAL_COMMAND_STATE,
-            actual = repository.nowCommandType
+            actual = repository.nowBattleCommandType
         )
     }
 
@@ -63,7 +63,7 @@ class CommandStateRepositoryImplTest : KoinTest {
 
             assertEquals(
                 expected = playerCommand,
-                actual = repository.nowCommandType
+                actual = repository.nowBattleCommandType
             )
 
             assertEquals(
@@ -84,7 +84,7 @@ class CommandStateRepositoryImplTest : KoinTest {
 
             assertEquals(
                 expected = playerCommand2,
-                actual = repository.nowCommandType
+                actual = repository.nowBattleCommandType
             )
 
             assertEquals(
@@ -143,7 +143,7 @@ class CommandStateRepositoryImplTest : KoinTest {
 
             assertEquals(
                 expected = playerCommand,
-                actual = repository.nowCommandType,
+                actual = repository.nowBattleCommandType,
             )
 
             repository.pop()
@@ -157,7 +157,7 @@ class CommandStateRepositoryImplTest : KoinTest {
 
             assertEquals(
                 expected = MainCommand,
-                actual = repository.nowCommandType,
+                actual = repository.nowBattleCommandType,
             )
 
             collectJob.cancel()
@@ -209,7 +209,7 @@ class CommandStateRepositoryImplTest : KoinTest {
 
             assertEquals(
                 expected = MainCommand,
-                actual = repository.nowCommandType,
+                actual = repository.nowBattleCommandType,
             )
 
             //　initしたあとはpopしても変化がないことを確認
@@ -224,7 +224,7 @@ class CommandStateRepositoryImplTest : KoinTest {
 
             assertEquals(
                 expected = MainCommand,
-                actual = repository.nowCommandType,
+                actual = repository.nowBattleCommandType,
             )
 
             collectJob.cancel()
@@ -288,7 +288,7 @@ class CommandStateRepositoryImplTest : KoinTest {
 
             assertEquals(
                 actual = first,
-                expected = repository.nowCommandType,
+                expected = repository.nowBattleCommandType,
             )
 
             collectJob.cancel()
@@ -352,7 +352,7 @@ class CommandStateRepositoryImplTest : KoinTest {
 
             assertEquals(
                 actual = MainCommand,
-                expected = repository.nowCommandType,
+                expected = repository.nowBattleCommandType,
             )
 
             collectJob.cancel()

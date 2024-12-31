@@ -225,7 +225,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
             delay(100)
 
             // アクションをしてもまだ戦闘中なら次のキャラへ
-            if (this@ActionPhaseViewModel.commandRepository.nowCommandType !is FinishCommand) {
+            if (this@ActionPhaseViewModel.commandRepository.nowBattleCommandType !is FinishCommand) {
                 changeToNextCharacter()
             }
         }
