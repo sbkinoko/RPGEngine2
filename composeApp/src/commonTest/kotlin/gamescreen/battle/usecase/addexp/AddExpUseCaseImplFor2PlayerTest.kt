@@ -1,7 +1,6 @@
 package gamescreen.battle.usecase.addexp
 
 import core.domain.status.PlayerStatus
-import core.domain.status.PlayerStatusTest
 import core.domain.status.PlayerStatusTest.Companion.testPlayerStatus
 import core.repository.player.PlayerStatusRepository
 import core.repository.player.PlayerStatusRepositoryImpl
@@ -16,13 +15,12 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-class AddExpUseCaseImplTest {
-
+class AddExpUseCaseImplFor2PlayerTest {
     private val lv1Hp = 10
     private val lv1Mp = 11
 
-    private val lv2Hp = 20
-    private val lv2Mp = 21
+    private val name1 = "test1"
+    private val name2 = "test2"
 
     private val statusRepository = object : StatusRepositoryAbstract() {
         override val statusUpList: List<List<StatusIncrease>>
@@ -32,25 +30,22 @@ class AddExpUseCaseImplTest {
                         hp = lv1Hp,
                         mp = lv1Mp,
                     ),
-                    StatusIncrease(
-                        hp = lv2Hp,
-                        mp = lv2Mp,
-                    ),
                 ),
                 listOf(
                     StatusIncrease(
                         hp = lv1Hp,
                         mp = lv1Mp,
                     ),
-                    StatusIncrease(
-                        hp = lv2Hp,
-                        mp = lv2Mp,
-                    ),
                 ),
             )
         override val statusBaseList: List<PlayerStatus>
             get() = listOf(
-                testPlayerStatus
+                testPlayerStatus.copy(
+                    name = name1,
+                ),
+                testPlayerStatus.copy(
+                    name = name2,
+                )
             )
     }
 
@@ -59,7 +54,7 @@ class AddExpUseCaseImplTest {
 
     @BeforeTest
     fun beforeTest() {
-        Constants.playerNum = 1
+        Constants.playerNum = 2
 
 
         playerStatusRepository = PlayerStatusRepositoryImpl(
@@ -78,20 +73,6 @@ class AddExpUseCaseImplTest {
     }
 
     @Test
-    fun notLvUp() {
-
-        runBlocking {
-            val result = addExpUseCase.invoke(
-                exp = 0,
-            )
-
-            assertTrue {
-                result.isEmpty()
-            }
-        }
-    }
-
-    @Test
     fun lvUp() {
         runBlocking {
             val result = addExpUseCase(
@@ -105,31 +86,14 @@ class AddExpUseCaseImplTest {
             }
 
             assertEquals(
-                expected = PlayerStatusTest.NAME,
-                actual = result.first()
+                expected = name1,
+                actual = result[0]
             )
 
-            playerStatusRepository.getStatus(0).apply {
-                assertEquals(
-                    expected = lv1Hp,
-                    actual = hp.value,
-                )
-
-                assertEquals(
-                    expected = lv1Hp + lv2Hp,
-                    actual = hp.maxValue,
-                )
-
-                assertEquals(
-                    expected = lv1Mp,
-                    actual = mp.value,
-                )
-
-                assertEquals(
-                    expected = lv1Mp + lv2Mp,
-                    actual = mp.maxValue,
-                )
-            }
+            assertEquals(
+                expected = name2,
+                actual = result[1]
+            )
         }
     }
 }
