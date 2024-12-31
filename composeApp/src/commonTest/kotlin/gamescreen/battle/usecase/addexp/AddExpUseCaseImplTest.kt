@@ -37,16 +37,6 @@ class AddExpUseCaseImplTest {
                         mp = lv2Mp,
                     ),
                 ),
-                listOf(
-                    StatusIncrease(
-                        hp = lv1Hp,
-                        mp = lv1Mp,
-                    ),
-                    StatusIncrease(
-                        hp = lv2Hp,
-                        mp = lv2Mp,
-                    ),
-                ),
             )
         override val statusBaseList: List<PlayerStatus>
             get() = listOf(
