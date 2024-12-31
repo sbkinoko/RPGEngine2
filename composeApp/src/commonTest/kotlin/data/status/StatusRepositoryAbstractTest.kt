@@ -3,6 +3,10 @@ package data.status
 import core.domain.status.PlayerStatus
 import core.domain.status.StatusIncrease
 import core.domain.status.StatusIncreaseTest
+import core.domain.status.StatusIncreaseTest.Companion.TEST_LV1_HP
+import core.domain.status.StatusIncreaseTest.Companion.TEST_LV1_MP
+import core.domain.status.StatusIncreaseTest.Companion.TEST_LV2_HP
+import core.domain.status.StatusIncreaseTest.Companion.TEST_LV2_MP
 import core.domain.status.param.EXP
 import core.domain.status.param.HP
 import core.domain.status.param.MP
@@ -53,12 +57,12 @@ class StatusRepositoryAbstractTest {
 
         status.apply {
             assertEquals(
-                expected = StatusIncreaseTest.TEST_LV1_HP,
+                expected = TEST_LV1_HP,
                 actual = hp.maxValue,
             )
 
             assertEquals(
-                expected = StatusIncreaseTest.TEST_LV1_MP,
+                expected = TEST_LV1_MP,
                 actual = mp.maxValue,
             )
 
@@ -88,12 +92,12 @@ class StatusRepositoryAbstractTest {
 
         status.apply {
             assertEquals(
-                expected = StatusIncreaseTest.TEST_LV1_HP + StatusIncreaseTest.TEST_LV2_HP,
+                expected = TEST_LV1_HP + TEST_LV2_HP,
                 actual = hp.maxValue,
             )
 
             assertEquals(
-                expected = StatusIncreaseTest.TEST_LV1_MP + StatusIncreaseTest.TEST_LV2_MP,
+                expected = TEST_LV1_MP + TEST_LV2_MP,
                 actual = mp.maxValue,
             )
 
