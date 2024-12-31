@@ -56,7 +56,6 @@ class AddExpUseCaseImplFor2PlayerTest {
     fun beforeTest() {
         Constants.playerNum = 2
 
-
         playerStatusRepository = PlayerStatusRepositoryImpl(
             statusRepository = statusRepository,
         )
