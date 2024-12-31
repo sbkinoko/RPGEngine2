@@ -7,6 +7,8 @@ import gamescreen.map.domain.collision.Square
 import gamescreen.map.manager.CELL_NUM
 import gamescreen.map.manager.SIDE_LENGTH
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
@@ -105,31 +107,33 @@ class MoveBackgroundUseCaseTest : KoinTest {
         val dx = 10f
         val dy = 5f
         val vMax = 20f
-        moveBackgroundUseCase(
-            velocity = Velocity(
-                x = dx,
-                y = dy,
-                maxVelocity = vMax,
-            ),
-            fieldSquare = Square(
-                x = 0f,
-                y = 0f,
-                size = SIDE_LENGTH.toFloat(),
-            ),
-        )
-
-        repository.getBackgroundAt(
-            x = 0,
-            y = 0,
-        ).square.apply {
-            assertEquals(
-                expected = 10f,
-                actual = leftSide,
+        runBlocking {
+            moveBackgroundUseCase.invoke(
+                velocity = Velocity(
+                    x = dx,
+                    y = dy,
+                    maxVelocity = vMax,
+                ),
+                fieldSquare = Square(
+                    x = 0f,
+                    y = 0f,
+                    size = SIDE_LENGTH.toFloat(),
+                ),
             )
-            assertEquals(
-                expected = 5f,
-                actual = topSide,
-            )
+            delay(50)
+            repository.getBackgroundAt(
+                x = 0,
+                y = 0,
+            ).square.apply {
+                assertEquals(
+                    expected = 10f,
+                    actual = leftSide,
+                )
+                assertEquals(
+                    expected = 5f,
+                    actual = topSide,
+                )
+            }
         }
     }
 }

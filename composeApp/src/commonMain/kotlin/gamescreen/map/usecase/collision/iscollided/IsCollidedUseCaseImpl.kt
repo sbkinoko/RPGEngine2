@@ -4,10 +4,11 @@ import gamescreen.map.domain.collision.Square
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 
 class IsCollidedUseCaseImpl(
-    private val repository: BackgroundRepository
+    private val backgroundRepository: BackgroundRepository
 ) : IsCollidedUseCase {
     override fun invoke(playerSquare: Square): Boolean {
-        repository.background.forEach { rowArray ->
+
+        backgroundRepository.backgroundStateFlow.value.forEach { rowArray ->
             rowArray.forEach { cell ->
                 if (cell.collisionList.isNotEmpty()) {
                     cell.collisionList.forEach {

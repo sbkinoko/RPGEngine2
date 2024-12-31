@@ -5,12 +5,17 @@ import gamescreen.map.data.LoopMap
 import gamescreen.map.domain.BackgroundCell
 import gamescreen.map.domain.MapData
 import gamescreen.map.viewmodel.MapViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class BackgroundRepositoryImpl : BackgroundRepository {
-    override val backgroundFlow: MutableSharedFlow<List<List<BackgroundCell>>> =
-        MutableSharedFlow(replay = 1)
-    override var background: List<List<BackgroundCell>> = BackgroundRepository.initialBackground
+    private val mutableBackgroundStateFlow = MutableStateFlow(
+        BackgroundRepository.initialBackground
+    )
+
+    override val backgroundStateFlow: StateFlow<List<List<BackgroundCell>>>
+        get() = mutableBackgroundStateFlow.asStateFlow()
 
     override var mapData: MapData = LoopMap()
 
@@ -24,7 +29,7 @@ class BackgroundRepositoryImpl : BackgroundRepository {
         get() = screenSize / cellNum.toFloat()
 
     override fun getBackgroundAt(x: Int, y: Int): BackgroundCell {
-        return background[y][x]
+        return backgroundStateFlow.value[y][x]
     }
 
     override fun getBackgroundAround(x: Int, y: Int): Array<Array<CellType>> {
@@ -48,12 +53,7 @@ class BackgroundRepositoryImpl : BackgroundRepository {
     }
 
     override suspend fun setBackground(background: List<List<BackgroundCell>>) {
-        this.background = background
-        backgroundFlow.emit(background)
-    }
-
-    override suspend fun reload() {
-        backgroundFlow.emit(background)
+        mutableBackgroundStateFlow.value = background
     }
 
     private fun getIdAt(x: Int, y: Int): CellType {

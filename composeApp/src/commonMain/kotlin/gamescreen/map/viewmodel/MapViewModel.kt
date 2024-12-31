@@ -120,7 +120,8 @@ class MapViewModel : ControllerCallback, KoinComponent {
         get() = eventType != EventType.None
 
 
-    val backgroundCells = backgroundRepository.backgroundFlow
+    val backgroundCells =
+        backgroundRepository.backgroundStateFlow
 
     init {
         backgroundRepository.cellNum = 5
@@ -148,7 +149,9 @@ class MapViewModel : ControllerCallback, KoinComponent {
     /**
      * 主人公の位置を更新
      */
-    fun updatePosition() {
+    suspend fun updatePosition() {
+        // fixme テストに影響がありそうなので確認する
+
         // タップしていたら位置を更新
         if (tapPoint != null) {
             updateVelocityByTap(tapPoint!!)
@@ -165,15 +168,13 @@ class MapViewModel : ControllerCallback, KoinComponent {
         if (!canMove) {
             return
         }
-
         mediateVelocity()
-        // fixme テストに影響がありそうなので確認する
-        CoroutineScope(Dispatchers.Default).launch {
-            playerMoveUseCase(
-                player = player,
-            )
-        }
-        moveBackgroundUseCase(
+
+        playerMoveUseCase.invoke(
+            player = player,
+        )
+
+        moveBackgroundUseCase.invoke(
             velocity = backGroundVelocity,
             fieldSquare = fieldSquare,
         )

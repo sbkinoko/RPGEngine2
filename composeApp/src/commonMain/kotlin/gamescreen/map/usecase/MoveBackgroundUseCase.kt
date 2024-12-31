@@ -10,24 +10,27 @@ class MoveBackgroundUseCase(
     private val repository: BackgroundRepository,
     private val collisionRepository: CollisionRepository,
 ) {
-    operator fun invoke(
+    suspend operator fun invoke(
         velocity: Velocity,
         fieldSquare: Square,
     ) {
-        repository.background.forEach { rowArray ->
-            rowArray.forEach { bgCell ->
-                bgCell.apply {
-                    moveDisplayPoint(
-                        dx = velocity.x,
-                        dy = velocity.y,
-                    )
+        repository.setBackground(
+            background = repository.backgroundStateFlow.value.map { rowArray ->
+                rowArray.map { bgCell ->
+                    bgCell.apply {
+                        moveDisplayPoint(
+                            dx = velocity.x,
+                            dy = velocity.y,
+                        )
+
+                        loopBackgroundCell(
+                            bgCell = this@apply,
+                            fieldSquare = fieldSquare,
+                        )
+                    }
                 }
-                loopBackgroundCell(
-                    bgCell = bgCell,
-                    fieldSquare = fieldSquare,
-                )
             }
-        }
+        )
     }
 
     /**
