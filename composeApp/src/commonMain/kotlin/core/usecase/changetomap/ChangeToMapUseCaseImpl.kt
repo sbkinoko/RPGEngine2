@@ -8,6 +8,8 @@ class ChangeToMapUseCaseImpl(
 ) : ChangeToMapUseCase {
 
     override fun invoke() {
-        screenTypeRepository.screenType = ScreenType.FIELD
+        screenTypeRepository.setScreenType(
+            screenType = ScreenType.FIELD,
+        )
     }
 }

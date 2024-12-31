@@ -372,7 +372,9 @@ class MapViewModel : ControllerCallback, KoinComponent {
     }
 
     private fun showMenu() {
-        screenTypeRepository.screenType = ScreenType.MENU
+        screenTypeRepository.setScreenType(
+            screenType = ScreenType.MENU
+        )
     }
 
     override fun moveStick(

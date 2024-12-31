@@ -7,7 +7,7 @@ import org.koin.core.component.inject
 class MainViewModel : KoinComponent {
     private val screenTypeRepository: ScreenTypeRepository by inject()
 
-    val nowScreenType = screenTypeRepository.screenTypeFlow
+    val nowScreenType = screenTypeRepository.screenStateFlow
 
     private val screenTypeManager: ScreenTypeManager by inject()
 

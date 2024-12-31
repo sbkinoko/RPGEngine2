@@ -25,7 +25,9 @@ class EscapeViewModel : BattleChildViewModel() {
             }
 
             escapeCommand -> {
-                screenTypeRepository.screenType = ScreenType.FIELD
+                screenTypeRepository.setScreenType(
+                    screenType = ScreenType.FIELD,
+                )
             }
         }
     }
