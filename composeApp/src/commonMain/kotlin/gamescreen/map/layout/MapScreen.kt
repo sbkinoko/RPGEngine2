@@ -15,7 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.util.fastAny
 import common.extension.pxToDp
-import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.viewmodel.MapViewModel
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -38,8 +37,9 @@ fun MapScreen(
     }
 
     val dir = mapViewModel.dirFlow.collectAsState()
-    val square = mapViewModel.playerSquare.collectAsState(
-        PlayerPositionRepository.initialSquare
+    val square = mapViewModel
+        .playerSquare
+        .collectAsState(
     )
     val eventSquare = mapViewModel.eventSquareFlow.collectAsState()
     val eventType = mapViewModel.eventTypeFlow.collectAsState()
