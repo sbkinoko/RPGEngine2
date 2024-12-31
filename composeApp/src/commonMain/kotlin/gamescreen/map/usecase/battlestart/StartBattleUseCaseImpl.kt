@@ -25,8 +25,9 @@ class StartBattleUseCaseImpl(
             battleMonsterRepository.setMonsters(
                 monsterList
             )
-
-            screenTypeRepository.screenType = ScreenType.BATTLE
+            screenTypeRepository.setScreenType(
+                screenType = ScreenType.BATTLE,
+            )
             commandStateRepository.init()
             actionRepository.resetTarget()
         }

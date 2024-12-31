@@ -9,6 +9,7 @@ import gamescreen.choice.ChoiceViewModel
 import gamescreen.choice.repository.ChoiceRepository
 import gamescreen.map.viewmodel.MapViewModel
 import gamescreen.menu.MenuViewModel
+import gamescreen.text.TextBoxData
 import gamescreen.text.TextViewModel
 import gamescreen.text.repository.TextRepository
 import kotlinx.coroutines.CoroutineScope
@@ -38,10 +39,14 @@ class ScreenTypeManager(
     val controllerFlow = mutableControllerFlow.asStateFlow()
 
     private var choiceList: List<Choice> = emptyList()
+    private var textBoxData: TextBoxData? = null
+    private var screenType: ScreenType = ScreenType.FIELD
+
 
     init {
         CoroutineScope(Dispatchers.Main).launch {
             textRepository.commandTypeFlow.collect {
+                textBoxData = it
                 updateScreenType()
             }
         }
@@ -54,7 +59,8 @@ class ScreenTypeManager(
         }
 
         CoroutineScope(Dispatchers.Main).launch {
-            screenTypeRepository.screenTypeFlow.collect {
+            screenTypeRepository.screenStateFlow.collect {
+                screenType = it
                 updateScreenType()
             }
         }
@@ -66,12 +72,12 @@ class ScreenTypeManager(
             return
         }
 
-        if (textRepository.nowCommandType != null) {
+        if (textBoxData != null) {
             mutableControllerFlow.value = textViewModel
             return
         }
 
-        mutableControllerFlow.value = when (screenTypeRepository.screenType) {
+        mutableControllerFlow.value = when (screenType) {
             ScreenType.BATTLE -> battleViewModel
             ScreenType.FIELD -> mapViewModel
             ScreenType.MENU -> menuViewModel

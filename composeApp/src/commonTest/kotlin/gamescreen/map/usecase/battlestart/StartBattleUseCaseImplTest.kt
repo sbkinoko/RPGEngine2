@@ -13,6 +13,7 @@ import gamescreen.battle.repository.commandstate.CommandStateRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import main.ModuleMain
 import org.koin.core.context.startKoin
@@ -25,7 +26,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class StartBattleUseCaseImplTest : KoinTest {
-    lateinit var startBattleUseCase: StartBattleUseCase
+    private lateinit var startBattleUseCase: StartBattleUseCase
 
     private val screenTypeRepository: ScreenTypeRepository by inject()
 
@@ -134,7 +135,14 @@ class StartBattleUseCaseImplTest : KoinTest {
     @Test
     fun checkStart() {
         runBlocking {
-            startBattleUseCase(
+            lateinit var result: ScreenType
+            val collectJob = launch {
+                screenTypeRepository.screenStateFlow.collect {
+                    result = it
+                }
+            }
+
+            startBattleUseCase.invoke(
                 monsterList = listOf(
                     getTestMonster(),
                 )
@@ -144,7 +152,7 @@ class StartBattleUseCaseImplTest : KoinTest {
 
             assertEquals(
                 actual = ScreenType.BATTLE,
-                expected = screenTypeRepository.screenType,
+                expected = result,
             )
 
             assertEquals(
@@ -161,6 +169,8 @@ class StartBattleUseCaseImplTest : KoinTest {
                 expected = 1,
                 actual = checkAction,
             )
+
+            collectJob.cancel()
         }
     }
 }

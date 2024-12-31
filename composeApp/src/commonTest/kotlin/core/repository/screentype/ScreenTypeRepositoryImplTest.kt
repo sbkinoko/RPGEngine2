@@ -35,23 +35,28 @@ class ScreenTypeRepositoryImplTest : KoinTest {
     fun checkSet() {
         var count = 0
         runBlocking {
+            lateinit var result: ScreenType
             val collectJob = launch {
-                screenTypeRepository.screenTypeFlow.collect {
+                screenTypeRepository.screenStateFlow.collect {
                     count++
+                    result = it
                 }
             }
 
-            screenTypeRepository.screenType = ScreenType.BATTLE
+            screenTypeRepository.setScreenType(
+                screenType = ScreenType.BATTLE,
+            )
 
             delay(100)
 
             assertEquals(
                 expected = ScreenType.BATTLE,
-                actual = screenTypeRepository.screenType
+                actual = result,
             )
+
             assertEquals(
                 expected = 1,
-                actual = count
+                actual = count,
             )
 
             collectJob.cancel()
