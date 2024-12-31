@@ -1,6 +1,7 @@
 package gamescreen.battle.service.findtarget
 
-import common.status.MonsterStatusTest
+import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
+import core.domain.status.MonsterStatusTest.Companion.TestNotActiveMonster
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -17,9 +18,9 @@ class FindTargetServiceImplTest {
     fun attackTo1When1IsNotActive() {
         val monsters = List(2) {
             if (it == 0) {
-                MonsterStatusTest.getNotActiveTestMonster()
+                TestNotActiveMonster
             } else {
-                MonsterStatusTest.getTestMonster()
+                TestActiveMonster
             }
         }
 
@@ -42,9 +43,9 @@ class FindTargetServiceImplTest {
     fun attackTo2When2IsNotActive() {
         val monsters = List(2) {
             if (it == 1) {
-                MonsterStatusTest.getNotActiveTestMonster()
+                TestNotActiveMonster
             } else {
-                MonsterStatusTest.getTestMonster()
+                TestActiveMonster
             }
         }
 
@@ -70,9 +71,9 @@ class FindTargetServiceImplTest {
         val activeId = 2
         val monsters = List(3) {
             if (it != 2) {
-                MonsterStatusTest.getNotActiveTestMonster()
+                TestNotActiveMonster
             } else {
-                MonsterStatusTest.getTestMonster()
+                TestActiveMonster
             }
         }
 

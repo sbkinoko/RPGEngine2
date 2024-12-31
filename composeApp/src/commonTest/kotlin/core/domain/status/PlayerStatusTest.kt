@@ -21,5 +21,32 @@ class PlayerStatusTest {
                     )
                 )
             )
+
+        private const val MAX_HP = 100
+        private const val MAX_MP = 100
+
+        val testActivePlayer
+            get() = PlayerStatus(
+                name = "テスト",
+                hp = HP(
+                    maxValue = MAX_HP,
+                ),
+                mp = MP(
+                    maxValue = MAX_MP,
+                ),
+                skillList = listOf(),
+                toolList = listOf(),
+                exp = EXP(
+                    EXP.type1,
+                ),
+            )
+
+        val testNotActivePlayer
+            get() = testActivePlayer.copy(
+                hp = HP(
+                    maxValue = MAX_HP,
+                    value = 0,
+                ),
+            )
     }
 }

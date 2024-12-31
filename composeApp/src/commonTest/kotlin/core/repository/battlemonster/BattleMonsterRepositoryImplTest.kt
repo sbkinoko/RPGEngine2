@@ -1,10 +1,7 @@
 package core.repository.battlemonster
 
 import core.ModuleCore
-import core.domain.status.DropItemInfo
-import core.domain.status.MonsterStatus
-import core.domain.status.param.HP
-import core.domain.status.param.MP
+import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -21,44 +18,8 @@ import kotlin.test.assertEquals
 class BattleMonsterRepositoryImplTest : KoinTest {
     private val battleMonsterRepository: BattleMonsterRepository by inject()
 
-    // fixme test用のデータを流用する
-    private val monster1 = MonsterStatus(
-        imgId = 1,
-        name = "monster1",
-        hp = HP(
-            maxValue = 10,
-        ),
-        mp = MP(
-            maxValue = 10,
-        ),
-        money = 1,
-        exp = 1,
-        dropInfoList = listOf(
-            DropItemInfo(
-                itemId = 1,
-                probability = 1,
-            )
-        )
-    )
-    private val monster2 = MonsterStatus(
-        imgId = 1,
-        name = "monster1",
-        hp = HP(
-            maxValue = 10,
-        ),
-        mp = MP(
-            maxValue = 10,
-        ),
-        money = 1,
-        exp = 1,
-        dropInfoList = listOf(
-            DropItemInfo(
-                itemId = 1,
-                probability = 1,
-            )
-        )
-    )
-
+    private val monster1 = TestActiveMonster
+    private val monster2 = TestActiveMonster
     private val monsterList = listOf(
         monster1,
         monster2,
