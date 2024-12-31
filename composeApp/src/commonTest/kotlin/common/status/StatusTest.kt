@@ -1,10 +1,7 @@
 package common.status
 
-import core.domain.status.PlayerStatus
+import core.domain.status.PlayerStatusTest.Companion.testActivePlayer
 import core.domain.status.Status
-import core.domain.status.param.EXP
-import core.domain.status.param.HP
-import core.domain.status.param.MP
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -14,20 +11,7 @@ class StatusTest {
 
     @BeforeTest
     fun beforeTest() {
-        status = PlayerStatus(
-            name = "test",
-            hp = HP(
-                maxValue = 100,
-            ),
-            mp = MP(
-                maxValue = 100,
-            ),
-            skillList = listOf(),
-            toolList = listOf(),
-            exp = EXP(
-                EXP.type1,
-            ),
-        )
+        status = testActivePlayer
     }
 
     @Test
