@@ -18,18 +18,22 @@ class BattleMainViewModel : BattleChildViewModel() {
         itemNum = 2,
     )
 
-    // fixme 定数化
     override fun goNextImpl() {
         when (selectManager.selected) {
-            0 -> commandRepository.push(
+            ID_ATTACK -> commandRepository.push(
                 PlayerActionCommand(
                     playerId = 0,
                 )
             )
 
-            1 -> commandRepository.push(
+            ID_ESCAPE -> commandRepository.push(
                 EscapeCommand
             )
         }
+    }
+
+    companion object {
+        const val ID_ATTACK = 0
+        const val ID_ESCAPE = 1
     }
 }
