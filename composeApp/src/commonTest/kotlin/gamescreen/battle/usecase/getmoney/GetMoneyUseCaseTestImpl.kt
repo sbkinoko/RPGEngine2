@@ -1,7 +1,7 @@
 package gamescreen.battle.usecase.getmoney
 
-import common.status.MonsterStatusTest.Companion.getTestMonster
 import core.domain.status.MonsterStatus
+import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
 import core.repository.battlemonster.TestBattleMonsterRepository
 import org.koin.test.KoinTest
 import kotlin.test.Test
@@ -21,10 +21,10 @@ class GetMoneyUseCaseTestImpl : KoinTest {
         val battleMonsterRepository = object : TestBattleMonsterRepository {
             override fun getMonsters(): List<MonsterStatus> {
                 return listOf(
-                    getTestMonster().copy(
+                    TestActiveMonster.copy(
                         money = money1,
                     ),
-                    getTestMonster().copy(
+                    TestActiveMonster.copy(
                         money = money2,
                     )
                 )
@@ -55,13 +55,13 @@ class GetMoneyUseCaseTestImpl : KoinTest {
         val battleMonsterRepository = object : TestBattleMonsterRepository {
             override fun getMonsters(): List<MonsterStatus> {
                 return listOf(
-                    getTestMonster().copy(
+                    TestActiveMonster.copy(
                         money = money1,
                     ),
-                    getTestMonster().copy(
+                    TestActiveMonster.copy(
                         money = money2,
                     ),
-                    getTestMonster().copy(
+                    TestActiveMonster.copy(
                         money = money3,
                     )
                 )

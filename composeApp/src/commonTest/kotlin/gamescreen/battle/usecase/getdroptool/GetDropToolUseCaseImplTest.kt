@@ -1,9 +1,9 @@
 package gamescreen.battle.usecase.getdroptool
 
-import common.status.MonsterStatusTest.Companion.getTestMonster
 import core.ModuleCore
 import core.domain.status.DropItemInfo
 import core.domain.status.MonsterStatus
+import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
 import core.repository.battlemonster.TestBattleMonsterRepository
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -38,7 +38,7 @@ class GetDropToolUseCaseImplTest {
             battleMonsterRepository = object : TestBattleMonsterRepository {
                 override fun getMonsters(): List<MonsterStatus> {
                     return listOf(
-                        getTestMonster().copy(
+                        TestActiveMonster.copy(
                             dropInfoList = listOf(
                                 DropItemInfo(
                                     itemId = itemId,
@@ -78,7 +78,7 @@ class GetDropToolUseCaseImplTest {
             battleMonsterRepository = object : TestBattleMonsterRepository {
                 override fun getMonsters(): List<MonsterStatus> {
                     return listOf(
-                        getTestMonster().copy(
+                        TestActiveMonster.copy(
                             dropInfoList = listOf(
                                 DropItemInfo(
                                     itemId = itemId,
@@ -113,7 +113,7 @@ class GetDropToolUseCaseImplTest {
             battleMonsterRepository = object : TestBattleMonsterRepository {
                 override fun getMonsters(): List<MonsterStatus> {
                     return listOf(
-                        getTestMonster().copy(
+                        TestActiveMonster.copy(
                             dropInfoList = listOf(
                                 DropItemInfo(
                                     itemId = itemId,
@@ -149,7 +149,7 @@ class GetDropToolUseCaseImplTest {
             battleMonsterRepository = object : TestBattleMonsterRepository {
                 override fun getMonsters(): List<MonsterStatus> {
                     return listOf(
-                        getTestMonster().copy(
+                        TestActiveMonster.copy(
                             dropInfoList = listOf(
                                 DropItemInfo(
                                     itemId = itemId1,
@@ -216,7 +216,7 @@ class GetDropToolUseCaseImplTest {
             battleMonsterRepository = object : TestBattleMonsterRepository {
                 override fun getMonsters(): List<MonsterStatus> {
                     return listOf(
-                        getTestMonster().copy(
+                        TestActiveMonster.copy(
                             dropInfoList = listOf(
                                 DropItemInfo(
                                     itemId = itemId1,
@@ -224,7 +224,7 @@ class GetDropToolUseCaseImplTest {
                                 ),
                             )
                         ),
-                        getTestMonster().copy(
+                        TestActiveMonster.copy(
                             dropInfoList = listOf(
                                 DropItemInfo(
                                     itemId = itemId2,

@@ -1,7 +1,7 @@
 package gamescreen.map.usecase.battledecidemonster
 
-import common.status.MonsterStatusTest.Companion.getTestMonster
 import core.domain.status.MonsterStatus
+import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
 import data.monster.MonsterRepository
 import kotlin.test.Test
 import kotlin.test.assertTrue
@@ -13,7 +13,7 @@ class DecideBattleMonsterUseCaseImplTest {
     fun count() {
         monsterRepository = object : MonsterRepository {
             override fun getMonster(id: Int): MonsterStatus {
-                return getTestMonster()
+                return TestActiveMonster
             }
         }
 

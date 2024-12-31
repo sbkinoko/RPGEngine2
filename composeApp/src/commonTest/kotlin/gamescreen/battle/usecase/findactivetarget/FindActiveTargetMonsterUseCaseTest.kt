@@ -1,9 +1,7 @@
 package gamescreen.battle.usecase.findactivetarget
 
-import core.domain.status.DropItemInfo
-import core.domain.status.MonsterStatus
-import core.domain.status.param.HP
-import core.domain.status.param.MP
+import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
+import core.domain.status.MonsterStatusTest.Companion.TestNotActiveMonster
 import gamescreen.battle.ModuleBattle
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -37,9 +35,9 @@ class FindActiveTargetMonsterUseCaseTest : KoinTest {
     @Test
     fun findNormal() {
         val list = listOf(
-            monster(isActive = true),
-            monster(isActive = true),
-            monster(isActive = true),
+            TestActiveMonster,
+            TestActiveMonster,
+            TestActiveMonster,
         )
 
         findActiveTargetUseCase(
@@ -60,9 +58,9 @@ class FindActiveTargetMonsterUseCaseTest : KoinTest {
     @Test
     fun findSkip() {
         val list = listOf(
-            monster(isActive = true),
-            monster(isActive = false),
-            monster(isActive = true),
+            TestActiveMonster,
+            TestNotActiveMonster,
+            TestActiveMonster,
         )
 
         findActiveTargetUseCase(
@@ -83,9 +81,9 @@ class FindActiveTargetMonsterUseCaseTest : KoinTest {
     @Test
     fun findNext() {
         val list = listOf(
-            monster(isActive = false),
-            monster(isActive = true),
-            monster(isActive = true),
+            TestNotActiveMonster,
+            TestActiveMonster,
+            TestActiveMonster,
         )
 
         findActiveTargetUseCase(
@@ -106,9 +104,9 @@ class FindActiveTargetMonsterUseCaseTest : KoinTest {
     @Test
     fun findOne() {
         val list = listOf(
-            monster(isActive = true),
-            monster(isActive = false),
-            monster(isActive = false),
+            TestActiveMonster,
+            TestNotActiveMonster,
+            TestNotActiveMonster,
         )
 
         findActiveTargetUseCase(
@@ -129,9 +127,9 @@ class FindActiveTargetMonsterUseCaseTest : KoinTest {
     @Test
     fun findLoop() {
         val list = listOf(
-            monster(isActive = true),
-            monster(isActive = true),
-            monster(isActive = true),
+            TestActiveMonster,
+            TestActiveMonster,
+            TestActiveMonster,
         )
 
         findActiveTargetUseCase(
@@ -152,9 +150,9 @@ class FindActiveTargetMonsterUseCaseTest : KoinTest {
     @Test
     fun findOver() {
         val list = listOf(
-            monster(isActive = true),
-            monster(isActive = true),
-            monster(isActive = true),
+            TestActiveMonster,
+            TestActiveMonster,
+            TestActiveMonster,
         )
 
         findActiveTargetUseCase(
@@ -168,33 +166,4 @@ class FindActiveTargetMonsterUseCaseTest : KoinTest {
             )
         }
     }
-
-    // fixme testデータを流用するようにする
-    private fun monster(isActive: Boolean): MonsterStatus {
-        return MonsterStatus(
-            mp = MP(
-                value = 100,
-                maxValue = 100,
-            ),
-            hp = HP(
-                value = if (isActive) {
-                    100
-                } else {
-                    0
-                },
-                maxValue = 100,
-            ),
-            imgId = 1,
-            name = "",
-            money = 1,
-            exp = 1,
-            dropInfoList = listOf(
-                DropItemInfo(
-                    itemId = 1,
-                    probability = 1,
-                )
-            )
-        )
-    }
-
 }
