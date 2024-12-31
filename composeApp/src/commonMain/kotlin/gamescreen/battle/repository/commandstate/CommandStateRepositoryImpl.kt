@@ -2,7 +2,6 @@ package gamescreen.battle.repository.commandstate
 
 import gamescreen.battle.domain.BattleCommandType
 import gamescreen.battle.domain.MainCommand
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,14 +14,12 @@ class CommandStateRepositoryImpl : CommandStateRepository {
             mutableCommandStateFlow.value = field.last()
         }
 
-    override val nowCommandType: BattleCommandType
+    override val nowBattleCommandType: BattleCommandType
         get() = battleCommandTypeQueue.last()
 
-    override val commandTypeFlow: MutableSharedFlow<BattleCommandType>
-        get() = throw NotImplementedError()
 
     private val mutableCommandStateFlow =
-        MutableStateFlow(nowCommandType)
+        MutableStateFlow(nowBattleCommandType)
     override val commandStateFlow: StateFlow<BattleCommandType> =
         mutableCommandStateFlow.asStateFlow()
 
@@ -30,8 +27,8 @@ class CommandStateRepositoryImpl : CommandStateRepository {
         battleCommandTypeQueue = listOf(CommandStateRepository.INITIAL_COMMAND_STATE)
     }
 
-    override fun push(commandType: BattleCommandType) {
-        battleCommandTypeQueue = battleCommandTypeQueue + commandType
+    override fun push(battleCommandType: BattleCommandType) {
+        battleCommandTypeQueue = battleCommandTypeQueue + battleCommandType
     }
 
     override fun pop() {

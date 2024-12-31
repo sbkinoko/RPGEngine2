@@ -11,7 +11,6 @@ import gamescreen.battle.domain.BattleCommandType
 import gamescreen.battle.repository.action.ActionRepository
 import gamescreen.battle.repository.commandstate.CommandStateRepository
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -70,18 +69,16 @@ class StartBattleUseCaseImplTest : KoinTest {
             },
             screenTypeRepository = screenTypeRepository,
             commandStateRepository = object : CommandStateRepository {
-                override val commandTypeFlow: MutableSharedFlow<BattleCommandType>
-                    get() = throw NotImplementedError()
                 override val commandStateFlow: StateFlow<BattleCommandType>
                     get() = throw NotImplementedError()
-                override val nowCommandType: BattleCommandType
+                override val nowBattleCommandType: BattleCommandType
                     get() = throw NotImplementedError()
 
                 override fun init() {
                     checkCommand++
                 }
 
-                override fun push(commandType: BattleCommandType) {
+                override fun push(battleCommandType: BattleCommandType) {
                     throw NotImplementedError()
                 }
 

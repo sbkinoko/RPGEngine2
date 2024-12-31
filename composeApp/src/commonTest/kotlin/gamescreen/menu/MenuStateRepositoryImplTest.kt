@@ -36,7 +36,7 @@ class MenuStateRepositoryImplTest : KoinTest {
         runBlocking {
             var count = 0
             val collectJob = launch {
-                menuStateRepository.commandTypeFlow.collect {
+                menuStateRepository.menuTypeStateFlow.collect {
                     count++
                 }
             }
@@ -47,7 +47,7 @@ class MenuStateRepositoryImplTest : KoinTest {
 
             assertEquals(
                 expected = MenuType.Status,
-                actual = menuStateRepository.nowCommandType
+                actual = menuStateRepository.nowMenuType
             )
             assertEquals(
                 expected = 1,
@@ -59,7 +59,7 @@ class MenuStateRepositoryImplTest : KoinTest {
             delay(100)
             assertEquals(
                 expected = MenuType.Main,
-                actual = menuStateRepository.nowCommandType
+                actual = menuStateRepository.nowMenuType
             )
             assertEquals(
                 expected = 2,
@@ -75,7 +75,7 @@ class MenuStateRepositoryImplTest : KoinTest {
         runBlocking {
             var count = 0
             val collectJob = launch {
-                menuStateRepository.commandTypeFlow.collect {
+                menuStateRepository.menuTypeStateFlow.collect {
                     count++
                 }
             }
@@ -93,7 +93,7 @@ class MenuStateRepositoryImplTest : KoinTest {
             //　リセットしたので標準状態
             assertEquals(
                 expected = MenuType.Main,
-                actual = menuStateRepository.nowCommandType
+                actual = menuStateRepository.nowMenuType
             )
             // セット2回とリセット分
             assertEquals(
@@ -107,7 +107,7 @@ class MenuStateRepositoryImplTest : KoinTest {
 
             assertEquals(
                 expected = MenuType.Main,
-                actual = menuStateRepository.nowCommandType
+                actual = menuStateRepository.nowMenuType
             )
             assertEquals(
                 expected = 3,

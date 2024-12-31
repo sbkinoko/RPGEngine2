@@ -30,7 +30,7 @@ class SelectAllyViewModel : BattleChildViewModel() {
 
     private val playerId: Int
         get() {
-            val command = commandRepository.nowCommandType as SelectAllyCommand
+            val command = commandRepository.nowBattleCommandType as SelectAllyCommand
             return command.playerId
         }
 

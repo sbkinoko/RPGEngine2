@@ -1,27 +1,24 @@
 package gamescreen.menu.repository.menustate
 
 import gamescreen.menu.domain.MenuType
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.asStateFlow
 
 class MenuStateRepositoryImpl : MenuStateRepository {
-    override val commandStateFlow: StateFlow<MenuType>
-        get() = TODO("Not yet implemented")
+    private val mutableCommandStateFlow = MutableStateFlow(MenuType.Main)
+    override val menuTypeStateFlow: StateFlow<MenuType>
+        get() = mutableCommandStateFlow.asStateFlow()
 
-    override val nowCommandType: MenuType
+    override val nowMenuType: MenuType
         get() = mutableList.last()
-
-    override val commandTypeFlow: MutableSharedFlow<MenuType> = MutableSharedFlow(replay = 1)
 
     private val mutableList: MutableList<MenuType> = mutableListOf(
         MenuType.Main,
     )
 
-    override fun push(commandType: MenuType) {
-        mutableList.add(commandType)
+    override fun push(menuType: MenuType) {
+        mutableList.add(menuType)
         emit()
     }
 
@@ -35,9 +32,7 @@ class MenuStateRepositoryImpl : MenuStateRepository {
     }
 
     private fun emit() {
-        CoroutineScope(Dispatchers.Default).launch {
-            this@MenuStateRepositoryImpl.commandTypeFlow.emit(nowCommandType)
-        }
+        mutableCommandStateFlow.value = nowMenuType
     }
 
     override fun reset() {

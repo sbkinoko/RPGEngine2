@@ -52,12 +52,12 @@ class ChangeSelectingActionPlayerUseCaseImplTest : KoinTest {
         useCase()
 
         assertTrue {
-            commandStateRepository.nowCommandType is PlayerActionCommand
+            commandStateRepository.nowBattleCommandType is PlayerActionCommand
         }
 
         assertEquals(
             expected = next,
-            actual = (commandStateRepository.nowCommandType as PlayerIdCommand).playerId
+            actual = (commandStateRepository.nowBattleCommandType as PlayerIdCommand).playerId
         )
     }
 
@@ -79,7 +79,7 @@ class ChangeSelectingActionPlayerUseCaseImplTest : KoinTest {
 
         assertEquals(
             expected = AttackPhaseCommand,
-            actual = commandStateRepository.nowCommandType
+            actual = commandStateRepository.nowBattleCommandType
         )
     }
 }

@@ -22,7 +22,7 @@ class SkillCommandViewModel : ItemCommandViewModel() {
         get() = playerStatusRepository.getStatus(playerId).skillList
 
     override val playerId: Int
-        get() = (commandRepository.nowCommandType as? SkillCommand)?.playerId
+        get() = (commandRepository.nowBattleCommandType as? SkillCommand)?.playerId
             ?: Const.INITIAL_PLAYER
 
     override val actionType: ActionType

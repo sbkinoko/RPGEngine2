@@ -39,7 +39,7 @@ class SelectEnemyViewModel : BattleChildViewModel() {
 
     val playerId: Int
         get() {
-            val command = commandRepository.nowCommandType as SelectEnemyCommand
+            val command = commandRepository.nowBattleCommandType as SelectEnemyCommand
             return command.playerId
         }
 
@@ -128,7 +128,7 @@ class SelectEnemyViewModel : BattleChildViewModel() {
 
     fun updateArrow() {
         val command =
-            commandRepository.nowCommandType as? SelectEnemyCommand
+            commandRepository.nowBattleCommandType as? SelectEnemyCommand
 
         if (command == null) {
             mutableSelectedEnemyState.value = mutableSelectedEnemyState.value.copy(
