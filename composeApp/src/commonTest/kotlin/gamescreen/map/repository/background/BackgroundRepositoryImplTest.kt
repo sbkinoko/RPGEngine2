@@ -6,14 +6,8 @@ import gamescreen.map.data.LoopTestMap
 import gamescreen.map.data.NonLoopTestMap
 import gamescreen.map.domain.BackgroundCell
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.koin.core.context.startKoin
@@ -61,7 +55,7 @@ class BackgroundRepositoryImplTest : KoinTest {
                 background = background
             )
 
-            repository.background.apply {
+            repository.backgroundStateFlow.value.apply {
                 assertEquals(
                     expected = background,
                     actual = this,
@@ -77,41 +71,30 @@ class BackgroundRepositoryImplTest : KoinTest {
         }
     }
 
-    @OptIn(DelicateCoroutinesApi::class)
     @Test
     fun checkFlow() {
         runBlocking {
+            lateinit var result: List<List<BackgroundCell>>
             var count = 0
             val collectJob: Job = launch {
-                repository.backgroundFlow.asSharedFlow()
-                    .onEach {
-                        count++
-                    }.launchIn(GlobalScope)
+                repository.backgroundStateFlow.collect {
+                    count++
+                    result = it
+                }
             }
 
             repository.setBackground(
                 background = background
             )
+
             delay(100)
 
             assertEquals(
                 expected = background,
-                actual = repository.backgroundFlow.first(),
+                actual = result,
             )
             assertEquals(
                 expected = 1,
-                actual = count
-            )
-
-            repository.reload()
-            delay(100)
-
-            assertEquals(
-                expected = background,
-                actual = repository.backgroundFlow.first(),
-            )
-            assertEquals(
-                expected = 2,
                 actual = count
             )
 

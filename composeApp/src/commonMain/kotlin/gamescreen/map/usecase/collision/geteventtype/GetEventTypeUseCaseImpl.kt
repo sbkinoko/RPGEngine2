@@ -11,7 +11,7 @@ class GetEventTypeUseCaseImpl(
     override fun invoke(
         square: Square,
     ): EventType {
-        backgroundRepository.background.forEach { rowArray ->
+        backgroundRepository.backgroundStateFlow.value.forEach { rowArray ->
             for (cell in rowArray) {
                 // 物がないので次を探索
                 if (cell.collisionList.isEmpty()) {

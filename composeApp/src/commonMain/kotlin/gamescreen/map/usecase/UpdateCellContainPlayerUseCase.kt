@@ -15,8 +15,9 @@ class UpdateCellContainPlayerUseCase(
 ) {
     operator fun invoke() {
         var playerIncludeCell: BackgroundCell? = null
-        backgroundRepository.background.mapIndexed { _, rowArray ->
-            rowArray.mapIndexed { _, cell ->
+
+        backgroundRepository.backgroundStateFlow.value.map { rowArray ->
+            rowArray.map { cell ->
                 cell.apply {
                     if (playerPositionRepository.getPlayerPosition().isIn(square)) {
                         isPlayerIncludeCell = true

@@ -120,7 +120,7 @@ val ModuleMap = module {
 
     single<IsCollidedUseCase> {
         IsCollidedUseCaseImpl(
-            repository = get(),
+            backgroundRepository = get(),
         )
     }
 
@@ -149,7 +149,6 @@ val ModuleMap = module {
         ActionEventUseCaseImpl(
             textRepository = get(),
             addToolUseCase = get(),
-            backgroundRepository = get(),
         )
     }
 

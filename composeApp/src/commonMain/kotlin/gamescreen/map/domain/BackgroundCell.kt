@@ -4,6 +4,8 @@ import core.domain.mapcell.CellType
 import gamescreen.map.domain.collision.CollisionDetectShape
 import gamescreen.map.domain.collision.Square
 
+//fixme 背景画像の情報を持たせる
+//宝箱を開けたときにすぐに更新するため
 class BackgroundCell(
     cellSize: Float,
     x: Float,

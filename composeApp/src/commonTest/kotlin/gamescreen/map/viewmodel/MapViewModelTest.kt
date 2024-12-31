@@ -56,6 +56,7 @@ class MapViewModelTest {
             mapViewModel.updatePosition()
 
             delay(100)
+
             collectJob.cancel()
             assertEquals(
                 expected = 1,

@@ -3,13 +3,10 @@ package gamescreen.map.repository.backgroundcell
 import core.domain.mapcell.CellType
 import gamescreen.map.domain.BackgroundCell
 import gamescreen.map.domain.MapData
-import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.StateFlow
 
 interface BackgroundRepository {
-    // fixme stateFlowにしたい
-    val backgroundFlow: MutableSharedFlow<List<List<BackgroundCell>>>
-
-    var background: List<List<BackgroundCell>>
+    val backgroundStateFlow: StateFlow<List<List<BackgroundCell>>>
 
     var mapData: MapData
 
@@ -26,8 +23,6 @@ interface BackgroundRepository {
     fun getBackgroundAround(x: Int, y: Int): Array<Array<CellType>>
 
     suspend fun setBackground(background: List<List<BackgroundCell>>)
-
-    suspend fun reload()
 
     companion object {
         val initialBackground: List<List<BackgroundCell>> = emptyList()
