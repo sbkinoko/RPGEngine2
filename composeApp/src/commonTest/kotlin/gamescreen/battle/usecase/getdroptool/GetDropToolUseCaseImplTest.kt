@@ -43,8 +43,8 @@ class GetDropToolUseCaseImplTest {
                                 DropItemInfo(
                                     itemId = itemId,
                                     probability = 50,
-                                )
-                            )
+                                ),
+                            ),
                         )
                     )
                 }
@@ -83,8 +83,8 @@ class GetDropToolUseCaseImplTest {
                                 DropItemInfo(
                                     itemId = itemId,
                                     probability = 100,
-                                )
-                            )
+                                ),
+                            ),
                         )
                     )
                 }
@@ -118,8 +118,8 @@ class GetDropToolUseCaseImplTest {
                                 DropItemInfo(
                                     itemId = itemId,
                                     probability = 0,
-                                )
-                            )
+                                ),
+                            ),
                         )
                     )
                 }
@@ -158,8 +158,8 @@ class GetDropToolUseCaseImplTest {
                                 DropItemInfo(
                                     itemId = itemId2,
                                     probability = 50,
-                                )
-                            )
+                                ),
+                            ),
                         )
                     )
                 }
@@ -222,15 +222,15 @@ class GetDropToolUseCaseImplTest {
                                     itemId = itemId1,
                                     probability = 50,
                                 ),
-                            )
+                            ),
                         ),
                         TestActiveMonster.copy(
                             dropInfoList = listOf(
                                 DropItemInfo(
                                     itemId = itemId2,
                                     probability = 50,
-                                )
-                            )
+                                ),
+                            ),
                         ),
                     )
                 }
