@@ -11,13 +11,22 @@ class GetTargetNumUseCaseImpl(
     override fun invoke(playerId: Int): Int {
         return actionRepository.getAction(playerId).let {
             when (it.thisTurnAction) {
-                ActionType.Normal -> 1
+                ActionType.Normal -> {
+                    //todo 装備の種類によって攻撃対象の数を変えられるようにする
+                    1
+                }
+
                 ActionType.Skill -> {
                     skillRepository.getItem(it.skillId).targetNum
                 }
 
-                ActionType.TOOL -> TODO()
-                ActionType.None -> throw RuntimeException()
+                ActionType.TOOL -> {
+                    TODO("敵を攻撃する道具を作ったら実装する")
+                }
+
+                ActionType.None -> {
+                    throw IllegalStateException("Noneで敵の対象数を取得することはない")
+                }
             }
         }
     }
