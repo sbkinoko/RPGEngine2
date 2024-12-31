@@ -31,7 +31,6 @@ import gamescreen.map.usecase.roadmap.RoadMapUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -66,8 +65,8 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
     private val roadMapUseCase: RoadMapUseCase by inject()
 
-    // fixme stateFlowにする
-    val playerSquare: SharedFlow<Square> = playerPositionRepository.playerPositionFLow
+    val playerSquare: StateFlow<Square> =
+        playerPositionRepository.playerPositionStateFlow
 
     private var eventSquare: Square = Square(
         size = VIRTUAL_PLAYER_SIZE,

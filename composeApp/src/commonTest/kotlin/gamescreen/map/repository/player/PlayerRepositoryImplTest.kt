@@ -4,13 +4,8 @@ import gamescreen.map.ModuleMap
 import gamescreen.map.domain.Point
 import gamescreen.map.domain.collision.Square
 import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.koin.core.context.startKoin
@@ -76,11 +71,12 @@ class PlayerPositionRepositoryImplTest : KoinTest {
 
         runBlocking {
             var count = 0
+            lateinit var result: Square
             val collectJob: Job = launch {
-                repository.playerPositionFLow.asSharedFlow()
-                    .onEach {
-                        count++
-                    }.launchIn(GlobalScope)
+                repository.playerPositionStateFlow.collect {
+                    count++
+                    result = it
+                }
             }
 
             repository.setPlayerPosition(
@@ -88,25 +84,12 @@ class PlayerPositionRepositoryImplTest : KoinTest {
             )
             delay(100)
 
-            val a = repository.playerPositionFLow.first()
             assertEquals(
                 expected = square,
-                actual = a,
+                actual = result,
             )
             assertEquals(
                 expected = 1,
-                actual = count
-            )
-
-            repository.reload()
-            delay(100)
-
-            assertEquals(
-                expected = square,
-                actual = a,
-            )
-            assertEquals(
-                expected = 2,
                 actual = count
             )
 
