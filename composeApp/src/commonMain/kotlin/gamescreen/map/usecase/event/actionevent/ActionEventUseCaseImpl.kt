@@ -34,7 +34,11 @@ class ActionEventUseCaseImpl(
             }
 
             is EventType.Talk -> {
-
+                textRepository.push(
+                    TextBoxData(
+                        text = "お話中",
+                    )
+                )
             }
         }
     }
