@@ -33,6 +33,10 @@ fun Background(
             listOf()
         )
 
+    val npc by mapViewModel
+        .npcFlow
+        .collectAsState()
+
     val imageBinder = ImageBinder()
 
     // fixme 背景が動いてない場合はリロードしない
@@ -101,6 +105,27 @@ fun Background(
                     }
 
                     collisionList.forEach {
+                        Canvas(
+                            modifier = Modifier
+                                .size(
+                                    (cellSize * screenRatio).pxToDp()
+                                )
+                                .offset(
+                                    x = (it.baseX * screenRatio).pxToDp(),
+                                    y = (it.baseY * screenRatio).pxToDp(),
+                                ),
+                            onDraw = {
+                                drawPath(
+                                    path = it.toPath(
+                                        screenRatio,
+                                    ),
+                                    color = Colors.CollisionColor,
+                                )
+                            }
+                        )
+                    }
+
+                    npc.let {
                         Canvas(
                             modifier = Modifier
                                 .size(

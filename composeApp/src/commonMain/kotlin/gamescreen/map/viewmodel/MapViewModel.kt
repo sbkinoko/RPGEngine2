@@ -14,6 +14,7 @@ import gamescreen.map.domain.collision.Square
 import gamescreen.map.domain.toDir
 import gamescreen.map.layout.PlayerMoveSquare
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
+import gamescreen.map.repository.npc.NPCRepository
 import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.repository.playercell.PlayerCellRepository
 import gamescreen.map.usecase.MoveBackgroundUseCase
@@ -54,6 +55,8 @@ class MapViewModel : ControllerCallback, KoinComponent {
     private val moveBackgroundUseCase: MoveBackgroundUseCase by inject()
     private val backgroundRepository: BackgroundRepository by inject()
     private val playerCellRepository: PlayerCellRepository by inject()
+
+    private val npcRepository: NPCRepository by inject()
 
     private val updateCellContainPlayerUseCase: UpdateCellContainPlayerUseCase by inject()
 
@@ -121,6 +124,8 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
     val backgroundCells =
         backgroundRepository.backgroundStateFlow
+
+    val npcFlow = npcRepository.npcStateFlow
 
     init {
         backgroundRepository.cellNum = 5
