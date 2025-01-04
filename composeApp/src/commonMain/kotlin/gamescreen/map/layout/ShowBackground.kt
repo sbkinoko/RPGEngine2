@@ -126,7 +126,7 @@ fun Background(
                     }
 
                     npc.let {
-                        Canvas(
+                        Image(
                             modifier = Modifier
                                 .size(
                                     (cellSize * screenRatio).pxToDp()
@@ -135,14 +135,10 @@ fun Background(
                                     x = (it.baseX * screenRatio).pxToDp(),
                                     y = (it.baseY * screenRatio).pxToDp(),
                                 ),
-                            onDraw = {
-                                drawPath(
-                                    path = it.toPath(
-                                        screenRatio,
-                                    ),
-                                    color = Colors.CollisionColor,
-                                )
-                            }
+                            painter = painterResource(
+                                imageBinder.bindNPC()
+                            ),
+                            contentDescription = "NPC"
                         )
                     }
                 }
