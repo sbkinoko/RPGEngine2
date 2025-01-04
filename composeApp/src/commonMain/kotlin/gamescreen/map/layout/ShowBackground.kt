@@ -33,6 +33,10 @@ fun Background(
             listOf()
         )
 
+    val npc by mapViewModel
+        .npcFlow
+        .collectAsState()
+
     val imageBinder = ImageBinder()
 
     // fixme 背景が動いてない場合はリロードしない
@@ -118,6 +122,23 @@ fun Background(
                                     color = Colors.CollisionColor,
                                 )
                             }
+                        )
+                    }
+
+                    npc.let {
+                        Image(
+                            modifier = Modifier
+                                .size(
+                                    (cellSize * screenRatio).pxToDp()
+                                )
+                                .offset(
+                                    x = (it.baseX * screenRatio).pxToDp(),
+                                    y = (it.baseY * screenRatio).pxToDp(),
+                                ),
+                            painter = painterResource(
+                                imageBinder.bindNPC()
+                            ),
+                            contentDescription = "NPC"
                         )
                     }
                 }

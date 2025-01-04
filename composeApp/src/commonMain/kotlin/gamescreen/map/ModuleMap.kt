@@ -5,6 +5,8 @@ import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.backgroundcell.BackgroundRepositoryImpl
 import gamescreen.map.repository.collision.CollisionRepository
 import gamescreen.map.repository.collision.CollisionRepositoryImpl
+import gamescreen.map.repository.npc.NPCRepository
+import gamescreen.map.repository.npc.NPCRepositoryImpl
 import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.repository.player.PlayerPositionRepositoryImpl
 import gamescreen.map.repository.playercell.PlayerCellRepository
@@ -65,6 +67,10 @@ val ModuleMap = module {
         CollisionRepositoryImpl()
     }
 
+    single<NPCRepository> {
+        NPCRepositoryImpl()
+    }
+
     single {
         PlayerMoveUseCase(
             playerPositionRepository = get(),
@@ -121,6 +127,7 @@ val ModuleMap = module {
     single<IsCollidedUseCase> {
         IsCollidedUseCaseImpl(
             backgroundRepository = get(),
+            npcRepository = get(),
         )
     }
 
