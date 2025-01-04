@@ -11,7 +11,6 @@ class TextViewModel : SelectableChildViewModel<TextBoxData?>() {
     val showState
         get() = textRepository.textDataStateFlow
 
-
     val callBack: () -> Unit
         get() = textRepository.callBack
 
@@ -19,8 +18,8 @@ class TextViewModel : SelectableChildViewModel<TextBoxData?>() {
         get() = textRepository.text
 
     override fun goNext() {
-        callBack()
         textRepository.pop()
+        callBack()
     }
 
     // スティック操作に反応しないように1にする

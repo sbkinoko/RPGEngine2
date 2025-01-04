@@ -134,6 +134,7 @@ val ModuleMap = module {
     single<GetEventTypeUseCase> {
         GetEventTypeUseCaseImpl(
             backgroundRepository = get(),
+            npcRepository = get(),
         )
     }
 
@@ -181,7 +182,6 @@ val ModuleMap = module {
             playerMoveToUseCase = get(),
         )
     }
-
 
     single<DecideConnectTypeUseCase> {
         DecideConnectTypeUseCaseImpl()
