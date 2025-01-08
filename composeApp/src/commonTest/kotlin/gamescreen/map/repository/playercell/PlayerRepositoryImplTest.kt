@@ -66,6 +66,7 @@ class PlayerRepositoryImplTest : KoinTest {
 
     @Test
     fun setTwoKind() {
+
         val backGroundCell = BackgroundCell(
             cellSize = 10f,
             x = 10f,
@@ -73,8 +74,9 @@ class PlayerRepositoryImplTest : KoinTest {
         )
         playerCellRepository.playerIncludeCell = backGroundCell
 
+        // fixme サイズ以外の情報を変更するようにする
         val backGroundCell2 = BackgroundCell(
-            cellSize = 10f,
+            cellSize = 11f,
             x = 10f,
             y = 10f,
         )
