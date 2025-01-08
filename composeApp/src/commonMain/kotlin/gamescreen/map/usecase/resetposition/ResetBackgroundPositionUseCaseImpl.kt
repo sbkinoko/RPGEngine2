@@ -23,26 +23,28 @@ class ResetBackgroundPositionUseCaseImpl(
             val background: List<List<BackgroundCell>> =
                 repository.run {
                     List(allCellNum) { row ->
-                    List(allCellNum) { col ->
-                        BackgroundCell(
-                            x = col * cellSize,
-                            y = row * cellSize,
-                            cellSize = cellSize,
-                        ).apply {
-                            mapPoint = mapData.getMapPoint(
+                        List(allCellNum) { col ->
+                            val mapPont = mapData.getMapPoint(
                                 x = col - (cellNum - 1) / 2 + mapX,
                                 y = row - (cellNum - 1) / 2 + mapY,
                             )
-                            cellType = mapData.getDataAt(mapPoint)
-                            collisionList = collisionRepository.collisionData(
+
+                            BackgroundCell(
+                                x = col * cellSize,
+                                y = row * cellSize,
                                 cellSize = cellSize,
-                                square = square,
-                                cellType = cellType,
-                            )
+                                mapPoint = mapPont,
+                            ).apply {
+                                cellType = mapData.getDataAt(mapPoint)
+                                collisionList = collisionRepository.collisionData(
+                                    cellSize = cellSize,
+                                    square = square,
+                                    cellType = cellType,
+                                )
+                            }
                         }
                     }
                 }
-            }
 
             // 更新した情報を元に背景リセット
             repository.setBackground(

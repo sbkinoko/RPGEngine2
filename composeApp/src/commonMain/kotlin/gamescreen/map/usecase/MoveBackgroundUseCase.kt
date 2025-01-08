@@ -39,49 +39,53 @@ class MoveBackgroundUseCase(
     private fun loopBackgroundCell(
         bgCell: BackgroundCell,
         fieldSquare: Square,
-    ) {
+    ): BackgroundCell {
         // loopに必要な移動量
         val allCellNum = repository.allCellNum
         val diffOfLoop = allCellNum * repository.cellSize
 
-        bgCell.apply {
-            val mapX: Int =
-                if (square.isRight(fieldSquare)) {
-                    square.move(
-                        dx = -diffOfLoop,
-                    )
-                    mapPoint.x - allCellNum
-                } else if (square.isLeft(fieldSquare)) {
-                    moveDisplayPoint(
-                        dx = diffOfLoop,
-                    )
-                    mapPoint.x + allCellNum
-                } else {
-                    mapPoint.x
-                }
+        //移動後のマップのx座標
+        val mapX: Int = bgCell.run {
+            if (square.isRight(fieldSquare)) {
+                square.move(
+                    dx = -diffOfLoop,
+                )
+                mapPoint.x - allCellNum
+            } else if (square.isLeft(fieldSquare)) {
+                moveDisplayPoint(
+                    dx = diffOfLoop,
+                )
+                mapPoint.x + allCellNum
+            } else {
+                mapPoint.x
+            }
+        }
 
-            val mapY: Int =
-                if (square.isDown(fieldSquare)) {
-                    moveDisplayPoint(
-                        dy = -diffOfLoop,
-                    )
-                    mapPoint.y - allCellNum
-                } else if (square.isUp(fieldSquare)) {
-                    moveDisplayPoint(
-                        dy = diffOfLoop,
-                    )
-                    mapPoint.y + allCellNum
-                } else {
-                    mapPoint.y
-                }
+        //移動後のマップのy座標
+        val mapY: Int = bgCell.run {
+            if (square.isDown(fieldSquare)) {
+                moveDisplayPoint(
+                    dy = -diffOfLoop,
+                )
+                mapPoint.y - allCellNum
+            } else if (square.isUp(fieldSquare)) {
+                moveDisplayPoint(
+                    dy = diffOfLoop,
+                )
+                mapPoint.y + allCellNum
+            } else {
+                mapPoint.y
+            }
+        }
 
-            repository.mapData.apply {
-                mapPoint = getMapPoint(
+        repository.mapData.let {
+            return bgCell.copy(
+                mapPoint = it.getMapPoint(
                     x = mapX,
                     y = mapY,
                 )
-
-                cellType = getDataAt(mapPoint)
+            ).apply {
+                cellType = it.getDataAt(mapPoint)
                 collisionList = collisionRepository.collisionData(
                     cellSize = cellSize,
                     square = square,

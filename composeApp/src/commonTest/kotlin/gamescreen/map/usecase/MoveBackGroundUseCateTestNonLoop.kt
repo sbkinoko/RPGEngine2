@@ -37,7 +37,7 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
         repository.cellNum = CELL_NUM
         repository.screenSize = SIDE_LENGTH
 
-        resetBackgroundPositionUseCase(
+        resetBackgroundPositionUseCase.invoke(
             mapData = mapData,
             mapX = 0,
             mapY = 0,
@@ -186,7 +186,7 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
     fun checkLoop_Left() {
         val dx = 15f
         runBlocking {
-            moveBackgroundUseCase(
+            moveBackgroundUseCase.invoke(
                 velocity = Velocity(
                     x = -dx,
                     y = 0f,

@@ -124,7 +124,6 @@ class MoveBackgroundUseCaseTestLoop : KoinTest {
                 }
             }
         }
-
     }
 
     /**
@@ -183,7 +182,7 @@ class MoveBackgroundUseCaseTestLoop : KoinTest {
         val dx = 15f
 
         runBlocking {
-            moveBackgroundUseCase(
+            moveBackgroundUseCase.invoke(
                 velocity = Velocity(
                     x = -dx,
                     y = 0f,
