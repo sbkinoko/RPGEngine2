@@ -31,7 +31,7 @@ class ResetBackgroundPositionUseCaseTest : KoinTest {
 
         repository.cellNum = CELL_NUM
         repository.screenSize = SIDE_LENGTH
-        resetBackgroundPositionUseCase(
+        resetBackgroundPositionUseCase.invoke(
             mapData = mapData,
             mapX = 0,
             mapY = 0,
@@ -43,8 +43,11 @@ class ResetBackgroundPositionUseCaseTest : KoinTest {
         stopKoin()
     }
 
+    /**
+     * 初期状態の確認
+     */
     @Test
-    fun resetPosition() {
+    fun initPosition() {
         repository.getBackgroundAt(
             x = 0,
             y = 0,
@@ -70,8 +73,11 @@ class ResetBackgroundPositionUseCaseTest : KoinTest {
                 )
             }
         }
+    }
 
-        resetBackgroundPositionUseCase(
+    @Test
+    fun resetPosition() {
+        resetBackgroundPositionUseCase.invoke(
             mapData = mapData,
             mapX = 1,
             mapY = 1,
