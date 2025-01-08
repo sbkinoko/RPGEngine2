@@ -1,8 +1,8 @@
 package gamescreen.map.usecase.roadmap
 
 import gamescreen.map.domain.MapData
-import gamescreen.map.usecase.ResetBackgroundPositionUseCase
 import gamescreen.map.usecase.UpdateCellContainPlayerUseCase
+import gamescreen.map.usecase.resetposition.ResetBackgroundPositionUseCase
 import gamescreen.map.usecase.setplayercenter.SetPlayerCenterUseCase
 
 class RoadMapUseCaseImpl(

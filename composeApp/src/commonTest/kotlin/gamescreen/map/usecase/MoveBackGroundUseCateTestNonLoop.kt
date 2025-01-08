@@ -7,6 +7,7 @@ import gamescreen.map.domain.collision.Square
 import gamescreen.map.manager.CELL_NUM
 import gamescreen.map.manager.SIDE_LENGTH
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
+import gamescreen.map.usecase.resetposition.ResetBackgroundPositionUseCase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.koin.core.context.startKoin
