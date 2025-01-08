@@ -5,6 +5,7 @@ import gamescreen.map.ModuleMap
 import gamescreen.map.data.LoopTestMap
 import gamescreen.map.data.NonLoopTestMap
 import gamescreen.map.domain.BackgroundCell
+import gamescreen.map.domain.MapPoint
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -30,6 +31,7 @@ class BackgroundRepositoryImplTest : KoinTest {
                 cellSize = 10f,
                 x = row * 10f,
                 y = col * 10f,
+                mapPoint = MapPoint()
             )
         }
     }

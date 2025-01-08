@@ -11,9 +11,9 @@ data class BackgroundCell(
     val cellSize: Float,
     val x: Float,
     val y: Float,
+    val mapPoint: MapPoint,
     // fixme 他の値をvalにしたら修正する
     val rnd: Int = Random.nextInt(),
-    val mapPoint: MapPoint = MapPoint(),
 ) {
     val square: Square = Square(
         displayPoint = Point(
