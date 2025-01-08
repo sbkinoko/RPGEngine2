@@ -31,6 +31,7 @@ import gamescreen.map.usecase.event.actionevent.ActionEventUseCaseImpl
 import gamescreen.map.usecase.event.cellevent.CellEventUseCase
 import gamescreen.map.usecase.event.cellevent.CellEventUseCaseImpl
 import gamescreen.map.usecase.resetposition.ResetBackgroundPositionUseCase
+import gamescreen.map.usecase.resetposition.ResetBackgroundPositionUseCaseImpl
 import gamescreen.map.usecase.roadmap.RoadMapUseCase
 import gamescreen.map.usecase.roadmap.RoadMapUseCaseImpl
 import gamescreen.map.usecase.setplayercenter.SetPlayerCenterUseCase
@@ -84,8 +85,8 @@ val ModuleMap = module {
         )
     }
 
-    single {
-        ResetBackgroundPositionUseCase(
+    single<ResetBackgroundPositionUseCase> {
+        ResetBackgroundPositionUseCaseImpl(
             repository = get(),
             collisionRepository = get(),
         )
