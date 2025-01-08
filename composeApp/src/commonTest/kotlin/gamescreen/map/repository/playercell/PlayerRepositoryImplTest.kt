@@ -66,7 +66,6 @@ class PlayerRepositoryImplTest : KoinTest {
 
     @Test
     fun setTwoKind() {
-
         val backGroundCell = BackgroundCell(
             cellSize = 10f,
             x = 10f,
