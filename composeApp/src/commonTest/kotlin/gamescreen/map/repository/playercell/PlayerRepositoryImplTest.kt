@@ -2,6 +2,7 @@ package gamescreen.map.repository.playercell
 
 import gamescreen.map.ModuleMap
 import gamescreen.map.domain.BackgroundCell
+import gamescreen.map.domain.MapPoint
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
@@ -39,6 +40,7 @@ class PlayerRepositoryImplTest : KoinTest {
             cellSize = 10f,
             x = 10f,
             y = 10f,
+            mapPoint = MapPoint(),
         )
         playerCellRepository.playerIncludeCell = backGroundCell
 
@@ -54,6 +56,7 @@ class PlayerRepositoryImplTest : KoinTest {
             cellSize = 10f,
             x = 10f,
             y = 10f,
+            mapPoint = MapPoint(),
         )
         playerCellRepository.playerIncludeCell = backGroundCell
         playerCellRepository.playerIncludeCell = backGroundCell
@@ -70,6 +73,7 @@ class PlayerRepositoryImplTest : KoinTest {
             cellSize = 10f,
             x = 10f,
             y = 10f,
+            mapPoint = MapPoint(),
         )
         playerCellRepository.playerIncludeCell = backGroundCell
 
@@ -77,6 +81,7 @@ class PlayerRepositoryImplTest : KoinTest {
             cellSize = 10f,
             x = 10f,
             y = 10f,
+            mapPoint = MapPoint(),
         )
         playerCellRepository.playerIncludeCell = backGroundCell2
 

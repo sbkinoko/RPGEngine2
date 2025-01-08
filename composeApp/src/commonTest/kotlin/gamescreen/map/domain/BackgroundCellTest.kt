@@ -14,7 +14,8 @@ class BackgroundCellTest {
         val bgCell = BackgroundCell(
             x = x,
             y = y,
-            cellSize = size
+            cellSize = size,
+            mapPoint = MapPoint(),
         )
 
         bgCell.apply {
