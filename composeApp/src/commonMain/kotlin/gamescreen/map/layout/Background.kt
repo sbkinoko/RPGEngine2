@@ -29,9 +29,7 @@ fun Background(
 ) {
     val backgroundCell: List<List<BackgroundCell>> by mapViewModel
         .backgroundCells
-        .collectAsState(
-            listOf()
-        )
+        .collectAsState()
 
     val imageBinder = ImageBinder()
 
