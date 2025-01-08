@@ -1,4 +1,4 @@
-package gamescreen.map.usecase
+package gamescreen.map.usecase.resetposition
 
 import gamescreen.map.domain.BackgroundCell
 import gamescreen.map.domain.MapData
@@ -6,11 +6,12 @@ import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.collision.CollisionRepository
 import kotlinx.coroutines.runBlocking
 
-class ResetBackgroundPositionUseCase(
+class ResetBackgroundPositionUseCaseImpl(
     private val repository: BackgroundRepository,
     private val collisionRepository: CollisionRepository,
-) {
-    operator fun invoke(
+) : ResetBackgroundPositionUseCase {
+
+    override operator fun invoke(
         mapData: MapData,
         mapX: Int,
         mapY: Int,
@@ -19,9 +20,9 @@ class ResetBackgroundPositionUseCase(
             // map情報を更新
             repository.mapData = mapData
 
-            val background: List<List<BackgroundCell>>
-            repository.apply {
-                background = List(allCellNum) { row ->
+            val background: List<List<BackgroundCell>> =
+                repository.run {
+                    List(allCellNum) { row ->
                     List(allCellNum) { col ->
                         BackgroundCell(
                             x = col * cellSize,
@@ -44,7 +45,9 @@ class ResetBackgroundPositionUseCase(
             }
 
             // 更新した情報を元に背景リセット
-            repository.setBackground(background = background)
+            repository.setBackground(
+                background = background,
+            )
         }
     }
 }
