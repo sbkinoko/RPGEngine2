@@ -6,10 +6,10 @@ import gamescreen.map.domain.collision.Square
 
 //fixme 背景画像の情報を持たせる
 //宝箱を開けたときにすぐに更新するため
-class BackgroundCell(
-    cellSize: Float,
-    x: Float,
-    y: Float,
+data class BackgroundCell(
+    val cellSize: Float,
+    val x: Float,
+    val y: Float,
 ) {
     var mapPoint: MapPoint = MapPoint()
 
@@ -26,11 +26,6 @@ class BackgroundCell(
     var cellType: CellType = CellType.Null
 
     var isPlayerIncludeCell = false
-
-    val cellSize: Float
-        get() {
-            return square.size
-        }
 
     fun moveDisplayPoint(
         dx: Float = 0f,
