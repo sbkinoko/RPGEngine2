@@ -15,8 +15,10 @@ class MoveBackgroundUseCaseImpl(
         velocity: Velocity,
         fieldSquare: Square,
     ) {
-        repository.setBackground(
-            background = repository.backgroundStateFlow.value.map { rowArray ->
+        val background = repository
+            .backgroundStateFlow
+            .value
+            .map { rowArray ->
                 rowArray.map { bgCell ->
                     bgCell.apply {
                         moveDisplayPoint(
@@ -31,6 +33,9 @@ class MoveBackgroundUseCaseImpl(
                     }
                 }
             }
+
+        repository.setBackground(
+            background = background,
         )
     }
 
@@ -80,13 +85,15 @@ class MoveBackgroundUseCaseImpl(
         }
 
         repository.mapData.let {
+            val mapPoint = it.getMapPoint(
+                x = mapX,
+                y = mapY,
+            )
+            val cellType = it.getDataAt(mapPoint)
             return bgCell.copy(
-                mapPoint = it.getMapPoint(
-                    x = mapX,
-                    y = mapY,
-                )
+                mapPoint = mapPoint,
             ).apply {
-                cellType = it.getDataAt(mapPoint)
+                this.cellType = cellType
                 collisionList = collisionRepository.collisionData(
                     cellSize = cellSize,
                     square = square,
