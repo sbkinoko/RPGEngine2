@@ -74,9 +74,8 @@ class PlayerRepositoryImplTest : KoinTest {
         )
         playerCellRepository.playerIncludeCell = backGroundCell
 
-        // fixme サイズ以外の情報を変更するようにする
         val backGroundCell2 = BackgroundCell(
-            cellSize = 11f,
+            cellSize = 10f,
             x = 10f,
             y = 10f,
         )

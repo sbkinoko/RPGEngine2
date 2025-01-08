@@ -20,9 +20,9 @@ class ResetBackgroundPositionUseCaseImpl(
             // map情報を更新
             repository.mapData = mapData
 
-            val background: List<List<BackgroundCell>>
-            repository.apply {
-                background = List(allCellNum) { row ->
+            val background: List<List<BackgroundCell>> =
+                repository.run {
+                    List(allCellNum) { row ->
                     List(allCellNum) { col ->
                         BackgroundCell(
                             x = col * cellSize,
@@ -45,7 +45,9 @@ class ResetBackgroundPositionUseCaseImpl(
             }
 
             // 更新した情報を元に背景リセット
-            repository.setBackground(background = background)
+            repository.setBackground(
+                background = background,
+            )
         }
     }
 }
