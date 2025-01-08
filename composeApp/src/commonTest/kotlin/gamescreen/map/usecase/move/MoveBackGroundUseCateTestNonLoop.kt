@@ -134,7 +134,6 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
      */
     @Test
     fun checkLoop_Down() {
-
         runBlocking {
             val dy = 35f
             moveBackgroundUseCase.invoke(
@@ -149,6 +148,7 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
                     size = SIDE_LENGTH.toFloat(),
                 ),
             )
+
             delay(50)
 
             repository.getBackgroundAt(
@@ -165,6 +165,7 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
                         actual = topSide,
                     )
                 }
+
                 mapPoint.apply {
                     assertEquals(
                         expected = INITIAL_LEFT_TOP_MAP_X,
@@ -278,7 +279,6 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
                 }
             }
         }
-
     }
 
     companion object {
