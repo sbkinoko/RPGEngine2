@@ -37,6 +37,7 @@ class MoveBackgroundUseCaseImpl(
         )
     }
 
+    // fixme 命名を考える
     /**
      * 背景を移動させたときに必要ならループさせる
      */
