@@ -10,7 +10,6 @@ import gamescreen.map.repository.player.PlayerPositionRepositoryImpl
 import gamescreen.map.repository.playercell.PlayerCellRepository
 import gamescreen.map.repository.playercell.PlayerCellRepositoryImpl
 import gamescreen.map.usecase.GetScreenCenterUseCase
-import gamescreen.map.usecase.MoveBackgroundUseCase
 import gamescreen.map.usecase.PlayerMoveManageUseCase
 import gamescreen.map.usecase.PlayerMoveToUseCase
 import gamescreen.map.usecase.PlayerMoveUseCase
@@ -30,6 +29,8 @@ import gamescreen.map.usecase.event.actionevent.ActionEventUseCase
 import gamescreen.map.usecase.event.actionevent.ActionEventUseCaseImpl
 import gamescreen.map.usecase.event.cellevent.CellEventUseCase
 import gamescreen.map.usecase.event.cellevent.CellEventUseCaseImpl
+import gamescreen.map.usecase.move.MoveBackgroundUseCase
+import gamescreen.map.usecase.move.MoveBackgroundUseCaseImpl
 import gamescreen.map.usecase.resetposition.ResetBackgroundPositionUseCase
 import gamescreen.map.usecase.resetposition.ResetBackgroundPositionUseCaseImpl
 import gamescreen.map.usecase.roadmap.RoadMapUseCase
@@ -78,8 +79,8 @@ val ModuleMap = module {
         )
     }
 
-    single {
-        MoveBackgroundUseCase(
+    single<MoveBackgroundUseCase> {
+        MoveBackgroundUseCaseImpl(
             repository = get(),
             collisionRepository = get(),
         )

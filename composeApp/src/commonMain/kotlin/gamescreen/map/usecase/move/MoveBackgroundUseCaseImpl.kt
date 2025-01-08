@@ -1,4 +1,4 @@
-package gamescreen.map.usecase
+package gamescreen.map.usecase.move
 
 import gamescreen.map.domain.BackgroundCell
 import gamescreen.map.domain.Velocity
@@ -6,11 +6,12 @@ import gamescreen.map.domain.collision.Square
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.collision.CollisionRepository
 
-class MoveBackgroundUseCase(
+class MoveBackgroundUseCaseImpl(
     private val repository: BackgroundRepository,
     private val collisionRepository: CollisionRepository,
-) {
-    suspend operator fun invoke(
+) : MoveBackgroundUseCase {
+
+    override suspend operator fun invoke(
         velocity: Velocity,
         fieldSquare: Square,
     ) {

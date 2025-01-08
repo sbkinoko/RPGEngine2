@@ -1,4 +1,4 @@
-package gamescreen.map.usecase
+package gamescreen.map.usecase.move
 
 import gamescreen.map.ModuleMap
 import gamescreen.map.data.LoopTestMap
