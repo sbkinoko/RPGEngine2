@@ -20,17 +20,15 @@ class MoveBackgroundUseCaseImpl(
             .value
             .map { rowArray ->
                 rowArray.map { bgCell ->
-                    bgCell.apply {
-                        moveDisplayPoint(
-                            dx = velocity.x,
-                            dy = velocity.y,
-                        )
+                    bgCell.moveDisplayPoint(
+                        dx = velocity.x,
+                        dy = velocity.y,
+                    )
 
-                        loopBackgroundCell(
-                            bgCell = this@apply,
-                            fieldSquare = fieldSquare,
-                        )
-                    }
+                    loopBackgroundCell(
+                        bgCell = bgCell,
+                        fieldSquare = fieldSquare,
+                    )
                 }
             }
 
@@ -90,6 +88,7 @@ class MoveBackgroundUseCaseImpl(
                 y = mapY,
             )
             val cellType = it.getDataAt(mapPoint)
+
             return bgCell.copy(
                 mapPoint = mapPoint,
             ).apply {

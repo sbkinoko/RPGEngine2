@@ -14,15 +14,14 @@ data class BackgroundCell(
     val mapPoint: MapPoint,
     // fixme 他の値をvalにしたら修正する
     val rnd: Int = Random.nextInt(),
-) {
     val square: Square = Square(
         displayPoint = Point(
             x = x,
             y = y,
         ),
         size = cellSize,
-    )
-
+    ),
+) {
     var collisionList: List<CollisionDetectShape> = emptyList()
 
     var cellType: CellType = CellType.Null
@@ -37,6 +36,7 @@ data class BackgroundCell(
             dx = dx,
             dy = dy,
         )
+
         collisionList.forEach {
             (it as Square).move(
                 dx = dx,
