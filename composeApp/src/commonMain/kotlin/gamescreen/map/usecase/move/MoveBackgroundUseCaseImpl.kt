@@ -97,9 +97,8 @@ class MoveBackgroundUseCaseImpl(
                         square = bgCell.square,
                         cellType = cellType,
                     ),
-            ).apply {
-                this.cellType = cellType
-            }
+                cellType = cellType,
+            )
         }
     }
 }

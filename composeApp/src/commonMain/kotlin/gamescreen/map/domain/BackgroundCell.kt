@@ -13,6 +13,7 @@ data class BackgroundCell(
     val x: Float,
     val y: Float,
     val mapPoint: MapPoint,
+    // fixme cellTypeとsquareに完全に依存しているので不要
     val collisionList: List<CollisionDetectShape> = emptyList(),
     val square: Square = Square(
         point = Point(
@@ -21,11 +22,10 @@ data class BackgroundCell(
         ),
         size = cellSize,
     ),
+    val cellType: CellType = CellType.Null,
     // fixme 他の値をvalにしたら修正する
     val rnd: Int = Random.nextInt(),
 ) {
-    var cellType: CellType = CellType.Null
-
     var isPlayerIncludeCell = false
 
     fun moveDisplayPoint(
