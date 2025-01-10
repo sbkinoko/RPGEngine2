@@ -39,7 +39,9 @@ class ResetBackgroundPositionUseCaseImpl(
                                 y = y,
                                 cellSize = cellSize,
                                 mapPoint = mapPoint,
+                                cellType = cellType
                             ).run {
+                                // fixme collisionListがなくなったら消す
                                 this.copy(
                                     collisionList = collisionRepository
                                         .collisionData(
@@ -47,8 +49,6 @@ class ResetBackgroundPositionUseCaseImpl(
                                             cellType = cellType,
                                         )
                                 )
-                            }.apply {
-                                this.cellType = mapData.getDataAt(mapPoint)
                             }
                         }
                     }
