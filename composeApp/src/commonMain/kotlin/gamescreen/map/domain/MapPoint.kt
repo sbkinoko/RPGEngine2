@@ -1,6 +1,6 @@
 package gamescreen.map.domain
 
-class MapPoint(
-    var x: Int = 0,
-    var y: Int = 0,
+data class MapPoint(
+    val x: Int = 0,
+    val y: Int = 0,
 )

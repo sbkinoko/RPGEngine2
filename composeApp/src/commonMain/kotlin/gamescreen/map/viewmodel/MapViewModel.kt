@@ -181,7 +181,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
         updateEventCollision()
         checkEvent()
         // playerが入っているマスを設定
-        updateCellContainPlayerUseCase()
+        updateCellContainPlayerUseCase.invoke()
         //　そのマスに基づいてイベントを呼び出し
         playerCellRepository.playerIncludeCell?.let {
             cellEventUseCase.invoke(
