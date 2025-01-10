@@ -1,7 +1,7 @@
 package gamescreen.map.repository.player
 
 import gamescreen.map.ModuleMap
-import gamescreen.map.domain.Point
+import gamescreen.map.domain.DisplayPoint
 import gamescreen.map.domain.collision.Square
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Job
@@ -38,7 +38,7 @@ class PlayerPositionRepositoryImplTest : KoinTest {
     @Test
     fun setPlayerPositionTest() {
         val square = Square(
-            displayPoint = Point(
+            displayPoint = DisplayPoint(
                 x = 0f,
                 y = 0f
             ),
@@ -62,7 +62,7 @@ class PlayerPositionRepositoryImplTest : KoinTest {
     @Test
     fun checkFlow() {
         val square = Square(
-            displayPoint = Point(
+            displayPoint = DisplayPoint(
                 x = 0f,
                 y = 0f
             ),

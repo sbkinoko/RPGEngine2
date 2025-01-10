@@ -11,7 +11,7 @@ class SquareTest {
     @Test
     fun move() {
         Square(
-            displayPoint = Point(
+            displayPoint = DisplayPoint(
                 x = 0f,
                 y = 0f,
             ),
@@ -51,7 +51,7 @@ class SquareTest {
         val size = SIZE * 2
 
         Square(
-            displayPoint = Point(
+            displayPoint = DisplayPoint(
                 x = x,
                 y = y,
             ),
@@ -85,7 +85,7 @@ class SquareTest {
     @Test
     fun side() {
         val square = Square(
-            displayPoint = Point(
+            displayPoint = DisplayPoint(
                 x = 10f,
                 y = 15f,
             ),
@@ -232,12 +232,12 @@ class SquareTest {
     @Test
     fun isOverlapUp() {
         val baseSquare = Square(
-            displayPoint = Point(10f, 10f),
+            displayPoint = DisplayPoint(10f, 10f),
             size = 10f
         )
 
         val upSquare1 = Square(
-            displayPoint = Point(10f, 0f),
+            displayPoint = DisplayPoint(10f, 0f),
             size = 10f,
         )
         assertTrue { baseSquare.isOverlap(upSquare1) }
@@ -252,12 +252,12 @@ class SquareTest {
     @Test
     fun isOverlapBottom() {
         val baseSquare = Square(
-            displayPoint = Point(10f, 10f),
+            displayPoint = DisplayPoint(10f, 10f),
             size = 10f
         )
 
         val upSquare1 = Square(
-            displayPoint = Point(10f, 20f),
+            displayPoint = DisplayPoint(10f, 20f),
             size = 10f,
         )
         assertTrue { baseSquare.isOverlap(upSquare1) }
@@ -272,12 +272,12 @@ class SquareTest {
     @Test
     fun isOverlapLeft() {
         val baseSquare = Square(
-            displayPoint = Point(10f, 10f),
+            displayPoint = DisplayPoint(10f, 10f),
             size = 10f
         )
 
         val upSquare1 = Square(
-            displayPoint = Point(0f, 10f),
+            displayPoint = DisplayPoint(0f, 10f),
             size = 10f,
         )
         assertTrue { baseSquare.isOverlap(upSquare1) }
@@ -292,12 +292,12 @@ class SquareTest {
     @Test
     fun isOverlapRight() {
         val baseSquare = Square(
-            displayPoint = Point(10f, 10f),
+            displayPoint = DisplayPoint(10f, 10f),
             size = 10f
         )
 
         val upSquare1 = Square(
-            displayPoint = Point(20f, 10f),
+            displayPoint = DisplayPoint(20f, 10f),
             size = 10f,
         )
         assertTrue { baseSquare.isOverlap(upSquare1) }

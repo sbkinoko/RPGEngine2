@@ -1,6 +1,10 @@
 package gamescreen.map.domain
 
-class Point(
+// fixme data class にしたい
+/**
+ * 画面の表示状の座標
+ */
+class DisplayPoint(
     var x: Float = 0f,
     var y: Float = 0f,
 ) {

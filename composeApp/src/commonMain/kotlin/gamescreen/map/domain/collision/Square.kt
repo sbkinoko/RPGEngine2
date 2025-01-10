@@ -1,10 +1,10 @@
 package gamescreen.map.domain.collision
 
 import androidx.compose.ui.graphics.Path
-import gamescreen.map.domain.Point
+import gamescreen.map.domain.DisplayPoint
 
 open class Square(
-    val displayPoint: Point = Point(),
+    val displayPoint: DisplayPoint = DisplayPoint(),
     val size: Float,
 ) : CollisionDetectShape {
     constructor(
@@ -12,7 +12,7 @@ open class Square(
         y: Float,
         size: Float
     ) : this(
-        displayPoint = Point(
+        displayPoint = DisplayPoint(
             x = x,
             y = y,
         ),

@@ -12,18 +12,18 @@ data class BackgroundCell(
     val x: Float,
     val y: Float,
     val mapPoint: MapPoint,
-    // fixme 他の値をvalにしたら修正する
-    val rnd: Int = Random.nextInt(),
+    val collisionList: List<CollisionDetectShape> = emptyList(),
+    // fixme xyに完全に依存する形にする
     val square: Square = Square(
-        displayPoint = Point(
+        displayPoint = DisplayPoint(
             x = x,
             y = y,
         ),
         size = cellSize,
     ),
+    // fixme 他の値をvalにしたら修正する
+    val rnd: Int = Random.nextInt(),
 ) {
-    var collisionList: List<CollisionDetectShape> = emptyList()
-
     var cellType: CellType = CellType.Null
 
     var isPlayerIncludeCell = false

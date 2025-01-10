@@ -24,23 +24,31 @@ class ResetBackgroundPositionUseCaseImpl(
                 repository.run {
                     List(allCellNum) { row ->
                         List(allCellNum) { col ->
-                            val mapPont = mapData.getMapPoint(
+                            val mapPoint = mapData.getMapPoint(
                                 x = col - (cellNum - 1) / 2 + mapX,
                                 y = row - (cellNum - 1) / 2 + mapY,
                             )
+                            val cellType = mapData.getDataAt(mapPoint)
+
+                            // 表示状の座標
+                            val x = col * cellSize
+                            val y = row * cellSize
 
                             BackgroundCell(
-                                x = col * cellSize,
-                                y = row * cellSize,
+                                x = x,
+                                y = y,
                                 cellSize = cellSize,
-                                mapPoint = mapPont,
-                            ).apply {
-                                cellType = mapData.getDataAt(mapPoint)
-                                collisionList = collisionRepository.collisionData(
-                                    cellSize = cellSize,
-                                    square = square,
-                                    cellType = cellType,
+                                mapPoint = mapPoint,
+                            ).run {
+                                this.copy(
+                                    collisionList = collisionRepository
+                                        .collisionData(
+                                            square = square,
+                                            cellType = cellType,
+                                        )
                                 )
+                            }.apply {
+                                this.cellType = mapData.getDataAt(mapPoint)
                             }
                         }
                     }

@@ -6,9 +6,9 @@ import core.domain.ScreenType
 import core.domain.mapcell.CellType
 import core.repository.screentype.ScreenTypeRepository
 import gamescreen.map.data.LoopMap
+import gamescreen.map.domain.DisplayPoint
 import gamescreen.map.domain.Player
 import gamescreen.map.domain.PlayerDir
-import gamescreen.map.domain.Point
 import gamescreen.map.domain.Velocity
 import gamescreen.map.domain.collision.Square
 import gamescreen.map.domain.toDir
@@ -70,7 +70,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
     private var eventSquare: Square = Square(
         size = VIRTUAL_PLAYER_SIZE,
-        displayPoint = Point(
+        displayPoint = DisplayPoint(
             x = playerPositionRepository.getPlayerPosition().x,
             y = playerPositionRepository.getPlayerPosition().y
         ),
@@ -85,7 +85,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
     )
     val eventSquareFlow: StateFlow<Square> = mutableEventSquareFlow.asStateFlow()
 
-    private var tapPoint: Point? = null
+    private var tapPoint: DisplayPoint? = null
 
     private var playerMoveArea: Square = PlayerMoveSquare(
         screenSize = VIRTUAL_SCREEN_SIZE,
@@ -198,7 +198,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
             PlayerDir.UP -> {
                 eventSquare = Square(
                     size = VIRTUAL_PLAYER_SIZE,
-                    displayPoint = Point(
+                    displayPoint = DisplayPoint(
                         x = playerPositionRepository.getPlayerPosition().x,
                         y = playerPositionRepository.getPlayerPosition().y - VIRTUAL_PLAYER_SIZE / 2
                     ),
@@ -208,7 +208,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
             PlayerDir.DOWN -> {
                 eventSquare = Square(
                     size = VIRTUAL_PLAYER_SIZE,
-                    displayPoint = Point(
+                    displayPoint = DisplayPoint(
                         x = playerPositionRepository.getPlayerPosition().x,
                         y = playerPositionRepository.getPlayerPosition().y + VIRTUAL_PLAYER_SIZE / 2
                     ),
@@ -218,7 +218,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
             PlayerDir.LEFT -> {
                 eventSquare = Square(
                     size = VIRTUAL_PLAYER_SIZE,
-                    displayPoint = Point(
+                    displayPoint = DisplayPoint(
                         x = playerPositionRepository.getPlayerPosition().x - VIRTUAL_PLAYER_SIZE / 2,
                         y = playerPositionRepository.getPlayerPosition().y
                     ),
@@ -228,7 +228,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
             PlayerDir.RIGHT -> {
                 eventSquare = Square(
                     size = VIRTUAL_PLAYER_SIZE,
-                    displayPoint = Point(
+                    displayPoint = DisplayPoint(
                         x = playerPositionRepository.getPlayerPosition().x + VIRTUAL_PLAYER_SIZE / 2,
                         y = playerPositionRepository.getPlayerPosition().y
                     ),
@@ -253,7 +253,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
         x: Float,
         y: Float,
     ) {
-        tapPoint = Point(
+        tapPoint = DisplayPoint(
             x = x,
             y = y,
         )
@@ -262,7 +262,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
     /**
      * タップの位置に対して速度を計算
      */
-    private fun updateVelocityByTap(tapPoint: Point) {
+    private fun updateVelocityByTap(tapPoint: DisplayPoint) {
         val square = playerPositionRepository.getPlayerPosition()
         val dx = (tapPoint.x) - (square.x + player.size / 2)
         val dy = (tapPoint.y) - (square.y + player.size / 2)

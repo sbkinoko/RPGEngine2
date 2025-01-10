@@ -92,13 +92,13 @@ class MoveBackgroundUseCaseImpl(
 
             return bgCell.copy(
                 mapPoint = mapPoint,
+                collisionList = collisionRepository
+                    .collisionData(
+                        square = bgCell.square,
+                        cellType = cellType,
+                    ),
             ).apply {
                 this.cellType = cellType
-                collisionList = collisionRepository.collisionData(
-                    cellSize = cellSize,
-                    square = square,
-                    cellType = cellType,
-                )
             }
         }
     }
