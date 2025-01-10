@@ -2,7 +2,7 @@ package controller.domain
 
 import androidx.compose.ui.geometry.Offset
 import common.Normalizer
-import gamescreen.map.domain.DisplayPoint
+import gamescreen.map.domain.Point
 
 data class Stick(
     val areaRadius: Int,
@@ -14,7 +14,7 @@ data class Stick(
 ) {
     val isReleased: Boolean
         get() = tap.x == 0f && tap.y == 0f
-    private var tap: DisplayPoint
+    private var tap: Point
 
     val x: Int
         get() = tap.x.toInt()

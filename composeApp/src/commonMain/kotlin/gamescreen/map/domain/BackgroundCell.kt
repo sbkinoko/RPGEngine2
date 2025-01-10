@@ -15,7 +15,7 @@ data class BackgroundCell(
     val collisionList: List<CollisionDetectShape> = emptyList(),
     // fixme xyに完全に依存する形にする
     val square: Square = Square(
-        displayPoint = DisplayPoint(
+        point = Point(
             x = x,
             y = y,
         ),

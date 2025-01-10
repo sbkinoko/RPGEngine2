@@ -1,10 +1,11 @@
 package gamescreen.map.domain
 
 // fixme data class にしたい
+// fixme 表示用のクラスであることがわかる名前にする
 /**
  * 画面の表示状の座標
  */
-class DisplayPoint(
+class Point(
     var x: Float = 0f,
     var y: Float = 0f,
 ) {

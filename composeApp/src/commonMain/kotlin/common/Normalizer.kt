@@ -1,6 +1,6 @@
 package common
 
-import gamescreen.map.domain.DisplayPoint
+import gamescreen.map.domain.Point
 import kotlin.math.sqrt
 
 class Normalizer {
@@ -9,7 +9,7 @@ class Normalizer {
             x: Float,
             y: Float,
             max: Number,
-        ): DisplayPoint {
+        ): Point {
             val dz = sqrt(x * x + y * y)
             val fMax = max.toFloat()
 
@@ -20,7 +20,7 @@ class Normalizer {
                 1f
             }
 
-            return DisplayPoint(
+            return Point(
                 x = x * ratio,
                 y = y * ratio,
             )
