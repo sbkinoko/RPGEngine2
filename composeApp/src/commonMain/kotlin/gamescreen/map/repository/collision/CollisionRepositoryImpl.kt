@@ -10,38 +10,43 @@ class CollisionRepositoryImpl : CollisionRepository {
 
     override fun collisionData(
         cellType: CellType,
-        cellSize: Float,
         square: Square,
     ): List<CollisionDetectShape> {
+
+        // 当たり判定がないマスなら空を返す
         if (cellType !is CellType.CollisionCell) {
             return emptyList()
         }
 
         return when (cellType) {
             CellType.Water ->
-                listOf(
-                    Square(
-                        x = square.x,
-                        y = square.y,
-                        size = cellSize
+                square.run {
+                    listOf(
+                        Square(
+                            x = x,
+                            y = y,
+                            size = size
+                        )
                     )
-                )
+                }
 
             is CellType.Box ->
-                listOf(
-                    EventSquare(
-                        x = square.x + cellSize / 3,
-                        y = square.y + cellSize / 3,
-                        size = cellSize / 3,
-                        eventID = if (cellType.id.hasItem) {
-                            EventType.Box(
-                                id = cellType.id
-                            )
-                        } else {
-                            EventType.None
-                        }
+                square.run {
+                    listOf(
+                        EventSquare(
+                            x = x + size / 3,
+                            y = y + size / 3,
+                            size = size / 3,
+                            eventID = if (cellType.id.hasItem) {
+                                EventType.Box(
+                                    id = cellType.id
+                                )
+                            } else {
+                                EventType.None
+                            }
+                        )
                     )
-                )
+                }
         }
     }
 }

@@ -38,7 +38,7 @@ class PlayerPositionRepositoryImplTest : KoinTest {
     @Test
     fun setPlayerPositionTest() {
         val square = Square(
-            displayPoint = Point(
+            point = Point(
                 x = 0f,
                 y = 0f
             ),
@@ -62,7 +62,7 @@ class PlayerPositionRepositoryImplTest : KoinTest {
     @Test
     fun checkFlow() {
         val square = Square(
-            displayPoint = Point(
+            point = Point(
                 x = 0f,
                 y = 0f
             ),

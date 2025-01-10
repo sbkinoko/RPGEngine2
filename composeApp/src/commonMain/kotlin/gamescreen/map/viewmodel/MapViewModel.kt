@@ -70,7 +70,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
     private var eventSquare: Square = Square(
         size = VIRTUAL_PLAYER_SIZE,
-        displayPoint = Point(
+        point = Point(
             x = playerPositionRepository.getPlayerPosition().x,
             y = playerPositionRepository.getPlayerPosition().y
         ),
@@ -198,7 +198,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
             PlayerDir.UP -> {
                 eventSquare = Square(
                     size = VIRTUAL_PLAYER_SIZE,
-                    displayPoint = Point(
+                    point = Point(
                         x = playerPositionRepository.getPlayerPosition().x,
                         y = playerPositionRepository.getPlayerPosition().y - VIRTUAL_PLAYER_SIZE / 2
                     ),
@@ -208,7 +208,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
             PlayerDir.DOWN -> {
                 eventSquare = Square(
                     size = VIRTUAL_PLAYER_SIZE,
-                    displayPoint = Point(
+                    point = Point(
                         x = playerPositionRepository.getPlayerPosition().x,
                         y = playerPositionRepository.getPlayerPosition().y + VIRTUAL_PLAYER_SIZE / 2
                     ),
@@ -218,7 +218,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
             PlayerDir.LEFT -> {
                 eventSquare = Square(
                     size = VIRTUAL_PLAYER_SIZE,
-                    displayPoint = Point(
+                    point = Point(
                         x = playerPositionRepository.getPlayerPosition().x - VIRTUAL_PLAYER_SIZE / 2,
                         y = playerPositionRepository.getPlayerPosition().y
                     ),
@@ -228,7 +228,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
             PlayerDir.RIGHT -> {
                 eventSquare = Square(
                     size = VIRTUAL_PLAYER_SIZE,
-                    displayPoint = Point(
+                    point = Point(
                         x = playerPositionRepository.getPlayerPosition().x + VIRTUAL_PLAYER_SIZE / 2,
                         y = playerPositionRepository.getPlayerPosition().y
                     ),

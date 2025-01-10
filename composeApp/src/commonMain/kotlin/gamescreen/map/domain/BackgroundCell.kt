@@ -8,22 +8,22 @@ import kotlin.random.Random
 //fixme 背景画像の情報を持たせる
 //宝箱を開けたときにすぐに更新するため
 data class BackgroundCell(
+    // fixme squareに依存する形に修正する
     val cellSize: Float,
     val x: Float,
     val y: Float,
     val mapPoint: MapPoint,
-    // fixme 他の値をvalにしたら修正する
-    val rnd: Int = Random.nextInt(),
+    val collisionList: List<CollisionDetectShape> = emptyList(),
     val square: Square = Square(
-        displayPoint = Point(
+        point = Point(
             x = x,
             y = y,
         ),
         size = cellSize,
     ),
+    // fixme 他の値をvalにしたら修正する
+    val rnd: Int = Random.nextInt(),
 ) {
-    var collisionList: List<CollisionDetectShape> = emptyList()
-
     var cellType: CellType = CellType.Null
 
     var isPlayerIncludeCell = false
