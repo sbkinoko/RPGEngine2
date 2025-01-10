@@ -4,17 +4,22 @@ import gamescreen.map.domain.BackgroundCell
 
 class PlayerCellRepositoryImpl : PlayerCellRepository {
     private var prePlayerIncludeCell: BackgroundCell? = null
-    private var _playerIncludeCell: BackgroundCell? = null
 
-    override var playerIncludeCell: BackgroundCell?
+    override var playerIncludeCell: BackgroundCell? = null
         get() {
-            if (prePlayerIncludeCell == _playerIncludeCell) {
+            val preMapPoint = prePlayerIncludeCell?.mapPoint
+            val mapPoint = field?.mapPoint
+
+            //同一のマスないなら何も起こさない
+            if (preMapPoint == mapPoint) {
                 return null
             }
-            return _playerIncludeCell
+
+            //違うならなんでもいいから返す
+            return field
         }
         set(value) {
-            prePlayerIncludeCell = _playerIncludeCell
-            _playerIncludeCell = value
+            prePlayerIncludeCell = field
+            field = value
         }
 }

@@ -34,6 +34,9 @@ class PlayerRepositoryImplTest : KoinTest {
         playerCellRepository.playerIncludeCell = null
     }
 
+    /**
+     * 一回セットしただけのテスト
+     */
     @Test
     fun setOnce() {
         val backGroundCell = BackgroundCell(
@@ -50,6 +53,10 @@ class PlayerRepositoryImplTest : KoinTest {
         )
     }
 
+    /**
+     * 同一のマスをセットした場合のテスト
+     * 移動なし
+     */
     @Test
     fun setTwice() {
         val backGroundCell = BackgroundCell(
@@ -67,6 +74,35 @@ class PlayerRepositoryImplTest : KoinTest {
         )
     }
 
+    /**
+     * 同一のマスをセットした場合のテスト
+     * 移動あり
+     */
+    @Test
+    fun setSameCell() {
+        val backGroundCell = BackgroundCell(
+            cellSize = 10f,
+            x = 10f,
+            y = 10f,
+            mapPoint = MapPoint(),
+        )
+        playerCellRepository.playerIncludeCell = backGroundCell
+
+        val backGroundCell2 = backGroundCell.copy(
+            x = 11f,
+            y = 11f,
+        )
+        playerCellRepository.playerIncludeCell = backGroundCell2
+
+        assertEquals(
+            expected = null,
+            actual = playerCellRepository.playerIncludeCell
+        )
+    }
+
+    /**
+     * 違うマスをセットした場合のテスト
+     */
     @Test
     fun setTwoKind() {
         val backGroundCell = BackgroundCell(
@@ -81,7 +117,10 @@ class PlayerRepositoryImplTest : KoinTest {
             cellSize = 10f,
             x = 10f,
             y = 10f,
-            mapPoint = MapPoint(),
+            mapPoint = MapPoint(
+                x = 1,
+                y = 1,
+            ),
         )
         playerCellRepository.playerIncludeCell = backGroundCell2
 

@@ -10,13 +10,17 @@ class RoadMapUseCaseImpl(
     private val resetBackgroundPositionUseCase: ResetBackgroundPositionUseCase,
     private val updateCellContainPlayerUseCase: UpdateCellContainPlayerUseCase,
 ) : RoadMapUseCase {
-    override fun invoke(mapX: Int, mapY: Int, mapData: MapData) {
-        setPlayerCenterUseCase.invoke()
-        resetBackgroundPositionUseCase(
+    override fun invoke(
+        mapX: Int,
+        mapY: Int,
+        mapData: MapData,
+    ) {
+        resetBackgroundPositionUseCase.invoke(
             mapData = mapData,
             mapX = mapX,
             mapY = mapY,
         )
-        updateCellContainPlayerUseCase()
+        setPlayerCenterUseCase.invoke()
+        updateCellContainPlayerUseCase.invoke()
     }
 }
