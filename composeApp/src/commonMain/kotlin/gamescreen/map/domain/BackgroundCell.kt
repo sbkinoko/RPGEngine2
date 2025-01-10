@@ -25,9 +25,12 @@ data class BackgroundCell(
     val cellType: CellType = CellType.Null,
     // fixme 他の値をvalにしたら修正する
     val rnd: Int = Random.nextInt(),
+    // fixme PlayerCellRepositoryImpl修正したら削除する
+    // ほぼデバッグ用の変数
+    val isPlayerIncludeCell: Boolean = false
 ) {
-    var isPlayerIncludeCell = false
 
+    // fixme 拡張関数にする
     fun moveDisplayPoint(
         dx: Float = 0f,
         dy: Float = 0f,

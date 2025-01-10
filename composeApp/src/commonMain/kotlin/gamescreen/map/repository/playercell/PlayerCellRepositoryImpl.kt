@@ -5,6 +5,7 @@ import gamescreen.map.domain.BackgroundCell
 class PlayerCellRepositoryImpl : PlayerCellRepository {
     private var prePlayerIncludeCell: BackgroundCell? = null
 
+    // fixme イベント用のセルと今いるセルを分けて返すようにする
     override var playerIncludeCell: BackgroundCell? = null
         get() {
             val preMapPoint = prePlayerIncludeCell?.mapPoint
