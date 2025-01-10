@@ -30,7 +30,7 @@ class ResetBackgroundPositionUseCaseImpl(
                             )
                             val cellType = mapData.getDataAt(mapPoint)
 
-                            // 表示状の座標
+                            // 表示上の座標
                             val x = col * cellSize
                             val y = row * cellSize
 
