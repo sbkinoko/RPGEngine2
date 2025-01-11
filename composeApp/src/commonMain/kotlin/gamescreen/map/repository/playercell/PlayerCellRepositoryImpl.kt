@@ -6,6 +6,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 class PlayerCellRepositoryImpl : PlayerCellRepository {
+    private val mutablePlayerIncludeCellFlow =
+        MutableStateFlow<BackgroundCell?>(null)
+
+    override val playerIncludeCellFlow: StateFlow<BackgroundCell?>
+        get() = mutablePlayerIncludeCellFlow.asStateFlow()
+
     private var prePlayerIncludeCell: BackgroundCell? = null
 
     override var playerIncludeCell: BackgroundCell? = null
@@ -15,11 +21,6 @@ class PlayerCellRepositoryImpl : PlayerCellRepository {
             field = value
         }
 
-    private val mutablePlayerIncludeCellFlow =
-        MutableStateFlow<BackgroundCell?>(null)
-
-    override val playerIncludeCellFlow: StateFlow<BackgroundCell?>
-        get() = mutablePlayerIncludeCellFlow.asStateFlow()
 
     override val eventCell: BackgroundCell?
         get() {
