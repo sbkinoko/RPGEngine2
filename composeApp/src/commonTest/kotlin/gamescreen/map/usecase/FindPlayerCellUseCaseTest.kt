@@ -38,7 +38,7 @@ class FindPlayerCellUseCaseTest : KoinTest {
 
         backgroundRepository.cellNum = CELL_NUM
         backgroundRepository.screenSize = SIDE_LENGTH
-        resetBackgroundPositionUseCase(
+        resetBackgroundPositionUseCase.invoke(
             mapData = mapData,
             mapX = 1,
             mapY = 1,
