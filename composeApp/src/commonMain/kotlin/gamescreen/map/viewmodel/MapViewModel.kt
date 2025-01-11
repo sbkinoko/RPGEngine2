@@ -6,10 +6,12 @@ import core.domain.ScreenType
 import core.domain.mapcell.CellType
 import core.repository.screentype.ScreenTypeRepository
 import gamescreen.map.data.LoopMap
+import gamescreen.map.domain.BackgroundCell
 import gamescreen.map.domain.Player
 import gamescreen.map.domain.PlayerDir
 import gamescreen.map.domain.Point
 import gamescreen.map.domain.Velocity
+import gamescreen.map.domain.collision.CollisionDetectShape
 import gamescreen.map.domain.collision.Square
 import gamescreen.map.domain.toDir
 import gamescreen.map.layout.PlayerMoveSquare
@@ -24,6 +26,7 @@ import gamescreen.map.usecase.battledecidemonster.DecideBattleMonsterUseCase
 import gamescreen.map.usecase.battlestart.StartBattleUseCase
 import gamescreen.map.usecase.collision.geteventtype.GetEventTypeUseCase
 import gamescreen.map.usecase.collision.iscollided.IsCollidedUseCase
+import gamescreen.map.usecase.collision.list.GetCollisionListUseCase
 import gamescreen.map.usecase.event.actionevent.ActionEventUseCase
 import gamescreen.map.usecase.event.cellevent.CellEventUseCase
 import gamescreen.map.usecase.move.MoveBackgroundUseCase
@@ -54,6 +57,13 @@ class MapViewModel : ControllerCallback, KoinComponent {
     private val moveBackgroundUseCase: MoveBackgroundUseCase by inject()
     private val backgroundRepository: BackgroundRepository by inject()
     private val playerCellRepository: PlayerCellRepository by inject()
+
+    private val getCollisionListUseCase: GetCollisionListUseCase by inject()
+    fun getCollisionList(backgroundCell: BackgroundCell): List<CollisionDetectShape> {
+        return getCollisionListUseCase.invoke(
+            backgroundCell = backgroundCell,
+        )
+    }
 
     val playerIncludeCellFlow = playerCellRepository
         .playerIncludeCellFlow
