@@ -21,7 +21,6 @@ class PlayerCellRepositoryImpl : PlayerCellRepository {
             field = value
         }
 
-
     override val eventCell: BackgroundCell?
         get() {
             val preMapPoint = prePlayerIncludeCell?.mapPoint
@@ -35,5 +34,4 @@ class PlayerCellRepositoryImpl : PlayerCellRepository {
             //違うなら始めて全身が入ったのでイベント用に情報返却
             return playerIncludeCell
         }
-
 }
