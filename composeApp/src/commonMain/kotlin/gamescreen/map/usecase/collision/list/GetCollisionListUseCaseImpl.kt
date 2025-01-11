@@ -5,7 +5,7 @@ import gamescreen.map.domain.collision.CollisionDetectShape
 import gamescreen.map.repository.collision.CollisionRepository
 
 class GetCollisionListUseCaseImpl(
-    private val collisionRepository: CollisionRepository
+    private val collisionRepository: CollisionRepository,
 ) : GetCollisionListUseCase {
     override fun invoke(backgroundCell: BackgroundCell): List<CollisionDetectShape> {
         return backgroundCell.run {
