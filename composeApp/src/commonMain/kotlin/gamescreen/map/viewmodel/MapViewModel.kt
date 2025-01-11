@@ -55,6 +55,9 @@ class MapViewModel : ControllerCallback, KoinComponent {
     private val backgroundRepository: BackgroundRepository by inject()
     private val playerCellRepository: PlayerCellRepository by inject()
 
+    val playerIncludeCellFlow = playerCellRepository
+        .playerIncludeCellFlow
+
     private val updateCellContainPlayerUseCase: UpdateCellContainPlayerUseCase by inject()
 
     private val actionEventUseCase: ActionEventUseCase by inject()
@@ -183,7 +186,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
         // playerが入っているマスを設定
         updateCellContainPlayerUseCase.invoke()
         //　そのマスに基づいてイベントを呼び出し
-        playerCellRepository.playerIncludeCell?.let {
+        playerCellRepository.eventCell?.let {
             cellEventUseCase.invoke(
                 it.cellType,
             )

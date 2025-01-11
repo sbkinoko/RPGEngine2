@@ -31,6 +31,10 @@ fun Background(
         .backgroundCells
         .collectAsState()
 
+    val eventCell by mapViewModel
+        .playerIncludeCellFlow
+        .collectAsState()
+
     val imageBinder = ImageBinder()
 
     // fixme 背景が動いてない場合はリロードしない
@@ -54,7 +58,7 @@ fun Background(
                             )
                             .border(
                                 width = 1.dp,
-                                color = if (isPlayerIncludeCell) {
+                                color = if (this == eventCell) {
                                     Colors.PlayerIncludeCell
                                 } else {
                                     Colors.BackgroundCellBorder

@@ -38,7 +38,7 @@ class FindPlayerCellUseCaseTest : KoinTest {
 
         backgroundRepository.cellNum = CELL_NUM
         backgroundRepository.screenSize = SIDE_LENGTH
-        resetBackgroundPositionUseCase(
+        resetBackgroundPositionUseCase.invoke(
             mapData = mapData,
             mapX = 1,
             mapY = 1,
@@ -62,15 +62,15 @@ class FindPlayerCellUseCaseTest : KoinTest {
             )
 
             // 最初に全身が入ってるからnullじゃない
-            updateCellContainPlayerUseCase()
+            updateCellContainPlayerUseCase.invoke()
             assertTrue {
-                playerCellRepository.playerIncludeCell != null
+                playerCellRepository.eventCell != null
             }
 
             // 前回のマスから動いてないからnull
-            updateCellContainPlayerUseCase()
+            updateCellContainPlayerUseCase.invoke()
             assertTrue {
-                playerCellRepository.playerIncludeCell == null
+                playerCellRepository.eventCell == null
             }
 
             // 全身が入ってないから動いたけどnull
@@ -81,9 +81,9 @@ class FindPlayerCellUseCaseTest : KoinTest {
                     size = 5f,
                 )
             )
-            updateCellContainPlayerUseCase()
+            updateCellContainPlayerUseCase.invoke()
             assertTrue {
-                playerCellRepository.playerIncludeCell == null
+                playerCellRepository.eventCell == null
             }
 
             // 全身が入ったからnullじゃない
@@ -94,9 +94,9 @@ class FindPlayerCellUseCaseTest : KoinTest {
                     size = 5f,
                 )
             )
-            updateCellContainPlayerUseCase()
+            updateCellContainPlayerUseCase.invoke()
             assertTrue {
-                playerCellRepository.playerIncludeCell != null
+                playerCellRepository.eventCell != null
             }
         }
     }
