@@ -49,9 +49,6 @@ class GetCollisionListUseCaseImplTest {
         cellTypeValue: CellType,
     ) {
         val backgroundCell = BackgroundCell(
-            x = 0f,
-            y = 0f,
-            cellSize = 10f,
             cellType = cellTypeValue,
             mapPoint = MapPoint(),
             square = squareValue,

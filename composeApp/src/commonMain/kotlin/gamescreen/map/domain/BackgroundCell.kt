@@ -2,26 +2,13 @@ package gamescreen.map.domain
 
 import core.domain.mapcell.CellType
 import gamescreen.map.domain.collision.Square
-import kotlin.random.Random
 
 //fixme 背景画像の情報を持たせる
 //宝箱を開けたときにすぐに更新するため
 data class BackgroundCell(
-    // fixme squareに依存する形に修正する
-    val cellSize: Float,
-    val x: Float,
-    val y: Float,
     val mapPoint: MapPoint,
-    val square: Square = Square(
-        point = Point(
-            x = x,
-            y = y,
-        ),
-        size = cellSize,
-    ),
+    val square: Square,
     val cellType: CellType = CellType.Null,
-    // fixme 他の値をvalにしたら修正する
-    val rnd: Int = Random.nextInt(),
 )
 
 
@@ -31,9 +18,16 @@ data class BackgroundCell(
 fun BackgroundCell.moveDisplayPoint(
     dx: Float = 0f,
     dy: Float = 0f,
-) {
+): BackgroundCell {
     square.move(
         dx = dx,
         dy = dy,
+    )
+    return this.copy(
+        square = Square(
+            x = square.x,
+            y = square.y,
+            size = square.size
+        )
     )
 }

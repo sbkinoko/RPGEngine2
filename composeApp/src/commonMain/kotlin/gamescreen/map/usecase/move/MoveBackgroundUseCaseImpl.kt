@@ -21,13 +21,13 @@ class MoveBackgroundUseCaseImpl(
             .value
             .map { rowArray ->
                 rowArray.map { bgCell ->
-                    bgCell.moveDisplayPoint(
+                    val moved = bgCell.moveDisplayPoint(
                         dx = velocity.x,
                         dy = velocity.y,
                     )
 
                     loopBackgroundCell(
-                        bgCell = bgCell,
+                        bgCell = moved,
                         fieldSquare = fieldSquare,
                     )
                 }
@@ -50,37 +50,37 @@ class MoveBackgroundUseCaseImpl(
         val allCellNum = repository.allCellNum
         val diffOfLoop = allCellNum * repository.cellSize
 
+        //表示の移動量
+        val dx: Float
         //移動後のマップのx座標
-        val mapX: Int = bgCell.run {
+        val mapX: Int
+        bgCell.apply {
             if (square.isRight(fieldSquare)) {
-                square.move(
-                    dx = -diffOfLoop,
-                )
-                mapPoint.x - allCellNum
+                dx = -diffOfLoop
+                mapX = mapPoint.x - allCellNum
             } else if (square.isLeft(fieldSquare)) {
-                moveDisplayPoint(
-                    dx = diffOfLoop,
-                )
-                mapPoint.x + allCellNum
+                dx = diffOfLoop
+                mapX = mapPoint.x + allCellNum
             } else {
-                mapPoint.x
+                dx = 0f
+                mapX = mapPoint.x
             }
         }
 
+        //表示の移動量
+        val dy: Float
         //移動後のマップのy座標
-        val mapY: Int = bgCell.run {
+        val mapY: Int
+        bgCell.apply {
             if (square.isDown(fieldSquare)) {
-                moveDisplayPoint(
-                    dy = -diffOfLoop,
-                )
-                mapPoint.y - allCellNum
+                dy = -diffOfLoop
+                mapY = mapPoint.y - allCellNum
             } else if (square.isUp(fieldSquare)) {
-                moveDisplayPoint(
-                    dy = diffOfLoop,
-                )
-                mapPoint.y + allCellNum
+                dy = diffOfLoop
+                mapY = mapPoint.y + allCellNum
             } else {
-                mapPoint.y
+                dy = 0f
+                mapY = mapPoint.y
             }
         }
 
@@ -94,6 +94,9 @@ class MoveBackgroundUseCaseImpl(
             return bgCell.copy(
                 mapPoint = mapPoint,
                 cellType = cellType,
+            ).moveDisplayPoint(
+                dx = dx,
+                dy = dy,
             )
         }
     }

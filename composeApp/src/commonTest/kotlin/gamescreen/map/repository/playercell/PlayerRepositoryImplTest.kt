@@ -3,6 +3,7 @@ package gamescreen.map.repository.playercell
 import gamescreen.map.ModuleMap
 import gamescreen.map.domain.BackgroundCell
 import gamescreen.map.domain.MapPoint
+import gamescreen.map.domain.collision.Square
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -17,6 +18,15 @@ import kotlin.test.assertEquals
 
 class PlayerRepositoryImplTest : KoinTest {
     private val playerCellRepository: PlayerCellRepository by inject()
+
+    private val backgroundCell = BackgroundCell(
+        square = Square(
+            x = 10f,
+            y = 10f,
+            size = 10f,
+        ),
+        mapPoint = MapPoint(),
+    )
 
     @BeforeTest
     fun beforeTest() {
@@ -40,25 +50,19 @@ class PlayerRepositoryImplTest : KoinTest {
     @Test
     fun checkFlow() {
         runBlocking {
-            val backGroundCell = BackgroundCell(
-                cellSize = 10f,
-                x = 10f,
-                y = 10f,
-                mapPoint = MapPoint(),
-            )
             var count = 0
 
             val collectJob = launch {
                 playerCellRepository.playerIncludeCellFlow.collect {
                     count++
                     assertEquals(
-                        expected = backGroundCell,
+                        expected = backgroundCell,
                         actual = it,
                     )
                 }
             }
 
-            playerCellRepository.playerIncludeCell = backGroundCell
+            playerCellRepository.playerIncludeCell = backgroundCell
 
             delay(50)
 
@@ -71,26 +75,22 @@ class PlayerRepositoryImplTest : KoinTest {
         }
     }
 
+
     /**
      * 一回セットしただけのテスト
      */
     @Test
     fun setOnce() {
-        val backGroundCell = BackgroundCell(
-            cellSize = 10f,
-            x = 10f,
-            y = 10f,
-            mapPoint = MapPoint(),
-        )
-        playerCellRepository.playerIncludeCell = backGroundCell
+
+        playerCellRepository.playerIncludeCell = backgroundCell
 
         assertEquals(
-            expected = backGroundCell,
+            expected = backgroundCell,
             actual = playerCellRepository.playerIncludeCell,
         )
 
         assertEquals(
-            expected = backGroundCell,
+            expected = backgroundCell,
             actual = playerCellRepository.eventCell,
         )
     }
@@ -101,14 +101,8 @@ class PlayerRepositoryImplTest : KoinTest {
      */
     @Test
     fun setTwice() {
-        val backGroundCell = BackgroundCell(
-            cellSize = 10f,
-            x = 10f,
-            y = 10f,
-            mapPoint = MapPoint(),
-        )
-        playerCellRepository.playerIncludeCell = backGroundCell
-        playerCellRepository.playerIncludeCell = backGroundCell
+        playerCellRepository.playerIncludeCell = backgroundCell
+        playerCellRepository.playerIncludeCell = backgroundCell
 
         assertEquals(
             expected = null,
@@ -116,7 +110,7 @@ class PlayerRepositoryImplTest : KoinTest {
         )
 
         assertEquals(
-            expected = backGroundCell,
+            expected = backgroundCell,
             actual = playerCellRepository.playerIncludeCell,
         )
     }
@@ -127,17 +121,14 @@ class PlayerRepositoryImplTest : KoinTest {
      */
     @Test
     fun setSameCell() {
-        val backGroundCell = BackgroundCell(
-            cellSize = 10f,
-            x = 10f,
-            y = 10f,
-            mapPoint = MapPoint(),
-        )
-        playerCellRepository.playerIncludeCell = backGroundCell
+        playerCellRepository.playerIncludeCell = backgroundCell
 
-        val backGroundCell2 = backGroundCell.copy(
-            x = 11f,
-            y = 11f,
+        val backGroundCell2 = backgroundCell.copy(
+            square = Square(
+                x = 11f,
+                y = 11f,
+                size = 10f,
+            )
         )
         playerCellRepository.playerIncludeCell = backGroundCell2
 
@@ -157,18 +148,9 @@ class PlayerRepositoryImplTest : KoinTest {
      */
     @Test
     fun setTwoKind() {
-        val backGroundCell = BackgroundCell(
-            cellSize = 10f,
-            x = 10f,
-            y = 10f,
-            mapPoint = MapPoint(),
-        )
-        playerCellRepository.playerIncludeCell = backGroundCell
+        playerCellRepository.playerIncludeCell = backgroundCell
 
-        val backGroundCell2 = BackgroundCell(
-            cellSize = 10f,
-            x = 10f,
-            y = 10f,
+        val backGroundCell2 = backgroundCell.copy(
             mapPoint = MapPoint(
                 x = 1,
                 y = 1,
