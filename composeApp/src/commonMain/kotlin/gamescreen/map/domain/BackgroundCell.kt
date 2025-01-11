@@ -1,7 +1,6 @@
 package gamescreen.map.domain
 
 import core.domain.mapcell.CellType
-import gamescreen.map.domain.collision.CollisionDetectShape
 import gamescreen.map.domain.collision.Square
 import kotlin.random.Random
 
@@ -13,8 +12,6 @@ data class BackgroundCell(
     val x: Float,
     val y: Float,
     val mapPoint: MapPoint,
-    // fixme cellTypeとsquareに完全に依存しているので不要
-    val collisionList: List<CollisionDetectShape> = emptyList(),
     val square: Square = Square(
         point = Point(
             x = x,
@@ -39,11 +36,4 @@ fun BackgroundCell.moveDisplayPoint(
         dx = dx,
         dy = dy,
     )
-
-    collisionList.forEach {
-        (it as Square).move(
-            dx = dx,
-            dy = dy,
-        )
-    }
 }

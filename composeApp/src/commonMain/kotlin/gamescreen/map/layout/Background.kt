@@ -102,6 +102,10 @@ fun Background(
                         )
                     }
 
+                    val collisionList = mapViewModel
+                        .getCollisionList(
+                            backgroundCell = this,
+                        )
                     collisionList.forEach {
                         Canvas(
                             modifier = Modifier

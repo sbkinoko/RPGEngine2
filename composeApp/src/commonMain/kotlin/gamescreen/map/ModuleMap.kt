@@ -23,6 +23,8 @@ import gamescreen.map.usecase.collision.geteventtype.GetEventTypeUseCase
 import gamescreen.map.usecase.collision.geteventtype.GetEventTypeUseCaseImpl
 import gamescreen.map.usecase.collision.iscollided.IsCollidedUseCase
 import gamescreen.map.usecase.collision.iscollided.IsCollidedUseCaseImpl
+import gamescreen.map.usecase.collision.list.GetCollisionListUseCase
+import gamescreen.map.usecase.collision.list.GetCollisionListUseCaseImpl
 import gamescreen.map.usecase.decideconnectcype.DecideConnectTypeUseCase
 import gamescreen.map.usecase.decideconnectcype.DecideConnectTypeUseCaseImpl
 import gamescreen.map.usecase.event.actionevent.ActionEventUseCase
@@ -120,15 +122,23 @@ val ModuleMap = module {
         )
     }
 
+    single<GetCollisionListUseCase> {
+        GetCollisionListUseCaseImpl(
+            collisionRepository = get(),
+        )
+    }
+
     single<IsCollidedUseCase> {
         IsCollidedUseCaseImpl(
             backgroundRepository = get(),
+            getCollisionListUseCase = get(),
         )
     }
 
     single<GetEventTypeUseCase> {
         GetEventTypeUseCaseImpl(
             backgroundRepository = get(),
+            getCollisionListUseCase = get(),
         )
     }
 
