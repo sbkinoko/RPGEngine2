@@ -28,23 +28,25 @@ data class BackgroundCell(
     // fixme PlayerCellRepositoryImpl修正したら削除する
     // ほぼデバッグ用の変数
     val isPlayerIncludeCell: Boolean = false
-) {
+)
 
-    // fixme 拡張関数にする
-    fun moveDisplayPoint(
-        dx: Float = 0f,
-        dy: Float = 0f,
-    ) {
-        square.move(
+
+/**
+ * 背景マスを移動する関数
+ */
+fun BackgroundCell.moveDisplayPoint(
+    dx: Float = 0f,
+    dy: Float = 0f,
+) {
+    square.move(
+        dx = dx,
+        dy = dy,
+    )
+
+    collisionList.forEach {
+        (it as Square).move(
             dx = dx,
             dy = dy,
         )
-
-        collisionList.forEach {
-            (it as Square).move(
-                dx = dx,
-                dy = dy,
-            )
-        }
     }
 }
