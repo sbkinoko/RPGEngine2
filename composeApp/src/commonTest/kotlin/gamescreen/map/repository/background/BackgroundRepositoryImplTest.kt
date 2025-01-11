@@ -6,6 +6,7 @@ import gamescreen.map.data.LoopTestMap
 import gamescreen.map.data.NonLoopTestMap
 import gamescreen.map.domain.BackgroundCell
 import gamescreen.map.domain.MapPoint
+import gamescreen.map.domain.collision.Square
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -28,10 +29,12 @@ class BackgroundRepositoryImplTest : KoinTest {
     { row ->
         List(3) { col ->
             BackgroundCell(
-                cellSize = 10f,
-                x = row * 10f,
-                y = col * 10f,
-                mapPoint = MapPoint()
+                square = Square(
+                    x = row * 10f,
+                    y = col * 10f,
+                    size = 10f,
+                ),
+                mapPoint = MapPoint(),
             )
         }
     }
@@ -40,7 +43,7 @@ class BackgroundRepositoryImplTest : KoinTest {
     fun beforeTest() {
         startKoin {
             modules(
-                ModuleMap
+                ModuleMap,
             )
         }
     }

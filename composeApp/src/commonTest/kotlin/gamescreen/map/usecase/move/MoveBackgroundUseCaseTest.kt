@@ -56,11 +56,6 @@ class MoveBackgroundUseCaseTest : KoinTest {
             y = 0,
         )
 
-        assertEquals(
-            expected = 10f,
-            actual = cell1.cellSize,
-        )
-
         cell1.square.apply {
             assertEquals(
                 expected = 0f,
@@ -121,7 +116,9 @@ class MoveBackgroundUseCaseTest : KoinTest {
                     size = SIDE_LENGTH.toFloat(),
                 ),
             )
+
             delay(50)
+
             repository.getBackgroundAt(
                 x = 0,
                 y = 0,

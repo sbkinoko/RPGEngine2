@@ -2,6 +2,7 @@ package gamescreen.map.usecase.resetposition
 
 import gamescreen.map.domain.BackgroundCell
 import gamescreen.map.domain.MapData
+import gamescreen.map.domain.collision.Square
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.collision.CollisionRepository
 import kotlinx.coroutines.runBlocking
@@ -33,11 +34,14 @@ class ResetBackgroundPositionUseCaseImpl(
                             // 表示上の座標
                             val x = col * cellSize
                             val y = row * cellSize
-
-                            BackgroundCell(
+                            val square = Square(
                                 x = x,
                                 y = y,
-                                cellSize = cellSize,
+                                size = cellSize,
+                            )
+
+                            BackgroundCell(
+                                square = square,
                                 mapPoint = mapPoint,
                                 cellType = cellType
                             )

@@ -50,7 +50,7 @@ fun Background(
                     Box(
                         modifier = Modifier
                             .size(
-                                (cellSize * screenRatio).pxToDp()
+                                (square.size * screenRatio).pxToDp()
                             )
                             .offset(
                                 x = (square.leftSide * screenRatio).pxToDp(),
@@ -110,7 +110,7 @@ fun Background(
                         Canvas(
                             modifier = Modifier
                                 .size(
-                                    (cellSize * screenRatio).pxToDp()
+                                    (square.size * screenRatio).pxToDp()
                                 )
                                 .offset(
                                     x = (it.baseX * screenRatio).pxToDp(),
