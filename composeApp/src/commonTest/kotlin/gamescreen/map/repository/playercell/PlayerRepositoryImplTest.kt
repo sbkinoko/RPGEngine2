@@ -3,6 +3,9 @@ package gamescreen.map.repository.playercell
 import gamescreen.map.ModuleMap
 import gamescreen.map.domain.BackgroundCell
 import gamescreen.map.domain.MapPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
@@ -32,6 +35,40 @@ class PlayerRepositoryImplTest : KoinTest {
     @Test
     fun initial() {
         playerCellRepository.playerIncludeCell = null
+    }
+
+    @Test
+    fun checkFlow() {
+        runBlocking {
+            val backGroundCell = BackgroundCell(
+                cellSize = 10f,
+                x = 10f,
+                y = 10f,
+                mapPoint = MapPoint(),
+            )
+            var count = 0
+
+            val collectJob = launch {
+                playerCellRepository.playerIncludeCellFlow.collect {
+                    count++
+                    assertEquals(
+                        expected = backGroundCell,
+                        actual = it,
+                    )
+                }
+            }
+
+            playerCellRepository.playerIncludeCell = backGroundCell
+
+            delay(50)
+
+            assertEquals(
+                expected = 1,
+                actual = count,
+            )
+
+            collectJob.cancel()
+        }
     }
 
     /**
