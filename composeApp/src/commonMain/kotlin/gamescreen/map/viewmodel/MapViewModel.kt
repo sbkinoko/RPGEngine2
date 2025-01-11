@@ -11,7 +11,6 @@ import gamescreen.map.domain.Player
 import gamescreen.map.domain.PlayerDir
 import gamescreen.map.domain.Point
 import gamescreen.map.domain.Velocity
-import gamescreen.map.domain.collision.CollisionDetectShape
 import gamescreen.map.domain.collision.Square
 import gamescreen.map.domain.toDir
 import gamescreen.map.layout.PlayerMoveSquare
@@ -59,11 +58,11 @@ class MapViewModel : ControllerCallback, KoinComponent {
     private val playerCellRepository: PlayerCellRepository by inject()
 
     private val getCollisionListUseCase: GetCollisionListUseCase by inject()
-    fun getCollisionList(backgroundCell: BackgroundCell): List<CollisionDetectShape> {
-        return getCollisionListUseCase.invoke(
+    fun getCollisionList(backgroundCell: BackgroundCell) =
+        getCollisionListUseCase.invoke(
             backgroundCell = backgroundCell,
         )
-    }
+
 
     val playerIncludeCellFlow = playerCellRepository
         .playerIncludeCellFlow
