@@ -49,7 +49,12 @@ class PlayerRepositoryImplTest : KoinTest {
 
         assertEquals(
             expected = backGroundCell,
-            actual = playerCellRepository.playerIncludeCell
+            actual = playerCellRepository.playerIncludeCell,
+        )
+
+        assertEquals(
+            expected = backGroundCell,
+            actual = playerCellRepository.eventCell,
         )
     }
 
@@ -70,7 +75,12 @@ class PlayerRepositoryImplTest : KoinTest {
 
         assertEquals(
             expected = null,
-            actual = playerCellRepository.playerIncludeCell
+            actual = playerCellRepository.eventCell,
+        )
+
+        assertEquals(
+            expected = backGroundCell,
+            actual = playerCellRepository.playerIncludeCell,
         )
     }
 
@@ -96,7 +106,12 @@ class PlayerRepositoryImplTest : KoinTest {
 
         assertEquals(
             expected = null,
-            actual = playerCellRepository.playerIncludeCell
+            actual = playerCellRepository.eventCell,
+        )
+
+        assertEquals(
+            expected = backGroundCell2,
+            actual = playerCellRepository.playerIncludeCell,
         )
     }
 
@@ -127,6 +142,11 @@ class PlayerRepositoryImplTest : KoinTest {
         assertEquals(
             expected = backGroundCell2,
             actual = playerCellRepository.playerIncludeCell
+        )
+
+        assertEquals(
+            expected = backGroundCell2,
+            actual = playerCellRepository.eventCell,
         )
     }
 }

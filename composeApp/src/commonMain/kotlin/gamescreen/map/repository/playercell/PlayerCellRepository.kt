@@ -4,4 +4,6 @@ import gamescreen.map.domain.BackgroundCell
 
 interface PlayerCellRepository {
     var playerIncludeCell: BackgroundCell?
+
+    val eventCell: BackgroundCell?
 }
