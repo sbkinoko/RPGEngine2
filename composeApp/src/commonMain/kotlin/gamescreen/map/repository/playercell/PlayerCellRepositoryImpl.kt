@@ -1,6 +1,9 @@
 package gamescreen.map.repository.playercell
 
 import gamescreen.map.domain.BackgroundCell
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class PlayerCellRepositoryImpl : PlayerCellRepository {
     private var prePlayerIncludeCell: BackgroundCell? = null
@@ -8,8 +11,15 @@ class PlayerCellRepositoryImpl : PlayerCellRepository {
     override var playerIncludeCell: BackgroundCell? = null
         set(value) {
             prePlayerIncludeCell = field
+            mutablePlayerIncludeCellFlow.value = value
             field = value
         }
+
+    private val mutablePlayerIncludeCellFlow =
+        MutableStateFlow<BackgroundCell?>(null)
+
+    override val playerIncludeCellFlow: StateFlow<BackgroundCell?>
+        get() = mutablePlayerIncludeCellFlow.asStateFlow()
 
     override val eventCell: BackgroundCell?
         get() {
@@ -24,4 +34,5 @@ class PlayerCellRepositoryImpl : PlayerCellRepository {
             //違うなら始めて全身が入ったのでイベント用に情報返却
             return playerIncludeCell
         }
+
 }

@@ -55,6 +55,9 @@ class MapViewModel : ControllerCallback, KoinComponent {
     private val backgroundRepository: BackgroundRepository by inject()
     private val playerCellRepository: PlayerCellRepository by inject()
 
+    val playerIncludeCellFlow = playerCellRepository
+        .playerIncludeCellFlow
+
     private val updateCellContainPlayerUseCase: UpdateCellContainPlayerUseCase by inject()
 
     private val actionEventUseCase: ActionEventUseCase by inject()
