@@ -4,12 +4,10 @@ import gamescreen.map.domain.BackgroundCell
 import gamescreen.map.domain.MapData
 import gamescreen.map.domain.collision.Square
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
-import gamescreen.map.repository.collision.CollisionRepository
 import kotlinx.coroutines.runBlocking
 
 class ResetBackgroundPositionUseCaseImpl(
     private val repository: BackgroundRepository,
-    private val collisionRepository: CollisionRepository,
 ) : ResetBackgroundPositionUseCase {
 
     override operator fun invoke(

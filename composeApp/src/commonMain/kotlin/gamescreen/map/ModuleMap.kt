@@ -90,14 +90,12 @@ val ModuleMap = module {
     single<MoveBackgroundUseCase> {
         MoveBackgroundUseCaseImpl(
             repository = get(),
-            collisionRepository = get(),
         )
     }
 
     single<ResetBackgroundPositionUseCase> {
         ResetBackgroundPositionUseCaseImpl(
             repository = get(),
-            collisionRepository = get(),
         )
     }
 
