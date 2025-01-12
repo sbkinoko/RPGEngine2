@@ -22,9 +22,6 @@ class TextRepositoryImpl : TextRepository {
     override val callBack: () -> Unit
         get() = nowTextData?.callBack ?: {}
 
-    override val needPop: Boolean
-        get() = nowTextData?.needPop ?: true
-
     override fun pop() {
         // これ以上表示するものがなければ空にする
         if (textBoxDataList.isEmpty()) {

@@ -19,9 +19,7 @@ class TextViewModel : SelectableChildViewModel<TextBoxData?>() {
 
     override fun goNext() {
         callBack()
-        if (textRepository.needPop) {
-            textRepository.pop()
-        }
+        textRepository.pop()
     }
 
     // スティック操作に反応しないように1にする
