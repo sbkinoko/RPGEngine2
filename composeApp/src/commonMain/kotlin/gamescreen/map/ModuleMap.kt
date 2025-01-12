@@ -166,6 +166,7 @@ val ModuleMap = module {
     single<ActionEventUseCase> {
         ActionEventUseCaseImpl(
             textRepository = get(),
+            choiceRepository = get(),
             addToolUseCase = get(),
         )
     }
