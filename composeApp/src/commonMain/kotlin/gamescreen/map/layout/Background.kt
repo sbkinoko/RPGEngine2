@@ -29,9 +29,11 @@ fun Background(
 ) {
     val backgroundCell: List<List<BackgroundCell>> by mapViewModel
         .backgroundCells
-        .collectAsState(
-            listOf()
-        )
+        .collectAsState()
+
+    val eventCell by mapViewModel
+        .playerIncludeCellFlow
+        .collectAsState()
 
     val npc by mapViewModel
         .npcFlow
@@ -52,7 +54,7 @@ fun Background(
                     Box(
                         modifier = Modifier
                             .size(
-                                (cellSize * screenRatio).pxToDp()
+                                (square.size * screenRatio).pxToDp()
                             )
                             .offset(
                                 x = (square.leftSide * screenRatio).pxToDp(),
@@ -60,7 +62,7 @@ fun Background(
                             )
                             .border(
                                 width = 1.dp,
-                                color = if (isPlayerIncludeCell) {
+                                color = if (this == eventCell) {
                                     Colors.PlayerIncludeCell
                                 } else {
                                     Colors.BackgroundCellBorder
@@ -104,11 +106,15 @@ fun Background(
                         )
                     }
 
+                    val collisionList = mapViewModel
+                        .getCollisionList(
+                            backgroundCell = this,
+                        )
                     collisionList.forEach {
                         Canvas(
                             modifier = Modifier
                                 .size(
-                                    (cellSize * screenRatio).pxToDp()
+                                    (square.size * screenRatio).pxToDp()
                                 )
                                 .offset(
                                     x = (it.baseX * screenRatio).pxToDp(),
@@ -129,7 +135,7 @@ fun Background(
                         Image(
                             modifier = Modifier
                                 .size(
-                                    (cellSize * screenRatio).pxToDp()
+                                    (it.size * screenRatio).pxToDp()
                                 )
                                 .offset(
                                     x = (it.baseX * screenRatio).pxToDp(),

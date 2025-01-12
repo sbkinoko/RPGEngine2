@@ -1,4 +1,4 @@
-package gamescreen.map.usecase
+package gamescreen.map.usecase.move
 
 import gamescreen.map.ModuleMap
 import gamescreen.map.data.LoopTestMap
@@ -8,6 +8,7 @@ import gamescreen.map.domain.collision.Square
 import gamescreen.map.manager.CELL_NUM
 import gamescreen.map.manager.SIDE_LENGTH
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
+import gamescreen.map.usecase.resetposition.ResetBackgroundPositionUseCase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.koin.core.context.startKoin
@@ -123,7 +124,6 @@ class MoveBackgroundUseCaseTestLoop : KoinTest {
                 }
             }
         }
-
     }
 
     /**
@@ -182,7 +182,7 @@ class MoveBackgroundUseCaseTestLoop : KoinTest {
         val dx = 15f
 
         runBlocking {
-            moveBackgroundUseCase(
+            moveBackgroundUseCase.invoke(
                 velocity = Velocity(
                     x = -dx,
                     y = 0f,

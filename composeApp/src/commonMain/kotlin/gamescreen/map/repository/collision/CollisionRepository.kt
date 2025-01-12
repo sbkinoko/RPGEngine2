@@ -7,7 +7,6 @@ import gamescreen.map.domain.collision.Square
 interface CollisionRepository {
     fun collisionData(
         cellType: CellType,
-        cellSize: Float,
         square: Square,
     ): List<CollisionDetectShape>
 }

@@ -5,6 +5,7 @@ import gamescreen.map.data.LoopTestMap
 import gamescreen.map.manager.CELL_NUM
 import gamescreen.map.manager.SIDE_LENGTH
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
+import gamescreen.map.usecase.resetposition.ResetBackgroundPositionUseCase
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest

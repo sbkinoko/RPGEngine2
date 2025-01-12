@@ -8,6 +8,7 @@ import gamescreen.map.manager.SIDE_LENGTH
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.repository.playercell.PlayerCellRepository
+import gamescreen.map.usecase.resetposition.ResetBackgroundPositionUseCase
 import kotlinx.coroutines.runBlocking
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -37,7 +38,7 @@ class FindPlayerCellUseCaseTest : KoinTest {
 
         backgroundRepository.cellNum = CELL_NUM
         backgroundRepository.screenSize = SIDE_LENGTH
-        resetBackgroundPositionUseCase(
+        resetBackgroundPositionUseCase.invoke(
             mapData = mapData,
             mapX = 1,
             mapY = 1,
@@ -61,15 +62,15 @@ class FindPlayerCellUseCaseTest : KoinTest {
             )
 
             // 最初に全身が入ってるからnullじゃない
-            updateCellContainPlayerUseCase()
+            updateCellContainPlayerUseCase.invoke()
             assertTrue {
-                playerCellRepository.playerIncludeCell != null
+                playerCellRepository.eventCell != null
             }
 
             // 前回のマスから動いてないからnull
-            updateCellContainPlayerUseCase()
+            updateCellContainPlayerUseCase.invoke()
             assertTrue {
-                playerCellRepository.playerIncludeCell == null
+                playerCellRepository.eventCell == null
             }
 
             // 全身が入ってないから動いたけどnull
@@ -80,9 +81,9 @@ class FindPlayerCellUseCaseTest : KoinTest {
                     size = 5f,
                 )
             )
-            updateCellContainPlayerUseCase()
+            updateCellContainPlayerUseCase.invoke()
             assertTrue {
-                playerCellRepository.playerIncludeCell == null
+                playerCellRepository.eventCell == null
             }
 
             // 全身が入ったからnullじゃない
@@ -93,9 +94,9 @@ class FindPlayerCellUseCaseTest : KoinTest {
                     size = 5f,
                 )
             )
-            updateCellContainPlayerUseCase()
+            updateCellContainPlayerUseCase.invoke()
             assertTrue {
-                playerCellRepository.playerIncludeCell != null
+                playerCellRepository.eventCell != null
             }
         }
     }

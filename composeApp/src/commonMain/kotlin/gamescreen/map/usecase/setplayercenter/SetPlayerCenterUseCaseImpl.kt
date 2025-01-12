@@ -14,8 +14,8 @@ class SetPlayerCenterUseCaseImpl(
 ) : SetPlayerCenterUseCase {
     override fun invoke() {
         CoroutineScope(Dispatchers.Default).launch {
-            val center = getScreenCenterUseCase()
-            playerMoveToUseCase(
+            val center = getScreenCenterUseCase.invoke()
+            playerMoveToUseCase.invoke(
                 x = center.x - player.size / 2,
                 y = center.y - player.size / 2,
             )

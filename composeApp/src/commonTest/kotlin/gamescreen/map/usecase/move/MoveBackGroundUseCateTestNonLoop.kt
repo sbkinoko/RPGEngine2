@@ -1,4 +1,4 @@
-package gamescreen.map.usecase
+package gamescreen.map.usecase.move
 
 import gamescreen.map.ModuleMap
 import gamescreen.map.data.NonLoopTestMap
@@ -7,6 +7,7 @@ import gamescreen.map.domain.collision.Square
 import gamescreen.map.manager.CELL_NUM
 import gamescreen.map.manager.SIDE_LENGTH
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
+import gamescreen.map.usecase.resetposition.ResetBackgroundPositionUseCase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.koin.core.context.startKoin
@@ -36,7 +37,7 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
         repository.cellNum = CELL_NUM
         repository.screenSize = SIDE_LENGTH
 
-        resetBackgroundPositionUseCase(
+        resetBackgroundPositionUseCase.invoke(
             mapData = mapData,
             mapX = 0,
             mapY = 0,
@@ -133,7 +134,6 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
      */
     @Test
     fun checkLoop_Down() {
-
         runBlocking {
             val dy = 35f
             moveBackgroundUseCase.invoke(
@@ -148,6 +148,7 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
                     size = SIDE_LENGTH.toFloat(),
                 ),
             )
+
             delay(50)
 
             repository.getBackgroundAt(
@@ -164,6 +165,7 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
                         actual = topSide,
                     )
                 }
+
                 mapPoint.apply {
                     assertEquals(
                         expected = INITIAL_LEFT_TOP_MAP_X,
@@ -185,7 +187,7 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
     fun checkLoop_Left() {
         val dx = 15f
         runBlocking {
-            moveBackgroundUseCase(
+            moveBackgroundUseCase.invoke(
                 velocity = Velocity(
                     x = -dx,
                     y = 0f,
@@ -277,7 +279,6 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
                 }
             }
         }
-
     }
 
     companion object {

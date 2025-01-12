@@ -36,14 +36,6 @@ fun MapScreen(
         }
     }
 
-    val dir = mapViewModel.dirFlow.collectAsState()
-    val square = mapViewModel
-        .playerSquare
-        .collectAsState(
-    )
-    val eventSquare = mapViewModel.eventSquareFlow.collectAsState()
-    val eventType = mapViewModel.eventTypeFlow.collectAsState()
-
     Box(
         modifier = modifier
             .pointerInput(Unit) {
@@ -72,38 +64,42 @@ fun MapScreen(
             screenRatio = screenRatio
         )
 
-
         Player(
-            modifier = Modifier
-                .offset(
-                    x = (square.value.x * screenRatio).pxToDp(),
-                    y = (square.value.y * screenRatio).pxToDp(),
-                )
-                .size((square.value.size * screenRatio).pxToDp())
-                .background(Colors.Player)
-                .clickable {
-                    mapViewModel.touchCharacter()
-                },
-            dir = dir.value,
+            mapViewModel = mapViewModel,
+            screenRatio = screenRatio,
         )
 
-        Spacer(
-            modifier = Modifier
-                .offset(
-                    x = (eventSquare.value.x * screenRatio).pxToDp(),
-                    y = (eventSquare.value.y * screenRatio).pxToDp(),
-                )
-                .size((eventSquare.value.size * screenRatio).pxToDp())
-                .background(
-                    if (eventType.value == EventType.None) {
-                        Colors.NotEventCollision
-                    } else {
-                        Colors.CanEventCollision
-                    }
-                )
-                .clickable {
-                    mapViewModel.touchEventSquare()
-                },
+        EventSquare(
+            mapViewModel,
+            screenRatio
         )
     }
+}
+
+@Composable
+fun EventSquare(
+    mapViewModel: MapViewModel,
+    screenRatio: Float,
+) {
+
+    val eventSquare = mapViewModel.eventSquareFlow.collectAsState()
+    val eventType = mapViewModel.eventTypeFlow.collectAsState()
+    Spacer(
+        modifier = Modifier
+            .offset(
+                x = (eventSquare.value.x * screenRatio).pxToDp(),
+                y = (eventSquare.value.y * screenRatio).pxToDp(),
+            )
+            .size((eventSquare.value.size * screenRatio).pxToDp())
+            .background(
+                if (eventType.value == EventType.None) {
+                    Colors.NotEventCollision
+                } else {
+                    Colors.CanEventCollision
+                }
+            )
+            .clickable {
+                mapViewModel.touchEventSquare()
+            },
+    )
 }

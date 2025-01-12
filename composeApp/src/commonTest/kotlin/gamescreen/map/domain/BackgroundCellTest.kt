@@ -1,35 +1,40 @@
 package gamescreen.map.domain
 
+import gamescreen.map.domain.collision.Square
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class BackgroundCellTest {
+    private val x = 0f
+    private val y = 0f
+    private val size = 10f
+
+    private val square = Square(
+        x = x,
+        y = y,
+        size = size,
+    )
+
+    private val mapPoint = MapPoint()
+
+    private val bgCell = BackgroundCell(
+        square = square,
+        mapPoint = mapPoint,
+    )
 
     @Test
-    fun checkInit() {
-        val x = 0f
-        val y = 0f
-        val size = 10f
-
-        val bgCell = BackgroundCell(
-            x = x,
-            y = y,
-            cellSize = size
+    fun checkSquare() {
+        assertEquals(
+            expected = square,
+            actual = bgCell.square,
         )
+    }
 
-        bgCell.apply {
-            assertEquals(
-                expected = x,
-                actual = square.leftSide,
-            )
-            assertEquals(
-                expected = y,
-                actual = square.topSide,
-            )
-            assertEquals(
-                expected = size,
-                actual = square.size
-            )
-        }
+    @Test
+    fun checkMapPoint() {
+        assertEquals(
+            expected = mapPoint,
+            actual = bgCell.mapPoint
+        )
     }
 }

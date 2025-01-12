@@ -4,31 +4,39 @@ import gamescreen.map.domain.collision.EventObject
 import gamescreen.map.domain.collision.Square
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.npc.NPCRepository
+import gamescreen.map.usecase.collision.list.GetCollisionListUseCase
 import values.EventType
 
+// todo テスト作る
 class GetEventTypeUseCaseImpl(
     private val backgroundRepository: BackgroundRepository,
+    private val getCollisionListUseCase: GetCollisionListUseCase,
     private val npcRepository: NPCRepository,
 ) : GetEventTypeUseCase {
+
     override fun invoke(
         square: Square,
     ): EventType {
         backgroundRepository.backgroundStateFlow.value.forEach { rowArray ->
-            for (cell in rowArray) {
+            rowArray.forEach cell@{ cell ->
+                val collisionList = getCollisionListUseCase.invoke(
+                    backgroundCell = cell,
+                )
                 // 物がないので次を探索
-                if (cell.collisionList.isEmpty()) {
-                    continue
+                if (collisionList.isEmpty()
+                ) {
+                    return@cell
                 }
 
-                for (shape in cell.collisionList) {
+                collisionList.forEach shape@{ shape ->
                     // 重なってないので次へ
                     if (shape.isOverlap(square).not()) {
-                        continue
+                        return@shape
                     }
 
                     // イベントオブジェではないので次へ
                     if (shape !is EventObject) {
-                        continue
+                        return@shape
                     }
 
                     //　イベントオブジェなのでIDを返す
@@ -47,5 +55,4 @@ class GetEventTypeUseCaseImpl(
 
         return EventType.None
     }
-
 }

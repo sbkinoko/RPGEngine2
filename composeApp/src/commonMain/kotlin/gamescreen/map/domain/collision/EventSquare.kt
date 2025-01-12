@@ -5,11 +5,11 @@ import values.EventType
 
 class EventSquare(
     override val eventID: EventType,
-    displayPoint: Point = Point(),
+    point: Point = Point(),
     size: Float,
 ) : EventObject,
     Square(
-        displayPoint = displayPoint,
+        point = point,
         size = size,
     ) {
     constructor(
@@ -19,7 +19,7 @@ class EventSquare(
         size: Float,
     ) : this(
         eventID = eventID,
-        displayPoint = Point(
+        point = Point(
             x = x,
             y = y,
         ),
