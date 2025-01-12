@@ -287,6 +287,9 @@ class TextRepositoryImplTest : KoinTest {
         }
     }
 
+    /**
+     * 空の場合にpopしたときのテスト
+     */
     @Test
     fun popEmpty() {
         var count = 0
