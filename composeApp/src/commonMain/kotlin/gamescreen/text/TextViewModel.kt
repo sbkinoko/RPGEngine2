@@ -12,10 +12,10 @@ class TextViewModel : SelectableChildViewModel<TextBoxData?>() {
         get() = textRepository.textDataStateFlow
 
     val callBack: () -> Unit
-        get() = textRepository.callBack
+        get() = textRepository.callBack ?: {}
 
     val text: String
-        get() = textRepository.text
+        get() = textRepository.text ?: ""
 
     override fun goNext() {
         callBack()

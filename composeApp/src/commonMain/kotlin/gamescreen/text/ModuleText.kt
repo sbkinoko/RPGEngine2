@@ -1,11 +1,12 @@
 package gamescreen.text
 
-import gamescreen.choice.ChoiceViewModel
+import gamescreen.text.repository.TextRepository
+import gamescreen.text.repository.TextRepositoryImpl
 import org.koin.dsl.module
 
 val ModuleText = module {
-    single<ChoiceViewModel> {
-        ChoiceViewModel()
+    single<TextRepository> {
+        TextRepositoryImpl()
     }
 
     single<TextViewModel> {
