@@ -16,11 +16,11 @@ class TextRepositoryImpl : TextRepository {
 
     private var textBoxDataList = emptyList<TextBoxData>()
 
-    override val text: String
-        get() = nowTextData?.text ?: ""
+    override val text: String?
+        get() = nowTextData?.text
 
-    override val callBack: () -> Unit
-        get() = nowTextData?.callBack ?: {}
+    override val callBack: (() -> Unit)?
+        get() = nowTextData?.callBack
 
     override fun pop() {
         // これ以上表示するものがなければ空にする
