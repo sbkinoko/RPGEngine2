@@ -2,5 +2,6 @@ package gamescreen.text
 
 data class TextBoxData(
     val text: String,
-    val callBack: () -> Unit = {},
+    val callBack: (() -> Unit)? = null,
+    val needPop: Boolean = true,
 )

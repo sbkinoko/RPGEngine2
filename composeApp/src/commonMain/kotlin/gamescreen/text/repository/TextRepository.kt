@@ -6,11 +6,14 @@ import kotlinx.coroutines.flow.StateFlow
 interface TextRepository {
     val callBack: () -> Unit
     val text: String
+    val needPop: Boolean
 
     val textDataStateFlow: StateFlow<TextBoxData?>
     val nowTextData: TextBoxData?
 
-    fun push(textBoxData: TextBoxData?)
+    fun push(textBoxData: TextBoxData)
+
+    fun push(textBoxDataList: List<TextBoxData>)
 
     fun pop()
 }
