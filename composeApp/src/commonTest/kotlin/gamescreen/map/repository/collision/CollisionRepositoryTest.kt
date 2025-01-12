@@ -34,7 +34,6 @@ class CollisionRepositoryTest : KoinTest {
     fun getData_0() {
         collisionRepository.collisionData(
             cellType = CellType.Glass,
-            cellSize = 10f,
             square = Square(
                 x = 0f,
                 y = 0f,
@@ -54,7 +53,6 @@ class CollisionRepositoryTest : KoinTest {
     fun getData_1() {
         collisionRepository.collisionData(
             cellType = CellType.Water,
-            cellSize = 10f,
             square = Square(
                 x = 0f,
                 y = 0f,

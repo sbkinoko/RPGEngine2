@@ -6,6 +6,7 @@ import core.domain.ScreenType
 import core.domain.mapcell.CellType
 import core.repository.screentype.ScreenTypeRepository
 import gamescreen.map.data.LoopMap
+import gamescreen.map.domain.BackgroundCell
 import gamescreen.map.domain.Player
 import gamescreen.map.domain.PlayerDir
 import gamescreen.map.domain.Point
@@ -16,7 +17,6 @@ import gamescreen.map.layout.PlayerMoveSquare
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.repository.playercell.PlayerCellRepository
-import gamescreen.map.usecase.MoveBackgroundUseCase
 import gamescreen.map.usecase.PlayerMoveManageUseCase
 import gamescreen.map.usecase.PlayerMoveUseCase
 import gamescreen.map.usecase.UpdateCellContainPlayerUseCase
@@ -25,8 +25,10 @@ import gamescreen.map.usecase.battledecidemonster.DecideBattleMonsterUseCase
 import gamescreen.map.usecase.battlestart.StartBattleUseCase
 import gamescreen.map.usecase.collision.geteventtype.GetEventTypeUseCase
 import gamescreen.map.usecase.collision.iscollided.IsCollidedUseCase
+import gamescreen.map.usecase.collision.list.GetCollisionListUseCase
 import gamescreen.map.usecase.event.actionevent.ActionEventUseCase
 import gamescreen.map.usecase.event.cellevent.CellEventUseCase
+import gamescreen.map.usecase.move.MoveBackgroundUseCase
 import gamescreen.map.usecase.roadmap.RoadMapUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -55,6 +57,16 @@ class MapViewModel : ControllerCallback, KoinComponent {
     private val backgroundRepository: BackgroundRepository by inject()
     private val playerCellRepository: PlayerCellRepository by inject()
 
+    private val getCollisionListUseCase: GetCollisionListUseCase by inject()
+    fun getCollisionList(backgroundCell: BackgroundCell) =
+        getCollisionListUseCase.invoke(
+            backgroundCell = backgroundCell,
+        )
+
+
+    val playerIncludeCellFlow = playerCellRepository
+        .playerIncludeCellFlow
+
     private val updateCellContainPlayerUseCase: UpdateCellContainPlayerUseCase by inject()
 
     private val actionEventUseCase: ActionEventUseCase by inject()
@@ -70,7 +82,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
     private var eventSquare: Square = Square(
         size = VIRTUAL_PLAYER_SIZE,
-        displayPoint = Point(
+        point = Point(
             x = playerPositionRepository.getPlayerPosition().x,
             y = playerPositionRepository.getPlayerPosition().y
         ),
@@ -181,9 +193,9 @@ class MapViewModel : ControllerCallback, KoinComponent {
         updateEventCollision()
         checkEvent()
         // playerが入っているマスを設定
-        updateCellContainPlayerUseCase()
+        updateCellContainPlayerUseCase.invoke()
         //　そのマスに基づいてイベントを呼び出し
-        playerCellRepository.playerIncludeCell?.let {
+        playerCellRepository.eventCell?.let {
             cellEventUseCase.invoke(
                 it.cellType,
             )
@@ -198,7 +210,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
             PlayerDir.UP -> {
                 eventSquare = Square(
                     size = VIRTUAL_PLAYER_SIZE,
-                    displayPoint = Point(
+                    point = Point(
                         x = playerPositionRepository.getPlayerPosition().x,
                         y = playerPositionRepository.getPlayerPosition().y - VIRTUAL_PLAYER_SIZE / 2
                     ),
@@ -208,7 +220,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
             PlayerDir.DOWN -> {
                 eventSquare = Square(
                     size = VIRTUAL_PLAYER_SIZE,
-                    displayPoint = Point(
+                    point = Point(
                         x = playerPositionRepository.getPlayerPosition().x,
                         y = playerPositionRepository.getPlayerPosition().y + VIRTUAL_PLAYER_SIZE / 2
                     ),
@@ -218,7 +230,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
             PlayerDir.LEFT -> {
                 eventSquare = Square(
                     size = VIRTUAL_PLAYER_SIZE,
-                    displayPoint = Point(
+                    point = Point(
                         x = playerPositionRepository.getPlayerPosition().x - VIRTUAL_PLAYER_SIZE / 2,
                         y = playerPositionRepository.getPlayerPosition().y
                     ),
@@ -228,7 +240,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
             PlayerDir.RIGHT -> {
                 eventSquare = Square(
                     size = VIRTUAL_PLAYER_SIZE,
-                    displayPoint = Point(
+                    point = Point(
                         x = playerPositionRepository.getPlayerPosition().x + VIRTUAL_PLAYER_SIZE / 2,
                         y = playerPositionRepository.getPlayerPosition().y
                     ),

@@ -1,10 +1,12 @@
-package gamescreen.map.usecase
+package gamescreen.map.usecase.resetposition
 
 import gamescreen.map.ModuleMap
 import gamescreen.map.data.LoopTestMap
 import gamescreen.map.manager.CELL_NUM
 import gamescreen.map.manager.SIDE_LENGTH
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
@@ -25,13 +27,13 @@ class ResetBackgroundPositionUseCaseTest : KoinTest {
     fun beforeTest() {
         startKoin {
             modules(
-                ModuleMap
+                ModuleMap,
             )
         }
 
         repository.cellNum = CELL_NUM
         repository.screenSize = SIDE_LENGTH
-        resetBackgroundPositionUseCase(
+        resetBackgroundPositionUseCase.invoke(
             mapData = mapData,
             mapX = 0,
             mapY = 0,
@@ -43,8 +45,11 @@ class ResetBackgroundPositionUseCaseTest : KoinTest {
         stopKoin()
     }
 
+    /**
+     * 初期状態の確認
+     */
     @Test
-    fun resetPosition() {
+    fun initPosition() {
         repository.getBackgroundAt(
             x = 0,
             y = 0,
@@ -70,36 +75,44 @@ class ResetBackgroundPositionUseCaseTest : KoinTest {
                 )
             }
         }
+    }
 
-        resetBackgroundPositionUseCase(
-            mapData = mapData,
-            mapX = 1,
-            mapY = 1,
-        )
+    @Test
+    fun resetPosition() {
+        runBlocking {
+            resetBackgroundPositionUseCase.invoke(
+                mapData = mapData,
+                mapX = 1,
+                mapY = 1,
+            )
 
-        repository.getBackgroundAt(
-            x = 0,
-            y = 0,
-        ).apply {
-            square.apply {
-                assertEquals(
-                    0f,
-                    x,
-                )
-                assertEquals(
-                    0f,
-                    y,
-                )
-            }
-            mapPoint.apply {
-                assertEquals(
-                    0,
-                    x,
-                )
-                assertEquals(
-                    0,
-                    y,
-                )
+            delay(50)
+
+            repository.getBackgroundAt(
+                x = 0,
+                y = 0,
+            ).apply {
+                square.apply {
+                    assertEquals(
+                        0f,
+                        x,
+                    )
+                    assertEquals(
+                        0f,
+                        y,
+                    )
+                }
+
+                mapPoint.apply {
+                    assertEquals(
+                        0,
+                        x,
+                    )
+                    assertEquals(
+                        0,
+                        y,
+                    )
+                }
             }
         }
     }

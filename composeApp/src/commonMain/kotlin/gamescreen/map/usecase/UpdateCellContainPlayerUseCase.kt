@@ -16,18 +16,23 @@ class UpdateCellContainPlayerUseCase(
     operator fun invoke() {
         var playerIncludeCell: BackgroundCell? = null
 
-        backgroundRepository.backgroundStateFlow.value.map { rowArray ->
-            rowArray.map { cell ->
-                cell.apply {
-                    if (playerPositionRepository.getPlayerPosition().isIn(square)) {
-                        isPlayerIncludeCell = true
-                        playerIncludeCell = this
-                    } else {
-                        isPlayerIncludeCell = false
+        // プレイヤーを包含しているセルを保存
+        backgroundRepository
+            .backgroundStateFlow
+            .value
+            .map row@{ rowArray ->
+                rowArray.map { cell ->
+                    if (
+                        playerPositionRepository
+                            .getPlayerPosition()
+                            .isIn(cell.square)
+                    ) {
+                        playerIncludeCell = cell
+                        return@row
                     }
                 }
             }
-        }
+
         playerCellRepository.playerIncludeCell = playerIncludeCell
     }
 }

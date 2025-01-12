@@ -31,6 +31,10 @@ fun Background(
         .backgroundCells
         .collectAsState()
 
+    val eventCell by mapViewModel
+        .playerIncludeCellFlow
+        .collectAsState()
+
     val imageBinder = ImageBinder()
 
     // fixme 背景が動いてない場合はリロードしない
@@ -46,7 +50,7 @@ fun Background(
                     Box(
                         modifier = Modifier
                             .size(
-                                (cellSize * screenRatio).pxToDp()
+                                (square.size * screenRatio).pxToDp()
                             )
                             .offset(
                                 x = (square.leftSide * screenRatio).pxToDp(),
@@ -54,7 +58,7 @@ fun Background(
                             )
                             .border(
                                 width = 1.dp,
-                                color = if (isPlayerIncludeCell) {
+                                color = if (this == eventCell) {
                                     Colors.PlayerIncludeCell
                                 } else {
                                     Colors.BackgroundCellBorder
@@ -98,11 +102,15 @@ fun Background(
                         )
                     }
 
+                    val collisionList = mapViewModel
+                        .getCollisionList(
+                            backgroundCell = this,
+                        )
                     collisionList.forEach {
                         Canvas(
                             modifier = Modifier
                                 .size(
-                                    (cellSize * screenRatio).pxToDp()
+                                    (square.size * screenRatio).pxToDp()
                                 )
                                 .offset(
                                     x = (it.baseX * screenRatio).pxToDp(),
