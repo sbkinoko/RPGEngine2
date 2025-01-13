@@ -3,15 +3,16 @@ package gamescreen.map.domain.collision
 import gamescreen.map.domain.Point
 import values.EventType
 
-class EventSquare(
+data class EventSquare(
     override val eventID: EventType,
-    point: Point = Point(),
-    size: Float,
+    override val point: Point = Point(),
+    override val size: Float,
 ) : EventObject,
     Square(
         point = point,
         size = size,
     ) {
+
     constructor(
         eventID: EventType,
         x: Float,
