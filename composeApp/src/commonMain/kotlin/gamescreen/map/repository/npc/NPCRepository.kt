@@ -5,4 +5,8 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface NPCRepository {
     val npcStateFlow: StateFlow<EventSquare>
+
+    fun setNpc(
+        eventSquare: EventSquare,
+    )
 }
