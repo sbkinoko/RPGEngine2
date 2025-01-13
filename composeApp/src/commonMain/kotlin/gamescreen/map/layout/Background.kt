@@ -111,7 +111,6 @@ fun Background(
                             backgroundCell = this,
                         )
                     collisionList.forEach {
-
                         Canvas(
                             modifier = Modifier
                                 .size(
