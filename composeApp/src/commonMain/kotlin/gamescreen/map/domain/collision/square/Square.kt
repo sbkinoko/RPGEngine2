@@ -6,16 +6,6 @@ import gamescreen.map.domain.collision.ShapeCollisionDetect
 interface Square : ShapeCollisionDetect {
     val size: Float
 
-    fun move(
-        dx: Float = 0f,
-        dy: Float = 0f,
-    ): Square
-
-    fun moveTo(
-        x: Float = 0f,
-        y: Float = 0f,
-    ): Square
-
     override val baseX: Float
         get() = leftSide
 
@@ -33,6 +23,49 @@ interface Square : ShapeCollisionDetect {
     val topSide: Float
 
     val bottomSide: Float
+
+    override fun isOverlap(other: Square): Boolean {
+        if (this.rightSide < other.leftSide)
+            return false
+
+        if (other.rightSide < this.leftSide)
+            return false
+
+        if (this.bottomSide < other.topSide)
+            return false
+
+        if (other.bottomSide < this.topSide)
+            return false
+
+        return true
+    }
+
+    override fun getPath(
+        screenRatio: Float,
+    ): Path {
+        val path = Path()
+        val left = 0f
+        val top = 0f
+        path.moveTo(
+            left,
+            top,
+        )
+        path.lineTo(left, size * screenRatio)
+        path.lineTo(size * screenRatio, size * screenRatio)
+        path.lineTo(size * screenRatio, top)
+        path.close()
+        return path
+    }
+
+    fun move(
+        dx: Float = 0f,
+        dy: Float = 0f,
+    ): Square
+
+    fun moveTo(
+        x: Float = 0f,
+        y: Float = 0f,
+    ): Square
 
     fun isLeft(other: Square): Boolean {
         return this.rightSide <= other.leftSide
@@ -68,38 +101,5 @@ interface Square : ShapeCollisionDetect {
             return false
 
         return true
-    }
-
-    override fun isOverlap(other: Square): Boolean {
-        if (this.rightSide < other.leftSide)
-            return false
-
-        if (other.rightSide < this.leftSide)
-            return false
-
-        if (this.bottomSide < other.topSide)
-            return false
-
-        if (other.bottomSide < this.topSide)
-            return false
-
-        return true
-    }
-
-    override fun getPath(
-        screenRatio: Float,
-    ): Path {
-        val path = Path()
-        val left = 0f
-        val top = 0f
-        path.moveTo(
-            left,
-            top,
-        )
-        path.lineTo(left, size * screenRatio)
-        path.lineTo(size * screenRatio, size * screenRatio)
-        path.lineTo(size * screenRatio, top)
-        path.close()
-        return path
     }
 }
