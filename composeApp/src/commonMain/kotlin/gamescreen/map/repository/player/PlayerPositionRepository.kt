@@ -1,17 +1,18 @@
 package gamescreen.map.repository.player
 
 import gamescreen.map.domain.collision.square.NormalSquare
+import gamescreen.map.domain.collision.square.Square
 import kotlinx.coroutines.flow.StateFlow
 
 interface PlayerPositionRepository {
-    val playerPositionStateFlow: StateFlow<NormalSquare>
+    val playerPositionStateFlow: StateFlow<Square>
 
-    fun getPlayerPosition(): NormalSquare
+    fun getPlayerPosition(): Square
 
-    suspend fun setPlayerPosition(square: NormalSquare)
+    suspend fun setPlayerPosition(square: Square)
 
     companion object {
-        val initialSquare: NormalSquare
+        val initialSquare: Square
             get() = NormalSquare(
                 x = 0f,
                 y = 0f,

@@ -3,6 +3,7 @@ package gamescreen.map.repository.player
 import gamescreen.map.ModuleMap
 import gamescreen.map.domain.Point
 import gamescreen.map.domain.collision.square.NormalSquare
+import gamescreen.map.domain.collision.square.Square
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -71,7 +72,7 @@ class PlayerPositionRepositoryImplTest : KoinTest {
 
         runBlocking {
             var count = 0
-            lateinit var result: NormalSquare
+            lateinit var result: Square
             val collectJob: Job = launch {
                 repository.playerPositionStateFlow.collect {
                     count++

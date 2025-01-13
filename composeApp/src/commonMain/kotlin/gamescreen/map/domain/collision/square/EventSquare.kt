@@ -5,9 +5,9 @@ import values.EventType
 
 data class EventSquare(
     override val eventID: EventType,
-    val square: NormalSquare,
+    override val square: Square,
 ) : SquareWrapper(
-    normalSquare = square,
+    square = square,
 ), EventObject {
     constructor(
         x: Float,

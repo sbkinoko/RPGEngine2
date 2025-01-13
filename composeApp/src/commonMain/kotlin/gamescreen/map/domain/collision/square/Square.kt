@@ -9,6 +9,16 @@ interface Square : ShapeCollisionDetect {
 
     val size: Float
 
+    fun move(
+        dx: Float = 0f,
+        dy: Float = 0f,
+    ): Square
+
+    fun moveTo(
+        x: Float = 0f,
+        y: Float = 0f,
+    ): Square
+
     override val baseX: Float
         get() = leftSide
 

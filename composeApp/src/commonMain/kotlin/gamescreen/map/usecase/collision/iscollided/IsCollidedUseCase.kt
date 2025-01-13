@@ -1,12 +1,12 @@
 package gamescreen.map.usecase.collision.iscollided
 
-import gamescreen.map.domain.collision.square.NormalSquare
+import gamescreen.map.domain.collision.square.Square
 
 interface IsCollidedUseCase {
     /**
      * 障害物と衝突しているかどうかをチェック
      */
     operator fun invoke(
-        playerSquare: NormalSquare,
+        playerSquare: Square,
     ): Boolean
 }

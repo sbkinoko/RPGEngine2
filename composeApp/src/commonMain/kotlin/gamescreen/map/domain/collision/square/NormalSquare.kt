@@ -21,10 +21,10 @@ data class NormalSquare(
         size = size,
     )
 
-    fun move(
-        dx: Float = 0f,
-        dy: Float = 0f,
-    ): NormalSquare {
+    override fun move(
+        dx: Float,
+        dy: Float,
+    ): Square {
         return copy(
             point = point.move(
                 dx = dx,
@@ -33,10 +33,10 @@ data class NormalSquare(
         )
     }
 
-    fun moveTo(
+    override fun moveTo(
         x: Float,
         y: Float,
-    ): NormalSquare {
+    ): Square {
         return copy(
             point = Point(
                 x = x,

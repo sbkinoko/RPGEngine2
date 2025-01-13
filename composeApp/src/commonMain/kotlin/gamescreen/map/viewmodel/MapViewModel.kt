@@ -80,7 +80,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
     private val roadMapUseCase: RoadMapUseCase by inject()
 
-    val playerSquare: StateFlow<NormalSquare> =
+    val playerSquare: StateFlow<Square> =
         playerPositionRepository.playerPositionStateFlow
 
     private var eventSquare: NormalSquare = NormalSquare(
