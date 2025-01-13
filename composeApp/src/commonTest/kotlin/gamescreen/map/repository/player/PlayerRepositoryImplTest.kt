@@ -2,7 +2,7 @@ package gamescreen.map.repository.player
 
 import gamescreen.map.ModuleMap
 import gamescreen.map.domain.Point
-import gamescreen.map.domain.collision.Square
+import gamescreen.map.domain.collision.square.NormalSquare
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -37,7 +37,7 @@ class PlayerPositionRepositoryImplTest : KoinTest {
 
     @Test
     fun setPlayerPositionTest() {
-        val square = Square(
+        val square = NormalSquare(
             point = Point(
                 x = 0f,
                 y = 0f
@@ -61,7 +61,7 @@ class PlayerPositionRepositoryImplTest : KoinTest {
     @OptIn(DelicateCoroutinesApi::class)
     @Test
     fun checkFlow() {
-        val square = Square(
+        val square = NormalSquare(
             point = Point(
                 x = 0f,
                 y = 0f
@@ -71,7 +71,7 @@ class PlayerPositionRepositoryImplTest : KoinTest {
 
         runBlocking {
             var count = 0
-            lateinit var result: Square
+            lateinit var result: NormalSquare
             val collectJob: Job = launch {
                 repository.playerPositionStateFlow.collect {
                     count++

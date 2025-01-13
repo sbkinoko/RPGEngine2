@@ -1,23 +1,13 @@
-package gamescreen.map.domain.collision
+package gamescreen.map.domain.collision.square
 
 import androidx.compose.ui.graphics.Path
 import gamescreen.map.domain.Point
+import gamescreen.map.domain.collision.ShapeCollisionDetect
 
-open class Square(
-    open val point: Point = Point(),
-    open val size: Float,
-) : CollisionDetectShape {
-    constructor(
-        x: Float,
-        y: Float,
-        size: Float
-    ) : this(
-        point = Point(
-            x = x,
-            y = y,
-        ),
-        size = size,
-    )
+interface Square : ShapeCollisionDetect {
+    val point: Point
+
+    val size: Float
 
     override val baseX: Float
         get() = leftSide
@@ -42,32 +32,6 @@ open class Square(
 
     val bottomSide: Float
         get() = point.y + size
-
-    fun move(
-        dx: Float = 0f,
-        dy: Float = 0f,
-    ) {
-        point.move(
-            dx = dx,
-            dy = dy,
-        )
-    }
-
-    fun moveTo(
-        x: Float,
-        y: Float,
-    ) {
-        point.x = x
-        point.y = y
-    }
-
-    fun getNew(): Square {
-        return Square(
-            x = x,
-            y = y,
-            size = size,
-        )
-    }
 
     fun isLeft(other: Square): Boolean {
         return this.rightSide <= other.leftSide
@@ -121,7 +85,7 @@ open class Square(
         return true
     }
 
-    override fun toPath(
+    override fun getPath(
         screenRatio: Float,
     ): Path {
         val path = Path()

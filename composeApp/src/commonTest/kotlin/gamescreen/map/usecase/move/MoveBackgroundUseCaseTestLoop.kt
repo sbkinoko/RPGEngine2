@@ -4,7 +4,7 @@ import gamescreen.map.ModuleMap
 import gamescreen.map.data.LoopTestMap
 import gamescreen.map.domain.BackgroundCell
 import gamescreen.map.domain.Velocity
-import gamescreen.map.domain.collision.Square
+import gamescreen.map.domain.collision.square.NormalSquare
 import gamescreen.map.manager.CELL_NUM
 import gamescreen.map.manager.SIDE_LENGTH
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
@@ -92,7 +92,7 @@ class MoveBackgroundUseCaseTestLoop : KoinTest {
                     y = -dy,
                     maxVelocity = dy,
                 ),
-                fieldSquare = Square(
+                fieldSquare = NormalSquare(
                     x = 0f,
                     y = 0f,
                     size = SIDE_LENGTH.toFloat(),
@@ -140,7 +140,7 @@ class MoveBackgroundUseCaseTestLoop : KoinTest {
                     y = dy,
                     maxVelocity = dy,
                 ),
-                fieldSquare = Square(
+                fieldSquare = NormalSquare(
                     x = 0f,
                     y = 0f,
                     size = SIDE_LENGTH.toFloat(),
@@ -188,7 +188,7 @@ class MoveBackgroundUseCaseTestLoop : KoinTest {
                     y = 0f,
                     maxVelocity = dx,
                 ),
-                fieldSquare = Square(
+                fieldSquare = NormalSquare(
                     x = 0f,
                     y = 0f,
                     size = SIDE_LENGTH.toFloat(),
@@ -236,7 +236,7 @@ class MoveBackgroundUseCaseTestLoop : KoinTest {
                     y = 0f,
                     maxVelocity = dx,
                 ),
-                fieldSquare = Square(
+                fieldSquare = NormalSquare(
                     x = 0f,
                     y = 0f,
                     size = SIDE_LENGTH.toFloat(),

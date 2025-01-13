@@ -111,6 +111,7 @@ fun Background(
                             backgroundCell = this,
                         )
                     collisionList.forEach {
+
                         Canvas(
                             modifier = Modifier
                                 .size(
@@ -122,7 +123,7 @@ fun Background(
                                 ),
                             onDraw = {
                                 drawPath(
-                                    path = it.toPath(
+                                    path = it.getPath(
                                         screenRatio,
                                     ),
                                     color = Colors.CollisionColor,

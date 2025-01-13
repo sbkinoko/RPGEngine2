@@ -1,17 +1,17 @@
 package gamescreen.map.repository.collision
 
 import core.domain.mapcell.CellType
-import gamescreen.map.domain.collision.CollisionDetectShape
-import gamescreen.map.domain.collision.EventSquare
-import gamescreen.map.domain.collision.Square
+import gamescreen.map.domain.collision.ShapeCollisionDetect
+import gamescreen.map.domain.collision.square.EventSquare
+import gamescreen.map.domain.collision.square.NormalSquare
 import values.EventType
 
 class CollisionRepositoryImpl : CollisionRepository {
 
     override fun collisionData(
         cellType: CellType,
-        square: Square,
-    ): List<CollisionDetectShape> {
+        square: NormalSquare,
+    ): List<ShapeCollisionDetect> {
 
         // 当たり判定がないマスなら空を返す
         if (cellType !is CellType.CollisionCell) {
@@ -22,7 +22,7 @@ class CollisionRepositoryImpl : CollisionRepository {
             CellType.Water ->
                 square.run {
                     listOf(
-                        Square(
+                        NormalSquare(
                             x = x,
                             y = y,
                             size = size

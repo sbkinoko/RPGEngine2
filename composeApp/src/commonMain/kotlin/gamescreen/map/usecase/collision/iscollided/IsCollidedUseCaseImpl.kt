@@ -1,6 +1,6 @@
 package gamescreen.map.usecase.collision.iscollided
 
-import gamescreen.map.domain.collision.Square
+import gamescreen.map.domain.collision.square.NormalSquare
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.npc.NPCRepository
 import gamescreen.map.usecase.collision.list.GetCollisionListUseCase
@@ -11,7 +11,7 @@ class IsCollidedUseCaseImpl(
     private val getCollisionListUseCase: GetCollisionListUseCase,
     private val npcRepository: NPCRepository,
 ) : IsCollidedUseCase {
-    override fun invoke(playerSquare: Square): Boolean {
+    override fun invoke(playerSquare: NormalSquare): Boolean {
         backgroundRepository
             .backgroundStateFlow
             .value

@@ -1,6 +1,6 @@
 package gamescreen.map.repository.player
 
-import gamescreen.map.domain.collision.Square
+import gamescreen.map.domain.collision.square.NormalSquare
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -10,14 +10,14 @@ class PlayerPositionRepositoryImpl : PlayerPositionRepository {
         PlayerPositionRepository.initialSquare
     )
 
-    override val playerPositionStateFlow: StateFlow<Square>
+    override val playerPositionStateFlow: StateFlow<NormalSquare>
         get() = mutablePlayerPositionStateFlow.asStateFlow()
 
-    override fun getPlayerPosition(): Square {
+    override fun getPlayerPosition(): NormalSquare {
         return playerPositionStateFlow.value
     }
 
-    override suspend fun setPlayerPosition(square: Square) {
+    override suspend fun setPlayerPosition(square: NormalSquare) {
         mutablePlayerPositionStateFlow.value = square
     }
 

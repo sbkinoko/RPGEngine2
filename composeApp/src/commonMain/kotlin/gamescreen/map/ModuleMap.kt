@@ -89,7 +89,8 @@ val ModuleMap = module {
 
     single<MoveBackgroundUseCase> {
         MoveBackgroundUseCaseImpl(
-            repository = get(),
+            backgroundRepository = get(),
+            npcRepository = get(),
         )
     }
 

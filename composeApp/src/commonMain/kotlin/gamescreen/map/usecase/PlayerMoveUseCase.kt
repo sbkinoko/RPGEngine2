@@ -9,11 +9,13 @@ class PlayerMoveUseCase(
     suspend operator fun invoke(
         player: Player,
     ) {
-        val square = playerPositionRepository.getPlayerPosition().getNew()
-        square.move(
-            dx = player.velocity.x,
-            dy = player.velocity.y,
-        )
+        val square = playerPositionRepository
+            .getPlayerPosition()
+            .move(
+                dx = player.velocity.x,
+                dy = player.velocity.y,
+            )
+
         playerPositionRepository.setPlayerPosition(
             square = square,
         )

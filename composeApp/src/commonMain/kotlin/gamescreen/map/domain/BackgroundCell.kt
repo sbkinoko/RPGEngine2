@@ -1,13 +1,13 @@
 package gamescreen.map.domain
 
 import core.domain.mapcell.CellType
-import gamescreen.map.domain.collision.Square
+import gamescreen.map.domain.collision.square.NormalSquare
 
 //fixme 背景画像の情報を持たせる
 //宝箱を開けたときにすぐに更新するため
 data class BackgroundCell(
     val mapPoint: MapPoint,
-    val square: Square,
+    val square: NormalSquare,
     val cellType: CellType = CellType.Null,
 )
 
@@ -19,15 +19,10 @@ fun BackgroundCell.moveDisplayPoint(
     dx: Float = 0f,
     dy: Float = 0f,
 ): BackgroundCell {
-    square.move(
-        dx = dx,
-        dy = dy,
-    )
     return this.copy(
-        square = Square(
-            x = square.x,
-            y = square.y,
-            size = square.size
+        square = square.move(
+            dx = dx,
+            dy = dy,
         )
     )
 }
