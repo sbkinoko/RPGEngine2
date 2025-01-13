@@ -102,7 +102,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
     private var tapPoint: Point? = null
 
-    private var playerMoveArea: Square = PlayerMoveSquare(
+    private var playerMoveArea = PlayerMoveSquare(
         screenSize = VIRTUAL_SCREEN_SIZE,
         borderRate = MOVE_BORDER,
     )
@@ -317,7 +317,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
     private fun mediateVelocity() {
         val mediatedVelocity = velocityManageUseCase.manageVelocity(
             tentativePlayerVelocity = tentativePlayerVelocity,
-            playerMoveArea = playerMoveArea,
+            playerMoveArea = playerMoveArea.square,
         )
 
         player.updateVelocity(mediatedVelocity.first)
