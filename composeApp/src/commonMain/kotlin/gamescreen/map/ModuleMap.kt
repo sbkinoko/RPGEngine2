@@ -95,7 +95,8 @@ val ModuleMap = module {
 
     single<ResetBackgroundPositionUseCase> {
         ResetBackgroundPositionUseCaseImpl(
-            repository = get(),
+            backgroundRepository = get(),
+            npcRepository = get(),
         )
     }
 

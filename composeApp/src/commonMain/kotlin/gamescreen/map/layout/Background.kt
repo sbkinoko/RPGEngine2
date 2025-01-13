@@ -131,7 +131,7 @@ fun Background(
                         )
                     }
 
-                    npc.let {
+                    npc.forEach {
                         Image(
                             modifier = Modifier
                                 .size(
