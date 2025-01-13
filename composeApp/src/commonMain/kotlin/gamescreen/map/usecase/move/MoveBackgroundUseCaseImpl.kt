@@ -2,24 +2,25 @@ package gamescreen.map.usecase.move
 
 import gamescreen.map.domain.BackgroundCell
 import gamescreen.map.domain.Velocity
-import gamescreen.map.domain.collision.Square
-import gamescreen.map.domain.moveDisplayPoint
+import gamescreen.map.domain.collision.square.NormalSquare
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
+import gamescreen.map.repository.npc.NPCRepository
 
 class MoveBackgroundUseCaseImpl(
-    private val repository: BackgroundRepository,
+    private val backgroundRepository: BackgroundRepository,
+    private val npcRepository: NPCRepository,
 ) : MoveBackgroundUseCase {
 
     override suspend operator fun invoke(
         velocity: Velocity,
-        fieldSquare: Square,
+        fieldSquare: NormalSquare,
     ) {
-        val background = repository
+        val background = backgroundRepository
             .backgroundStateFlow
             .value
             .map { rowArray ->
                 rowArray.map { bgCell ->
-                    val moved = bgCell.moveDisplayPoint(
+                    val moved = bgCell.move(
                         dx = velocity.x,
                         dy = velocity.y,
                     )
@@ -31,8 +32,21 @@ class MoveBackgroundUseCaseImpl(
                 }
             }
 
-        repository.setBackground(
+        backgroundRepository.setBackground(
             background = background,
+        )
+
+        val npc = npcRepository.npcStateFlow.value.map {
+            it.copy(
+                square = it.square.move(
+                    dx = velocity.x,
+                    dy = velocity.y,
+                )
+            )
+        }
+
+        npcRepository.setNpc(
+            npc
         )
     }
 
@@ -42,11 +56,11 @@ class MoveBackgroundUseCaseImpl(
      */
     private fun loopBackgroundCell(
         bgCell: BackgroundCell,
-        fieldSquare: Square,
+        fieldSquare: NormalSquare,
     ): BackgroundCell {
         // loopに必要な移動量
-        val allCellNum = repository.allCellNum
-        val diffOfLoop = allCellNum * repository.cellSize
+        val allCellNum = backgroundRepository.allCellNum
+        val diffOfLoop = allCellNum * backgroundRepository.cellSize
 
         //表示の移動量
         val dx: Float
@@ -82,7 +96,7 @@ class MoveBackgroundUseCaseImpl(
             }
         }
 
-        repository.mapData.let {
+        backgroundRepository.mapData.let {
             val mapPoint = it.getMapPoint(
                 x = mapX,
                 y = mapY,
@@ -92,7 +106,7 @@ class MoveBackgroundUseCaseImpl(
             return bgCell.copy(
                 mapPoint = mapPoint,
                 cellType = cellType,
-            ).moveDisplayPoint(
+            ).move(
                 dx = dx,
                 dy = dy,
             )

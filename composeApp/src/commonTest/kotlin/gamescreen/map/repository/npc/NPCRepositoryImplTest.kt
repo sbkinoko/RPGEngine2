@@ -1,7 +1,7 @@
 package gamescreen.map.repository.npc
 
 import gamescreen.map.ModuleMap
-import gamescreen.map.domain.collision.EventSquare
+import gamescreen.map.domain.collision.square.EventSquare
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking

@@ -2,7 +2,7 @@ package gamescreen.map.usecase
 
 import gamescreen.map.ModuleMap
 import gamescreen.map.data.LoopTestMap
-import gamescreen.map.domain.collision.Square
+import gamescreen.map.domain.collision.square.NormalSquare
 import gamescreen.map.manager.CELL_NUM
 import gamescreen.map.manager.SIDE_LENGTH
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
@@ -54,7 +54,7 @@ class FindPlayerCellUseCaseTest : KoinTest {
     fun checkIncludeCell() {
         runBlocking {
             playerPositionRepository.setPlayerPosition(
-                Square(
+                NormalSquare(
                     x = 1f,
                     y = 1f,
                     size = 5f,
@@ -75,7 +75,7 @@ class FindPlayerCellUseCaseTest : KoinTest {
 
             // 全身が入ってないから動いたけどnull
             playerPositionRepository.setPlayerPosition(
-                Square(
+                NormalSquare(
                     x = 6f,
                     y = 6f,
                     size = 5f,
@@ -88,7 +88,7 @@ class FindPlayerCellUseCaseTest : KoinTest {
 
             // 全身が入ったからnullじゃない
             playerPositionRepository.setPlayerPosition(
-                Square(
+                NormalSquare(
                     x = 0.5f,
                     y = 0.5f,
                     size = 5f,

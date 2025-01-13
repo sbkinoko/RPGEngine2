@@ -1,6 +1,6 @@
 package gamescreen.map.usecase.collision.iscollided
 
-import gamescreen.map.domain.collision.Square
+import gamescreen.map.domain.collision.square.Square
 
 interface IsCollidedUseCase {
     /**

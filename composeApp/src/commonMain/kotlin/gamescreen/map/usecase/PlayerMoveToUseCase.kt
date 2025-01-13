@@ -9,11 +9,13 @@ class PlayerMoveToUseCase(
         x: Float,
         y: Float,
     ) {
-        val square = playerPositionRepository.getPlayerPosition().getNew()
-        square.moveTo(
-            x = x,
-            y = y,
-        )
+        val square = playerPositionRepository
+            .getPlayerPosition()
+            .moveTo(
+                x = x,
+                y = y,
+            )
+
         playerPositionRepository.setPlayerPosition(
             square = square,
         )

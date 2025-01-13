@@ -1,7 +1,7 @@
 package gamescreen.map.usecase
 
 import gamescreen.map.domain.Velocity
-import gamescreen.map.domain.collision.Square
+import gamescreen.map.domain.collision.square.Square
 import gamescreen.map.repository.player.PlayerPositionRepository
 
 class VelocityManageUseCase(

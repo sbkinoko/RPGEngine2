@@ -1,6 +1,6 @@
 package gamescreen.map.repository.player
 
-import gamescreen.map.domain.collision.Square
+import gamescreen.map.domain.collision.square.Square
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

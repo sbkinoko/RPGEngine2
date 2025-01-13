@@ -2,7 +2,7 @@ package gamescreen.map.usecase.resetposition
 
 import gamescreen.map.domain.BackgroundCell
 import gamescreen.map.domain.MapData
-import gamescreen.map.domain.collision.Square
+import gamescreen.map.domain.collision.square.NormalSquare
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.npc.NPCRepository
 import gamescreen.map.repository.npc.NPCRepositoryImpl
@@ -35,7 +35,7 @@ class ResetBackgroundPositionUseCaseImpl(
                             // 表示上の座標
                             val x = col * cellSize
                             val y = row * cellSize
-                            val square = Square(
+                            val square = NormalSquare(
                                 x = x,
                                 y = y,
                                 size = cellSize,

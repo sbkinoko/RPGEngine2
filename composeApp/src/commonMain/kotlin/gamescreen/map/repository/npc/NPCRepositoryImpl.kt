@@ -1,6 +1,6 @@
 package gamescreen.map.repository.npc
 
-import gamescreen.map.domain.collision.EventSquare
+import gamescreen.map.domain.collision.square.EventSquare
 import gamescreen.map.viewmodel.MapViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

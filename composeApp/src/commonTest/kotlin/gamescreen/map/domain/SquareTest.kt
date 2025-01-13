@@ -1,6 +1,6 @@
 package gamescreen.map.domain
 
-import gamescreen.map.domain.collision.Square
+import gamescreen.map.domain.collision.square.NormalSquare
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -10,20 +10,19 @@ class SquareTest {
     // displayPointの値が0の時のテスト
     @Test
     fun move() {
-        Square(
+        val dx = 1f
+        val dy = 1f
+
+        NormalSquare(
             point = Point(
                 x = 0f,
                 y = 0f,
             ),
             size = SIZE,
+        ).move(
+            dx = dx,
+            dy = dy,
         ).apply {
-            val dx = 1f
-            val dy = 1f
-            move(
-                dx = dx,
-                dy = dy,
-            )
-
             assertEquals(
                 expected = 1f,
                 actual = leftSide,
@@ -50,18 +49,16 @@ class SquareTest {
         val dy = 2f
         val size = SIZE * 2
 
-        Square(
+        NormalSquare(
             point = Point(
                 x = x,
                 y = y,
             ),
             size = size,
+        ).move(
+            dx = dx,
+            dy = dy,
         ).apply {
-            move(
-                dx = dx,
-                dy = dy,
-            )
-
             assertEquals(
                 expected = x + dx,
                 actual = leftSide,
@@ -84,7 +81,7 @@ class SquareTest {
      */
     @Test
     fun side() {
-        val square = Square(
+        val square = NormalSquare(
             point = Point(
                 x = 10f,
                 y = 15f,
@@ -117,13 +114,13 @@ class SquareTest {
 
     @Test
     fun isLeft() {
-        val square1 = Square(
+        val square1 = NormalSquare(
             x = 10f,
             y = 0f,
             size = SIZE,
         )
         // 半分かぶってる
-        Square(
+        NormalSquare(
             x = 5f,
             y = 0f,
             size = SIZE,
@@ -131,7 +128,7 @@ class SquareTest {
             assertFalse { this.isLeft(square1) }
         }
         // 辺だけ接してる
-        Square(
+        NormalSquare(
             x = 0f,
             y = 0f,
             size = SIZE,
@@ -144,14 +141,14 @@ class SquareTest {
 
     @Test
     fun isRight() {
-        val baseSquare = Square(
+        val baseSquare = NormalSquare(
             x = 10f,
             y = 0f,
             size = SIZE,
         )
 
         // 半分かぶってる
-        Square(
+        NormalSquare(
             x = 15f,
             y = 0f,
             size = SIZE,
@@ -160,7 +157,7 @@ class SquareTest {
         }
 
         // 辺だけ接してる
-        Square(
+        NormalSquare(
             x = 20f,
             y = 0f,
             size = SIZE,
@@ -173,14 +170,14 @@ class SquareTest {
 
     @Test
     fun isUp() {
-        val baseSquare = Square(
+        val baseSquare = NormalSquare(
             x = 0f,
             y = 10f,
             size = SIZE,
         )
 
         // 半分かぶってる
-        Square(
+        NormalSquare(
             x = 0f,
             y = 5f,
             size = SIZE,
@@ -189,7 +186,7 @@ class SquareTest {
         }
 
         // 辺だけ接してる
-        Square(
+        NormalSquare(
             x = 0f,
             y = 0f,
             size = SIZE,
@@ -202,14 +199,14 @@ class SquareTest {
 
     @Test
     fun isDown() {
-        val baseSquare = Square(
+        val baseSquare = NormalSquare(
             x = 0f,
             y = 10f,
             size = SIZE,
         )
 
         // 半分かぶってる
-        Square(
+        NormalSquare(
             x = 0f,
             y = 15f,
             size = SIZE,
@@ -218,7 +215,7 @@ class SquareTest {
         }
 
         // 辺だけ接してる
-        Square(
+        NormalSquare(
             x = 0f,
             y = 20f,
             size = SIZE,
@@ -231,82 +228,85 @@ class SquareTest {
 
     @Test
     fun isOverlapUp() {
-        val baseSquare = Square(
+        val baseSquare = NormalSquare(
             point = Point(10f, 10f),
             size = 10f
         )
 
-        val upSquare1 = Square(
+        val upSquare1 = NormalSquare(
             point = Point(10f, 0f),
             size = 10f,
         )
         assertTrue { baseSquare.isOverlap(upSquare1) }
         assertTrue { upSquare1.isOverlap(baseSquare) }
 
-        upSquare1.move(dx = 0f, dy = -1f)
+        val square2 = upSquare1.move(dx = 0f, dy = -1f)
 
-        assertFalse { baseSquare.isOverlap(upSquare1) }
-        assertFalse { upSquare1.isOverlap(baseSquare) }
+        assertFalse { baseSquare.isOverlap(square2) }
+        assertFalse { square2.isOverlap(baseSquare) }
     }
 
     @Test
     fun isOverlapBottom() {
-        val baseSquare = Square(
+        val baseSquare = NormalSquare(
             point = Point(10f, 10f),
             size = 10f
         )
 
-        val upSquare1 = Square(
+        val upSquare1 = NormalSquare(
             point = Point(10f, 20f),
             size = 10f,
         )
         assertTrue { baseSquare.isOverlap(upSquare1) }
         assertTrue { upSquare1.isOverlap(baseSquare) }
 
-        upSquare1.move(dx = 0f, dy = 1f)
+        val square2 = upSquare1.move(
+            dx = 0f,
+            dy = 1f,
+        )
 
-        assertFalse { baseSquare.isOverlap(upSquare1) }
-        assertFalse { upSquare1.isOverlap(baseSquare) }
+        assertFalse { baseSquare.isOverlap(square2) }
+        assertFalse { square2.isOverlap(baseSquare) }
     }
 
     @Test
     fun isOverlapLeft() {
-        val baseSquare = Square(
+        val baseSquare = NormalSquare(
             point = Point(10f, 10f),
             size = 10f
         )
 
-        val upSquare1 = Square(
+        val upSquare1 = NormalSquare(
             point = Point(0f, 10f),
             size = 10f,
         )
         assertTrue { baseSquare.isOverlap(upSquare1) }
         assertTrue { upSquare1.isOverlap(baseSquare) }
 
-        upSquare1.move(dx = -1f, dy = 0f)
+        val square2 = upSquare1.move(dx = -1f, dy = 0f)
 
-        assertFalse { baseSquare.isOverlap(upSquare1) }
-        assertFalse { upSquare1.isOverlap(baseSquare) }
+        assertFalse { baseSquare.isOverlap(square2) }
+        assertFalse { square2.isOverlap(baseSquare) }
     }
 
     @Test
     fun isOverlapRight() {
-        val baseSquare = Square(
+        val baseSquare = NormalSquare(
             point = Point(10f, 10f),
             size = 10f
         )
 
-        val upSquare1 = Square(
+        val upSquare1 = NormalSquare(
             point = Point(20f, 10f),
             size = 10f,
         )
         assertTrue { baseSquare.isOverlap(upSquare1) }
         assertTrue { upSquare1.isOverlap(baseSquare) }
 
-        upSquare1.move(dx = 1f, dy = 0f)
+        val square2 = upSquare1.move(dx = 1f, dy = 0f)
 
-        assertFalse { baseSquare.isOverlap(upSquare1) }
-        assertFalse { upSquare1.isOverlap(baseSquare) }
+        assertFalse { baseSquare.isOverlap(square2) }
+        assertFalse { square2.isOverlap(baseSquare) }
     }
 
 

@@ -122,7 +122,7 @@ fun Background(
                                 ),
                             onDraw = {
                                 drawPath(
-                                    path = it.toPath(
+                                    path = it.getPath(
                                         screenRatio,
                                     ),
                                     color = Colors.CollisionColor,

@@ -11,7 +11,8 @@ import gamescreen.map.domain.Player
 import gamescreen.map.domain.PlayerDir
 import gamescreen.map.domain.Point
 import gamescreen.map.domain.Velocity
-import gamescreen.map.domain.collision.Square
+import gamescreen.map.domain.collision.square.NormalSquare
+import gamescreen.map.domain.collision.square.Square
 import gamescreen.map.domain.toDir
 import gamescreen.map.layout.PlayerMoveSquare
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
@@ -82,7 +83,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
     val playerSquare: StateFlow<Square> =
         playerPositionRepository.playerPositionStateFlow
 
-    private var eventSquare: Square = Square(
+    private var eventSquare: NormalSquare = NormalSquare(
         size = VIRTUAL_PLAYER_SIZE,
         point = Point(
             x = playerPositionRepository.getPlayerPosition().x,
@@ -97,11 +98,11 @@ class MapViewModel : ControllerCallback, KoinComponent {
     private val mutableEventSquareFlow = MutableStateFlow(
         eventSquare
     )
-    val eventSquareFlow: StateFlow<Square> = mutableEventSquareFlow.asStateFlow()
+    val eventSquareFlow: StateFlow<NormalSquare> = mutableEventSquareFlow.asStateFlow()
 
     private var tapPoint: Point? = null
 
-    private var playerMoveArea: Square = PlayerMoveSquare(
+    private var playerMoveArea = PlayerMoveSquare(
         screenSize = VIRTUAL_SCREEN_SIZE,
         borderRate = MOVE_BORDER,
     )
@@ -144,7 +145,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
         CoroutineScope(Dispatchers.Default).launch {
             playerPositionRepository.setPlayerPosition(
-                Square(size = player.size)
+                NormalSquare(size = player.size)
             )
         }
 
@@ -155,7 +156,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
         )
     }
 
-    private val fieldSquare: Square = Square(
+    private val fieldSquare: NormalSquare = NormalSquare(
         x = 0f,
         y = 0f,
         size = VIRTUAL_SCREEN_SIZE.toFloat(),
@@ -212,7 +213,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
     private fun updateEventCollision() {
         when (dir) {
             PlayerDir.UP -> {
-                eventSquare = Square(
+                eventSquare = NormalSquare(
                     size = VIRTUAL_PLAYER_SIZE,
                     point = Point(
                         x = playerPositionRepository.getPlayerPosition().x,
@@ -222,7 +223,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
             }
 
             PlayerDir.DOWN -> {
-                eventSquare = Square(
+                eventSquare = NormalSquare(
                     size = VIRTUAL_PLAYER_SIZE,
                     point = Point(
                         x = playerPositionRepository.getPlayerPosition().x,
@@ -232,7 +233,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
             }
 
             PlayerDir.LEFT -> {
-                eventSquare = Square(
+                eventSquare = NormalSquare(
                     size = VIRTUAL_PLAYER_SIZE,
                     point = Point(
                         x = playerPositionRepository.getPlayerPosition().x - VIRTUAL_PLAYER_SIZE / 2,
@@ -242,7 +243,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
             }
 
             PlayerDir.RIGHT -> {
-                eventSquare = Square(
+                eventSquare = NormalSquare(
                     size = VIRTUAL_PLAYER_SIZE,
                     point = Point(
                         x = playerPositionRepository.getPlayerPosition().x + VIRTUAL_PLAYER_SIZE / 2,
@@ -316,7 +317,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
     private fun mediateVelocity() {
         val mediatedVelocity = velocityManageUseCase.manageVelocity(
             tentativePlayerVelocity = tentativePlayerVelocity,
-            playerMoveArea = playerMoveArea,
+            playerMoveArea = playerMoveArea.square,
         )
 
         player.updateVelocity(mediatedVelocity.first)
@@ -327,11 +328,12 @@ class MapViewModel : ControllerCallback, KoinComponent {
     private var canMove = true
 
     private fun checkMove() {
-        val square = playerPositionRepository.getPlayerPosition().getNew()
-        square.move(
-            dx = tentativePlayerVelocity.x,
-            dy = tentativePlayerVelocity.y
-        )
+        val square = playerPositionRepository
+            .getPlayerPosition()
+            .move(
+                dx = tentativePlayerVelocity.x,
+                dy = tentativePlayerVelocity.y
+            )
 
         // このままの速度で動けるなら移動
         if (isCollidedUseCase.invoke(square).not()) {
