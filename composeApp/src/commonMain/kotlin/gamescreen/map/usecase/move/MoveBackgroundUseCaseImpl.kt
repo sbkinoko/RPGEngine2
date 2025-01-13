@@ -3,7 +3,6 @@ package gamescreen.map.usecase.move
 import gamescreen.map.domain.BackgroundCell
 import gamescreen.map.domain.Velocity
 import gamescreen.map.domain.collision.square.NormalSquare
-import gamescreen.map.domain.moveDisplayPoint
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.npc.NPCRepository
 
@@ -21,7 +20,7 @@ class MoveBackgroundUseCaseImpl(
             .value
             .map { rowArray ->
                 rowArray.map { bgCell ->
-                    val moved = bgCell.moveDisplayPoint(
+                    val moved = bgCell.move(
                         dx = velocity.x,
                         dy = velocity.y,
                     )
@@ -107,7 +106,7 @@ class MoveBackgroundUseCaseImpl(
             return bgCell.copy(
                 mapPoint = mapPoint,
                 cellType = cellType,
-            ).moveDisplayPoint(
+            ).move(
                 dx = dx,
                 dy = dy,
             )

@@ -6,7 +6,7 @@ import values.EventType
 data class EventSquare(
     override val eventID: EventType,
     override val square: Square,
-) : SquareWrapper(
+) : SquareWrapper<EventSquare>(
     square = square,
 ), EventObject {
     constructor(
@@ -22,4 +22,22 @@ data class EventSquare(
             size = size,
         )
     )
+
+    override fun move(dx: Float, dy: Float): EventSquare {
+        return this.copy(
+            square = square.move(
+                dx = dx,
+                dy = dy,
+            )
+        )
+    }
+
+    override fun moveTo(x: Float, y: Float): EventSquare {
+        return this.copy(
+            square = square.moveTo(
+                x = x,
+                y = y,
+            )
+        )
+    }
 }

@@ -1,6 +1,6 @@
 package gamescreen.map.domain.collision.square
 
-abstract class SquareWrapper(
+abstract class SquareWrapper<T : Square>(
     open val square: Square,
 ) : Square {
     override val size: Float
@@ -24,17 +24,7 @@ abstract class SquareWrapper(
     override val bottomSide: Float
         get() = square.bottomSide
 
-    override fun move(dx: Float, dy: Float): Square {
-        return square.move(
-            dx = dx,
-            dy = dy,
-        )
-    }
+    abstract override fun move(dx: Float, dy: Float): T
 
-    override fun moveTo(x: Float, y: Float): Square {
-        return square.moveTo(
-            x = x,
-            y = y,
-        )
-    }
+    abstract override fun moveTo(x: Float, y: Float): T
 }
