@@ -5,7 +5,7 @@ import gamescreen.map.domain.collision.ShapeCollisionDetect
 import gamescreen.map.domain.move
 
 data class NormalSquare(
-    override val point: Point = Point(),
+    val point: Point = Point(),
     override val size: Float,
 ) : ShapeCollisionDetect,
     Square {
@@ -20,6 +20,24 @@ data class NormalSquare(
         ),
         size = size,
     )
+
+    override val x: Float
+        get() = point.x
+
+    override val y: Float
+        get() = point.y
+
+    override val leftSide: Float
+        get() = point.x
+
+    override val rightSide: Float
+        get() = point.x + size
+
+    override val topSide: Float
+        get() = point.y
+
+    override val bottomSide: Float
+        get() = point.y + size
 
     override fun move(
         dx: Float,

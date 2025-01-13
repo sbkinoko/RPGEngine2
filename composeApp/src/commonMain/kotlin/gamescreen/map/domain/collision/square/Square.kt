@@ -1,12 +1,9 @@
 package gamescreen.map.domain.collision.square
 
 import androidx.compose.ui.graphics.Path
-import gamescreen.map.domain.Point
 import gamescreen.map.domain.collision.ShapeCollisionDetect
 
 interface Square : ShapeCollisionDetect {
-    val point: Point
-
     val size: Float
 
     fun move(
@@ -26,22 +23,16 @@ interface Square : ShapeCollisionDetect {
         get() = topSide
 
     val x: Float
-        get() = point.x
 
     val y: Float
-        get() = point.y
 
     val leftSide: Float
-        get() = point.x
 
     val rightSide: Float
-        get() = point.x + size
 
     val topSide: Float
-        get() = point.y
 
     val bottomSide: Float
-        get() = point.y + size
 
     fun isLeft(other: Square): Boolean {
         return this.rightSide <= other.leftSide
