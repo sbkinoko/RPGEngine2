@@ -8,22 +8,26 @@ import kotlinx.coroutines.flow.asStateFlow
 import values.EventType
 
 class NPCRepositoryImpl : NPCRepository {
-    private val mutableNpcStateFlow =
+    private val mutableNpcStateFlow: MutableStateFlow<List<EventSquare>> =
         MutableStateFlow(
-            EventSquare(
-                eventID = EventType.Talk,
-                size = MapViewModel.VIRTUAL_SCREEN_SIZE / 5f,
-                x = MapViewModel.VIRTUAL_SCREEN_SIZE * 3f / 5f,
-                y = MapViewModel.VIRTUAL_SCREEN_SIZE * 3f / 5f,
-            )
+            listOf()
         )
 
-    override val npcStateFlow: StateFlow<EventSquare>
+    override val npcStateFlow: StateFlow<List<EventSquare>>
         get() = mutableNpcStateFlow.asStateFlow()
 
     override fun setNpc(
-        eventSquare: EventSquare,
+        eventSquares: List<EventSquare>,
     ) {
-        mutableNpcStateFlow.value = eventSquare
+        mutableNpcStateFlow.value = eventSquares
+    }
+
+    companion object {
+        val eventSquare = EventSquare(
+            eventID = EventType.Talk,
+            size = MapViewModel.VIRTUAL_SCREEN_SIZE / 5f,
+            x = MapViewModel.VIRTUAL_SCREEN_SIZE * 3f / 5f,
+            y = MapViewModel.VIRTUAL_SCREEN_SIZE * 3f / 5f,
+        )
     }
 }
