@@ -1,7 +1,6 @@
-package gamescreen.map.usecase.resetnppc
+package gamescreen.map.usecase.resetnpc
 
 import gamescreen.map.ModuleMap
-import gamescreen.map.usecase.resetnpc.ResetNPCPositionUseCase
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
