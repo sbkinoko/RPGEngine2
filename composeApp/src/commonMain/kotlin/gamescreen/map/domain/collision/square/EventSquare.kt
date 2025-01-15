@@ -10,8 +10,8 @@ data class EventSquare(
     square = square,
 ), EventObject {
     constructor(
-        x: Float,
-        y: Float,
+        x: Float = 0f,
+        y: Float = 0f,
         size: Float,
         eventID: EventType,
     ) : this(

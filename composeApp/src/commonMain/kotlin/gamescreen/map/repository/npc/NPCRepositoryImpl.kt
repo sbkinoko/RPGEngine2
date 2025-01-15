@@ -26,14 +26,21 @@ class NPCRepositoryImpl : NPCRepository {
     }
 
     companion object {
-        val npc = NPC(
+        val npc1 = NPC(
             npcType = NPCType.GIRL,
-            mapPoint = MapPoint(0, 0),
+            mapPoint = MapPoint(3, 3),
             eventSquare = EventSquare(
                 eventID = EventType.Talk,
-                size = MapViewModel.VIRTUAL_SCREEN_SIZE / 5f,
-                x = MapViewModel.VIRTUAL_SCREEN_SIZE * 3f / 5f,
-                y = MapViewModel.VIRTUAL_SCREEN_SIZE * 3f / 5f,
+                size = MapViewModel.CELL_SIZE * 0.5f,
+            ),
+        )
+
+        val npc2 = NPC(
+            npcType = NPCType.GIRL,
+            mapPoint = MapPoint(8, 8),
+            eventSquare = EventSquare(
+                eventID = EventType.Talk,
+                size = MapViewModel.CELL_SIZE,
             ),
         )
     }
