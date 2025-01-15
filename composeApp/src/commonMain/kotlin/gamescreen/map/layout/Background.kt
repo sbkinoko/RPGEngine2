@@ -131,21 +131,23 @@ fun Background(
                         )
                     }
 
-                    npc.forEach {
-                        Image(
-                            modifier = Modifier
-                                .size(
-                                    (it.size * screenRatio).pxToDp()
-                                )
-                                .offset(
-                                    x = (it.baseX * screenRatio).pxToDp(),
-                                    y = (it.baseY * screenRatio).pxToDp(),
+                    npc.forEach { npc ->
+                        npc.eventSquare.let {
+                            Image(
+                                modifier = Modifier
+                                    .size(
+                                        (it.size * screenRatio).pxToDp()
+                                    )
+                                    .offset(
+                                        x = (it.baseX * screenRatio).pxToDp(),
+                                        y = (it.baseY * screenRatio).pxToDp(),
+                                    ),
+                                painter = painterResource(
+                                    imageBinder.bindNPC()
                                 ),
-                            painter = painterResource(
-                                imageBinder.bindNPC()
-                            ),
-                            contentDescription = "NPC"
-                        )
+                                contentDescription = "NPC"
+                            )
+                        }
                     }
                 }
             }

@@ -45,12 +45,14 @@ class GetEventTypeUseCaseImpl(
             }
         }
 
-        npcRepository.npcStateFlow.value.forEach {
-            if (it.isOverlap(square).not()) {
-                return@forEach
-            }
+        npcRepository.npcStateFlow.value.forEach { npc ->
+            npc.eventSquare.let {
+                if (it.isOverlap(square).not()) {
+                    return@forEach
+                }
 
-            return it.eventID
+                return it.eventID
+            }
         }
 
         return EventType.None
