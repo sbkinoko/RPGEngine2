@@ -2,7 +2,7 @@ package gamescreen.map.data
 
 
 import core.domain.mapcell.CellType
-import gamescreen.map.domain.MapData
+import gamescreen.map.domain.npc.NPC
 
 class LoopMap : MapData() {
     override val isLoop = true
@@ -10,6 +10,10 @@ class LoopMap : MapData() {
         get() = 10
     override val height: Int
         get() = 10
+
+    override val npcList: List<NPC>
+        get() = listOf()
+
     override val field: Array<Array<CellType>>
         get() = arrayOf(
             arrayOf(

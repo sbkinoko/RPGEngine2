@@ -1,11 +1,10 @@
 package gamescreen.map.usecase.resetposition
 
+import gamescreen.map.data.MapData
 import gamescreen.map.domain.BackgroundCell
-import gamescreen.map.domain.MapData
 import gamescreen.map.domain.collision.square.NormalSquare
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.npc.NPCRepository
-import gamescreen.map.repository.npc.NPCRepositoryImpl
 import kotlinx.coroutines.runBlocking
 
 class ResetBackgroundPositionUseCaseImpl(
@@ -56,9 +55,7 @@ class ResetBackgroundPositionUseCaseImpl(
             )
 
             npcRepository.setNpc(
-                listOf(
-                    NPCRepositoryImpl.npc,
-                )
+                mapData.npcList,
             )
         }
     }

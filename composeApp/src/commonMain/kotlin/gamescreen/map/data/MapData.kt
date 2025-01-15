@@ -1,6 +1,8 @@
-package gamescreen.map.domain
+package gamescreen.map.data
 
 import core.domain.mapcell.CellType
+import gamescreen.map.domain.MapPoint
+import gamescreen.map.domain.npc.NPC
 
 abstract class MapData {
 
@@ -11,6 +13,8 @@ abstract class MapData {
     abstract val height: Int
 
     abstract val field: Array<Array<CellType>>
+
+    abstract val npcList: List<NPC>
 
     fun getDataAt(
         x: Int,
