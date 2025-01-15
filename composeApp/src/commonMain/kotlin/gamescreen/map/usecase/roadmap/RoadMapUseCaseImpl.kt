@@ -12,6 +12,7 @@ class RoadMapUseCaseImpl(
     private val resetNPCPositionUseCase: ResetNPCPositionUseCase,
     private val updateCellContainPlayerUseCase: UpdateCellContainPlayerUseCase,
 ) : RoadMapUseCase {
+
     override fun invoke(
         mapX: Int,
         mapY: Int,

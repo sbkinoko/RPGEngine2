@@ -5,6 +5,7 @@ import gamescreen.map.repository.npc.NPCRepository
 import gamescreen.map.viewmodel.MapViewModel
 import kotlinx.coroutines.runBlocking
 
+//todo test作る
 class ResetNPCPositionUseCaseImpl(
     private val npcRepository: NPCRepository,
 ) : ResetNPCPositionUseCase {
