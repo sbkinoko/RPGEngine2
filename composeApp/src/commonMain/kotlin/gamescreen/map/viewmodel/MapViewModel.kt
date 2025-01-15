@@ -140,7 +140,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
     val npcFlow = npcRepository.npcStateFlow
 
     init {
-        backgroundRepository.cellNum = 5
+        backgroundRepository.cellNum = CELL_NUM
         backgroundRepository.screenSize = VIRTUAL_SCREEN_SIZE
 
         CoroutineScope(Dispatchers.Default).launch {
@@ -408,5 +408,8 @@ class MapViewModel : ControllerCallback, KoinComponent {
         const val MOVE_BORDER = 0.3f
         const val VIRTUAL_SCREEN_SIZE = 210
         const val VIRTUAL_PLAYER_SIZE = 20f
+        const val CELL_NUM = 5
+
+        const val CELL_SIZE = VIRTUAL_SCREEN_SIZE / CELL_NUM.toFloat()
     }
 }

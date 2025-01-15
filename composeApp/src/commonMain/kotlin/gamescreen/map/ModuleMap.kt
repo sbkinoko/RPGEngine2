@@ -35,6 +35,8 @@ import gamescreen.map.usecase.event.cellevent.CellEventUseCase
 import gamescreen.map.usecase.event.cellevent.CellEventUseCaseImpl
 import gamescreen.map.usecase.move.MoveBackgroundUseCase
 import gamescreen.map.usecase.move.MoveBackgroundUseCaseImpl
+import gamescreen.map.usecase.resetnpc.ResetNPCPositionUseCase
+import gamescreen.map.usecase.resetnpc.ResetNPCPositionUseCaseImpl
 import gamescreen.map.usecase.resetposition.ResetBackgroundPositionUseCase
 import gamescreen.map.usecase.resetposition.ResetBackgroundPositionUseCaseImpl
 import gamescreen.map.usecase.roadmap.RoadMapUseCase
@@ -97,6 +99,11 @@ val ModuleMap = module {
     single<ResetBackgroundPositionUseCase> {
         ResetBackgroundPositionUseCaseImpl(
             backgroundRepository = get(),
+        )
+    }
+
+    single<ResetNPCPositionUseCase> {
+        ResetNPCPositionUseCaseImpl(
             npcRepository = get(),
         )
     }
@@ -184,6 +191,7 @@ val ModuleMap = module {
         RoadMapUseCaseImpl(
             setPlayerCenterUseCase = get(),
             resetBackgroundPositionUseCase = get(),
+            resetNPCPositionUseCase = get(),
             updateCellContainPlayerUseCase = get(),
         )
     }

@@ -1,8 +1,8 @@
 package gamescreen.map.repository.backgroundcell
 
 import core.domain.mapcell.CellType
+import gamescreen.map.data.MapData
 import gamescreen.map.domain.BackgroundCell
-import gamescreen.map.domain.MapData
 import kotlinx.coroutines.flow.StateFlow
 
 interface BackgroundRepository {
