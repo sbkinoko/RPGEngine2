@@ -57,7 +57,7 @@ class ResetBackgroundPositionUseCaseImpl(
 
             npcRepository.setNpc(
                 listOf(
-                    NPCRepositoryImpl.eventSquare,
+                    NPCRepositoryImpl.npc,
                 )
             )
         }

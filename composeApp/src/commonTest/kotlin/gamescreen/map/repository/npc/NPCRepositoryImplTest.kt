@@ -1,7 +1,10 @@
 package gamescreen.map.repository.npc
 
 import gamescreen.map.ModuleMap
+import gamescreen.map.domain.MapPoint
 import gamescreen.map.domain.collision.square.EventSquare
+import gamescreen.map.domain.npc.NPC
+import gamescreen.map.domain.npc.NPCType
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -36,7 +39,7 @@ class NPCRepositoryImplTest : KoinTest {
     fun initialTest() {
         runBlocking {
             var count = 0
-            lateinit var result: List<EventSquare>
+            lateinit var result: List<NPC>
             val collectJob = launch {
                 npcRepository.npcStateFlow.collect {
                     count++
@@ -68,11 +71,17 @@ class NPCRepositoryImplTest : KoinTest {
             size = 3f,
             eventID = EventType.Talk
         )
-        val list = listOf(eventSquare)
+        val npc = NPC(
+            npcType = NPCType.GIRL,
+            mapPoint = MapPoint(0, 0),
+            eventSquare = eventSquare,
+        )
+
+        val list = listOf(npc)
 
         runBlocking {
             var count = 0
-            lateinit var result: List<EventSquare>
+            lateinit var result: List<NPC>
             val collectJob = launch {
                 npcRepository.npcStateFlow.collect {
                     count++

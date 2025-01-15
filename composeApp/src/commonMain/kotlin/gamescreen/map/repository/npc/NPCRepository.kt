@@ -1,12 +1,12 @@
 package gamescreen.map.repository.npc
 
-import gamescreen.map.domain.collision.square.EventSquare
+import gamescreen.map.domain.npc.NPC
 import kotlinx.coroutines.flow.StateFlow
 
 interface NPCRepository {
-    val npcStateFlow: StateFlow<List<EventSquare>>
+    val npcStateFlow: StateFlow<List<NPC>>
 
     fun setNpc(
-        eventSquares: List<EventSquare>,
+        npcList: List<NPC>,
     )
 }

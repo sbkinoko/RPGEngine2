@@ -33,10 +33,12 @@ class IsCollidedUseCaseImpl(
                 }
             }
 
-        npcRepository.npcStateFlow.value.forEach {
-            if (it.isOverlap(playerSquare)
-            ) {
-                return true
+        npcRepository.npcStateFlow.value.forEach { npc ->
+            npc.eventSquare.let {
+                if (it.isOverlap(playerSquare)
+                ) {
+                    return true
+                }
             }
         }
         return false

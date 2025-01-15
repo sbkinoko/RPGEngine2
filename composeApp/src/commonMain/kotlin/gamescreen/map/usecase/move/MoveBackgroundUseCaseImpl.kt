@@ -36,17 +36,21 @@ class MoveBackgroundUseCaseImpl(
             background = background,
         )
 
-        val npc = npcRepository.npcStateFlow.value.map {
-            it.copy(
-                square = it.square.move(
-                    dx = velocity.x,
-                    dy = velocity.y,
+        val npcList = npcRepository.npcStateFlow.value.map { npc ->
+            npc.eventSquare.let {
+                npc.copy(
+                    eventSquare = it.copy(
+                        square = it.square.move(
+                            dx = velocity.x,
+                            dy = velocity.y,
+                        )
+                    )
                 )
-            )
+            }
         }
 
         npcRepository.setNpc(
-            npc
+            npcList = npcList,
         )
     }
 
