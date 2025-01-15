@@ -191,6 +191,7 @@ val ModuleMap = module {
         RoadMapUseCaseImpl(
             setPlayerCenterUseCase = get(),
             resetBackgroundPositionUseCase = get(),
+            resetNPCPositionUseCase = get(),
             updateCellContainPlayerUseCase = get(),
         )
     }
