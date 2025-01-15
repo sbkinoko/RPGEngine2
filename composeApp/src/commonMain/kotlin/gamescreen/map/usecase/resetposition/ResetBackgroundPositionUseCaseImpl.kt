@@ -4,13 +4,10 @@ import gamescreen.map.data.MapData
 import gamescreen.map.domain.BackgroundCell
 import gamescreen.map.domain.collision.square.NormalSquare
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
-import gamescreen.map.repository.npc.NPCRepository
-import gamescreen.map.viewmodel.MapViewModel
 import kotlinx.coroutines.runBlocking
 
 class ResetBackgroundPositionUseCaseImpl(
     private val backgroundRepository: BackgroundRepository,
-    private val npcRepository: NPCRepository,
 ) : ResetBackgroundPositionUseCase {
 
     override operator fun invoke(
@@ -53,28 +50,6 @@ class ResetBackgroundPositionUseCaseImpl(
             // 更新した情報を元に背景リセット
             backgroundRepository.setBackground(
                 background = background,
-            )
-
-            val npcList = mapData.npcList.map {
-                val x =
-                    MapViewModel.VIRTUAL_SCREEN_SIZE / 2f +
-                            (it.mapPoint.x - mapX) * MapViewModel.CELL_SIZE -
-                            it.eventSquare.square.size / 2
-                val y =
-                    MapViewModel.VIRTUAL_SCREEN_SIZE / 2f +
-                            (it.mapPoint.y - mapY) * MapViewModel.CELL_SIZE -
-                            it.eventSquare.square.size / 2
-
-                it.copy(
-                    eventSquare = it.eventSquare.moveTo(
-                        x = x,
-                        y = y,
-                    )
-                )
-            }
-
-            npcRepository.setNpc(
-                npcList,
             )
         }
     }
