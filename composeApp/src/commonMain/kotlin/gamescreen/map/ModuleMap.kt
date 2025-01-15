@@ -5,6 +5,8 @@ import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.backgroundcell.BackgroundRepositoryImpl
 import gamescreen.map.repository.collision.CollisionRepository
 import gamescreen.map.repository.collision.CollisionRepositoryImpl
+import gamescreen.map.repository.npc.NPCRepository
+import gamescreen.map.repository.npc.NPCRepositoryImpl
 import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.repository.player.PlayerPositionRepositoryImpl
 import gamescreen.map.repository.playercell.PlayerCellRepository
@@ -33,6 +35,8 @@ import gamescreen.map.usecase.event.cellevent.CellEventUseCase
 import gamescreen.map.usecase.event.cellevent.CellEventUseCaseImpl
 import gamescreen.map.usecase.move.MoveBackgroundUseCase
 import gamescreen.map.usecase.move.MoveBackgroundUseCaseImpl
+import gamescreen.map.usecase.resetnpc.ResetNPCPositionUseCase
+import gamescreen.map.usecase.resetnpc.ResetNPCPositionUseCaseImpl
 import gamescreen.map.usecase.resetposition.ResetBackgroundPositionUseCase
 import gamescreen.map.usecase.resetposition.ResetBackgroundPositionUseCaseImpl
 import gamescreen.map.usecase.roadmap.RoadMapUseCase
@@ -69,6 +73,10 @@ val ModuleMap = module {
         CollisionRepositoryImpl()
     }
 
+    single<NPCRepository> {
+        NPCRepositoryImpl()
+    }
+
     single {
         PlayerMoveUseCase(
             playerPositionRepository = get(),
@@ -83,13 +91,20 @@ val ModuleMap = module {
 
     single<MoveBackgroundUseCase> {
         MoveBackgroundUseCaseImpl(
-            repository = get(),
+            backgroundRepository = get(),
+            npcRepository = get(),
         )
     }
 
     single<ResetBackgroundPositionUseCase> {
         ResetBackgroundPositionUseCaseImpl(
-            repository = get(),
+            backgroundRepository = get(),
+        )
+    }
+
+    single<ResetNPCPositionUseCase> {
+        ResetNPCPositionUseCaseImpl(
+            npcRepository = get(),
         )
     }
 
@@ -130,12 +145,14 @@ val ModuleMap = module {
         IsCollidedUseCaseImpl(
             backgroundRepository = get(),
             getCollisionListUseCase = get(),
+            npcRepository = get(),
         )
     }
 
     single<GetEventTypeUseCase> {
         GetEventTypeUseCaseImpl(
             backgroundRepository = get(),
+            npcRepository = get(),
             getCollisionListUseCase = get(),
         )
     }
@@ -158,6 +175,7 @@ val ModuleMap = module {
     single<ActionEventUseCase> {
         ActionEventUseCaseImpl(
             textRepository = get(),
+            choiceRepository = get(),
             addToolUseCase = get(),
         )
     }
@@ -173,6 +191,7 @@ val ModuleMap = module {
         RoadMapUseCaseImpl(
             setPlayerCenterUseCase = get(),
             resetBackgroundPositionUseCase = get(),
+            resetNPCPositionUseCase = get(),
             updateCellContainPlayerUseCase = get(),
         )
     }
@@ -184,7 +203,6 @@ val ModuleMap = module {
             playerMoveToUseCase = get(),
         )
     }
-
 
     single<DecideConnectTypeUseCase> {
         DecideConnectTypeUseCaseImpl()

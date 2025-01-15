@@ -11,10 +11,12 @@ import gamescreen.map.domain.Player
 import gamescreen.map.domain.PlayerDir
 import gamescreen.map.domain.Point
 import gamescreen.map.domain.Velocity
-import gamescreen.map.domain.collision.Square
+import gamescreen.map.domain.collision.square.NormalSquare
+import gamescreen.map.domain.collision.square.Square
 import gamescreen.map.domain.toDir
 import gamescreen.map.layout.PlayerMoveSquare
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
+import gamescreen.map.repository.npc.NPCRepository
 import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.repository.playercell.PlayerCellRepository
 import gamescreen.map.usecase.PlayerMoveManageUseCase
@@ -57,12 +59,13 @@ class MapViewModel : ControllerCallback, KoinComponent {
     private val backgroundRepository: BackgroundRepository by inject()
     private val playerCellRepository: PlayerCellRepository by inject()
 
+    private val npcRepository: NPCRepository by inject()
+
     private val getCollisionListUseCase: GetCollisionListUseCase by inject()
     fun getCollisionList(backgroundCell: BackgroundCell) =
         getCollisionListUseCase.invoke(
             backgroundCell = backgroundCell,
         )
-
 
     val playerIncludeCellFlow = playerCellRepository
         .playerIncludeCellFlow
@@ -80,7 +83,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
     val playerSquare: StateFlow<Square> =
         playerPositionRepository.playerPositionStateFlow
 
-    private var eventSquare: Square = Square(
+    private var eventSquare: NormalSquare = NormalSquare(
         size = VIRTUAL_PLAYER_SIZE,
         point = Point(
             x = playerPositionRepository.getPlayerPosition().x,
@@ -95,11 +98,11 @@ class MapViewModel : ControllerCallback, KoinComponent {
     private val mutableEventSquareFlow = MutableStateFlow(
         eventSquare
     )
-    val eventSquareFlow: StateFlow<Square> = mutableEventSquareFlow.asStateFlow()
+    val eventSquareFlow: StateFlow<NormalSquare> = mutableEventSquareFlow.asStateFlow()
 
     private var tapPoint: Point? = null
 
-    private var playerMoveArea: Square = PlayerMoveSquare(
+    private var playerMoveArea = PlayerMoveSquare(
         screenSize = VIRTUAL_SCREEN_SIZE,
         borderRate = MOVE_BORDER,
     )
@@ -134,13 +137,15 @@ class MapViewModel : ControllerCallback, KoinComponent {
     val backgroundCells =
         backgroundRepository.backgroundStateFlow
 
+    val npcFlow = npcRepository.npcStateFlow
+
     init {
-        backgroundRepository.cellNum = 5
+        backgroundRepository.cellNum = CELL_NUM
         backgroundRepository.screenSize = VIRTUAL_SCREEN_SIZE
 
         CoroutineScope(Dispatchers.Default).launch {
             playerPositionRepository.setPlayerPosition(
-                Square(size = player.size)
+                NormalSquare(size = player.size)
             )
         }
 
@@ -151,7 +156,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
         )
     }
 
-    private val fieldSquare: Square = Square(
+    private val fieldSquare: NormalSquare = NormalSquare(
         x = 0f,
         y = 0f,
         size = VIRTUAL_SCREEN_SIZE.toFloat(),
@@ -208,7 +213,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
     private fun updateEventCollision() {
         when (dir) {
             PlayerDir.UP -> {
-                eventSquare = Square(
+                eventSquare = NormalSquare(
                     size = VIRTUAL_PLAYER_SIZE,
                     point = Point(
                         x = playerPositionRepository.getPlayerPosition().x,
@@ -218,7 +223,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
             }
 
             PlayerDir.DOWN -> {
-                eventSquare = Square(
+                eventSquare = NormalSquare(
                     size = VIRTUAL_PLAYER_SIZE,
                     point = Point(
                         x = playerPositionRepository.getPlayerPosition().x,
@@ -228,7 +233,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
             }
 
             PlayerDir.LEFT -> {
-                eventSquare = Square(
+                eventSquare = NormalSquare(
                     size = VIRTUAL_PLAYER_SIZE,
                     point = Point(
                         x = playerPositionRepository.getPlayerPosition().x - VIRTUAL_PLAYER_SIZE / 2,
@@ -238,7 +243,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
             }
 
             PlayerDir.RIGHT -> {
-                eventSquare = Square(
+                eventSquare = NormalSquare(
                     size = VIRTUAL_PLAYER_SIZE,
                     point = Point(
                         x = playerPositionRepository.getPlayerPosition().x + VIRTUAL_PLAYER_SIZE / 2,
@@ -312,7 +317,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
     private fun mediateVelocity() {
         val mediatedVelocity = velocityManageUseCase.manageVelocity(
             tentativePlayerVelocity = tentativePlayerVelocity,
-            playerMoveArea = playerMoveArea,
+            playerMoveArea = playerMoveArea.square,
         )
 
         player.updateVelocity(mediatedVelocity.first)
@@ -323,11 +328,12 @@ class MapViewModel : ControllerCallback, KoinComponent {
     private var canMove = true
 
     private fun checkMove() {
-        val square = playerPositionRepository.getPlayerPosition().getNew()
-        square.move(
-            dx = tentativePlayerVelocity.x,
-            dy = tentativePlayerVelocity.y
-        )
+        val square = playerPositionRepository
+            .getPlayerPosition()
+            .move(
+                dx = tentativePlayerVelocity.x,
+                dy = tentativePlayerVelocity.y
+            )
 
         // このままの速度で動けるなら移動
         if (isCollidedUseCase.invoke(square).not()) {
@@ -402,5 +408,8 @@ class MapViewModel : ControllerCallback, KoinComponent {
         const val MOVE_BORDER = 0.3f
         const val VIRTUAL_SCREEN_SIZE = 210
         const val VIRTUAL_PLAYER_SIZE = 20f
+        const val CELL_NUM = 5
+
+        const val CELL_SIZE = VIRTUAL_SCREEN_SIZE / CELL_NUM.toFloat()
     }
 }

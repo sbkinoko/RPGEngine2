@@ -35,6 +35,10 @@ fun Background(
         .playerIncludeCellFlow
         .collectAsState()
 
+    val npc by mapViewModel
+        .npcFlow
+        .collectAsState()
+
     val imageBinder = ImageBinder()
 
     // fixme 背景が動いてない場合はリロードしない
@@ -118,13 +122,32 @@ fun Background(
                                 ),
                             onDraw = {
                                 drawPath(
-                                    path = it.toPath(
+                                    path = it.getPath(
                                         screenRatio,
                                     ),
                                     color = Colors.CollisionColor,
                                 )
                             }
                         )
+                    }
+
+                    npc.forEach { npc ->
+                        npc.eventSquare.let {
+                            Image(
+                                modifier = Modifier
+                                    .size(
+                                        (it.size * screenRatio).pxToDp()
+                                    )
+                                    .offset(
+                                        x = (it.baseX * screenRatio).pxToDp(),
+                                        y = (it.baseY * screenRatio).pxToDp(),
+                                    ),
+                                painter = painterResource(
+                                    imageBinder.bindNPC()
+                                ),
+                                contentDescription = "NPC"
+                            )
+                        }
                     }
                 }
             }

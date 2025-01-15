@@ -1,7 +1,7 @@
 package gamescreen.map.usecase.move
 
 import gamescreen.map.domain.Velocity
-import gamescreen.map.domain.collision.Square
+import gamescreen.map.domain.collision.square.NormalSquare
 
 interface MoveBackgroundUseCase {
 
@@ -12,6 +12,6 @@ interface MoveBackgroundUseCase {
      */
     suspend operator fun invoke(
         velocity: Velocity,
-        fieldSquare: Square,
+        fieldSquare: NormalSquare,
     )
 }

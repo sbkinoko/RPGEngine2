@@ -2,8 +2,6 @@ package gamescreen.choice
 
 import gamescreen.choice.repository.ChoiceRepository
 import gamescreen.choice.repository.ChoiceRepositoryImpl
-import gamescreen.text.repository.TextRepository
-import gamescreen.text.repository.TextRepositoryImpl
 import org.koin.dsl.module
 
 val ModuleChoice = module {
@@ -11,7 +9,7 @@ val ModuleChoice = module {
         ChoiceRepositoryImpl()
     }
 
-    single<TextRepository> {
-        TextRepositoryImpl()
+    single<ChoiceViewModel> {
+        ChoiceViewModel()
     }
 }

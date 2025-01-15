@@ -1,6 +1,7 @@
 package gamescreen.map.repository.player
 
-import gamescreen.map.domain.collision.Square
+import gamescreen.map.domain.collision.square.NormalSquare
+import gamescreen.map.domain.collision.square.Square
 import kotlinx.coroutines.flow.StateFlow
 
 interface PlayerPositionRepository {
@@ -12,7 +13,7 @@ interface PlayerPositionRepository {
 
     companion object {
         val initialSquare: Square
-            get() = Square(
+            get() = NormalSquare(
                 x = 0f,
                 y = 0f,
                 size = 0f,

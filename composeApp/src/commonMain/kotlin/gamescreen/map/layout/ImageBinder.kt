@@ -12,6 +12,7 @@ import rpgengine.composeapp.generated.resources.bg_00
 import rpgengine.composeapp.generated.resources.bg_02
 import rpgengine.composeapp.generated.resources.bg_20
 import rpgengine.composeapp.generated.resources.bg_null
+import rpgengine.composeapp.generated.resources.npc_1_1_1
 import rpgengine.composeapp.generated.resources.ob_01_01
 import rpgengine.composeapp.generated.resources.ob_01_02
 import rpgengine.composeapp.generated.resources.ob_01_03
@@ -91,4 +92,13 @@ class ImageBinder : KoinComponent {
             }
         }
     }
+
+    /**
+     * NPCの紐づけ
+     */
+    @OptIn(ExperimentalResourceApi::class)
+    fun bindNPC(): DrawableResource {
+        return Res.drawable.npc_1_1_1
+    }
+
 }

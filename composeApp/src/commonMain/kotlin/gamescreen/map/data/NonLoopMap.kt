@@ -1,7 +1,8 @@
 package gamescreen.map.data
 
 import core.domain.mapcell.CellType
-import gamescreen.map.domain.MapData
+import gamescreen.map.domain.npc.NPC
+import gamescreen.map.repository.npc.NPCRepositoryImpl
 
 class NonLoopMap : MapData() {
     override val isLoop = false
@@ -9,6 +10,13 @@ class NonLoopMap : MapData() {
         get() = 10
     override val height: Int
         get() = 10
+
+    override val npcList: List<NPC>
+        get() = listOf(
+            NPCRepositoryImpl.npc1,
+            NPCRepositoryImpl.npc2,
+        )
+
     override val field: Array<Array<CellType>>
         get() = Array(height) { y ->
             Array(width) { x ->

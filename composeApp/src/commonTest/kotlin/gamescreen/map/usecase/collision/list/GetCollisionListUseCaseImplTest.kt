@@ -3,8 +3,9 @@ package gamescreen.map.usecase.collision.list
 import core.domain.mapcell.CellType
 import gamescreen.map.domain.BackgroundCell
 import gamescreen.map.domain.MapPoint
-import gamescreen.map.domain.collision.CollisionDetectShape
-import gamescreen.map.domain.collision.Square
+import gamescreen.map.domain.collision.ShapeCollisionDetect
+import gamescreen.map.domain.collision.square.NormalSquare
+import gamescreen.map.domain.collision.square.Square
 import gamescreen.map.repository.collision.CollisionRepository
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -13,7 +14,7 @@ class GetCollisionListUseCaseImplTest {
 
     @Test
     fun call1() {
-        val squareValue = Square(
+        val squareValue = NormalSquare(
             x = 0f,
             y = 0f,
             size = 10f,
@@ -28,7 +29,7 @@ class GetCollisionListUseCaseImplTest {
 
     @Test
     fun call2() {
-        val squareValue = Square(
+        val squareValue = NormalSquare(
             x = 10f,
             y = 10f,
             size = 10f,
@@ -45,7 +46,7 @@ class GetCollisionListUseCaseImplTest {
      * 背景セルを作成して、当たり判定を取得するテスト
      */
     private fun callUseCase(
-        squareValue: Square,
+        squareValue: NormalSquare,
         cellTypeValue: CellType,
     ) {
         val backgroundCell = BackgroundCell(
@@ -60,7 +61,7 @@ class GetCollisionListUseCaseImplTest {
             override fun collisionData(
                 cellType: CellType,
                 square: Square,
-            ): List<CollisionDetectShape> {
+            ): List<ShapeCollisionDetect> {
                 assertEquals(
                     expected = cellTypeValue,
                     actual = cellType,

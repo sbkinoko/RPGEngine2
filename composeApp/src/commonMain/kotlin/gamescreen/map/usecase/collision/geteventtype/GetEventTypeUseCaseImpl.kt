@@ -1,8 +1,9 @@
 package gamescreen.map.usecase.collision.geteventtype
 
 import gamescreen.map.domain.collision.EventObject
-import gamescreen.map.domain.collision.Square
+import gamescreen.map.domain.collision.square.NormalSquare
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
+import gamescreen.map.repository.npc.NPCRepository
 import gamescreen.map.usecase.collision.list.GetCollisionListUseCase
 import values.EventType
 
@@ -10,10 +11,11 @@ import values.EventType
 class GetEventTypeUseCaseImpl(
     private val backgroundRepository: BackgroundRepository,
     private val getCollisionListUseCase: GetCollisionListUseCase,
+    private val npcRepository: NPCRepository,
 ) : GetEventTypeUseCase {
 
     override fun invoke(
-        square: Square,
+        square: NormalSquare,
     ): EventType {
         backgroundRepository.backgroundStateFlow.value.forEach { rowArray ->
             rowArray.forEach cell@{ cell ->
@@ -42,6 +44,17 @@ class GetEventTypeUseCaseImpl(
                 }
             }
         }
+
+        npcRepository.npcStateFlow.value.forEach { npc ->
+            npc.eventSquare.let {
+                if (it.isOverlap(square).not()) {
+                    return@forEach
+                }
+
+                return it.eventID
+            }
+        }
+
         return EventType.None
     }
 }

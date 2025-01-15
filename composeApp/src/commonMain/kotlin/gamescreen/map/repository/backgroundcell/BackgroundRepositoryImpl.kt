@@ -2,8 +2,8 @@ package gamescreen.map.repository.backgroundcell
 
 import core.domain.mapcell.CellType
 import gamescreen.map.data.LoopMap
+import gamescreen.map.data.MapData
 import gamescreen.map.domain.BackgroundCell
-import gamescreen.map.domain.MapData
 import gamescreen.map.viewmodel.MapViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

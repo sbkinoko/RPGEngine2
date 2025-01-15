@@ -20,6 +20,11 @@ class VelocityManagerUseCaseTest : KoinTest {
     private val velocityManageUseCase: VelocityManageUseCase by inject()
     private val moveToUseCase: PlayerMoveToUseCase by inject()
 
+    val playerMoveSquare = PlayerMoveSquare(
+        screenSize = MapViewModel.VIRTUAL_SCREEN_SIZE,
+        borderRate = MapViewModel.MOVE_BORDER,
+    )
+
     @BeforeTest
     fun beforeTest() {
         startKoin {
@@ -277,10 +282,7 @@ class VelocityManagerUseCaseTest : KoinTest {
     ) {
         velocityManageUseCase.manageVelocity(
             tentativePlayerVelocity = velocity,
-            playerMoveArea = PlayerMoveSquare(
-                screenSize = MapViewModel.VIRTUAL_SCREEN_SIZE,
-                borderRate = MapViewModel.MOVE_BORDER,
-            ),
+            playerMoveArea = playerMoveSquare.square,
         ).apply {
             first.apply {
                 assertEquals(

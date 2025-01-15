@@ -1,6 +1,6 @@
 package gamescreen.map.usecase.resetposition
 
-import gamescreen.map.domain.MapData
+import gamescreen.map.data.MapData
 
 interface ResetBackgroundPositionUseCase {
 

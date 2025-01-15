@@ -1,12 +1,15 @@
 package gamescreen.map.layout
 
-import gamescreen.map.domain.collision.Square
+import gamescreen.map.domain.collision.square.NormalSquare
+import gamescreen.map.domain.collision.square.Square
 
 class PlayerMoveSquare(
     screenSize: Int,
     borderRate: Float,
-) : Square(
-    x = screenSize * borderRate,
-    y = screenSize * borderRate,
-    size = screenSize * (1 - 2 * borderRate),
-)
+) {
+    val square: Square = NormalSquare(
+        x = screenSize * borderRate,
+        y = screenSize * borderRate,
+        size = screenSize * (1 - 2 * borderRate),
+    )
+}
