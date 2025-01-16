@@ -25,7 +25,6 @@ fun NPC(
 
     val imageBinder = ImageBinderNPC()
 
-    // fixme 背景が動いてない場合はリロードしない
     Box {
         npc.forEach { npc ->
             npc.eventSquare.let {
