@@ -30,7 +30,7 @@ class NPCRepositoryImpl : NPCRepository {
             npcType = NPCType.MARCHANT,
             mapPoint = MapPoint(3, 3),
             eventSquare = EventSquare(
-                eventID = EventType.Talk,
+                eventID = EventType.Shop,
                 size = MapViewModel.CELL_SIZE * 0.5f,
             ),
         )
