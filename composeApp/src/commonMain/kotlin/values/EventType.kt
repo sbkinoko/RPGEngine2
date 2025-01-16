@@ -7,6 +7,8 @@ sealed class EventType {
 
     data object Talk : EventType()
 
+    data object Shop : EventType()
+
     class Box(
         val id: BoxId,
     ) : EventType()
