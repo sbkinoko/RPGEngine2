@@ -6,6 +6,7 @@ import data.ModuleData
 import gamescreen.battle.ModuleBattle
 import gamescreen.choice.ModuleChoice
 import gamescreen.map.ModuleMap
+import gamescreen.mapshop.ModuleShop
 import gamescreen.menu.ModuleMenu
 import gamescreen.text.ModuleText
 import main.ModuleMain
@@ -24,6 +25,8 @@ class RPGApplication : Application() {
                 ModuleMap,
                 ModuleBattle,
                 ModuleMenu,
+                ModuleShop,
+
                 ModuleText,
                 ModuleChoice,
 
