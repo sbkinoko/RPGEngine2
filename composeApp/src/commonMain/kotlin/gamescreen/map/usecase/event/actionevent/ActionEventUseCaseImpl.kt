@@ -3,6 +3,7 @@ package gamescreen.map.usecase.event.actionevent
 import gamescreen.choice.Choice
 import gamescreen.choice.repository.ChoiceRepository
 import gamescreen.map.data.BoxData
+import gamescreen.mapshop.repoisitory.ShopMenuRepository
 import gamescreen.menu.usecase.bag.addtool.AddToolUseCase
 import gamescreen.text.TextBoxData
 import gamescreen.text.repository.TextRepository
@@ -11,6 +12,7 @@ import values.EventType
 class ActionEventUseCaseImpl(
     private val textRepository: TextRepository,
     private val choiceRepository: ChoiceRepository,
+    private val shopMenuRepository: ShopMenuRepository,
     private val addToolUseCase: AddToolUseCase,
 ) : ActionEventUseCase {
     override fun invoke(
@@ -71,11 +73,20 @@ class ActionEventUseCaseImpl(
             }
 
             is EventType.Shop -> {
-                val textBoxData = TextBoxData(
-                    text = "買い物中",
+
+                val textBoxData = listOf(
+                    TextBoxData(
+                        text = "いらっしゃい",
+                        callBack = {
+                            shopMenuRepository.setVisibility(
+                                isVisible = true,
+                            )
+                        }
+                    )
                 )
+
                 textRepository.push(
-                    textBoxData = textBoxData,
+                    textBoxDataList = textBoxData,
                 )
             }
         }
