@@ -34,6 +34,4 @@ object Colors {
     val MenuBackground = white
     val Disabled = transGrey
     val OverlayMenu = transGrey
-
-    val ShopBackground = transGrey
 }

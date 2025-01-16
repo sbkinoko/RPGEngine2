@@ -6,10 +6,6 @@ import org.koin.dsl.module
 
 val ModuleShop = module {
 
-    single {
-        ShopViewModel()
-    }
-
     single<ShopMenuRepository> {
         ShopMenuRepositoryImpl()
     }
