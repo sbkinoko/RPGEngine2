@@ -15,6 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.util.fastAny
 import common.extension.pxToDp
+import gamescreen.map.layout.background.Background
+import gamescreen.map.layout.npc.NPC
 import gamescreen.map.viewmodel.MapViewModel
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -62,6 +64,11 @@ fun MapScreen(
         Background(
             mapViewModel = mapViewModel,
             screenRatio = screenRatio
+        )
+
+        NPC(
+            mapViewModel = mapViewModel,
+            screenRatio = screenRatio,
         )
 
         Player(

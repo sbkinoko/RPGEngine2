@@ -23,8 +23,7 @@ fun Player(
     val dir = mapViewModel.dirFlow.collectAsState()
     val square = mapViewModel
         .playerSquare
-        .collectAsState(
-        )
+        .collectAsState()
 
     Box(
         modifier = modifier
