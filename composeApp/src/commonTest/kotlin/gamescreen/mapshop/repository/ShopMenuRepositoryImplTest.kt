@@ -1,7 +1,7 @@
 package gamescreen.mapshop.repository
 
+import gamescreen.mapshop.ModuleShop
 import gamescreen.mapshop.repoisitory.ShopMenuRepository
-import gamescreen.text.ModuleText
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -22,7 +22,7 @@ class ShopMenuRepositoryImplTest : KoinTest {
     fun beforeTest() {
         startKoin {
             modules(
-                ModuleText,
+                ModuleShop,
             )
         }
     }
@@ -35,7 +35,7 @@ class ShopMenuRepositoryImplTest : KoinTest {
     @Test
     fun checkInit() {
         runBlocking {
-            var result: Boolean = false
+            var result = false
             var count = 0
             val collectJob = launch {
                 shopMenuRepository.isVisibleStateFlow
@@ -44,6 +44,8 @@ class ShopMenuRepositoryImplTest : KoinTest {
                         count++
                     }
             }
+
+            delay(50)
 
             assertEquals(
                 expected = false,
@@ -104,7 +106,7 @@ class ShopMenuRepositoryImplTest : KoinTest {
             )
 
             assertEquals(
-                expected = 2,
+                expected = 3,
                 actual = count,
             )
 
