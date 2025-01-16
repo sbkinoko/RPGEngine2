@@ -1,17 +1,12 @@
 package gamescreen.mapshop.repoisitory
 
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 
 class ShopMenuRepositoryImpl : ShopMenuRepository {
-    private val mutableIsVisibleStateFlow =
-        MutableStateFlow(false)
-
-    override val isVisibleStateFlow: StateFlow<Boolean> =
-        mutableIsVisibleStateFlow.asStateFlow()
+    override val isVisibleStateFlow: StateFlow<Boolean>
+        get() = TODO("Not yet implemented")
 
     override fun setVisibility(isVisible: Boolean) {
-        mutableIsVisibleStateFlow.value = isVisible
+        TODO("Not yet implemented")
     }
 }
