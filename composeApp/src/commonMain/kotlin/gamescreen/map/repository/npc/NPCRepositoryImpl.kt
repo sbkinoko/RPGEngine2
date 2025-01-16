@@ -27,7 +27,7 @@ class NPCRepositoryImpl : NPCRepository {
 
     companion object {
         val npc1 = NPC(
-            npcType = NPCType.GIRL,
+            npcType = NPCType.MARCHANT,
             mapPoint = MapPoint(3, 3),
             eventSquare = EventSquare(
                 eventID = EventType.Talk,
