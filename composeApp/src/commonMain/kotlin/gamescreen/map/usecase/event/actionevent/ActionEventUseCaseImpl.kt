@@ -69,15 +69,6 @@ class ActionEventUseCaseImpl(
                     talkData,
                 )
             }
-
-            is EventType.Shop -> {
-                val textBoxData = TextBoxData(
-                    text = "買い物中",
-                )
-                textRepository.push(
-                    textBoxData = textBoxData,
-                )
-            }
         }
     }
 }
