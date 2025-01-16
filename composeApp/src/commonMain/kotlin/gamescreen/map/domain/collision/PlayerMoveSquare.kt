@@ -1,4 +1,4 @@
-package gamescreen.map.layout
+package gamescreen.map.domain.collision
 
 import gamescreen.map.domain.collision.square.NormalSquare
 import gamescreen.map.domain.collision.square.Square
