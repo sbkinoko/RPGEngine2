@@ -10,6 +10,7 @@ import gamescreen.battle.BattleScreen
 import gamescreen.choice.ChoiceWindow
 import gamescreen.map.layout.MapScreen
 import gamescreen.map.viewmodel.MapViewModel
+import gamescreen.mapshop.ShopMenu
 import gamescreen.menu.MenuScreen
 import gamescreen.text.TextWindow
 import values.Colors
@@ -58,6 +59,7 @@ fun PlayArea(
                 ),
         )
 
+        ShopMenu()
 
     }
 }

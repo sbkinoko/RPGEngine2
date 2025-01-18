@@ -18,7 +18,6 @@ import common.extension.pxToDp
 import gamescreen.map.layout.background.Background
 import gamescreen.map.layout.npc.NPC
 import gamescreen.map.viewmodel.MapViewModel
-import gamescreen.mapshop.ShopMenu
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
@@ -81,9 +80,6 @@ fun MapScreen(
             mapViewModel,
             screenRatio
         )
-
-        ShopMenu()
-
     }
 }
 
