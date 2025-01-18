@@ -1,4 +1,4 @@
-package gamescreen.mapshop.repoisitory
+package gamescreen.menushop.repoisitory
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
