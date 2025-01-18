@@ -8,6 +8,8 @@ import gamescreen.choice.Choice
 import gamescreen.choice.ChoiceViewModel
 import gamescreen.choice.repository.ChoiceRepository
 import gamescreen.map.viewmodel.MapViewModel
+import gamescreen.mapshop.ShopViewModel
+import gamescreen.mapshop.repoisitory.ShopMenuRepository
 import gamescreen.menu.MenuViewModel
 import gamescreen.text.TextBoxData
 import gamescreen.text.TextViewModel
@@ -30,6 +32,9 @@ class ScreenTypeManager(
     private val textRepository: TextRepository,
     private val textViewModel: TextViewModel,
 
+    private val shopMenuRepository: ShopMenuRepository,
+    private val shopViewModel: ShopViewModel,
+
     private val screenTypeRepository: ScreenTypeRepository,
 ) : KoinComponent {
     private val mutableControllerFlow =
@@ -41,6 +46,7 @@ class ScreenTypeManager(
     private var choiceList: List<Choice> = emptyList()
     private var textBoxData: TextBoxData? = null
     private var screenType: ScreenType = ScreenType.FIELD
+    private var isShop: Boolean = false
 
 
     init {
@@ -64,6 +70,13 @@ class ScreenTypeManager(
                 updateScreenType()
             }
         }
+
+        CoroutineScope(Dispatchers.Main).launch {
+            shopMenuRepository.isVisibleStateFlow.collect {
+                isShop = it
+                updateScreenType()
+            }
+        }
     }
 
     private fun updateScreenType() {
@@ -74,6 +87,11 @@ class ScreenTypeManager(
 
         if (textBoxData != null) {
             mutableControllerFlow.value = textViewModel
+            return
+        }
+
+        if (isShop) {
+            mutableControllerFlow.value = shopViewModel
             return
         }
 
