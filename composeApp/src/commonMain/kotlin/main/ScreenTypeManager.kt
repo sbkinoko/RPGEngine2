@@ -8,9 +8,9 @@ import gamescreen.choice.Choice
 import gamescreen.choice.ChoiceViewModel
 import gamescreen.choice.repository.ChoiceRepository
 import gamescreen.map.viewmodel.MapViewModel
-import gamescreen.mapshop.ShopViewModel
-import gamescreen.mapshop.repoisitory.ShopMenuRepository
 import gamescreen.menu.MenuViewModel
+import gamescreen.menushop.ShopViewModel
+import gamescreen.menushop.repoisitory.ShopMenuRepository
 import gamescreen.text.TextBoxData
 import gamescreen.text.TextViewModel
 import gamescreen.text.repository.TextRepository

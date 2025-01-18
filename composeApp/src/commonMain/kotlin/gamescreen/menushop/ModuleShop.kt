@@ -1,7 +1,7 @@
-package gamescreen.mapshop
+package gamescreen.menushop
 
-import gamescreen.mapshop.repoisitory.ShopMenuRepository
-import gamescreen.mapshop.repoisitory.ShopMenuRepositoryImpl
+import gamescreen.menushop.repoisitory.ShopMenuRepository
+import gamescreen.menushop.repoisitory.ShopMenuRepositoryImpl
 import org.koin.dsl.module
 
 val ModuleShop = module {

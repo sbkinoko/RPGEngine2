@@ -1,8 +1,8 @@
-package gamescreen.mapshop
+package gamescreen.menushop
 
 import core.menu.SelectableChildViewModel
-import gamescreen.mapshop.repoisitory.ShopMenuRepository
 import gamescreen.menu.domain.SelectManager
+import gamescreen.menushop.repoisitory.ShopMenuRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
