@@ -43,6 +43,8 @@ fun PlayArea(
             }
         }
 
+        ShopMenu()
+
         TextWindow(
             modifier = Modifier
                 .fillMaxSize()
@@ -59,7 +61,6 @@ fun PlayArea(
                 ),
         )
 
-        ShopMenu()
 
     }
 }
