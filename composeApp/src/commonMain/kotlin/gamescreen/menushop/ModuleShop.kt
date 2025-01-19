@@ -7,7 +7,9 @@ import org.koin.dsl.module
 val ModuleShop = module {
 
     single {
-        ShopViewModel()
+        ShopViewModel(
+            moneyRepository = get()
+        )
     }
 
     single<ShopMenuRepository> {

@@ -17,6 +17,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import common.extension.menuItem
+import gamescreen.menushop.component.MoneyComponent
+import gamescreen.menushop.component.ShopComponent
 import org.koin.compose.koinInject
 import values.Colors
 
@@ -33,6 +35,8 @@ fun ShopMenu(
 
     val itemList by shopViewModel.shopItem
 
+    val money by shopViewModel.moneyFlow.collectAsState()
+
     if (!isShopMenuVisible) {
         return
     }
@@ -45,10 +49,10 @@ fun ShopMenu(
                 color = Colors.ShopBackground,
             ),
     ) {
-
-
         Column(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .padding(5.dp)
+                .weight(1f),
         ) {
             itemList.forEachIndexed { id, it ->
                 ShopComponent(
@@ -66,6 +70,14 @@ fun ShopMenu(
         Column(
             modifier = Modifier.weight(1f),
         ) {
+            MoneyComponent(
+                modifier = Modifier.fillMaxWidth()
+                    .padding(
+                        all = 5.dp
+                    ),
+                money = money,
+            )
+
             Spacer(
                 modifier = Modifier.weight(1f),
             )

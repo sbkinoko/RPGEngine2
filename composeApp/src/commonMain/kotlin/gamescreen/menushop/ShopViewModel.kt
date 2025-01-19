@@ -2,13 +2,16 @@ package gamescreen.menushop
 
 import androidx.compose.runtime.mutableStateOf
 import core.menu.SelectableChildViewModel
+import core.repository.money.MoneyRepository
 import gamescreen.menu.domain.SelectManager
 import gamescreen.menushop.domain.ShopItem
 import gamescreen.menushop.repoisitory.ShopMenuRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class ShopViewModel : KoinComponent,
+class ShopViewModel(
+    moneyRepository: MoneyRepository,
+) : KoinComponent,
     SelectableChildViewModel<Any>() {
 
     override var selectManager: SelectManager =
@@ -31,6 +34,8 @@ class ShopViewModel : KoinComponent,
     private val shopMenuRepository: ShopMenuRepository by inject()
     val isShopMenuVisibleStateFlow =
         shopMenuRepository.isVisibleStateFlow
+
+    val moneyFlow = moneyRepository.moneyStateFLow
 
     fun hideMenu() {
         shopMenuRepository.setVisibility(
