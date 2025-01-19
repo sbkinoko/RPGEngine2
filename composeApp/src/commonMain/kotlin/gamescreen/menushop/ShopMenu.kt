@@ -45,7 +45,7 @@ fun ShopMenu(
     Row(
         modifier = modifier
             .clickable {
-                shopViewModel.hideMenu()
+                shopViewModel.pressB()
             }.background(
                 color = Colors.ShopBackground,
             ),
