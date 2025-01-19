@@ -4,7 +4,7 @@ import gamescreen.choice.Choice
 import gamescreen.choice.repository.ChoiceRepository
 import gamescreen.map.data.BoxData
 import gamescreen.menu.usecase.bag.addtool.AddToolUseCase
-import gamescreen.menushop.repoisitory.shopmenu.ShopMenuRepository
+import gamescreen.menushop.repository.shopmenu.ShopMenuRepository
 import gamescreen.text.TextBoxData
 import gamescreen.text.repository.TextRepository
 import values.EventType

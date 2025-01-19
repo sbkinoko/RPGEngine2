@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 class AmountDataImpl : AmountData {
-    var max = 99
+    override var maxNum = 99
 
     val num
         get() = amount3.value * 100 +
@@ -22,7 +22,7 @@ class AmountDataImpl : AmountData {
 
 
     override fun incAmount1() {
-        if (num == max) {
+        if (num == maxNum) {
             set0()
             return
         }
@@ -37,7 +37,7 @@ class AmountDataImpl : AmountData {
     }
 
     override fun incAmount2() {
-        if (num == max) {
+        if (num == maxNum) {
             set0()
             return
         }
@@ -58,9 +58,9 @@ class AmountDataImpl : AmountData {
 
     //数が最大値を超えていたら最大にする
     private fun correctValue() {
-        if (num > max) {
-            val num1 = max % 10
-            val num2 = (max % 100 - num1) / 10
+        if (num > maxNum) {
+            val num1 = maxNum % 10
+            val num2 = (maxNum % 100 - num1) / 10
             val num3 = 0
             mutableAmount1.value = num1
             mutableAmount2.value = num2

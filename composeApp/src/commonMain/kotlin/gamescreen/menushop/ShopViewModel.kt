@@ -7,7 +7,7 @@ import gamescreen.menu.domain.SelectManager
 import gamescreen.menushop.amountdata.AmountData
 import gamescreen.menushop.domain.ShopItem
 import gamescreen.menushop.domain.SubWindowType
-import gamescreen.menushop.repoisitory.shopmenu.ShopMenuRepository
+import gamescreen.menushop.repository.shopmenu.ShopMenuRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 

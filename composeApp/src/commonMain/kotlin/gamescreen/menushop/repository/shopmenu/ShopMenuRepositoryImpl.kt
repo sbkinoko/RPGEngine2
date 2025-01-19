@@ -1,4 +1,4 @@
-package gamescreen.menushop.repoisitory.shopmenu
+package gamescreen.menushop.repository.shopmenu
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
