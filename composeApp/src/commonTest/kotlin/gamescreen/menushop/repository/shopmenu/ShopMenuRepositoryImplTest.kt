@@ -1,7 +1,6 @@
-package gamescreen.menushop.repository
+package gamescreen.menushop.repository.shopmenu
 
 import gamescreen.menushop.ModuleShop
-import gamescreen.menushop.repoisitory.ShopMenuRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking

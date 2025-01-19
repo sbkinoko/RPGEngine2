@@ -10,7 +10,7 @@ import gamescreen.choice.repository.ChoiceRepository
 import gamescreen.map.viewmodel.MapViewModel
 import gamescreen.menu.MenuViewModel
 import gamescreen.menushop.ShopViewModel
-import gamescreen.menushop.repoisitory.ShopMenuRepository
+import gamescreen.menushop.repository.shopmenu.ShopMenuRepository
 import gamescreen.text.TextBoxData
 import gamescreen.text.TextViewModel
 import gamescreen.text.repository.TextRepository

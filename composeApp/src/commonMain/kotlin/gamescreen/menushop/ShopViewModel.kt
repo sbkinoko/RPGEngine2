@@ -4,14 +4,16 @@ import androidx.compose.runtime.mutableStateOf
 import core.menu.SelectableChildViewModel
 import core.repository.money.MoneyRepository
 import gamescreen.menu.domain.SelectManager
+import gamescreen.menushop.amountdata.AmountData
 import gamescreen.menushop.domain.ShopItem
 import gamescreen.menushop.domain.SubWindowType
-import gamescreen.menushop.repoisitory.ShopMenuRepository
+import gamescreen.menushop.repository.shopmenu.ShopMenuRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class ShopViewModel(
     moneyRepository: MoneyRepository,
+    val amountData: AmountData,
 ) : KoinComponent,
     SelectableChildViewModel<Any>() {
 
@@ -72,4 +74,11 @@ class ShopViewModel(
             }
         }
     }
+
+
+    fun buy() {
+
+    }
+
+
 }
