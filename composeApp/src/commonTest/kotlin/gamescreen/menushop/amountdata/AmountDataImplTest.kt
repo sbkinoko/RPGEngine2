@@ -2,7 +2,6 @@ package gamescreen.menushop.amountdata
 
 import gamescreen.menushop.ModuleShop
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -90,28 +89,34 @@ class AmountDataImplTest : KoinTest {
     @Test
     fun inc1_1() {
         runBlocking {
-            var result = 0
-            val collectJob = launch {
-                amountData.amount1.collect {
-                    result = it
-                }
-            }
-
             amountData.incAmount1()
 
             delay(50)
 
             assertEquals(
                 expected = 1,
-                actual = result
-            )
-
-            assertEquals(
-                expected = 1,
                 actual = amountData.num
             )
+        }
+    }
 
-            collectJob.cancel()
+    /**
+     * 1桁目の減算の確認
+     */
+    @Test
+    fun dec1_1() {
+        runBlocking {
+
+            amountData.set(5)
+            delay(5)
+
+            amountData.decAmount1()
+            delay(50)
+
+            assertEquals(
+                expected = 4,
+                actual = amountData.num
+            )
         }
     }
 
@@ -121,28 +126,34 @@ class AmountDataImplTest : KoinTest {
     @Test
     fun inc2_1() {
         runBlocking {
-            var result = 0
-            val collectJob = launch {
-                amountData.amount2.collect {
-                    result = it
-                }
-            }
-
             amountData.incAmount2()
 
             delay(50)
 
             assertEquals(
-                expected = 1,
-                actual = result
-            )
-
-            assertEquals(
                 expected = 10,
                 actual = amountData.num
             )
+        }
+    }
 
-            collectJob.cancel()
+    /**
+     * 2桁目の加算の確認
+     */
+    @Test
+    fun dec2_1() {
+        runBlocking {
+            amountData.set(21)
+            delay(5)
+
+            amountData.decAmount2()
+
+            delay(50)
+
+            assertEquals(
+                expected = 11,
+                actual = amountData.num
+            )
         }
     }
 
@@ -173,9 +184,9 @@ class AmountDataImplTest : KoinTest {
         runBlocking {
 
             amountData.set(95)
+            delay(5)
 
             amountData.incAmount2()
-
             delay(5)
 
             assertEquals(
@@ -236,6 +247,56 @@ class AmountDataImplTest : KoinTest {
 
             amountData.incAmount2()
 
+            delay(5)
+
+            assertEquals(
+                expected = 0,
+                actual = amountData.num,
+            )
+        }
+    }
+
+    /**
+     * 最小個数での減算
+     */
+    @Test
+    fun dec0_1() {
+        runBlocking {
+            amountData.decAmount1()
+            delay(5)
+
+            assertEquals(
+                expected = 99,
+                actual = amountData.num,
+            )
+        }
+    }
+
+    /**
+     * 最小個数での減算
+     */
+    @Test
+    fun dec0_2() {
+        runBlocking {
+            amountData.decAmount2()
+            delay(5)
+
+            assertEquals(
+                expected = 99,
+                actual = amountData.num,
+            )
+        }
+    }
+
+    /**
+     * 最小個数での減算
+     */
+    @Test
+    fun decTo0() {
+        runBlocking {
+            amountData.set(5)
+
+            amountData.decAmount2()
             delay(5)
 
             assertEquals(
