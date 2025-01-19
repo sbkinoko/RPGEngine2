@@ -1,18 +1,25 @@
 package gamescreen.menushop
 
-import gamescreen.menushop.repoisitory.ShopMenuRepository
-import gamescreen.menushop.repoisitory.ShopMenuRepositoryImpl
+import gamescreen.menushop.amountdata.AmountData
+import gamescreen.menushop.amountdata.AmountDataImpl
+import gamescreen.menushop.repoisitory.shopmenu.ShopMenuRepository
+import gamescreen.menushop.repoisitory.shopmenu.ShopMenuRepositoryImpl
 import org.koin.dsl.module
 
 val ModuleShop = module {
 
     single {
         ShopViewModel(
-            moneyRepository = get()
+            moneyRepository = get(),
+            amountData = get(),
         )
     }
 
     single<ShopMenuRepository> {
         ShopMenuRepositoryImpl()
+    }
+
+    single<AmountData> {
+        AmountDataImpl()
     }
 }

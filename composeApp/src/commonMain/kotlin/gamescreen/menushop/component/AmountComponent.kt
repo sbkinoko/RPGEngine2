@@ -11,18 +11,25 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import gamescreen.menushop.amountdata.AmountData
 import values.Colors
 import values.TextData
 
 @Composable
 fun AmountComponent(
+    amountData: AmountData,
     onClickBuy: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val amount1 by amountData.amount1.collectAsState()
+    val amount2 by amountData.amount2.collectAsState()
+
     Row(
         modifier = modifier
             .background(
@@ -37,12 +44,20 @@ fun AmountComponent(
             modifier = Modifier
                 .weight(1f)
                 .padding(5.dp),
+            amount = amount2,
+            onClickAdd = {
+                amountData.incAmount2()
+            },
         )
 
         SpinButton(
             modifier = Modifier
                 .weight(1f)
                 .padding(5.dp),
+            amount = amount1,
+            onClickAdd = {
+                amountData.incAmount1()
+            },
         )
 
         Button(
@@ -60,14 +75,16 @@ fun AmountComponent(
 
 @Composable
 fun SpinButton(
-    modifier: Modifier = Modifier
+    amount: Int,
+    onClickAdd: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier,
     ) {
         Button(
             modifier = Modifier.fillMaxWidth(),
-            onClick = {}
+            onClick = onClickAdd,
         ) {
             Text("↑")
         }
@@ -81,7 +98,7 @@ fun SpinButton(
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center,
-                text = "0",
+                text = amount.toString(),
             )
         }
 

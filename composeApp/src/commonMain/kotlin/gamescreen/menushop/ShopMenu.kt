@@ -101,7 +101,10 @@ fun ShopMenu(
                     AmountComponent(
                         modifier = Modifier.weight(1f)
                             .fillMaxWidth(),
-                        onClickBuy = {}
+                        amountData = shopViewModel.amountData,
+                        onClickBuy = {
+                            shopViewModel.buy()
+                        }
                     )
 
                     Spacer(
