@@ -37,7 +37,6 @@ class AmountDataImplTest : KoinTest {
             actual = amountData.amount1.value,
         )
 
-
         assertEquals(
             expected = 0,
             actual = amountData.amount2.value,
@@ -45,8 +44,44 @@ class AmountDataImplTest : KoinTest {
 
         assertEquals(
             expected = 0,
-            actual = amountData.amount3.value,
+            actual = amountData.num,
         )
+    }
+
+    @Test
+    fun checkDigit1() {
+        runBlocking {
+            amountData.set(43)
+            delay(5)
+
+            assertEquals(
+                expected = 4,
+                actual = amountData.amount2.value
+            )
+
+            assertEquals(
+                expected = 3,
+                actual = amountData.amount1.value
+            )
+        }
+    }
+
+    @Test
+    fun checkDigit2() {
+        runBlocking {
+            amountData.set(51)
+            delay(5)
+
+            assertEquals(
+                expected = 5,
+                actual = amountData.amount2.value
+            )
+
+            assertEquals(
+                expected = 1,
+                actual = amountData.amount1.value
+            )
+        }
     }
 
     /**
@@ -69,6 +104,11 @@ class AmountDataImplTest : KoinTest {
             assertEquals(
                 expected = 1,
                 actual = result
+            )
+
+            assertEquals(
+                expected = 1,
+                actual = amountData.num
             )
 
             collectJob.cancel()
@@ -97,6 +137,11 @@ class AmountDataImplTest : KoinTest {
                 actual = result
             )
 
+            assertEquals(
+                expected = 10,
+                actual = amountData.num
+            )
+
             collectJob.cancel()
         }
     }
@@ -107,40 +152,18 @@ class AmountDataImplTest : KoinTest {
     @Test
     fun inc1_10() {
         runBlocking {
-            var result1 = 0
-            val collectJob1 = launch {
-                amountData.amount1.collect {
-                    result1 = it
-                }
-            }
+            amountData.set(9)
+            delay(5)
 
-            var result2 = 0
-            val collectJob2 = launch {
-                amountData.amount2.collect {
-                    result2 = it
-                }
-            }
-
-            repeat(10) {
-                amountData.incAmount1()
-                delay(50)
-            }
+            amountData.incAmount1()
+            delay(5)
 
             assertEquals(
-                expected = 0,
-                actual = result1
+                expected = 10,
+                actual = amountData.num,
             )
-
-            assertEquals(
-                expected = 1,
-                actual = result2,
-            )
-
-            collectJob1.cancel()
-            collectJob2.cancel()
         }
     }
-
 
     /**
      * 最大個数未満の超過
@@ -148,51 +171,17 @@ class AmountDataImplTest : KoinTest {
     @Test
     fun over99() {
         runBlocking {
-            var result1 = 0
-            val collectJob1 = launch {
-                amountData.amount1.collect {
-                    result1 = it
-                }
-            }
 
-            var result2 = 0
-            val collectJob2 = launch {
-                amountData.amount2.collect {
-                    result2 = it
-                }
-            }
-
-            repeat(95) {
-                amountData.incAmount1()
-                delay(5)
-            }
-
-            assertEquals(
-                expected = 5,
-                actual = result1
-            )
-
-            assertEquals(
-                expected = 9,
-                actual = result2,
-            )
+            amountData.set(95)
 
             amountData.incAmount2()
 
             delay(5)
 
             assertEquals(
-                expected = 9,
-                actual = result1
+                expected = 99,
+                actual = amountData.num,
             )
-
-            assertEquals(
-                expected = 9,
-                actual = result2,
-            )
-
-            collectJob1.cancel()
-            collectJob2.cancel()
         }
     }
 
@@ -204,51 +193,15 @@ class AmountDataImplTest : KoinTest {
         runBlocking {
             amountData.maxNum = 50
 
-            var result1 = 0
-            val collectJob1 = launch {
-                amountData.amount1.collect {
-                    result1 = it
-                }
-            }
-
-            var result2 = 0
-            val collectJob2 = launch {
-                amountData.amount2.collect {
-                    result2 = it
-                }
-            }
-
-            repeat(49) {
-                amountData.incAmount1()
-                delay(5)
-            }
-
-            assertEquals(
-                expected = 9,
-                actual = result1
-            )
-
-            assertEquals(
-                expected = 4,
-                actual = result2,
-            )
-
+            amountData.set(49)
             amountData.incAmount2()
 
             delay(5)
 
             assertEquals(
-                expected = 0,
-                actual = result1
+                expected = 50,
+                actual = amountData.num,
             )
-
-            assertEquals(
-                expected = 5,
-                actual = result2,
-            )
-
-            collectJob1.cancel()
-            collectJob2.cancel()
         }
     }
 
@@ -258,51 +211,16 @@ class AmountDataImplTest : KoinTest {
     @Test
     fun inc99_1() {
         runBlocking {
-            var result1 = 0
-            val collectJob1 = launch {
-                amountData.amount1.collect {
-                    result1 = it
-                }
-            }
-
-            var result2 = 0
-            val collectJob2 = launch {
-                amountData.amount2.collect {
-                    result2 = it
-                }
-            }
-
-            repeat(99) {
-                amountData.incAmount1()
-                delay(5)
-            }
-
-            assertEquals(
-                expected = 9,
-                actual = result1
-            )
-
-            assertEquals(
-                expected = 9,
-                actual = result2,
-            )
+            amountData.set(99)
+            delay(5)
 
             amountData.incAmount1()
-
             delay(5)
 
             assertEquals(
                 expected = 0,
-                actual = result1
+                actual = amountData.num,
             )
-
-            assertEquals(
-                expected = 0,
-                actual = result2,
-            )
-
-            collectJob1.cancel()
-            collectJob2.cancel()
         }
     }
 
@@ -312,34 +230,9 @@ class AmountDataImplTest : KoinTest {
     @Test
     fun inc99_2() {
         runBlocking {
-            var result1 = 0
-            val collectJob1 = launch {
-                amountData.amount1.collect {
-                    result1 = it
-                }
-            }
 
-            var result2 = 0
-            val collectJob2 = launch {
-                amountData.amount2.collect {
-                    result2 = it
-                }
-            }
-
-            repeat(99) {
-                amountData.incAmount1()
-                delay(5)
-            }
-
-            assertEquals(
-                expected = 9,
-                actual = result1
-            )
-
-            assertEquals(
-                expected = 9,
-                actual = result2,
-            )
+            amountData.set(99)
+            delay(5)
 
             amountData.incAmount2()
 
@@ -347,16 +240,8 @@ class AmountDataImplTest : KoinTest {
 
             assertEquals(
                 expected = 0,
-                actual = result1
+                actual = amountData.num,
             )
-
-            assertEquals(
-                expected = 0,
-                actual = result2,
-            )
-
-            collectJob1.cancel()
-            collectJob2.cancel()
         }
     }
 }
