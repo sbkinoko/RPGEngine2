@@ -29,6 +29,9 @@ class AmountDataImplTest : KoinTest {
         stopKoin()
     }
 
+    /**
+     * 初期値の確認
+     */
     @Test
     fun initTest() {
         assertEquals(
@@ -47,6 +50,9 @@ class AmountDataImplTest : KoinTest {
         )
     }
 
+    /**
+     * 各桁の値の確認
+     */
     @Test
     fun checkDigit1() {
         runBlocking {
@@ -65,6 +71,9 @@ class AmountDataImplTest : KoinTest {
         }
     }
 
+    /**
+     * 各桁の値の確認
+     */
     @Test
     fun checkDigit2() {
         runBlocking {
@@ -106,7 +115,6 @@ class AmountDataImplTest : KoinTest {
     @Test
     fun dec1_1() {
         runBlocking {
-
             amountData.set(5)
             delay(5)
 
@@ -138,7 +146,7 @@ class AmountDataImplTest : KoinTest {
     }
 
     /**
-     * 2桁目の加算の確認
+     * 2桁目の減算の確認
      */
     @Test
     fun dec2_1() {
@@ -182,7 +190,6 @@ class AmountDataImplTest : KoinTest {
     @Test
     fun over99() {
         runBlocking {
-
             amountData.set(95)
             delay(5)
 
