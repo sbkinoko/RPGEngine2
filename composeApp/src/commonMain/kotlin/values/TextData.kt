@@ -34,4 +34,10 @@ class TextData {
             return "$name はレベルアップした"
         }
     }
+
+    object ShopMoney {
+        fun getText(): String {
+            return "所持金 : "
+        }
+    }
 }

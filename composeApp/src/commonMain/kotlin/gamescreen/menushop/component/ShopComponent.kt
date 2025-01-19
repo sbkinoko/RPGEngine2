@@ -1,4 +1,4 @@
-package gamescreen.menushop
+package gamescreen.menushop.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

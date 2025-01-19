@@ -1,5 +1,6 @@
 package gamescreen.menushop
 
+import core.ModuleCore
 import gamescreen.menushop.repoisitory.ShopMenuRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -23,6 +24,7 @@ class ShopViewModelTest : KoinTest {
         startKoin {
             modules(
                 ModuleShop,
+                ModuleCore,
             )
         }
 
