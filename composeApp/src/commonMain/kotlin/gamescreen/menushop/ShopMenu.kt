@@ -3,7 +3,6 @@ package gamescreen.menushop
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,12 +12,13 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import common.extension.menuItem
+import gamescreen.menushop.component.ExplainComponent
 import gamescreen.menushop.component.MoneyComponent
 import gamescreen.menushop.component.ShopComponent
+import gamescreen.menushop.domain.SubWindowType
 import org.koin.compose.koinInject
 import values.Colors
 
@@ -40,6 +40,8 @@ fun ShopMenu(
     if (!isShopMenuVisible) {
         return
     }
+
+    val subWindowType by shopViewModel.subWindowType
 
     Row(
         modifier = modifier
@@ -78,28 +80,41 @@ fun ShopMenu(
                 money = money,
             )
 
-            Spacer(
-                modifier = Modifier.weight(1f),
-            )
-
-            Box(
-                modifier = Modifier.weight(1f)
-                    .clickable { }
-                    .padding(
-                        all = 5.dp,
-                    )
-                    .fillMaxWidth()
-                    .background(
-                        color = Colors.MenuBackground,
-                    ).border(
-                        width = 2.dp,
-                        color = Colors.MenuFrame,
-                    ),
-                contentAlignment = Alignment.CenterStart,
+            when (
+                subWindowType
             ) {
-                Text(
-                    text = itemList[selected].name + "の説明",
-                )
+                SubWindowType.EXPLAIN -> {
+                    Spacer(
+                        modifier = Modifier.weight(1f),
+                    )
+
+                    ExplainComponent(
+                        modifier = Modifier.weight(1f),
+                        explain = itemList[selected].name + "の説明",
+                    )
+                }
+
+                SubWindowType.AMOUNT -> {
+                    Spacer(
+                        modifier = Modifier.weight(1f),
+                    )
+
+                    Text(
+                        modifier = Modifier.weight(1f)
+                            .fillMaxWidth()
+                            .background(
+                                color = Colors.MenuBackground,
+                            ).border(
+                                width = 1.dp,
+                                color = Colors.MenuFrame,
+                            ),
+                        text = "サンプル",
+                    )
+
+                    Spacer(
+                        modifier = Modifier.weight(1f),
+                    )
+                }
             }
         }
     }

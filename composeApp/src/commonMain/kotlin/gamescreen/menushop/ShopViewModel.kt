@@ -5,6 +5,7 @@ import core.menu.SelectableChildViewModel
 import core.repository.money.MoneyRepository
 import gamescreen.menu.domain.SelectManager
 import gamescreen.menushop.domain.ShopItem
+import gamescreen.menushop.domain.SubWindowType
 import gamescreen.menushop.repoisitory.ShopMenuRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -37,6 +38,10 @@ class ShopViewModel(
 
     val moneyFlow = moneyRepository.moneyStateFLow
 
+    val subWindowType = mutableStateOf(
+        SubWindowType.EXPLAIN,
+    )
+
     fun hideMenu() {
         shopMenuRepository.setVisibility(
             isVisible = false,
@@ -44,15 +49,27 @@ class ShopViewModel(
     }
 
     override fun goNext() {
-        //NOP
-    }
+        when (
+            subWindowType.value
+        ) {
+            SubWindowType.EXPLAIN -> {
+                subWindowType.value = SubWindowType.AMOUNT
+            }
 
-    override fun pressA() {
-        //NOP
+            SubWindowType.AMOUNT -> {
+
+            }
+        }
     }
 
     override fun pressB() {
-        hideMenu()
+        when (
+            subWindowType.value
+        ) {
+            SubWindowType.EXPLAIN -> hideMenu()
+            SubWindowType.AMOUNT -> {
+                subWindowType.value = SubWindowType.EXPLAIN
+            }
+        }
     }
-
 }
