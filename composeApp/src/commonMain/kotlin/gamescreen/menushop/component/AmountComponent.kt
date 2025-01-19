@@ -48,6 +48,9 @@ fun AmountComponent(
             onClickAdd = {
                 amountData.incAmount2()
             },
+            onClickDec = {
+                amountData.decAmount2()
+            }
         )
 
         SpinButton(
@@ -58,6 +61,9 @@ fun AmountComponent(
             onClickAdd = {
                 amountData.incAmount1()
             },
+            onClickDec = {
+                amountData.decAmount1()
+            }
         )
 
         Button(
@@ -77,6 +83,7 @@ fun AmountComponent(
 fun SpinButton(
     amount: Int,
     onClickAdd: () -> Unit,
+    onClickDec: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -103,9 +110,8 @@ fun SpinButton(
         }
 
         Button(
-
             modifier = Modifier.fillMaxWidth(),
-            onClick = {}
+            onClick = onClickDec,
         ) {
             Text("↓")
         }

@@ -27,6 +27,15 @@ class AmountDataImpl : AmountData {
         set(value = num + 1)
     }
 
+    override fun decAmount1() {
+        if (num == 0) {
+            set(value = maxNum)
+            return
+        }
+
+        set(value = num - 1)
+    }
+
     override fun incAmount2() {
         if (num == maxNum) {
             set(value = 0)
@@ -36,7 +45,21 @@ class AmountDataImpl : AmountData {
         set(value = num + 10)
     }
 
+    override fun decAmount2() {
+        if (num == 0) {
+            set(value = maxNum)
+            return
+        }
+
+        set(value = num - 10)
+    }
+
     override fun set(value: Int) {
+        if (value < 0) {
+            set(value = 0)
+            return
+        }
+
         if (value > maxNum) {
             set(value = maxNum)
             return

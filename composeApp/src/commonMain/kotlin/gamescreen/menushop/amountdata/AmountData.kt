@@ -15,4 +15,8 @@ interface AmountData {
 
     fun incAmount2()
 
+    fun decAmount1()
+
+    fun decAmount2()
+
 }
