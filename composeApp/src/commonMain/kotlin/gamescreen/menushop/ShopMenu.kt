@@ -100,7 +100,8 @@ fun ShopMenu(
 
                     AmountComponent(
                         modifier = Modifier.weight(1f)
-                            .fillMaxWidth()
+                            .fillMaxWidth(),
+                        onClickBuy = {}
                     )
 
                     Spacer(

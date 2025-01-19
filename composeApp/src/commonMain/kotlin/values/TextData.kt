@@ -9,6 +9,8 @@ class TextData {
 
         const val BATTLE_MAIN_ATTACK = "攻撃"
         const val BATTLE_MAIN_ESCAPE = "逃げる"
+
+        const val SHOP_BUY = "購入"
     }
 
     object BattleFinishMoney {
@@ -39,5 +41,12 @@ class TextData {
         fun getText(): String {
             return "所持金 : "
         }
+    }
+
+    object ShopBuy {
+        fun getTest() {
+
+        }
+
     }
 }
