@@ -42,11 +42,4 @@ class TextData {
             return "所持金 : "
         }
     }
-
-    object ShopBuy {
-        fun getTest() {
-
-        }
-
-    }
 }
