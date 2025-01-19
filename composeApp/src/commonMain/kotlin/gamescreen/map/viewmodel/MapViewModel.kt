@@ -5,7 +5,7 @@ import controller.domain.Stick
 import core.domain.ScreenType
 import core.domain.mapcell.CellType
 import core.repository.screentype.ScreenTypeRepository
-import gamescreen.map.data.LoopMap
+import gamescreen.map.data.NonLoopMap
 import gamescreen.map.domain.BackgroundCell
 import gamescreen.map.domain.Player
 import gamescreen.map.domain.PlayerDir
@@ -150,9 +150,9 @@ class MapViewModel : ControllerCallback, KoinComponent {
         }
 
         roadMapUseCase.invoke(
-            mapX = 0,
-            mapY = 0,
-            mapData = LoopMap(),
+            mapX = 3,
+            mapY = 2,
+            mapData = NonLoopMap(),
         )
     }
 
