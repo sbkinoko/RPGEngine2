@@ -1,20 +1,19 @@
 package gamescreen.menushop
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import common.extension.menuItem
+import gamescreen.menushop.component.AmountComponent
 import gamescreen.menushop.component.ExplainComponent
 import gamescreen.menushop.component.MoneyComponent
 import gamescreen.menushop.component.ShopComponent
@@ -99,16 +98,9 @@ fun ShopMenu(
                         modifier = Modifier.weight(1f),
                     )
 
-                    Text(
+                    AmountComponent(
                         modifier = Modifier.weight(1f)
                             .fillMaxWidth()
-                            .background(
-                                color = Colors.MenuBackground,
-                            ).border(
-                                width = 1.dp,
-                                color = Colors.MenuFrame,
-                            ),
-                        text = "サンプル",
                     )
 
                     Spacer(
