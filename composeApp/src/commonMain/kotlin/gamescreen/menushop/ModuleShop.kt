@@ -1,7 +1,7 @@
 package gamescreen.menushop
 
-import gamescreen.menushop.amountdata.AmountData
-import gamescreen.menushop.amountdata.AmountDataImpl
+import gamescreen.menushop.domain.amountdata.AmountData
+import gamescreen.menushop.domain.amountdata.AmountDataImpl
 import gamescreen.menushop.repository.shopmenu.ShopMenuRepository
 import gamescreen.menushop.repository.shopmenu.ShopMenuRepositoryImpl
 import org.koin.dsl.module
