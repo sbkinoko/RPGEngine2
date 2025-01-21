@@ -5,7 +5,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,9 +20,6 @@ fun ExplainComponent(
     Box(
         modifier = modifier
             .clickable { }
-            .padding(
-                all = 5.dp,
-            )
             .fillMaxWidth()
             .background(
                 color = Colors.MenuBackground,
