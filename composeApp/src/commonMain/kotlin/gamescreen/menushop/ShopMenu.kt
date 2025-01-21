@@ -2,9 +2,12 @@ package gamescreen.menushop
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -42,7 +45,7 @@ fun ShopMenu(
 
     val subWindowType by shopViewModel.subWindowType
 
-    Row(
+    Box(
         modifier = modifier
             .clickable {
                 shopViewModel.pressB()
@@ -50,39 +53,41 @@ fun ShopMenu(
                 color = Colors.ShopBackground,
             ),
     ) {
-        Column(
-            modifier = Modifier
-                .padding(5.dp)
-                .weight(1f),
-        ) {
-            itemList.forEachIndexed { id, it ->
-                ShopComponent(
-                    modifier = Modifier.weight(1f)
-                        .fillMaxWidth()
-                        .menuItem(
-                            id = id,
-                            childViewModel = shopViewModel,
+        Row(modifier = Modifier.fillMaxSize()) {
+            Column(
+                modifier = Modifier
+                    .padding(5.dp)
+                    .weight(1f),
+            ) {
+                itemList.forEachIndexed { id, it ->
+                    ShopComponent(
+                        modifier = Modifier.weight(1f)
+                            .fillMaxWidth()
+                            .menuItem(
+                                id = id,
+                                childViewModel = shopViewModel,
+                            ),
+                        shopItem = it,
+                    )
+                }
+            }
+
+            Column(modifier = Modifier.weight(1f)) {
+                MoneyComponent(
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(
+                            all = 5.dp
                         ),
-                    shopItem = it,
+                    money = money,
                 )
             }
         }
 
-        Column(
-            modifier = Modifier.weight(1f),
-        ) {
-            MoneyComponent(
-                modifier = Modifier.fillMaxWidth()
-                    .padding(
-                        all = 5.dp
-                    ),
-                money = money,
-            )
-
-            when (
-                subWindowType
-            ) {
-                SubWindowType.EXPLAIN -> {
+        when (subWindowType) {
+            SubWindowType.EXPLAIN -> {
+                SubWindow(
+                    modifier = Modifier.fillMaxSize(),
+                ) {
                     Spacer(
                         modifier = Modifier.weight(1f),
                     )
@@ -92,8 +97,17 @@ fun ShopMenu(
                         explain = itemList[selected].name + "の説明",
                     )
                 }
+            }
 
-                SubWindowType.AMOUNT -> {
+            SubWindowType.AMOUNT -> {
+                SubWindow(
+                    modifier = Modifier.fillMaxSize()
+                        .clickable {
+                            shopViewModel.pressB()
+                        }.background(
+                            color = Colors.OverlayMenu,
+                        ),
+                ) {
                     Spacer(
                         modifier = Modifier.weight(1f),
                     )
@@ -114,6 +128,23 @@ fun ShopMenu(
                     )
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun SubWindow(
+    modifier: Modifier = Modifier,
+    layout: @Composable ColumnScope.() -> Unit,
+) {
+    Row(
+        modifier = modifier
+    ) {
+        Spacer(modifier = Modifier.weight(1f))
+        Column(
+            modifier = Modifier.weight(1f),
+        ) {
+            layout()
         }
     }
 }
