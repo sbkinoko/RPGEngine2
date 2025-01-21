@@ -15,9 +15,8 @@ class AmountDataImpl : AmountData {
     private val mutableAmount1 = MutableStateFlow(0)
     private val mutableAmount2 = MutableStateFlow(0)
 
-    override val buttonData1 = object : SpinButtonData<Int> {
-        override val dataFlow: StateFlow<Int>
-            get() = mutableAmount1.asStateFlow()
+    abstract inner class ButtonData : SpinButtonData<Int> {
+        abstract val dif: Int
 
         override fun onClickAdd() {
             if (num == maxNum) {
@@ -27,7 +26,7 @@ class AmountDataImpl : AmountData {
                 return
             }
 
-            set(value = num + 1)
+            set(value = num + dif)
         }
 
         override fun onClickDec() {
@@ -36,32 +35,24 @@ class AmountDataImpl : AmountData {
                 return
             }
 
-            set(value = num - 1)
+            set(value = num - dif)
         }
     }
 
-    override val buttonData10 = object : SpinButtonData<Int> {
+    override val buttonData1 = object : ButtonData() {
+        override val dif: Int
+            get() = 1
+
+        override val dataFlow: StateFlow<Int>
+            get() = mutableAmount1.asStateFlow()
+    }
+
+    override val buttonData10 = object : ButtonData() {
+        override val dif: Int
+            get() = 10
+
         override val dataFlow: StateFlow<Int>
             get() = mutableAmount2.asStateFlow()
-
-        override fun onClickAdd() {
-            if (num == maxNum) {
-                set(value = 0)
-                return
-            }
-
-            set(value = num + 10)
-        }
-
-        override fun onClickDec() {
-            if (num == 0) {
-                set(value = maxNum)
-                return
-            }
-
-            set(value = num - 10)
-        }
-
     }
 
     override fun set(value: Int) {
