@@ -13,11 +13,14 @@ import gamescreen.menushop.domain.amountdata.AmountData
 import gamescreen.menushop.repository.shopmenu.ShopMenuRepository
 import gamescreen.text.TextBoxData
 import gamescreen.text.repository.TextRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class ShopViewModel(
-    moneyRepository: MoneyRepository,
+    val moneyRepository: MoneyRepository,
     val amountData: AmountData,
     val choiceRepository: ChoiceRepository,
     val textRepository: TextRepository,
@@ -52,6 +55,33 @@ class ShopViewModel(
     val subWindowType = mutableStateOf(
         SubWindowType.EXPLAIN,
     )
+
+    var money = 0
+    var price = 1
+    var shopItemList = shopItem.value
+
+    init {
+        CoroutineScope(Dispatchers.Default).launch {
+            selectManager.selectedFlowState.collect {
+                price = shopItemList[it].value
+                setMax()
+            }
+        }
+
+        CoroutineScope(Dispatchers.Default).launch {
+            moneyRepository.moneyStateFLow.collect {
+                money = it
+                setMax()
+            }
+        }
+
+        moneyRepository.setMoney(1000)
+    }
+
+    private fun setMax() {
+        amountData.maxNum = money / price
+    }
+
 
     fun hideMenu() {
         shopMenuRepository.setVisibility(
@@ -96,10 +126,16 @@ class ShopViewModel(
                             toolId = itemId,
                             toolNum = amountData.num,
                         )
+                        moneyRepository.decMoney(
+                            price * amountData.num
+                        )
                         textRepository.push(
                             TextBoxData(
                                 text = "まいどあり",
-                            )
+                                callBack = {
+                                    pressB()
+                                }
+                            ),
                         )
                     },
                 ),
