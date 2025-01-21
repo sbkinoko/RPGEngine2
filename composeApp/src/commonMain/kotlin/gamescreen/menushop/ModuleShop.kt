@@ -12,6 +12,9 @@ val ModuleShop = module {
         ShopViewModel(
             moneyRepository = get(),
             amountData = get(),
+            choiceRepository = get(),
+            textRepository = get(),
+            addToolUseCase = get()
         )
     }
 

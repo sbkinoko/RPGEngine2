@@ -103,7 +103,9 @@ fun ShopMenu(
                             .fillMaxWidth(),
                         amountData = shopViewModel.amountData,
                         onClickBuy = {
-                            shopViewModel.buy()
+                            shopViewModel.buy(
+                                selected = selected,
+                            )
                         }
                     )
 
