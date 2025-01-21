@@ -87,6 +87,7 @@ fun ShopMenu(
             SubWindowType.EXPLAIN -> {
                 SubWindow(
                     modifier = Modifier.fillMaxSize(),
+                    columnModifier = Modifier.padding(5.dp)
                 ) {
                     Spacer(
                         modifier = Modifier.weight(1f),
@@ -107,6 +108,7 @@ fun ShopMenu(
                         }.background(
                             color = Colors.OverlayMenu,
                         ),
+                    columnModifier = Modifier.padding(5.dp)
                 ) {
                     Spacer(
                         modifier = Modifier.weight(1f),
@@ -135,14 +137,19 @@ fun ShopMenu(
 @Composable
 fun SubWindow(
     modifier: Modifier = Modifier,
+    columnModifier: Modifier = Modifier,
     layout: @Composable ColumnScope.() -> Unit,
 ) {
     Row(
         modifier = modifier
     ) {
         Spacer(modifier = Modifier.weight(1f))
+
         Column(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier.weight(1f)
+                .then(
+                    columnModifier
+                ),
         ) {
             layout()
         }
