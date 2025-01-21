@@ -7,9 +7,9 @@ import gamescreen.choice.Choice
 import gamescreen.choice.repository.ChoiceRepository
 import gamescreen.menu.domain.SelectManager
 import gamescreen.menu.usecase.bag.addtool.AddToolUseCase
-import gamescreen.menushop.amountdata.AmountData
 import gamescreen.menushop.domain.ShopItem
 import gamescreen.menushop.domain.SubWindowType
+import gamescreen.menushop.domain.amountdata.AmountData
 import gamescreen.menushop.repository.shopmenu.ShopMenuRepository
 import gamescreen.text.TextBoxData
 import gamescreen.text.repository.TextRepository
@@ -84,7 +84,6 @@ class ShopViewModel(
         }
     }
 
-
     fun buy(selected: Int) {
         val itemId = shopItem.value[selected].itemId
 
@@ -106,7 +105,6 @@ class ShopViewModel(
                 ),
                 Choice(
                     text = "やめる",
-                    callBack = {},
                 )
             )
         )
