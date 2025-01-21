@@ -1,7 +1,10 @@
 package gamescreen.menushop
 
 import core.ModuleCore
+import gamescreen.choice.ModuleChoice
+import gamescreen.menu.ModuleMenu
 import gamescreen.menushop.repository.shopmenu.ShopMenuRepository
+import gamescreen.text.ModuleText
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -25,6 +28,9 @@ class ShopViewModelTest : KoinTest {
             modules(
                 ModuleShop,
                 ModuleCore,
+                ModuleText,
+                ModuleChoice,
+                ModuleMenu,
             )
         }
 
