@@ -1,4 +1,4 @@
-package gamescreen.menushop.amountdata
+package gamescreen.menushop.domain.amountdata
 
 import gamescreen.menushop.ModuleShop
 import kotlinx.coroutines.delay
@@ -36,12 +36,12 @@ class AmountDataImplTest : KoinTest {
     fun initTest() {
         assertEquals(
             expected = 0,
-            actual = amountData.amount1.value,
+            actual = amountData.buttonData1.dataFlow.value,
         )
 
         assertEquals(
             expected = 0,
-            actual = amountData.amount2.value,
+            actual = amountData.buttonData10.dataFlow.value,
         )
 
         assertEquals(
@@ -61,12 +61,12 @@ class AmountDataImplTest : KoinTest {
 
             assertEquals(
                 expected = 4,
-                actual = amountData.amount2.value
+                actual = amountData.buttonData10.dataFlow.value
             )
 
             assertEquals(
                 expected = 3,
-                actual = amountData.amount1.value
+                actual = amountData.buttonData1.dataFlow.value
             )
         }
     }
@@ -82,12 +82,12 @@ class AmountDataImplTest : KoinTest {
 
             assertEquals(
                 expected = 5,
-                actual = amountData.amount2.value
+                actual = amountData.buttonData10.dataFlow.value
             )
 
             assertEquals(
                 expected = 1,
-                actual = amountData.amount1.value
+                actual = amountData.buttonData1.dataFlow.value
             )
         }
     }
@@ -98,7 +98,7 @@ class AmountDataImplTest : KoinTest {
     @Test
     fun inc1_1() {
         runBlocking {
-            amountData.incAmount1()
+            amountData.buttonData1.onClickAdd()
 
             delay(50)
 
@@ -118,7 +118,7 @@ class AmountDataImplTest : KoinTest {
             amountData.set(5)
             delay(5)
 
-            amountData.decAmount1()
+            amountData.buttonData1.onClickDec()
             delay(50)
 
             assertEquals(
@@ -134,7 +134,7 @@ class AmountDataImplTest : KoinTest {
     @Test
     fun inc2_1() {
         runBlocking {
-            amountData.incAmount2()
+            amountData.buttonData10.onClickAdd()
 
             delay(50)
 
@@ -154,32 +154,13 @@ class AmountDataImplTest : KoinTest {
             amountData.set(21)
             delay(5)
 
-            amountData.decAmount2()
+            amountData.buttonData10.onClickDec()
 
             delay(50)
 
             assertEquals(
                 expected = 11,
                 actual = amountData.num
-            )
-        }
-    }
-
-    /**
-     * 1桁目の繰り上がりの確認
-     */
-    @Test
-    fun inc1_10() {
-        runBlocking {
-            amountData.set(9)
-            delay(5)
-
-            amountData.incAmount1()
-            delay(5)
-
-            assertEquals(
-                expected = 10,
-                actual = amountData.num,
             )
         }
     }
@@ -193,7 +174,7 @@ class AmountDataImplTest : KoinTest {
             amountData.set(95)
             delay(5)
 
-            amountData.incAmount2()
+            amountData.buttonData10.onClickAdd()
             delay(5)
 
             assertEquals(
@@ -212,7 +193,7 @@ class AmountDataImplTest : KoinTest {
             amountData.maxNum = 50
 
             amountData.set(49)
-            amountData.incAmount2()
+            amountData.buttonData10.onClickAdd()
 
             delay(5)
 
@@ -232,7 +213,7 @@ class AmountDataImplTest : KoinTest {
             amountData.set(99)
             delay(5)
 
-            amountData.incAmount1()
+            amountData.buttonData1.onClickAdd()
             delay(5)
 
             assertEquals(
@@ -252,7 +233,7 @@ class AmountDataImplTest : KoinTest {
             amountData.set(99)
             delay(5)
 
-            amountData.incAmount2()
+            amountData.buttonData10.onClickAdd()
 
             delay(5)
 
@@ -269,7 +250,7 @@ class AmountDataImplTest : KoinTest {
     @Test
     fun dec0_1() {
         runBlocking {
-            amountData.decAmount1()
+            amountData.buttonData1.onClickDec()
             delay(5)
 
             assertEquals(
@@ -285,7 +266,7 @@ class AmountDataImplTest : KoinTest {
     @Test
     fun dec0_2() {
         runBlocking {
-            amountData.decAmount2()
+            amountData.buttonData10.onClickDec()
             delay(5)
 
             assertEquals(
@@ -296,14 +277,14 @@ class AmountDataImplTest : KoinTest {
     }
 
     /**
-     * 最小個数での減算
+     * 最小個数への減算
      */
     @Test
     fun decTo0() {
         runBlocking {
             amountData.set(5)
 
-            amountData.decAmount2()
+            amountData.buttonData10.onClickDec()
             delay(5)
 
             assertEquals(
