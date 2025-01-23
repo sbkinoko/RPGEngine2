@@ -4,11 +4,19 @@ import controller.domain.ArrowCommand
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class SelectManager(
-    val width: Int,
-    private val itemNum: Int,
-) {
+class SelectManager() {
     private var _selected: Int = FIRST_SELECTED
+
+    var width: Int = 0
+    var itemNum: Int = 0
+
+    constructor(
+        width: Int,
+        itemNum: Int,
+    ) : this() {
+        this.width = width
+        this.itemNum = itemNum
+    }
 
     private val mutableSelectedStateFlow =
         MutableStateFlow<Int>(FIRST_SELECTED)

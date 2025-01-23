@@ -33,7 +33,7 @@ fun ShopComponent(
         Text(
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.End,
-            text = "価格 : ${shopItem.value}",
+            text = "価格 : ${shopItem.price}",
         )
     }
 }
