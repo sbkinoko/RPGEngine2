@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import common.layout.spinnbutton.SpinButton
@@ -22,6 +24,9 @@ fun AmountComponent(
     onClickBuy: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val selected by amountData.selected
+        .collectAsState()
+
     Row(
         modifier = modifier
             .background(
@@ -32,19 +37,24 @@ fun AmountComponent(
             ).clickable { },
     ) {
 
-        SpinButton(
-            modifier = Modifier
-                .weight(1f)
-                .padding(5.dp),
-            spinButtonData = amountData.buttonData10,
-        )
-
-        SpinButton(
-            modifier = Modifier
-                .weight(1f)
-                .padding(5.dp),
-            spinButtonData = amountData.buttonData1,
-        )
+        amountData.buttonDataList.mapIndexed { index, buttonData ->
+            SpinButton(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(5.dp)
+                    .then(
+                        if (selected == index) {
+                            Modifier.border(
+                                width = 1.dp,
+                                color = Colors.SelectedMenu
+                            )
+                        } else {
+                            Modifier
+                        }
+                    ),
+                spinButtonData = buttonData,
+            )
+        }
 
         Button(
             onClick = onClickBuy,
