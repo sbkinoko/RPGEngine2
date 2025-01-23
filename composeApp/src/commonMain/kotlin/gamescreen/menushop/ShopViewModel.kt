@@ -17,7 +17,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
 class ShopViewModel(
     val moneyRepository: MoneyRepository,
@@ -25,28 +24,18 @@ class ShopViewModel(
     val choiceRepository: ChoiceRepository,
     val textRepository: TextRepository,
     val addToolUseCase: AddToolUseCase,
+    private val shopMenuRepository: ShopMenuRepository,
 ) : KoinComponent,
     SelectableChildViewModel<Any>() {
+
+    val shopItemStateFlow = shopMenuRepository.shopItemListStateFlow
 
     override var selectManager: SelectManager =
         SelectManager(
             width = 1,
-            itemNum = 5,
+            itemNum = 1,
         )
 
-    val shopItem = mutableStateOf(
-        List(2) {
-            ShopItem(
-                name = "アイテム${it + 1}",
-                value = (it + 1) * (it + 1) * 100,
-                explain = "アイテム${it + 1}の説明",
-                // fixme 正しいidを入れる
-                itemId = it,
-            )
-        }
-    )
-
-    private val shopMenuRepository: ShopMenuRepository by inject()
     val isShopMenuVisibleStateFlow =
         shopMenuRepository.isVisibleStateFlow
 
@@ -56,14 +45,18 @@ class ShopViewModel(
         SubWindowType.EXPLAIN,
     )
 
-    var money = 0
-    var price = 1
-    var shopItemList = shopItem.value
+    private var money = 0
+    private var price = 1
+    private var shopItemList = emptyList<ShopItem>()
 
     init {
         CoroutineScope(Dispatchers.Default).launch {
             selectManager.selectedFlowState.collect {
-                price = shopItemList[it].value
+                price = if (it < shopItemList.size) {
+                    shopItemList[it].price
+                } else {
+                    0
+                }
                 setMax()
             }
         }
@@ -75,18 +68,35 @@ class ShopViewModel(
             }
         }
 
+        CoroutineScope(Dispatchers.Default).launch {
+            shopItemStateFlow.collect {
+                shopItemList = it
+                selectManager.itemNum = it.size
+                setMax()
+            }
+        }
+
         moneyRepository.setMoney(1000)
     }
 
     private fun setMax() {
-        amountData.maxNum = money / price
+        amountData.maxNum = if (price == 0) {
+            0
+        } else {
+            money / price
+        }
     }
 
+    fun getExplainAt(selected: Int): String {
+        if (shopItemList.size <= selected) {
+            return ""
+        }
+
+        return shopItemList[selected].name + "の説明"
+    }
 
     fun hideMenu() {
-        shopMenuRepository.setVisibility(
-            isVisible = false,
-        )
+        shopMenuRepository.setList(emptyList())
     }
 
     override fun goNext() {
@@ -115,7 +125,7 @@ class ShopViewModel(
     }
 
     fun buy(selected: Int) {
-        val itemId = shopItem.value[selected].itemId
+        val itemId = shopItemList[selected].itemId
 
         choiceRepository.push(
             commandType = listOf(

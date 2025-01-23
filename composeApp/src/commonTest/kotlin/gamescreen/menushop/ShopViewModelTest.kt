@@ -3,6 +3,7 @@ package gamescreen.menushop
 import core.ModuleCore
 import gamescreen.choice.ModuleChoice
 import gamescreen.menu.ModuleMenu
+import gamescreen.menushop.domain.amountdata.dummyItem
 import gamescreen.menushop.repository.shopmenu.ShopMenuRepository
 import gamescreen.text.ModuleText
 import kotlinx.coroutines.delay
@@ -36,7 +37,9 @@ class ShopViewModelTest : KoinTest {
 
         // この画面は基本見えるようになっているはず
         runBlocking {
-            shopMenuRepository.setVisibility(true)
+            shopMenuRepository.setList(
+                listOf(dummyItem)
+            )
             delay(50)
         }
     }

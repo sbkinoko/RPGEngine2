@@ -35,7 +35,7 @@ fun ShopMenu(
 
     val selected by shopViewModel.selectedFlowState.collectAsState()
 
-    val itemList by shopViewModel.shopItem
+    val itemList by shopViewModel.shopItemStateFlow.collectAsState()
 
     val money by shopViewModel.moneyFlow.collectAsState()
 
@@ -95,7 +95,9 @@ fun ShopMenu(
 
                     ExplainComponent(
                         modifier = Modifier.weight(1f),
-                        explain = itemList[selected].name + "の説明",
+                        explain = shopViewModel.getExplainAt(
+                            selected
+                        ),
                     )
                 }
             }
