@@ -103,6 +103,8 @@ fun ShopMenu(
             }
 
             SubWindowType.AMOUNT -> {
+                shopViewModel.reset()
+
                 SubWindow(
                     modifier = Modifier.fillMaxSize()
                         .clickable {

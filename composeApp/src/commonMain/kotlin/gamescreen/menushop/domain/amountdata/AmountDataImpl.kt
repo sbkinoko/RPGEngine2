@@ -20,8 +20,10 @@ class AmountDataImpl : AmountData {
     override val selected: StateFlow<Int>
         get() = mutableSelectedFlow.asStateFlow()
 
-    private val mutableAmount1 = MutableStateFlow(1)
-    private val mutableAmount2 = MutableStateFlow(0)
+    private val mutableAmount1 =
+        MutableStateFlow(0)
+    private val mutableAmount2 =
+        MutableStateFlow(0)
 
     abstract inner class ButtonData : SpinButtonData<Int> {
         abstract val dif: Int
@@ -79,6 +81,11 @@ class AmountDataImpl : AmountData {
 
         mutableAmount1.value = num1
         mutableAmount2.value = num2
+    }
+
+    override fun reset() {
+        set(1)
+        mutableSelectedFlow.value = 1
     }
 
     override fun useStick(command: ArrowCommand) {

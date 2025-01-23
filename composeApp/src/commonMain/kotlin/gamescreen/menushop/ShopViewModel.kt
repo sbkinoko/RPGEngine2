@@ -84,6 +84,10 @@ class ShopViewModel(
         }
     }
 
+    fun reset() {
+        amountData.reset()
+    }
+
     fun getExplainAt(selected: Int): String {
         if (shopItemList.size <= selected) {
             return ""
