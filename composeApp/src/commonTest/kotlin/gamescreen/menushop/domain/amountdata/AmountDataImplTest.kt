@@ -22,6 +22,8 @@ class AmountDataImplTest : KoinTest {
                 ModuleShop,
             )
         }
+
+        amountData.reset()
     }
 
     @AfterTest
@@ -29,6 +31,7 @@ class AmountDataImplTest : KoinTest {
         stopKoin()
     }
 
+    // todo スティック操作のテストを作る
     /**
      * 初期値の確認
      */
@@ -293,7 +296,6 @@ class AmountDataImplTest : KoinTest {
             )
         }
     }
-
 
     companion object {
         const val DIGIT_1 = 1

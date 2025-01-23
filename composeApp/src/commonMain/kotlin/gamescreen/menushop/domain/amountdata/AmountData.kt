@@ -15,4 +15,5 @@ interface AmountData {
 
     fun set(value: Int)
 
+    fun reset()
 }
