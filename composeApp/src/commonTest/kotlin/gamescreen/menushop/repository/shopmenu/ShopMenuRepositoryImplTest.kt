@@ -1,6 +1,8 @@
 package gamescreen.menushop.repository.shopmenu
 
 import gamescreen.menushop.ModuleShop
+import gamescreen.menushop.domain.ShopItem
+import gamescreen.menushop.domain.amountdata.dummyItem
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -73,18 +75,32 @@ class ShopMenuRepositoryImplTest : KoinTest {
                     }
             }
 
+            var result2 = emptyList<ShopItem>()
+            val collectJob2 = launch {
+                shopMenuRepository.shopItemListStateFlow
+                    .collect {
+                        result2 = it
+                    }
+            }
+
             delay(50)
 
-            val first = true
-            shopMenuRepository.setVisibility(
-                isVisible = first,
+            val first = listOf(
+                dummyItem,
+            )
+            shopMenuRepository.setList(
+                list = first,
             )
 
             delay(50)
 
             assertEquals(
-                expected = first,
+                expected = true,
                 actual = result,
+            )
+            assertEquals(
+                expected = first,
+                actual = result2,
             )
 
             assertEquals(
@@ -92,16 +108,21 @@ class ShopMenuRepositoryImplTest : KoinTest {
                 actual = count,
             )
 
-            val second = false
-            shopMenuRepository.setVisibility(
-                isVisible = second,
+            val second = emptyList<ShopItem>()
+            shopMenuRepository.setList(
+                second,
             )
 
             delay(50)
 
             assertEquals(
-                expected = second,
+                expected = false,
                 actual = result,
+            )
+
+            assertEquals(
+                expected = second,
+                actual = result2,
             )
 
             assertEquals(
@@ -110,6 +131,7 @@ class ShopMenuRepositoryImplTest : KoinTest {
             )
 
             collectJob.cancel()
+            collectJob2.cancel()
         }
     }
 }
