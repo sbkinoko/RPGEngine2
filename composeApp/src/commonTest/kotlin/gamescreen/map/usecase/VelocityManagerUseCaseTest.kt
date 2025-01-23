@@ -2,7 +2,7 @@ package gamescreen.map.usecase
 
 import gamescreen.map.ModuleMap
 import gamescreen.map.domain.Velocity
-import gamescreen.map.layout.PlayerMoveSquare
+import gamescreen.map.domain.collision.PlayerMoveSquare
 import gamescreen.map.viewmodel.MapViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking

@@ -24,6 +24,9 @@ val ModuleMain = module {
             textRepository = get(),
             textViewModel = get(),
 
+            shopMenuRepository = get(),
+            shopViewModel = get(),
+
             screenTypeRepository = get(),
         )
     }

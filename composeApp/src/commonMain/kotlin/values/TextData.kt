@@ -9,6 +9,8 @@ class TextData {
 
         const val BATTLE_MAIN_ATTACK = "攻撃"
         const val BATTLE_MAIN_ESCAPE = "逃げる"
+
+        const val SHOP_BUY = "購入"
     }
 
     object BattleFinishMoney {
@@ -32,6 +34,12 @@ class TextData {
     object BattleFinishLevelUp {
         fun getText(name: String): String {
             return "$name はレベルアップした"
+        }
+    }
+
+    object ShopMoney {
+        fun getText(): String {
+            return "所持金 : "
         }
     }
 }

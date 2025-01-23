@@ -15,6 +15,7 @@ class NonLoopMap : MapData() {
         get() = listOf(
             NPCRepositoryImpl.npc1,
             NPCRepositoryImpl.npc2,
+            NPCRepositoryImpl.npc3,
         )
 
     override val field: Array<Array<CellType>>

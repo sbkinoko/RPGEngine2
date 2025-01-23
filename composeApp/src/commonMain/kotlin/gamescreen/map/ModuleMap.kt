@@ -177,6 +177,7 @@ val ModuleMap = module {
             textRepository = get(),
             choiceRepository = get(),
             addToolUseCase = get(),
+            setShopItemUseCase = get(),
         )
     }
 

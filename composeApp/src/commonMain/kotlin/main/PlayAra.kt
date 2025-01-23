@@ -11,6 +11,7 @@ import gamescreen.choice.ChoiceWindow
 import gamescreen.map.layout.MapScreen
 import gamescreen.map.viewmodel.MapViewModel
 import gamescreen.menu.MenuScreen
+import gamescreen.menushop.ShopMenu
 import gamescreen.text.TextWindow
 import values.Colors
 
@@ -41,6 +42,10 @@ fun PlayArea(
                 )
             }
         }
+
+        ShopMenu(
+            modifier = Modifier.fillMaxSize(),
+        )
 
         TextWindow(
             modifier = Modifier

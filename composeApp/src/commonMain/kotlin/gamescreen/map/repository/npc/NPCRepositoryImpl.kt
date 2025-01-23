@@ -1,5 +1,6 @@
 package gamescreen.map.repository.npc
 
+import gamescreen.map.data.ShopId
 import gamescreen.map.domain.MapPoint
 import gamescreen.map.domain.collision.square.EventSquare
 import gamescreen.map.domain.npc.NPC
@@ -27,10 +28,12 @@ class NPCRepositoryImpl : NPCRepository {
 
     companion object {
         val npc1 = NPC(
-            npcType = NPCType.GIRL,
+            npcType = NPCType.MARCHANT,
             mapPoint = MapPoint(3, 3),
             eventSquare = EventSquare(
-                eventID = EventType.Talk,
+                eventID = EventType.Shop(
+                    shopId = ShopId.Type1,
+                ),
                 size = MapViewModel.CELL_SIZE * 0.5f,
             ),
         )
@@ -43,5 +46,17 @@ class NPCRepositoryImpl : NPCRepository {
                 size = MapViewModel.CELL_SIZE,
             ),
         )
+
+        val npc3 = NPC(
+            npcType = NPCType.MARCHANT,
+            mapPoint = MapPoint(4, 3),
+            eventSquare = EventSquare(
+                eventID = EventType.Shop(
+                    shopId = ShopId.Type2,
+                ),
+                size = MapViewModel.CELL_SIZE,
+            ),
+        )
+
     }
 }

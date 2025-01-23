@@ -5,16 +5,16 @@ import controller.domain.Stick
 import core.domain.ScreenType
 import core.domain.mapcell.CellType
 import core.repository.screentype.ScreenTypeRepository
-import gamescreen.map.data.LoopMap
+import gamescreen.map.data.NonLoopMap
 import gamescreen.map.domain.BackgroundCell
 import gamescreen.map.domain.Player
 import gamescreen.map.domain.PlayerDir
 import gamescreen.map.domain.Point
 import gamescreen.map.domain.Velocity
+import gamescreen.map.domain.collision.PlayerMoveSquare
 import gamescreen.map.domain.collision.square.NormalSquare
 import gamescreen.map.domain.collision.square.Square
 import gamescreen.map.domain.toDir
-import gamescreen.map.layout.PlayerMoveSquare
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.npc.NPCRepository
 import gamescreen.map.repository.player.PlayerPositionRepository
@@ -150,9 +150,9 @@ class MapViewModel : ControllerCallback, KoinComponent {
         }
 
         roadMapUseCase.invoke(
-            mapX = 0,
-            mapY = 0,
-            mapData = LoopMap(),
+            mapX = 3,
+            mapY = 2,
+            mapData = NonLoopMap(),
         )
     }
 

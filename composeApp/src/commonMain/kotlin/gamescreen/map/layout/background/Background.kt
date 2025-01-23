@@ -1,4 +1,4 @@
-package gamescreen.map.layout
+package gamescreen.map.layout.background
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
@@ -35,11 +35,7 @@ fun Background(
         .playerIncludeCellFlow
         .collectAsState()
 
-    val npc by mapViewModel
-        .npcFlow
-        .collectAsState()
-
-    val imageBinder = ImageBinder()
+    val imageBinder = ImageBinderBackground()
 
     // fixme 背景が動いてない場合はリロードしない
     Box {
@@ -129,25 +125,6 @@ fun Background(
                                 )
                             }
                         )
-                    }
-
-                    npc.forEach { npc ->
-                        npc.eventSquare.let {
-                            Image(
-                                modifier = Modifier
-                                    .size(
-                                        (it.size * screenRatio).pxToDp()
-                                    )
-                                    .offset(
-                                        x = (it.baseX * screenRatio).pxToDp(),
-                                        y = (it.baseY * screenRatio).pxToDp(),
-                                    ),
-                                painter = painterResource(
-                                    imageBinder.bindNPC()
-                                ),
-                                contentDescription = "NPC"
-                            )
-                        }
                     }
                 }
             }
