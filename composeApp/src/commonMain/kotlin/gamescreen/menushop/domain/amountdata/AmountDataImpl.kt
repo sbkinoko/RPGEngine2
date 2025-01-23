@@ -1,6 +1,7 @@
 package gamescreen.menushop.domain.amountdata
 
 import common.layout.spinnbutton.SpinButtonData
+import controller.domain.ArrowCommand
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -8,11 +9,18 @@ import kotlinx.coroutines.flow.asStateFlow
 class AmountDataImpl : AmountData {
     override var maxNum = 99
 
+    val minNum = 1
+
     override val num
         get() = mutableAmount2.value * 10 +
                 mutableAmount1.value
 
-    private val mutableAmount1 = MutableStateFlow(0)
+    private val mutableSelectedFlow =
+        MutableStateFlow(0)
+    override val selected: StateFlow<Int>
+        get() = mutableSelectedFlow.asStateFlow()
+
+    private val mutableAmount1 = MutableStateFlow(1)
     private val mutableAmount2 = MutableStateFlow(0)
 
     abstract inner class ButtonData : SpinButtonData<Int> {
@@ -20,9 +28,7 @@ class AmountDataImpl : AmountData {
 
         override fun onClickAdd() {
             if (num == maxNum) {
-                set(
-                    value = 0,
-                )
+                set(value = minNum)
                 return
             }
 
@@ -30,7 +36,7 @@ class AmountDataImpl : AmountData {
         }
 
         override fun onClickDec() {
-            if (num == 0) {
+            if (num == minNum) {
                 set(value = maxNum)
                 return
             }
@@ -39,25 +45,27 @@ class AmountDataImpl : AmountData {
         }
     }
 
-    override val buttonData1 = object : ButtonData() {
-        override val dif: Int
-            get() = 1
+    override val buttonDataList: List<SpinButtonData<Int>> =
+        listOf(
+            object : ButtonData() {
+                override val dif: Int
+                    get() = 10
 
-        override val dataFlow: StateFlow<Int>
-            get() = mutableAmount1.asStateFlow()
-    }
+                override val dataFlow: StateFlow<Int>
+                    get() = mutableAmount2.asStateFlow()
+            },
+            object : ButtonData() {
+                override val dif: Int
+                    get() = 1
 
-    override val buttonData10 = object : ButtonData() {
-        override val dif: Int
-            get() = 10
-
-        override val dataFlow: StateFlow<Int>
-            get() = mutableAmount2.asStateFlow()
-    }
+                override val dataFlow: StateFlow<Int>
+                    get() = mutableAmount1.asStateFlow()
+            },
+        )
 
     override fun set(value: Int) {
         if (value < 0) {
-            set(value = 0)
+            set(value = minNum)
             return
         }
 
@@ -71,5 +79,24 @@ class AmountDataImpl : AmountData {
 
         mutableAmount1.value = num1
         mutableAmount2.value = num2
+    }
+
+    override fun useStick(command: ArrowCommand) {
+        when (command) {
+            ArrowCommand.Up -> {
+                buttonDataList[selected.value].onClickAdd()
+            }
+
+            ArrowCommand.Down -> {
+                buttonDataList[selected.value].onClickDec()
+            }
+
+            ArrowCommand.Right,
+            ArrowCommand.Left -> {
+                mutableSelectedFlow.value = (mutableSelectedFlow.value + 1) % 2
+            }
+
+            ArrowCommand.None -> Unit
+        }
     }
 }

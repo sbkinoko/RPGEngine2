@@ -1,6 +1,7 @@
 package gamescreen.menushop
 
 import androidx.compose.runtime.mutableStateOf
+import controller.domain.Stick
 import core.menu.SelectableChildViewModel
 import core.repository.money.MoneyRepository
 import gamescreen.choice.Choice
@@ -46,17 +47,13 @@ class ShopViewModel(
     )
 
     private var money = 0
-    private var price = 1
+    private var selected = 0
     private var shopItemList = emptyList<ShopItem>()
 
     init {
         CoroutineScope(Dispatchers.Default).launch {
             selectManager.selectedFlowState.collect {
-                price = if (it < shopItemList.size) {
-                    shopItemList[it].price
-                } else {
-                    0
-                }
+                selected = it
                 setMax()
             }
         }
@@ -80,10 +77,10 @@ class ShopViewModel(
     }
 
     private fun setMax() {
-        amountData.maxNum = if (price == 0) {
+        amountData.maxNum = if (shopItemList.size <= selected) {
             0
         } else {
-            money / price
+            money / shopItemList[selected].price
         }
     }
 
@@ -108,7 +105,20 @@ class ShopViewModel(
             }
 
             SubWindowType.AMOUNT -> {
+                buy(
+                    selected = selected,
+                )
+            }
+        }
+    }
 
+    override fun moveStick(stick: Stick) {
+        when (subWindowType.value) {
+            SubWindowType.EXPLAIN -> super.moveStick(stick)
+            SubWindowType.AMOUNT -> {
+                timer.callbackIfTimePassed {
+                    amountData.useStick(stick.toCommand())
+                }
             }
         }
     }
@@ -126,6 +136,7 @@ class ShopViewModel(
 
     fun buy(selected: Int) {
         val itemId = shopItemList[selected].itemId
+        val price = shopItemList[selected].price
 
         choiceRepository.push(
             commandType = listOf(

@@ -36,16 +36,16 @@ class AmountDataImplTest : KoinTest {
     fun initTest() {
         assertEquals(
             expected = 0,
-            actual = amountData.buttonData1.dataFlow.value,
+            actual = amountData.buttonDataList[DIGIT_10].dataFlow.value,
         )
 
         assertEquals(
-            expected = 0,
-            actual = amountData.buttonData10.dataFlow.value,
+            expected = 1,
+            actual = amountData.buttonDataList[DIGIT_1].dataFlow.value,
         )
 
         assertEquals(
-            expected = 0,
+            expected = 1,
             actual = amountData.num,
         )
     }
@@ -61,12 +61,12 @@ class AmountDataImplTest : KoinTest {
 
             assertEquals(
                 expected = 4,
-                actual = amountData.buttonData10.dataFlow.value
+                actual = amountData.buttonDataList[DIGIT_10].dataFlow.value
             )
 
             assertEquals(
                 expected = 3,
-                actual = amountData.buttonData1.dataFlow.value
+                actual = amountData.buttonDataList[DIGIT_1].dataFlow.value
             )
         }
     }
@@ -82,12 +82,12 @@ class AmountDataImplTest : KoinTest {
 
             assertEquals(
                 expected = 5,
-                actual = amountData.buttonData10.dataFlow.value
+                actual = amountData.buttonDataList[DIGIT_10].dataFlow.value
             )
 
             assertEquals(
                 expected = 1,
-                actual = amountData.buttonData1.dataFlow.value
+                actual = amountData.buttonDataList[DIGIT_1].dataFlow.value
             )
         }
     }
@@ -98,12 +98,12 @@ class AmountDataImplTest : KoinTest {
     @Test
     fun inc1_1() {
         runBlocking {
-            amountData.buttonData1.onClickAdd()
+            amountData.buttonDataList[DIGIT_1].onClickAdd()
 
             delay(50)
 
             assertEquals(
-                expected = 1,
+                expected = 2,
                 actual = amountData.num
             )
         }
@@ -118,7 +118,7 @@ class AmountDataImplTest : KoinTest {
             amountData.set(5)
             delay(5)
 
-            amountData.buttonData1.onClickDec()
+            amountData.buttonDataList[DIGIT_1].onClickDec()
             delay(50)
 
             assertEquals(
@@ -134,12 +134,12 @@ class AmountDataImplTest : KoinTest {
     @Test
     fun inc2_1() {
         runBlocking {
-            amountData.buttonData10.onClickAdd()
+            amountData.buttonDataList[DIGIT_10].onClickAdd()
 
             delay(50)
 
             assertEquals(
-                expected = 10,
+                expected = 11,
                 actual = amountData.num
             )
         }
@@ -154,7 +154,7 @@ class AmountDataImplTest : KoinTest {
             amountData.set(21)
             delay(5)
 
-            amountData.buttonData10.onClickDec()
+            amountData.buttonDataList[DIGIT_10].onClickDec()
 
             delay(50)
 
@@ -174,7 +174,7 @@ class AmountDataImplTest : KoinTest {
             amountData.set(95)
             delay(5)
 
-            amountData.buttonData10.onClickAdd()
+            amountData.buttonDataList[DIGIT_10].onClickAdd()
             delay(5)
 
             assertEquals(
@@ -193,7 +193,7 @@ class AmountDataImplTest : KoinTest {
             amountData.maxNum = 50
 
             amountData.set(49)
-            amountData.buttonData10.onClickAdd()
+            amountData.buttonDataList[DIGIT_1].onClickAdd()
 
             delay(5)
 
@@ -213,11 +213,11 @@ class AmountDataImplTest : KoinTest {
             amountData.set(99)
             delay(5)
 
-            amountData.buttonData1.onClickAdd()
+            amountData.buttonDataList[DIGIT_1].onClickAdd()
             delay(5)
 
             assertEquals(
-                expected = 0,
+                expected = 1,
                 actual = amountData.num,
             )
         }
@@ -233,12 +233,12 @@ class AmountDataImplTest : KoinTest {
             amountData.set(99)
             delay(5)
 
-            amountData.buttonData10.onClickAdd()
+            amountData.buttonDataList[DIGIT_1].onClickAdd()
 
             delay(5)
 
             assertEquals(
-                expected = 0,
+                expected = 1,
                 actual = amountData.num,
             )
         }
@@ -250,7 +250,7 @@ class AmountDataImplTest : KoinTest {
     @Test
     fun dec0_1() {
         runBlocking {
-            amountData.buttonData1.onClickDec()
+            amountData.buttonDataList[DIGIT_1].onClickDec()
             delay(5)
 
             assertEquals(
@@ -266,7 +266,7 @@ class AmountDataImplTest : KoinTest {
     @Test
     fun dec0_2() {
         runBlocking {
-            amountData.buttonData10.onClickDec()
+            amountData.buttonDataList[DIGIT_10].onClickDec()
             delay(5)
 
             assertEquals(
@@ -284,13 +284,19 @@ class AmountDataImplTest : KoinTest {
         runBlocking {
             amountData.set(5)
 
-            amountData.buttonData10.onClickDec()
+            amountData.buttonDataList[DIGIT_10].onClickDec()
             delay(5)
 
             assertEquals(
-                expected = 0,
+                expected = 1,
                 actual = amountData.num,
             )
         }
+    }
+
+
+    companion object {
+        const val DIGIT_1 = 1
+        const val DIGIT_10 = 0
     }
 }
