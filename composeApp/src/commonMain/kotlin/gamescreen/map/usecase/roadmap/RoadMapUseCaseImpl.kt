@@ -13,7 +13,7 @@ class RoadMapUseCaseImpl(
     private val updateCellContainPlayerUseCase: UpdateCellContainPlayerUseCase,
 ) : RoadMapUseCase {
 
-    override fun invoke(
+    override suspend fun invoke(
         mapX: Int,
         mapY: Int,
         mapData: MapData,

@@ -5,5 +5,5 @@ interface SetPlayerCenterUseCase {
     /**
      * プレイヤーを中心に移動する
      */
-    operator fun invoke()
+    suspend operator fun invoke()
 }

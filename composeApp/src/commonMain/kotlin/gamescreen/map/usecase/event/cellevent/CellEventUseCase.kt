@@ -6,7 +6,7 @@ interface CellEventUseCase {
     /**
      * 対応するマスのイベントを発火
      */
-    operator fun invoke(
+    suspend operator fun invoke(
         cellId: CellType,
     )
 }

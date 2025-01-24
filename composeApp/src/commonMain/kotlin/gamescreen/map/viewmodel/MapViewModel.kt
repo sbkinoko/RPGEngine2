@@ -147,13 +147,13 @@ class MapViewModel : ControllerCallback, KoinComponent {
             playerPositionRepository.setPlayerPosition(
                 NormalSquare(size = player.size)
             )
-        }
 
-        roadMapUseCase.invoke(
-            mapX = 3,
-            mapY = 2,
-            mapData = NonLoopMap(),
-        )
+            roadMapUseCase.invoke(
+                mapX = 3,
+                mapY = 2,
+                mapData = NonLoopMap(),
+            )
+        }
     }
 
     private val fieldSquare: NormalSquare = NormalSquare(
@@ -197,8 +197,10 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
         updateEventCollision()
         checkEvent()
+
         // playerが入っているマスを設定
         updateCellContainPlayerUseCase.invoke()
+
         //　そのマスに基づいてイベントを呼び出し
         playerCellRepository.eventCell?.let {
             cellEventUseCase.invoke(
