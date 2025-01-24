@@ -10,7 +10,7 @@ class CellEventUseCaseImpl(
     private val backgroundRepository: BackgroundRepository,
     private val roadMapDataUseCase: RoadMapUseCase,
 ) : CellEventUseCase {
-    override fun invoke(
+    override suspend fun invoke(
         cellId: CellType,
     ) {
         // セルがイベントでなければ何もしない
