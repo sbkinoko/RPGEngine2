@@ -13,6 +13,9 @@ class PlayerMoveManageUseCase(
     private val player: Player
         get() = playerPositionRepository.getPlayerPosition()
 
+
+    // fixme 引数にplayerを取るようにする
+    // fixme リポジトリの削除
     /**
      * 移動可能な速度を返す
      */
