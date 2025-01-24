@@ -1,7 +1,7 @@
 package gamescreen.map.usecase
 
+import gamescreen.map.domain.Player
 import gamescreen.map.domain.Velocity
-import gamescreen.map.domain.collision.square.Square
 import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.usecase.collision.iscollided.IsCollidedUseCase
 import kotlin.math.abs
@@ -10,7 +10,7 @@ class PlayerMoveManageUseCase(
     private val playerPositionRepository: PlayerPositionRepository,
     private val isCollidedUseCase: IsCollidedUseCase,
 ) {
-    private val playerSquare: Square
+    private val player: Player
         get() = playerPositionRepository.getPlayerPosition()
 
     /**
@@ -19,8 +19,10 @@ class PlayerMoveManageUseCase(
     fun getMovableVelocity(
         tentativePlayerVelocity: Velocity,
     ): Velocity {
+        val square = player.square
+
         //　x方向だけの移動ができるかチェック
-        val onlyMoveX = playerSquare.move(
+        val onlyMoveX = square.move(
             dx = tentativePlayerVelocity.x,
             dy = 0f,
         )
@@ -28,7 +30,7 @@ class PlayerMoveManageUseCase(
             isCollidedUseCase.invoke(onlyMoveX).not()
 
         //　y方向だけの移動ができるかチェック
-        val onlyMoveY = playerSquare.move(
+        val onlyMoveY = player.square.move(
             dx = 0f,
             dy = tentativePlayerVelocity.y,
         )
@@ -127,7 +129,7 @@ class PlayerMoveManageUseCase(
         dy: Float,
         section: Section,
     ): Section {
-        val square = playerSquare.move(
+        val square = player.square.move(
             dx = dx,
             dy = dy,
         )

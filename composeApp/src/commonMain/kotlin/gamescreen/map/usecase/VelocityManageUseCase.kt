@@ -21,7 +21,7 @@ class VelocityManageUseCase(
         // プレイヤーの移動速度
         val vpx: Float
         val vpy: Float
-        val player = playerPositionRepository.getPlayerPosition()
+        val player = playerPositionRepository.getPlayerPosition().square
 
         if ((player.isLeft(playerMoveArea) &&
                     tentativePlayerVelocity.x < 0) ||

@@ -4,20 +4,13 @@ import gamescreen.map.domain.Player
 import gamescreen.map.repository.player.PlayerPositionRepository
 
 class PlayerMoveUseCase(
-    private val playerPositionRepository: PlayerPositionRepository
+    private val playerPositionRepository: PlayerPositionRepository,
 ) {
     suspend operator fun invoke(
         player: Player,
     ) {
-        val square = playerPositionRepository
-            .getPlayerPosition()
-            .move(
-                dx = player.velocity.x,
-                dy = player.velocity.y,
-            )
-
         playerPositionRepository.setPlayerPosition(
-            square = square,
+            player = player.move(),
         )
     }
 }

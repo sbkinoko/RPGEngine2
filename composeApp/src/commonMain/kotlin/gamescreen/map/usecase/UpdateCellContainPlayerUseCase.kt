@@ -25,6 +25,7 @@ class UpdateCellContainPlayerUseCase(
                     if (
                         playerPositionRepository
                             .getPlayerPosition()
+                            .square
                             .isIn(cell.square)
                     ) {
                         playerIncludeCell = cell
