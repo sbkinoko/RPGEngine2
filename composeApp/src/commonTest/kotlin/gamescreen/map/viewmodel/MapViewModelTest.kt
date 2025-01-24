@@ -1,8 +1,8 @@
 package gamescreen.map.viewmodel
 
 import gamescreen.map.ModuleMap
+import gamescreen.map.domain.Player
 import gamescreen.map.domain.Velocity
-import gamescreen.map.domain.collision.square.Square
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -34,18 +34,11 @@ class MapViewModelTest {
         runBlocking {
             val x = CENTER + 2f
             val y = CENTER + 1f
+            lateinit var result: Player
             var count = 0
             val collectJob = launch {
                 mapViewModel.playerSquare.collect {
                     count++
-                    assertEquals(
-                        x - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
-                        it.x,
-                    )
-                    assertEquals(
-                        y - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
-                        it.y,
-                    )
                 }
             }
 
@@ -57,6 +50,15 @@ class MapViewModelTest {
             mapViewModel.updatePosition()
 
             delay(100)
+
+            assertEquals(
+                x - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
+                result.square.x,
+            )
+            assertEquals(
+                y - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
+                result.square.y,
+            )
 
             assertEquals(
                 expected = 1,
@@ -76,7 +78,7 @@ class MapViewModelTest {
         val y = CENTER
         var count = 0
         runBlocking {
-            lateinit var result: Square
+            lateinit var result: Player
             val collectJob = launch {
                 mapViewModel.playerSquare.collect {
                     result = it
@@ -94,11 +96,11 @@ class MapViewModelTest {
 
             assertEquals(
                 CENTER + Velocity.MAX - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
-                result.x,
+                result.square.x,
             )
             assertEquals(
                 y - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
-                result.y,
+                result.square.y,
             )
 
             mapViewModel.updatePosition()
@@ -106,11 +108,11 @@ class MapViewModelTest {
 
             assertEquals(
                 CENTER + Velocity.MAX * 2 - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
-                result.x,
+                result.square.x,
             )
             assertEquals(
                 y - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
-                result.y,
+                result.square.y,
             )
 
             // 値が更新されないことを確認
@@ -120,11 +122,11 @@ class MapViewModelTest {
 
             assertEquals(
                 CENTER + Velocity.MAX * 2 - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
-                result.x,
+                result.square.x,
             )
             assertEquals(
                 y - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
-                result.y,
+                result.square.y,
             )
 
             // updateは3回しているが、値の更新は2回なのでcollectは2回しか呼ばれない
@@ -144,7 +146,7 @@ class MapViewModelTest {
         var count = 0
 
         runBlocking {
-            lateinit var result: Square
+            lateinit var result: Player
             val collectJob = launch {
                 mapViewModel.playerSquare.collect {
                     result = it
@@ -165,11 +167,11 @@ class MapViewModelTest {
 
             assertEquals(
                 MapViewModel.VIRTUAL_SCREEN_SIZE / 2 - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
-                result.x,
+                result.square.x,
             )
             assertEquals(
                 MapViewModel.VIRTUAL_SCREEN_SIZE / 2 - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
-                result.y,
+                result.square.y,
             )
 
             assertEquals(
