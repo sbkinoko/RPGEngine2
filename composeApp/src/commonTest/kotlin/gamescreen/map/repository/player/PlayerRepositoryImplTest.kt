@@ -1,10 +1,7 @@
 package gamescreen.map.repository.player
 
 import gamescreen.map.ModuleMap
-import gamescreen.map.domain.Point
-import gamescreen.map.domain.collision.square.NormalSquare
-import gamescreen.map.domain.collision.square.Square
-import kotlinx.coroutines.DelicateCoroutinesApi
+import gamescreen.map.domain.Player
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -22,6 +19,10 @@ class PlayerPositionRepositoryImplTest : KoinTest {
 
     private val repository: PlayerPositionRepository by inject()
 
+    private val player = Player(
+        size = 10F
+    )
+
     @BeforeTest
     fun beforeTest() {
         startKoin {
@@ -38,41 +39,25 @@ class PlayerPositionRepositoryImplTest : KoinTest {
 
     @Test
     fun setPlayerPositionTest() {
-        val square = NormalSquare(
-            point = Point(
-                x = 0f,
-                y = 0f
-            ),
-            size = 10f,
-        )
         runBlocking {
             repository.setPlayerPosition(
-                square = square
+                player = player
             )
 
             repository.getPlayerPosition().apply {
                 assertEquals(
-                    expected = square,
+                    expected = player,
                     actual = this,
                 )
             }
         }
     }
 
-    @OptIn(DelicateCoroutinesApi::class)
     @Test
     fun checkFlow() {
-        val square = NormalSquare(
-            point = Point(
-                x = 0f,
-                y = 0f
-            ),
-            size = 10f,
-        )
-
         runBlocking {
             var count = 0
-            lateinit var result: Square
+            lateinit var result: Player
             val collectJob: Job = launch {
                 repository.playerPositionStateFlow.collect {
                     count++
@@ -81,12 +66,12 @@ class PlayerPositionRepositoryImplTest : KoinTest {
             }
 
             repository.setPlayerPosition(
-                square = square
+                player = player,
             )
             delay(100)
 
             assertEquals(
-                expected = square,
+                expected = player,
                 actual = result,
             )
             assertEquals(

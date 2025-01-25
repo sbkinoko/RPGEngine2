@@ -1,18 +1,14 @@
-package gamescreen.map.usecase
+package gamescreen.map.service.velocitymanage
 
 import gamescreen.map.domain.Velocity
 import gamescreen.map.domain.collision.square.Square
-import gamescreen.map.repository.player.PlayerPositionRepository
 
-class VelocityManageUseCase(
-    private val playerPositionRepository: PlayerPositionRepository,
-) {
-    /**
-     * 移動可能領域とプレイヤーの位置を比較して、どっちをどう動かすかを調整するメソッド
-     */
-    fun manageVelocity(
+class VelocityManageServiceImpl : VelocityManageService {
+
+    override fun invoke(
         tentativePlayerVelocity: Velocity,
         playerMoveArea: Square,
+        playerSquare: Square,
     ): Pair<Velocity, Velocity> {
         // 背景の移動速度
         val vbx: Float
@@ -21,11 +17,10 @@ class VelocityManageUseCase(
         // プレイヤーの移動速度
         val vpx: Float
         val vpy: Float
-        val player = playerPositionRepository.getPlayerPosition()
 
-        if ((player.isLeft(playerMoveArea) &&
+        if ((playerSquare.isLeft(playerMoveArea) &&
                     tentativePlayerVelocity.x < 0) ||
-            (player.isRight(playerMoveArea) &&
+            (playerSquare.isRight(playerMoveArea) &&
                     0 < tentativePlayerVelocity.x)
         ) {
             vbx = -(tentativePlayerVelocity.x)
@@ -35,9 +30,9 @@ class VelocityManageUseCase(
             vbx = 0f
         }
 
-        if ((player.isUp(playerMoveArea) &&
+        if ((playerSquare.isUp(playerMoveArea) &&
                     tentativePlayerVelocity.y < 0) ||
-            (player.isDown(playerMoveArea) &&
+            (playerSquare.isDown(playerMoveArea) &&
                     0 < tentativePlayerVelocity.y)
         ) {
             vby = -(tentativePlayerVelocity.y)

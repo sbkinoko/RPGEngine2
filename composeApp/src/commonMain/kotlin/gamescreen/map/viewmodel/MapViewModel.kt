@@ -8,21 +8,19 @@ import core.repository.screentype.ScreenTypeRepository
 import gamescreen.map.data.NonLoopMap
 import gamescreen.map.domain.BackgroundCell
 import gamescreen.map.domain.Player
-import gamescreen.map.domain.PlayerDir
 import gamescreen.map.domain.Point
 import gamescreen.map.domain.Velocity
 import gamescreen.map.domain.collision.PlayerMoveSquare
 import gamescreen.map.domain.collision.square.NormalSquare
-import gamescreen.map.domain.collision.square.Square
 import gamescreen.map.domain.toDir
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.npc.NPCRepository
 import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.repository.playercell.PlayerCellRepository
+import gamescreen.map.service.velocitymanage.VelocityManageService
 import gamescreen.map.usecase.PlayerMoveManageUseCase
 import gamescreen.map.usecase.PlayerMoveUseCase
 import gamescreen.map.usecase.UpdateCellContainPlayerUseCase
-import gamescreen.map.usecase.VelocityManageUseCase
 import gamescreen.map.usecase.battledecidemonster.DecideBattleMonsterUseCase
 import gamescreen.map.usecase.battlestart.StartBattleUseCase
 import gamescreen.map.usecase.collision.geteventtype.GetEventTypeUseCase
@@ -43,10 +41,9 @@ import org.koin.core.component.inject
 import values.EventType
 
 class MapViewModel : ControllerCallback, KoinComponent {
-    val player: Player by inject()
     private val playerPositionRepository: PlayerPositionRepository by inject()
     private val playerMoveManageUseCase: PlayerMoveManageUseCase by inject()
-    private val velocityManageUseCase: VelocityManageUseCase by inject()
+    private val velocityManageService: VelocityManageService by inject()
 
     private val screenTypeRepository: ScreenTypeRepository by inject()
 
@@ -80,25 +77,10 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
     private val roadMapUseCase: RoadMapUseCase by inject()
 
-    val playerSquare: StateFlow<Square> =
+    val playerSquare: StateFlow<Player> =
         playerPositionRepository.playerPositionStateFlow
 
-    private var eventSquare: NormalSquare = NormalSquare(
-        size = VIRTUAL_PLAYER_SIZE,
-        point = Point(
-            x = playerPositionRepository.getPlayerPosition().x,
-            y = playerPositionRepository.getPlayerPosition().y
-        ),
-    )
-        set(value) {
-            mutableEventSquareFlow.value = value
-            field = value
-        }
-
-    private val mutableEventSquareFlow = MutableStateFlow(
-        eventSquare
-    )
-    val eventSquareFlow: StateFlow<NormalSquare> = mutableEventSquareFlow.asStateFlow()
+    private var player: Player = Player(size = 0f)
 
     private var tapPoint: Point? = null
 
@@ -107,18 +89,8 @@ class MapViewModel : ControllerCallback, KoinComponent {
         borderRate = MOVE_BORDER,
     )
 
-    private var backGroundVelocity: Velocity = Velocity()
+    // fixme 直接playerに入れちゃう
     private var tentativePlayerVelocity: Velocity = Velocity()
-
-    private var dir: PlayerDir = PlayerDir.DOWN
-        set(value) {
-            field = value
-            mutableDirFlow.value = dir
-        }
-    private val mutableDirFlow = MutableStateFlow<PlayerDir>(
-        dir
-    )
-    val dirFlow: StateFlow<PlayerDir> = mutableDirFlow.asStateFlow()
 
     private var eventType: EventType = EventType.None
         set(value) {
@@ -133,7 +105,6 @@ class MapViewModel : ControllerCallback, KoinComponent {
     private val canEvent: Boolean
         get() = eventType != EventType.None
 
-
     val backgroundCells =
         backgroundRepository.backgroundStateFlow
 
@@ -145,7 +116,9 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
         CoroutineScope(Dispatchers.Default).launch {
             playerPositionRepository.setPlayerPosition(
-                NormalSquare(size = player.size)
+                player = Player(
+                    size = VIRTUAL_PLAYER_SIZE,
+                )
             )
 
             roadMapUseCase.invoke(
@@ -153,6 +126,12 @@ class MapViewModel : ControllerCallback, KoinComponent {
                 mapY = 2,
                 mapData = NonLoopMap(),
             )
+        }
+
+        CoroutineScope(Dispatchers.Default).launch {
+            playerSquare.collect {
+                player = it
+            }
         }
     }
 
@@ -178,24 +157,27 @@ class MapViewModel : ControllerCallback, KoinComponent {
             return
         }
 
-        dir = tentativePlayerVelocity.toDir()
-
         checkMove()
-        if (!canMove) {
-            return
-        }
-        mediateVelocity()
+
+        val mediatedVelocity =
+            velocityManageService.invoke(
+                tentativePlayerVelocity = tentativePlayerVelocity,
+                playerMoveArea = playerMoveArea.square,
+                playerSquare = player.square,
+            )
 
         playerMoveUseCase.invoke(
-            player = player,
+            player = player.copy(
+                velocity = mediatedVelocity.first,
+                dir = tentativePlayerVelocity.toDir(),
+            ),
         )
 
         moveBackgroundUseCase.invoke(
-            velocity = backGroundVelocity,
+            velocity = mediatedVelocity.second,
             fieldSquare = fieldSquare,
         )
 
-        updateEventCollision()
         checkEvent()
 
         // playerが入っているマスを設定
@@ -209,58 +191,9 @@ class MapViewModel : ControllerCallback, KoinComponent {
         }
     }
 
-    /**
-     * イベントの当たり判定を移動させる
-     */
-    private fun updateEventCollision() {
-        when (dir) {
-            PlayerDir.UP -> {
-                eventSquare = NormalSquare(
-                    size = VIRTUAL_PLAYER_SIZE,
-                    point = Point(
-                        x = playerPositionRepository.getPlayerPosition().x,
-                        y = playerPositionRepository.getPlayerPosition().y - VIRTUAL_PLAYER_SIZE / 2
-                    ),
-                )
-            }
-
-            PlayerDir.DOWN -> {
-                eventSquare = NormalSquare(
-                    size = VIRTUAL_PLAYER_SIZE,
-                    point = Point(
-                        x = playerPositionRepository.getPlayerPosition().x,
-                        y = playerPositionRepository.getPlayerPosition().y + VIRTUAL_PLAYER_SIZE / 2
-                    ),
-                )
-            }
-
-            PlayerDir.LEFT -> {
-                eventSquare = NormalSquare(
-                    size = VIRTUAL_PLAYER_SIZE,
-                    point = Point(
-                        x = playerPositionRepository.getPlayerPosition().x - VIRTUAL_PLAYER_SIZE / 2,
-                        y = playerPositionRepository.getPlayerPosition().y
-                    ),
-                )
-            }
-
-            PlayerDir.RIGHT -> {
-                eventSquare = NormalSquare(
-                    size = VIRTUAL_PLAYER_SIZE,
-                    point = Point(
-                        x = playerPositionRepository.getPlayerPosition().x + VIRTUAL_PLAYER_SIZE / 2,
-                        y = playerPositionRepository.getPlayerPosition().y
-                    ),
-                )
-            }
-
-            PlayerDir.NONE -> Unit
-        }
-    }
-
     private fun checkEvent() {
         eventType = getEventTypeUseCase.invoke(
-            eventSquare
+            player.eventSquare
         )
     }
 
@@ -282,7 +215,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
      * タップの位置に対して速度を計算
      */
     private fun updateVelocityByTap(tapPoint: Point) {
-        val square = playerPositionRepository.getPlayerPosition()
+        val square = playerPositionRepository.getPlayerPosition().square
         val dx = (tapPoint.x) - (square.x + player.size / 2)
         val dy = (tapPoint.y) - (square.y + player.size / 2)
         tentativePlayerVelocity = Velocity(
@@ -313,25 +246,10 @@ class MapViewModel : ControllerCallback, KoinComponent {
         tentativePlayerVelocity = velocity
     }
 
-    /**
-     * playerを動かすか、背景を動かすか決定する
-     */
-    private fun mediateVelocity() {
-        val mediatedVelocity = velocityManageUseCase.manageVelocity(
-            tentativePlayerVelocity = tentativePlayerVelocity,
-            playerMoveArea = playerMoveArea.square,
-        )
-
-        player.updateVelocity(mediatedVelocity.first)
-
-        backGroundVelocity = mediatedVelocity.second
-    }
-
-    private var canMove = true
-
     private fun checkMove() {
         val square = playerPositionRepository
             .getPlayerPosition()
+            .square
             .move(
                 dx = tentativePlayerVelocity.x,
                 dy = tentativePlayerVelocity.y

@@ -11,12 +11,13 @@ import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.repository.player.PlayerPositionRepositoryImpl
 import gamescreen.map.repository.playercell.PlayerCellRepository
 import gamescreen.map.repository.playercell.PlayerCellRepositoryImpl
+import gamescreen.map.service.velocitymanage.VelocityManageService
+import gamescreen.map.service.velocitymanage.VelocityManageServiceImpl
 import gamescreen.map.usecase.GetScreenCenterUseCase
 import gamescreen.map.usecase.PlayerMoveManageUseCase
 import gamescreen.map.usecase.PlayerMoveToUseCase
 import gamescreen.map.usecase.PlayerMoveUseCase
 import gamescreen.map.usecase.UpdateCellContainPlayerUseCase
-import gamescreen.map.usecase.VelocityManageUseCase
 import gamescreen.map.usecase.battledecidemonster.DecideBattleMonsterUseCase
 import gamescreen.map.usecase.battledecidemonster.DecideBattleMonsterUseCaseImpl
 import gamescreen.map.usecase.battlestart.StartBattleUseCase
@@ -129,10 +130,8 @@ val ModuleMap = module {
         )
     }
 
-    single {
-        VelocityManageUseCase(
-            playerPositionRepository = get(),
-        )
+    single<VelocityManageService> {
+        VelocityManageServiceImpl()
     }
 
     single<GetCollisionListUseCase> {
