@@ -45,6 +45,14 @@ class NonLoopMap : MapData() {
                     size = MapViewModel.CELL_SIZE,
                 ),
             ),
+            NPC(
+                npcType = NPCType.ENEMY,
+                mapPoint = MapPoint(3, 1),
+                eventSquare = EventSquare(
+                    eventID = EventType.None,
+                    size = MapViewModel.CELL_SIZE,
+                ),
+            ),
         )
 
     override val field: Array<Array<CellType>>
