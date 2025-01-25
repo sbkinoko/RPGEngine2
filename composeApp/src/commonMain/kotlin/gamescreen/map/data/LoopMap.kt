@@ -3,6 +3,7 @@ package gamescreen.map.data
 
 import core.domain.mapcell.CellType
 import gamescreen.map.domain.npc.NPC
+import values.event.BoxId
 
 class LoopMap : MapData() {
     override val isLoop = true

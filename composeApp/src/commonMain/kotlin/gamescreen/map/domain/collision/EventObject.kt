@@ -1,6 +1,6 @@
 package gamescreen.map.domain.collision
 
-import values.EventType
+import values.event.EventType
 
 interface EventObject {
     val eventType: EventType

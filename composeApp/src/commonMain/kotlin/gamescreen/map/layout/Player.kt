@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import common.extension.pxToDp
 import gamescreen.map.viewmodel.MapViewModel
 import values.Colors
-import values.EventType
+import values.event.EventType
 
 @Composable
 fun Player(

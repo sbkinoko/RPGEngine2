@@ -1,12 +1,11 @@
-package values
-
-import gamescreen.map.data.BoxId
-import gamescreen.map.data.ShopId
+package values.event
 
 sealed class EventType {
     data object None : EventType()
 
-    data object Talk : EventType()
+    data class Talk(
+        val talkId: TalkId,
+    ) : EventType()
 
     data class Shop(
         val shopId: ShopId,

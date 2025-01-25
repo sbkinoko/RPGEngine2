@@ -1,8 +1,8 @@
 package gamescreen.menushop.usecase.setshopitem
 
-import gamescreen.map.data.ShopId
 import gamescreen.menushop.domain.ShopItem
 import gamescreen.menushop.repository.shopmenu.ShopMenuRepository
+import values.event.ShopId
 
 class SetShopItemUseCaseImpl(
     private val shopMenuRepository: ShopMenuRepository,

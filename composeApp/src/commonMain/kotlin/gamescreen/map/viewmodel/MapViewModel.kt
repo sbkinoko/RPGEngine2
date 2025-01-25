@@ -38,7 +38,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import values.EventType
+import values.event.EventType
 
 class MapViewModel : ControllerCallback, KoinComponent {
     private val playerPositionRepository: PlayerPositionRepository by inject()

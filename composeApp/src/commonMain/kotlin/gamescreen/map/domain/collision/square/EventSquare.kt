@@ -1,7 +1,7 @@
 package gamescreen.map.domain.collision.square
 
 import gamescreen.map.domain.collision.EventObject
-import values.EventType
+import values.event.EventType
 
 data class EventSquare(
     override val eventType: EventType,

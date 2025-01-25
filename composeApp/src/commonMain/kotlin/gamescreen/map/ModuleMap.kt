@@ -44,6 +44,8 @@ import gamescreen.map.usecase.roadmap.RoadMapUseCase
 import gamescreen.map.usecase.roadmap.RoadMapUseCaseImpl
 import gamescreen.map.usecase.setplayercenter.SetPlayerCenterUseCase
 import gamescreen.map.usecase.setplayercenter.SetPlayerCenterUseCaseImpl
+import gamescreen.map.usecase.settalk.SetTalkUseCase
+import gamescreen.map.usecase.settalk.SetTalkUseCaseImpl
 import gamescreen.map.viewmodel.MapViewModel
 import org.koin.dsl.module
 
@@ -174,9 +176,16 @@ val ModuleMap = module {
     single<ActionEventUseCase> {
         ActionEventUseCaseImpl(
             textRepository = get(),
-            choiceRepository = get(),
             addToolUseCase = get(),
             setShopItemUseCase = get(),
+            setTalkUseCase = get(),
+        )
+    }
+
+    single<SetTalkUseCase> {
+        SetTalkUseCaseImpl(
+            textRepository = get(),
+            choiceRepository = get(),
         )
     }
 

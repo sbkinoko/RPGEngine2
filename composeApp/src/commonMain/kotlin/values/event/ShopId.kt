@@ -1,4 +1,4 @@
-package gamescreen.map.data
+package values.event
 
 enum class ShopId {
     Type1,
