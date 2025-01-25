@@ -2,7 +2,7 @@ package gamescreen.map.domain.npc
 
 import gamescreen.map.domain.MapPoint
 import gamescreen.map.domain.collision.square.EventSquare
-import values.EventType
+import values.event.EventType
 
 data class NPC(
     val npcType: NPCType,

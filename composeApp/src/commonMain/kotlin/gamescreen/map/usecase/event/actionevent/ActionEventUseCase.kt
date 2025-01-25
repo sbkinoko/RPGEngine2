@@ -1,6 +1,6 @@
 package gamescreen.map.usecase.event.actionevent
 
-import values.EventType
+import values.event.EventType
 
 interface ActionEventUseCase {
     operator fun invoke(

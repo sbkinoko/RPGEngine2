@@ -1,7 +1,7 @@
 package gamescreen.map.usecase.collision.geteventtype
 
 import gamescreen.map.domain.collision.square.Square
-import values.EventType
+import values.event.EventType
 
 interface GetEventTypeUseCase {
     operator fun invoke(
