@@ -4,7 +4,7 @@ import gamescreen.map.domain.collision.EventObject
 import values.EventType
 
 data class EventSquare(
-    override val eventID: EventType,
+    override val eventType: EventType,
     override val square: Square,
 ) : SquareWrapper<EventSquare>(
     square = square,
@@ -13,9 +13,9 @@ data class EventSquare(
         x: Float = 0f,
         y: Float = 0f,
         size: Float,
-        eventID: EventType,
+        eventType: EventType,
     ) : this(
-        eventID = eventID,
+        eventType = eventType,
         square = NormalSquare(
             x = x,
             y = y,

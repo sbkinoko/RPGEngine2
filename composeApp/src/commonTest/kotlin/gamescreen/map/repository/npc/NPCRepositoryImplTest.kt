@@ -69,7 +69,7 @@ class NPCRepositoryImplTest : KoinTest {
             x = 1f,
             y = 2f,
             size = 3f,
-            eventID = EventType.Talk
+            eventType = EventType.Talk
         )
         val npc = NPC(
             npcType = NPCType.GIRL,
