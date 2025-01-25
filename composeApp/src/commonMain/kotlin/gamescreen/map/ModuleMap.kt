@@ -20,6 +20,8 @@ import gamescreen.map.usecase.PlayerMoveUseCase
 import gamescreen.map.usecase.UpdateCellContainPlayerUseCase
 import gamescreen.map.usecase.battledecidemonster.DecideBattleMonsterUseCase
 import gamescreen.map.usecase.battledecidemonster.DecideBattleMonsterUseCaseImpl
+import gamescreen.map.usecase.battleevent.StartEventBattleUseCase
+import gamescreen.map.usecase.battleevent.StartEventBattleUseCaseImpl
 import gamescreen.map.usecase.battlestart.StartBattleUseCase
 import gamescreen.map.usecase.battlestart.StartBattleUseCaseImpl
 import gamescreen.map.usecase.collision.geteventtype.GetEventTypeUseCase
@@ -44,6 +46,8 @@ import gamescreen.map.usecase.roadmap.RoadMapUseCase
 import gamescreen.map.usecase.roadmap.RoadMapUseCaseImpl
 import gamescreen.map.usecase.setplayercenter.SetPlayerCenterUseCase
 import gamescreen.map.usecase.setplayercenter.SetPlayerCenterUseCaseImpl
+import gamescreen.map.usecase.settalk.SetTalkUseCase
+import gamescreen.map.usecase.settalk.SetTalkUseCaseImpl
 import gamescreen.map.viewmodel.MapViewModel
 import org.koin.dsl.module
 
@@ -171,12 +175,27 @@ val ModuleMap = module {
         )
     }
 
+    single<StartEventBattleUseCase> {
+        StartEventBattleUseCaseImpl(
+            battleDataRepository = get(),
+            startBattleUseCase = get(),
+        )
+    }
+
     single<ActionEventUseCase> {
         ActionEventUseCaseImpl(
             textRepository = get(),
-            choiceRepository = get(),
             addToolUseCase = get(),
             setShopItemUseCase = get(),
+            setTalkUseCase = get(),
+        )
+    }
+
+    single<SetTalkUseCase> {
+        SetTalkUseCaseImpl(
+            textRepository = get(),
+            choiceRepository = get(),
+            startEventBattleUseCase = get(),
         )
     }
 

@@ -5,7 +5,7 @@ import gamescreen.map.domain.collision.square.Square
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.npc.NPCRepository
 import gamescreen.map.usecase.collision.list.GetCollisionListUseCase
-import values.EventType
+import values.event.EventType
 
 // todo テスト作る
 class GetEventTypeUseCaseImpl(
@@ -40,7 +40,7 @@ class GetEventTypeUseCaseImpl(
                     }
 
                     //　イベントオブジェなのでIDを返す
-                    return shape.eventID
+                    return shape.eventType
                 }
             }
         }
@@ -51,7 +51,7 @@ class GetEventTypeUseCaseImpl(
                     return@forEach
                 }
 
-                return it.eventID
+                return it.eventType
             }
         }
 

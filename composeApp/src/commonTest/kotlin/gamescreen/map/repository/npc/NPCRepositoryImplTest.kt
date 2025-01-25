@@ -2,7 +2,6 @@ package gamescreen.map.repository.npc
 
 import gamescreen.map.ModuleMap
 import gamescreen.map.domain.MapPoint
-import gamescreen.map.domain.collision.square.EventSquare
 import gamescreen.map.domain.npc.NPC
 import gamescreen.map.domain.npc.NPCType
 import kotlinx.coroutines.delay
@@ -12,7 +11,7 @@ import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
 import org.koin.test.inject
-import values.EventType
+import values.event.TalkEvent
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -65,16 +64,11 @@ class NPCRepositoryImplTest : KoinTest {
 
     @Test
     fun checkFlow() {
-        val eventSquare = EventSquare(
-            x = 1f,
-            y = 2f,
-            size = 3f,
-            eventID = EventType.Talk
-        )
         val npc = NPC(
             npcType = NPCType.GIRL,
             mapPoint = MapPoint(0, 0),
-            eventSquare = eventSquare,
+            size = 3f,
+            eventType = TalkEvent.Talk1
         )
 
         val list = listOf(npc)

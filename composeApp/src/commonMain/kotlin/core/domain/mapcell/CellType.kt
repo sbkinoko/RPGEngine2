@@ -1,6 +1,6 @@
 package core.domain.mapcell
 
-import gamescreen.map.data.BoxId
+import values.event.BoxId
 
 // fixme いい命名を考える
 sealed class CellType {

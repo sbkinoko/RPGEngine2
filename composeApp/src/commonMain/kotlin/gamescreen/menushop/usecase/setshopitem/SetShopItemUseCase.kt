@@ -1,6 +1,6 @@
 package gamescreen.menushop.usecase.setshopitem
 
-import gamescreen.map.data.ShopId
+import values.event.ShopId
 
 interface SetShopItemUseCase {
     operator fun invoke(

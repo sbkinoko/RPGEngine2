@@ -5,7 +5,7 @@ import gamescreen.map.domain.collision.ShapeCollisionDetect
 import gamescreen.map.domain.collision.square.EventSquare
 import gamescreen.map.domain.collision.square.NormalSquare
 import gamescreen.map.domain.collision.square.Square
-import values.EventType
+import values.event.EventType
 
 class CollisionRepositoryImpl : CollisionRepository {
 
@@ -38,7 +38,7 @@ class CollisionRepositoryImpl : CollisionRepository {
                             x = x + size / 3,
                             y = y + size / 3,
                             size = size / 3,
-                            eventID = if (cellType.id.hasItem) {
+                            eventType = if (cellType.id.hasItem) {
                                 EventType.Box(
                                     id = cellType.id
                                 )

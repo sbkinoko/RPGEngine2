@@ -1,15 +1,9 @@
 package gamescreen.map.repository.npc
 
-import gamescreen.map.data.ShopId
-import gamescreen.map.domain.MapPoint
-import gamescreen.map.domain.collision.square.EventSquare
 import gamescreen.map.domain.npc.NPC
-import gamescreen.map.domain.npc.NPCType
-import gamescreen.map.viewmodel.MapViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import values.EventType
 
 class NPCRepositoryImpl : NPCRepository {
     private val mutableNpcStateFlow: MutableStateFlow<List<NPC>> =
@@ -24,39 +18,5 @@ class NPCRepositoryImpl : NPCRepository {
         npcList: List<NPC>,
     ) {
         mutableNpcStateFlow.value = npcList
-    }
-
-    companion object {
-        val npc1 = NPC(
-            npcType = NPCType.MARCHANT,
-            mapPoint = MapPoint(3, 3),
-            eventSquare = EventSquare(
-                eventID = EventType.Shop(
-                    shopId = ShopId.Type1,
-                ),
-                size = MapViewModel.CELL_SIZE * 0.5f,
-            ),
-        )
-
-        val npc2 = NPC(
-            npcType = NPCType.GIRL,
-            mapPoint = MapPoint(8, 8),
-            eventSquare = EventSquare(
-                eventID = EventType.Talk,
-                size = MapViewModel.CELL_SIZE,
-            ),
-        )
-
-        val npc3 = NPC(
-            npcType = NPCType.MARCHANT,
-            mapPoint = MapPoint(4, 3),
-            eventSquare = EventSquare(
-                eventID = EventType.Shop(
-                    shopId = ShopId.Type2,
-                ),
-                size = MapViewModel.CELL_SIZE,
-            ),
-        )
-
     }
 }
