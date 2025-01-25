@@ -1,11 +1,10 @@
-package gamescreen.map.usecase
+package gamescreen.map.service.velocitymanage
 
 import gamescreen.map.ModuleMap
+import gamescreen.map.domain.Player
 import gamescreen.map.domain.Velocity
 import gamescreen.map.domain.collision.PlayerMoveSquare
 import gamescreen.map.viewmodel.MapViewModel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
@@ -16,14 +15,14 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class VelocityManagerUseCaseTest : KoinTest {
+    private val velocityManageUseCase: VelocityManageService by inject()
 
-    private val velocityManageUseCase: VelocityManageUseCase by inject()
-    private val moveToUseCase: PlayerMoveToUseCase by inject()
-
-    val playerMoveSquare = PlayerMoveSquare(
+    private val playerMoveSquare = PlayerMoveSquare(
         screenSize = MapViewModel.VIRTUAL_SCREEN_SIZE,
         borderRate = MapViewModel.MOVE_BORDER,
     )
+
+    private val player: Player = Player(size = MapViewModel.VIRTUAL_PLAYER_SIZE)
 
     @BeforeTest
     fun beforeTest() {
@@ -45,6 +44,7 @@ class VelocityManagerUseCaseTest : KoinTest {
     @Test
     fun checkNoMove() {
         check(
+            player = player,
             velocity = Velocity(),
             vpx = 0f,
             vpy = 0f,
@@ -58,24 +58,20 @@ class VelocityManagerUseCaseTest : KoinTest {
      */
     @Test
     fun checkPlayerMove() {
-        runBlocking {
-            moveToUseCase(
+        check(
+            player = player.moveTo(
                 x = CENTER,
                 y = CENTER,
-            )
-            delay(100)
-
-            check(
-                velocity = Velocity(
-                    x = 3f,
-                    y = 4f,
-                ),
-                vpx = 3f,
-                vpy = 4f,
-                vbx = 0f,
-                vby = 0f,
-            )
-        }
+            ),
+            velocity = Velocity(
+                x = 3f,
+                y = 4f,
+            ),
+            vpx = 3f,
+            vpy = 4f,
+            vbx = 0f,
+            vby = 0f,
+        )
     }
 
     /**
@@ -83,23 +79,21 @@ class VelocityManagerUseCaseTest : KoinTest {
      */
     @Test
     fun checkMoveInLeftToLeft() {
-        runBlocking {
-            moveToUseCase(
+        check(
+            player = player.moveTo(
                 x = SMALL_BORDER,
                 y = CENTER,
-            )
-            delay(100)
-            check(
-                velocity = Velocity(
-                    x = -3f,
-                    y = 0f,
+
                 ),
-                vpx = 0f,
-                vpy = 0f,
-                vbx = 3f,
-                vby = 0f,
-            )
-        }
+            velocity = Velocity(
+                x = -3f,
+                y = 0f,
+            ),
+            vpx = 0f,
+            vpy = 0f,
+            vbx = 3f,
+            vby = 0f,
+        )
     }
 
     /**
@@ -107,24 +101,20 @@ class VelocityManagerUseCaseTest : KoinTest {
      */
     @Test
     fun checkMoveInLeftToRight() {
-        runBlocking {
-            moveToUseCase(
+        check(
+            player = player.moveTo(
                 x = SMALL_BORDER,
                 y = CENTER,
-            )
-            delay(100)
-
-            check(
-                velocity = Velocity(
-                    x = 3f,
-                    y = 0f,
-                ),
-                vpx = 3f,
-                vpy = 0f,
-                vbx = 0f,
-                vby = 0f,
-            )
-        }
+            ),
+            velocity = Velocity(
+                x = 3f,
+                y = 0f,
+            ),
+            vpx = 3f,
+            vpy = 0f,
+            vbx = 0f,
+            vby = 0f,
+        )
     }
 
     /**
@@ -132,23 +122,20 @@ class VelocityManagerUseCaseTest : KoinTest {
      */
     @Test
     fun checkMoveInRightToLeft() {
-        runBlocking {
-            moveToUseCase(
+        check(
+            player = player.moveTo(
                 x = LARGE_BORDER,
                 y = CENTER,
-            )
-            delay(100)
-            check(
-                velocity = Velocity(
-                    x = -3f,
-                    y = 0f,
-                ),
-                vpx = -3f,
-                vpy = 0f,
-                vbx = 0f,
-                vby = 0f,
-            )
-        }
+            ),
+            velocity = Velocity(
+                x = -3f,
+                y = 0f,
+            ),
+            vpx = -3f,
+            vpy = 0f,
+            vbx = 0f,
+            vby = 0f,
+        )
     }
 
     /**
@@ -156,22 +143,21 @@ class VelocityManagerUseCaseTest : KoinTest {
      */
     @Test
     fun checkMoveInRightToRight() {
-        runBlocking {
-            moveToUseCase(
+
+        check(
+            player = player.moveTo(
                 x = LARGE_BORDER,
                 y = CENTER,
-            )
-            check(
-                velocity = Velocity(
-                    x = 3f,
-                    y = 0f,
-                ),
-                vpx = 0f,
-                vpy = 0f,
-                vbx = -3f,
-                vby = 0f,
-            )
-        }
+            ),
+            velocity = Velocity(
+                x = 3f,
+                y = 0f,
+            ),
+            vpx = 0f,
+            vpy = 0f,
+            vbx = -3f,
+            vby = 0f,
+        )
     }
 
     /**
@@ -179,24 +165,21 @@ class VelocityManagerUseCaseTest : KoinTest {
      */
     @Test
     fun checkMoveInTopToTop() {
-        runBlocking {
-            moveToUseCase(
+        check(
+            player = player.moveTo(
                 x = CENTER,
                 y = SMALL_BORDER,
-            )
-            delay(100)
 
-            check(
-                velocity = Velocity(
-                    x = 0f,
-                    y = -4f,
                 ),
-                vpx = 0f,
-                vpy = 0f,
-                vbx = 0f,
-                vby = 4f,
-            )
-        }
+            velocity = Velocity(
+                x = 0f,
+                y = -4f,
+            ),
+            vpx = 0f,
+            vpy = 0f,
+            vbx = 0f,
+            vby = 4f,
+        )
     }
 
     /**
@@ -204,24 +187,22 @@ class VelocityManagerUseCaseTest : KoinTest {
      */
     @Test
     fun checkMoveInTopToBottom() {
-        runBlocking {
-            moveToUseCase(
+
+        check(
+            player = player.moveTo(
                 x = CENTER,
                 y = SMALL_BORDER,
-            )
-            delay(100)
+            ),
+            velocity = Velocity(
+                x = 0f,
+                y = 4f,
+            ),
+            vpx = 0f,
+            vpy = 4f,
+            vbx = 0f,
+            vby = 0f,
+        )
 
-            check(
-                velocity = Velocity(
-                    x = 0f,
-                    y = 4f,
-                ),
-                vpx = 0f,
-                vpy = 4f,
-                vbx = 0f,
-                vby = 0f,
-            )
-        }
     }
 
     /**
@@ -229,24 +210,21 @@ class VelocityManagerUseCaseTest : KoinTest {
      */
     @Test
     fun checkMoveInBottomToTop() {
-        runBlocking {
-            moveToUseCase(
+        check(
+            player = player.moveTo(
                 x = CENTER,
                 y = LARGE_BORDER,
-            )
-            delay(100)
-            check(
-                velocity = Velocity(
-                    x = 0f,
-                    y = -4f,
-                ),
+            ),
+            velocity = Velocity(
+                x = 0f,
+                y = -4f,
+            ),
 
-                vpx = 0f,
-                vpy = -4f,
-                vbx = 0f,
-                vby = 0f,
-            )
-        }
+            vpx = 0f,
+            vpy = -4f,
+            vbx = 0f,
+            vby = 0f,
+        )
     }
 
     /**
@@ -254,35 +232,35 @@ class VelocityManagerUseCaseTest : KoinTest {
      */
     @Test
     fun checkMoveInBottomToBottom() {
-        runBlocking {
-            moveToUseCase(
+        check(
+            player = player.moveTo(
                 x = CENTER,
                 y = LARGE_BORDER,
-            )
-            delay(100)
-            check(
-                velocity = Velocity(
-                    x = 0f,
-                    y = 4f,
+
                 ),
-                vpx = 0f,
-                vpy = 0f,
-                vbx = 0f,
-                vby = -4f,
-            )
-        }
+            velocity = Velocity(
+                x = 0f,
+                y = 4f,
+            ),
+            vpx = 0f,
+            vpy = 0f,
+            vbx = 0f,
+            vby = -4f,
+        )
     }
 
     private fun check(
         velocity: Velocity,
+        player: Player,
         vpx: Float,
         vpy: Float,
         vbx: Float,
         vby: Float,
     ) {
-        velocityManageUseCase.manageVelocity(
+        velocityManageUseCase.invoke(
             tentativePlayerVelocity = velocity,
             playerMoveArea = playerMoveSquare.square,
+            playerSquare = player.square,
         ).apply {
             first.apply {
                 assertEquals(

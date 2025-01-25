@@ -39,6 +39,7 @@ class MapViewModelTest {
             val collectJob = launch {
                 mapViewModel.playerSquare.collect {
                     count++
+                    result = it
                 }
             }
 
@@ -52,12 +53,12 @@ class MapViewModelTest {
             delay(100)
 
             assertEquals(
-                x - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
-                result.square.x,
+                expected = x - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
+                actual = result.square.x,
             )
             assertEquals(
-                y - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
-                result.square.y,
+                expected = y - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
+                actual = result.square.y,
             )
 
             assertEquals(

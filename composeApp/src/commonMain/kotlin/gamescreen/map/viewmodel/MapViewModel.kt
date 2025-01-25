@@ -17,10 +17,10 @@ import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.npc.NPCRepository
 import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.repository.playercell.PlayerCellRepository
+import gamescreen.map.service.velocitymanage.VelocityManageService
 import gamescreen.map.usecase.PlayerMoveManageUseCase
 import gamescreen.map.usecase.PlayerMoveUseCase
 import gamescreen.map.usecase.UpdateCellContainPlayerUseCase
-import gamescreen.map.usecase.VelocityManageUseCase
 import gamescreen.map.usecase.battledecidemonster.DecideBattleMonsterUseCase
 import gamescreen.map.usecase.battlestart.StartBattleUseCase
 import gamescreen.map.usecase.collision.geteventtype.GetEventTypeUseCase
@@ -43,7 +43,7 @@ import values.EventType
 class MapViewModel : ControllerCallback, KoinComponent {
     private val playerPositionRepository: PlayerPositionRepository by inject()
     private val playerMoveManageUseCase: PlayerMoveManageUseCase by inject()
-    private val velocityManageUseCase: VelocityManageUseCase by inject()
+    private val velocityManageService: VelocityManageService by inject()
 
     private val screenTypeRepository: ScreenTypeRepository by inject()
 
@@ -89,6 +89,7 @@ class MapViewModel : ControllerCallback, KoinComponent {
         borderRate = MOVE_BORDER,
     )
 
+    // fixme 直接playerに入れちゃう
     private var tentativePlayerVelocity: Velocity = Velocity()
 
     private var eventType: EventType = EventType.None
@@ -157,14 +158,12 @@ class MapViewModel : ControllerCallback, KoinComponent {
         }
 
         checkMove()
-        if (!canMove) {
-            return
-        }
 
         val mediatedVelocity =
-            velocityManageUseCase.manageVelocity(
+            velocityManageService.invoke(
                 tentativePlayerVelocity = tentativePlayerVelocity,
                 playerMoveArea = playerMoveArea.square,
+                playerSquare = player.square,
             )
 
         playerMoveUseCase.invoke(
@@ -246,8 +245,6 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
         tentativePlayerVelocity = velocity
     }
-
-    private var canMove = true
 
     private fun checkMove() {
         val square = playerPositionRepository
