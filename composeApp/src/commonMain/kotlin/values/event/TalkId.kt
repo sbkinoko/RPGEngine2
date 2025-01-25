@@ -1,6 +1,6 @@
 package values.event
 
-enum class TalkId {
-    Talk1,
-    Talk2,
+sealed class TalkEvent : EventType() {
+    data object Talk1 : TalkEvent()
+    data object Talk2 : TalkEvent()
 }

@@ -11,8 +11,7 @@ import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
 import org.koin.test.inject
-import values.event.EventType
-import values.event.TalkId
+import values.event.TalkEvent
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -69,9 +68,7 @@ class NPCRepositoryImplTest : KoinTest {
             npcType = NPCType.GIRL,
             mapPoint = MapPoint(0, 0),
             size = 3f,
-            eventType = EventType.Talk(
-                talkId = TalkId.Talk1,
-            )
+            eventType = TalkEvent.Talk1
         )
 
         val list = listOf(npc)
