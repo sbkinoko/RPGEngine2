@@ -23,7 +23,7 @@ fun NPC(
         .npcFlow
         .collectAsState()
 
-    val imageBinder = ImageBinderNPC()
+    val imageBinder = ImageBinder()
 
     Box {
         npc.forEach { npc ->

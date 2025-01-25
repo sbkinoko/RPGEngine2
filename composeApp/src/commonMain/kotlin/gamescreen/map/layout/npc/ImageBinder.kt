@@ -6,8 +6,9 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 import rpgengine.composeapp.generated.resources.Res
 import rpgengine.composeapp.generated.resources.npc_1_1_1
 import rpgengine.composeapp.generated.resources.npc_2
+import rpgengine.composeapp.generated.resources.npc_3
 
-class ImageBinderNPC {
+class ImageBinder {
 
     /**
      * NPCの紐づけ
@@ -16,10 +17,10 @@ class ImageBinderNPC {
     fun bind(
         npcType: NPCType,
     ): DrawableResource {
-
         return when (npcType) {
             NPCType.GIRL -> Res.drawable.npc_1_1_1
             NPCType.MARCHANT -> Res.drawable.npc_2
+            NPCType.ENEMY -> Res.drawable.npc_3
         }
     }
 }
