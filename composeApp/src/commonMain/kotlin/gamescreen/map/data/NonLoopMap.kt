@@ -44,11 +44,10 @@ class NonLoopMap : MapData() {
                     ),
                     size = MapViewModel.CELL_SIZE,
                 ),
-            )
+            ),
         )
 
-    override
-    val field: Array<Array<CellType>>
+    override val field: Array<Array<CellType>>
         get() = Array(height) { y ->
             Array(width) { x ->
                 if (x == 0 && y == 2) {
