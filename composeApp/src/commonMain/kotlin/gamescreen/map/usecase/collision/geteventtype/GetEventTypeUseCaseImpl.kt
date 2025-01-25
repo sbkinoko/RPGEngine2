@@ -40,7 +40,7 @@ class GetEventTypeUseCaseImpl(
                     }
 
                     //　イベントオブジェなのでIDを返す
-                    return shape.eventID
+                    return shape.eventType
                 }
             }
         }
@@ -51,7 +51,7 @@ class GetEventTypeUseCaseImpl(
                     return@forEach
                 }
 
-                return it.eventID
+                return it.eventType
             }
         }
 

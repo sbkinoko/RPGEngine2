@@ -2,7 +2,6 @@ package gamescreen.map.data
 
 import core.domain.mapcell.CellType
 import gamescreen.map.domain.MapPoint
-import gamescreen.map.domain.collision.square.EventSquare
 import gamescreen.map.domain.npc.NPC
 import gamescreen.map.domain.npc.NPCType
 import gamescreen.map.viewmodel.MapViewModel
@@ -20,38 +19,30 @@ class NonLoopMap : MapData() {
             NPC(
                 npcType = NPCType.MARCHANT,
                 mapPoint = MapPoint(3, 3),
-                eventSquare = EventSquare(
-                    eventID = EventType.Shop(
-                        shopId = ShopId.Type1,
-                    ),
-                    size = MapViewModel.CELL_SIZE * 0.5f,
+                eventType = EventType.Shop(
+                    shopId = ShopId.Type1,
                 ),
+                size = MapViewModel.CELL_SIZE * 0.5f,
             ),
             NPC(
                 npcType = NPCType.GIRL,
                 mapPoint = MapPoint(8, 8),
-                eventSquare = EventSquare(
-                    eventID = EventType.Talk,
-                    size = MapViewModel.CELL_SIZE,
-                ),
+                eventType = EventType.Talk,
+                size = MapViewModel.CELL_SIZE,
             ),
             NPC(
                 npcType = NPCType.MARCHANT,
                 mapPoint = MapPoint(4, 3),
-                eventSquare = EventSquare(
-                    eventID = EventType.Shop(
-                        shopId = ShopId.Type2,
-                    ),
-                    size = MapViewModel.CELL_SIZE,
+                eventType = EventType.Shop(
+                    shopId = ShopId.Type2,
                 ),
+                size = MapViewModel.CELL_SIZE,
             ),
             NPC(
                 npcType = NPCType.ENEMY,
                 mapPoint = MapPoint(3, 1),
-                eventSquare = EventSquare(
-                    eventID = EventType.None,
-                    size = MapViewModel.CELL_SIZE,
-                ),
+                eventType = EventType.None,
+                size = MapViewModel.CELL_SIZE,
             ),
         )
 
