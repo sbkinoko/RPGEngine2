@@ -1,8 +1,12 @@
 package gamescreen.map.data
 
 import core.domain.mapcell.CellType
+import gamescreen.map.domain.MapPoint
+import gamescreen.map.domain.collision.square.EventSquare
 import gamescreen.map.domain.npc.NPC
-import gamescreen.map.repository.npc.NPCRepositoryImpl
+import gamescreen.map.domain.npc.NPCType
+import gamescreen.map.viewmodel.MapViewModel
+import values.EventType
 
 class NonLoopMap : MapData() {
     override val isLoop = false
@@ -13,9 +17,34 @@ class NonLoopMap : MapData() {
 
     override val npcList: List<NPC>
         get() = listOf(
-            NPCRepositoryImpl.npc1,
-            NPCRepositoryImpl.npc2,
-            NPCRepositoryImpl.npc3,
+            NPC(
+                npcType = NPCType.MARCHANT,
+                mapPoint = MapPoint(3, 3),
+                eventSquare = EventSquare(
+                    eventID = EventType.Shop(
+                        shopId = ShopId.Type1,
+                    ),
+                    size = MapViewModel.CELL_SIZE * 0.5f,
+                ),
+            ),
+            NPC(
+                npcType = NPCType.GIRL,
+                mapPoint = MapPoint(8, 8),
+                eventSquare = EventSquare(
+                    eventID = EventType.Talk,
+                    size = MapViewModel.CELL_SIZE,
+                ),
+            ),
+            NPC(
+                npcType = NPCType.MARCHANT,
+                mapPoint = MapPoint(4, 3),
+                eventSquare = EventSquare(
+                    eventID = EventType.Shop(
+                        shopId = ShopId.Type2,
+                    ),
+                    size = MapViewModel.CELL_SIZE,
+                ),
+            ),
         )
 
     override val field: Array<Array<CellType>>
