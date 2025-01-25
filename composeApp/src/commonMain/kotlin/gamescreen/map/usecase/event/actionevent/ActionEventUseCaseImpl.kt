@@ -7,6 +7,7 @@ import gamescreen.text.TextBoxData
 import gamescreen.text.repository.TextRepository
 import values.event.BoxData
 import values.event.EventType
+import values.event.TalkEvent
 
 class ActionEventUseCaseImpl(
     private val textRepository: TextRepository,
@@ -35,9 +36,9 @@ class ActionEventUseCaseImpl(
                 //fixme 画面にすぐ反映できるようにする
             }
 
-            is EventType.Talk -> {
+            is TalkEvent -> {
                 setTalkUseCase.invoke(
-                    talkId = eventType.talkId,
+                    talkEvent = eventType,
                 )
             }
 
