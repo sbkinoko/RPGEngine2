@@ -18,6 +18,7 @@ class MonsterStatusTest {
                 mp = MP(
                     maxValue = MAX_MP,
                 ),
+                speed = 10,
                 money = 1,
                 exp = 1,
                 dropInfoList = listOf(
