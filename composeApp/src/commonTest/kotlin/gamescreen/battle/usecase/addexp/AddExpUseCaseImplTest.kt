@@ -11,7 +11,7 @@ import core.domain.status.StatusIncreaseTest.Companion.TEST_LV2_MP
 import core.domain.status.StatusIncreaseTest.Companion.testStatusUpList
 import core.repository.player.PlayerStatusRepository
 import core.repository.player.PlayerStatusRepositoryImpl
-import data.status.StatusRepositoryAbstract
+import data.status.AbstractStatusRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import values.Constants
@@ -23,7 +23,7 @@ import kotlin.test.assertTrue
 
 class AddExpUseCaseImplTest {
 
-    private val statusRepository = object : StatusRepositoryAbstract() {
+    private val statusRepository = object : AbstractStatusRepository() {
         override val statusUpList: List<List<StatusIncrease>>
             get() = listOf(
                 testStatusUpList,

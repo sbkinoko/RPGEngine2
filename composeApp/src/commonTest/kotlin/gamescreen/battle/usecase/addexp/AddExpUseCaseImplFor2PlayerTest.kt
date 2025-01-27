@@ -6,7 +6,7 @@ import core.domain.status.StatusIncrease
 import core.domain.status.StatusIncreaseTest.Companion.testStatusUpList
 import core.repository.player.PlayerStatusRepository
 import core.repository.player.PlayerStatusRepositoryImpl
-import data.status.StatusRepositoryAbstract
+import data.status.AbstractStatusRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import values.Constants
@@ -20,7 +20,7 @@ class AddExpUseCaseImplFor2PlayerTest {
     private val name1 = "test1"
     private val name2 = "test2"
 
-    private val statusRepository = object : StatusRepositoryAbstract() {
+    private val statusRepository = object : AbstractStatusRepository() {
         override val statusUpList: List<List<StatusIncrease>>
             get() = listOf(
                 testStatusUpList,
