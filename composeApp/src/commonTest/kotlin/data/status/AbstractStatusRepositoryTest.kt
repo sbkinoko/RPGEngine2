@@ -13,7 +13,7 @@ import core.domain.status.param.EXP
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class StatusRepositoryAbstractTest {
+class AbstractStatusRepositoryTest {
     private val skillListValue = listOf(1)
     private val toolListValue = listOf(2)
 
@@ -25,7 +25,7 @@ class StatusRepositoryAbstractTest {
         )
     )
 
-    private val testRepository: StatusRepository = object : StatusRepositoryAbstract() {
+    private val testRepository: StatusRepository = object : AbstractStatusRepository() {
         override val statusUpList: List<List<StatusIncrease>>
             get() = listOf(
                 StatusIncreaseTest.testStatusUpList

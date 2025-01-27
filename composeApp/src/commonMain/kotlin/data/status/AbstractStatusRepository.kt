@@ -3,7 +3,7 @@ package data.status
 import core.domain.status.PlayerStatus
 import core.domain.status.StatusIncrease
 
-abstract class StatusRepositoryAbstract : StatusRepository {
+abstract class AbstractStatusRepository : StatusRepository {
 
     override fun getStatus(id: Int, level: Int): PlayerStatus {
         var statusSum = statusBaseList[id]

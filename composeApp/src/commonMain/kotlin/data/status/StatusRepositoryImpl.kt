@@ -9,7 +9,7 @@ import data.item.skill.HEAL_SKILL
 import data.item.skill.REVIVE_SKILL
 import data.item.tool.ToolRepositoryImpl
 
-class StatusRepositoryImpl : StatusRepositoryAbstract() {
+class StatusRepositoryImpl : AbstractStatusRepository() {
 
     override val statusUpList: List<List<StatusIncrease>> = List(3) {
         when (it) {
