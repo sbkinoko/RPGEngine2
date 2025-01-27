@@ -24,6 +24,8 @@ import gamescreen.battle.usecase.attack.AttackFromPlayerUseCaseImpl
 import gamescreen.battle.usecase.attack.AttackUseCase
 import gamescreen.battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUseCase
 import gamescreen.battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUseCaseImpl
+import gamescreen.battle.usecase.decideactionorder.DecideActionOrderUseCase
+import gamescreen.battle.usecase.decideactionorder.DecideActionOrderUseCaseImpl
 import gamescreen.battle.usecase.findactivetarget.FindActiveTargetUseCase
 import gamescreen.battle.usecase.findactivetarget.FindActiveTargetUseCaseImpl
 import gamescreen.battle.usecase.getcontrollerbyscreentype.GetControllerByCommandTypeUseCase
@@ -60,7 +62,9 @@ val ModuleBattle = module {
     }
 
     single {
-        ActionPhaseViewModel()
+        ActionPhaseViewModel(
+            decideActionOrderUseCase = get(),
+        )
     }
 
     single {
@@ -111,6 +115,13 @@ val ModuleBattle = module {
             toolCommandViewModel = get(),
             selectAllyViewModel = get(),
             battleFinishViewModel = get(),
+        )
+    }
+
+    single<DecideActionOrderUseCase> {
+        DecideActionOrderUseCaseImpl(
+            battleMonsterRepository = get(),
+            playerStatusRepository = get(),
         )
     }
 

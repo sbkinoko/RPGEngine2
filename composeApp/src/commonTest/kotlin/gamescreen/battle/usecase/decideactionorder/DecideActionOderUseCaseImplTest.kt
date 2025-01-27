@@ -1,4 +1,4 @@
-package gamescreen.battle.command.actionphase
+package gamescreen.battle.usecase.decideactionorder
 
 import gamescreen.battle.ModuleBattle
 import org.koin.core.context.startKoin
@@ -8,8 +8,9 @@ import org.koin.test.inject
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 
-class ActionPhaseViewModelTest : KoinTest {
-    private val viewModel: ActionPhaseViewModel by inject()
+// todo テスト作る
+class DecideActionOderUseCaseImplTest : KoinTest {
+    val decideActionOrderUseCase: DecideActionOrderUseCase by inject()
 
     @BeforeTest
     fun beforeTest() {
