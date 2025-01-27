@@ -12,7 +12,24 @@ data class PlayerStatus(
     val skillList: List<Int>,
     val toolList: List<Int>,
     val exp: EXP,
-) : Status
+) : Status {
+
+    fun addStatus(
+        statusIncrease: StatusIncrease,
+    ): PlayerStatus {
+        return statusIncrease.let {
+            copy(
+                hp = HP(
+                    hp.maxValue + it.hp,
+                ),
+                mp = MP(
+                    mp.maxValue + it.mp,
+                ),
+                speed = speed + it.speed,
+            )
+        }
+    }
+}
 
 private val dummyHP
     get() = HP(
