@@ -6,6 +6,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import org.koin.compose.koinInject
@@ -19,7 +20,9 @@ fun ActionPhase(
         actionPhaseViewModel.init()
     }
 
-    val playerId = actionPhaseViewModel.attackingPlayerId.collectAsState().value
+    val playerId by actionPhaseViewModel
+        .attackingStatusId
+        .collectAsState()
 
     Box(
         modifier = modifier

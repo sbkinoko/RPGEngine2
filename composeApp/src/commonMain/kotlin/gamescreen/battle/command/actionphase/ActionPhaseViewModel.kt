@@ -24,6 +24,7 @@ import gamescreen.battle.domain.FinishCommand
 import gamescreen.battle.repository.action.ActionRepository
 import gamescreen.battle.service.isannihilation.IsAnnihilationService
 import gamescreen.battle.usecase.attack.AttackUseCase
+import gamescreen.battle.usecase.decideactionbyspeed.DecideActionOrderUseCase
 import gamescreen.battle.usecase.findactivetarget.FindActiveTargetUseCase
 import gamescreen.menu.domain.SelectManager
 import kotlinx.coroutines.CoroutineScope
@@ -31,14 +32,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.koin.core.component.inject
 import org.koin.core.qualifier.named
 import values.Constants.Companion.playerNum
 
-class ActionPhaseViewModel : BattleChildViewModel() {
+class ActionPhaseViewModel(
+    private val decideActionOrderUseCase: DecideActionOrderUseCase,
+) : BattleChildViewModel() {
     private val actionRepository: ActionRepository by inject()
     private val battleMonsterRepository: BattleMonsterRepository by inject()
     private val playerStatusRepository: PlayerStatusRepository by inject()
@@ -68,9 +70,7 @@ class ActionPhaseViewModel : BattleChildViewModel() {
             playerStatusRepository.getPlayers()
         )
 
-
     private val useToolUseCase: UseToolUseCase by inject()
-
 
     init {
         CoroutineScope(Dispatchers.IO).launch {
@@ -82,13 +82,14 @@ class ActionPhaseViewModel : BattleChildViewModel() {
         }
     }
 
-    // fixme attackingPlayerは削除する　
-    // 行動順を変更できるようになったら修正
-    // 敵の攻撃が挟まってPlayerだけじゃなくなるから
-    private val mutableAttackingPlayerId: MutableStateFlow<Int> = MutableStateFlow(
-        NONE_PLAYER
-    )
-    val attackingPlayerId: StateFlow<Int> = mutableAttackingPlayerId.asStateFlow()
+    private var attackingNumber = NONE_PLAYER
+
+    private val mutableAttackingStatusId: MutableStateFlow<Int> =
+        MutableStateFlow(NONE_PLAYER)
+    val attackingStatusId = mutableAttackingStatusId.asStateFlow()
+
+    private val monsterNum: Int
+        get() = battleMonsterRepository.getMonsters().size
 
     // 使わないので適当
     override var selectManager: SelectManager = SelectManager(
@@ -96,7 +97,13 @@ class ActionPhaseViewModel : BattleChildViewModel() {
         itemNum = 1,
     )
 
+    private lateinit var speedList: List<Int>
+
+    private val statusId: Int
+        get() = speedList[attackingNumber]
+
     fun init() {
+        speedList = decideActionOrderUseCase.invoke()
         changeToNextCharacter()
     }
 
@@ -105,20 +112,20 @@ class ActionPhaseViewModel : BattleChildViewModel() {
             return ""
         }
 
-        val actionStatusName = getActionCharacterName(playerId)
-        val forStatusName = getForStatusName(playerId)
-
+        val actionStatusName = getActionStatusName(playerId)
+        val targetStatusName = getTargetStatusName(playerId)
         val actionStatusActionName = getActionName(playerId)
+
         return actionStatusName + "の" +
-                forStatusName + "への" +
+                targetStatusName + "への" +
                 actionStatusActionName
     }
 
-    private fun getActionCharacterName(id: Int): String {
-        return if (id < playerNum) {
+    private fun getActionStatusName(id: Int): String {
+        return if (isPlayer(id = id)) {
             playerStatusRepository.getStatus(id).name
         } else {
-            battleMonsterRepository.getStatus(id - playerNum).name
+            battleMonsterRepository.getStatus(id.toMonster()).name
         }
     }
 
@@ -127,8 +134,8 @@ class ActionPhaseViewModel : BattleChildViewModel() {
         HEAL,
     }
 
-    private fun getForStatusName(id: Int): String {
-        return if (id < playerNum) {
+    private fun getTargetStatusName(id: Int): String {
+        return if (isPlayer(id = id)) {
             getPlayerActionTargetName(id = id)
         } else {
             getMonsterTargetName()
@@ -151,7 +158,6 @@ class ActionPhaseViewModel : BattleChildViewModel() {
 
             ActionType.None ->
                 throw RuntimeException("ここには来ない")
-
         }
 
         return when (type) {
@@ -172,19 +178,30 @@ class ActionPhaseViewModel : BattleChildViewModel() {
         return "仲間"
     }
 
+    private fun getActionType(id: Int): ActionData {
+        return if (isPlayer(id = id)) {
+            actionRepository.getAction(id)
+        } else {
+            ActionData(
+                thisTurnAction = ActionType.Skill,
+                skillId = ATTACK_NORMAL,
+                target = 0,
+                ally = 0,
+                toolId = 0,
+                toolIndex = 0,
+            )
+        }
+    }
+
     private fun getActionName(
         id: Int,
     ): String {
-        val action = if (id < playerNum) {
-            actionRepository.getAction(id).thisTurnAction
-        } else {
-            ActionType.Skill
-        }
+        val action = getActionType(id = id).thisTurnAction
 
         return when (action) {
             ActionType.Normal -> "攻撃"
             ActionType.Skill -> {
-                val skill = if (id < playerNum) {
+                val skill = if (isPlayer(id = id)) {
                     val skillId = actionRepository.getAction(id).skillId
                     skillRepository.getItem(skillId)
                 } else {
@@ -216,7 +233,8 @@ class ActionPhaseViewModel : BattleChildViewModel() {
 
     override fun goNextImpl() {
         CoroutineScope(Dispatchers.IO).launch {
-            if (attackingPlayerId.value < playerNum) {
+            val id = statusId
+            if (isPlayer(id = id)) {
                 playerAction()
             } else {
                 enemyAction()
@@ -232,19 +250,21 @@ class ActionPhaseViewModel : BattleChildViewModel() {
     }
 
     private suspend fun playerAction() {
-        when (actionRepository.getAction(attackingPlayerId.value).thisTurnAction) {
+        val id = statusId
+        val actionType = getActionType(id).thisTurnAction
+        when (actionType) {
             ActionType.Normal -> {
                 //　攻撃
                 attackFromPlayerUseCase(
-                    target = actionRepository.getAction(attackingPlayerId.value).target,
+                    target = actionRepository.getAction(id).target,
                     damage = 10,
                 )
             }
 
             ActionType.Skill -> {
                 skillAction(
-                    id = attackingPlayerId.value,
-                    actionData = actionRepository.getAction(attackingPlayerId.value),
+                    id = id,
+                    actionData = actionRepository.getAction(id),
                     statusList = battleMonsterRepository.getMonsters(),
                     attackUseCase = attackFromPlayerUseCase,
                     updateParameter = updatePlayerParameter,
@@ -252,11 +272,10 @@ class ActionPhaseViewModel : BattleChildViewModel() {
             }
 
             ActionType.TOOL -> {
-                val userID = attackingPlayerId.value
                 toolAction(
-                    userId = userID,
+                    userId = id,
                     actionData = actionRepository.getAction(
-                        userID,
+                        id,
                     ),
                 )
             }
@@ -275,11 +294,10 @@ class ActionPhaseViewModel : BattleChildViewModel() {
         }
     }
 
-
-
     private suspend fun enemyAction() {
+        val id = statusId
         skillAction(
-            id = attackingPlayerId.value - playerNum,
+            id = id.toMonster(),
             statusList = playerStatusRepository.getPlayers(),
             actionData = ActionData(
                 skillId = ATTACK_NORMAL,
@@ -359,58 +377,66 @@ class ActionPhaseViewModel : BattleChildViewModel() {
     }
 
     private val totalNum: Int
-        get() = playerNum + battleMonsterRepository.getMonsters().size
+        get() = playerNum + monsterNum
 
     private fun changeToNextCharacter() {
-        var character = attackingPlayerId.value
         while (true) {
             //　次のキャラに移動
-            character++
+            attackingNumber++
 
             // 全キャラ終わっているので別の処理へ
-            if (totalNum <= character) {
+            if (totalNum <= attackingNumber) {
                 initAction()
                 break
             }
 
-            if (playerNum <= character) {
-                //　monsterを確認
-                if (battleMonsterRepository.getStatus(
-                        character - playerNum
-                    ).isActive
-                ) {
-                    // 行動可能なのでデータ更新
-                    updateAttackingPlayer(character)
-                    break
+            val id = statusId
+
+            if (isPlayer(id = id)) {
+                //　playerを確認
+
+                val player = playerStatusRepository.getStatus(id = id)
+                if (player.isActive.not()) {
+                    continue
+                }
+
+                val action = actionRepository.getAction(playerId = id)
+                val actionType = action.thisTurnAction
+                if (actionType == ActionType.None) {
+                    continue
                 }
             } else {
-                //　playerを確認
-                if (playerStatusRepository.getStatus(character).isActive &&
-                    actionRepository.getAction(character).thisTurnAction != ActionType.None
-                ) {
-                    // 行動可能なのでデータ更新
-                    updateAttackingPlayer(character)
-                    break
+                val monsterId = id.toMonster()
+                val monster = battleMonsterRepository
+                    .getStatus(id = monsterId)
+
+                //　monsterを確認
+                if (monster.isActive.not()) {
+                    continue
                 }
             }
 
-            //行動可能ではないので次のキャラへ移動
+            // 行動可能なのでデータ更新
+            mutableAttackingStatusId.value = id
+            break
         }
     }
+
+    private fun isPlayer(id: Int): Boolean {
+        return id < playerNum
+    }
+
+    private fun Int.toMonster(): Int = this - playerNum
+
 
     private fun initAction() {
         resetAttackingPlayer()
         commandRepository.init()
     }
 
-    private fun updateAttackingPlayer(
-        character: Int,
-    ) {
-        mutableAttackingPlayerId.value = character
-    }
-
     private fun resetAttackingPlayer() {
-        updateAttackingPlayer(NONE_PLAYER)
+        mutableAttackingStatusId.value = NONE_PLAYER
+        attackingNumber = NONE_PLAYER
     }
 
     override fun pressB() {
