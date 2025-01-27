@@ -1,4 +1,4 @@
-package gamescreen.battle.usecase.decideactionbyspeed
+package gamescreen.battle.usecase.decideactionorder
 
 interface DecideActionOrderUseCase {
     operator fun invoke(): List<Int>

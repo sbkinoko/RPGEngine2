@@ -1,4 +1,4 @@
-package gamescreen.battle.usecase.decideactionbyspeed
+package gamescreen.battle.usecase.decideactionorder
 
 import core.repository.battlemonster.BattleMonsterRepository
 import core.repository.player.PlayerStatusRepository

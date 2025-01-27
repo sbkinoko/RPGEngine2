@@ -24,7 +24,7 @@ import gamescreen.battle.domain.FinishCommand
 import gamescreen.battle.repository.action.ActionRepository
 import gamescreen.battle.service.isannihilation.IsAnnihilationService
 import gamescreen.battle.usecase.attack.AttackUseCase
-import gamescreen.battle.usecase.decideactionbyspeed.DecideActionOrderUseCase
+import gamescreen.battle.usecase.decideactionorder.DecideActionOrderUseCase
 import gamescreen.battle.usecase.findactivetarget.FindActiveTargetUseCase
 import gamescreen.menu.domain.SelectManager
 import kotlinx.coroutines.CoroutineScope
