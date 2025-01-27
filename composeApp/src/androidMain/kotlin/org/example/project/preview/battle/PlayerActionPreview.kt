@@ -24,6 +24,7 @@ fun PlayerActionPreview() {
                 maxValue = 10,
                 value = 5,
             ),
+            speed = 10,
             skillList = listOf(
                 0,
             ),

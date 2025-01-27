@@ -16,6 +16,7 @@ abstract class StatusRepositoryAbstract : StatusRepository {
             if (statusUpList[id].size <= lv) {
                 break
             }
+
             statusUpList[id][lv].apply {
                 statusSum = statusSum.copy(
                     hp = HP(
@@ -23,7 +24,8 @@ abstract class StatusRepositoryAbstract : StatusRepository {
                     ),
                     mp = MP(
                         statusSum.mp.maxValue + mp,
-                    )
+                    ),
+                    speed = statusSum.speed + speed,
                 )
             }
         }
