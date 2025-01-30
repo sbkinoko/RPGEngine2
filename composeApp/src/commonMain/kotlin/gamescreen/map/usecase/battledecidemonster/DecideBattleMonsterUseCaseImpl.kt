@@ -1,6 +1,6 @@
 package gamescreen.map.usecase.battledecidemonster
 
-import core.domain.status.MonsterStatus
+import core.domain.status.monster.MonsterStatus
 import data.monster.MonsterRepository
 import kotlin.random.Random
 

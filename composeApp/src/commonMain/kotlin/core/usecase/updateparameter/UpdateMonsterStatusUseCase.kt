@@ -1,6 +1,6 @@
 package core.usecase.updateparameter
 
-import core.domain.status.MonsterStatus
+import core.domain.status.monster.MonsterStatus
 import core.repository.status.StatusRepository
 
 class UpdateMonsterStatusUseCase(
