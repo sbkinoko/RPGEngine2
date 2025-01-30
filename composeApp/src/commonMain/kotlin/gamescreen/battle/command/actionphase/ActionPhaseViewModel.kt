@@ -109,17 +109,21 @@ class ActionPhaseViewModel(
 
     fun init() {
         statusList = mutableListOf()
-        for (id: Int in 0 until playerNum) {
-            statusList += OrderData(
-                status = playerStatusRepository.getStatus(id = id),
-                id = id,
-                actionData = actionRepository.getAction(playerId = id),
-            )
-        }
+        playerStatusRepository.getPlayers()
+            .mapIndexed { id, status ->
+                statusList += OrderData(
+                    status = status,
+                    id = id,
+                    actionData = actionRepository.getAction(playerId = id),
+                )
+            }
 
         battleMonsterRepository.getMonsters()
             .mapIndexed { index, status ->
-                val action = decideMonsterActionService.getAction(status)
+                val action = decideMonsterActionService.getAction(
+                    status,
+                    playerStatusRepository.getPlayers(),
+                )
                 statusList += OrderData(
                     status = status,
                     id = index + playerNum,
