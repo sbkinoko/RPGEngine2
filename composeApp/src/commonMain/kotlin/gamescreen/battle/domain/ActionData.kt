@@ -5,9 +5,9 @@ data class ActionData(
     val lastSelectedAction: ActionType = ActionType.Normal,
     val target: Int = 0,
     val ally: Int = 0,
-    val skillId: Int,
-    val toolId: Int,
-    val toolIndex: Int,
+    val skillId: Int = 0,
+    val toolId: Int = 0,
+    val toolIndex: Int = 0,
 ) {
     companion object {
         fun default(): ActionData {

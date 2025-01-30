@@ -1,7 +1,7 @@
 package gamescreen.map.usecase.battledecidemonster
 
-import core.domain.status.MonsterStatus
 import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
+import core.domain.status.monster.MonsterStatus
 import data.monster.MonsterRepository
 import kotlin.test.Test
 import kotlin.test.assertTrue

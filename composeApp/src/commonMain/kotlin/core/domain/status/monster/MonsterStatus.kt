@@ -1,5 +1,7 @@
-package core.domain.status
+package core.domain.status.monster
 
+import core.domain.status.DropItemInfo
+import core.domain.status.Status
 import core.domain.status.param.HP
 import core.domain.status.param.MP
 
@@ -13,4 +15,6 @@ data class MonsterStatus(
     val exp: Int,
     val money: Int,
     val dropInfoList: List<DropItemInfo>,
+    val skillList: List<Int>,
+    val actionStyle: ActionStyle,
 ) : Status

@@ -3,6 +3,7 @@ package gamescreen.battle.usecase.decideactionorder
 import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
 import core.domain.status.PlayerStatusTest.Companion.testActivePlayer
 import gamescreen.battle.ModuleBattle
+import gamescreen.battle.domain.ActionData
 import gamescreen.battle.domain.OrderData
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -15,6 +16,12 @@ import kotlin.test.assertEquals
 
 class DecideActionOderUseCaseImplTest : KoinTest {
     private val decideActionOrderUseCase: DecideActionOrderUseCase by inject()
+
+    private val defaultData = OrderData(
+        id = 0,
+        status = testActivePlayer,
+        ActionData(),
+    )
 
     @BeforeTest
     fun beforeTest() {
@@ -33,19 +40,19 @@ class DecideActionOderUseCaseImplTest : KoinTest {
     @Test
     fun check1() {
         val list = listOf(
-            OrderData(
+            defaultData.copy(
                 id = 0,
                 status = testActivePlayer.copy(
                     speed = 1,
                 ),
             ),
-            OrderData(
+            defaultData.copy(
                 id = 1,
                 status = testActivePlayer.copy(
                     speed = 3,
                 ),
             ),
-            OrderData(
+            defaultData.copy(
                 id = 2,
                 status = testActivePlayer.copy(
                     speed = 5,
@@ -63,25 +70,25 @@ class DecideActionOderUseCaseImplTest : KoinTest {
     @Test
     fun check2() {
         val list = listOf(
-            OrderData(
+            defaultData.copy(
                 id = 0,
                 status = testActivePlayer.copy(
                     speed = 1,
                 ),
             ),
-            OrderData(
+            defaultData.copy(
                 id = 1,
                 status = testActivePlayer.copy(
                     speed = 3,
                 ),
             ),
-            OrderData(
+            defaultData.copy(
                 id = 2,
                 status = testActivePlayer.copy(
                     speed = 5,
                 )
             ),
-            OrderData(
+            defaultData.copy(
                 id = 3,
                 status = TestActiveMonster.copy(
                     speed = 4,

@@ -1,6 +1,6 @@
 package core.repository.battlemonster
 
-import core.domain.status.MonsterStatus
+import core.domain.status.monster.MonsterStatus
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

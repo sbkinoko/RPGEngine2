@@ -24,6 +24,7 @@ import gamescreen.battle.domain.FinishCommand
 import gamescreen.battle.domain.OrderData
 import gamescreen.battle.repository.action.ActionRepository
 import gamescreen.battle.service.isannihilation.IsAnnihilationService
+import gamescreen.battle.service.monster.DecideMonsterActionService
 import gamescreen.battle.usecase.attack.AttackUseCase
 import gamescreen.battle.usecase.decideactionorder.DecideActionOrderUseCase
 import gamescreen.battle.usecase.findactivetarget.FindActiveTargetUseCase
@@ -60,6 +61,8 @@ class ActionPhaseViewModel(
     private val findActiveTargetUseCase: FindActiveTargetUseCase by inject()
 
     private val isAnnihilationService: IsAnnihilationService by inject()
+
+    private val decideMonsterActionService = DecideMonsterActionService()
 
     private val isMonsterAnnihilated: Boolean
         get() = isAnnihilationService(
@@ -106,18 +109,25 @@ class ActionPhaseViewModel(
 
     fun init() {
         statusList = mutableListOf()
-        for (id: Int in 0 until playerNum) {
-            statusList += OrderData(
-                status = playerStatusRepository.getStatus(id = id),
-                id = id,
-            )
-        }
+        playerStatusRepository.getPlayers()
+            .mapIndexed { id, status ->
+                statusList += OrderData(
+                    status = status,
+                    id = id,
+                    actionData = actionRepository.getAction(playerId = id),
+                )
+            }
 
         battleMonsterRepository.getMonsters()
             .mapIndexed { index, status ->
+                val action = decideMonsterActionService.getAction(
+                    status,
+                    playerStatusRepository.getPlayers(),
+                )
                 statusList += OrderData(
                     status = status,
-                    id = index + playerNum
+                    id = index + playerNum,
+                    actionData = action,
                 )
             }
         speedList = decideActionOrderUseCase.invoke(
@@ -201,14 +211,7 @@ class ActionPhaseViewModel(
         return if (isPlayer(id = id)) {
             actionRepository.getAction(id)
         } else {
-            ActionData(
-                thisTurnAction = ActionType.Skill,
-                skillId = ATTACK_NORMAL,
-                target = 0,
-                ally = 0,
-                toolId = 0,
-                toolIndex = 0,
-            )
+            statusList[id].actionData
         }
     }
 
@@ -318,13 +321,7 @@ class ActionPhaseViewModel(
         skillAction(
             id = id.toMonster(),
             statusList = playerStatusRepository.getPlayers(),
-            actionData = ActionData(
-                skillId = ATTACK_NORMAL,
-                target = 0,
-                ally = 0,
-                toolId = 0,
-                toolIndex = 0,
-            ),
+            actionData = statusList[id].actionData,
             attackUseCase = attackFromEnemyUseCase,
             updateParameter = updateEnemyParameter,
         )

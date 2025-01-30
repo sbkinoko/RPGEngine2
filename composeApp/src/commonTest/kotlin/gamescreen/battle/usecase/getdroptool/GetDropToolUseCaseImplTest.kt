@@ -2,8 +2,8 @@ package gamescreen.battle.usecase.getdroptool
 
 import core.ModuleCore
 import core.domain.status.DropItemInfo
-import core.domain.status.MonsterStatus
 import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
+import core.domain.status.monster.MonsterStatus
 import core.repository.battlemonster.TestBattleMonsterRepository
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin

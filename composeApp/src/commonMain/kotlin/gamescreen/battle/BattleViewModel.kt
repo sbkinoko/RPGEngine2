@@ -2,8 +2,8 @@ package gamescreen.battle
 
 import controller.domain.ControllerCallback
 import controller.domain.Stick
-import core.domain.status.MonsterStatus
 import core.domain.status.PlayerStatus
+import core.domain.status.monster.MonsterStatus
 import core.repository.battlemonster.BattleMonsterRepository
 import core.repository.player.PlayerStatusRepository
 import gamescreen.battle.repository.commandstate.CommandStateRepository

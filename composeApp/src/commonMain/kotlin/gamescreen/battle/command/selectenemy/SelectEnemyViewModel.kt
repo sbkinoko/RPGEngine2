@@ -2,7 +2,7 @@ package gamescreen.battle.command.selectenemy
 
 import controller.domain.ArrowCommand
 import controller.domain.Stick
-import core.domain.status.MonsterStatus
+import core.domain.status.monster.MonsterStatus
 import core.repository.battlemonster.BattleMonsterRepository
 import gamescreen.battle.BattleChildViewModel
 import gamescreen.battle.domain.BattleCommandType
