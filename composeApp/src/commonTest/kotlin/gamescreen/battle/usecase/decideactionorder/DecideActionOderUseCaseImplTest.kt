@@ -20,7 +20,7 @@ class DecideActionOderUseCaseImplTest : KoinTest {
     private val defaultData = OrderData(
         id = 0,
         status = testActivePlayer,
-        ActionData()
+        ActionData(),
     )
 
     @BeforeTest
