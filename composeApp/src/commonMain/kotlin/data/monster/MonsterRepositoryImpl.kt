@@ -1,9 +1,12 @@
 package data.monster
 
 import core.domain.status.DropItemInfo
-import core.domain.status.MonsterStatus
+import core.domain.status.monster.ActionStyle
+import core.domain.status.monster.MonsterStatus
 import core.domain.status.param.HP
 import core.domain.status.param.MP
+import data.item.skill.ATTACK_NORMAL
+import data.item.skill.MONSTER_ATTACK_2
 import data.item.tool.ToolRepositoryImpl
 
 class MonsterRepositoryImpl : MonsterRepository {
@@ -29,7 +32,12 @@ class MonsterRepositoryImpl : MonsterRepository {
                     itemId = ToolRepositoryImpl.HEAL_TOOL2,
                     probability = 10,
                 ),
-            )
+            ),
+            skillList = listOf(
+                ATTACK_NORMAL,
+                MONSTER_ATTACK_2,
+            ),
+            actionStyle = ActionStyle.RANDOM,
         )
     }
 }

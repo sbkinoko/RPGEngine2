@@ -24,6 +24,7 @@ import gamescreen.battle.domain.FinishCommand
 import gamescreen.battle.domain.OrderData
 import gamescreen.battle.repository.action.ActionRepository
 import gamescreen.battle.service.isannihilation.IsAnnihilationService
+import gamescreen.battle.service.monster.DecideMonsterActionService
 import gamescreen.battle.usecase.attack.AttackUseCase
 import gamescreen.battle.usecase.decideactionorder.DecideActionOrderUseCase
 import gamescreen.battle.usecase.findactivetarget.FindActiveTargetUseCase
@@ -60,6 +61,8 @@ class ActionPhaseViewModel(
     private val findActiveTargetUseCase: FindActiveTargetUseCase by inject()
 
     private val isAnnihilationService: IsAnnihilationService by inject()
+
+    private val decideMonsterActionService = DecideMonsterActionService()
 
     private val isMonsterAnnihilated: Boolean
         get() = isAnnihilationService(
@@ -110,14 +113,17 @@ class ActionPhaseViewModel(
             statusList += OrderData(
                 status = playerStatusRepository.getStatus(id = id),
                 id = id,
+                actionData = actionRepository.getAction(playerId = id),
             )
         }
 
         battleMonsterRepository.getMonsters()
             .mapIndexed { index, status ->
+                val action = decideMonsterActionService.getAction(status)
                 statusList += OrderData(
                     status = status,
-                    id = index + playerNum
+                    id = index + playerNum,
+                    actionData = action,
                 )
             }
         speedList = decideActionOrderUseCase.invoke(
@@ -141,11 +147,7 @@ class ActionPhaseViewModel(
     }
 
     private fun getActionStatusName(id: Int): String {
-        return if (isPlayer(id = id)) {
-            playerStatusRepository.getStatus(id).name
-        } else {
-            battleMonsterRepository.getStatus(id.toMonster()).name
-        }
+        return statusList[id].status.name
     }
 
     private enum class Type {
@@ -198,18 +200,7 @@ class ActionPhaseViewModel(
     }
 
     private fun getActionType(id: Int): ActionData {
-        return if (isPlayer(id = id)) {
-            actionRepository.getAction(id)
-        } else {
-            ActionData(
-                thisTurnAction = ActionType.Skill,
-                skillId = ATTACK_NORMAL,
-                target = 0,
-                ally = 0,
-                toolId = 0,
-                toolIndex = 0,
-            )
-        }
+        return statusList[id].actionData
     }
 
     private fun getActionName(
@@ -318,13 +309,7 @@ class ActionPhaseViewModel(
         skillAction(
             id = id.toMonster(),
             statusList = playerStatusRepository.getPlayers(),
-            actionData = ActionData(
-                skillId = ATTACK_NORMAL,
-                target = 0,
-                ally = 0,
-                toolId = 0,
-                toolIndex = 0,
-            ),
+            actionData = statusList[id].actionData,
             attackUseCase = attackFromEnemyUseCase,
             updateParameter = updateEnemyParameter,
         )

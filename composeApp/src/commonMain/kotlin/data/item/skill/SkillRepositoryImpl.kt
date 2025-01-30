@@ -11,6 +11,7 @@ const val CANT_USE = 1
 const val ATTACK_NORMAL = 2
 const val HEAL_SKILL = 3
 const val REVIVE_SKILL = 4
+const val MONSTER_ATTACK_2 = 5
 
 class SkillRepositoryImpl : SkillRepository {
 
@@ -61,6 +62,15 @@ class SkillRepositoryImpl : SkillRepository {
                 targetNum = 1,
                 targetType = TargetType.INACTIVE,
                 usablePlace = Place.BOTH,
+            )
+
+            MONSTER_ATTACK_2 -> AttackSkill(
+                id = id,
+                name = "通常攻撃2",
+                damageAmount = 10,
+                needMP = 0,
+                targetNum = 1,
+                usablePlace = Place.BATTLE,
             )
 
             else -> throw NotImplementedError()

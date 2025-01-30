@@ -1,8 +1,8 @@
 package gamescreen.map.usecase.battlestart
 
 import core.domain.ScreenType
-import core.domain.status.MonsterStatus
 import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
+import core.domain.status.monster.MonsterStatus
 import core.repository.battlemonster.BattleMonsterRepository
 import core.repository.screentype.ScreenTypeRepository
 import gamescreen.battle.domain.ActionData

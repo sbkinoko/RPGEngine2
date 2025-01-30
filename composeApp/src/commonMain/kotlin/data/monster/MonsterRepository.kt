@@ -1,6 +1,6 @@
 package data.monster
 
-import core.domain.status.MonsterStatus
+import core.domain.status.monster.MonsterStatus
 
 interface MonsterRepository {
 

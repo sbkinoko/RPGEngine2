@@ -1,5 +1,7 @@
 package core.domain.status
 
+import core.domain.status.monster.ActionStyle
+import core.domain.status.monster.MonsterStatus
 import core.domain.status.param.HP
 import core.domain.status.param.MP
 
@@ -26,7 +28,11 @@ class MonsterStatusTest {
                         itemId = 1,
                         probability = 1,
                     )
-                )
+                ),
+                skillList = listOf(
+                    1, 2,
+                ),
+                actionStyle = ActionStyle.RANDOM,
             )
 
         val TestNotActiveMonster

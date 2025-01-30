@@ -1,6 +1,6 @@
 package data.battle
 
-import core.domain.status.MonsterStatus
+import core.domain.status.monster.MonsterStatus
 import gamescreen.battle.domain.BattleId
 
 interface BattleDataRepository {
