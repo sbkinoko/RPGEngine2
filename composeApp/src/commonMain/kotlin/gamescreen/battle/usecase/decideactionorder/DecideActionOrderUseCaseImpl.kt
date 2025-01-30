@@ -4,6 +4,7 @@ import gamescreen.battle.domain.OrderData
 
 class DecideActionOrderUseCaseImpl(
 ) : DecideActionOrderUseCase {
+    // todo 同じ素早さの場合の挙動を考える
     override fun invoke(
         statusList: List<OrderData>,
     ): List<Int> {
