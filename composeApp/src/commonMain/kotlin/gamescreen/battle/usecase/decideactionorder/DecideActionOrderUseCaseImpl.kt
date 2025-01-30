@@ -1,31 +1,13 @@
 package gamescreen.battle.usecase.decideactionorder
 
-import core.repository.battlemonster.BattleMonsterRepository
-import core.repository.player.PlayerStatusRepository
-import values.Constants.Companion.playerNum
+import gamescreen.battle.domain.OrderData
 
 class DecideActionOrderUseCaseImpl(
-    private val playerStatusRepository: PlayerStatusRepository,
-    private val battleMonsterRepository: BattleMonsterRepository,
 ) : DecideActionOrderUseCase {
-    override fun invoke(): List<Int> {
-        val mutableList = mutableListOf<SpeedInfo>()
-        for (id: Int in 0 until playerNum) {
-            mutableList += SpeedInfo(
-                speed = playerStatusRepository.getStatus(id = id).speed,
-                id = id,
-            )
-        }
-
-        battleMonsterRepository.getMonsters()
-            .mapIndexed { index, status ->
-                mutableList += SpeedInfo(
-                    speed = status.speed,
-                    id = index + playerNum
-                )
-            }
-
-        return mutableList
+    override fun invoke(
+        statusList: List<OrderData>,
+    ): List<Int> {
+        return statusList
             // 素早さ順でソート
             .sortedWith(speedComparator)
             // 降順にする
@@ -36,12 +18,7 @@ class DecideActionOrderUseCaseImpl(
             }
     }
 
-    private val speedComparator: Comparator<SpeedInfo> = compareBy {
-        it.speed
+    private val speedComparator: Comparator<OrderData> = compareBy {
+        it.status.speed
     }
-
-    private data class SpeedInfo(
-        val speed: Int,
-        val id: Int,
-    )
 }

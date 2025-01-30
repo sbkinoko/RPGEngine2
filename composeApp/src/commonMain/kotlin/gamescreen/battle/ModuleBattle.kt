@@ -119,10 +119,7 @@ val ModuleBattle = module {
     }
 
     single<DecideActionOrderUseCase> {
-        DecideActionOrderUseCaseImpl(
-            battleMonsterRepository = get(),
-            playerStatusRepository = get(),
-        )
+        DecideActionOrderUseCaseImpl()
     }
 
     single<AttackUseCase>(
