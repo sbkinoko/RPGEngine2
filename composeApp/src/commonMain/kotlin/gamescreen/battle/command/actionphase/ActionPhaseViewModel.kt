@@ -21,6 +21,7 @@ import gamescreen.battle.domain.ActionType
 import gamescreen.battle.domain.AttackPhaseCommand
 import gamescreen.battle.domain.BattleCommandType
 import gamescreen.battle.domain.FinishCommand
+import gamescreen.battle.domain.OrderData
 import gamescreen.battle.repository.action.ActionRepository
 import gamescreen.battle.service.isannihilation.IsAnnihilationService
 import gamescreen.battle.usecase.attack.AttackUseCase
@@ -101,9 +102,27 @@ class ActionPhaseViewModel(
 
     private val statusId: Int
         get() = speedList[attackingNumber]
+    var statusList: MutableList<OrderData> = mutableListOf()
 
     fun init() {
-        speedList = decideActionOrderUseCase.invoke()
+        statusList = mutableListOf()
+        for (id: Int in 0 until playerNum) {
+            statusList += OrderData(
+                status = playerStatusRepository.getStatus(id = id),
+                id = id,
+            )
+        }
+
+        battleMonsterRepository.getMonsters()
+            .mapIndexed { index, status ->
+                statusList += OrderData(
+                    status = status,
+                    id = index + playerNum
+                )
+            }
+        speedList = decideActionOrderUseCase.invoke(
+            statusList = statusList,
+        )
         changeToNextCharacter()
     }
 
