@@ -5,15 +5,15 @@ import core.domain.status.StatusIncrease
 import core.domain.status.StatusIncreaseTest
 import core.domain.status.StatusIncreaseTest.Companion.TEST_LV1_HP
 import core.domain.status.StatusIncreaseTest.Companion.TEST_LV1_MP
+import core.domain.status.StatusIncreaseTest.Companion.TEST_LV1_SPEED
 import core.domain.status.StatusIncreaseTest.Companion.TEST_LV2_HP
 import core.domain.status.StatusIncreaseTest.Companion.TEST_LV2_MP
+import core.domain.status.StatusIncreaseTest.Companion.TEST_LV2_SPEED
 import core.domain.status.param.EXP
-import core.domain.status.param.HP
-import core.domain.status.param.MP
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class StatusRepositoryAbstractTest {
+class AbstractStatusRepositoryTest {
     private val skillListValue = listOf(1)
     private val toolListValue = listOf(2)
 
@@ -25,7 +25,7 @@ class StatusRepositoryAbstractTest {
         )
     )
 
-    private val testRepository: StatusRepository = object : StatusRepositoryAbstract() {
+    private val testRepository: StatusRepository = object : AbstractStatusRepository() {
         override val statusUpList: List<List<StatusIncrease>>
             get() = listOf(
                 StatusIncreaseTest.testStatusUpList
@@ -34,12 +34,6 @@ class StatusRepositoryAbstractTest {
         override val statusBaseList: List<PlayerStatus>
             get() = listOf(
                 PlayerStatus(
-                    hp = HP(
-                        maxValue = 0,
-                    ),
-                    mp = MP(
-                        maxValue = 0,
-                    ),
                     toolList = toolListValue,
                     skillList = skillListValue,
                     name = nameValue,
@@ -64,6 +58,11 @@ class StatusRepositoryAbstractTest {
             assertEquals(
                 expected = TEST_LV1_MP,
                 actual = mp.maxValue,
+            )
+
+            assertEquals(
+                expected = TEST_LV1_SPEED,
+                actual = speed,
             )
 
             assertEquals(
@@ -99,6 +98,11 @@ class StatusRepositoryAbstractTest {
             assertEquals(
                 expected = TEST_LV1_MP + TEST_LV2_MP,
                 actual = mp.maxValue,
+            )
+
+            assertEquals(
+                expected = TEST_LV1_SPEED + TEST_LV2_SPEED,
+                actual = speed
             )
 
             assertEquals(

@@ -6,9 +6,37 @@ import core.domain.status.param.MP
 
 data class PlayerStatus(
     override var name: String,
-    override val hp: HP,
-    override val mp: MP,
+    override val hp: HP = dummyHP,
+    override val mp: MP = dummyMP,
+    override val speed: Int = 0,
     val skillList: List<Int>,
     val toolList: List<Int>,
     val exp: EXP,
-) : Status
+) : Status {
+
+    fun addStatus(
+        statusIncrease: StatusIncrease,
+    ): PlayerStatus {
+        return statusIncrease.let {
+            copy(
+                hp = HP(
+                    hp.maxValue + it.hp,
+                ),
+                mp = MP(
+                    mp.maxValue + it.mp,
+                ),
+                speed = speed + it.speed,
+            )
+        }
+    }
+}
+
+private val dummyHP
+    get() = HP(
+        0, 0,
+    )
+
+private val dummyMP
+    get() = MP(
+        0, 0
+    )

@@ -17,6 +17,7 @@ class MonsterRepositoryImpl : MonsterRepository {
             mp = MP(
                 maxValue = 10,
             ),
+            speed = 10,
             exp = 2,
             money = 1,
             dropInfoList = listOf(

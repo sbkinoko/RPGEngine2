@@ -3,25 +3,13 @@ package data.status
 import core.domain.status.PlayerStatus
 import core.domain.status.StatusIncrease
 import core.domain.status.param.EXP
-import core.domain.status.param.HP
-import core.domain.status.param.MP
 import data.item.skill.ATTACK_TO_2
 import data.item.skill.CANT_USE
 import data.item.skill.HEAL_SKILL
 import data.item.skill.REVIVE_SKILL
 import data.item.tool.ToolRepositoryImpl
 
-class StatusRepositoryImpl : StatusRepositoryAbstract() {
-
-    private val dummyHP
-        get() = HP(
-            0, 0,
-        )
-
-    private val dummyMP
-        get() = MP(
-            0, 0
-        )
+class StatusRepositoryImpl : AbstractStatusRepository() {
 
     override val statusUpList: List<List<StatusIncrease>> = List(3) {
         when (it) {
@@ -29,10 +17,12 @@ class StatusRepositoryImpl : StatusRepositoryAbstract() {
                 StatusIncrease(
                     hp = 100,
                     mp = 10,
+                    speed = 11,
                 ),
                 StatusIncrease(
                     hp = 100,
                     mp = 10,
+                    speed = 10
                 ),
             )
 
@@ -40,6 +30,7 @@ class StatusRepositoryImpl : StatusRepositoryAbstract() {
                 StatusIncrease(
                     hp = 100,
                     mp = 111,
+                    speed = 9,
                 )
             )
 
@@ -47,6 +38,7 @@ class StatusRepositoryImpl : StatusRepositoryAbstract() {
                 StatusIncrease(
                     hp = 100,
                     mp = 100,
+                    speed = 9,
                 )
             )
 
@@ -54,6 +46,7 @@ class StatusRepositoryImpl : StatusRepositoryAbstract() {
                 StatusIncrease(
                     hp = 100,
                     mp = 500,
+                    speed = 9,
                 )
             )
 
@@ -68,8 +61,6 @@ class StatusRepositoryImpl : StatusRepositoryAbstract() {
             0 ->
                 PlayerStatus(
                     name = "test1",
-                    hp = dummyHP,
-                    mp = dummyMP,
                     skillList = listOf(
                         ATTACK_TO_2,
                         CANT_USE,
@@ -91,8 +82,6 @@ class StatusRepositoryImpl : StatusRepositoryAbstract() {
 
             1 -> PlayerStatus(
                 name = "test2",
-                hp = dummyHP,
-                mp = dummyMP,
                 skillList = listOf(
                     ATTACK_TO_2,
                     CANT_USE,
@@ -108,8 +97,6 @@ class StatusRepositoryImpl : StatusRepositoryAbstract() {
 
             2 -> PlayerStatus(
                 name = "test3",
-                hp = dummyHP,
-                mp = dummyMP,
                 skillList = listOf(
                     HEAL_SKILL,
                     REVIVE_SKILL,
@@ -126,8 +113,6 @@ class StatusRepositoryImpl : StatusRepositoryAbstract() {
 
             3 -> PlayerStatus(
                 name = "MPたくさん",
-                hp = dummyHP,
-                mp = dummyMP,
                 skillList = listOf(
                     HEAL_SKILL,
                     REVIVE_SKILL,

@@ -10,6 +10,8 @@ interface Status {
 
     val mp: MP
 
+    val speed: Int
+
     val isActive: Boolean
         get() {
             return 0 < hp.point
