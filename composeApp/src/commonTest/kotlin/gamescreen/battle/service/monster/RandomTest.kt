@@ -17,7 +17,6 @@ class RandomTest {
     private val players1 = listOf(
         testActivePlayer,
         testActivePlayer,
-        testActivePlayer,
     )
 
     private val players2 = listOf(
