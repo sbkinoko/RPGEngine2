@@ -147,7 +147,11 @@ class ActionPhaseViewModel(
     }
 
     private fun getActionStatusName(id: Int): String {
-        return statusList[id].status.name
+        return if (isPlayer(id = id)) {
+            playerStatusRepository.getStatus(id).name
+        } else {
+            battleMonsterRepository.getStatus(id.toMonster()).name
+        }
     }
 
     private enum class Type {
@@ -200,7 +204,11 @@ class ActionPhaseViewModel(
     }
 
     private fun getActionType(id: Int): ActionData {
-        return statusList[id].actionData
+        return if (isPlayer(id = id)) {
+            actionRepository.getAction(id)
+        } else {
+            statusList[id].actionData
+        }
     }
 
     private fun getActionName(
