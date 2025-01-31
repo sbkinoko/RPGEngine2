@@ -1,8 +1,8 @@
 package gamescreen.battle.command.actionphase
 
+import core.domain.item.TypeKind
 import core.domain.item.skill.AttackSkill
 import core.domain.item.skill.HealSkill
-import core.domain.item.tool.HealTool
 import core.domain.status.Status
 import core.repository.battlemonster.BattleMonsterRepository
 import core.repository.player.PlayerStatusRepository
@@ -10,6 +10,7 @@ import core.usecase.item.usetool.UseToolUseCase
 import core.usecase.updateparameter.UpdateMonsterStatusUseCase
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
 import core.usecase.updateparameter.UpdateStatusUseCase
+import data.item.skill.ATTACK_NORMAL
 import data.item.skill.SkillRepository
 import data.item.tool.ToolRepository
 import gamescreen.battle.BattleChildViewModel
@@ -157,62 +158,91 @@ class ActionPhaseViewModel(
         }
     }
 
-    private enum class Type {
-        ATTACK,
-        HEAL,
-    }
-
     private fun getTargetStatusName(id: Int): String {
         return if (isPlayer(id = id)) {
             getPlayerActionTargetName(id = id)
         } else {
-            getMonsterTargetName()
+            getMonsterTargetName(id = id)
         }
     }
 
     private fun getPlayerActionTargetName(id: Int): String {
         val action = actionRepository.getAction(id)
 
-        val type = when (action.thisTurnAction) {
-            ActionType.Normal -> Type.ATTACK
-            ActionType.Skill -> when (skillRepository.getItem(action.skillId)) {
-                is AttackSkill -> Type.ATTACK
-                is HealSkill -> Type.HEAL
-            }
-
-            ActionType.TOOL -> when (toolRepository.getItem(action.toolId)) {
-                is HealTool -> Type.HEAL
-            }
+        val item = when (action.thisTurnAction) {
+            ActionType.Normal -> skillRepository.getItem(ATTACK_NORMAL)
+            ActionType.Skill -> skillRepository.getItem(action.skillId)
+            ActionType.TOOL -> toolRepository.getItem(action.toolId)
 
             ActionType.None ->
                 throw RuntimeException("ここには来ない")
         }
 
-        return when (type) {
-            Type.ATTACK -> {
-                val targetId = action.target
+        return when (item) {
+            is TypeKind.AttackItem -> {
+                var targetId = action.target
+                if (battleMonsterRepository.getStatus(targetId).isActive.not()) {
+                    targetId = findActiveTargetUseCase.invoke(
+                        statusList = battleMonsterRepository.getMonsters(),
+                        target = targetId,
+                        targetNum = item.targetNum,
+                    ).first()
+                }
                 battleMonsterRepository.getStatus(targetId).name
             }
 
-            Type.HEAL -> {
+            is TypeKind.HealItem -> {
                 val targetId = action.ally
                 playerStatusRepository.getStatus(targetId).name
+            }
+
+            else -> {
+                throw IllegalStateException()
             }
         }
     }
 
-    private fun getMonsterTargetName(): String {
-        //　fixme 敵の攻撃対象を保存するようにしたら修正
-        return "仲間"
+    private fun getMonsterTargetName(id: Int): String {
+        val action = statusList[id].actionData
+        return when (
+            val skill = skillRepository
+                .getItem(action.skillId)
+        ) {
+            is TypeKind.AttackItem -> {
+                var targetId = action.target
+                if (playerStatusRepository.getStatus(targetId).isActive.not()) {
+                    targetId = findActiveTargetUseCase.invoke(
+                        statusList = playerStatusRepository.getPlayers(),
+                        target = targetId,
+                        targetNum = skill.targetNum,
+                    ).first()
+                }
+                playerStatusRepository.getStatus(targetId).name
+            }
+
+            is TypeKind.HealItem -> {
+                val targetId = action.ally
+                battleMonsterRepository.getStatus(targetId).name
+            }
+
+            else -> {
+                throw IllegalStateException()
+            }
+        }
     }
 
     private fun getActionName(
         id: Int,
     ): String {
         val actionData = statusList[id].actionData
-
         return when (actionData.thisTurnAction) {
-            ActionType.Normal -> "攻撃"
+            ActionType.Normal -> {
+                // fixme actionDataに通常攻撃の情報を持たせる
+                val skillId = ATTACK_NORMAL
+                val skill = skillRepository.getItem(skillId)
+                skill.name
+            }
+
             ActionType.Skill -> {
                 val skillId = statusList[id].actionData.skillId
                 val skill = skillRepository.getItem(skillId)

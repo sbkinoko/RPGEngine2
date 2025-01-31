@@ -12,6 +12,7 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertTrue
 
+// todo 回数を増やす
 class GetDropToolUseCaseImplTest {
 
     @BeforeTest

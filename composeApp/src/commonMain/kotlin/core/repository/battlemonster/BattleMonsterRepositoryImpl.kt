@@ -27,7 +27,32 @@ class BattleMonsterRepositoryImpl : BattleMonsterRepository {
     }
 
     override fun setMonsters(monsters: List<MonsterStatus>) {
-        monsterList = monsters
+        val nameNum: MutableMap<String, Int> = mutableMapOf()
+        monsters.map {
+            if (nameNum[it.name] != null) {
+                nameNum[it.name] = (nameNum[it.name]!! + 1)
+            } else {
+                nameNum[it.name] = 1
+            }
+        }
+
+        val nameId: MutableMap<String, Int> = mutableMapOf()
+
+        monsterList = monsters.map {
+            if (nameNum[it.name] == 1) {
+                return@map it
+            }
+
+            if (nameId[it.name] != null) {
+                nameId[it.name] = (nameId[it.name]!! + 1)
+            } else {
+                nameId[it.name] = 1
+            }
+
+            it.copy(
+                name = it.name + nameId[it.name]
+            )
+        }
     }
 
     override suspend fun setStatus(

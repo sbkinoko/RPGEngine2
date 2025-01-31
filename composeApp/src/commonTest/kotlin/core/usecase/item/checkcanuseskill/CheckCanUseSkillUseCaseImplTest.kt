@@ -1,9 +1,9 @@
 package core.usecase.item.checkcanuseskill
 
 import core.domain.Place
+import core.domain.item.ItemKind
 import core.domain.item.TargetType
 import core.domain.item.skill.HealSkill
-import core.domain.item.skill.Skill
 import core.domain.status.PlayerStatus
 import core.domain.status.param.EXP
 import core.domain.status.param.HP
@@ -51,7 +51,7 @@ class CheckCanUseSkillUseCaseImplTest {
     @BeforeTest
     fun beforeTest() {
         val skillRepository = object : SkillRepository {
-            override fun getItem(id: Int): Skill {
+            override fun getItem(id: Int): ItemKind.Skill {
                 return skill
             }
         }

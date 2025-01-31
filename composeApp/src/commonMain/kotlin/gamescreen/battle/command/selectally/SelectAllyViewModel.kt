@@ -1,8 +1,7 @@
 package gamescreen.battle.command.selectally
 
-import core.domain.item.HealItem
 import core.domain.item.TargetType
-import core.domain.item.skill.HealSkill
+import core.domain.item.TypeKind
 import core.repository.player.PlayerStatusRepository
 import data.item.skill.SkillRepository
 import data.item.tool.ToolRepository
@@ -40,6 +39,7 @@ class SelectAllyViewModel : BattleChildViewModel() {
     val targetType: TargetType
         get() {
             val actionType = actionRepository.getAction(playerId).thisTurnAction
+
             val item = when (
                 actionType
             ) {
@@ -59,11 +59,7 @@ class SelectAllyViewModel : BattleChildViewModel() {
                 }
             }
 
-            if (item is HealSkill) {
-                return item.targetType
-            }
-
-            if (item is HealItem) {
+            if (item is TypeKind.HealItem) {
                 return item.targetType
             }
 

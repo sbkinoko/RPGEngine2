@@ -1,7 +1,8 @@
 package core.domain.item.skill
 
 import core.domain.Place
-import core.domain.item.AttackItem
+import core.domain.item.ItemKind
+import core.domain.item.TypeKind
 
 // 必要になったらattackのinterfaceを作る
 data class AttackSkill(
@@ -12,7 +13,7 @@ data class AttackSkill(
     override val canUse: (Int) -> Boolean = { mp -> mp >= needMP },
     override val usablePlace: Place,
     override val damageAmount: Int,
-) : Skill, AttackItem {
+) : ItemKind.Skill, TypeKind.AttackItem {
     override val explain: String
         get() {
             return name + "\n" +
