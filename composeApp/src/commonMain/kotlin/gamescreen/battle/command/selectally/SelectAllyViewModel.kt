@@ -1,7 +1,7 @@
 package gamescreen.battle.command.selectally
 
+import core.domain.item.HealItem
 import core.domain.item.TargetType
-import core.domain.item.TypeKind
 import core.repository.player.PlayerStatusRepository
 import data.item.skill.SkillRepository
 import data.item.tool.ToolRepository
@@ -59,7 +59,7 @@ class SelectAllyViewModel : BattleChildViewModel() {
                 }
             }
 
-            if (item is TypeKind.HealItem) {
+            if (item is HealItem) {
                 return item.targetType
             }
 

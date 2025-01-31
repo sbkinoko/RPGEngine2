@@ -1,7 +1,8 @@
 package gamescreen.battle.command.item
 
 import core.domain.Const
-import core.domain.item.TypeKind
+import core.domain.item.AttackItem
+import core.domain.item.HealItem
 import core.repository.player.PlayerStatusRepository
 import data.item.ItemRepository
 import gamescreen.battle.BattleChildViewModel
@@ -72,13 +73,13 @@ abstract class ItemCommandViewModel : BattleChildViewModel() {
         )
 
         when (itemRepository.getItem(itemId)) {
-            is TypeKind.AttackItem -> {
+            is AttackItem -> {
                 commandRepository.push(
                     SelectEnemyCommand(playerId),
                 )
             }
 
-            is TypeKind.HealItem -> {
+            is HealItem -> {
                 commandRepository.push(
                     SelectAllyCommand(playerId),
                 )

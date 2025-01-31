@@ -1,8 +1,8 @@
 package core.usecase.item.usetool
 
 import core.domain.Place
-import core.domain.item.ItemKind
 import core.domain.item.TargetType
+import core.domain.item.Tool
 import core.domain.item.tool.HealTool
 import core.domain.status.PlayerStatus
 import core.domain.status.param.EXP
@@ -94,7 +94,7 @@ class UseToolUseCaseImplTest : KoinTest {
     @Test
     fun updateHP() {
         val toolRepository: ToolRepository = object : ToolRepository {
-            override fun getItem(id: Int): ItemKind.Tool {
+            override fun getItem(id: Int): Tool {
                 return HealTool(
                     id = id,
                     name = "回復",
@@ -150,7 +150,7 @@ class UseToolUseCaseImplTest : KoinTest {
     @Test
     fun reusable() {
         val toolRepository: ToolRepository = object : ToolRepository {
-            override fun getItem(id: Int): ItemKind.Tool {
+            override fun getItem(id: Int): Tool {
                 return HealTool(
                     id = id,
                     name = "回復",
@@ -205,7 +205,7 @@ class UseToolUseCaseImplTest : KoinTest {
     @Test
     fun useBag() {
         val toolRepository: ToolRepository = object : ToolRepository {
-            override fun getItem(id: Int): ItemKind.Tool {
+            override fun getItem(id: Int): Tool {
                 return HealTool(
                     id = id,
                     name = "回復",

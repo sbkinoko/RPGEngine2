@@ -1,9 +1,9 @@
 package core.domain.item.skill
 
 import core.domain.Place
-import core.domain.item.ItemKind
+import core.domain.item.HealItem
+import core.domain.item.Skill
 import core.domain.item.TargetType
-import core.domain.item.TypeKind
 
 data class HealSkill(
     override val id: Int,
@@ -14,7 +14,7 @@ data class HealSkill(
     override val usablePlace: Place,
     override val healAmount: Int,
     override val targetType: TargetType,
-) : ItemKind.Skill, TypeKind.HealItem {
+) : Skill, HealItem {
     override val explain: String
         get() {
             return name + "\n" +

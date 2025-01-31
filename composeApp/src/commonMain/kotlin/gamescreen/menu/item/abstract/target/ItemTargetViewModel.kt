@@ -1,7 +1,7 @@
 package gamescreen.menu.item.abstract.target
 
 import core.domain.AbleType
-import core.domain.item.TypeKind
+import core.domain.item.HealItem
 import core.repository.player.PlayerStatusRepository
 import data.item.ItemRepository
 import gamescreen.choice.Choice
@@ -69,7 +69,7 @@ abstract class ItemTargetViewModel : MenuChildViewModel() {
         val targetStatus = playerStatusRepository.getStatus(id = target)
         val skill = itemRepository.getItem(itemId)
 
-        if (skill !is TypeKind.HealItem) {
+        if (skill !is HealItem) {
             // 回復じゃなかったら使えないはず
             return false
         }

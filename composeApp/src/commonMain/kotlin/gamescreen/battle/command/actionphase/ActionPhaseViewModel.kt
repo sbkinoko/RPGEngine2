@@ -1,5 +1,7 @@
 package gamescreen.battle.command.actionphase
 
+import core.domain.item.AttackItem
+import core.domain.item.HealItem
 import core.domain.item.TypeKind
 import core.domain.item.skill.AttackSkill
 import core.domain.item.skill.HealSkill
@@ -169,6 +171,7 @@ class ActionPhaseViewModel(
     private fun getPlayerActionTargetName(id: Int): String {
         val action = actionRepository.getAction(id)
 
+        // fixme item を取得するだけの関数を作る
         val item = when (action.thisTurnAction) {
             ActionType.Normal -> skillRepository.getItem(ATTACK_NORMAL)
             ActionType.Skill -> skillRepository.getItem(action.skillId)
@@ -178,8 +181,8 @@ class ActionPhaseViewModel(
                 throw RuntimeException("ここには来ない")
         }
 
-        return when (item) {
-            is TypeKind.AttackItem -> {
+        return when (item as TypeKind) {
+            is AttackItem -> {
                 var targetId = action.target
                 if (battleMonsterRepository.getStatus(targetId).isActive.not()) {
                     targetId = findActiveTargetUseCase.invoke(
@@ -191,13 +194,9 @@ class ActionPhaseViewModel(
                 battleMonsterRepository.getStatus(targetId).name
             }
 
-            is TypeKind.HealItem -> {
+            is HealItem -> {
                 val targetId = action.ally
                 playerStatusRepository.getStatus(targetId).name
-            }
-
-            else -> {
-                throw IllegalStateException()
             }
         }
     }
@@ -206,9 +205,9 @@ class ActionPhaseViewModel(
         val action = statusList[id].actionData
         return when (
             val skill = skillRepository
-                .getItem(action.skillId)
+                .getItem(action.skillId) as TypeKind
         ) {
-            is TypeKind.AttackItem -> {
+            is AttackItem -> {
                 var targetId = action.target
                 if (playerStatusRepository.getStatus(targetId).isActive.not()) {
                     targetId = findActiveTargetUseCase.invoke(
@@ -220,13 +219,9 @@ class ActionPhaseViewModel(
                 playerStatusRepository.getStatus(targetId).name
             }
 
-            is TypeKind.HealItem -> {
+            is HealItem -> {
                 val targetId = action.ally
                 battleMonsterRepository.getStatus(targetId).name
-            }
-
-            else -> {
-                throw IllegalStateException()
             }
         }
     }
@@ -365,6 +360,8 @@ class ActionPhaseViewModel(
             amount = skill.needMP,
         )
 
+        // todo 複数回攻撃する技を作ったら表示方法を考える
+        // todo 味方を選択するスキルで対象が対象外になっている場合の挙動を作成する
         // todo 敵のスキルをつくってからマップとの共通化を考える
         when (skill) {
             is AttackSkill -> {

@@ -1,7 +1,7 @@
 package data.item.skill
 
 import core.domain.Place
-import core.domain.item.ItemKind
+import core.domain.item.Skill
 import core.domain.item.TargetType
 import core.domain.item.skill.AttackSkill
 import core.domain.item.skill.HealSkill
@@ -15,7 +15,7 @@ const val MONSTER_ATTACK_2 = 5
 
 class SkillRepositoryImpl : SkillRepository {
 
-    override fun getItem(id: Int): ItemKind.Skill {
+    override fun getItem(id: Int): Skill {
         return when (id) {
             ATTACK_TO_2 -> AttackSkill(
                 id = id,

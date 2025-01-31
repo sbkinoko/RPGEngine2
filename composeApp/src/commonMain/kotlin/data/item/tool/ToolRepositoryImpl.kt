@@ -1,12 +1,12 @@
 package data.item.tool
 
 import core.domain.Place
-import core.domain.item.ItemKind
 import core.domain.item.TargetType
+import core.domain.item.Tool
 import core.domain.item.tool.HealTool
 
 class ToolRepositoryImpl : ToolRepository {
-    override fun getItem(id: Int): ItemKind.Tool {
+    override fun getItem(id: Int): Tool {
         return when (id) {
             HEAL_TOOL -> HealTool(
                 id = id,
