@@ -10,7 +10,7 @@ class DecideBattleMonsterUseCaseImpl(
     override fun invoke(): List<MonsterStatus> {
         // fixme マスによって出現モンスターを変える
         // ランダムで1~5の敵を作成
-        return MutableList(
+        return List(
             Random.nextInt(5) + 1,
         ) {
             monsterRepository.getMonster(1)
