@@ -3,6 +3,7 @@ package core.domain.item.tool
 import core.domain.Place
 import core.domain.item.HealItem
 import core.domain.item.TargetType
+import core.domain.item.Tool
 
 data class HealTool(
     override val id: Int,
@@ -13,7 +14,7 @@ data class HealTool(
     override val isReusable: Boolean,
     override val healAmount: Int,
     override val targetType: TargetType,
-) : Tool, HealItem {
+) : HealItem, Tool {
     override val explain: String
         get() {
             return name + "\n" +

@@ -2,6 +2,7 @@ package core.domain.item.skill
 
 import core.domain.Place
 import core.domain.item.HealItem
+import core.domain.item.Skill
 import core.domain.item.TargetType
 
 data class HealSkill(

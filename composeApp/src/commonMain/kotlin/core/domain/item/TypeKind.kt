@@ -1,9 +1,11 @@
 package core.domain.item
 
+sealed interface TypeKind : Item
+
 /**
  * 回復itemに必要な変数
  */
-interface HealItem {
+interface HealItem : TypeKind {
     /**
      * 回復量
      */
@@ -13,4 +15,8 @@ interface HealItem {
      * 回復対象にとれる状態
      */
     val targetType: TargetType
+}
+
+interface AttackItem : TypeKind {
+    val damageAmount: Int
 }

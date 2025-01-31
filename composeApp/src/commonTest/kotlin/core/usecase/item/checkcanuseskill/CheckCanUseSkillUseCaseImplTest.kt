@@ -1,9 +1,9 @@
 package core.usecase.item.checkcanuseskill
 
 import core.domain.Place
+import core.domain.item.Skill
 import core.domain.item.TargetType
 import core.domain.item.skill.HealSkill
-import core.domain.item.skill.Skill
 import core.domain.status.PlayerStatus
 import core.domain.status.param.EXP
 import core.domain.status.param.HP

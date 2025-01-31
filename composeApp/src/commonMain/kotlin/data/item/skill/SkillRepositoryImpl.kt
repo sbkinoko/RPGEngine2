@@ -1,10 +1,10 @@
 package data.item.skill
 
 import core.domain.Place
+import core.domain.item.Skill
 import core.domain.item.TargetType
 import core.domain.item.skill.AttackSkill
 import core.domain.item.skill.HealSkill
-import core.domain.item.skill.Skill
 
 const val ATTACK_TO_2 = 0
 const val CANT_USE = 1

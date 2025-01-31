@@ -2,6 +2,7 @@ package core.domain.item.skill
 
 import core.domain.Place
 import core.domain.item.AttackItem
+import core.domain.item.Skill
 
 // 必要になったらattackのinterfaceを作る
 data class AttackSkill(
