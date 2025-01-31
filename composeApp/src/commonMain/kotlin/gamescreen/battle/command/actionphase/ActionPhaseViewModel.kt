@@ -10,7 +10,6 @@ import core.usecase.item.usetool.UseToolUseCase
 import core.usecase.updateparameter.UpdateMonsterStatusUseCase
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
 import core.usecase.updateparameter.UpdateStatusUseCase
-import data.item.skill.ATTACK_NORMAL
 import data.item.skill.SkillRepository
 import data.item.tool.ToolRepository
 import gamescreen.battle.BattleChildViewModel
@@ -207,40 +206,23 @@ class ActionPhaseViewModel(
         return "仲間"
     }
 
-    private fun getActionType(id: Int): ActionData {
-        return if (isPlayer(id = id)) {
-            actionRepository.getAction(id)
-        } else {
-            statusList[id].actionData
-        }
-    }
-
     private fun getActionName(
         id: Int,
     ): String {
-        val action = getActionType(id = id).thisTurnAction
+        val actionData = statusList[id].actionData
 
-        return when (action) {
+        return when (actionData.thisTurnAction) {
             ActionType.Normal -> "攻撃"
             ActionType.Skill -> {
-                val skill = if (isPlayer(id = id)) {
-                    val skillId = actionRepository.getAction(id).skillId
-                    skillRepository.getItem(skillId)
-                } else {
-                    skillRepository.getItem(ATTACK_NORMAL)
-                }
-                when (skill) {
-                    is AttackSkill -> "攻撃"
-                    is HealSkill -> "回復"
-                }
+                val skillId = statusList[id].actionData.skillId
+                val skill = skillRepository.getItem(skillId)
+                skill.name
             }
 
             ActionType.TOOL -> {
                 val itemId = actionRepository.getAction(id).toolId
                 val item = toolRepository.getItem(itemId)
-                when (item) {
-                    is HealTool -> "回復"
-                }
+                item.name
             }
 
             ActionType.None -> throw RuntimeException(
@@ -273,7 +255,7 @@ class ActionPhaseViewModel(
 
     private suspend fun playerAction() {
         val id = statusId
-        val actionType = getActionType(id).thisTurnAction
+        val actionType = statusList[id].actionData.thisTurnAction
         when (actionType) {
             ActionType.Normal -> {
                 //　攻撃

@@ -10,7 +10,7 @@ class ToolRepositoryImpl : ToolRepository {
         return when (id) {
             HEAL_TOOL -> HealTool(
                 id = id,
-                name = "回復",
+                name = "回復1",
                 targetNum = 1,
                 usablePlace = Place.BOTH,
                 isReusable = false,
