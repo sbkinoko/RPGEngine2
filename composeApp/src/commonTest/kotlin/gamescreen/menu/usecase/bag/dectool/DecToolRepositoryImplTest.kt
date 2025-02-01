@@ -1,5 +1,6 @@
 package gamescreen.menu.usecase.bag.dectool
 
+import data.item.tool.ToolId
 import gamescreen.menu.ModuleMenu
 import gamescreen.menu.domain.BagToolData
 import gamescreen.menu.repository.bag.BagRepository
@@ -32,7 +33,7 @@ class DecToolUseCaseImplTest : KoinTest {
 
     @Test
     fun testDecTool() {
-        val id = 1
+        val id = ToolId.HEAL1
         val num = 1
         val bagToolData = BagToolData(
             id = id,
@@ -49,7 +50,7 @@ class DecToolUseCaseImplTest : KoinTest {
 
         assertEquals(
             expected = 0,
-            actual = bagRepository.getList().find { it.id == 1 }?.num,
+            actual = bagRepository.getList().find { it.id == id }?.num,
         )
 
         var count = 0
@@ -67,7 +68,7 @@ class DecToolUseCaseImplTest : KoinTest {
             actual = count,
         )
 
-        val id2 = 2
+        val id2 = ToolId.HEAL2
         try {
             decToolUseCase(
                 itemId = id2,

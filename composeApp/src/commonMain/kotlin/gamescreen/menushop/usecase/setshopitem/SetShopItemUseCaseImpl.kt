@@ -1,5 +1,6 @@
 package gamescreen.menushop.usecase.setshopitem
 
+import data.item.tool.ToolId
 import gamescreen.menushop.domain.ShopItem
 import gamescreen.menushop.repository.shopmenu.ShopMenuRepository
 import values.event.ShopId
@@ -16,7 +17,7 @@ class SetShopItemUseCaseImpl(
                         price = (it + 1) * (it + 1) * 100,
                         explain = "アイテム${it + 1}の説明",
                         // fixme 正しいidを入れる
-                        itemId = it,
+                        itemId = ToolId.HEAL1,
                     )
                 }
             }
@@ -28,7 +29,7 @@ class SetShopItemUseCaseImpl(
                         price = (it + 1) * (it + 1) * 100,
                         explain = "アイテム${it + 1}の説明",
                         // fixme 正しいidを入れる
-                        itemId = it,
+                        itemId = ToolId.HEAL1,
                     )
                 }
             }

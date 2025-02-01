@@ -1,15 +1,15 @@
 package values.event
 
-import data.item.tool.ToolRepositoryImpl
+import data.item.tool.ToolId
 
 class BoxData {
     companion object {
         fun getItem(
             id: BoxId,
-        ): Int {
+        ): ToolId {
             return when (id) {
-                BoxId.Box1 -> ToolRepositoryImpl.HEAL_TOOL
-                BoxId.Box2 -> ToolRepositoryImpl.HEAL_TOOL2
+                BoxId.Box1 -> ToolId.HEAL1
+                BoxId.Box2 -> ToolId.HEAL2
             }
         }
     }

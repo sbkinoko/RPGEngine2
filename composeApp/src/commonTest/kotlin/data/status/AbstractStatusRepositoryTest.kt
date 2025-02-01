@@ -11,12 +11,13 @@ import core.domain.status.StatusIncreaseTest.Companion.TEST_LV2_MP
 import core.domain.status.StatusIncreaseTest.Companion.TEST_LV2_SPEED
 import core.domain.status.param.EXP
 import data.item.skill.SkillId
+import data.item.tool.ToolId
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class AbstractStatusRepositoryTest {
     private val skillListValue = listOf(SkillId.Normal1)
-    private val toolListValue = listOf(2)
+    private val toolListValue = listOf(ToolId.HEAL1)
 
     private val nameValue = "test"
     private val expValue = EXP(

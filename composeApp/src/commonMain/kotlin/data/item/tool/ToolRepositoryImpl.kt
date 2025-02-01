@@ -6,9 +6,11 @@ import core.domain.item.Tool
 import core.domain.item.tool.HealTool
 
 class ToolRepositoryImpl : ToolRepository {
-    override fun getItem(id: Int): Tool {
+    override fun getItem(id: ToolId): Tool {
         return when (id) {
-            HEAL_TOOL -> HealTool(
+            ToolId.None -> throw RuntimeException()
+
+            ToolId.HEAL1 -> HealTool(
                 name = "回復1",
                 targetNum = 1,
                 usablePlace = Place.BOTH,
@@ -18,7 +20,7 @@ class ToolRepositoryImpl : ToolRepository {
                 targetType = TargetType.ACTIVE
             )
 
-            HEAL_TOOL2 -> HealTool(
+            ToolId.HEAL2 -> HealTool(
                 name = "回復2",
                 targetNum = 1,
                 usablePlace = Place.BOTH,
@@ -27,13 +29,6 @@ class ToolRepositoryImpl : ToolRepository {
                 healAmount = 10,
                 targetType = TargetType.ACTIVE
             )
-
-            else -> throw NotImplementedError()
         }
-    }
-
-    companion object {
-        const val HEAL_TOOL = 0
-        const val HEAL_TOOL2 = 1
     }
 }

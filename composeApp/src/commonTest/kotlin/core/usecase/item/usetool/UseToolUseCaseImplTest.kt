@@ -10,6 +10,7 @@ import core.domain.status.param.HP
 import core.domain.status.param.MP
 import core.repository.status.StatusRepository
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
+import data.item.tool.ToolId
 import data.item.tool.ToolRepository
 import gamescreen.menu.usecase.bag.dectool.DecToolUseCase
 import gamescreen.menu.usecase.gettoolid.GetToolIdUseCase
@@ -44,16 +45,16 @@ class UseToolUseCaseImplTest : KoinTest {
 
     var countDecItem = 0
     private val decToolUseCase = object : DecToolUseCase {
-        override fun invoke(itemId: Int, itemNum: Int) {
+        override fun invoke(itemId: ToolId, itemNum: Int) {
             countDecItem++
         }
     }
 
     private var countGetToolId = 0
     private val getToolIdUseCase = object : GetToolIdUseCase {
-        override fun invoke(userId: Int, index: Int): Int {
+        override fun invoke(userId: Int, index: Int): ToolId {
             countGetToolId++
-            return 0
+            return ToolId.None
         }
     }
 
@@ -94,7 +95,7 @@ class UseToolUseCaseImplTest : KoinTest {
     @Test
     fun updateHP() {
         val toolRepository: ToolRepository = object : ToolRepository {
-            override fun getItem(id: Int): Tool {
+            override fun getItem(id: ToolId): Tool {
                 return HealTool(
                     name = "回復",
                     targetNum = 1,
@@ -149,7 +150,7 @@ class UseToolUseCaseImplTest : KoinTest {
     @Test
     fun reusable() {
         val toolRepository: ToolRepository = object : ToolRepository {
-            override fun getItem(id: Int): Tool {
+            override fun getItem(id: ToolId): Tool {
                 return HealTool(
                     name = "回復",
                     targetNum = 1,
@@ -203,7 +204,7 @@ class UseToolUseCaseImplTest : KoinTest {
     @Test
     fun useBag() {
         val toolRepository: ToolRepository = object : ToolRepository {
-            override fun getItem(id: Int): Tool {
+            override fun getItem(id: ToolId): Tool {
                 return HealTool(
                     name = "回復",
                     targetNum = 1,

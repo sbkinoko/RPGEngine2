@@ -2,6 +2,7 @@ package core.usecase.item.usetool
 
 import core.domain.item.tool.HealTool
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
+import data.item.tool.ToolId
 import data.item.tool.ToolRepository
 import gamescreen.menu.usecase.bag.dectool.DecToolUseCase
 import gamescreen.menu.usecase.gettoolid.GetToolIdUseCase
@@ -54,7 +55,7 @@ class UseToolUseCaseImpl(
     private suspend fun delTool(
         userId: Int,
         index: Int,
-        toolId: Int,
+        toolId: ToolId,
     ) {
         if (userId < Constants.playerNum) {
             updateStatusService.deleteToolAt(

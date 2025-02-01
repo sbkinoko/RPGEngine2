@@ -5,6 +5,7 @@ import core.domain.status.DropItemInfo
 import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
 import core.domain.status.monster.MonsterStatus
 import core.repository.battlemonster.TestBattleMonsterRepository
+import data.item.tool.ToolId
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import kotlin.test.AfterTest
@@ -34,7 +35,7 @@ class GetDropToolUseCaseImplTest {
      */
     @Test
     fun dropToolPROB() {
-        val itemId = 1
+        val itemId = ToolId.HEAL1
         val getDropToolUseCase: GetDropToolUseCase = GetDropToolUseCaseImpl(
             battleMonsterRepository = object : TestBattleMonsterRepository {
                 override fun getMonsters(): List<MonsterStatus> {
@@ -42,7 +43,7 @@ class GetDropToolUseCaseImplTest {
                         TestActiveMonster.copy(
                             dropInfoList = listOf(
                                 DropItemInfo(
-                                    itemId = itemId,
+                                    toolId = itemId,
                                     probability = 50,
                                 ),
                             ),
@@ -74,7 +75,7 @@ class GetDropToolUseCaseImplTest {
      */
     @Test
     fun dropToolABS() {
-        val itemId = 1
+        val itemId = ToolId.HEAL1
         val getDropToolUseCase: GetDropToolUseCase = GetDropToolUseCaseImpl(
             battleMonsterRepository = object : TestBattleMonsterRepository {
                 override fun getMonsters(): List<MonsterStatus> {
@@ -82,7 +83,7 @@ class GetDropToolUseCaseImplTest {
                         TestActiveMonster.copy(
                             dropInfoList = listOf(
                                 DropItemInfo(
-                                    itemId = itemId,
+                                    toolId = itemId,
                                     probability = 100,
                                 ),
                             ),
@@ -109,7 +110,7 @@ class GetDropToolUseCaseImplTest {
      */
     @Test
     fun notDropToolABS() {
-        val itemId = 1
+        val itemId = ToolId.HEAL1
         val getDropToolUseCase: GetDropToolUseCase = GetDropToolUseCaseImpl(
             battleMonsterRepository = object : TestBattleMonsterRepository {
                 override fun getMonsters(): List<MonsterStatus> {
@@ -117,7 +118,7 @@ class GetDropToolUseCaseImplTest {
                         TestActiveMonster.copy(
                             dropInfoList = listOf(
                                 DropItemInfo(
-                                    itemId = itemId,
+                                    toolId = itemId,
                                     probability = 0,
                                 ),
                             ),
@@ -143,8 +144,8 @@ class GetDropToolUseCaseImplTest {
      */
     @Test
     fun dropToolSomeTool() {
-        val itemId1 = 1
-        val itemId2 = 2
+        val itemId1 = ToolId.HEAL1
+        val itemId2 = ToolId.HEAL2
 
         val getDropToolUseCase: GetDropToolUseCase = GetDropToolUseCaseImpl(
             battleMonsterRepository = object : TestBattleMonsterRepository {
@@ -153,11 +154,11 @@ class GetDropToolUseCaseImplTest {
                         TestActiveMonster.copy(
                             dropInfoList = listOf(
                                 DropItemInfo(
-                                    itemId = itemId1,
+                                    toolId = itemId1,
                                     probability = 50,
                                 ),
                                 DropItemInfo(
-                                    itemId = itemId2,
+                                    toolId = itemId2,
                                     probability = 50,
                                 ),
                             ),
@@ -210,8 +211,8 @@ class GetDropToolUseCaseImplTest {
      */
     @Test
     fun dropToolSomeEnemy() {
-        val itemId1 = 1
-        val itemId2 = 2
+        val itemId1 = ToolId.HEAL1
+        val itemId2 = ToolId.HEAL2
 
         val getDropToolUseCase: GetDropToolUseCase = GetDropToolUseCaseImpl(
             battleMonsterRepository = object : TestBattleMonsterRepository {
@@ -220,7 +221,7 @@ class GetDropToolUseCaseImplTest {
                         TestActiveMonster.copy(
                             dropInfoList = listOf(
                                 DropItemInfo(
-                                    itemId = itemId1,
+                                    toolId = itemId1,
                                     probability = 50,
                                 ),
                             ),
@@ -228,7 +229,7 @@ class GetDropToolUseCaseImplTest {
                         TestActiveMonster.copy(
                             dropInfoList = listOf(
                                 DropItemInfo(
-                                    itemId = itemId2,
+                                    toolId = itemId2,
                                     probability = 50,
                                 ),
                             ),

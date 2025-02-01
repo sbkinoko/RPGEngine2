@@ -5,6 +5,7 @@ import core.domain.status.monster.MonsterStatus
 import core.domain.status.param.HP
 import core.domain.status.param.MP
 import data.item.skill.SkillId
+import data.item.tool.ToolId
 
 class MonsterStatusTest {
     companion object {
@@ -26,7 +27,7 @@ class MonsterStatusTest {
                 exp = 1,
                 dropInfoList = listOf(
                     DropItemInfo(
-                        itemId = 1,
+                        toolId = ToolId.HEAL1,
                         probability = 1,
                     )
                 ),

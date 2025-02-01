@@ -1,6 +1,8 @@
 package gamescreen.menu.domain
 
+import data.item.tool.ToolId
+
 data class BagToolData(
-    val id: Int,
+    val id: ToolId,
     val num: Int,
 )

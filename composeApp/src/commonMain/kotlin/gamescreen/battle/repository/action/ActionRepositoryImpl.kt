@@ -1,6 +1,7 @@
 package gamescreen.battle.repository.action
 
 import data.item.skill.SkillId
+import data.item.tool.ToolId
 import gamescreen.battle.domain.ActionData
 import gamescreen.battle.domain.ActionType
 
@@ -30,7 +31,7 @@ class ActionRepositoryImpl : ActionRepository {
 
                     ActionType.TOOL -> it.copy(
                         lastSelectedAction = actionType,
-                        toolId = itemId!! as Int,
+                        toolId = itemId!! as ToolId,
                         toolIndex = itemIndex!!,
                     )
 
@@ -42,7 +43,8 @@ class ActionRepositoryImpl : ActionRepository {
             // fixme いい感じに修正する
             skillId = if (actionType == ActionType.Skill) itemId as? SkillId
                 ?: SkillId.NONE else SkillId.NONE,
-            toolId = if (actionType == ActionType.TOOL) itemId as Int else 0,
+            toolId = if (actionType == ActionType.TOOL) itemId as? ToolId
+                ?: ToolId.None else ToolId.None,
             toolIndex = if (actionType == ActionType.TOOL) itemIndex!! else 0,
         )
     }

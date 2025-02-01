@@ -7,6 +7,7 @@ import core.domain.status.param.EXP
 import core.domain.status.param.HP
 import core.domain.status.param.MP
 import data.item.skill.SkillId
+import data.item.tool.ToolId
 import gamescreen.battle.command.playeraction.PlayerAction
 import gamescreen.battle.command.playeraction.PlayerActionViewModel
 
@@ -30,7 +31,7 @@ fun PlayerActionPreview() {
                 SkillId.Normal1,
             ),
             toolList = listOf(
-                0,
+                ToolId.HEAL1,
             ),
             exp = EXP(
                 EXP.type1,

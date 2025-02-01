@@ -3,6 +3,7 @@ package gamescreen.menu.usecase.givetool
 import core.ModuleCore
 import core.repository.player.PlayerStatusRepository
 import data.ModuleData
+import data.item.tool.ToolId
 import gamescreen.menu.ModuleMenu
 import gamescreen.menu.domain.BagToolData
 import gamescreen.menu.domain.GiveResult
@@ -67,7 +68,7 @@ class GiveToolUseCaseImplTest : KoinTest {
             val target = 0
             targetRepository.target = target
 
-            val itemId = 1
+            val itemId = ToolId.HEAL1
 
             //　対象の持ち物をいっぱいにする
             val player1 = playerStatusRepository.getPlayers()[target]
@@ -113,69 +114,69 @@ class GiveToolUseCaseImplTest : KoinTest {
     @Test
     fun movePlayerToBag() {
         runBlocking {
+            val id1 = ToolId.HEAL1
+            val id2 = ToolId.HEAL2
             // 一番上を渡す
             val result = moveToolFromPlayerToBag(
                 index = 0,
                 itemList = listOf(
-                    0,
-                    1,
-                    2,
+                    id1,
+                    id2,
                 )
             )
 
             assertEquals(
                 expected = GiveResult.OK(
-                    itemId = 0,
+                    itemId = id1,
                 ),
                 actual = result
             )
 
             assertEquals(
                 expected = listOf(
-                    BagToolData(id = 0, num = 1)
+                    BagToolData(id = id1, num = 1)
                 ),
                 actual = bagRepository.getList()
             )
 
             assertEquals(
-                expected = listOf(1, 2),
+                expected = listOf(id2),
                 actual = fromPlayerStatus.toolList
             )
 
             // 一番下を渡す
             val result2 = moveToolFromPlayerToBag(
-                index = 2,
+                index = 1,
                 itemList = listOf(
-                    0,
-                    1,
-                    2,
+                    id1,
+                    id2,
                 )
             )
 
             assertEquals(
                 expected = GiveResult.OK(
-                    itemId = 2,
+                    itemId = id2,
                 ),
                 actual = result2
             )
 
             assertEquals(
                 expected = listOf(
-                    BagToolData(id = 0, num = 1),
-                    BagToolData(id = 2, num = 1),
+                    BagToolData(id = id1, num = 1),
+                    BagToolData(id = id2, num = 1),
                 ),
                 actual = bagRepository.getList()
             )
 
             assertEquals(
-                expected = listOf(0, 1),
+                expected = listOf(id1),
                 actual = fromPlayerStatus.toolList
             )
         }
     }
 
     private suspend fun moveToolFromPlayerToBag(
-        itemList: List<Int>,
+        itemList: List<ToolId>,
         index: Int,
     ): GiveResult {
         // 渡される対象を袋に設定
@@ -208,61 +209,64 @@ class GiveToolUseCaseImplTest : KoinTest {
                     toolList = listOf()
                 )
             )
+
+            val id = ToolId.HEAL1
             val result1 = moveFromBagToPlayer(
                 itemList = listOf(
-                    BagToolData(id = 0, num = 1),
+                    BagToolData(id = id, num = 1),
                 ),
                 index = 0,
             )
             assertEquals(
                 expected = GiveResult.OK(
-                    itemId = 0,
+                    itemId = id,
                 ),
                 actual = result1
             )
             assertEquals(
-                expected = listOf(0),
+                expected = listOf(id),
                 actual = toPlayerStatus.toolList,
             )
             assertEquals(
                 expected = listOf(
                     BagToolData(
-                        id = 0,
+                        id = id,
                         num = 0,
                     )
                 ),
                 actual = bagRepository.getList(),
             )
 
+            val id1 = ToolId.HEAL1
+            val id2 = ToolId.HEAL2
             val result2 = moveFromBagToPlayer(
                 itemList = listOf(
-                    BagToolData(id = 0, num = 1),
-                    BagToolData(id = 2, num = 2),
+                    BagToolData(id = id1, num = 1),
+                    BagToolData(id = id2, num = 2),
                 ),
                 index = 1,
             )
 
             assertEquals(
                 expected = GiveResult.OK(
-                    itemId = 2,
+                    itemId = id2,
                 ),
                 actual = result2
             )
             assertEquals(
-                expected = listOf(0, 2),
+                expected = listOf(id, id2),
                 actual = toPlayerStatus.toolList,
             )
             assertEquals(
                 expected = listOf(
                     BagToolData(
-                        id = 0,
+                        id = id1,
                         num = 1,
                     ),
                     BagToolData(
-                        id = 2,
+                        id = id2,
                         num = 1,
-
-                        )
+                    )
                 ),
                 actual = bagRepository.getList(),
             )

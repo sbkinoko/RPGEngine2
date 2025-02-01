@@ -1,7 +1,7 @@
 package gamescreen.menu.item.tool.give
 
+import data.item.tool.ToolId
 import data.item.tool.ToolRepository
-import data.item.tool.ToolRepositoryImpl
 import gamescreen.choice.Choice
 import gamescreen.choice.repository.ChoiceRepository
 import gamescreen.menu.domain.BagToolData
@@ -21,7 +21,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import values.Constants
 
-class ToolGiveUserViewModel : ItemUserViewModel<Int>(),
+class ToolGiveUserViewModel : ItemUserViewModel<ToolId>(),
     KoinComponent {
     override val itemRepository: ToolRepository by inject()
     private val bagRepository: BagRepository by inject()
@@ -46,16 +46,18 @@ class ToolGiveUserViewModel : ItemUserViewModel<Int>(),
             itemNum = playerNum,
         )
 
+    // fixme 初期化用のuseCaseを作る
+    // 別の場所で呼び出す
     init {
         bagRepository.setData(
             data = BagToolData(
-                id = ToolRepositoryImpl.HEAL_TOOL,
+                id = ToolId.HEAL1,
                 num = 100,
             )
         )
         bagRepository.setData(
             data = BagToolData(
-                id = ToolRepositoryImpl.HEAL_TOOL2,
+                id = ToolId.HEAL2,
                 num = 100,
             )
         )
@@ -108,7 +110,7 @@ class ToolGiveUserViewModel : ItemUserViewModel<Int>(),
         }
     }
 
-    override fun getPlayerItemIdListAt(id: Int): List<Int> {
+    override fun getPlayerItemIdListAt(id: Int): List<ToolId> {
         return if (id < Constants.playerNum) {
             playerStatusRepository.getStatus(id).toolList
         } else {

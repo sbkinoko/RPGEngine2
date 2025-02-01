@@ -6,7 +6,7 @@ import core.domain.status.monster.MonsterStatus
 import core.domain.status.param.HP
 import core.domain.status.param.MP
 import data.item.skill.SkillId
-import data.item.tool.ToolRepositoryImpl
+import data.item.tool.ToolId
 
 class MonsterRepositoryImpl : MonsterRepository {
     override fun getMonster(id: Int): MonsterStatus {
@@ -24,11 +24,11 @@ class MonsterRepositoryImpl : MonsterRepository {
             money = 1,
             dropInfoList = listOf(
                 DropItemInfo(
-                    itemId = ToolRepositoryImpl.HEAL_TOOL,
+                    toolId = ToolId.HEAL1,
                     probability = 30,
                 ),
                 DropItemInfo(
-                    itemId = ToolRepositoryImpl.HEAL_TOOL2,
+                    toolId = ToolId.HEAL2,
                     probability = 10,
                 ),
             ),
