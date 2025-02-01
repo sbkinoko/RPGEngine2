@@ -2,6 +2,7 @@ package gamescreen.battle.command.actionphase
 
 import core.domain.item.AttackItem
 import core.domain.item.HealItem
+import core.domain.item.Item
 import core.domain.item.TypeKind
 import core.domain.item.skill.AttackSkill
 import core.domain.item.skill.HealSkill
@@ -107,7 +108,7 @@ class ActionPhaseViewModel(
 
     private val statusId: Int
         get() = speedList[attackingNumber]
-    var statusWrapperList: MutableList<StatusWrapper> = mutableListOf()
+    private var statusWrapperList: MutableList<StatusWrapper> = mutableListOf()
 
     fun init() {
         statusWrapperList = mutableListOf()
@@ -145,18 +146,30 @@ class ActionPhaseViewModel(
 
         val actionStatusName = getActionStatusName(playerId)
         val targetStatusName = getTargetStatusName(playerId)
-        val actionStatusActionName = getActionName(playerId)
+        val actionName = getActionItem(playerId).name
 
         return actionStatusName + "の" +
                 targetStatusName + "への" +
-                actionStatusActionName
+                actionName
     }
 
     private fun getActionStatusName(id: Int): String {
-        return if (isPlayer(id = id)) {
-            playerStatusRepository.getStatus(id).name
-        } else {
-            battleMonsterRepository.getStatus(id.toMonster()).name
+        return statusWrapperList[id].status.name
+    }
+
+    private fun getActionData(id: Int): ActionData {
+        return statusWrapperList[id].actionData
+    }
+
+    private fun getActionItem(id: Int): Item {
+        val action = getActionData(id = id)
+        return when (action.thisTurnAction) {
+            ActionType.Normal -> skillRepository.getItem(SkillId.Normal1)
+            ActionType.Skill -> skillRepository.getItem(action.skillId)
+            ActionType.TOOL -> toolRepository.getItem(action.toolId)
+
+            ActionType.None ->
+                throw RuntimeException("ここには来ない")
         }
     }
 
@@ -169,17 +182,8 @@ class ActionPhaseViewModel(
     }
 
     private fun getPlayerActionTargetName(id: Int): String {
-        val action = actionRepository.getAction(id)
-
-        // fixme item を取得するだけの関数を作る
-        val item = when (action.thisTurnAction) {
-            ActionType.Normal -> skillRepository.getItem(SkillId.Normal1)
-            ActionType.Skill -> skillRepository.getItem(action.skillId)
-            ActionType.TOOL -> toolRepository.getItem(action.toolId)
-
-            ActionType.None ->
-                throw RuntimeException("ここには来ない")
-        }
+        val action = statusWrapperList[id].actionData
+        val item = getActionItem(id = id)
 
         return when (item as TypeKind) {
             is AttackItem -> {
@@ -203,17 +207,16 @@ class ActionPhaseViewModel(
 
     private fun getMonsterTargetName(id: Int): String {
         val action = statusWrapperList[id].actionData
-        return when (
-            val skill = skillRepository
-                .getItem(action.skillId) as TypeKind
-        ) {
+        val item = getActionItem(id)
+
+        return when (item as TypeKind) {
             is AttackItem -> {
                 var targetId = action.target
                 if (playerStatusRepository.getStatus(targetId).isActive.not()) {
                     targetId = findActiveTargetUseCase.invoke(
                         statusList = playerStatusRepository.getPlayers(),
                         target = targetId,
-                        targetNum = skill.targetNum,
+                        targetNum = item.targetNum,
                     ).first()
                 }
                 playerStatusRepository.getStatus(targetId).name
@@ -223,36 +226,6 @@ class ActionPhaseViewModel(
                 val targetId = action.ally
                 battleMonsterRepository.getStatus(targetId).name
             }
-        }
-    }
-
-    private fun getActionName(
-        id: Int,
-    ): String {
-        val actionData = statusWrapperList[id].actionData
-        return when (actionData.thisTurnAction) {
-            ActionType.Normal -> {
-                // fixme actionDataに通常攻撃の情報を持たせる
-                val skillId = SkillId.Normal1
-                val skill = skillRepository.getItem(skillId)
-                skill.name
-            }
-
-            ActionType.Skill -> {
-                val skillId = statusWrapperList[id].actionData.skillId
-                val skill = skillRepository.getItem(skillId)
-                skill.name
-            }
-
-            ActionType.TOOL -> {
-                val itemId = actionRepository.getAction(id).toolId
-                val item = toolRepository.getItem(itemId)
-                item.name
-            }
-
-            ActionType.None -> throw RuntimeException(
-                "ここには来ないはず"
-            )
         }
     }
 
@@ -281,6 +254,7 @@ class ActionPhaseViewModel(
     private suspend fun playerAction() {
         val id = statusId
         val actionType = statusWrapperList[id].actionData.thisTurnAction
+
         when (actionType) {
             ActionType.Normal -> {
                 //　攻撃
