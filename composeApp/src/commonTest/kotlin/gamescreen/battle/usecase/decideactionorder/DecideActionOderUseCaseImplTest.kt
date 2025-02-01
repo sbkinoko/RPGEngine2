@@ -4,7 +4,7 @@ import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
 import core.domain.status.PlayerStatusTest.Companion.testActivePlayer
 import gamescreen.battle.ModuleBattle
 import gamescreen.battle.domain.ActionData
-import gamescreen.battle.domain.OrderData
+import gamescreen.battle.domain.StatusWrapper
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
@@ -17,7 +17,7 @@ import kotlin.test.assertEquals
 class DecideActionOderUseCaseImplTest : KoinTest {
     private val decideActionOrderUseCase: DecideActionOrderUseCase by inject()
 
-    private val defaultData = OrderData(
+    private val defaultData = StatusWrapper(
         id = 0,
         status = testActivePlayer,
         ActionData(),

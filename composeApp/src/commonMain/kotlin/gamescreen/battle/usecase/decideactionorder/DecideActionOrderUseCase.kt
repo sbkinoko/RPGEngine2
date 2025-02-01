@@ -1,9 +1,9 @@
 package gamescreen.battle.usecase.decideactionorder
 
-import gamescreen.battle.domain.OrderData
+import gamescreen.battle.domain.StatusWrapper
 
 interface DecideActionOrderUseCase {
     operator fun invoke(
-        statusList: List<OrderData>,
+        statusList: List<StatusWrapper>,
     ): List<Int>
 }

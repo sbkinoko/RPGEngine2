@@ -23,7 +23,7 @@ import gamescreen.battle.domain.ActionType
 import gamescreen.battle.domain.AttackPhaseCommand
 import gamescreen.battle.domain.BattleCommandType
 import gamescreen.battle.domain.FinishCommand
-import gamescreen.battle.domain.OrderData
+import gamescreen.battle.domain.StatusWrapper
 import gamescreen.battle.repository.action.ActionRepository
 import gamescreen.battle.service.isannihilation.IsAnnihilationService
 import gamescreen.battle.service.monster.DecideMonsterActionService
@@ -107,13 +107,13 @@ class ActionPhaseViewModel(
 
     private val statusId: Int
         get() = speedList[attackingNumber]
-    var statusList: MutableList<OrderData> = mutableListOf()
+    var statusWrapperList: MutableList<StatusWrapper> = mutableListOf()
 
     fun init() {
-        statusList = mutableListOf()
+        statusWrapperList = mutableListOf()
         playerStatusRepository.getPlayers()
             .mapIndexed { id, status ->
-                statusList += OrderData(
+                statusWrapperList += StatusWrapper(
                     status = status,
                     id = id,
                     actionData = actionRepository.getAction(playerId = id),
@@ -126,14 +126,14 @@ class ActionPhaseViewModel(
                     status,
                     playerStatusRepository.getPlayers(),
                 )
-                statusList += OrderData(
+                statusWrapperList += StatusWrapper(
                     status = status,
                     id = index + playerNum,
                     actionData = action,
                 )
             }
         speedList = decideActionOrderUseCase.invoke(
-            statusList = statusList,
+            statusList = statusWrapperList,
         )
         changeToNextCharacter()
     }
@@ -202,7 +202,7 @@ class ActionPhaseViewModel(
     }
 
     private fun getMonsterTargetName(id: Int): String {
-        val action = statusList[id].actionData
+        val action = statusWrapperList[id].actionData
         return when (
             val skill = skillRepository
                 .getItem(action.skillId) as TypeKind
@@ -229,7 +229,7 @@ class ActionPhaseViewModel(
     private fun getActionName(
         id: Int,
     ): String {
-        val actionData = statusList[id].actionData
+        val actionData = statusWrapperList[id].actionData
         return when (actionData.thisTurnAction) {
             ActionType.Normal -> {
                 // fixme actionDataに通常攻撃の情報を持たせる
@@ -239,7 +239,7 @@ class ActionPhaseViewModel(
             }
 
             ActionType.Skill -> {
-                val skillId = statusList[id].actionData.skillId
+                val skillId = statusWrapperList[id].actionData.skillId
                 val skill = skillRepository.getItem(skillId)
                 skill.name
             }
@@ -280,7 +280,7 @@ class ActionPhaseViewModel(
 
     private suspend fun playerAction() {
         val id = statusId
-        val actionType = statusList[id].actionData.thisTurnAction
+        val actionType = statusWrapperList[id].actionData.thisTurnAction
         when (actionType) {
             ActionType.Normal -> {
                 //　攻撃
@@ -328,7 +328,7 @@ class ActionPhaseViewModel(
         skillAction(
             id = id.toMonster(),
             statusList = playerStatusRepository.getPlayers(),
-            actionData = statusList[id].actionData,
+            actionData = statusWrapperList[id].actionData,
             attackUseCase = attackFromEnemyUseCase,
             updateParameter = updateEnemyParameter,
         )
