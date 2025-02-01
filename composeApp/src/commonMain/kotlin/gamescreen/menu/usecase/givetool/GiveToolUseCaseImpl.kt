@@ -1,6 +1,7 @@
 package gamescreen.menu.usecase.givetool
 
 import core.repository.player.PlayerStatusRepository
+import data.item.tool.ToolId
 import gamescreen.menu.domain.GiveResult
 import gamescreen.menu.item.repository.index.IndexRepository
 import gamescreen.menu.item.repository.target.TargetRepository
@@ -31,9 +32,10 @@ class GiveToolUseCaseImpl(
             }
         }
 
-        val itemId: Int
+        val itemId: ToolId
         if (userRepository.userId < Constants.playerNum) {
-            val player = playerStatusRepository.getPlayers()[userRepository.userId]
+            val player = playerStatusRepository
+                .getPlayers()[userRepository.userId]
             itemId = player.toolList[indexRepository.index]
 
             playerStatusRepository.setStatus(

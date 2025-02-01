@@ -1,6 +1,7 @@
 package gamescreen.menu.item.tool.list
 
 import core.domain.AbleType
+import data.item.tool.ToolId
 import data.item.tool.ToolRepository
 import gamescreen.choice.Choice
 import gamescreen.choice.repository.ChoiceRepository
@@ -10,7 +11,7 @@ import gamescreen.menu.repository.bag.BagRepository
 import org.koin.core.component.inject
 import values.Constants
 
-class ToolListViewModel : ItemListViewModel<Int>() {
+class ToolListViewModel : ItemListViewModel<ToolId>() {
     override val itemRepository: ToolRepository by inject()
     private val bagRepository: BagRepository by inject()
     private val choiceRepository: ChoiceRepository by inject()
@@ -66,7 +67,7 @@ class ToolListViewModel : ItemListViewModel<Int>() {
         }
     }
 
-    override fun getPlayerItemIdListAt(id: Int): List<Int> {
+    override fun getPlayerItemIdListAt(id: Int): List<ToolId> {
         return if (id < Constants.playerNum) {
             playerStatusRepository.getStatus(id).toolList
         } else {

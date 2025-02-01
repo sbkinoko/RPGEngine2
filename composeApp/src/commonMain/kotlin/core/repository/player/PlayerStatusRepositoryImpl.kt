@@ -2,6 +2,7 @@ package core.repository.player
 
 import core.domain.status.PlayerStatus
 import data.item.skill.SkillId
+import data.item.tool.ToolId
 import data.status.StatusRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -63,7 +64,7 @@ class PlayerStatusRepositoryImpl(
     override fun getTool(
         playerId: Int,
         index: Int,
-    ): Int {
+    ): ToolId {
         val player = players[playerId]
         return player.toolList[index]
     }

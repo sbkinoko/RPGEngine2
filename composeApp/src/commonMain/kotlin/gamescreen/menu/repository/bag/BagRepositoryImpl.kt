@@ -1,5 +1,6 @@
 package gamescreen.menu.repository.bag
 
+import data.item.tool.ToolId
 import gamescreen.menu.domain.BagToolData
 
 class BagRepositoryImpl : BagRepository {
@@ -9,7 +10,7 @@ class BagRepositoryImpl : BagRepository {
         return bagToolDataList
     }
 
-    override fun getItemIdAt(index: Int): Int {
+    override fun getItemIdAt(index: Int): ToolId {
         return bagToolDataList[index].id
     }
 

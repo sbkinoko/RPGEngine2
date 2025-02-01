@@ -33,13 +33,11 @@ class DecideMonsterActionService {
 
         val target = Random.nextInt(playerNum)
 
-        return ActionData(
+        return ActionData.default().copy(
             thisTurnAction = ActionType.Skill,
             skillId = skillId,
             target = target,
             ally = 0,
-            toolId = 0,
-            toolIndex = 0,
         )
     }
 }

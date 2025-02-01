@@ -4,6 +4,7 @@ import core.domain.status.param.EXP
 import core.domain.status.param.HP
 import core.domain.status.param.MP
 import data.item.skill.SkillId
+import data.item.tool.ToolId
 
 data class PlayerStatus(
     override var name: String,
@@ -11,7 +12,7 @@ data class PlayerStatus(
     override val mp: MP = dummyMP,
     override val speed: Int = 0,
     val skillList: List<SkillId>,
-    val toolList: List<Int>,
+    val toolList: List<ToolId>,
     val exp: EXP,
 ) : Status {
 

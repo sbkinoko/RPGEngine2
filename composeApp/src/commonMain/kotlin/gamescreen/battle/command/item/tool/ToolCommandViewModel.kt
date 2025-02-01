@@ -1,6 +1,7 @@
 package gamescreen.battle.command.item.tool
 
 import core.domain.Const
+import data.item.tool.ToolId
 import data.item.tool.ToolRepository
 import gamescreen.battle.command.item.ItemCommandViewModel
 import gamescreen.battle.domain.ActionType
@@ -9,10 +10,10 @@ import gamescreen.battle.domain.ToolCommand
 import gamescreen.menu.domain.SelectManager
 import org.koin.core.component.inject
 
-class ToolCommandViewModel : ItemCommandViewModel<Int>() {
+class ToolCommandViewModel : ItemCommandViewModel<ToolId>() {
     override val itemRepository: ToolRepository by inject()
 
-    override val itemList: List<Int>
+    override val itemList: List<ToolId>
         get() = playerStatusRepository.getStatus(playerId).toolList
     override val playerId: Int
         get() = (commandRepository.nowBattleCommandType as? ToolCommand)?.playerId
@@ -30,7 +31,7 @@ class ToolCommandViewModel : ItemCommandViewModel<Int>() {
         return commandType is ToolCommand
     }
 
-    override fun getLastSelectedItemId(): Int {
+    override fun getLastSelectedItemId(): ToolId {
         return actionRepository.getAction(
             playerId = playerId
         ).toolId

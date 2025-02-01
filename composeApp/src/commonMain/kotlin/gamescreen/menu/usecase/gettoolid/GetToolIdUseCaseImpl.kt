@@ -1,6 +1,7 @@
 package gamescreen.menu.usecase.gettoolid
 
 import core.repository.player.PlayerStatusRepository
+import data.item.tool.ToolId
 import gamescreen.menu.repository.bag.BagRepository
 import values.Constants
 
@@ -11,7 +12,7 @@ class GetToolIdUseCaseImpl(
     override fun invoke(
         userId: Int,
         index: Int,
-    ): Int {
+    ): ToolId {
         return if (userId < Constants.playerNum) {
             playerStatusRepository.getTool(
                 userId,

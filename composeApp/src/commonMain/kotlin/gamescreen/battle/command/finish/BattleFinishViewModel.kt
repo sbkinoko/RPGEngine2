@@ -3,6 +3,7 @@ package gamescreen.battle.command.finish
 import core.repository.money.MoneyRepository
 import core.repository.player.PlayerStatusRepository
 import core.usecase.changetomap.ChangeToMapUseCase
+import data.item.tool.ToolId
 import data.item.tool.ToolRepository
 import gamescreen.battle.BattleChildViewModel
 import gamescreen.battle.domain.BattleCommandType
@@ -41,7 +42,7 @@ class BattleFinishViewModel : BattleChildViewModel() {
     private var contentType: MutableStateFlow<ContentType> =
         MutableStateFlow(ContentType.None)
 
-    private val dropItemList: MutableStateFlow<List<Int>> =
+    private val dropItemList: MutableStateFlow<List<ToolId>> =
         MutableStateFlow(listOf())
 
     private val addExpUseCase: AddExpUseCase by inject()

@@ -4,7 +4,7 @@ import core.domain.status.PlayerStatus
 import core.domain.status.StatusIncrease
 import core.domain.status.param.EXP
 import data.item.skill.SkillId
-import data.item.tool.ToolRepositoryImpl
+import data.item.tool.ToolId
 
 class StatusRepositoryImpl : AbstractStatusRepository() {
 
@@ -65,12 +65,14 @@ class StatusRepositoryImpl : AbstractStatusRepository() {
                         SkillId.Revive,
                     ),
                     toolList = listOf(
-                        ToolRepositoryImpl.HEAL_TOOL,
-                        ToolRepositoryImpl.HEAL_TOOL,
-                        ToolRepositoryImpl.HEAL_TOOL2,
-                        ToolRepositoryImpl.HEAL_TOOL,
-                        ToolRepositoryImpl.HEAL_TOOL,
-                        ToolRepositoryImpl.HEAL_TOOL,
+                        ToolId.HEAL1,
+                        ToolId.HEAL1,
+                        ToolId.HEAL1,
+                        ToolId.HEAL2,
+                        ToolId.HEAL1,
+                        ToolId.HEAL1,
+                        ToolId.HEAL1,
+                        ToolId.HEAL1,
                     ),
                     exp = EXP(
                         EXP.type1,
@@ -84,8 +86,8 @@ class StatusRepositoryImpl : AbstractStatusRepository() {
                     SkillId.CantUse,
                 ),
                 toolList = listOf(
-                    ToolRepositoryImpl.HEAL_TOOL,
-                    ToolRepositoryImpl.HEAL_TOOL,
+                    ToolId.HEAL1,
+                    ToolId.HEAL1,
                 ),
                 exp = EXP(
                     EXP.type1,
@@ -99,9 +101,8 @@ class StatusRepositoryImpl : AbstractStatusRepository() {
                     SkillId.Revive,
                 ),
                 toolList = listOf(
-                    ToolRepositoryImpl.HEAL_TOOL,
-                    ToolRepositoryImpl.HEAL_TOOL,
-                    ToolRepositoryImpl.HEAL_TOOL,
+                    ToolId.HEAL1,
+                    ToolId.HEAL1,
                 ),
                 exp = EXP(
                     EXP.type1,
@@ -115,10 +116,10 @@ class StatusRepositoryImpl : AbstractStatusRepository() {
                     SkillId.Revive,
                 ),
                 toolList = listOf(
-                    ToolRepositoryImpl.HEAL_TOOL,
-                    ToolRepositoryImpl.HEAL_TOOL,
-                    ToolRepositoryImpl.HEAL_TOOL,
-                    ToolRepositoryImpl.HEAL_TOOL,
+                    ToolId.HEAL1,
+                    ToolId.HEAL1,
+                    ToolId.HEAL1,
+                    ToolId.HEAL1,
                 ),
                 exp = EXP(
                     EXP.type1,
