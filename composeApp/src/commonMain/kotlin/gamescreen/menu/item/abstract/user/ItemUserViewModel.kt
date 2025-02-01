@@ -1,5 +1,6 @@
 package gamescreen.menu.item.abstract.user
 
+import core.domain.item.Item
 import core.repository.player.PlayerStatusRepository
 import data.item.ItemRepository
 import gamescreen.menu.MenuChildViewModel
@@ -9,12 +10,12 @@ import gamescreen.menu.item.repository.user.UserRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-abstract class ItemUserViewModel : MenuChildViewModel(),
-    ItemList,
+abstract class ItemUserViewModel<T> : MenuChildViewModel(),
+    ItemList<T>,
     KoinComponent {
     private val userRepository: UserRepository by inject()
     protected val playerStatusRepository: PlayerStatusRepository by inject()
-    protected abstract val itemRepository: ItemRepository
+    protected abstract val itemRepository: ItemRepository<T>
 
     abstract val boundedScreenType: MenuType
 
@@ -35,7 +36,13 @@ abstract class ItemUserViewModel : MenuChildViewModel(),
 
     abstract fun getPlayerNameAt(id: Int): String
 
-    override fun getItemName(id: Int): String {
+    override fun getItemName(id: T): String {
         return itemRepository.getItem(id).name
+    }
+
+    override fun getPlayerItemListAt(id: Int): List<Item> {
+        return getPlayerItemIdListAt(id).map {
+            itemRepository.getItem(it)
+        }
     }
 }

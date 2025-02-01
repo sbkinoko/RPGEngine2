@@ -2,6 +2,7 @@ package gamescreen.battle.usecase.gettargetnum
 
 import core.ModuleCore
 import data.ModuleData
+import data.item.skill.SkillId
 import gamescreen.battle.ModuleBattle
 import gamescreen.battle.domain.ActionType
 import gamescreen.battle.repository.action.ActionRepository
@@ -64,7 +65,7 @@ class GetTargetNumUseCaseTest : KoinTest {
         actionRepository.setAction(
             playerId = playerId,
             actionType = actionType,
-            itemId = 0
+            itemId = SkillId.AttackToTwo
         )
 
         getTargetNumUseCase(

@@ -12,7 +12,7 @@ import core.usecase.item.usetool.UseToolUseCase
 import core.usecase.updateparameter.UpdateMonsterStatusUseCase
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
 import core.usecase.updateparameter.UpdateStatusUseCase
-import data.item.skill.ATTACK_NORMAL
+import data.item.skill.SkillId
 import data.item.skill.SkillRepository
 import data.item.tool.ToolRepository
 import gamescreen.battle.BattleChildViewModel
@@ -173,7 +173,7 @@ class ActionPhaseViewModel(
 
         // fixme item を取得するだけの関数を作る
         val item = when (action.thisTurnAction) {
-            ActionType.Normal -> skillRepository.getItem(ATTACK_NORMAL)
+            ActionType.Normal -> skillRepository.getItem(SkillId.Normal1)
             ActionType.Skill -> skillRepository.getItem(action.skillId)
             ActionType.TOOL -> toolRepository.getItem(action.toolId)
 
@@ -233,7 +233,7 @@ class ActionPhaseViewModel(
         return when (actionData.thisTurnAction) {
             ActionType.Normal -> {
                 // fixme actionDataに通常攻撃の情報を持たせる
-                val skillId = ATTACK_NORMAL
+                val skillId = SkillId.Normal1
                 val skill = skillRepository.getItem(skillId)
                 skill.name
             }

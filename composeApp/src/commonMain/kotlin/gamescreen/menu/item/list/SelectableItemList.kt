@@ -12,14 +12,14 @@ import core.menu.SelectableChildViewModel
 fun SelectableItemList(
     selectedUserId: Int,
     itemUserViewModel: SelectableChildViewModel<*>,
-    itemList: ItemList,
+    itemList: ItemList<*>,
     modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier,
     ) {
         itemList.getPlayerItemListAt(selectedUserId)
-            .forEachIndexed { index, itemId ->
+            .forEachIndexed { index, item ->
                 CenterText(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -28,7 +28,7 @@ fun SelectableItemList(
                             id = index,
                             childViewModel = itemUserViewModel,
                         ),
-                    text = itemList.getItemName(itemId),
+                    text = item.name,
                 )
             }
     }

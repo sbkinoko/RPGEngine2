@@ -12,7 +12,7 @@ import gamescreen.menu.item.abstract.user.ItemUserViewModel
 
 @Composable
 fun UserList(
-    itemUserViewModel: ItemUserViewModel,
+    itemUserViewModel: ItemUserViewModel<*>,
     modifier: Modifier = Modifier,
 ) {
     Column(

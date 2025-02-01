@@ -6,7 +6,6 @@ import core.domain.item.Skill
 import core.domain.item.TargetType
 
 data class HealSkill(
-    override val id: Int,
     override val name: String,
     override val needMP: Int,
     override val targetNum: Int,
@@ -17,7 +16,6 @@ data class HealSkill(
 ) : Skill, HealItem {
     override val explain: String
         get() {
-            return name + "\n" +
-                    "${id}番目のスキル"
+            return name
         }
 }

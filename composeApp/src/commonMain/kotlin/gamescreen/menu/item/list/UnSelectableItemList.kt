@@ -10,14 +10,14 @@ import common.layout.CenterText
 @Composable
 fun UnSelectableItemList(
     selectedUserId: Int,
-    itemList: ItemList,
+    itemList: ItemList<*>,
     modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier,
     ) {
         itemList.getPlayerItemListAt(selectedUserId)
-            .forEachIndexed { _, itemId ->
+            .forEachIndexed { _, item ->
                 CenterText(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -27,7 +27,7 @@ fun UnSelectableItemList(
                             id = 1,
                             selected = 2,
                         ),
-                    text = itemList.getItemName(itemId),
+                    text = item.name,
                 )
             }
     }

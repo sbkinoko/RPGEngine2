@@ -2,6 +2,7 @@ package gamescreen.battle.service.monster
 
 import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
 import core.domain.status.PlayerStatusTest.Companion.testActivePlayer
+import data.item.skill.SkillId
 import gamescreen.battle.domain.ActionData
 import kotlin.test.Test
 import kotlin.test.assertTrue
@@ -11,8 +12,8 @@ class RandomTest {
 
     private val monster = TestActiveMonster
 
-    private val skillList1 = listOf(1, 2, 6)
-    private val skillList2 = listOf(3, 5)
+    private val skillList1 = listOf(SkillId.Normal1, SkillId.Normal2, SkillId.Heal)
+    private val skillList2 = listOf(SkillId.Revive, SkillId.AttackToTwo)
 
     private val players1 = listOf(
         testActivePlayer,

@@ -1,6 +1,7 @@
 package gamescreen.menu.item.skill.user
 
 import core.repository.player.PlayerStatusRepository
+import data.item.skill.SkillId
 import data.item.skill.SkillRepository
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.domain.SelectManager
@@ -8,7 +9,7 @@ import gamescreen.menu.item.abstract.user.ItemUserViewModel
 import org.koin.core.component.inject
 import values.Constants
 
-class SkillUserViewModel : ItemUserViewModel() {
+class SkillUserViewModel : ItemUserViewModel<SkillId>() {
     val repository: PlayerStatusRepository by inject()
 
     override val itemRepository: SkillRepository by inject()
@@ -30,7 +31,7 @@ class SkillUserViewModel : ItemUserViewModel() {
         return playerStatusRepository.getStatus(id).name
     }
 
-    override fun getPlayerItemListAt(id: Int): List<Int> {
+    override fun getPlayerItemIdListAt(id: Int): List<SkillId> {
         return repository.getStatus(id).skillList
     }
 }

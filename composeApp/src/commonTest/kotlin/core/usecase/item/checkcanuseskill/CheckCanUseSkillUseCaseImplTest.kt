@@ -8,6 +8,7 @@ import core.domain.status.PlayerStatus
 import core.domain.status.param.EXP
 import core.domain.status.param.HP
 import core.domain.status.param.MP
+import data.item.skill.SkillId
 import data.item.skill.SkillRepository
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -17,7 +18,6 @@ class CheckCanUseSkillUseCaseImplTest {
     private lateinit var checkCanUseSkillUseCase: CheckCanUseSkillUseCase
 
     private val skill = HealSkill(
-        id = 0,
         name = "test",
         healAmount = 1,
         needMP = 1,
@@ -51,7 +51,7 @@ class CheckCanUseSkillUseCaseImplTest {
     @BeforeTest
     fun beforeTest() {
         val skillRepository = object : SkillRepository {
-            override fun getItem(id: Int): Skill {
+            override fun getItem(id: SkillId): Skill {
                 return skill
             }
         }
@@ -63,7 +63,7 @@ class CheckCanUseSkillUseCaseImplTest {
         val playerStatus = playerStatusWithMP
 
         val result = checkCanUseSkillUseCase.invoke(
-            skillId = 1,
+            skillId = SkillId.Normal1,
             status = playerStatus,
             here = Place.BATTLE
         )
@@ -79,7 +79,7 @@ class CheckCanUseSkillUseCaseImplTest {
         val playerStatus = playerStatusNoMP
 
         val result = checkCanUseSkillUseCase.invoke(
-            skillId = 1,
+            skillId = SkillId.Normal1,
             status = playerStatus,
             here = Place.MAP,
         )
@@ -95,7 +95,7 @@ class CheckCanUseSkillUseCaseImplTest {
         val playerStatus = playerStatusWithMP
 
         val result = checkCanUseSkillUseCase.invoke(
-            skillId = 1,
+            skillId = SkillId.Normal1,
             status = playerStatus,
             here = Place.MAP,
         )

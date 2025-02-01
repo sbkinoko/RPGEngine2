@@ -9,7 +9,7 @@ import gamescreen.battle.domain.ToolCommand
 import gamescreen.menu.domain.SelectManager
 import org.koin.core.component.inject
 
-class ToolCommandViewModel : ItemCommandViewModel() {
+class ToolCommandViewModel : ItemCommandViewModel<Int>() {
     override val itemRepository: ToolRepository by inject()
 
     override val itemList: List<Int>

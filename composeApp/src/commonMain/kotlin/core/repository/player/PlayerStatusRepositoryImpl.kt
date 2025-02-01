@@ -1,6 +1,7 @@
 package core.repository.player
 
 import core.domain.status.PlayerStatus
+import data.item.skill.SkillId
 import data.status.StatusRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -70,7 +71,7 @@ class PlayerStatusRepositoryImpl(
     override fun getSkill(
         playerId: Int,
         index: Int,
-    ): Int {
+    ): SkillId {
         val player = players[playerId]
         return player.skillList[index]
     }

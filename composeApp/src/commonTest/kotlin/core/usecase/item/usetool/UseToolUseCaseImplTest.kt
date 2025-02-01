@@ -96,7 +96,6 @@ class UseToolUseCaseImplTest : KoinTest {
         val toolRepository: ToolRepository = object : ToolRepository {
             override fun getItem(id: Int): Tool {
                 return HealTool(
-                    id = id,
                     name = "回復",
                     targetNum = 1,
                     usablePlace = Place.BOTH,
@@ -152,7 +151,6 @@ class UseToolUseCaseImplTest : KoinTest {
         val toolRepository: ToolRepository = object : ToolRepository {
             override fun getItem(id: Int): Tool {
                 return HealTool(
-                    id = id,
                     name = "回復",
                     targetNum = 1,
                     usablePlace = Place.BOTH,
@@ -207,7 +205,6 @@ class UseToolUseCaseImplTest : KoinTest {
         val toolRepository: ToolRepository = object : ToolRepository {
             override fun getItem(id: Int): Tool {
                 return HealTool(
-                    id = id,
                     name = "回復",
                     targetNum = 1,
                     usablePlace = Place.BOTH,

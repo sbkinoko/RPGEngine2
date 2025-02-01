@@ -1,6 +1,7 @@
 package gamescreen.menu.item.abstract.itemselect
 
 import core.domain.AbleType
+import core.domain.item.Item
 import core.repository.player.PlayerStatusRepository
 import data.item.ItemRepository
 import gamescreen.menu.MenuChildViewModel
@@ -15,8 +16,8 @@ import gamescreen.text.repository.TextRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-abstract class ItemListViewModel : MenuChildViewModel(),
-    ItemList,
+abstract class ItemListViewModel<T> : MenuChildViewModel(),
+    ItemList<T>,
     KoinComponent {
     protected val menuStateRepository: MenuStateRepository by inject()
     private val textRepository: TextRepository by inject()
@@ -25,7 +26,7 @@ abstract class ItemListViewModel : MenuChildViewModel(),
     protected val indexRepository: IndexRepository by inject()
 
     protected val playerStatusRepository: PlayerStatusRepository by inject()
-    protected abstract val itemRepository: ItemRepository
+    protected abstract val itemRepository: ItemRepository<T>
 
     override var selectManager = SelectManager(
         width = 1,
@@ -35,7 +36,10 @@ abstract class ItemListViewModel : MenuChildViewModel(),
     val userId: Int
         get() = userRepository.userId
 
-    protected val itemList: List<Int>
+    protected val itemIdList: List<T>
+        get() = getPlayerItemIdListAt(userId)
+
+    protected val itemList: List<Item>
         get() = getPlayerItemListAt(userId)
 
     protected abstract val boundedScreenType: MenuType
@@ -48,14 +52,14 @@ abstract class ItemListViewModel : MenuChildViewModel(),
     fun init() {
         selectManager = SelectManager(
             width = 1,
-            itemNum = itemList.size
+            itemNum = itemIdList.size
         )
         // fixme 前回の選択位置を利用する
         selectManager.selected = INIT_ITEM_POSITION
     }
 
     open fun getExplainAt(position: Int): String {
-        val itemId = itemList[position]
+        val itemId = itemIdList[position]
         return itemRepository.getItem(itemId).explain
     }
 
@@ -63,8 +67,14 @@ abstract class ItemListViewModel : MenuChildViewModel(),
         commandRepository.pop()
     }
 
-    override fun getItemName(id: Int): String {
+    override fun getItemName(id: T): String {
         return itemRepository.getItem(id).name
+    }
+
+    override fun getPlayerItemListAt(id: Int): List<Item> {
+        return getPlayerItemIdListAt(id).map {
+            itemRepository.getItem(it)
+        }
     }
 
     override fun goNextImpl() {

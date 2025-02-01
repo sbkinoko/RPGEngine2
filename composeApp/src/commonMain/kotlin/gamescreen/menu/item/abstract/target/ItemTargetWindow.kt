@@ -19,7 +19,7 @@ import values.Constants.Companion.playerNum
 @Composable
 fun ItemTargetWindow(
     modifier: Modifier = Modifier,
-    itemTargetViewModel: ItemTargetViewModel,
+    itemTargetViewModel: ItemTargetViewModel<*>,
 ) {
 
     Row(

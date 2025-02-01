@@ -4,6 +4,7 @@ import core.domain.status.monster.ActionStyle
 import core.domain.status.monster.MonsterStatus
 import core.domain.status.param.HP
 import core.domain.status.param.MP
+import data.item.skill.SkillId
 
 class MonsterStatusTest {
     companion object {
@@ -30,7 +31,7 @@ class MonsterStatusTest {
                     )
                 ),
                 skillList = listOf(
-                    1, 2,
+                    SkillId.Normal1, SkillId.Normal2,
                 ),
                 actionStyle = ActionStyle.RANDOM,
             )

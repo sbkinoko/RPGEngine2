@@ -2,6 +2,7 @@ package core.repository.player
 
 import core.domain.status.PlayerStatus
 import core.repository.status.StatusRepository
+import data.item.skill.SkillId
 import kotlinx.coroutines.flow.StateFlow
 
 interface PlayerStatusRepository : StatusRepository<PlayerStatus> {
@@ -11,5 +12,5 @@ interface PlayerStatusRepository : StatusRepository<PlayerStatus> {
 
     fun getTool(playerId: Int, index: Int): Int
 
-    fun getSkill(playerId: Int, index: Int): Int
+    fun getSkill(playerId: Int, index: Int): SkillId
 }
