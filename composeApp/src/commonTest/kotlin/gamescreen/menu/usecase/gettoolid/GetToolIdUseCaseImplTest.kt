@@ -3,6 +3,7 @@ package gamescreen.menu.usecase.gettoolid
 import core.domain.status.PlayerStatus
 import core.repository.player.PlayerStatusRepository
 import data.item.skill.SkillId
+import data.item.tool.ToolId
 import gamescreen.menu.domain.BagToolData
 import gamescreen.menu.repository.bag.BagRepository
 import kotlinx.coroutines.flow.StateFlow
@@ -20,9 +21,9 @@ class GetToolIdUseCaseImplTest {
             throw NotImplementedError()
         }
 
-        override fun getTool(playerId: Int, index: Int): Int {
+        override fun getTool(playerId: Int, index: Int): ToolId {
             countPlayer++
-            return 0
+            return ToolId.HEAL1
         }
 
         override fun getSkill(playerId: Int, index: Int): SkillId {
@@ -44,9 +45,9 @@ class GetToolIdUseCaseImplTest {
             throw NotImplementedError()
         }
 
-        override fun getItemIdAt(index: Int): Int {
+        override fun getItemIdAt(index: Int): ToolId {
             countBag++
-            return 0
+            return ToolId.HEAL1
         }
 
         override fun setData(data: BagToolData) {

@@ -5,6 +5,7 @@ import core.domain.status.param.EXP
 import core.domain.status.param.HP
 import core.domain.status.param.MP
 import core.repository.status.StatusRepository
+import data.item.tool.ToolId
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -21,7 +22,7 @@ class UpdatePlayerStatusUseCaseImplTest {
             value = 5,
         ),
         skillList = listOf(),
-        toolList = listOf(1, 2, 3, 4, 5),
+        toolList = listOf(ToolId.HEAL1, ToolId.HEAL2, ToolId.HEAL2),
         exp = EXP(
             EXP.type1,
         ),
@@ -52,7 +53,7 @@ class UpdatePlayerStatusUseCaseImplTest {
                 index = 2,
             )
             assertEquals(
-                expected = listOf(1, 2, 4, 5),
+                expected = listOf(ToolId.HEAL1, ToolId.HEAL2),
                 actual = statusRepository.getStatus(0).toolList
             )
         }

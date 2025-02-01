@@ -1,5 +1,6 @@
 package gamescreen.menu.usecase.bag.addtool
 
+import data.item.tool.ToolId
 import gamescreen.menu.ModuleMenu
 import gamescreen.menu.repository.bag.BagRepository
 import org.koin.core.context.startKoin
@@ -29,7 +30,7 @@ class AddToolUseCaseImplTest : KoinTest {
 
     @Test
     fun addTest() {
-        val id1 = 1
+        val id1 = ToolId.HEAL1
         val num1 = 1
 
         (id1 to num1).apply {
@@ -51,7 +52,7 @@ class AddToolUseCaseImplTest : KoinTest {
             }
         }
 
-        val id2 = 2
+        val id2 = ToolId.HEAL2
         val num2 = 1
 
         (id2 to num2).apply {
@@ -73,10 +74,9 @@ class AddToolUseCaseImplTest : KoinTest {
             }
         }
 
-        val id3 = 1
         val num3 = 1
 
-        (id3 to num3).apply {
+        (id1 to num3).apply {
             addToolUseCase.invoke(
                 toolId = first,
                 toolNum = second,
@@ -89,7 +89,7 @@ class AddToolUseCaseImplTest : KoinTest {
             val data = list.first { it.id == first }
 
             assertTrue {
-                data.num == id1 + id3
+                data.num == 2 * num1
             }
         }
     }

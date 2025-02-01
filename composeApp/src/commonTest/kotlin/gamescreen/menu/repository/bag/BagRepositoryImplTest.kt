@@ -1,5 +1,6 @@
 package gamescreen.menu.repository.bag
 
+import data.item.tool.ToolId
 import gamescreen.menu.ModuleMenu
 import gamescreen.menu.domain.BagToolData
 import org.koin.core.context.startKoin
@@ -28,7 +29,7 @@ class BagRepositoryImplTest : KoinTest {
 
     @Test
     fun setTest() {
-        val first = 1
+        val first = ToolId.HEAL1
         val data1 = BagToolData(first, 1)
         bagRepository.setData(data1)
         assertEquals(
@@ -40,7 +41,7 @@ class BagRepositoryImplTest : KoinTest {
             expected = first
         )
 
-        val second = 2
+        val second = ToolId.HEAL2
         val data2 = BagToolData(second, 2)
         bagRepository.setData(data2)
         assertEquals(
@@ -52,7 +53,7 @@ class BagRepositoryImplTest : KoinTest {
             expected = second
         )
 
-        val data3 = BagToolData(1, 3)
+        val data3 = BagToolData(first, 3)
         bagRepository.setData(data3)
         assertEquals(
             actual = bagRepository.getList(),
