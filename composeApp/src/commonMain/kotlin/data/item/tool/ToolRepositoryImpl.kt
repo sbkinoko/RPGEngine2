@@ -2,15 +2,15 @@ package data.item.tool
 
 import core.domain.Place
 import core.domain.item.TargetType
+import core.domain.item.Tool
 import core.domain.item.tool.HealTool
-import core.domain.item.tool.Tool
 
 class ToolRepositoryImpl : ToolRepository {
     override fun getItem(id: Int): Tool {
         return when (id) {
             HEAL_TOOL -> HealTool(
                 id = id,
-                name = "回復",
+                name = "回復1",
                 targetNum = 1,
                 usablePlace = Place.BOTH,
                 isReusable = false,

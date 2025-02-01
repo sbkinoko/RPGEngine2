@@ -19,10 +19,13 @@ class BattleMonsterRepositoryImplTest : KoinTest {
     private val battleMonsterRepository: BattleMonsterRepository by inject()
 
     private val monster1 = TestActiveMonster
-    private val monster2 = TestActiveMonster
-    private val monsterList = listOf(
+    private val monsterList1 = listOf(
         monster1,
-        monster2,
+    )
+
+    private val monsterList2 = listOf(
+        monster1,
+        monster1,
     )
 
     @BeforeTest
@@ -43,37 +46,72 @@ class BattleMonsterRepositoryImplTest : KoinTest {
      * モンスターリストの更新テスト
      */
     @Test
-    fun setMonsterTest() {
+    fun setMonsterTest1() {
         runBlocking {
             var count = 0
             val collectJob = launch {
                 battleMonsterRepository.monsterListStateFLow.collect {
-                    assertEquals(
-                        expected = monsterList,
-                        actual = it,
-                    )
-
                     count++
                 }
             }
 
             battleMonsterRepository.setMonsters(
-                monsters = monsterList.toMutableList()
+                monsters = monsterList1.toMutableList()
             )
+
+            delay(100)
+
             battleMonsterRepository.getStatus(0).apply {
                 assertEquals(
                     expected = monster1,
                     actual = this,
                 )
             }
-            battleMonsterRepository.getStatus(1).apply {
+
+            assertEquals(
+                expected = 1,
+                actual = count,
+            )
+
+            collectJob.cancel()
+        }
+    }
+
+    /**
+     * モンスターリストの更新テスト
+     */
+    @Test
+    fun setMonsterTest2() {
+        runBlocking {
+            var count = 0
+            val collectJob = launch {
+                battleMonsterRepository.monsterListStateFLow.collect {
+                    count++
+                }
+            }
+
+            battleMonsterRepository.setMonsters(
+                monsters = monsterList2.toMutableList()
+            )
+
+            delay(100)
+
+            battleMonsterRepository.getStatus(0).apply {
                 assertEquals(
-                    expected = monster2,
+                    expected = monster1.copy(
+                        name = monster1.name + "1"
+                    ),
                     actual = this,
                 )
             }
-
-            delay(100)
+            battleMonsterRepository.getStatus(1).apply {
+                assertEquals(
+                    expected = monster1.copy(
+                        name = monster1.name + "2"
+                    ),
+                    actual = this,
+                )
+            }
 
             assertEquals(
                 expected = 1,

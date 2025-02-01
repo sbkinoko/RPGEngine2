@@ -2,8 +2,8 @@ package core.usecase.item.usetool
 
 import core.domain.Place
 import core.domain.item.TargetType
+import core.domain.item.Tool
 import core.domain.item.tool.HealTool
-import core.domain.item.tool.Tool
 import core.domain.status.PlayerStatus
 import core.domain.status.param.EXP
 import core.domain.status.param.HP
