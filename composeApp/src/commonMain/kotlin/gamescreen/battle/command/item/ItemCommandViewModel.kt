@@ -46,6 +46,7 @@ abstract class ItemCommandViewModel<T> : BattleChildViewModel() {
         selectManager.selected = selected
     }
 
+    //　fixme abstractの場所を揃える
     abstract fun getLastSelectedItemId(): T
 
     override fun selectable(): Boolean {
@@ -60,11 +61,13 @@ abstract class ItemCommandViewModel<T> : BattleChildViewModel() {
     abstract fun canUse(position: Int): Boolean
 
     override fun goNextImpl() {
-        val itemId = selectedItemId
-        //　使えないので進まない
+
         if (canUse(selectManager.selected).not()) {
+            //　今選択しているアイテムは使えないので進まない
             return
         }
+
+        val itemId = selectedItemId
 
         actionRepository.setAction(
             actionType = actionType,
