@@ -1,5 +1,6 @@
 package gamescreen.battle.repository.actionrepository
 
+import data.item.skill.SkillId
 import gamescreen.battle.domain.ActionType
 import gamescreen.battle.repository.action.ActionRepository
 import gamescreen.battle.repository.action.ActionRepositoryImpl
@@ -50,11 +51,11 @@ class ActionRepositoryImplTest {
     @Test
     fun setSkill() {
         val playerID = 2
-        val skillID = 1
+        val skillId = SkillId.Normal1
         actionRepository.setAction(
             playerId = playerID,
             actionType = ActionType.Skill,
-            itemId = skillID,
+            itemId = skillId,
         )
 
         actionRepository.getAction(playerID).apply {
@@ -63,7 +64,7 @@ class ActionRepositoryImplTest {
                 actual = thisTurnAction,
             )
             assertEquals(
-                expected = skillID,
+                expected = skillId,
                 actual = this.skillId,
             )
         }
@@ -72,7 +73,7 @@ class ActionRepositoryImplTest {
     @Test
     fun setNormalAfterSkill() {
         val playerID = 2
-        val skillID = 1
+        val skillID = SkillId.Normal1
         val initAction = ActionType.Skill
         val secondAction = ActionType.Normal
 

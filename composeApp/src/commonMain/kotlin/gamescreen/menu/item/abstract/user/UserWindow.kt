@@ -13,7 +13,7 @@ import values.Colors
 
 @Composable
 fun UserWindow(
-    itemUserViewModel: ItemUserViewModel,
+    itemUserViewModel: ItemUserViewModel<*>,
     modifier: Modifier = Modifier,
 ) {
     val selectedId by itemUserViewModel.selectedFlowState.collectAsState()

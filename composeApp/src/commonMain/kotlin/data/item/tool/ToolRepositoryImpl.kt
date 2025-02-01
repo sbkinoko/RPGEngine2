@@ -9,7 +9,6 @@ class ToolRepositoryImpl : ToolRepository {
     override fun getItem(id: Int): Tool {
         return when (id) {
             HEAL_TOOL -> HealTool(
-                id = id,
                 name = "回復1",
                 targetNum = 1,
                 usablePlace = Place.BOTH,
@@ -20,7 +19,6 @@ class ToolRepositoryImpl : ToolRepository {
             )
 
             HEAL_TOOL2 -> HealTool(
-                id = id,
                 name = "回復2",
                 targetNum = 1,
                 usablePlace = Place.BOTH,

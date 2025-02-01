@@ -14,19 +14,19 @@ import gamescreen.menu.domain.SelectManager
 import org.koin.core.component.inject
 import kotlin.math.max
 
-abstract class ItemCommandViewModel : BattleChildViewModel() {
+abstract class ItemCommandViewModel<T> : BattleChildViewModel() {
     protected val actionRepository: ActionRepository by inject()
     protected val playerStatusRepository: PlayerStatusRepository by inject()
 
-    protected abstract val itemRepository: ItemRepository
+    protected abstract val itemRepository: ItemRepository<T>
 
-    abstract val itemList: List<Int>
+    abstract val itemList: List<T>
 
     abstract val playerId: Int
 
     abstract val actionType: ActionType
 
-    private val selectedItemId: Int
+    private val selectedItemId: T
         get() = itemList[selectManager.selected]
 
     fun init() {
@@ -46,22 +46,23 @@ abstract class ItemCommandViewModel : BattleChildViewModel() {
         selectManager.selected = selected
     }
 
-    abstract fun getLastSelectedItemId(): Int
+    abstract fun getLastSelectedItemId(): T
 
     override fun selectable(): Boolean {
-        return canUse(selectedItemId)
+        return canUse(selectManager.selected)
     }
 
-    fun getName(id: Int): String {
+    fun getName(position: Int): String {
+        val id = itemList[position]
         return itemRepository.getItem(id).name
     }
 
-    abstract fun canUse(id: Int): Boolean
+    abstract fun canUse(position: Int): Boolean
 
     override fun goNextImpl() {
         val itemId = selectedItemId
         //　使えないので進まない
-        if (canUse(itemId).not()) {
+        if (canUse(selectManager.selected).not()) {
             return
         }
 

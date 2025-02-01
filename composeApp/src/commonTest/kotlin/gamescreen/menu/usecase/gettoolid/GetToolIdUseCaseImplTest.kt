@@ -2,6 +2,7 @@ package gamescreen.menu.usecase.gettoolid
 
 import core.domain.status.PlayerStatus
 import core.repository.player.PlayerStatusRepository
+import data.item.skill.SkillId
 import gamescreen.menu.domain.BagToolData
 import gamescreen.menu.repository.bag.BagRepository
 import kotlinx.coroutines.flow.StateFlow
@@ -24,7 +25,7 @@ class GetToolIdUseCaseImplTest {
             return 0
         }
 
-        override fun getSkill(playerId: Int, index: Int): Int {
+        override fun getSkill(playerId: Int, index: Int): SkillId {
             throw NotImplementedError()
         }
 

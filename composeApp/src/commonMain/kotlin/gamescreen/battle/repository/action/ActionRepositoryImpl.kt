@@ -1,5 +1,6 @@
 package gamescreen.battle.repository.action
 
+import data.item.skill.SkillId
 import gamescreen.battle.domain.ActionData
 import gamescreen.battle.domain.ActionType
 
@@ -9,7 +10,7 @@ class ActionRepositoryImpl : ActionRepository {
     override fun setAction(
         playerId: Int,
         actionType: ActionType,
-        itemId: Int?,
+        itemId: Any?,
         itemIndex: Int?,
     ) {
         actionMap[playerId] = actionMap[playerId]?.let { actionData ->
@@ -24,12 +25,12 @@ class ActionRepositoryImpl : ActionRepository {
 
                     ActionType.Skill -> it.copy(
                         lastSelectedAction = actionType,
-                        skillId = itemId!!,
+                        skillId = itemId!! as SkillId,
                     )
 
                     ActionType.TOOL -> it.copy(
                         lastSelectedAction = actionType,
-                        toolId = itemId!!,
+                        toolId = itemId!! as Int,
                         toolIndex = itemIndex!!,
                     )
 
@@ -38,8 +39,10 @@ class ActionRepositoryImpl : ActionRepository {
             }
         } ?: ActionData(
             thisTurnAction = actionType,
-            skillId = if (actionType == ActionType.Skill) itemId!! else 0,
-            toolId = if (actionType == ActionType.TOOL) itemId!! else 0,
+            // fixme いい感じに修正する
+            skillId = if (actionType == ActionType.Skill) itemId as? SkillId
+                ?: SkillId.NONE else SkillId.NONE,
+            toolId = if (actionType == ActionType.TOOL) itemId as Int else 0,
             toolIndex = if (actionType == ActionType.TOOL) itemIndex!! else 0,
         )
     }

@@ -4,6 +4,7 @@ import core.domain.AbleType
 import core.domain.Place
 import core.usecase.item.checkcanuseskill.CheckCanUseSkillUseCase
 import core.usecase.item.useskill.UseSkillUseCase
+import data.item.skill.SkillId
 import data.item.skill.SkillRepository
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.item.abstract.target.ItemTargetViewModel
@@ -11,7 +12,7 @@ import gamescreen.menu.item.repository.index.IndexRepository
 import gamescreen.text.TextBoxData
 import org.koin.core.component.inject
 
-class SkillTargetViewModel : ItemTargetViewModel() {
+class SkillTargetViewModel : ItemTargetViewModel<SkillId>() {
     override val itemRepository: SkillRepository by inject()
 
     private val indexRepository: IndexRepository by inject()
@@ -21,7 +22,7 @@ class SkillTargetViewModel : ItemTargetViewModel() {
     override val boundedMenuType: MenuType
         get() = MenuType.SKILL_TARGET
 
-    override val itemId: Int
+    override val itemId: SkillId
         get() = playerStatusRepository.getSkill(
             user,
             indexRepository.index,

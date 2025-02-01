@@ -15,21 +15,21 @@ import gamescreen.text.repository.TextRepository
 import org.koin.core.component.inject
 import values.Constants.Companion.playerNum
 
-abstract class ItemTargetViewModel : MenuChildViewModel() {
+abstract class ItemTargetViewModel<T> : MenuChildViewModel() {
     protected val userRepository: UserRepository by inject()
     protected val targetRepository: TargetRepository by inject()
     protected val playerStatusRepository: PlayerStatusRepository by inject()
 
     private val choiceRepository: ChoiceRepository by inject()
 
-    protected abstract val itemRepository: ItemRepository
+    protected abstract val itemRepository: ItemRepository<T>
 
     protected val textRepository: TextRepository by inject()
 
     val user: Int
         get() = userRepository.userId
 
-    abstract val itemId: Int
+    abstract val itemId: T
 
     val explain: String
         get() = itemRepository.getItem(itemId).explain

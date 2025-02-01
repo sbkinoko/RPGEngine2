@@ -6,6 +6,7 @@ import core.domain.status.PlayerStatus
 import core.domain.status.param.EXP
 import core.domain.status.param.HP
 import core.domain.status.param.MP
+import data.item.skill.SkillId
 import gamescreen.battle.command.playeraction.PlayerAction
 import gamescreen.battle.command.playeraction.PlayerActionViewModel
 
@@ -26,7 +27,7 @@ fun PlayerActionPreview() {
             ),
             speed = 10,
             skillList = listOf(
-                0,
+                SkillId.Normal1,
             ),
             toolList = listOf(
                 0,

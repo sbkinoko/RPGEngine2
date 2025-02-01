@@ -3,10 +3,7 @@ package data.status
 import core.domain.status.PlayerStatus
 import core.domain.status.StatusIncrease
 import core.domain.status.param.EXP
-import data.item.skill.ATTACK_TO_2
-import data.item.skill.CANT_USE
-import data.item.skill.HEAL_SKILL
-import data.item.skill.REVIVE_SKILL
+import data.item.skill.SkillId
 import data.item.tool.ToolRepositoryImpl
 
 class StatusRepositoryImpl : AbstractStatusRepository() {
@@ -62,10 +59,10 @@ class StatusRepositoryImpl : AbstractStatusRepository() {
                 PlayerStatus(
                     name = "test1",
                     skillList = listOf(
-                        ATTACK_TO_2,
-                        CANT_USE,
-                        HEAL_SKILL,
-                        REVIVE_SKILL,
+                        SkillId.AttackToTwo,
+                        SkillId.CantUse,
+                        SkillId.Heal,
+                        SkillId.Revive,
                     ),
                     toolList = listOf(
                         ToolRepositoryImpl.HEAL_TOOL,
@@ -83,8 +80,8 @@ class StatusRepositoryImpl : AbstractStatusRepository() {
             1 -> PlayerStatus(
                 name = "test2",
                 skillList = listOf(
-                    ATTACK_TO_2,
-                    CANT_USE,
+                    SkillId.AttackToTwo,
+                    SkillId.CantUse,
                 ),
                 toolList = listOf(
                     ToolRepositoryImpl.HEAL_TOOL,
@@ -98,8 +95,8 @@ class StatusRepositoryImpl : AbstractStatusRepository() {
             2 -> PlayerStatus(
                 name = "test3",
                 skillList = listOf(
-                    HEAL_SKILL,
-                    REVIVE_SKILL,
+                    SkillId.Heal,
+                    SkillId.Revive,
                 ),
                 toolList = listOf(
                     ToolRepositoryImpl.HEAL_TOOL,
@@ -114,8 +111,8 @@ class StatusRepositoryImpl : AbstractStatusRepository() {
             3 -> PlayerStatus(
                 name = "MPたくさん",
                 skillList = listOf(
-                    HEAL_SKILL,
-                    REVIVE_SKILL,
+                    SkillId.Heal,
+                    SkillId.Revive,
                 ),
                 toolList = listOf(
                     ToolRepositoryImpl.HEAL_TOOL,

@@ -21,7 +21,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import values.Constants
 
-class ToolGiveUserViewModel : ItemUserViewModel(),
+class ToolGiveUserViewModel : ItemUserViewModel<Int>(),
     KoinComponent {
     override val itemRepository: ToolRepository by inject()
     private val bagRepository: BagRepository by inject()
@@ -108,7 +108,7 @@ class ToolGiveUserViewModel : ItemUserViewModel(),
         }
     }
 
-    override fun getPlayerItemListAt(id: Int): List<Int> {
+    override fun getPlayerItemIdListAt(id: Int): List<Int> {
         return if (id < Constants.playerNum) {
             playerStatusRepository.getStatus(id).toolList
         } else {

@@ -4,6 +4,7 @@ import core.domain.AbleType
 import core.domain.Const
 import core.domain.Place
 import core.usecase.item.checkcanuseskill.CheckCanUseSkillUseCase
+import data.item.skill.SkillId
 import data.item.skill.SkillRepository
 import gamescreen.battle.command.item.ItemCommandViewModel
 import gamescreen.battle.domain.ActionType
@@ -12,13 +13,12 @@ import gamescreen.battle.domain.SkillCommand
 import gamescreen.menu.domain.SelectManager
 import org.koin.core.component.inject
 
-class SkillCommandViewModel : ItemCommandViewModel() {
+class SkillCommandViewModel : ItemCommandViewModel<SkillId>() {
     override val itemRepository: SkillRepository by inject()
 
     private val checkCanUseSkillUseCase: CheckCanUseSkillUseCase by inject()
 
-
-    override val itemList: List<Int>
+    override val itemList: List<SkillId>
         get() = playerStatusRepository.getStatus(playerId).skillList
 
     override val playerId: Int
@@ -37,16 +37,17 @@ class SkillCommandViewModel : ItemCommandViewModel() {
         return commandType is SkillCommand
     }
 
-    override fun getLastSelectedItemId(): Int {
+    override fun getLastSelectedItemId(): SkillId {
         return actionRepository.getAction(
             playerId = playerId
         ).skillId
     }
 
-    override fun canUse(id: Int): Boolean {
+    override fun canUse(position: Int): Boolean {
+        val skillId = itemList[position]
         val status = playerStatusRepository.getStatus(playerId)
         val ableType = checkCanUseSkillUseCase.invoke(
-            skillId = id,
+            skillId = skillId,
             status = status,
             here = Place.BATTLE,
         )

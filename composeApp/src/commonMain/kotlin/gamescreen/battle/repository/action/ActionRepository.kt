@@ -7,7 +7,9 @@ interface ActionRepository {
     fun setAction(
         playerId: Int,
         actionType: ActionType,
-        itemId: Int? = null,
+        // fixme any 以外の実装方法を考える
+        // sealedクラスとか
+        itemId: Any? = null,
         itemIndex: Int? = null,
     )
 

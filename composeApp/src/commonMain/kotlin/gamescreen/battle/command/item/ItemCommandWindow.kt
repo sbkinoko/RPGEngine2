@@ -15,7 +15,7 @@ import common.layout.DisableBox
 
 @Composable
 fun ItemCommandWindow(
-    itemCommandViewModel: ItemCommandViewModel,
+    itemCommandViewModel: ItemCommandViewModel<*>,
     modifier: Modifier = Modifier,
 ) {
     val flg = remember {
@@ -54,7 +54,7 @@ fun ItemCommandWindow(
 fun ItemArea(
     index: Int,
     size: Int,
-    itemCommandViewModel: ItemCommandViewModel,
+    itemCommandViewModel: ItemCommandViewModel<*>,
     modifier: Modifier = Modifier,
 ) {
     if (index < size) {
@@ -73,12 +73,11 @@ fun ItemArea(
 @Composable
 fun ItemText(
     position: Int,
-    itemCommandViewModel: ItemCommandViewModel,
+    itemCommandViewModel: ItemCommandViewModel<*>,
     modifier: Modifier = Modifier,
 ) {
-    val id = itemCommandViewModel.itemList[position]
     DisableBox(
-        isDisable = itemCommandViewModel.canUse(id = id).not(),
+        isDisable = itemCommandViewModel.canUse(position = position).not(),
         modifier = modifier
             .menuItem(
                 id = position,
@@ -87,7 +86,7 @@ fun ItemText(
     ) {
         CenterText(
             modifier = Modifier.fillMaxSize(),
-            text = itemCommandViewModel.getName(id = id),
+            text = itemCommandViewModel.getName(position = position),
         )
     }
 }

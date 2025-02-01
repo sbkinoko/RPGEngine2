@@ -1,7 +1,11 @@
 package gamescreen.menu.item.list
 
-interface ItemList {
-    fun getPlayerItemListAt(id: Int): List<Int>
+import core.domain.item.Item
 
-    fun getItemName(id: Int): String
+interface ItemList<T> {
+    fun getPlayerItemIdListAt(id: Int): List<T>
+
+    fun getPlayerItemListAt(id: Int): List<Item>
+
+    fun getItemName(id: T): String
 }

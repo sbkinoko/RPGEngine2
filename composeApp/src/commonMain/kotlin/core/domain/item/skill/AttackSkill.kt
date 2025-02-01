@@ -4,9 +4,7 @@ import core.domain.Place
 import core.domain.item.AttackItem
 import core.domain.item.Skill
 
-// 必要になったらattackのinterfaceを作る
 data class AttackSkill(
-    override val id: Int,
     override val name: String,
     override val needMP: Int,
     override val targetNum: Int,
@@ -16,7 +14,6 @@ data class AttackSkill(
 ) : Skill, AttackItem {
     override val explain: String
         get() {
-            return name + "\n" +
-                    "${id}番目のスキル"
+            return name
         }
 }

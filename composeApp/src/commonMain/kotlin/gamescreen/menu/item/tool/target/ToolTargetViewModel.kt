@@ -10,7 +10,7 @@ import gamescreen.menu.usecase.gettoolid.GetToolIdUseCase
 import gamescreen.text.TextBoxData
 import org.koin.core.component.inject
 
-class ToolTargetViewModel : ItemTargetViewModel() {
+class ToolTargetViewModel : ItemTargetViewModel<Int>() {
     override val itemRepository: ToolRepository by inject()
     private val indexRepository: IndexRepository by inject()
 

@@ -22,7 +22,7 @@ import values.Colors
 @Composable
 fun ItemListWindow(
     modifier: Modifier = Modifier,
-    itemListViewModel: ItemListViewModel,
+    itemListViewModel: ItemListViewModel<*>,
 ) {
     val user = itemListViewModel.userId
 
