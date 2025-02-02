@@ -53,7 +53,10 @@ import org.koin.dsl.module
 
 val ModuleMap = module {
     single {
-        MapViewModel()
+        MapViewModel(
+            restartUseCase = get(),
+            textRepository = get(),
+        )
     }
 
     single {

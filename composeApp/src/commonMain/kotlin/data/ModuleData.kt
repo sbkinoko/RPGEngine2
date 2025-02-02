@@ -29,6 +29,7 @@ val ModuleData = module {
         BattleDataRepositoryImpl(
             monsterRepository = get(),
             textRepository = get(),
+            maxHealUseCase = get(),
         )
     }
 

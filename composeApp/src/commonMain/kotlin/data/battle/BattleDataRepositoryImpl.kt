@@ -1,21 +1,27 @@
 package data.battle
 
 import core.domain.BattleEventCallback
+import core.usecase.heal.MaxHealUseCase
 import data.monster.MonsterRepository
 import gamescreen.battle.domain.BattleId
 import gamescreen.text.TextBoxData
 import gamescreen.text.repository.TextRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class BattleDataRepositoryImpl(
     private val monsterRepository: MonsterRepository,
     private val textRepository: TextRepository,
+
+    private val maxHealUseCase: MaxHealUseCase
 ) : BattleDataRepository {
     override fun getBattleMonsterData(battleId: BattleId): EventBattleData {
         return when (battleId) {
             BattleId.Battle1 -> EventBattleData(
-                monsterList = listOf(
+                monsterList = List(5) {
                     monsterRepository.getMonster(0)
-                ),
+                },
                 battleEventCallback = BattleEventCallback(
                     winCallback = {
                         textRepository.push(
@@ -27,8 +33,13 @@ class BattleDataRepositoryImpl(
                     loseCallback = {
                         textRepository.push(
                             textBoxData = TextBoxData(
-                                text = "また挑戦してね"
-                            )
+                                text = "また挑戦してね",
+                                callBack = {
+                                    CoroutineScope(Dispatchers.Default).launch {
+                                        maxHealUseCase.invoke()
+                                    }
+                                }
+                            ),
                         )
                     },
                 ),

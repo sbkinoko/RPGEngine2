@@ -2,10 +2,14 @@ package gamescreen.map.viewmodel
 
 import controller.domain.ControllerCallback
 import controller.domain.Stick
+import core.domain.BattleEventCallback
 import core.domain.ScreenType
 import core.domain.mapcell.CellType
 import core.repository.screentype.ScreenTypeRepository
-import gamescreen.map.data.NonLoopMap
+import core.usecase.restart.RestartUseCase
+import data.INITIAL_MAP_DATA
+import data.INITIAL_MAP_X
+import data.INITIAL_MAP_Y
 import gamescreen.map.domain.BackgroundCell
 import gamescreen.map.domain.Player
 import gamescreen.map.domain.Point
@@ -30,6 +34,8 @@ import gamescreen.map.usecase.event.actionevent.ActionEventUseCase
 import gamescreen.map.usecase.event.cellevent.CellEventUseCase
 import gamescreen.map.usecase.move.MoveBackgroundUseCase
 import gamescreen.map.usecase.roadmap.RoadMapUseCase
+import gamescreen.text.TextBoxData
+import gamescreen.text.repository.TextRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -40,7 +46,10 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import values.event.EventType
 
-class MapViewModel : ControllerCallback, KoinComponent {
+class MapViewModel(
+    private val restartUseCase: RestartUseCase,
+    private val textRepository: TextRepository,
+) : ControllerCallback, KoinComponent {
     private val playerPositionRepository: PlayerPositionRepository by inject()
     private val playerMoveManageUseCase: PlayerMoveManageUseCase by inject()
     private val velocityManageService: VelocityManageService by inject()
@@ -122,9 +131,9 @@ class MapViewModel : ControllerCallback, KoinComponent {
             )
 
             roadMapUseCase.invoke(
-                mapX = 3,
-                mapY = 2,
-                mapData = NonLoopMap(),
+                mapX = INITIAL_MAP_X,
+                mapY = INITIAL_MAP_Y,
+                mapData = INITIAL_MAP_DATA,
             )
         }
 
@@ -302,6 +311,19 @@ class MapViewModel : ControllerCallback, KoinComponent {
 
         startBattleUseCase.invoke(
             monsterList = monsterList,
+            battleEventCallback = BattleEventCallback(
+                winCallback = {},
+                loseCallback = {
+                    CoroutineScope(Dispatchers.Default).launch {
+                        restartUseCase.invoke()
+                        textRepository.push(
+                            textBoxData = TextBoxData(
+                                text = "全滅してしまった",
+                            )
+                        )
+                    }
+                }
+            )
         )
     }
 
