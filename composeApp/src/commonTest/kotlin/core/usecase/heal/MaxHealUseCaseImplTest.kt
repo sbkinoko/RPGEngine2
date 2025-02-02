@@ -27,18 +27,18 @@ class MaxHealUseCaseImplTest {
         }
 
         override val playerStatusFlow: StateFlow<List<PlayerStatus>>
-            get() = TODO("Not yet implemented")
+            get() = throw NotImplementedError()
 
         override fun getPlayers(): List<PlayerStatus> {
             return statusList
         }
 
         override fun getTool(playerId: Int, index: Int): ToolId {
-            TODO("Not yet implemented")
+            throw NotImplementedError()
         }
 
         override fun getSkill(playerId: Int, index: Int): SkillId {
-            TODO("Not yet implemented")
+            throw NotImplementedError()
         }
 
         override fun getStatus(id: Int): PlayerStatus {
