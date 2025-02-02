@@ -1,9 +1,11 @@
 package gamescreen.map.usecase.battlestart
 
+import core.ModuleCore
 import core.domain.ScreenType
 import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
 import core.domain.status.monster.MonsterStatus
 import core.repository.battlemonster.BattleMonsterRepository
+import core.repository.event.EventRepository
 import core.repository.screentype.ScreenTypeRepository
 import gamescreen.battle.domain.ActionData
 import gamescreen.battle.domain.ActionType
@@ -28,6 +30,7 @@ class StartBattleUseCaseImplTest : KoinTest {
     private lateinit var startBattleUseCase: StartBattleUseCase
 
     private val screenTypeRepository: ScreenTypeRepository by inject()
+    private val eventRepository: EventRepository by inject()
 
     var checkCommand = 0
     var checkAction = 0
@@ -38,6 +41,7 @@ class StartBattleUseCaseImplTest : KoinTest {
         startKoin {
             modules(
                 ModuleMain,
+                ModuleCore,
             )
         }
 
@@ -121,6 +125,7 @@ class StartBattleUseCaseImplTest : KoinTest {
                     checkAction++
                 }
             },
+            eventRepository = eventRepository,
         )
     }
 

@@ -1,8 +1,11 @@
 package gamescreen.map.usecase.battlestart
 
+import core.domain.BattleEventCallback
+import core.domain.BattleResult
 import core.domain.ScreenType
 import core.domain.status.monster.MonsterStatus
 import core.repository.battlemonster.BattleMonsterRepository
+import core.repository.event.EventRepository
 import core.repository.screentype.ScreenTypeRepository
 import gamescreen.battle.repository.action.ActionRepository
 import gamescreen.battle.repository.commandstate.CommandStateRepository
@@ -16,10 +19,12 @@ class StartBattleUseCaseImpl(
     private val screenTypeRepository: ScreenTypeRepository,
     private val commandStateRepository: CommandStateRepository,
     private val actionRepository: ActionRepository,
+    private val eventRepository: EventRepository,
 ) : StartBattleUseCase, KoinComponent {
 
     override operator fun invoke(
         monsterList: List<MonsterStatus>,
+        battleEventCallback: BattleEventCallback,
     ) {
         CoroutineScope(Dispatchers.Default).launch {
             battleMonsterRepository.setMonsters(
@@ -30,6 +35,10 @@ class StartBattleUseCaseImpl(
             )
             commandStateRepository.init()
             actionRepository.resetTarget()
+            eventRepository.setResult(BattleResult.None)
+            eventRepository.setCallBack(
+                battleEventCallback,
+            )
         }
     }
 }

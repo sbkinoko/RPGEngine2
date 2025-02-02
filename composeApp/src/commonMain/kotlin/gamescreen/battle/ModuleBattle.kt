@@ -84,7 +84,9 @@ val ModuleBattle = module {
     }
 
     single {
-        BattleFinishViewModel()
+        BattleFinishViewModel(
+            eventRepository = get(),
+        )
     }
 
     single<ActionRepository> {

@@ -1,5 +1,7 @@
 package gamescreen.battle.command.finish
 
+import core.domain.BattleResult
+import core.repository.event.EventRepository
 import core.repository.money.MoneyRepository
 import core.repository.player.PlayerStatusRepository
 import core.usecase.changetomap.ChangeToMapUseCase
@@ -22,7 +24,9 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.inject
 import values.TextData
 
-class BattleFinishViewModel : BattleChildViewModel() {
+class BattleFinishViewModel(
+    private val eventRepository: EventRepository,
+) : BattleChildViewModel() {
 
     private val changeToMapUseCase: ChangeToMapUseCase by inject()
 
@@ -41,6 +45,8 @@ class BattleFinishViewModel : BattleChildViewModel() {
 
     private var contentType: MutableStateFlow<ContentType> =
         MutableStateFlow(ContentType.None)
+
+    private var battleResult: BattleResult = BattleResult.None
 
     private val dropItemList: MutableStateFlow<List<ToolId>> =
         MutableStateFlow(listOf())
@@ -158,8 +164,10 @@ class BattleFinishViewModel : BattleChildViewModel() {
         isWin: Boolean,
     ) {
         contentType.value = if (isWin) {
+            battleResult = BattleResult.Win
             ContentType.Win
         } else {
+            battleResult = BattleResult.Lose
             ContentType.Lose
         }
     }
@@ -236,6 +244,9 @@ class BattleFinishViewModel : BattleChildViewModel() {
     private fun finishBattle() {
         changeToMapUseCase.invoke()
         contentType.value = ContentType.None
+        eventRepository.setResult(
+            battleResult
+        )
     }
 
     override fun pressB() {
