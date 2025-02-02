@@ -13,7 +13,7 @@ class EventRepositoryImpl : EventRepository {
 
     override fun setCallBack(
         winEvent: () -> Unit,
-        looseEvent: () -> Unit,
+        loseEvent: () -> Unit,
     ) {
         TODO("Not yet implemented")
     }
