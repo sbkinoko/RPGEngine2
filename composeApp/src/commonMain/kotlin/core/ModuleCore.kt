@@ -2,6 +2,8 @@ package core
 
 import core.repository.battlemonster.BattleMonsterRepository
 import core.repository.battlemonster.BattleMonsterRepositoryImpl
+import core.repository.event.EventRepository
+import core.repository.event.EventRepositoryImpl
 import core.repository.money.MoneyRepository
 import core.repository.money.MoneyRepositoryImpl
 import core.repository.player.PlayerStatusRepository
@@ -32,6 +34,10 @@ val ModuleCore = module {
 
     single<MoneyRepository> {
         MoneyRepositoryImpl()
+    }
+
+    single<EventRepository> {
+        EventRepositoryImpl()
     }
 
     single<CheckCanUseSkillUseCase> {
