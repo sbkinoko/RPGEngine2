@@ -40,7 +40,7 @@ class EventRepositoryImplTest : KoinTest {
         }
         eventRepository.setCallBack(
             winEvent = winCallBack,
-            looseEvent = loseCallback,
+            loseEvent = loseCallback,
         )
     }
 

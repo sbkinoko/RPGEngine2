@@ -10,6 +10,6 @@ interface EventRepository {
 
     fun setCallBack(
         winEvent: () -> Unit,
-        looseEvent: () -> Unit,
+        loseEvent: () -> Unit,
     )
 }

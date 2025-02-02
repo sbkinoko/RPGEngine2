@@ -36,7 +36,7 @@ class EventRepositoryImpl : EventRepository {
 
     override fun setCallBack(
         winEvent: () -> Unit,
-        looseEvent: () -> Unit,
+        loseEvent: () -> Unit,
     ) {
         this.winEvent = winEvent
         this.looseEvent = looseEvent
