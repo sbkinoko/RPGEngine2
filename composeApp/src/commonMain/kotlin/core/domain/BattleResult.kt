@@ -1,7 +1,5 @@
 package core.domain
 
-import core.domain.status.monster.MonsterStatus
-
 enum class BattleResult {
     Win,
     Lose,
@@ -28,8 +26,3 @@ data class BattleEventCallback(
             )
     }
 }
-
-data class EventBattleData(
-    val monsterList: List<MonsterStatus>,
-    val battleEventCallback: BattleEventCallback,
-)

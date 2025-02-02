@@ -1,7 +1,6 @@
 package data.battle
 
 import core.domain.BattleEventCallback
-import core.domain.EventBattleData
 import data.monster.MonsterRepository
 import gamescreen.battle.domain.BattleId
 import gamescreen.text.TextBoxData
