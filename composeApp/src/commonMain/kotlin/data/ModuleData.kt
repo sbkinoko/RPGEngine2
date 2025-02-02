@@ -28,6 +28,7 @@ val ModuleData = module {
     single<BattleDataRepository> {
         BattleDataRepositoryImpl(
             monsterRepository = get(),
+            textRepository = get(),
         )
     }
 

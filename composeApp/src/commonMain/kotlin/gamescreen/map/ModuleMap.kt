@@ -172,6 +172,7 @@ val ModuleMap = module {
             screenTypeRepository = get(),
             commandStateRepository = get(),
             actionRepository = get(),
+            eventRepository = get(),
         )
     }
 

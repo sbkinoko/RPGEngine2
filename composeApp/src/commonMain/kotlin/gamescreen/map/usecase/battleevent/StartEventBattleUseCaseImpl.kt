@@ -9,13 +9,14 @@ class StartEventBattleUseCaseImpl(
     private val startBattleUseCase: StartBattleUseCase
 ) : StartEventBattleUseCase {
     override fun invoke(battleId: BattleId) {
-        val monsters = battleDataRepository
+        val eventBattleData = battleDataRepository
             .getBattleMonsterData(
-                battleId = BattleId.Battle1,
+                battleId = battleId,
             )
 
         startBattleUseCase.invoke(
-            monsterList = monsters
+            monsterList = eventBattleData.monsterList,
+            battleEventCallback = eventBattleData.battleEventCallback,
         )
     }
 }
