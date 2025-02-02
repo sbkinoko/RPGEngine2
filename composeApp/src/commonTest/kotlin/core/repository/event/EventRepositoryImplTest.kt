@@ -1,6 +1,7 @@
 package core.repository.event
 
 import core.ModuleCore
+import core.domain.BattleEventCallback
 import core.domain.BattleResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -31,6 +32,11 @@ class EventRepositoryImplTest : KoinTest {
         Unit
     }
 
+    private val battleEventCallback = BattleEventCallback(
+        winCallback = winCallBack,
+        loseCallback = loseCallback,
+    )
+
     @BeforeTest
     fun beforeTest() {
         startKoin {
@@ -39,8 +45,7 @@ class EventRepositoryImplTest : KoinTest {
             )
         }
         eventRepository.setCallBack(
-            winEvent = winCallBack,
-            loseEvent = loseCallback,
+            battleEventCallback,
         )
     }
 

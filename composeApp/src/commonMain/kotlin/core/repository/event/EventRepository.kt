@@ -1,5 +1,6 @@
 package core.repository.event
 
+import core.domain.BattleEventCallback
 import core.domain.BattleResult
 import kotlinx.coroutines.flow.StateFlow
 
@@ -9,7 +10,6 @@ interface EventRepository {
     fun setResult(result: BattleResult)
 
     fun setCallBack(
-        winEvent: () -> Unit,
-        loseEvent: () -> Unit,
+        battleEventCallback: BattleEventCallback,
     )
 }
