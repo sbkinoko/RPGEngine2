@@ -7,6 +7,10 @@ class EventRepositoryImpl : EventRepository {
     override val resultStateFlow: StateFlow<BattleResult>
         get() = TODO("Not yet implemented")
 
+    override fun setResult(result: BattleResult) {
+        TODO("Not yet implemented")
+    }
+
     override fun setCallBack(
         winEvent: () -> Unit,
         looseEvent: () -> Unit,

@@ -6,6 +6,8 @@ import kotlinx.coroutines.flow.StateFlow
 interface EventRepository {
     val resultStateFlow: StateFlow<BattleResult>
 
+    fun setResult(result: BattleResult)
+
     fun setCallBack(
         winEvent: () -> Unit,
         looseEvent: () -> Unit,
