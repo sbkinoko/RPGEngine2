@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 
 class EventRepositoryImpl : EventRepository {
     private var winEvent = {}
-    private var looseEvent = {}
+    private var loseEvent = {}
 
     private val mutableBattleResultFlow = MutableStateFlow(
         BattleResult.None,
@@ -23,7 +23,7 @@ class EventRepositoryImpl : EventRepository {
             resultStateFlow.collect {
                 when (it) {
                     BattleResult.Win -> winEvent.invoke()
-                    BattleResult.Lose -> looseEvent.invoke()
+                    BattleResult.Lose -> loseEvent.invoke()
                     BattleResult.None -> Unit
                 }
             }
@@ -39,6 +39,6 @@ class EventRepositoryImpl : EventRepository {
         loseEvent: () -> Unit,
     ) {
         this.winEvent = winEvent
-        this.looseEvent = looseEvent
+        this.loseEvent = loseEvent
     }
 }
