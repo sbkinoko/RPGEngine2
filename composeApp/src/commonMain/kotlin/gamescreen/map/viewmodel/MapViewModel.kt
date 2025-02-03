@@ -100,18 +100,14 @@ class MapViewModel(
     // fixme 直接playerに入れちゃう
     private var tentativePlayerVelocity: Velocity = Velocity()
 
-    private var eventType: EventType = EventType.None
-        set(value) {
-            mutableEventTypeFlow.value = value
-            field = value
-        }
-    private val mutableEventTypeFlow = MutableStateFlow(
-        eventType
-    )
+    private val mutableEventTypeFlow =
+        MutableStateFlow<EventType>(
+            EventType.None
+        )
     val eventTypeFlow: StateFlow<EventType> = mutableEventTypeFlow.asStateFlow()
 
     private val canEvent: Boolean
-        get() = eventType != EventType.None
+        get() = eventTypeFlow.value != EventType.None
 
     val backgroundCells =
         backgroundRepository.backgroundStateFlow
@@ -139,6 +135,20 @@ class MapViewModel(
         CoroutineScope(Dispatchers.Default).launch {
             playerSquare.collect {
                 player = it
+
+                mutableEventTypeFlow.value = getEventTypeUseCase.invoke(
+                    it.eventSquare
+                )
+
+                // playerが入っているマスを設定
+                updateCellContainPlayerUseCase.invoke()
+
+                //　そのマスに基づいてイベントを呼び出し
+                playerCellRepository.eventCell?.let { cell ->
+                    cellEventUseCase.invoke(
+                        cell.cellType,
+                    )
+                }
             }
         }
     }
@@ -165,7 +175,9 @@ class MapViewModel(
             return
         }
 
-        val actualVelocity = checkMove()
+        val actualVelocity = checkMove(
+            velocity = tentativePlayerVelocity,
+        )
 
         val mediatedVelocity =
             velocityManageService.invoke(
@@ -184,24 +196,6 @@ class MapViewModel(
         moveBackgroundUseCase.invoke(
             velocity = mediatedVelocity.second,
             fieldSquare = fieldSquare,
-        )
-
-        checkEvent()
-
-        // playerが入っているマスを設定
-        updateCellContainPlayerUseCase.invoke()
-
-        //　そのマスに基づいてイベントを呼び出し
-        playerCellRepository.eventCell?.let {
-            cellEventUseCase.invoke(
-                it.cellType,
-            )
-        }
-    }
-
-    private fun checkEvent() {
-        eventType = getEventTypeUseCase.invoke(
-            player.eventSquare
         )
     }
 
@@ -254,23 +248,23 @@ class MapViewModel(
         tentativePlayerVelocity = velocity
     }
 
-    private fun checkMove(): Velocity {
+    private fun checkMove(velocity: Velocity): Velocity {
         val square = playerPositionRepository
             .getPlayerPosition()
             .square
             .move(
-                dx = tentativePlayerVelocity.x,
-                dy = tentativePlayerVelocity.y
+                dx = velocity.x,
+                dy = velocity.y
             )
 
         // このままの速度で動けるなら移動
         if (isCollidedUseCase.invoke(square).not()) {
-            return tentativePlayerVelocity
+            return velocity
         }
 
         // 動けないので動ける最大の速度を取得
         return playerMoveManageUseCase.getMovableVelocity(
-            tentativePlayerVelocity = tentativePlayerVelocity,
+            tentativePlayerVelocity = velocity,
         )
     }
 
@@ -282,7 +276,9 @@ class MapViewModel(
     }
 
     private fun event() {
-        actionEventUseCase.invoke(eventType)
+        actionEventUseCase.invoke(
+            eventType = eventTypeFlow.value,
+        )
     }
 
     fun touchCharacter() {
