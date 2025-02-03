@@ -9,6 +9,7 @@ data class Player(
     val square: Square,
     val actualVelocity: Velocity,
     val tentativeVelocity: Velocity,
+    val moveDistance: Float,
 ) {
     constructor(size: Float) : this(
         size = size,
@@ -20,6 +21,7 @@ data class Player(
             0f,
         ),
         tentativeVelocity = Velocity(),
+        moveDistance = 0f,
     )
 
     val dir
@@ -33,10 +35,12 @@ data class Player(
             square = square.move(
                 dx = actualVelocity.x,
                 dy = actualVelocity.y,
-            )
+            ),
+            moveDistance = moveDistance + actualVelocity.scalar,
         )
     }
 
+    //fixme 不要なので削除
     fun move(dx: Float, dy: Float): Player {
         return copy(
             square = square.move(
@@ -51,7 +55,8 @@ data class Player(
             square = square.moveTo(
                 x = x,
                 y = y,
-            )
+            ),
+            moveDistance = 0f,
         )
     }
 

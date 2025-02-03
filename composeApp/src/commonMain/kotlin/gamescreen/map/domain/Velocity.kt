@@ -2,6 +2,7 @@ package gamescreen.map.domain
 
 import common.Normalizer
 import kotlin.math.abs
+import kotlin.math.sqrt
 
 data class Velocity(
     val maxVelocity: Float = MAX,
@@ -18,6 +19,9 @@ data class Velocity(
             this@Velocity.y = y
         }
     }
+
+    val scalar: Float
+        get() = sqrt(x * x + y * y)
 
     val isMoving: Boolean
         get() = x != 0f ||
