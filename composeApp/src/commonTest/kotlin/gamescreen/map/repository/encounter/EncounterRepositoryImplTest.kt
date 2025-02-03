@@ -12,6 +12,7 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
+import kotlin.test.assertTrue
 
 class EncounterRepositoryImplTest : KoinTest {
 
@@ -68,6 +69,10 @@ class EncounterRepositoryImplTest : KoinTest {
             encounterRepository.resetCount()
         }
 
+        assertTrue {
+            battleCount.toFloat() in
+                    EXPECTED_BATTLE_NUM * LOW..EXPECTED_BATTLE_NUM * HIGH
+        }
         assertNotEquals(
             illegal = 0,
             actual = battleCount,
@@ -95,13 +100,16 @@ class EncounterRepositoryImplTest : KoinTest {
             encounterRepository.resetCount()
         }
 
-        assertNotEquals(
-            illegal = 0,
-            actual = battleCount,
-        )
+        assertTrue {
+            battleCount.toFloat() in
+                    EXPECTED_BATTLE_NUM * LOW..EXPECTED_BATTLE_NUM * HIGH
+        }
     }
 
     companion object {
-        private const val TEST_NUM = 100
+        private const val TEST_NUM = 1000
+        private const val EXPECTED_BATTLE_NUM = TEST_NUM * GameParams.ENCOUNTER_PROBABILITY / 100
+        private const val LOW = 0.8f
+        private const val HIGH = 1.2f
     }
 }
