@@ -40,6 +40,7 @@ data class Player(
         )
     }
 
+    //fixme 不要なので削除
     fun move(dx: Float, dy: Float): Player {
         return copy(
             square = square.move(
@@ -54,7 +55,8 @@ data class Player(
             square = square.moveTo(
                 x = x,
                 y = y,
-            )
+            ),
+            moveDistance = 0f,
         )
     }
 
