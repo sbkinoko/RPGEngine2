@@ -36,7 +36,7 @@ data class Player(
                 dx = actualVelocity.x,
                 dy = actualVelocity.y,
             ),
-            moveDistance = moveDistance + actualVelocity.scalar
+            moveDistance = moveDistance + actualVelocity.scalar,
         )
     }
 
