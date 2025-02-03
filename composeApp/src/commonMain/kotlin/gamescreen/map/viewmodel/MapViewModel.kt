@@ -166,11 +166,11 @@ class MapViewModel(
             return
         }
 
-        checkMove()
+        val actualVelocity = checkMove()
 
         val mediatedVelocity =
             velocityManageService.invoke(
-                tentativePlayerVelocity = tentativePlayerVelocity,
+                tentativePlayerVelocity = actualVelocity,
                 playerMoveArea = playerMoveArea.square,
                 playerSquare = player.square,
             )
@@ -178,6 +178,7 @@ class MapViewModel(
         playerMoveUseCase.invoke(
             player = player.copy(
                 actualVelocity = mediatedVelocity.first,
+                tentativeVelocity = tentativePlayerVelocity,
                 dir = tentativePlayerVelocity.toDir(),
             ),
         )
@@ -255,7 +256,7 @@ class MapViewModel(
         tentativePlayerVelocity = velocity
     }
 
-    private fun checkMove() {
+    private fun checkMove(): Velocity {
         val square = playerPositionRepository
             .getPlayerPosition()
             .square
@@ -266,11 +267,11 @@ class MapViewModel(
 
         // このままの速度で動けるなら移動
         if (isCollidedUseCase.invoke(square).not()) {
-            return
+            return tentativePlayerVelocity
         }
 
         // 動けないので動ける最大の速度を取得
-        tentativePlayerVelocity = playerMoveManageUseCase.getMovableVelocity(
+        return playerMoveManageUseCase.getMovableVelocity(
             tentativePlayerVelocity = tentativePlayerVelocity,
         )
     }
