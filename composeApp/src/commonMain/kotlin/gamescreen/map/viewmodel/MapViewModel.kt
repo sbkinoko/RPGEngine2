@@ -17,6 +17,7 @@ import gamescreen.map.domain.Velocity
 import gamescreen.map.domain.collision.PlayerMoveSquare
 import gamescreen.map.domain.collision.square.NormalSquare
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
+import gamescreen.map.repository.encouter.EncounterRepository
 import gamescreen.map.repository.npc.NPCRepository
 import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.repository.playercell.PlayerCellRepository
@@ -48,6 +49,7 @@ import values.event.EventType
 class MapViewModel(
     private val restartUseCase: RestartUseCase,
     private val textRepository: TextRepository,
+    private val encounterRepository: EncounterRepository,
 ) : ControllerCallback, KoinComponent {
     private val playerPositionRepository: PlayerPositionRepository by inject()
     private val playerMoveManageUseCase: PlayerMoveManageUseCase by inject()
@@ -189,13 +191,21 @@ class MapViewModel(
             player = player.copy(
                 actualVelocity = mediatedVelocity.first,
                 tentativeVelocity = tentativePlayerVelocity,
-            ),
+            )
         )
 
         moveBackgroundUseCase.invoke(
             velocity = mediatedVelocity.second,
             fieldSquare = fieldSquare,
         )
+
+        if (encounterRepository.judgeStartBattle(
+                distance = actualVelocity.scalar,
+            )
+        ) {
+            startBattle()
+            resetTapPoint()
+        }
     }
 
     /**
@@ -289,6 +299,10 @@ class MapViewModel(
     }
 
     override fun pressB() {
+        startBattle()
+    }
+
+    private fun startBattle() {
         val monsterList = decideBattleMonsterUseCase.invoke()
 
         startBattleUseCase.invoke(
@@ -308,6 +322,7 @@ class MapViewModel(
             )
         )
     }
+
 
     override fun pressM() {
         showMenu()

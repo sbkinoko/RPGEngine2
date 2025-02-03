@@ -59,6 +59,7 @@ val ModuleMap = module {
         MapViewModel(
             restartUseCase = get(),
             textRepository = get(),
+            encounterRepository = get(),
         )
     }
 
