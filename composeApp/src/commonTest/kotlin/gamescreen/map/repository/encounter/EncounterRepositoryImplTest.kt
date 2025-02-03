@@ -84,20 +84,18 @@ class EncounterRepositoryImplTest : KoinTest {
         var battleCount = 0
         repeat(TEST_NUM) {
             if (encounterRepository.judgeStartBattle(
-                    GameParams.ENCOUNTER_DISTANCE.toFloat() - 10f,
+                    GameParams.ENCOUNTER_DISTANCE.toFloat() / 2f,
                 )
             ) {
                 battleCount++
             }
 
             if (encounterRepository.judgeStartBattle(
-                    GameParams.ENCOUNTER_DISTANCE.toFloat() - 10f,
+                    GameParams.ENCOUNTER_DISTANCE.toFloat() / 2f,
                 )
             ) {
                 battleCount++
             }
-
-            encounterRepository.resetCount()
         }
 
         assertTrue {
