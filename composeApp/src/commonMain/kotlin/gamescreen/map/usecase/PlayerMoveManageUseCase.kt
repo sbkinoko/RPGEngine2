@@ -2,27 +2,37 @@ package gamescreen.map.usecase
 
 import gamescreen.map.domain.Player
 import gamescreen.map.domain.Velocity
-import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.usecase.collision.iscollided.IsCollidedUseCase
 import kotlin.math.abs
 
 class PlayerMoveManageUseCase(
-    private val playerPositionRepository: PlayerPositionRepository,
     private val isCollidedUseCase: IsCollidedUseCase,
 ) {
-    private val player: Player
-        get() = playerPositionRepository.getPlayerPosition()
+    private lateinit var player: Player
 
-
-    // fixme 引数にplayerを取るようにする
-    // fixme リポジトリの削除
     /**
      * 移動可能な速度を返す
      */
     fun getMovableVelocity(
+        player: Player,
         tentativePlayerVelocity: Velocity,
     ): Velocity {
+        this.player = player
         val square = player.square
+
+        val moveBoth = square
+            .move(
+                dx = tentativePlayerVelocity.x,
+                dy = tentativePlayerVelocity.y
+            )
+
+        // このままの速度で動けるなら移動
+        if (isCollidedUseCase.invoke(
+                playerSquare = moveBoth,
+            ).not()
+        ) {
+            return tentativePlayerVelocity
+        }
 
         //　x方向だけの移動ができるかチェック
         val onlyMoveX = square.move(

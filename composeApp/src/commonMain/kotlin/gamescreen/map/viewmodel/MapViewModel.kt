@@ -16,7 +16,6 @@ import gamescreen.map.domain.Point
 import gamescreen.map.domain.Velocity
 import gamescreen.map.domain.collision.PlayerMoveSquare
 import gamescreen.map.domain.collision.square.NormalSquare
-import gamescreen.map.domain.toDir
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.npc.NPCRepository
 import gamescreen.map.repository.player.PlayerPositionRepository
@@ -98,21 +97,16 @@ class MapViewModel(
         borderRate = MOVE_BORDER,
     )
 
-    // fixme 直接playerに入れちゃう
     private var tentativePlayerVelocity: Velocity = Velocity()
 
-    private var eventType: EventType = EventType.None
-        set(value) {
-            mutableEventTypeFlow.value = value
-            field = value
-        }
-    private val mutableEventTypeFlow = MutableStateFlow(
-        eventType
-    )
+    private val mutableEventTypeFlow =
+        MutableStateFlow<EventType>(
+            EventType.None
+        )
     val eventTypeFlow: StateFlow<EventType> = mutableEventTypeFlow.asStateFlow()
 
     private val canEvent: Boolean
-        get() = eventType != EventType.None
+        get() = eventTypeFlow.value != EventType.None
 
     val backgroundCells =
         backgroundRepository.backgroundStateFlow
@@ -140,6 +134,20 @@ class MapViewModel(
         CoroutineScope(Dispatchers.Default).launch {
             playerSquare.collect {
                 player = it
+
+                mutableEventTypeFlow.value = getEventTypeUseCase.invoke(
+                    it.eventSquare
+                )
+
+                // playerが入っているマスを設定
+                updateCellContainPlayerUseCase.invoke()
+
+                //　そのマスに基づいてイベントを呼び出し
+                playerCellRepository.eventCell?.let { cell ->
+                    cellEventUseCase.invoke(
+                        cell.cellType,
+                    )
+                }
             }
         }
     }
@@ -166,43 +174,27 @@ class MapViewModel(
             return
         }
 
-        checkMove()
+        val actualVelocity = checkMove(
+            velocity = tentativePlayerVelocity,
+        )
 
         val mediatedVelocity =
             velocityManageService.invoke(
-                tentativePlayerVelocity = tentativePlayerVelocity,
+                tentativePlayerVelocity = actualVelocity,
                 playerMoveArea = playerMoveArea.square,
                 playerSquare = player.square,
             )
 
         playerMoveUseCase.invoke(
             player = player.copy(
-                velocity = mediatedVelocity.first,
-                dir = tentativePlayerVelocity.toDir(),
+                actualVelocity = mediatedVelocity.first,
+                tentativeVelocity = tentativePlayerVelocity,
             ),
         )
 
         moveBackgroundUseCase.invoke(
             velocity = mediatedVelocity.second,
             fieldSquare = fieldSquare,
-        )
-
-        checkEvent()
-
-        // playerが入っているマスを設定
-        updateCellContainPlayerUseCase.invoke()
-
-        //　そのマスに基づいてイベントを呼び出し
-        playerCellRepository.eventCell?.let {
-            cellEventUseCase.invoke(
-                it.cellType,
-            )
-        }
-    }
-
-    private fun checkEvent() {
-        eventType = getEventTypeUseCase.invoke(
-            player.eventSquare
         )
     }
 
@@ -255,23 +247,11 @@ class MapViewModel(
         tentativePlayerVelocity = velocity
     }
 
-    private fun checkMove() {
-        val square = playerPositionRepository
-            .getPlayerPosition()
-            .square
-            .move(
-                dx = tentativePlayerVelocity.x,
-                dy = tentativePlayerVelocity.y
-            )
-
-        // このままの速度で動けるなら移動
-        if (isCollidedUseCase.invoke(square).not()) {
-            return
-        }
-
+    private fun checkMove(velocity: Velocity): Velocity {
         // 動けないので動ける最大の速度を取得
-        tentativePlayerVelocity = playerMoveManageUseCase.getMovableVelocity(
-            tentativePlayerVelocity = tentativePlayerVelocity,
+        return playerMoveManageUseCase.getMovableVelocity(
+            player = player,
+            tentativePlayerVelocity = velocity,
         )
     }
 
@@ -283,7 +263,9 @@ class MapViewModel(
     }
 
     private fun event() {
-        actionEventUseCase.invoke(eventType)
+        actionEventUseCase.invoke(
+            eventType = eventTypeFlow.value,
+        )
     }
 
     fun touchCharacter() {
