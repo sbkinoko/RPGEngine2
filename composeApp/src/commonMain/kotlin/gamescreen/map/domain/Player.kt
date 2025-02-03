@@ -4,7 +4,6 @@ import gamescreen.map.domain.collision.square.NormalSquare
 import gamescreen.map.domain.collision.square.Square
 import gamescreen.map.viewmodel.MapViewModel.Companion.VIRTUAL_PLAYER_SIZE
 
-// fixme 移動用の速度と方向判定用の速度を分ける
 data class Player(
     val size: Float,
     val square: Square,

@@ -97,7 +97,6 @@ class MapViewModel(
         borderRate = MOVE_BORDER,
     )
 
-    // fixme 直接playerに入れちゃう
     private var tentativePlayerVelocity: Velocity = Velocity()
 
     private val mutableEventTypeFlow =
