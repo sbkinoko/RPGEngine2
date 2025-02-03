@@ -10,7 +10,6 @@ data class Player(
     val square: Square,
     val actualVelocity: Velocity,
     val tentativeVelocity: Velocity,
-    val dir: PlayerDir,
 ) {
     constructor(size: Float) : this(
         size = size,
@@ -22,8 +21,10 @@ data class Player(
             0f,
         ),
         tentativeVelocity = Velocity(),
-        dir = PlayerDir.NONE,
     )
+
+    val dir
+        get() = tentativeVelocity.toDir()
 
     val maxVelocity: Float
         get() = actualVelocity.maxVelocity

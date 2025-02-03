@@ -16,7 +16,6 @@ import gamescreen.map.domain.Point
 import gamescreen.map.domain.Velocity
 import gamescreen.map.domain.collision.PlayerMoveSquare
 import gamescreen.map.domain.collision.square.NormalSquare
-import gamescreen.map.domain.toDir
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.npc.NPCRepository
 import gamescreen.map.repository.player.PlayerPositionRepository
@@ -179,7 +178,6 @@ class MapViewModel(
             player = player.copy(
                 actualVelocity = mediatedVelocity.first,
                 tentativeVelocity = tentativePlayerVelocity,
-                dir = tentativePlayerVelocity.toDir(),
             ),
         )
 
