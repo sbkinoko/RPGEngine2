@@ -8,7 +8,8 @@ import gamescreen.map.viewmodel.MapViewModel.Companion.VIRTUAL_PLAYER_SIZE
 data class Player(
     val size: Float,
     val square: Square,
-    val velocity: Velocity,
+    val actualVelocity: Velocity,
+    val tentativeVelocity: Velocity,
     val dir: PlayerDir,
 ) {
     constructor(size: Float) : this(
@@ -16,21 +17,22 @@ data class Player(
         square = NormalSquare(
             size = size,
         ),
-        velocity = Velocity(
+        actualVelocity = Velocity(
             0f,
             0f,
         ),
+        tentativeVelocity = Velocity(),
         dir = PlayerDir.NONE,
     )
 
     val maxVelocity: Float
-        get() = velocity.maxVelocity
+        get() = actualVelocity.maxVelocity
 
     fun move(): Player {
         return copy(
             square = square.move(
-                dx = velocity.x,
-                dy = velocity.y,
+                dx = actualVelocity.x,
+                dy = actualVelocity.y,
             )
         )
     }

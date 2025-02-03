@@ -177,7 +177,7 @@ class MapViewModel(
 
         playerMoveUseCase.invoke(
             player = player.copy(
-                velocity = mediatedVelocity.first,
+                actualVelocity = mediatedVelocity.first,
                 dir = tentativePlayerVelocity.toDir(),
             ),
         )
