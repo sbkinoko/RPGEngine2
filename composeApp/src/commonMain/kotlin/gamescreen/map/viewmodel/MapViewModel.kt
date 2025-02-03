@@ -248,21 +248,9 @@ class MapViewModel(
     }
 
     private fun checkMove(velocity: Velocity): Velocity {
-        val square = playerPositionRepository
-            .getPlayerPosition()
-            .square
-            .move(
-                dx = velocity.x,
-                dy = velocity.y
-            )
-
-        // このままの速度で動けるなら移動
-        if (isCollidedUseCase.invoke(square).not()) {
-            return velocity
-        }
-
         // 動けないので動ける最大の速度を取得
         return playerMoveManageUseCase.getMovableVelocity(
+            player = player,
             tentativePlayerVelocity = velocity,
         )
     }

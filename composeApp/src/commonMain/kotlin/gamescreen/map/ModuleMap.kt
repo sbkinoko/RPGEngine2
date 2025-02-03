@@ -132,7 +132,6 @@ val ModuleMap = module {
 
     single {
         PlayerMoveManageUseCase(
-            playerPositionRepository = get(),
             isCollidedUseCase = get(),
         )
     }
