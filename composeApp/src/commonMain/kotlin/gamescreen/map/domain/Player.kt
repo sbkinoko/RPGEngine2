@@ -9,6 +9,7 @@ data class Player(
     val square: Square,
     val actualVelocity: Velocity,
     val tentativeVelocity: Velocity,
+    val moveDistance: Float,
 ) {
     constructor(size: Float) : this(
         size = size,
@@ -20,6 +21,7 @@ data class Player(
             0f,
         ),
         tentativeVelocity = Velocity(),
+        moveDistance = 0f,
     )
 
     val dir
