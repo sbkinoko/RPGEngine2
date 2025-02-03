@@ -5,6 +5,8 @@ import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.backgroundcell.BackgroundRepositoryImpl
 import gamescreen.map.repository.collision.CollisionRepository
 import gamescreen.map.repository.collision.CollisionRepositoryImpl
+import gamescreen.map.repository.encouter.EncounterRepository
+import gamescreen.map.repository.encouter.EncounterRepositoryImpl
 import gamescreen.map.repository.npc.NPCRepository
 import gamescreen.map.repository.npc.NPCRepositoryImpl
 import gamescreen.map.repository.player.PlayerPositionRepository
@@ -84,6 +86,10 @@ val ModuleMap = module {
 
     single<NPCRepository> {
         NPCRepositoryImpl()
+    }
+
+    single<EncounterRepository> {
+        EncounterRepositoryImpl()
     }
 
     single<PlayerMoveUseCase> {
