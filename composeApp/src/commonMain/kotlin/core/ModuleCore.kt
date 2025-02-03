@@ -2,16 +2,22 @@ package core
 
 import core.repository.battlemonster.BattleMonsterRepository
 import core.repository.battlemonster.BattleMonsterRepositoryImpl
+import core.repository.event.EventRepository
+import core.repository.event.EventRepositoryImpl
 import core.repository.money.MoneyRepository
 import core.repository.money.MoneyRepositoryImpl
 import core.repository.player.PlayerStatusRepository
 import core.repository.player.PlayerStatusRepositoryImpl
 import core.usecase.changetomap.ChangeToMapUseCase
 import core.usecase.changetomap.ChangeToMapUseCaseImpl
+import core.usecase.heal.MaxHealUseCase
+import core.usecase.heal.MaxHealUseCaseImpl
 import core.usecase.item.checkcanuseskill.CheckCanUseSkillUseCase
 import core.usecase.item.checkcanuseskill.CheckCanUseSkillUseCaseImpl
 import core.usecase.item.usetool.UseToolUseCase
 import core.usecase.item.usetool.UseToolUseCaseImpl
+import core.usecase.restart.RestartUseCase
+import core.usecase.restart.RestartUseCaseImpl
 import core.usecase.updateparameter.UpdateMonsterStatusUseCase
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
 import core.usecase.updateparameter.UpdatePlayerStatusUseCaseImpl
@@ -32,6 +38,10 @@ val ModuleCore = module {
 
     single<MoneyRepository> {
         MoneyRepositoryImpl()
+    }
+
+    single<EventRepository> {
+        EventRepositoryImpl()
     }
 
     single<CheckCanUseSkillUseCase> {
@@ -71,6 +81,19 @@ val ModuleCore = module {
         GetToolIdUseCaseImpl(
             playerStatusRepository = get(),
             bagRepository = get(),
+        )
+    }
+
+    single<MaxHealUseCase> {
+        MaxHealUseCaseImpl(
+            playerStatusRepository = get(),
+        )
+    }
+
+    single<RestartUseCase> {
+        RestartUseCaseImpl(
+            roadMapUseCase = get(),
+            maxHealUseCase = get(),
         )
     }
 }
