@@ -35,7 +35,8 @@ data class Player(
             square = square.move(
                 dx = actualVelocity.x,
                 dy = actualVelocity.y,
-            )
+            ),
+            moveDistance = moveDistance + actualVelocity.scalar
         )
     }
 
