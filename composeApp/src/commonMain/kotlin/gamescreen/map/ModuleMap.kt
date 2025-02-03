@@ -16,7 +16,6 @@ import gamescreen.map.service.velocitymanage.VelocityManageServiceImpl
 import gamescreen.map.usecase.GetScreenCenterUseCase
 import gamescreen.map.usecase.PlayerMoveManageUseCase
 import gamescreen.map.usecase.PlayerMoveToUseCase
-import gamescreen.map.usecase.PlayerMoveUseCase
 import gamescreen.map.usecase.UpdateCellContainPlayerUseCase
 import gamescreen.map.usecase.battledecidemonster.DecideBattleMonsterUseCase
 import gamescreen.map.usecase.battledecidemonster.DecideBattleMonsterUseCaseImpl
@@ -38,6 +37,8 @@ import gamescreen.map.usecase.event.cellevent.CellEventUseCase
 import gamescreen.map.usecase.event.cellevent.CellEventUseCaseImpl
 import gamescreen.map.usecase.move.MoveBackgroundUseCase
 import gamescreen.map.usecase.move.MoveBackgroundUseCaseImpl
+import gamescreen.map.usecase.moveplayer.PlayerMoveUseCase
+import gamescreen.map.usecase.moveplayer.PlayerMoveUseCaseImpl
 import gamescreen.map.usecase.resetnpc.ResetNPCPositionUseCase
 import gamescreen.map.usecase.resetnpc.ResetNPCPositionUseCaseImpl
 import gamescreen.map.usecase.resetposition.ResetBackgroundPositionUseCase
@@ -85,8 +86,8 @@ val ModuleMap = module {
         NPCRepositoryImpl()
     }
 
-    single {
-        PlayerMoveUseCase(
+    single<PlayerMoveUseCase> {
+        PlayerMoveUseCaseImpl(
             playerPositionRepository = get(),
         )
     }

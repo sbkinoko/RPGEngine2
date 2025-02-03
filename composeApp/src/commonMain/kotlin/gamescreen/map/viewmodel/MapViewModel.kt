@@ -22,7 +22,6 @@ import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.repository.playercell.PlayerCellRepository
 import gamescreen.map.service.velocitymanage.VelocityManageService
 import gamescreen.map.usecase.PlayerMoveManageUseCase
-import gamescreen.map.usecase.PlayerMoveUseCase
 import gamescreen.map.usecase.UpdateCellContainPlayerUseCase
 import gamescreen.map.usecase.battledecidemonster.DecideBattleMonsterUseCase
 import gamescreen.map.usecase.battlestart.StartBattleUseCase
@@ -32,6 +31,7 @@ import gamescreen.map.usecase.collision.list.GetCollisionListUseCase
 import gamescreen.map.usecase.event.actionevent.ActionEventUseCase
 import gamescreen.map.usecase.event.cellevent.CellEventUseCase
 import gamescreen.map.usecase.move.MoveBackgroundUseCase
+import gamescreen.map.usecase.moveplayer.PlayerMoveUseCase
 import gamescreen.map.usecase.roadmap.RoadMapUseCase
 import gamescreen.text.TextBoxData
 import gamescreen.text.repository.TextRepository

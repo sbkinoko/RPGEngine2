@@ -1,12 +1,12 @@
-package gamescreen.map.usecase
+package gamescreen.map.usecase.moveplayer
 
 import gamescreen.map.domain.Player
 import gamescreen.map.repository.player.PlayerPositionRepository
 
-class PlayerMoveUseCase(
+class PlayerMoveUseCaseImpl(
     private val playerPositionRepository: PlayerPositionRepository,
-) {
-    suspend operator fun invoke(
+) : PlayerMoveUseCase {
+    override suspend operator fun invoke(
         player: Player,
     ) {
         playerPositionRepository.setPlayerPosition(
