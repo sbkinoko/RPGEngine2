@@ -3,6 +3,7 @@ package gamescreen.map.domain
 import gamescreen.map.domain.collision.square.NormalSquare
 import gamescreen.map.domain.collision.square.Square
 import gamescreen.map.viewmodel.MapViewModel.Companion.VIRTUAL_PLAYER_SIZE
+import values.event.EventType
 
 data class Player(
     val size: Float,
@@ -10,6 +11,7 @@ data class Player(
     val actualVelocity: Velocity,
     val tentativeVelocity: Velocity,
     val moveDistance: Float,
+    val eventType: EventType,
 ) {
     constructor(size: Float) : this(
         size = size,
@@ -22,6 +24,7 @@ data class Player(
         ),
         tentativeVelocity = Velocity(),
         moveDistance = 0f,
+        eventType = EventType.None,
     )
 
     val dir

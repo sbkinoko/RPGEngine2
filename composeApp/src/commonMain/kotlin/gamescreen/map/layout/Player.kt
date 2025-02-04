@@ -15,7 +15,6 @@ import androidx.compose.ui.Modifier
 import common.extension.pxToDp
 import gamescreen.map.viewmodel.MapViewModel
 import values.Colors
-import values.event.EventType
 
 @Composable
 fun Player(
@@ -25,10 +24,6 @@ fun Player(
 ) {
     val player by mapViewModel
         .playerSquare
-        .collectAsState()
-
-    val eventType by mapViewModel
-        .eventTypeFlow
         .collectAsState()
 
     Box(
@@ -57,10 +52,10 @@ fun Player(
             )
             .size((player.eventSquare.size * screenRatio).pxToDp())
             .background(
-                if (eventType == EventType.None) {
-                    Colors.NotEventCollision
-                } else {
+                if (player.eventType.canEvent) {
                     Colors.CanEventCollision
+                } else {
+                    Colors.NotEventCollision
                 }
             )
             .clickable {
