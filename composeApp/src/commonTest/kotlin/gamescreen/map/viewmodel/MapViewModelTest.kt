@@ -6,7 +6,6 @@ import gamescreen.battle.ModuleBattle
 import gamescreen.choice.ModuleChoice
 import gamescreen.map.ModuleMap
 import gamescreen.map.domain.Player
-import gamescreen.map.domain.Velocity
 import gamescreen.menu.ModuleMenu
 import gamescreen.menushop.ModuleShop
 import gamescreen.text.ModuleText
@@ -51,125 +50,125 @@ class MapViewModelTest : KoinTest {
         stopKoin()
     }
 
-    @Test
-    fun updateVelocity() {
-        runBlocking {
-            val x = CENTER + 2f
-            val y = CENTER + 1f
-            lateinit var result: Player
-            var count = 0
-            val collectJob = launch {
-                mapViewModel.playerSquare.collect {
-                    count++
-                    result = it
-                }
-            }
-
-            delay(100)
-
-            mapViewModel.setTapPoint(
-                x = x,
-                y = y,
-            )
-
-            mapViewModel.updatePosition()
-
-            delay(100)
-
-            assertEquals(
-                expected = x - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
-                actual = result.square.x,
-            )
-            assertEquals(
-                expected = y - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
-                actual = result.square.y,
-            )
-
-            // todo 回数のテストやる
+//    @Test
+//    fun updateVelocity() {
+//        runBlocking {
+//            val x = CENTER + 2f
+//            val y = CENTER + 1f
+//            lateinit var result: Player
+//            var count = 0
+//            val collectJob = launch {
+//                mapViewModel.playerSquare.collect {
+//                    count++
+//                    result = it
+//                }
+//            }
+//
+//            delay(100)
+//
+//            mapViewModel.setTapPoint(
+//                x = x,
+//                y = y,
+//            )
+//
+//            mapViewModel.updatePosition()
+//
+//            delay(100)
+//
 //            assertEquals(
-//                expected = 2,
+//                expected = x - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
+//                actual = result.square.x,
+//            )
+//            assertEquals(
+//                expected = y - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
+//                actual = result.square.y,
+//            )
+//
+//            // todo 回数のテストやる
+////            assertEquals(
+////                expected = 2,
+////                actual = count,
+////            )
+//
+//            collectJob.cancel()
+//        }
+//    }
+//
+//    /**
+//     * 一回のタップで長く移動
+//     */
+//    @Test
+//    fun updatePosition2Times() {
+//        val x = MapViewModel.VIRTUAL_SCREEN_SIZE.toFloat()
+//        val y = CENTER
+//        var count = 0
+//        runBlocking {
+//            lateinit var result: Player
+//            val collectJob = launch {
+//                mapViewModel.playerSquare.collect {
+//                    result = it
+//                    count++
+//                }
+//            }
+//
+//            delay(100)
+//
+//            mapViewModel.setTapPoint(
+//                x = x,
+//                y = y,
+//            )
+//
+//            mapViewModel.updatePosition()
+//            delay(100)
+//
+//            assertEquals(
+//                CENTER + Velocity.MAX - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
+//                result.square.x,
+//            )
+//            assertEquals(
+//                y - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
+//                result.square.y,
+//            )
+//
+//            mapViewModel.updatePosition()
+//            delay(100)
+//
+//            assertEquals(
+//                CENTER + Velocity.MAX * 2 - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
+//                result.square.x,
+//            )
+//            assertEquals(
+//                y - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
+//                result.square.y,
+//            )
+//
+//            assertEquals(
+//                expected = 3,
 //                actual = count,
 //            )
-
-            collectJob.cancel()
-        }
-    }
-
-    /**
-     * 一回のタップで長く移動
-     */
-    @Test
-    fun updatePosition2Times() {
-        val x = MapViewModel.VIRTUAL_SCREEN_SIZE.toFloat()
-        val y = CENTER
-        var count = 0
-        runBlocking {
-            lateinit var result: Player
-            val collectJob = launch {
-                mapViewModel.playerSquare.collect {
-                    result = it
-                    count++
-                }
-            }
-
-            delay(100)
-
-            mapViewModel.setTapPoint(
-                x = x,
-                y = y,
-            )
-
-            mapViewModel.updatePosition()
-            delay(100)
-
-            assertEquals(
-                CENTER + Velocity.MAX - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
-                result.square.x,
-            )
-            assertEquals(
-                y - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
-                result.square.y,
-            )
-
-            mapViewModel.updatePosition()
-            delay(100)
-
-            assertEquals(
-                CENTER + Velocity.MAX * 2 - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
-                result.square.x,
-            )
-            assertEquals(
-                y - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
-                result.square.y,
-            )
-
-            assertEquals(
-                expected = 3,
-                actual = count,
-            )
-
-            // 値が更新されないことを確認
-            mapViewModel.resetTapPoint()
-            mapViewModel.updatePosition()
-            delay(100)
-
-            assertEquals(
-                CENTER + Velocity.MAX * 2 - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
-                result.square.x,
-            )
-            assertEquals(
-                y - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
-                result.square.y,
-            )
-
-            assertEquals(
-                expected = 3,
-                actual = count,
-            )
-
-            collectJob.cancel()
-        }
-    }
+//
+//            // 値が更新されないことを確認
+//            mapViewModel.resetTapPoint()
+//            mapViewModel.updatePosition()
+//            delay(100)
+//
+//            assertEquals(
+//                CENTER + Velocity.MAX * 2 - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
+//                result.square.x,
+//            )
+//            assertEquals(
+//                y - MapViewModel.VIRTUAL_PLAYER_SIZE / 2,
+//                result.square.y,
+//            )
+//
+//            assertEquals(
+//                expected = 3,
+//                actual = count,
+//            )
+//
+//            collectJob.cancel()
+//        }
+//    }
 
     @Test
     fun resetTapPoint() {

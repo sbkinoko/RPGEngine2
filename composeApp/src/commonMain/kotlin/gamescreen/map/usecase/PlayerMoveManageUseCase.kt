@@ -5,6 +5,8 @@ import gamescreen.map.domain.Velocity
 import gamescreen.map.usecase.collision.iscollided.IsCollidedUseCase
 import kotlin.math.abs
 
+// todo invokeにする
+// todo interfaceを作成する
 class PlayerMoveManageUseCase(
     private val isCollidedUseCase: IsCollidedUseCase,
 ) {
