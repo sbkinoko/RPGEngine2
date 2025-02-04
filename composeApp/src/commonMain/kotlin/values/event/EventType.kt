@@ -10,4 +10,7 @@ sealed class EventType {
     class Box(
         val id: BoxId,
     ) : EventType()
+
+    val canEvent: Boolean
+        get() = this != None
 }

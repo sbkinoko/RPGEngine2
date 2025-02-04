@@ -38,13 +38,10 @@ import gamescreen.text.TextBoxData
 import gamescreen.text.repository.TextRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import values.event.EventType
 
 class MapViewModel(
     private val restartUseCase: RestartUseCase,
@@ -101,14 +98,9 @@ class MapViewModel(
 
     private var tentativePlayerVelocity: Velocity = Velocity()
 
-    private val mutableEventTypeFlow =
-        MutableStateFlow<EventType>(
-            EventType.None
-        )
-    val eventTypeFlow: StateFlow<EventType> = mutableEventTypeFlow.asStateFlow()
 
     private val canEvent: Boolean
-        get() = eventTypeFlow.value != EventType.None
+        get() = playerPositionRepository.playerPositionStateFlow.value.eventType.canEvent
 
     val backgroundCells =
         backgroundRepository.backgroundStateFlow
@@ -135,10 +127,13 @@ class MapViewModel(
 
         CoroutineScope(Dispatchers.Default).launch {
             playerSquare.collect {
-                player = it
-
-                mutableEventTypeFlow.value = getEventTypeUseCase.invoke(
-                    it.eventSquare
+                player = it.copy(
+                    eventType = getEventTypeUseCase.invoke(
+                        it.eventSquare
+                    )
+                )
+                playerPositionRepository.setPlayerPosition(
+                    player = player,
                 )
 
                 // playerが入っているマスを設定
@@ -274,7 +269,7 @@ class MapViewModel(
 
     private fun event() {
         actionEventUseCase.invoke(
-            eventType = eventTypeFlow.value,
+            eventType = player.eventType,
         )
     }
 
