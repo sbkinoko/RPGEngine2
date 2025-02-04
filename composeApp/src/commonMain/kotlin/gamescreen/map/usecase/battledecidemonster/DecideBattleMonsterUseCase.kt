@@ -1,11 +1,14 @@
 package gamescreen.map.usecase.battledecidemonster
 
 import core.domain.status.monster.MonsterStatus
+import gamescreen.map.domain.BackgroundCell
 
 interface DecideBattleMonsterUseCase {
 
     /**
      * 戦闘するモンスターのリストを返す
      */
-    operator fun invoke(): List<MonsterStatus>
+    operator fun invoke(
+        backgroundCell: BackgroundCell,
+    ): List<MonsterStatus>
 }

@@ -26,6 +26,10 @@ class StartBattleUseCaseImpl(
         monsterList: List<MonsterStatus>,
         battleEventCallback: BattleEventCallback,
     ) {
+        if (monsterList.isEmpty()) {
+            return
+        }
+
         CoroutineScope(Dispatchers.Default).launch {
             battleMonsterRepository.setMonsters(
                 monsterList

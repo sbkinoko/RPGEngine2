@@ -23,15 +23,21 @@ sealed class CellType {
      */
     sealed interface ObjectCell
 
+    /**
+     * 敵が出る可能性のあるマス
+     */
+    sealed interface MonsterCell
 
-    data object Glass : CellType()
+
+    data object Glass : CellType(), MonsterCell
     data object Water : CollisionCell, CellType()
 
     data object Town1I : EventCell, CellType()
     data object Town1O : EventCell, CellType()
 
 
-    data object Road : CellType()
+    data object Road : CellType(), MonsterCell
+
     class Box(
         val id: BoxId,
     ) : CollisionCell,

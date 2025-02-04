@@ -14,6 +14,8 @@ class PlayerCellRepositoryImpl : PlayerCellRepository {
 
     private var prePlayerIncludeCell: BackgroundCell? = null
 
+    override lateinit var playerCenterCell: BackgroundCell
+
     override var playerIncludeCell: BackgroundCell? = null
         set(value) {
             prePlayerIncludeCell = field
