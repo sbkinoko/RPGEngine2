@@ -31,7 +31,6 @@ import gamescreen.map.usecase.collision.list.GetCollisionListUseCase
 import gamescreen.map.usecase.event.actionevent.ActionEventUseCase
 import gamescreen.map.usecase.event.cellevent.CellEventUseCase
 import gamescreen.map.usecase.move.MoveBackgroundUseCase
-import gamescreen.map.usecase.moveplayer.PlayerMoveUseCase
 import gamescreen.map.usecase.roadmap.RoadMapUseCase
 import gamescreen.text.TextBoxData
 import gamescreen.text.repository.TextRepository
@@ -52,8 +51,6 @@ class MapViewModel(
     private val velocityManageService: VelocityManageService by inject()
 
     private val screenTypeRepository: ScreenTypeRepository by inject()
-
-    private val playerMoveUseCase: PlayerMoveUseCase by inject()
 
     private val getEventTypeUseCase: GetEventTypeUseCase by inject()
 
@@ -84,8 +81,6 @@ class MapViewModel(
 
     val playerSquare: StateFlow<Player> =
         playerPositionRepository.playerPositionStateFlow
-
-    private var player: Player = Player(size = 0f)
 
     private var tapPoint: Point? = null
 
@@ -122,29 +117,6 @@ class MapViewModel(
                 mapData = INITIAL_MAP_DATA,
             )
         }
-
-        CoroutineScope(Dispatchers.Default).launch {
-            playerSquare.collect {
-                player = it.copy(
-                    eventType = getEventTypeUseCase.invoke(
-                        it.eventSquare
-                    )
-                )
-                playerPositionRepository.setPlayerPosition(
-                    player = player,
-                )
-
-                // playerが入っているマスを設定
-                updateCellContainPlayerUseCase.invoke()
-
-                //　そのマスに基づいてイベントを呼び出し
-                playerCellRepository.eventCell?.let { cell ->
-                    cellEventUseCase.invoke(
-                        cell.cellType,
-                    )
-                }
-            }
-        }
     }
 
     private val fieldSquare: NormalSquare = NormalSquare(
@@ -158,6 +130,7 @@ class MapViewModel(
      */
     suspend fun updatePosition() {
         // fixme テストに影響がありそうなので確認する
+        var player = playerSquare.value
 
         // タップしていたら位置を更新
         if (tapPoint != null) {
@@ -169,9 +142,11 @@ class MapViewModel(
             return
         }
 
-        val actualVelocity = checkMove(
-            velocity = tentativePlayerVelocity,
-        )
+        val actualVelocity = playerMoveManageUseCase
+            .getMovableVelocity(
+                player = player,
+                tentativePlayerVelocity = tentativePlayerVelocity,
+            )
 
         val mediatedVelocity =
             velocityManageService.invoke(
@@ -180,17 +155,35 @@ class MapViewModel(
                 playerSquare = player.square,
             )
 
-        playerMoveUseCase.invoke(
-            player = player.copy(
-                actualVelocity = mediatedVelocity.first,
-                tentativeVelocity = tentativePlayerVelocity,
-            )
-        )
+        player = player.copy(
+            actualVelocity = mediatedVelocity.first,
+            tentativeVelocity = tentativePlayerVelocity,
+        ).move()
 
         moveBackgroundUseCase.invoke(
             velocity = mediatedVelocity.second,
             fieldSquare = fieldSquare,
         )
+
+        player = player.copy(
+            eventType = getEventTypeUseCase.invoke(
+                player.eventSquare
+            )
+        )
+
+        playerPositionRepository.setPlayerPosition(
+            player = player,
+        )
+
+        // playerが入っているマスを設定
+        updateCellContainPlayerUseCase.invoke()
+
+        //　そのマスに基づいてイベントを呼び出し
+        playerCellRepository.eventCell?.let { cell ->
+            cellEventUseCase.invoke(
+                cell.cellType,
+            )
+        }
 
         if (encounterRepository.judgeStartBattle(
                 distance = actualVelocity.scalar,
@@ -220,8 +213,8 @@ class MapViewModel(
      */
     private fun updateVelocityByTap(tapPoint: Point) {
         val square = playerPositionRepository.getPlayerPosition().square
-        val dx = (tapPoint.x) - (square.x + player.size / 2)
-        val dy = (tapPoint.y) - (square.y + player.size / 2)
+        val dx = (tapPoint.x) - (square.x + playerSquare.value.size / 2)
+        val dy = (tapPoint.y) - (square.y + playerSquare.value.size / 2)
         tentativePlayerVelocity = Velocity(
             x = dx,
             y = dy,
@@ -229,8 +222,8 @@ class MapViewModel(
     }
 
     private fun updateVelocityByStick(dx: Float, dy: Float) {
-        val vx = player.maxVelocity * dx
-        val vy = player.maxVelocity * dy
+        val vx = playerSquare.value.maxVelocity * dx
+        val vy = playerSquare.value.maxVelocity * dy
         tentativePlayerVelocity = Velocity(
             x = vx,
             y = vy,
@@ -250,14 +243,6 @@ class MapViewModel(
         tentativePlayerVelocity = velocity
     }
 
-    private fun checkMove(velocity: Velocity): Velocity {
-        // 動けないので動ける最大の速度を取得
-        return playerMoveManageUseCase.getMovableVelocity(
-            player = player,
-            tentativePlayerVelocity = velocity,
-        )
-    }
-
     fun getAroundCellId(x: Int, y: Int): Array<Array<CellType>> {
         return backgroundRepository.getBackgroundAround(
             x = x,
@@ -267,7 +252,7 @@ class MapViewModel(
 
     private fun event() {
         actionEventUseCase.invoke(
-            eventType = player.eventType,
+            eventType = playerSquare.value.eventType,
         )
     }
 
