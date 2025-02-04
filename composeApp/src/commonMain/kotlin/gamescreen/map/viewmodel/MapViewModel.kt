@@ -280,8 +280,12 @@ class MapViewModel(
         startBattle()
     }
 
-    private fun startBattle() {
-        val monsterList = decideBattleMonsterUseCase.invoke()
+    private fun startBattle(
+    ) {
+        val backgroundCell = playerCellRepository.playerCenterCell
+        val monsterList = decideBattleMonsterUseCase.invoke(
+            backgroundCell = backgroundCell,
+        )
 
         startBattleUseCase.invoke(
             monsterList = monsterList,
