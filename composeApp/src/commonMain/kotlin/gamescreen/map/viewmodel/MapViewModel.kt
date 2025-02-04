@@ -27,7 +27,6 @@ import gamescreen.map.usecase.UpdateCellContainPlayerUseCase
 import gamescreen.map.usecase.battledecidemonster.DecideBattleMonsterUseCase
 import gamescreen.map.usecase.battlestart.StartBattleUseCase
 import gamescreen.map.usecase.collision.geteventtype.GetEventTypeUseCase
-import gamescreen.map.usecase.collision.iscollided.IsCollidedUseCase
 import gamescreen.map.usecase.collision.list.GetCollisionListUseCase
 import gamescreen.map.usecase.event.actionevent.ActionEventUseCase
 import gamescreen.map.usecase.event.cellevent.CellEventUseCase
@@ -56,7 +55,6 @@ class MapViewModel(
 
     private val playerMoveUseCase: PlayerMoveUseCase by inject()
 
-    private val isCollidedUseCase: IsCollidedUseCase by inject()
     private val getEventTypeUseCase: GetEventTypeUseCase by inject()
 
     private val moveBackgroundUseCase: MoveBackgroundUseCase by inject()
