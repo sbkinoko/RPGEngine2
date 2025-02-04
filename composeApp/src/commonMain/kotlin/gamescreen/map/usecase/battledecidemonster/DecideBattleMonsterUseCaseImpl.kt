@@ -1,19 +1,31 @@
 package gamescreen.map.usecase.battledecidemonster
 
+import core.domain.mapcell.CellType
 import core.domain.status.monster.MonsterStatus
 import data.monster.MonsterRepository
-import kotlin.random.Random
+import gamescreen.map.domain.BackgroundCell
 
 class DecideBattleMonsterUseCaseImpl(
     private val monsterRepository: MonsterRepository,
 ) : DecideBattleMonsterUseCase {
-    override fun invoke(): List<MonsterStatus> {
-        // fixme マスによって出現モンスターを変える
-        // ランダムで1~5の敵を作成
-        return List(
-            Random.nextInt(5) + 1,
-        ) {
-            monsterRepository.getMonster(1)
+    override fun invoke(
+        backgroundCell: BackgroundCell,
+    ): List<MonsterStatus> {
+        val cellType = backgroundCell.cellType as? CellType.MonsterCell
+            ?: return emptyList()
+
+        return when (cellType) {
+            CellType.Glass -> List(
+                5,
+            ) {
+                monsterRepository.getMonster(1)
+            }
+
+            CellType.Road -> List(
+                2,
+            ) {
+                monsterRepository.getMonster(1)
+            }
         }
     }
 }
