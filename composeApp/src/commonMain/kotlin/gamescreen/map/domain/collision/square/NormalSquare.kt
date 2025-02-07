@@ -62,4 +62,17 @@ data class NormalSquare(
             )
         )
     }
+
+    companion object {
+        fun smallSquare(
+            size: Int,
+            rate: Float
+        ): NormalSquare {
+            return NormalSquare(
+                x = size * rate,
+                y = size * rate,
+                size = size * (1 - 2 * rate),
+            )
+        }
+    }
 }

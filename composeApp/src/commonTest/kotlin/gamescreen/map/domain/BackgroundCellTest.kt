@@ -1,5 +1,6 @@
 package gamescreen.map.domain
 
+import gamescreen.map.domain.background.BackgroundCell
 import gamescreen.map.domain.collision.square.NormalSquare
 import kotlin.test.Test
 import kotlin.test.assertEquals

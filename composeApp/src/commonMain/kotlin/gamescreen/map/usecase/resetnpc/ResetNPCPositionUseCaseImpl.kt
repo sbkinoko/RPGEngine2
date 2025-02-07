@@ -1,6 +1,7 @@
 package gamescreen.map.usecase.resetnpc
 
 import gamescreen.map.data.MapData
+import gamescreen.map.domain.npc.NPCData
 import gamescreen.map.repository.npc.NPCRepository
 import gamescreen.map.viewmodel.MapViewModel
 import kotlinx.coroutines.runBlocking
@@ -38,7 +39,7 @@ class ResetNPCPositionUseCaseImpl(
             }
 
             npcRepository.setNpc(
-                npcList,
+                NPCData(npcList),
             )
         }
     }

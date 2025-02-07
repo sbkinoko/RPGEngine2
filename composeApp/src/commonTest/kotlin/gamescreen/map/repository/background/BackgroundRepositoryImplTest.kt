@@ -4,8 +4,9 @@ import core.domain.mapcell.CellType
 import gamescreen.map.ModuleMap
 import gamescreen.map.data.LoopTestMap
 import gamescreen.map.data.NonLoopTestMap
-import gamescreen.map.domain.BackgroundCell
 import gamescreen.map.domain.MapPoint
+import gamescreen.map.domain.background.BackgroundCell
+import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.domain.collision.square.NormalSquare
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import kotlinx.coroutines.Job
@@ -25,19 +26,21 @@ class BackgroundRepositoryImplTest : KoinTest {
 
     private val repository: BackgroundRepository by inject()
 
-    private val background = List(3)
-    { row ->
-        List(3) { col ->
-            BackgroundCell(
-                square = NormalSquare(
-                    x = row * 10f,
-                    y = col * 10f,
-                    size = 10f,
-                ),
-                mapPoint = MapPoint(),
-            )
+    private val background = BackgroundData(
+        List(3)
+        { row ->
+            List(3) { col ->
+                BackgroundCell(
+                    square = NormalSquare(
+                        x = row * 10f,
+                        y = col * 10f,
+                        size = 10f,
+                    ),
+                    mapPoint = MapPoint(),
+                )
+            }
         }
-    }
+    )
 
     @BeforeTest
     fun beforeTest() {
@@ -69,7 +72,7 @@ class BackgroundRepositoryImplTest : KoinTest {
 
             repository.getBackgroundAt(0, 0).apply {
                 assertEquals(
-                    expected = background[0][0],
+                    expected = background.fieldData[0][0],
                     actual = this,
                 )
             }
@@ -79,7 +82,7 @@ class BackgroundRepositoryImplTest : KoinTest {
     @Test
     fun checkFlow() {
         runBlocking {
-            lateinit var result: List<List<BackgroundCell>>
+            lateinit var result: BackgroundData
             var count = 0
             val collectJob: Job = launch {
                 repository.backgroundStateFlow.collect {

@@ -1,6 +1,6 @@
 package gamescreen.map.usecase
 
-import gamescreen.map.domain.BackgroundCell
+import gamescreen.map.domain.background.BackgroundCell
 import gamescreen.map.domain.collision.square.NormalSquare
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.player.PlayerPositionRepository
@@ -14,6 +14,7 @@ class UpdateCellContainPlayerUseCase(
     private val playerCellRepository: PlayerCellRepository,
     private val backgroundRepository: BackgroundRepository,
 ) {
+    // fixme プレイヤーの位置と背景の位置は外から入れる
     operator fun invoke() {
         var playerIncludeCell: BackgroundCell? = null
         lateinit var centerCell: BackgroundCell
@@ -32,6 +33,7 @@ class UpdateCellContainPlayerUseCase(
         backgroundRepository
             .backgroundStateFlow
             .value
+            .fieldData
             .map row@{ rowArray ->
                 rowArray.map { cell ->
                     if (center.isIn(cell.square)) {

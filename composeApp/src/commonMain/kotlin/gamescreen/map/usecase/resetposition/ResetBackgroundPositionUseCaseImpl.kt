@@ -1,7 +1,8 @@
 package gamescreen.map.usecase.resetposition
 
 import gamescreen.map.data.MapData
-import gamescreen.map.domain.BackgroundCell
+import gamescreen.map.domain.background.BackgroundCell
+import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.domain.collision.square.NormalSquare
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import kotlinx.coroutines.runBlocking
@@ -19,7 +20,7 @@ class ResetBackgroundPositionUseCaseImpl(
             // map情報を更新
             backgroundRepository.mapData = mapData
 
-            val background: List<List<BackgroundCell>> =
+            val background =
                 backgroundRepository.run {
                     List(allCellNum) { row ->
                         List(allCellNum) { col ->
@@ -49,7 +50,9 @@ class ResetBackgroundPositionUseCaseImpl(
 
             // 更新した情報を元に背景リセット
             backgroundRepository.setBackground(
-                background = background,
+                background = BackgroundData(
+                    fieldData = background,
+                ),
             )
         }
     }

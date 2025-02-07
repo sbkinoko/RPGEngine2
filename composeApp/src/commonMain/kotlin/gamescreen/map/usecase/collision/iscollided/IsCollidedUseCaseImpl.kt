@@ -15,6 +15,7 @@ class IsCollidedUseCaseImpl(
         backgroundRepository
             .backgroundStateFlow
             .value
+            .fieldData
             .forEach { rowArray ->
                 rowArray.forEach cell@{ cell ->
                     val collisionList = getCollisionListUseCase.invoke(

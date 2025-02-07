@@ -1,8 +1,8 @@
 package gamescreen.map.repository.playercell
 
 import gamescreen.map.ModuleMap
-import gamescreen.map.domain.BackgroundCell
 import gamescreen.map.domain.MapPoint
+import gamescreen.map.domain.background.BackgroundCell
 import gamescreen.map.domain.collision.square.NormalSquare
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

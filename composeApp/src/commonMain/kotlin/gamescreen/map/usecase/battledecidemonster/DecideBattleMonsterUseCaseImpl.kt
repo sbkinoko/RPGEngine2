@@ -3,7 +3,7 @@ package gamescreen.map.usecase.battledecidemonster
 import core.domain.mapcell.CellType
 import core.domain.status.monster.MonsterStatus
 import data.monster.MonsterRepository
-import gamescreen.map.domain.BackgroundCell
+import gamescreen.map.domain.background.BackgroundCell
 
 class DecideBattleMonsterUseCaseImpl(
     private val monsterRepository: MonsterRepository,
