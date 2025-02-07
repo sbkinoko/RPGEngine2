@@ -4,11 +4,9 @@ import gamescreen.map.domain.BackgroundCell
 import gamescreen.map.domain.Velocity
 import gamescreen.map.domain.collision.square.NormalSquare
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
-import gamescreen.map.repository.npc.NPCRepository
 
 class MoveBackgroundUseCaseImpl(
     private val backgroundRepository: BackgroundRepository,
-    private val npcRepository: NPCRepository,
 ) : MoveBackgroundUseCase {
 
     override suspend operator fun invoke(
@@ -34,23 +32,6 @@ class MoveBackgroundUseCaseImpl(
 
         backgroundRepository.setBackground(
             background = background,
-        )
-
-        val npcList = npcRepository.npcStateFlow.value.map { npc ->
-            npc.eventSquare.let {
-                npc.copy(
-                    eventSquare = it.copy(
-                        square = it.square.move(
-                            dx = velocity.x,
-                            dy = velocity.y,
-                        )
-                    )
-                )
-            }
-        }
-
-        npcRepository.setNpc(
-            npcList = npcList,
         )
     }
 

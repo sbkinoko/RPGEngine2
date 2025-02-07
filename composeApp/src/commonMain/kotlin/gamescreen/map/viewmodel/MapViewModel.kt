@@ -31,6 +31,7 @@ import gamescreen.map.usecase.collision.list.GetCollisionListUseCase
 import gamescreen.map.usecase.event.actionevent.ActionEventUseCase
 import gamescreen.map.usecase.event.cellevent.CellEventUseCase
 import gamescreen.map.usecase.move.MoveBackgroundUseCase
+import gamescreen.map.usecase.movenpc.MoveNPCUseCase
 import gamescreen.map.usecase.roadmap.RoadMapUseCase
 import gamescreen.text.TextBoxData
 import gamescreen.text.repository.TextRepository
@@ -45,6 +46,8 @@ class MapViewModel(
     private val restartUseCase: RestartUseCase,
     private val textRepository: TextRepository,
     private val encounterRepository: EncounterRepository,
+
+    private val moveNPCUseCase: MoveNPCUseCase,
 ) : ControllerCallback, KoinComponent {
     private val playerPositionRepository: PlayerPositionRepository by inject()
     private val playerMoveManageUseCase: PlayerMoveManageUseCase by inject()
@@ -163,6 +166,10 @@ class MapViewModel(
         moveBackgroundUseCase.invoke(
             velocity = mediatedVelocity.second,
             fieldSquare = fieldSquare,
+        )
+
+        moveNPCUseCase.invoke(
+            velocity = mediatedVelocity.second,
         )
 
         player = player.copy(

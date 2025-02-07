@@ -39,6 +39,8 @@ import gamescreen.map.usecase.event.cellevent.CellEventUseCase
 import gamescreen.map.usecase.event.cellevent.CellEventUseCaseImpl
 import gamescreen.map.usecase.move.MoveBackgroundUseCase
 import gamescreen.map.usecase.move.MoveBackgroundUseCaseImpl
+import gamescreen.map.usecase.movenpc.MoveNPCUseCase
+import gamescreen.map.usecase.movenpc.MoveNPCUseCaseImpl
 import gamescreen.map.usecase.moveplayer.PlayerMoveUseCase
 import gamescreen.map.usecase.moveplayer.PlayerMoveUseCaseImpl
 import gamescreen.map.usecase.resetnpc.ResetNPCPositionUseCase
@@ -60,6 +62,7 @@ val ModuleMap = module {
             restartUseCase = get(),
             textRepository = get(),
             encounterRepository = get(),
+            moveNPCUseCase = get(),
         )
     }
 
@@ -108,6 +111,11 @@ val ModuleMap = module {
     single<MoveBackgroundUseCase> {
         MoveBackgroundUseCaseImpl(
             backgroundRepository = get(),
+        )
+    }
+
+    single<MoveNPCUseCase> {
+        MoveNPCUseCaseImpl(
             npcRepository = get(),
         )
     }
