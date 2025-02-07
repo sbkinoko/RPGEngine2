@@ -115,9 +115,7 @@ val ModuleMap = module {
     }
 
     single<MoveNPCUseCase> {
-        MoveNPCUseCaseImpl(
-            npcRepository = get(),
-        )
+        MoveNPCUseCaseImpl()
     }
 
     single<ResetBackgroundPositionUseCase> {
