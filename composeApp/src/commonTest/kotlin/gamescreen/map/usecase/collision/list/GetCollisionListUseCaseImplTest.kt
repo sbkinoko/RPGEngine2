@@ -1,8 +1,8 @@
 package gamescreen.map.usecase.collision.list
 
 import core.domain.mapcell.CellType
-import gamescreen.map.domain.BackgroundCell
 import gamescreen.map.domain.MapPoint
+import gamescreen.map.domain.background.BackgroundCell
 import gamescreen.map.domain.collision.ShapeCollisionDetect
 import gamescreen.map.domain.collision.square.NormalSquare
 import gamescreen.map.domain.collision.square.Square

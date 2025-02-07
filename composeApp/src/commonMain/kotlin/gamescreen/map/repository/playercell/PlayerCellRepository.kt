@@ -1,6 +1,6 @@
 package gamescreen.map.repository.playercell
 
-import gamescreen.map.domain.BackgroundCell
+import gamescreen.map.domain.background.BackgroundCell
 import kotlinx.coroutines.flow.StateFlow
 
 interface PlayerCellRepository {

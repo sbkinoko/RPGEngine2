@@ -2,14 +2,13 @@ package gamescreen.map.usecase.move
 
 import gamescreen.map.ModuleMap
 import gamescreen.map.data.LoopTestMap
-import gamescreen.map.domain.BackgroundCell
 import gamescreen.map.domain.Velocity
+import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.domain.collision.square.NormalSquare
 import gamescreen.map.manager.CELL_NUM
 import gamescreen.map.manager.SIDE_LENGTH
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.usecase.resetposition.ResetBackgroundPositionUseCase
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -27,6 +26,12 @@ class MoveBackgroundUseCaseTestLoop : KoinTest {
 
     private val mapData = LoopTestMap()
 
+    private lateinit var backgroundData: BackgroundData
+
+    val BackgroundData.leftTopCell
+        get() = this.fieldData[0][0]
+
+
     @BeforeTest
     fun beforeTest() {
         startKoin {
@@ -43,6 +48,8 @@ class MoveBackgroundUseCaseTestLoop : KoinTest {
             mapX = 0,
             mapY = 0,
         )
+
+        backgroundData = repository.backgroundStateFlow.value
     }
 
     @AfterTest
@@ -52,10 +59,7 @@ class MoveBackgroundUseCaseTestLoop : KoinTest {
 
     @Test
     fun checkFirstPosition() {
-        repository.getBackgroundAt(
-            x = 0,
-            y = 0,
-        ).apply {
+        backgroundData.leftTopCell.apply {
             square.apply {
                 assertEquals(
                     expected = 0f,
@@ -97,11 +101,8 @@ class MoveBackgroundUseCaseTestLoop : KoinTest {
                     y = 0f,
                     size = SIDE_LENGTH.toFloat(),
                 ),
-            )
-
-            delay(50)
-
-            getLeftTopCell().apply {
+                backgroundData = backgroundData,
+            ).leftTopCell.apply {
                 square.apply {
                     assertEquals(
                         expected = 0f,
@@ -145,11 +146,8 @@ class MoveBackgroundUseCaseTestLoop : KoinTest {
                     y = 0f,
                     size = SIDE_LENGTH.toFloat(),
                 ),
-            )
-
-            delay(50)
-
-            getLeftTopCell().apply {
+                backgroundData = backgroundData
+            ).leftTopCell.apply {
                 square.apply {
                     assertEquals(
                         expected = 0f,
@@ -193,10 +191,8 @@ class MoveBackgroundUseCaseTestLoop : KoinTest {
                     y = 0f,
                     size = SIDE_LENGTH.toFloat(),
                 ),
-            )
-            delay(50)
-
-            getLeftTopCell().apply {
+                backgroundData = backgroundData,
+            ).leftTopCell.apply {
                 square.apply {
                     assertEquals(
                         expected = 25f,
@@ -219,7 +215,6 @@ class MoveBackgroundUseCaseTestLoop : KoinTest {
                 }
             }
         }
-
     }
 
     /**
@@ -241,11 +236,8 @@ class MoveBackgroundUseCaseTestLoop : KoinTest {
                     y = 0f,
                     size = SIDE_LENGTH.toFloat(),
                 ),
-            )
-
-            delay(50)
-
-            getLeftTopCell().apply {
+                backgroundData = backgroundData,
+            ).leftTopCell.apply {
                 square.apply {
                     assertEquals(
                         expected = -dx + SIDE_LENGTH,
@@ -268,16 +260,6 @@ class MoveBackgroundUseCaseTestLoop : KoinTest {
                 }
             }
         }
-    }
-
-    /**
-     * 中心が(0,0)　左上のセルは(-1,-1) ループしてるので(3,3)
-     */
-    private fun getLeftTopCell(): BackgroundCell {
-        return repository.getBackgroundAt(
-            x = 0,
-            y = 0,
-        )
     }
 
     companion object {

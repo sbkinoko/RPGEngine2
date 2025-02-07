@@ -1,6 +1,6 @@
 package gamescreen.map.usecase
 
-import gamescreen.map.domain.BackgroundCell
+import gamescreen.map.domain.background.BackgroundCell
 import gamescreen.map.domain.collision.square.NormalSquare
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.player.PlayerPositionRepository
@@ -32,6 +32,7 @@ class UpdateCellContainPlayerUseCase(
         backgroundRepository
             .backgroundStateFlow
             .value
+            .fieldData
             .map row@{ rowArray ->
                 rowArray.map { cell ->
                     if (center.isIn(cell.square)) {

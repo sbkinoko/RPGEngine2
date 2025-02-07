@@ -1,7 +1,7 @@
 package gamescreen.map.usecase.battledecidemonster
 
 import core.domain.status.monster.MonsterStatus
-import gamescreen.map.domain.BackgroundCell
+import gamescreen.map.domain.background.BackgroundCell
 
 interface DecideBattleMonsterUseCase {
 

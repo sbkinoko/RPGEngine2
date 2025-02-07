@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import common.extension.pxToDp
-import gamescreen.map.domain.BackgroundCell
+import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.viewmodel.MapViewModel
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
@@ -27,7 +27,7 @@ fun Background(
     mapViewModel: MapViewModel,
     screenRatio: Float,
 ) {
-    val backgroundCell: List<List<BackgroundCell>> by mapViewModel
+    val backgroundCell: BackgroundData by mapViewModel
         .backgroundCells
         .collectAsState()
 
@@ -39,7 +39,7 @@ fun Background(
 
     // fixme 背景が動いてない場合はリロードしない
     Box {
-        backgroundCell.forEachIndexed { row, backgroundCells ->
+        backgroundCell.fieldData.forEachIndexed { row, backgroundCells ->
             backgroundCells.forEachIndexed { col, cell ->
                 cell.apply {
                     val aroundCellId = mapViewModel.getAroundCellId(
