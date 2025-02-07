@@ -10,10 +10,10 @@ import core.usecase.restart.RestartUseCase
 import data.INITIAL_MAP_DATA
 import data.INITIAL_MAP_X
 import data.INITIAL_MAP_Y
-import gamescreen.map.domain.BackgroundCell
 import gamescreen.map.domain.Player
 import gamescreen.map.domain.Point
 import gamescreen.map.domain.Velocity
+import gamescreen.map.domain.background.BackgroundCell
 import gamescreen.map.domain.collision.PlayerMoveSquare
 import gamescreen.map.domain.collision.square.NormalSquare
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
@@ -158,14 +158,19 @@ class MapViewModel(
                 playerSquare = player.square,
             )
 
+        val backgroundData = backgroundRepository
+            .backgroundStateFlow
+            .value
+
         player = player.copy(
             actualVelocity = mediatedVelocity.first,
             tentativeVelocity = tentativePlayerVelocity,
         ).move()
 
-        moveBackgroundUseCase.invoke(
+        val movedBackgroundData = moveBackgroundUseCase.invoke(
             velocity = mediatedVelocity.second,
             fieldSquare = fieldSquare,
+            backgroundData = backgroundData
         )
 
         moveNPCUseCase.invoke(
@@ -180,6 +185,10 @@ class MapViewModel(
 
         playerPositionRepository.setPlayerPosition(
             player = player,
+        )
+
+        backgroundRepository.setBackground(
+            background = movedBackgroundData,
         )
 
         // playerが入っているマスを設定

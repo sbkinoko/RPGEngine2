@@ -17,7 +17,7 @@ class GetEventTypeUseCaseImpl(
     override fun invoke(
         square: Square,
     ): EventType {
-        backgroundRepository.backgroundStateFlow.value.forEach { rowArray ->
+        backgroundRepository.backgroundStateFlow.value.fieldData.forEach { rowArray ->
             rowArray.forEach cell@{ cell ->
                 val collisionList = getCollisionListUseCase.invoke(
                     backgroundCell = cell,

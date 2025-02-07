@@ -3,7 +3,8 @@ package gamescreen.map.repository.backgroundcell
 import core.domain.mapcell.CellType
 import gamescreen.map.data.LoopMap
 import gamescreen.map.data.MapData
-import gamescreen.map.domain.BackgroundCell
+import gamescreen.map.domain.background.BackgroundCell
+import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.viewmodel.MapViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,7 +15,7 @@ class BackgroundRepositoryImpl : BackgroundRepository {
         BackgroundRepository.initialBackground
     )
 
-    override val backgroundStateFlow: StateFlow<List<List<BackgroundCell>>>
+    override val backgroundStateFlow: StateFlow<BackgroundData>
         get() = mutableBackgroundStateFlow.asStateFlow()
 
     override var mapData: MapData = LoopMap()
@@ -29,7 +30,7 @@ class BackgroundRepositoryImpl : BackgroundRepository {
         get() = screenSize / cellNum.toFloat()
 
     override fun getBackgroundAt(x: Int, y: Int): BackgroundCell {
-        return backgroundStateFlow.value[y][x]
+        return backgroundStateFlow.value.fieldData[y][x]
     }
 
     override fun getBackgroundAround(x: Int, y: Int): Array<Array<CellType>> {
@@ -52,7 +53,7 @@ class BackgroundRepositoryImpl : BackgroundRepository {
         )
     }
 
-    override suspend fun setBackground(background: List<List<BackgroundCell>>) {
+    override suspend fun setBackground(background: BackgroundData) {
         mutableBackgroundStateFlow.value = background
     }
 

@@ -2,11 +2,12 @@ package gamescreen.map.repository.backgroundcell
 
 import core.domain.mapcell.CellType
 import gamescreen.map.data.MapData
-import gamescreen.map.domain.BackgroundCell
+import gamescreen.map.domain.background.BackgroundCell
+import gamescreen.map.domain.background.BackgroundData
 import kotlinx.coroutines.flow.StateFlow
 
 interface BackgroundRepository {
-    val backgroundStateFlow: StateFlow<List<List<BackgroundCell>>>
+    val backgroundStateFlow: StateFlow<BackgroundData>
 
     var mapData: MapData
 
@@ -22,9 +23,12 @@ interface BackgroundRepository {
 
     fun getBackgroundAround(x: Int, y: Int): Array<Array<CellType>>
 
-    suspend fun setBackground(background: List<List<BackgroundCell>>)
+    suspend fun setBackground(background: BackgroundData)
 
     companion object {
-        val initialBackground: List<List<BackgroundCell>> = emptyList()
+        val initialBackground: BackgroundData =
+            BackgroundData(
+                emptyList(),
+            )
     }
 }

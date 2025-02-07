@@ -3,12 +3,12 @@ package gamescreen.map.usecase.move
 import gamescreen.map.ModuleMap
 import gamescreen.map.data.LoopTestMap
 import gamescreen.map.domain.Velocity
+import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.domain.collision.square.NormalSquare
 import gamescreen.map.manager.CELL_NUM
 import gamescreen.map.manager.SIDE_LENGTH
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.usecase.resetposition.ResetBackgroundPositionUseCase
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -26,6 +26,8 @@ class MoveBackgroundUseCaseTest : KoinTest {
 
     private val mapData = LoopTestMap()
 
+    private lateinit var backgroundData: BackgroundData
+
     @BeforeTest
     fun beforeTest() {
         startKoin {
@@ -42,6 +44,8 @@ class MoveBackgroundUseCaseTest : KoinTest {
             mapX = 0,
             mapY = 0,
         )
+
+        backgroundData = repository.backgroundStateFlow.value
     }
 
     @AfterTest
@@ -115,22 +119,18 @@ class MoveBackgroundUseCaseTest : KoinTest {
                     y = 0f,
                     size = SIDE_LENGTH.toFloat(),
                 ),
-            )
-
-            delay(50)
-
-            repository.getBackgroundAt(
-                x = 0,
-                y = 0,
-            ).square.apply {
-                assertEquals(
-                    expected = 10f,
-                    actual = leftSide,
-                )
-                assertEquals(
-                    expected = 5f,
-                    actual = topSide,
-                )
+                backgroundData = backgroundData
+            ).fieldData[0][0].apply {
+                square.apply {
+                    assertEquals(
+                        expected = 10f,
+                        actual = leftSide,
+                    )
+                    assertEquals(
+                        expected = 5f,
+                        actual = topSide,
+                    )
+                }
             }
         }
     }

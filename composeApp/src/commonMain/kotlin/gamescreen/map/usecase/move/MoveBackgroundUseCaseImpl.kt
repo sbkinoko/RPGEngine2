@@ -1,7 +1,8 @@
 package gamescreen.map.usecase.move
 
-import gamescreen.map.domain.BackgroundCell
 import gamescreen.map.domain.Velocity
+import gamescreen.map.domain.background.BackgroundCell
+import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.domain.collision.square.NormalSquare
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 
@@ -9,13 +10,13 @@ class MoveBackgroundUseCaseImpl(
     private val backgroundRepository: BackgroundRepository,
 ) : MoveBackgroundUseCase {
 
-    override suspend operator fun invoke(
+    override operator fun invoke(
         velocity: Velocity,
+        backgroundData: BackgroundData,
         fieldSquare: NormalSquare,
-    ) {
-        val background = backgroundRepository
-            .backgroundStateFlow
-            .value
+    ): BackgroundData {
+        val background = backgroundData
+            .fieldData
             .map { rowArray ->
                 rowArray.map { bgCell ->
                     val moved = bgCell.move(
@@ -29,9 +30,8 @@ class MoveBackgroundUseCaseImpl(
                     )
                 }
             }
-
-        backgroundRepository.setBackground(
-            background = background,
+        return BackgroundData(
+            background
         )
     }
 
