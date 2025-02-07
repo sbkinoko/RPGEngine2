@@ -173,8 +173,11 @@ class MapViewModel(
             backgroundData = backgroundData
         )
 
-        moveNPCUseCase.invoke(
+
+        val npcData = npcRepository.npcStateFlow.value
+        val movedData = moveNPCUseCase.invoke(
             velocity = mediatedVelocity.second,
+            npcList = npcData
         )
 
         player = player.copy(
@@ -189,6 +192,9 @@ class MapViewModel(
 
         backgroundRepository.setBackground(
             background = movedBackgroundData,
+        )
+        npcRepository.setNpc(
+            npcList = npcData,
         )
 
         // playerが入っているマスを設定
