@@ -1,30 +1,18 @@
 package gamescreen.map.usecase.movenpc
 
 import gamescreen.map.domain.Velocity
-import gamescreen.map.repository.npc.NPCRepository
+import gamescreen.map.domain.npc.NPCData
 
-class MoveNPCUseCaseImpl(
-    private val npcRepository: NPCRepository,
-) : MoveNPCUseCase {
+class MoveNPCUseCaseImpl : MoveNPCUseCase {
 
     override operator fun invoke(
         velocity: Velocity,
-    ) {
-        val npcList = npcRepository.npcStateFlow.value.map { npc ->
-            npc.eventSquare.let {
-                npc.copy(
-                    eventSquare = it.copy(
-                        square = it.square.move(
-                            dx = velocity.x,
-                            dy = velocity.y,
-                        )
-                    )
-                )
-            }
+        npcData: NPCData
+    ): NPCData {
+        return npcData.map { npc ->
+            npc.move(
+                velocity = velocity,
+            )
         }
-
-        npcRepository.setNpc(
-            npcList = npcList,
-        )
     }
 }

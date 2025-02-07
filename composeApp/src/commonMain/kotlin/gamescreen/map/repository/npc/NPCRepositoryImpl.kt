@@ -1,22 +1,24 @@
 package gamescreen.map.repository.npc
 
-import gamescreen.map.domain.npc.NPC
+import gamescreen.map.domain.npc.NPCData
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 class NPCRepositoryImpl : NPCRepository {
-    private val mutableNpcStateFlow: MutableStateFlow<List<NPC>> =
+    private val mutableNpcStateFlow: MutableStateFlow<NPCData> =
         MutableStateFlow(
-            listOf()
+            NPCData(
+                listOf()
+            )
         )
 
-    override val npcStateFlow: StateFlow<List<NPC>>
+    override val npcStateFlow: StateFlow<NPCData>
         get() = mutableNpcStateFlow.asStateFlow()
 
     override fun setNpc(
-        npcList: List<NPC>,
+        npcData: NPCData,
     ) {
-        mutableNpcStateFlow.value = npcList
+        mutableNpcStateFlow.value = npcData
     }
 }
