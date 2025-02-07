@@ -3,6 +3,7 @@ package gamescreen.map.repository.npc
 import gamescreen.map.ModuleMap
 import gamescreen.map.domain.MapPoint
 import gamescreen.map.domain.npc.NPC
+import gamescreen.map.domain.npc.NPCData
 import gamescreen.map.domain.npc.NPCType
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -38,7 +39,7 @@ class NPCRepositoryImplTest : KoinTest {
     fun initialTest() {
         runBlocking {
             var count = 0
-            lateinit var result: List<NPC>
+            lateinit var result: NPCData
             val collectJob = launch {
                 npcRepository.npcStateFlow.collect {
                     count++
@@ -49,7 +50,7 @@ class NPCRepositoryImplTest : KoinTest {
             delay(50)
 
             assertEquals(
-                expected = listOf(),
+                expected = NPCData(listOf()),
                 actual = result
             )
 
@@ -71,11 +72,11 @@ class NPCRepositoryImplTest : KoinTest {
             eventType = TalkEvent.Talk1
         )
 
-        val list = listOf(npc)
+        val list = NPCData(listOf(npc))
 
         runBlocking {
             var count = 0
-            lateinit var result: List<NPC>
+            lateinit var result: NPCData
             val collectJob = launch {
                 npcRepository.npcStateFlow.collect {
                     count++
@@ -90,7 +91,6 @@ class NPCRepositoryImplTest : KoinTest {
             )
 
             delay(50)
-
 
             assertEquals(
                 expected = list,
