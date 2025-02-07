@@ -1,4 +1,4 @@
-package gamescreen.map.usecase.move
+package gamescreen.map.usecase.movebackground
 
 import gamescreen.map.ModuleMap
 import gamescreen.map.data.LoopTestMap

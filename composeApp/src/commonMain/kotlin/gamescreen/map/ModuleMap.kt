@@ -37,8 +37,10 @@ import gamescreen.map.usecase.event.actionevent.ActionEventUseCase
 import gamescreen.map.usecase.event.actionevent.ActionEventUseCaseImpl
 import gamescreen.map.usecase.event.cellevent.CellEventUseCase
 import gamescreen.map.usecase.event.cellevent.CellEventUseCaseImpl
-import gamescreen.map.usecase.move.MoveBackgroundUseCase
-import gamescreen.map.usecase.move.MoveBackgroundUseCaseImpl
+import gamescreen.map.usecase.move.MoveUseCase
+import gamescreen.map.usecase.move.MoveUseCaseImpl
+import gamescreen.map.usecase.movebackground.MoveBackgroundUseCase
+import gamescreen.map.usecase.movebackground.MoveBackgroundUseCaseImpl
 import gamescreen.map.usecase.movenpc.MoveNPCUseCase
 import gamescreen.map.usecase.movenpc.MoveNPCUseCaseImpl
 import gamescreen.map.usecase.moveplayer.PlayerMoveUseCase
@@ -62,7 +64,7 @@ val ModuleMap = module {
             restartUseCase = get(),
             textRepository = get(),
             encounterRepository = get(),
-            moveNPCUseCase = get(),
+            moveUseCase = get(),
         )
     }
 
@@ -94,6 +96,19 @@ val ModuleMap = module {
 
     single<EncounterRepository> {
         EncounterRepositoryImpl()
+    }
+
+    single<MoveUseCase> {
+        MoveUseCaseImpl(
+            playerPositionRepository = get(),
+            moveNPCUseCase = get(),
+            npcRepository = get(),
+            backgroundRepository = get(),
+            moveBackgroundUseCase = get(),
+            getEventTypeUseCase = get(),
+            velocityManageService = get(),
+            updateCellContainPlayerUseCase = get(),
+        )
     }
 
     single<PlayerMoveUseCase> {

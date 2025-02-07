@@ -1,4 +1,4 @@
-package gamescreen.map.usecase.move
+package gamescreen.map.usecase.movebackground
 
 import gamescreen.map.domain.Velocity
 import gamescreen.map.domain.background.BackgroundCell

@@ -1,7 +1,7 @@
-package gamescreen.map.usecase.move
+package gamescreen.map.usecase.movebackground
 
 import gamescreen.map.ModuleMap
-import gamescreen.map.data.NonLoopTestMap
+import gamescreen.map.data.LoopTestMap
 import gamescreen.map.domain.Velocity
 import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.domain.collision.square.NormalSquare
@@ -19,13 +19,18 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class MoveBackGroundUseCateTestNonLoop : KoinTest {
+class MoveBackgroundUseCaseTestLoop : KoinTest {
     private val moveBackgroundUseCase: MoveBackgroundUseCase by inject()
     private val repository: BackgroundRepository by inject()
     private val resetBackgroundPositionUseCase: ResetBackgroundPositionUseCase by inject()
 
-    private val mapData = NonLoopTestMap()
+    private val mapData = LoopTestMap()
+
     private lateinit var backgroundData: BackgroundData
+
+    val BackgroundData.leftTopCell
+        get() = this.fieldData[0][0]
+
 
     @BeforeTest
     fun beforeTest() {
@@ -38,7 +43,7 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
         repository.cellNum = CELL_NUM
         repository.screenSize = SIDE_LENGTH
 
-        resetBackgroundPositionUseCase.invoke(
+        resetBackgroundPositionUseCase(
             mapData = mapData,
             mapX = 0,
             mapY = 0,
@@ -53,11 +58,8 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
     }
 
     @Test
-    fun heckFirstPosition() {
-        repository.getBackgroundAt(
-            x = 0,
-            y = 0,
-        ).apply {
+    fun checkFirstPosition() {
+        backgroundData.leftTopCell.apply {
             square.apply {
                 assertEquals(
                     expected = 0f,
@@ -70,11 +72,11 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
             }
             mapPoint.apply {
                 assertEquals(
-                    expected = INITIAL_LEFT_TOP_MAP_X,
+                    expected = LEFT_TOP_CELL_MAP_X,
                     actual = x,
                 )
                 assertEquals(
-                    expected = INITIAL_LEFT_TOP_MAP_Y,
+                    expected = LEFT_TOP_CELL_MAP_Y,
                     actual = y,
                 )
             }
@@ -87,7 +89,6 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
     @Test
     fun checkLoop_Up() {
         val dy = 15f
-
         runBlocking {
             moveBackgroundUseCase.invoke(
                 velocity = Velocity(
@@ -101,7 +102,7 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
                     size = SIDE_LENGTH.toFloat(),
                 ),
                 backgroundData = backgroundData,
-            ).fieldData[0][0].apply {
+            ).leftTopCell.apply {
                 square.apply {
                     assertEquals(
                         expected = 0f,
@@ -114,11 +115,11 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
                 }
                 mapPoint.apply {
                     assertEquals(
-                        expected = INITIAL_LEFT_TOP_MAP_X,
+                        expected = LEFT_TOP_CELL_MAP_X,
                         actual = x,
                     )
                     assertEquals(
-                        expected = 3,
+                        expected = LEFT_TOP_CELL_MAP_Y,
                         actual = y,
                     )
                 }
@@ -131,8 +132,9 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
      */
     @Test
     fun checkLoop_Down() {
+        val dy = 35f
+
         runBlocking {
-            val dy = 35f
             moveBackgroundUseCase.invoke(
                 velocity = Velocity(
                     x = 0f,
@@ -144,8 +146,8 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
                     y = 0f,
                     size = SIDE_LENGTH.toFloat(),
                 ),
-                backgroundData = backgroundData,
-            ).fieldData[0][0].apply {
+                backgroundData = backgroundData
+            ).leftTopCell.apply {
                 square.apply {
                     assertEquals(
                         expected = 0f,
@@ -156,14 +158,13 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
                         actual = topSide,
                     )
                 }
-
                 mapPoint.apply {
                     assertEquals(
-                        expected = INITIAL_LEFT_TOP_MAP_X,
+                        expected = LEFT_TOP_CELL_MAP_X,
                         actual = x,
                     )
                     assertEquals(
-                        expected = -5,
+                        expected = LEFT_TOP_CELL_MAP_Y,
                         actual = y,
                     )
                 }
@@ -177,6 +178,7 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
     @Test
     fun checkLoop_Left() {
         val dx = 15f
+
         runBlocking {
             moveBackgroundUseCase.invoke(
                 velocity = Velocity(
@@ -190,7 +192,7 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
                     size = SIDE_LENGTH.toFloat(),
                 ),
                 backgroundData = backgroundData,
-            ).fieldData[0][0].apply {
+            ).leftTopCell.apply {
                 square.apply {
                     assertEquals(
                         expected = 25f,
@@ -203,11 +205,11 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
                 }
                 mapPoint.apply {
                     assertEquals(
-                        expected = 3,
+                        expected = LEFT_TOP_CELL_MAP_X,
                         actual = x,
                     )
                     assertEquals(
-                        expected = INITIAL_LEFT_TOP_MAP_Y,
+                        expected = LEFT_TOP_CELL_MAP_Y,
                         actual = y,
                     )
                 }
@@ -234,8 +236,8 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
                     y = 0f,
                     size = SIDE_LENGTH.toFloat(),
                 ),
-                backgroundData = backgroundData
-            ).fieldData[0][0].apply {
+                backgroundData = backgroundData,
+            ).leftTopCell.apply {
                 square.apply {
                     assertEquals(
                         expected = -dx + SIDE_LENGTH,
@@ -248,11 +250,11 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
                 }
                 mapPoint.apply {
                     assertEquals(
-                        expected = -5,
+                        expected = LEFT_TOP_CELL_MAP_X,
                         actual = x,
                     )
                     assertEquals(
-                        expected = INITIAL_LEFT_TOP_MAP_Y,
+                        expected = LEFT_TOP_CELL_MAP_Y,
                         actual = y,
                     )
                 }
@@ -261,7 +263,7 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
     }
 
     companion object {
-        const val INITIAL_LEFT_TOP_MAP_X = -1
-        const val INITIAL_LEFT_TOP_MAP_Y = -1
+        private const val LEFT_TOP_CELL_MAP_X = 3
+        private const val LEFT_TOP_CELL_MAP_Y = 3
     }
 }

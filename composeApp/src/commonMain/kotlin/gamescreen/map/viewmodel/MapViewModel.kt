@@ -14,24 +14,19 @@ import gamescreen.map.domain.Player
 import gamescreen.map.domain.Point
 import gamescreen.map.domain.Velocity
 import gamescreen.map.domain.background.BackgroundCell
-import gamescreen.map.domain.collision.PlayerMoveSquare
 import gamescreen.map.domain.collision.square.NormalSquare
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.encouter.EncounterRepository
 import gamescreen.map.repository.npc.NPCRepository
 import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.repository.playercell.PlayerCellRepository
-import gamescreen.map.service.velocitymanage.VelocityManageService
 import gamescreen.map.usecase.PlayerMoveManageUseCase
-import gamescreen.map.usecase.UpdateCellContainPlayerUseCase
 import gamescreen.map.usecase.battledecidemonster.DecideBattleMonsterUseCase
 import gamescreen.map.usecase.battlestart.StartBattleUseCase
-import gamescreen.map.usecase.collision.geteventtype.GetEventTypeUseCase
 import gamescreen.map.usecase.collision.list.GetCollisionListUseCase
 import gamescreen.map.usecase.event.actionevent.ActionEventUseCase
 import gamescreen.map.usecase.event.cellevent.CellEventUseCase
-import gamescreen.map.usecase.move.MoveBackgroundUseCase
-import gamescreen.map.usecase.movenpc.MoveNPCUseCase
+import gamescreen.map.usecase.move.MoveUseCase
 import gamescreen.map.usecase.roadmap.RoadMapUseCase
 import gamescreen.text.TextBoxData
 import gamescreen.text.repository.TextRepository
@@ -47,17 +42,14 @@ class MapViewModel(
     private val textRepository: TextRepository,
     private val encounterRepository: EncounterRepository,
 
-    private val moveNPCUseCase: MoveNPCUseCase,
+    private val moveUseCase: MoveUseCase,
 ) : ControllerCallback, KoinComponent {
     private val playerPositionRepository: PlayerPositionRepository by inject()
     private val playerMoveManageUseCase: PlayerMoveManageUseCase by inject()
-    private val velocityManageService: VelocityManageService by inject()
 
     private val screenTypeRepository: ScreenTypeRepository by inject()
 
-    private val getEventTypeUseCase: GetEventTypeUseCase by inject()
 
-    private val moveBackgroundUseCase: MoveBackgroundUseCase by inject()
     private val backgroundRepository: BackgroundRepository by inject()
     private val playerCellRepository: PlayerCellRepository by inject()
 
@@ -72,8 +64,6 @@ class MapViewModel(
     val playerIncludeCellFlow = playerCellRepository
         .playerIncludeCellFlow
 
-    private val updateCellContainPlayerUseCase: UpdateCellContainPlayerUseCase by inject()
-
     private val actionEventUseCase: ActionEventUseCase by inject()
     private val cellEventUseCase: CellEventUseCase by inject()
 
@@ -86,11 +76,6 @@ class MapViewModel(
         playerPositionRepository.playerPositionStateFlow
 
     private var tapPoint: Point? = null
-
-    private var playerMoveArea = PlayerMoveSquare(
-        screenSize = VIRTUAL_SCREEN_SIZE,
-        borderRate = MOVE_BORDER,
-    )
 
     private var tentativePlayerVelocity: Velocity = Velocity()
 
@@ -128,12 +113,16 @@ class MapViewModel(
         size = VIRTUAL_SCREEN_SIZE.toFloat(),
     )
 
+    private var playerMoveArea = NormalSquare.smallSquare(
+        size = VIRTUAL_SCREEN_SIZE,
+        rate = MOVE_BORDER,
+    )
+
     /**
      * 主人公の位置を更新
      */
     suspend fun updatePosition() {
         // fixme テストに影響がありそうなので確認する
-        var player = playerSquare.value
 
         // タップしていたら位置を更新
         if (tapPoint != null) {
@@ -145,65 +134,29 @@ class MapViewModel(
             return
         }
 
+        val player = playerSquare.value
+
         val actualVelocity = playerMoveManageUseCase
             .getMovableVelocity(
                 player = player,
                 tentativePlayerVelocity = tentativePlayerVelocity,
             )
 
-        val mediatedVelocity =
-            velocityManageService.invoke(
-                tentativePlayerVelocity = actualVelocity,
-                playerMoveArea = playerMoveArea.square,
-                playerSquare = player.square,
-            )
-
-        val backgroundData = backgroundRepository
-            .backgroundStateFlow
-            .value
-
-        player = player.copy(
-            actualVelocity = mediatedVelocity.first,
+        // 表示物を移動
+        moveUseCase.invoke(
+            actualVelocity = actualVelocity,
             tentativeVelocity = tentativePlayerVelocity,
-        ).move()
-
-        val movedBackgroundData = moveBackgroundUseCase.invoke(
-            velocity = mediatedVelocity.second,
+            playerMoveArea = playerMoveArea,
             fieldSquare = fieldSquare,
-            backgroundData = backgroundData
         )
 
-        val npcData = npcRepository.npcStateFlow.value
-        val movedData = moveNPCUseCase.invoke(
-            velocity = mediatedVelocity.second,
-            npcData = npcData,
-        )
-
-        player = player.copy(
-            eventType = getEventTypeUseCase.invoke(
-                player.eventSquare
-            )
-        )
-
-        playerPositionRepository.setPlayerPosition(
-            player = player,
-        )
-
-        backgroundRepository.setBackground(
-            background = movedBackgroundData,
-        )
-        npcRepository.setNpc(
-            npcData = movedData,
-        )
-
-        // playerが入っているマスを設定
-        updateCellContainPlayerUseCase.invoke()
-
-        //　そのマスに基づいてイベントを呼び出し
+        //　プレイヤーが今いるマスマスに基づいてイベントを呼び出し
         playerCellRepository.eventCell?.let { cell ->
             cellEventUseCase.invoke(
                 cell.cellType,
             )
+            // 戦闘せずに終了
+            return
         }
 
         if (encounterRepository.judgeStartBattle(

@@ -14,6 +14,7 @@ class UpdateCellContainPlayerUseCase(
     private val playerCellRepository: PlayerCellRepository,
     private val backgroundRepository: BackgroundRepository,
 ) {
+    // fixme プレイヤーの位置と背景の位置は外から入れる
     operator fun invoke() {
         var playerIncludeCell: BackgroundCell? = null
         lateinit var centerCell: BackgroundCell
