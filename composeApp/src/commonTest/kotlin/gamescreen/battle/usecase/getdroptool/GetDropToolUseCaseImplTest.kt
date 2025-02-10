@@ -13,7 +13,6 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertTrue
 
-// todo 回数を増やす
 class GetDropToolUseCaseImplTest {
 
     @BeforeTest
@@ -53,7 +52,7 @@ class GetDropToolUseCaseImplTest {
             }
         )
 
-        val idList = List(10) {
+        val idList = List(TestTimes) {
             getDropToolUseCase.invoke()
         }
 
@@ -93,7 +92,7 @@ class GetDropToolUseCaseImplTest {
             }
         )
 
-        val idList = List(10) {
+        val idList = List(TestTimes) {
             getDropToolUseCase.invoke()
         }
 
@@ -128,7 +127,7 @@ class GetDropToolUseCaseImplTest {
             }
         )
 
-        val idList = List(10) {
+        val idList = List(TestTimes) {
             getDropToolUseCase.invoke()
         }
 
@@ -168,7 +167,7 @@ class GetDropToolUseCaseImplTest {
             }
         )
 
-        val idList = List(20) {
+        val idList = List(TestTimes) {
             getDropToolUseCase.invoke()
         }
 
@@ -239,7 +238,7 @@ class GetDropToolUseCaseImplTest {
             }
         )
 
-        val idList = List(20) {
+        val idList = List(TestTimes) {
             getDropToolUseCase.invoke()
         }
 
@@ -274,5 +273,9 @@ class GetDropToolUseCaseImplTest {
                         it.contains(itemId2)
             }
         )
+    }
+
+    companion object {
+        private const val TestTimes = 50
     }
 }
