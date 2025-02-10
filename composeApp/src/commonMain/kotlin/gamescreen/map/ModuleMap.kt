@@ -63,10 +63,9 @@ import org.koin.dsl.module
 val ModuleMap = module {
     single {
         MapViewModel(
-            restartUseCase = get(),
-            textRepository = get(),
             encounterRepository = get(),
             moveUseCase = get(),
+            startNormalBattleUseCase = get(),
         )
     }
 
