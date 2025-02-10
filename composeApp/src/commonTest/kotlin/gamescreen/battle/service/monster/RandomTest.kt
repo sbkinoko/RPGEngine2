@@ -26,7 +26,7 @@ class RandomTest {
         testActivePlayer,
     )
 
-    private val num = 100
+    private val num = 200
     private val low = (num * 0.8).toInt()
     private val high = (num * 1.2).toInt()
 
