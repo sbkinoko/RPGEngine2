@@ -26,17 +26,26 @@ sealed class CellType {
     /**
      * 敵が出る可能性のあるマス
      */
-    sealed interface MonsterCell
+    sealed interface MonsterCell {
+        val distanceLate: Float
+    }
 
 
-    data object Glass : CellType(), MonsterCell
+    data object Glass : CellType(), MonsterCell {
+        override val distanceLate: Float
+            get() = 2.0f
+    }
+
     data object Water : CollisionCell, CellType()
 
     data object Town1I : EventCell, CellType()
     data object Town1O : EventCell, CellType()
 
 
-    data object Road : CellType(), MonsterCell
+    data object Road : CellType(), MonsterCell {
+        override val distanceLate: Float
+            get() = 1.0f
+    }
 
     class Box(
         val id: BoxId,
