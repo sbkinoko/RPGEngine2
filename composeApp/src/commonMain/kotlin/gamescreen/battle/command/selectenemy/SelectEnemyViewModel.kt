@@ -3,7 +3,7 @@ package gamescreen.battle.command.selectenemy
 import controller.domain.ArrowCommand
 import controller.domain.Stick
 import core.domain.status.monster.MonsterStatus
-import core.repository.battlemonster.BattleMonsterRepository
+import core.repository.battlemonster.BattleInfoRepository
 import gamescreen.battle.BattleChildViewModel
 import gamescreen.battle.domain.BattleCommandType
 import gamescreen.battle.domain.SelectEnemyCommand
@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.inject
 
 class SelectEnemyViewModel : BattleChildViewModel() {
-    private val monsterRepository: BattleMonsterRepository by inject()
+    private val monsterRepository: BattleInfoRepository by inject()
     private val actionRepository: ActionRepository by inject()
 
     private val findActiveTargetUseCase: FindActiveTargetUseCase by inject()

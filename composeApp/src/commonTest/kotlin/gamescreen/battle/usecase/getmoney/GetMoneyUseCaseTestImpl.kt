@@ -2,7 +2,7 @@ package gamescreen.battle.usecase.getmoney
 
 import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
 import core.domain.status.monster.MonsterStatus
-import core.repository.battlemonster.TestBattleMonsterRepository
+import core.repository.battlemonster.TestBattleInfoRepository
 import org.koin.test.KoinTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -18,7 +18,7 @@ class GetMoneyUseCaseTestImpl : KoinTest {
         val money1 = 1
         val money2 = 2
 
-        val battleMonsterRepository = object : TestBattleMonsterRepository {
+        val battleMonsterRepository = object : TestBattleInfoRepository {
             override fun getMonsters(): List<MonsterStatus> {
                 return listOf(
                     TestActiveMonster.copy(
@@ -32,7 +32,7 @@ class GetMoneyUseCaseTestImpl : KoinTest {
         }
 
         getMoneyUseCase = GetMoneyUseCaseImpl(
-            battleMonsterRepository = battleMonsterRepository,
+            battleInfoRepository = battleMonsterRepository,
         )
 
         val money = getMoneyUseCase.invoke()
@@ -52,7 +52,7 @@ class GetMoneyUseCaseTestImpl : KoinTest {
         val money2 = 5
         val money3 = 7
 
-        val battleMonsterRepository = object : TestBattleMonsterRepository {
+        val battleMonsterRepository = object : TestBattleInfoRepository {
             override fun getMonsters(): List<MonsterStatus> {
                 return listOf(
                     TestActiveMonster.copy(
@@ -69,7 +69,7 @@ class GetMoneyUseCaseTestImpl : KoinTest {
         }
 
         getMoneyUseCase = GetMoneyUseCaseImpl(
-            battleMonsterRepository = battleMonsterRepository,
+            battleInfoRepository = battleMonsterRepository,
         )
 
         val money = getMoneyUseCase.invoke()

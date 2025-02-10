@@ -1,12 +1,12 @@
 package gamescreen.battle.usecase.getmoney
 
-import core.repository.battlemonster.BattleMonsterRepository
+import core.repository.battlemonster.BattleInfoRepository
 
 class GetMoneyUseCaseImpl(
-    private val battleMonsterRepository: BattleMonsterRepository,
+    private val battleInfoRepository: BattleInfoRepository,
 ) : GetMoneyUseCase {
     override fun invoke(): Int {
-        return battleMonsterRepository
+        return battleInfoRepository
             .getMonsters()
             .sumOf {
                 it.money

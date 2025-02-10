@@ -199,7 +199,7 @@ val ModuleMap = module {
 
     single<StartBattleUseCase> {
         StartBattleUseCaseImpl(
-            battleMonsterRepository = get(),
+            battleInfoRepository = get(),
             screenTypeRepository = get(),
             commandStateRepository = get(),
             actionRepository = get(),

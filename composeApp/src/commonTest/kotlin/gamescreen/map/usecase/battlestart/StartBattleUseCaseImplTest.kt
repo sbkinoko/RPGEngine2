@@ -4,11 +4,12 @@ import core.ModuleCore
 import core.domain.ScreenType
 import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
 import core.domain.status.monster.MonsterStatus
-import core.repository.battlemonster.BattleMonsterRepository
+import core.repository.battlemonster.BattleInfoRepository
 import core.repository.event.EventRepository
 import core.repository.screentype.ScreenTypeRepository
 import gamescreen.battle.domain.ActionData
 import gamescreen.battle.domain.ActionType
+import gamescreen.battle.domain.BattleBackgroundType
 import gamescreen.battle.domain.BattleCommandType
 import gamescreen.battle.repository.action.ActionRepository
 import gamescreen.battle.repository.commandstate.CommandStateRepository
@@ -35,6 +36,7 @@ class StartBattleUseCaseImplTest : KoinTest {
     var checkCommand = 0
     var checkAction = 0
     var checkMonster = 0
+    var checkBackground = 0
 
     @BeforeTest
     fun beforeTest() {
@@ -46,8 +48,11 @@ class StartBattleUseCaseImplTest : KoinTest {
         }
 
         startBattleUseCase = StartBattleUseCaseImpl(
-            battleMonsterRepository = object : BattleMonsterRepository {
+            battleInfoRepository = object : BattleInfoRepository {
                 override val monsterListStateFLow: StateFlow<List<MonsterStatus>>
+                    get() = throw NotImplementedError()
+
+                override val backgroundType: StateFlow<BattleBackgroundType>
                     get() = throw NotImplementedError()
 
                 override fun getStatus(id: Int): MonsterStatus {
@@ -60,6 +65,10 @@ class StartBattleUseCaseImplTest : KoinTest {
 
                 override fun setMonsters(monsters: List<MonsterStatus>) {
                     checkMonster++
+                }
+
+                override fun setBackgroundType(backgroundType: BattleBackgroundType) {
+                    checkBackground++
                 }
 
                 override suspend fun setStatus(id: Int, status: MonsterStatus) {
@@ -147,7 +156,8 @@ class StartBattleUseCaseImplTest : KoinTest {
             startBattleUseCase.invoke(
                 monsterList = listOf(
                     TestActiveMonster,
-                )
+                ),
+                backgroundType = BattleBackgroundType.Road,
             )
 
             delay(100)
@@ -170,6 +180,10 @@ class StartBattleUseCaseImplTest : KoinTest {
             assertEquals(
                 expected = 1,
                 actual = checkAction,
+            )
+            assertEquals(
+                expected = 1,
+                actual = checkBackground,
             )
 
             collectJob.cancel()

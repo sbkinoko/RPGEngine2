@@ -4,7 +4,7 @@ import controller.domain.ControllerCallback
 import controller.domain.Stick
 import core.domain.status.PlayerStatus
 import core.domain.status.monster.MonsterStatus
-import core.repository.battlemonster.BattleMonsterRepository
+import core.repository.battlemonster.BattleInfoRepository
 import core.repository.player.PlayerStatusRepository
 import gamescreen.battle.repository.commandstate.CommandStateRepository
 import gamescreen.battle.usecase.getcontrollerbyscreentype.GetControllerByCommandTypeUseCase
@@ -20,7 +20,7 @@ class BattleViewModel :
     lateinit var players: List<PlayerStatus>
 
     private val playerStatusRepository: PlayerStatusRepository by inject()
-    private val battleMonsterRepository: BattleMonsterRepository by inject()
+    private val battleInfoRepository: BattleInfoRepository by inject()
     private val commandStateRepository: CommandStateRepository by inject()
 
     private val getControllerByCommandTypeUseCase: GetControllerByCommandTypeUseCase by inject()
@@ -34,7 +34,10 @@ class BattleViewModel :
     val playerStatusFlow: StateFlow<List<PlayerStatus>> = playerStatusRepository.playerStatusFlow
 
     val monsterStatusFlow: StateFlow<List<MonsterStatus>> =
-        battleMonsterRepository.monsterListStateFLow
+        battleInfoRepository.monsterListStateFLow
+
+    val battleBackgroundTypeFlow =
+        battleInfoRepository.backgroundType
 
     init {
         initPlayers()
@@ -47,7 +50,7 @@ class BattleViewModel :
     }
 
     fun reloadMonster() {
-        battleMonsterRepository.reload()
+        battleInfoRepository.reload()
     }
 
     override fun moveStick(stick: Stick) {

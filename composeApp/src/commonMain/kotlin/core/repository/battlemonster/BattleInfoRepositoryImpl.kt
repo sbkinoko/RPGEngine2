@@ -1,11 +1,12 @@
 package core.repository.battlemonster
 
 import core.domain.status.monster.MonsterStatus
+import gamescreen.battle.domain.BattleBackgroundType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class BattleMonsterRepositoryImpl : BattleMonsterRepository {
+class BattleInfoRepositoryImpl : BattleInfoRepository {
     private var monsterList = listOf<MonsterStatus>()
         set(value) {
             field = value
@@ -16,6 +17,12 @@ class BattleMonsterRepositoryImpl : BattleMonsterRepository {
         MutableStateFlow(monsterList)
     override val monsterListStateFLow: StateFlow<List<MonsterStatus>> =
         mutableMonsterListStateFLow.asStateFlow()
+
+    private val mutableBackgroundType = MutableStateFlow(
+        BattleBackgroundType.Glass
+    )
+    override val backgroundType: StateFlow<BattleBackgroundType>
+        get() = mutableBackgroundType.asStateFlow()
 
 
     override fun getStatus(id: Int): MonsterStatus {
@@ -66,6 +73,10 @@ class BattleMonsterRepositoryImpl : BattleMonsterRepository {
                 status
             }
         }
+    }
+
+    override fun setBackgroundType(backgroundType: BattleBackgroundType) {
+        mutableBackgroundType.value = backgroundType
     }
 
     override fun reload() {
