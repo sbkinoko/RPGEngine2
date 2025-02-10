@@ -7,6 +7,7 @@ import core.domain.status.monster.MonsterStatus
 import core.repository.battlemonster.BattleInfoRepository
 import core.repository.event.EventRepository
 import core.repository.screentype.ScreenTypeRepository
+import gamescreen.battle.domain.BattleBackgroundType
 import gamescreen.battle.repository.action.ActionRepository
 import gamescreen.battle.repository.commandstate.CommandStateRepository
 import kotlinx.coroutines.CoroutineScope
@@ -25,6 +26,7 @@ class StartBattleUseCaseImpl(
     override operator fun invoke(
         monsterList: List<MonsterStatus>,
         battleEventCallback: BattleEventCallback,
+        backgroundType: BattleBackgroundType,
     ) {
         if (monsterList.isEmpty()) {
             return
@@ -33,6 +35,9 @@ class StartBattleUseCaseImpl(
         CoroutineScope(Dispatchers.Default).launch {
             battleInfoRepository.setMonsters(
                 monsterList
+            )
+            battleInfoRepository.setBackgroundType(
+                backgroundType
             )
             screenTypeRepository.setScreenType(
                 screenType = ScreenType.BATTLE,

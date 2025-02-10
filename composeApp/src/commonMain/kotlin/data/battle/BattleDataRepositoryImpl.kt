@@ -3,6 +3,7 @@ package data.battle
 import core.domain.BattleEventCallback
 import core.usecase.heal.MaxHealUseCase
 import data.monster.MonsterRepository
+import gamescreen.battle.domain.BattleBackgroundType
 import gamescreen.battle.domain.BattleId
 import gamescreen.text.TextBoxData
 import gamescreen.text.repository.TextRepository
@@ -22,6 +23,7 @@ class BattleDataRepositoryImpl(
                 monsterList = List(5) {
                     monsterRepository.getMonster(0)
                 },
+                battleBackgroundType = BattleBackgroundType.Event,
                 battleEventCallback = BattleEventCallback(
                     winCallback = {
                         textRepository.push(

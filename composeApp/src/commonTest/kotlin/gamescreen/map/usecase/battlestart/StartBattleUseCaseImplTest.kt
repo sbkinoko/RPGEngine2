@@ -9,6 +9,7 @@ import core.repository.event.EventRepository
 import core.repository.screentype.ScreenTypeRepository
 import gamescreen.battle.domain.ActionData
 import gamescreen.battle.domain.ActionType
+import gamescreen.battle.domain.BattleBackgroundType
 import gamescreen.battle.domain.BattleCommandType
 import gamescreen.battle.repository.action.ActionRepository
 import gamescreen.battle.repository.commandstate.CommandStateRepository
@@ -50,6 +51,9 @@ class StartBattleUseCaseImplTest : KoinTest {
                 override val monsterListStateFLow: StateFlow<List<MonsterStatus>>
                     get() = throw NotImplementedError()
 
+                override val backgroundType: StateFlow<BattleBackgroundType>
+                    get() = throw NotImplementedError()
+
                 override fun getStatus(id: Int): MonsterStatus {
                     throw NotImplementedError()
                 }
@@ -60,6 +64,10 @@ class StartBattleUseCaseImplTest : KoinTest {
 
                 override fun setMonsters(monsters: List<MonsterStatus>) {
                     checkMonster++
+                }
+
+                override fun setBackgroundType(backgroundType: BattleBackgroundType) {
+                    throw NotImplementedError()
                 }
 
                 override suspend fun setStatus(id: Int, status: MonsterStatus) {
@@ -147,7 +155,8 @@ class StartBattleUseCaseImplTest : KoinTest {
             startBattleUseCase.invoke(
                 monsterList = listOf(
                     TestActiveMonster,
-                )
+                ),
+                backgroundType = BattleBackgroundType.Road,
             )
 
             delay(100)
