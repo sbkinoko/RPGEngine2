@@ -151,7 +151,7 @@ class MapViewModel(
             fieldSquare = fieldSquare,
         )
 
-        //　プレイヤーが今いるマスマスに基づいてイベントを呼び出し
+        //　プレイヤーが今いるマスに基づいてイベントを呼び出し
         playerCellRepository.eventCell?.let { cell ->
             cellEventUseCase.invoke(
                 cell.cellType,
@@ -160,8 +160,13 @@ class MapViewModel(
             return
         }
 
+        val playerCenterCell = playerCellRepository.playerCenterCell
+
+        val monsterCell = playerCenterCell.cellType as? CellType.MonsterCell
+            ?: return
+        val encounterDistance = actualVelocity.scalar * monsterCell.distanceLate
         if (encounterRepository.judgeStartBattle(
-                distance = actualVelocity.scalar,
+                distance = encounterDistance
             )
         ) {
             startBattle()
