@@ -2,7 +2,7 @@ package core.usecase.updateparameter
 
 import core.ModuleCore
 import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
-import core.repository.battlemonster.BattleMonsterRepository
+import core.repository.battlemonster.BattleInfoRepository
 import gamescreen.battle.ModuleBattle
 import kotlinx.coroutines.runBlocking
 import org.koin.core.context.startKoin
@@ -17,7 +17,7 @@ import kotlin.test.assertEquals
 class UpdateMonsterParameterUseCaseTest : KoinTest {
 
     private val updateMonsterParameterUseCase: UpdateMonsterStatusUseCase by inject()
-    private val battleMonsterRepository: BattleMonsterRepository by inject()
+    private val battleInfoRepository: BattleInfoRepository by inject()
 
     @BeforeTest
     fun beforeTest() {
@@ -38,7 +38,7 @@ class UpdateMonsterParameterUseCaseTest : KoinTest {
     fun attackTo1() {
         runBlocking {
             val monster = TestActiveMonster
-            battleMonsterRepository.setMonsters(
+            battleInfoRepository.setMonsters(
                 listOf(
                     monster,
                 )
@@ -51,7 +51,7 @@ class UpdateMonsterParameterUseCaseTest : KoinTest {
                 id = 0,
             )
 
-            battleMonsterRepository.getStatus(0).hp.apply {
+            battleInfoRepository.getStatus(0).hp.apply {
                 assertEquals(
                     expected = maxPoint - damage,
                     actual = point

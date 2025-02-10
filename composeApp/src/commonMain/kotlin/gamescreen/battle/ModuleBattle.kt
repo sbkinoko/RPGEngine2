@@ -128,7 +128,7 @@ val ModuleBattle = module {
         qualifier = named(QualifierAttackFromPlayer),
     ) {
         AttackFromPlayerUseCaseImpl(
-            battleMonsterRepository = get(),
+            battleInfoRepository = get(),
             findTargetService = get(),
             updateMonsterStatusService = get(),
         )
@@ -165,19 +165,19 @@ val ModuleBattle = module {
 
     single<GetMoneyUseCase> {
         GetMoneyUseCaseImpl(
-            battleMonsterRepository = get()
+            battleInfoRepository = get()
         )
     }
 
     single<GetExpUseCase> {
         GetExpUseCaseImpl(
-            battleMonsterRepository = get(),
+            battleInfoRepository = get(),
         )
     }
 
     single<GetDropToolUseCase> {
         GetDropToolUseCaseImpl(
-            battleMonsterRepository = get(),
+            battleInfoRepository = get(),
         )
     }
 

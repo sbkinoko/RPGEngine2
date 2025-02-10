@@ -16,7 +16,7 @@ import kotlin.test.assertEquals
 
 
 class BattleMonsterRepositoryImplTest : KoinTest {
-    private val battleMonsterRepository: BattleMonsterRepository by inject()
+    private val battleInfoRepository: BattleInfoRepository by inject()
 
     private val monster1 = TestActiveMonster
     private val monsterList1 = listOf(
@@ -50,18 +50,18 @@ class BattleMonsterRepositoryImplTest : KoinTest {
         runBlocking {
             var count = 0
             val collectJob = launch {
-                battleMonsterRepository.monsterListStateFLow.collect {
+                battleInfoRepository.monsterListStateFLow.collect {
                     count++
                 }
             }
 
-            battleMonsterRepository.setMonsters(
+            battleInfoRepository.setMonsters(
                 monsters = monsterList1.toMutableList()
             )
 
             delay(100)
 
-            battleMonsterRepository.getStatus(0).apply {
+            battleInfoRepository.getStatus(0).apply {
                 assertEquals(
                     expected = monster1,
                     actual = this,
@@ -85,18 +85,18 @@ class BattleMonsterRepositoryImplTest : KoinTest {
         runBlocking {
             var count = 0
             val collectJob = launch {
-                battleMonsterRepository.monsterListStateFLow.collect {
+                battleInfoRepository.monsterListStateFLow.collect {
                     count++
                 }
             }
 
-            battleMonsterRepository.setMonsters(
+            battleInfoRepository.setMonsters(
                 monsters = monsterList2.toMutableList()
             )
 
             delay(100)
 
-            battleMonsterRepository.getStatus(0).apply {
+            battleInfoRepository.getStatus(0).apply {
                 assertEquals(
                     expected = monster1.copy(
                         name = monster1.name + "1"
@@ -104,7 +104,7 @@ class BattleMonsterRepositoryImplTest : KoinTest {
                     actual = this,
                 )
             }
-            battleMonsterRepository.getStatus(1).apply {
+            battleInfoRepository.getStatus(1).apply {
                 assertEquals(
                     expected = monster1.copy(
                         name = monster1.name + "2"

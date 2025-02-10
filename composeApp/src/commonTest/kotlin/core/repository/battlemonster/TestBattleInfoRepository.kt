@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
  * 任意のモンスターリストを返し易くするためのinterface
  * getMonsterList以外実装済み
  */
-interface TestBattleMonsterRepository : BattleMonsterRepository {
+interface TestBattleInfoRepository : BattleInfoRepository {
     override val monsterListStateFLow: StateFlow<List<MonsterStatus>>
         get() = throw NotImplementedError()
 

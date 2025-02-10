@@ -7,7 +7,7 @@ import core.domain.item.TypeKind
 import core.domain.item.skill.AttackSkill
 import core.domain.item.skill.HealSkill
 import core.domain.status.Status
-import core.repository.battlemonster.BattleMonsterRepository
+import core.repository.battlemonster.BattleInfoRepository
 import core.repository.player.PlayerStatusRepository
 import core.usecase.item.usetool.UseToolUseCase
 import core.usecase.updateparameter.UpdateMonsterStatusUseCase
@@ -47,7 +47,7 @@ class ActionPhaseViewModel(
     private val decideActionOrderUseCase: DecideActionOrderUseCase,
 ) : BattleChildViewModel() {
     private val actionRepository: ActionRepository by inject()
-    private val battleMonsterRepository: BattleMonsterRepository by inject()
+    private val battleInfoRepository: BattleInfoRepository by inject()
     private val playerStatusRepository: PlayerStatusRepository by inject()
     private val skillRepository: SkillRepository by inject()
     private val toolRepository: ToolRepository by inject()
@@ -69,7 +69,7 @@ class ActionPhaseViewModel(
 
     private val isMonsterAnnihilated: Boolean
         get() = isAnnihilationService(
-            battleMonsterRepository.getMonsters()
+            battleInfoRepository.getMonsters()
         )
 
     private val isPlayerAnnihilated: Boolean
@@ -96,7 +96,7 @@ class ActionPhaseViewModel(
     val attackingStatusId = mutableAttackingStatusId.asStateFlow()
 
     private val monsterNum: Int
-        get() = battleMonsterRepository.getMonsters().size
+        get() = battleInfoRepository.getMonsters().size
 
     // 使わないので適当
     override var selectManager: SelectManager = SelectManager(
@@ -121,7 +121,7 @@ class ActionPhaseViewModel(
                 )
             }
 
-        battleMonsterRepository.getMonsters()
+        battleInfoRepository.getMonsters()
             .mapIndexed { index, status ->
                 val action = decideMonsterActionService.getAction(
                     status,
@@ -188,14 +188,14 @@ class ActionPhaseViewModel(
         return when (item as TypeKind) {
             is AttackItem -> {
                 var targetId = action.target
-                if (battleMonsterRepository.getStatus(targetId).isActive.not()) {
+                if (battleInfoRepository.getStatus(targetId).isActive.not()) {
                     targetId = findActiveTargetUseCase.invoke(
-                        statusList = battleMonsterRepository.getMonsters(),
+                        statusList = battleInfoRepository.getMonsters(),
                         target = targetId,
                         targetNum = item.targetNum,
                     ).first()
                 }
-                battleMonsterRepository.getStatus(targetId).name
+                battleInfoRepository.getStatus(targetId).name
             }
 
             is HealItem -> {
@@ -224,7 +224,7 @@ class ActionPhaseViewModel(
 
             is HealItem -> {
                 val targetId = action.ally
-                battleMonsterRepository.getStatus(targetId).name
+                battleInfoRepository.getStatus(targetId).name
             }
         }
     }
@@ -268,7 +268,7 @@ class ActionPhaseViewModel(
                 skillAction(
                     id = id,
                     actionData = actionRepository.getAction(id),
-                    statusList = battleMonsterRepository.getMonsters(),
+                    statusList = battleInfoRepository.getMonsters(),
                     attackUseCase = attackFromPlayerUseCase,
                     updateParameter = updatePlayerParameter,
                 )
@@ -406,7 +406,7 @@ class ActionPhaseViewModel(
                 }
             } else {
                 val monsterId = id.toMonster()
-                val monster = battleMonsterRepository
+                val monster = battleInfoRepository
                     .getStatus(id = monsterId)
 
                 //　monsterを確認

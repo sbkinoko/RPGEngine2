@@ -1,7 +1,7 @@
 package core
 
-import core.repository.battlemonster.BattleMonsterRepository
-import core.repository.battlemonster.BattleMonsterRepositoryImpl
+import core.repository.battlemonster.BattleInfoRepository
+import core.repository.battlemonster.BattleInfoRepositoryImpl
 import core.repository.event.EventRepository
 import core.repository.event.EventRepositoryImpl
 import core.repository.money.MoneyRepository
@@ -32,8 +32,8 @@ val ModuleCore = module {
         )
     }
 
-    single<BattleMonsterRepository> {
-        BattleMonsterRepositoryImpl()
+    single<BattleInfoRepository> {
+        BattleInfoRepositoryImpl()
     }
 
     single<MoneyRepository> {
@@ -58,7 +58,7 @@ val ModuleCore = module {
 
     single {
         UpdateMonsterStatusUseCase(
-            statusRepository = get<BattleMonsterRepository>()
+            statusRepository = get<BattleInfoRepository>()
         )
     }
 

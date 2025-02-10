@@ -4,7 +4,7 @@ import core.domain.BattleEventCallback
 import core.domain.BattleResult
 import core.domain.ScreenType
 import core.domain.status.monster.MonsterStatus
-import core.repository.battlemonster.BattleMonsterRepository
+import core.repository.battlemonster.BattleInfoRepository
 import core.repository.event.EventRepository
 import core.repository.screentype.ScreenTypeRepository
 import gamescreen.battle.repository.action.ActionRepository
@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 
 class StartBattleUseCaseImpl(
-    private val battleMonsterRepository: BattleMonsterRepository,
+    private val battleInfoRepository: BattleInfoRepository,
     private val screenTypeRepository: ScreenTypeRepository,
     private val commandStateRepository: CommandStateRepository,
     private val actionRepository: ActionRepository,
@@ -31,7 +31,7 @@ class StartBattleUseCaseImpl(
         }
 
         CoroutineScope(Dispatchers.Default).launch {
-            battleMonsterRepository.setMonsters(
+            battleInfoRepository.setMonsters(
                 monsterList
             )
             screenTypeRepository.setScreenType(
