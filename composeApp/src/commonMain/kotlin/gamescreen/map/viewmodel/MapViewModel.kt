@@ -5,6 +5,7 @@ import controller.domain.Stick
 import core.domain.BattleEventCallback
 import core.domain.ScreenType
 import core.domain.mapcell.CellType
+import core.domain.mapcell.toBattleBackGround
 import core.repository.screentype.ScreenTypeRepository
 import core.usecase.restart.RestartUseCase
 import data.INITIAL_MAP_DATA
@@ -254,15 +255,21 @@ class MapViewModel(
         startBattle()
     }
 
-    private fun startBattle(
-    ) {
+    private fun startBattle() {
         val backgroundCell = playerCellRepository.playerCenterCell
+
+        val cellType = backgroundCell.cellType as? CellType.MonsterCell
+            ?: return
+
         val monsterList = decideBattleMonsterUseCase.invoke(
             backgroundCell = backgroundCell,
         )
 
+        val backgroundType = cellType.toBattleBackGround()
+
         startBattleUseCase.invoke(
             monsterList = monsterList,
+            backgroundType = backgroundType,
             battleEventCallback = BattleEventCallback(
                 winCallback = {},
                 loseCallback = {

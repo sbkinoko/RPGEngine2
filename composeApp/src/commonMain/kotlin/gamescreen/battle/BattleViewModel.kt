@@ -36,6 +36,9 @@ class BattleViewModel :
     val monsterStatusFlow: StateFlow<List<MonsterStatus>> =
         battleInfoRepository.monsterListStateFLow
 
+    val battleBackgroundTypeFlow =
+        battleInfoRepository.backgroundType
+
     init {
         initPlayers()
     }

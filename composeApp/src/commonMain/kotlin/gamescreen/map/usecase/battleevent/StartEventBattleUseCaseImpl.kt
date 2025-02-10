@@ -17,6 +17,7 @@ class StartEventBattleUseCaseImpl(
         startBattleUseCase.invoke(
             monsterList = eventBattleData.monsterList,
             battleEventCallback = eventBattleData.battleEventCallback,
+            backgroundType = eventBattleData.battleBackgroundType,
         )
     }
 }
