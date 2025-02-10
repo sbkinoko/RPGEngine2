@@ -36,6 +36,7 @@ class StartBattleUseCaseImplTest : KoinTest {
     var checkCommand = 0
     var checkAction = 0
     var checkMonster = 0
+    var checkBackground = 0
 
     @BeforeTest
     fun beforeTest() {
@@ -67,7 +68,7 @@ class StartBattleUseCaseImplTest : KoinTest {
                 }
 
                 override fun setBackgroundType(backgroundType: BattleBackgroundType) {
-                    throw NotImplementedError()
+                    checkBackground++
                 }
 
                 override suspend fun setStatus(id: Int, status: MonsterStatus) {
@@ -179,6 +180,10 @@ class StartBattleUseCaseImplTest : KoinTest {
             assertEquals(
                 expected = 1,
                 actual = checkAction,
+            )
+            assertEquals(
+                expected = 1,
+                actual = checkBackground,
             )
 
             collectJob.cancel()
