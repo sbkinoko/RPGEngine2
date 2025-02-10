@@ -52,7 +52,7 @@ class GetDropToolUseCaseImplTest {
             }
         )
 
-        val idList = List(TestTimes) {
+        val idList = List(TEST_TIMES) {
             getDropToolUseCase.invoke()
         }
 
@@ -92,7 +92,7 @@ class GetDropToolUseCaseImplTest {
             }
         )
 
-        val idList = List(TestTimes) {
+        val idList = List(TEST_TIMES) {
             getDropToolUseCase.invoke()
         }
 
@@ -127,7 +127,7 @@ class GetDropToolUseCaseImplTest {
             }
         )
 
-        val idList = List(TestTimes) {
+        val idList = List(TEST_TIMES) {
             getDropToolUseCase.invoke()
         }
 
@@ -167,7 +167,7 @@ class GetDropToolUseCaseImplTest {
             }
         )
 
-        val idList = List(TestTimes) {
+        val idList = List(TEST_TIMES) {
             getDropToolUseCase.invoke()
         }
 
@@ -238,7 +238,7 @@ class GetDropToolUseCaseImplTest {
             }
         )
 
-        val idList = List(TestTimes) {
+        val idList = List(TEST_TIMES) {
             getDropToolUseCase.invoke()
         }
 
@@ -276,6 +276,6 @@ class GetDropToolUseCaseImplTest {
     }
 
     companion object {
-        private const val TestTimes = 50
+        private const val TEST_TIMES = 50
     }
 }
