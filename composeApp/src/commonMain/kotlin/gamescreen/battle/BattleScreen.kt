@@ -55,6 +55,7 @@ fun BattleScreen(
             ),
             contentDescription = "戦闘背景"
         )
+
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
