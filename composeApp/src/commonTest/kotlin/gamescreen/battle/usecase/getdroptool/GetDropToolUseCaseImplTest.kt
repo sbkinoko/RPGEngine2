@@ -4,7 +4,7 @@ import core.ModuleCore
 import core.domain.status.DropItemInfo
 import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
 import core.domain.status.monster.MonsterStatus
-import core.repository.battlemonster.TestBattleMonsterRepository
+import core.repository.battlemonster.TestBattleInfoRepository
 import data.item.tool.ToolId
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -37,7 +37,7 @@ class GetDropToolUseCaseImplTest {
     fun dropToolPROB() {
         val itemId = ToolId.HEAL1
         val getDropToolUseCase: GetDropToolUseCase = GetDropToolUseCaseImpl(
-            battleMonsterRepository = object : TestBattleMonsterRepository {
+            battleInfoRepository = object : TestBattleInfoRepository {
                 override fun getMonsters(): List<MonsterStatus> {
                     return listOf(
                         TestActiveMonster.copy(
@@ -77,7 +77,7 @@ class GetDropToolUseCaseImplTest {
     fun dropToolABS() {
         val itemId = ToolId.HEAL1
         val getDropToolUseCase: GetDropToolUseCase = GetDropToolUseCaseImpl(
-            battleMonsterRepository = object : TestBattleMonsterRepository {
+            battleInfoRepository = object : TestBattleInfoRepository {
                 override fun getMonsters(): List<MonsterStatus> {
                     return listOf(
                         TestActiveMonster.copy(
@@ -112,7 +112,7 @@ class GetDropToolUseCaseImplTest {
     fun notDropToolABS() {
         val itemId = ToolId.HEAL1
         val getDropToolUseCase: GetDropToolUseCase = GetDropToolUseCaseImpl(
-            battleMonsterRepository = object : TestBattleMonsterRepository {
+            battleInfoRepository = object : TestBattleInfoRepository {
                 override fun getMonsters(): List<MonsterStatus> {
                     return listOf(
                         TestActiveMonster.copy(
@@ -148,7 +148,7 @@ class GetDropToolUseCaseImplTest {
         val itemId2 = ToolId.HEAL2
 
         val getDropToolUseCase: GetDropToolUseCase = GetDropToolUseCaseImpl(
-            battleMonsterRepository = object : TestBattleMonsterRepository {
+            battleInfoRepository = object : TestBattleInfoRepository {
                 override fun getMonsters(): List<MonsterStatus> {
                     return listOf(
                         TestActiveMonster.copy(
@@ -215,7 +215,7 @@ class GetDropToolUseCaseImplTest {
         val itemId2 = ToolId.HEAL2
 
         val getDropToolUseCase: GetDropToolUseCase = GetDropToolUseCaseImpl(
-            battleMonsterRepository = object : TestBattleMonsterRepository {
+            battleInfoRepository = object : TestBattleInfoRepository {
                 override fun getMonsters(): List<MonsterStatus> {
                     return listOf(
                         TestActiveMonster.copy(

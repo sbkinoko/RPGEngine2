@@ -4,7 +4,7 @@ import core.ModuleCore
 import core.domain.ScreenType
 import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
 import core.domain.status.monster.MonsterStatus
-import core.repository.battlemonster.BattleMonsterRepository
+import core.repository.battlemonster.BattleInfoRepository
 import core.repository.event.EventRepository
 import core.repository.screentype.ScreenTypeRepository
 import gamescreen.battle.domain.ActionData
@@ -46,7 +46,7 @@ class StartBattleUseCaseImplTest : KoinTest {
         }
 
         startBattleUseCase = StartBattleUseCaseImpl(
-            battleMonsterRepository = object : BattleMonsterRepository {
+            battleInfoRepository = object : BattleInfoRepository {
                 override val monsterListStateFLow: StateFlow<List<MonsterStatus>>
                     get() = throw NotImplementedError()
 

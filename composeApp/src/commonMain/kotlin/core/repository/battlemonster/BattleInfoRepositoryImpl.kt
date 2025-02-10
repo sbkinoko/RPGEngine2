@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class BattleMonsterRepositoryImpl : BattleMonsterRepository {
+class BattleInfoRepositoryImpl : BattleInfoRepository {
     private var monsterList = listOf<MonsterStatus>()
         set(value) {
             field = value

@@ -1,13 +1,13 @@
 package gamescreen.battle.usecase.getexp
 
-import core.repository.battlemonster.BattleMonsterRepository
+import core.repository.battlemonster.BattleInfoRepository
 
 class GetExpUseCaseImpl(
-    private val battleMonsterRepository: BattleMonsterRepository,
+    private val battleInfoRepository: BattleInfoRepository,
 ) : GetExpUseCase {
     override fun invoke(): Int {
 
-        return battleMonsterRepository
+        return battleInfoRepository
             .getMonsters()
             .sumOf {
                 it.exp

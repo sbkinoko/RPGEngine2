@@ -4,7 +4,7 @@ import core.domain.status.monster.MonsterStatus
 import core.repository.status.StatusRepository
 import kotlinx.coroutines.flow.StateFlow
 
-interface BattleMonsterRepository : StatusRepository<MonsterStatus> {
+interface BattleInfoRepository : StatusRepository<MonsterStatus> {
 
     val monsterListStateFLow: StateFlow<List<MonsterStatus>>
 

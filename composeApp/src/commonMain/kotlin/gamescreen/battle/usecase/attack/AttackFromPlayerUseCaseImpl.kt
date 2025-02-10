@@ -1,11 +1,11 @@
 package gamescreen.battle.usecase.attack
 
-import core.repository.battlemonster.BattleMonsterRepository
+import core.repository.battlemonster.BattleInfoRepository
 import core.usecase.updateparameter.UpdateMonsterStatusUseCase
 import gamescreen.battle.service.findtarget.FindTargetService
 
 class AttackFromPlayerUseCaseImpl(
-    private val battleMonsterRepository: BattleMonsterRepository,
+    private val battleInfoRepository: BattleInfoRepository,
     private val findTargetService: FindTargetService,
     private val updateMonsterStatusService: UpdateMonsterStatusUseCase
 ) : AttackUseCase {
@@ -14,7 +14,7 @@ class AttackFromPlayerUseCaseImpl(
         damage: Int,
     ) {
         var actualTarget = target
-        val monsters = battleMonsterRepository.getMonsters()
+        val monsters = battleInfoRepository.getMonsters()
         if (monsters[target].isActive.not()) {
             actualTarget = findTargetService.findNext(
                 statusList = monsters,
