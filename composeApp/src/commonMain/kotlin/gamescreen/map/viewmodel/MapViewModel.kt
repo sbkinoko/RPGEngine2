@@ -2,12 +2,9 @@ package gamescreen.map.viewmodel
 
 import controller.domain.ControllerCallback
 import controller.domain.Stick
-import core.domain.BattleEventCallback
 import core.domain.ScreenType
 import core.domain.mapcell.CellType
-import core.domain.mapcell.toBattleBackGround
 import core.repository.screentype.ScreenTypeRepository
-import core.usecase.restart.RestartUseCase
 import data.INITIAL_MAP_DATA
 import data.INITIAL_MAP_X
 import data.INITIAL_MAP_Y
@@ -22,15 +19,12 @@ import gamescreen.map.repository.npc.NPCRepository
 import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.repository.playercell.PlayerCellRepository
 import gamescreen.map.usecase.PlayerMoveManageUseCase
-import gamescreen.map.usecase.battledecidemonster.DecideBattleMonsterUseCase
-import gamescreen.map.usecase.battlestart.StartBattleUseCase
+import gamescreen.map.usecase.battlenormal.StartNormalBattleUseCase
 import gamescreen.map.usecase.collision.list.GetCollisionListUseCase
 import gamescreen.map.usecase.event.actionevent.ActionEventUseCase
 import gamescreen.map.usecase.event.cellevent.CellEventUseCase
 import gamescreen.map.usecase.move.MoveUseCase
 import gamescreen.map.usecase.roadmap.RoadMapUseCase
-import gamescreen.text.TextBoxData
-import gamescreen.text.repository.TextRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.StateFlow
@@ -39,9 +33,8 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class MapViewModel(
-    private val restartUseCase: RestartUseCase,
-    private val textRepository: TextRepository,
     private val encounterRepository: EncounterRepository,
+    private val startNormalBattleUseCase: StartNormalBattleUseCase,
 
     private val moveUseCase: MoveUseCase,
 ) : ControllerCallback, KoinComponent {
@@ -49,7 +42,6 @@ class MapViewModel(
     private val playerMoveManageUseCase: PlayerMoveManageUseCase by inject()
 
     private val screenTypeRepository: ScreenTypeRepository by inject()
-
 
     private val backgroundRepository: BackgroundRepository by inject()
     private val playerCellRepository: PlayerCellRepository by inject()
@@ -67,9 +59,6 @@ class MapViewModel(
 
     private val actionEventUseCase: ActionEventUseCase by inject()
     private val cellEventUseCase: CellEventUseCase by inject()
-
-    private val decideBattleMonsterUseCase: DecideBattleMonsterUseCase by inject()
-    private val startBattleUseCase: StartBattleUseCase by inject()
 
     private val roadMapUseCase: RoadMapUseCase by inject()
 
@@ -169,7 +158,7 @@ class MapViewModel(
                 distance = encounterDistance
             )
         ) {
-            startBattle()
+            startNormalBattleUseCase.invoke()
             resetTapPoint()
         }
     }
@@ -257,40 +246,8 @@ class MapViewModel(
     }
 
     override fun pressB() {
-        startBattle()
+        startNormalBattleUseCase.invoke()
     }
-
-    private fun startBattle() {
-        val backgroundCell = playerCellRepository.playerCenterCell
-
-        val cellType = backgroundCell.cellType as? CellType.MonsterCell
-            ?: return
-
-        val monsterList = decideBattleMonsterUseCase.invoke(
-            backgroundCell = backgroundCell,
-        )
-
-        val backgroundType = cellType.toBattleBackGround()
-
-        startBattleUseCase.invoke(
-            monsterList = monsterList,
-            backgroundType = backgroundType,
-            battleEventCallback = BattleEventCallback(
-                winCallback = {},
-                loseCallback = {
-                    CoroutineScope(Dispatchers.Default).launch {
-                        restartUseCase.invoke()
-                        textRepository.push(
-                            textBoxData = TextBoxData(
-                                text = "全滅してしまった",
-                            )
-                        )
-                    }
-                }
-            )
-        )
-    }
-
 
     override fun pressM() {
         showMenu()

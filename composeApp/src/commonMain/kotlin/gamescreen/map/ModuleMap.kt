@@ -23,6 +23,8 @@ import gamescreen.map.usecase.battledecidemonster.DecideBattleMonsterUseCase
 import gamescreen.map.usecase.battledecidemonster.DecideBattleMonsterUseCaseImpl
 import gamescreen.map.usecase.battleevent.StartEventBattleUseCase
 import gamescreen.map.usecase.battleevent.StartEventBattleUseCaseImpl
+import gamescreen.map.usecase.battlenormal.StartNormalBattleUseCase
+import gamescreen.map.usecase.battlenormal.StartNormalBattleUseCaseImpl
 import gamescreen.map.usecase.battlestart.StartBattleUseCase
 import gamescreen.map.usecase.battlestart.StartBattleUseCaseImpl
 import gamescreen.map.usecase.collision.geteventtype.GetEventTypeUseCase
@@ -61,10 +63,9 @@ import org.koin.dsl.module
 val ModuleMap = module {
     single {
         MapViewModel(
-            restartUseCase = get(),
-            textRepository = get(),
             encounterRepository = get(),
             moveUseCase = get(),
+            startNormalBattleUseCase = get(),
         )
     }
 
@@ -211,6 +212,16 @@ val ModuleMap = module {
         StartEventBattleUseCaseImpl(
             battleDataRepository = get(),
             startBattleUseCase = get(),
+        )
+    }
+
+    single<StartNormalBattleUseCase> {
+        StartNormalBattleUseCaseImpl(
+            playerCellRepository = get(),
+            decideBattleMonsterUseCase = get(),
+            startBattleUseCase = get(),
+            textRepository = get(),
+            restartUseCase = get(),
         )
     }
 
