@@ -14,14 +14,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import gamescreen.battle.command.CommandArea
+import gamescreen.battle.domain.toResource
 import gamescreen.battle.monster.MonsterArea
 import gamescreen.battle.status.StatusArea
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
-import rpgengine.composeapp.generated.resources.Res
-import rpgengine.composeapp.generated.resources.bt_bg_01
 import values.Colors
 
 @OptIn(ExperimentalResourceApi::class)
@@ -38,6 +37,10 @@ fun BattleScreen(
         .playerStatusFlow
         .collectAsState()
 
+    val backgroundType by battleViewModel
+        .battleBackgroundTypeFlow
+        .collectAsState()
+
     if (monsters.isEmpty()) {
         LaunchedEffect(Unit) {
             delay(10)
@@ -51,7 +54,7 @@ fun BattleScreen(
         Image(
             modifier = Modifier.fillMaxSize(),
             painter = painterResource(
-                Res.drawable.bt_bg_01
+                backgroundType.toResource()
             ),
             contentDescription = "戦闘背景"
         )
