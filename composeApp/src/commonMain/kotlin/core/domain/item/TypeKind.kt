@@ -23,6 +23,6 @@ interface AttackItem : TypeKind {
     val damageAmount: Int
 }
 
-interface AbnormalConditionItem : TypeKind {
+interface ConditionItem : TypeKind {
     val conditionType: ConditionType
 }

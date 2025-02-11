@@ -1,7 +1,7 @@
 package gamescreen.battle.command.actionphase
 
-import core.domain.item.AbnormalConditionItem
 import core.domain.item.AttackItem
+import core.domain.item.ConditionItem
 import core.domain.item.HealItem
 import core.domain.item.Item
 import core.domain.item.TypeKind
@@ -61,14 +61,14 @@ class ActionPhaseViewModel(
     private val attackFromPlayerUseCase: AttackUseCase by inject(
         qualifier = named(QualifierAttackFromPlayer)
     )
-    private val conditionFromPlayerUseCaseImpl: ConditionUseCase by inject(
+    private val conditionFromPlayerUseCase: ConditionUseCase by inject(
         qualifier = named(QualifierAttackFromPlayer)
     )
 
     private val attackFromEnemyUseCase: AttackUseCase by inject(
         qualifier = named(QualifierAttackFromEnemy)
     )
-    private val conditionFromEnemyUseCaseImpl: ConditionUseCase by inject(
+    private val conditionFromEnemyUseCase: ConditionUseCase by inject(
         qualifier = named(QualifierAttackFromEnemy)
     )
 
@@ -197,7 +197,7 @@ class ActionPhaseViewModel(
         val item = getActionItem(id = id)
 
         return when (item as TypeKind) {
-            is AbnormalConditionItem,
+            is ConditionItem,
             is AttackItem -> {
                 var targetId = action.target
                 if (battleInfoRepository.getStatus(targetId).isActive.not()) {
@@ -222,7 +222,7 @@ class ActionPhaseViewModel(
         val item = getActionItem(id)
 
         return when (item as TypeKind) {
-            is AbnormalConditionItem,
+            is ConditionItem,
             is AttackItem -> {
                 var targetId = action.target
                 if (playerStatusRepository.getStatus(targetId).isActive.not()) {
@@ -261,11 +261,6 @@ class ActionPhaseViewModel(
             if (this@ActionPhaseViewModel.commandRepository.nowBattleCommandType !is FinishCommand) {
                 changeToNextCharacter()
             }
-
-            println("condition")
-            battleInfoRepository.getMonsters().forEach {
-                println("condition" + it.conditionList)
-            }
         }
     }
 
@@ -288,7 +283,7 @@ class ActionPhaseViewModel(
                     actionData = actionRepository.getAction(id),
                     statusList = battleInfoRepository.getMonsters(),
                     attackUseCase = attackFromPlayerUseCase,
-                    conditionUseCase = conditionFromPlayerUseCaseImpl,
+                    conditionUseCase = conditionFromPlayerUseCase,
                     updateParameter = updatePlayerParameter,
                 )
             }
@@ -323,7 +318,7 @@ class ActionPhaseViewModel(
             statusList = playerStatusRepository.getPlayers(),
             actionData = statusWrapperList[id].actionData,
             attackUseCase = attackFromEnemyUseCase,
-            conditionUseCase = conditionFromEnemyUseCaseImpl,
+            conditionUseCase = conditionFromEnemyUseCase,
             updateParameter = updateEnemyParameter,
         )
 
