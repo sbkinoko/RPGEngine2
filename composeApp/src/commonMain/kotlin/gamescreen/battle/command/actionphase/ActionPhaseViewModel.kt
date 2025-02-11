@@ -119,45 +119,59 @@ class ActionPhaseViewModel(
 
     private val statusId: Int
         get() = speedList[attackingNumber]
-    private var statusWrapperList: MutableList<StatusWrapper> = mutableListOf()
+
+    private val statusWrapperList: List<StatusWrapper>
+        get() {
+            val list = mutableListOf<StatusWrapper>()
+            playerStatusRepository.getPlayers()
+                .mapIndexed { id, status ->
+                    list += StatusWrapper(
+                        status = status,
+                        id = id,
+                        actionData = actionRepository.getAction(playerId = id),
+                    )
+                }
+
+            battleInfoRepository.getMonsters()
+                .mapIndexed { index, status ->
+                    val action = decideMonsterActionService.getAction(
+                        status,
+                        playerStatusRepository.getPlayers(),
+                    )
+                    list += StatusWrapper(
+                        status = status,
+                        id = index + playerNum,
+                        actionData = action,
+                    )
+                }
+            return list
+        }
 
     fun init() {
-        statusWrapperList = mutableListOf()
-        playerStatusRepository.getPlayers()
-            .mapIndexed { id, status ->
-                statusWrapperList += StatusWrapper(
-                    status = status,
-                    id = id,
-                    actionData = actionRepository.getAction(playerId = id),
-                )
-            }
-
-        battleInfoRepository.getMonsters()
-            .mapIndexed { index, status ->
-                val action = decideMonsterActionService.getAction(
-                    status,
-                    playerStatusRepository.getPlayers(),
-                )
-                statusWrapperList += StatusWrapper(
-                    status = status,
-                    id = index + playerNum,
-                    actionData = action,
-                )
-            }
         speedList = decideActionOrderUseCase.invoke(
             statusList = statusWrapperList,
         )
         changeToNextCharacter()
     }
 
+    private var isSkip = false
+
     fun getActionText(playerId: Int): String {
         if (playerId < 0) {
             return ""
         }
 
+        isSkip = false
+
         val actionStatusName = getActionStatusName(playerId)
         val targetStatusName = getTargetStatusName(playerId)
         val actionName = getActionItem(playerId).name
+
+        //fixme 状態異常の処理をわかりやすく分割する
+        if (statusWrapperList[playerId].status.conditionList.isNotEmpty()) {
+            isSkip = true
+            return actionStatusName + "はしびれて動けない"
+        }
 
         return actionStatusName + "の" +
                 targetStatusName + "への" +
@@ -249,10 +263,12 @@ class ActionPhaseViewModel(
     override fun goNextImpl() {
         CoroutineScope(Dispatchers.IO).launch {
             val id = statusId
-            if (isPlayer(id = id)) {
-                playerAction()
-            } else {
-                enemyAction()
+            if (!isSkip) {
+                if (isPlayer(id = id)) {
+                    playerAction()
+                } else {
+                    enemyAction()
+                }
             }
 
             delay(100)
