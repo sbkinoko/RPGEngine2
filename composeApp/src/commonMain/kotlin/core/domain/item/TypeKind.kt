@@ -1,5 +1,7 @@
 package core.domain.item
 
+import core.domain.status.ConditionType
+
 sealed interface TypeKind : Item
 
 /**
@@ -19,4 +21,8 @@ interface HealItem : TypeKind {
 
 interface AttackItem : TypeKind {
     val damageAmount: Int
+}
+
+interface ConditionItem : TypeKind {
+    val conditionType: ConditionType
 }

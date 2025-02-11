@@ -4,6 +4,7 @@ import core.domain.Place
 import core.domain.item.TargetType
 import core.domain.item.Tool
 import core.domain.item.tool.HealTool
+import core.domain.status.ConditionType
 import core.domain.status.PlayerStatus
 import core.domain.status.param.EXP
 import core.domain.status.param.HP
@@ -73,6 +74,10 @@ class UseToolUseCaseImplTest : KoinTest {
         }
 
         override fun incMPImpl(amount: Int, status: PlayerStatus): PlayerStatus {
+            throw NotImplementedError()
+        }
+
+        override suspend fun setCondition(id: Int, conditionType: ConditionType) {
             throw NotImplementedError()
         }
 
