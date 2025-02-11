@@ -16,4 +16,6 @@ interface Status {
         get() {
             return 0 < hp.point
         }
+
+    val conditionList: List<ConditionType>
 }

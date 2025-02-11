@@ -1,10 +1,12 @@
 package gamescreen.battle.command.actionphase
 
 import core.domain.item.AttackItem
+import core.domain.item.ConditionItem
 import core.domain.item.HealItem
 import core.domain.item.Item
 import core.domain.item.TypeKind
 import core.domain.item.skill.AttackSkill
+import core.domain.item.skill.ConditionSkill
 import core.domain.item.skill.HealSkill
 import core.domain.status.Status
 import core.repository.battlemonster.BattleInfoRepository
@@ -29,6 +31,7 @@ import gamescreen.battle.repository.action.ActionRepository
 import gamescreen.battle.service.isannihilation.IsAnnihilationService
 import gamescreen.battle.service.monster.DecideMonsterActionService
 import gamescreen.battle.usecase.attack.AttackUseCase
+import gamescreen.battle.usecase.condition.ConditionUseCase
 import gamescreen.battle.usecase.decideactionorder.DecideActionOrderUseCase
 import gamescreen.battle.usecase.findactivetarget.FindActiveTargetUseCase
 import gamescreen.menu.domain.SelectManager
@@ -58,9 +61,17 @@ class ActionPhaseViewModel(
     private val attackFromPlayerUseCase: AttackUseCase by inject(
         qualifier = named(QualifierAttackFromPlayer)
     )
+    private val conditionFromPlayerUseCase: ConditionUseCase by inject(
+        qualifier = named(QualifierAttackFromPlayer)
+    )
+
     private val attackFromEnemyUseCase: AttackUseCase by inject(
         qualifier = named(QualifierAttackFromEnemy)
     )
+    private val conditionFromEnemyUseCase: ConditionUseCase by inject(
+        qualifier = named(QualifierAttackFromEnemy)
+    )
+
     private val findActiveTargetUseCase: FindActiveTargetUseCase by inject()
 
     private val isAnnihilationService: IsAnnihilationService by inject()
@@ -186,6 +197,7 @@ class ActionPhaseViewModel(
         val item = getActionItem(id = id)
 
         return when (item as TypeKind) {
+            is ConditionItem,
             is AttackItem -> {
                 var targetId = action.target
                 if (battleInfoRepository.getStatus(targetId).isActive.not()) {
@@ -210,6 +222,7 @@ class ActionPhaseViewModel(
         val item = getActionItem(id)
 
         return when (item as TypeKind) {
+            is ConditionItem,
             is AttackItem -> {
                 var targetId = action.target
                 if (playerStatusRepository.getStatus(targetId).isActive.not()) {
@@ -270,6 +283,7 @@ class ActionPhaseViewModel(
                     actionData = actionRepository.getAction(id),
                     statusList = battleInfoRepository.getMonsters(),
                     attackUseCase = attackFromPlayerUseCase,
+                    conditionUseCase = conditionFromPlayerUseCase,
                     updateParameter = updatePlayerParameter,
                 )
             }
@@ -304,6 +318,7 @@ class ActionPhaseViewModel(
             statusList = playerStatusRepository.getPlayers(),
             actionData = statusWrapperList[id].actionData,
             attackUseCase = attackFromEnemyUseCase,
+            conditionUseCase = conditionFromEnemyUseCase,
             updateParameter = updateEnemyParameter,
         )
 
@@ -322,6 +337,7 @@ class ActionPhaseViewModel(
         actionData: ActionData,
         statusList: List<Status>,
         attackUseCase: AttackUseCase,
+        conditionUseCase: ConditionUseCase,
         updateParameter: UpdateStatusUseCase<*>,
     ) {
         val skill = skillRepository.getItem(
@@ -350,6 +366,21 @@ class ActionPhaseViewModel(
                     attackUseCase.invoke(
                         target = it,
                         damage = skill.damageAmount,
+                    )
+                }
+            }
+
+            is ConditionSkill -> {
+                val targetList = findActiveTargetUseCase.invoke(
+                    statusList = statusList,
+                    target = actionData.target,
+                    targetNum = skill.targetNum
+                )
+                //　複数の対象攻撃
+                targetList.forEach {
+                    conditionUseCase.invoke(
+                        target = it,
+                        conditionType = skill.conditionType,
                     )
                 }
             }

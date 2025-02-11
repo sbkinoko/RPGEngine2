@@ -1,5 +1,7 @@
 package core.usecase.updateparameter
 
+import core.domain.status.ConditionType
+
 interface UpdateStatusUseCase<T> {
     /**
      *  HPを減らして、更新後のステータスを返す
@@ -25,5 +27,10 @@ interface UpdateStatusUseCase<T> {
     suspend fun incMP(
         id: Int,
         amount: Int,
+    )
+
+    suspend fun setCondition(
+        id: Int,
+        conditionType: ConditionType,
     )
 }
