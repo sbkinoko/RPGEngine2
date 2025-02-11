@@ -4,7 +4,9 @@ import core.domain.Place
 import core.domain.item.Skill
 import core.domain.item.TargetType
 import core.domain.item.skill.AttackSkill
+import core.domain.item.skill.ConditionSkill
 import core.domain.item.skill.HealSkill
+import core.domain.status.ConditionType
 
 class SkillRepositoryImpl : SkillRepository {
 
@@ -60,6 +62,14 @@ class SkillRepositoryImpl : SkillRepository {
                 targetNum = 1,
                 targetType = TargetType.INACTIVE,
                 usablePlace = Place.BOTH,
+            )
+
+            SkillId.Paralysis -> ConditionSkill(
+                name = "麻痺",
+                needMP = 1,
+                targetNum = 1,
+                usablePlace = Place.BATTLE,
+                conditionType = ConditionType.Paralysis(),
             )
         }
     }

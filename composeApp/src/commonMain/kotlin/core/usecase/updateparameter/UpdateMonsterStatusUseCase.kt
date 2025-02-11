@@ -1,5 +1,6 @@
 package core.usecase.updateparameter
 
+import core.domain.status.ConditionType
 import core.domain.status.monster.MonsterStatus
 import core.repository.status.StatusRepository
 
@@ -36,6 +37,21 @@ class UpdateMonsterStatusUseCase(
             mp = status.mp.copy(
                 value = status.mp.value + amount
             )
+        )
+    }
+
+    override suspend fun setCondition(
+        id: Int,
+        conditionType: ConditionType,
+    ) {
+        val status = statusRepository.getStatus(id)
+        val updated = status.copy(
+            conditionList = status.conditionList + conditionType,
+        )
+
+        statusRepository.setStatus(
+            id = id,
+            status = updated,
         )
     }
 }
