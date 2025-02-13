@@ -505,6 +505,7 @@ class ActionPhaseViewModel(
                         return
                     }
 
+                    // fixme サイズだけじゃなく、リストの内容で判断するように修正
                     if (statusWrapperList[statusId].status.conditionList.isNotEmpty()
                     ) {
                         return
