@@ -24,6 +24,8 @@ fun ActionPhase(
         .attackingStatusId
         .collectAsState()
 
+    val actionState by actionPhaseViewModel.actionState
+
     Box(
         modifier = modifier
             .clickable {
@@ -33,7 +35,10 @@ fun ActionPhase(
         Text(
             modifier = Modifier
                 .align(Alignment.Center),
-            text = actionPhaseViewModel.getActionText(playerId),
+            text = actionPhaseViewModel.getActionText(
+                playerId,
+                actionState,
+            ),
         )
     }
 }

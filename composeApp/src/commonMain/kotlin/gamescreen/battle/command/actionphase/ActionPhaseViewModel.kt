@@ -1,5 +1,6 @@
 package gamescreen.battle.command.actionphase
 
+import androidx.compose.runtime.mutableStateOf
 import core.domain.item.AttackItem
 import core.domain.item.ConditionItem
 import core.domain.item.HealItem
@@ -120,6 +121,9 @@ class ActionPhaseViewModel(
     private val statusId: Int
         get() = speedList[attackingNumber]
 
+    val actionState =
+        mutableStateOf(ActionState.Start)
+
     private val statusWrapperList: List<StatusWrapper>
         get() {
             val list = mutableListOf<StatusWrapper>()
@@ -156,7 +160,10 @@ class ActionPhaseViewModel(
 
     private var isSkip = false
 
-    fun getActionText(playerId: Int): String {
+    fun getActionText(
+        playerId: Int,
+        actionState: ActionState,
+    ): String {
         if (playerId < 0) {
             return ""
         }
@@ -167,15 +174,21 @@ class ActionPhaseViewModel(
         val targetStatusName = getTargetStatusName(playerId)
         val actionName = getActionItem(playerId).name
 
-        //fixme 状態異常の処理をわかりやすく分割する
-        if (statusWrapperList[playerId].status.conditionList.isNotEmpty()) {
-            isSkip = true
-            return actionStatusName + "はしびれて動けない"
-        }
+        return when (actionState) {
+            ActionState.Paralyze -> {
+                actionStatusName + "はしびれて動けない"
+            }
 
-        return actionStatusName + "の" +
-                targetStatusName + "への" +
-                actionName
+            ActionState.Action -> {
+                return actionStatusName + "の" +
+                        targetStatusName + "への" +
+                        actionName
+            }
+
+            // 表示するものはない
+            ActionState.Start -> ""
+            ActionState.Next -> ""
+        }
     }
 
     private fun getActionStatusName(id: Int): String {
@@ -263,19 +276,33 @@ class ActionPhaseViewModel(
     override fun goNextImpl() {
         CoroutineScope(Dispatchers.IO).launch {
             val id = statusId
-            if (!isSkip) {
-                if (isPlayer(id = id)) {
-                    playerAction()
-                } else {
-                    enemyAction()
+
+            while (true) {
+                when (actionState.value) {
+                    ActionState.Start -> Unit
+
+                    ActionState.Paralyze -> {
+                        changeActionPhase()
+                    }
+
+                    ActionState.Action -> {
+                        if (isPlayer(id = id)) {
+                            playerAction()
+                        } else {
+                            enemyAction()
+                        }
+                        delay(100)
+                        changeActionPhase()
+                    }
+
+                    ActionState.Next -> {
+                        // アクションをしてもまだ戦闘中なら次のキャラへ
+                        if (this@ActionPhaseViewModel.commandRepository.nowBattleCommandType !is FinishCommand) {
+                            changeToNextCharacter()
+                        }
+                        return@launch
+                    }
                 }
-            }
-
-            delay(100)
-
-            // アクションをしてもまだ戦闘中なら次のキャラへ
-            if (this@ActionPhaseViewModel.commandRepository.nowBattleCommandType !is FinishCommand) {
-                changeToNextCharacter()
             }
         }
     }
@@ -464,7 +491,41 @@ class ActionPhaseViewModel(
 
             // 行動可能なのでデータ更新
             mutableAttackingStatusId.value = id
+            actionState.value = ActionState.Start
+            changeActionPhase()
             break
+        }
+    }
+
+    private fun changeActionPhase() {
+        val initialState = actionState.value
+        while (true) {
+            when (actionState.value) {
+                ActionState.Start -> Unit
+                ActionState.Paralyze -> {
+                    if (initialState == ActionState.Paralyze) {
+                        actionState.value = ActionState.Next
+                        return
+                    }
+
+                    if (statusWrapperList[statusId].status.conditionList.isNotEmpty()
+                    ) {
+                        return
+                    }
+                }
+
+                ActionState.Action -> {
+                    if (initialState != ActionState.Action) {
+                        return
+                    }
+                }
+
+                ActionState.Next -> {
+                    return
+                }
+            }
+
+            actionState.value = actionState.value.next
         }
     }
 
