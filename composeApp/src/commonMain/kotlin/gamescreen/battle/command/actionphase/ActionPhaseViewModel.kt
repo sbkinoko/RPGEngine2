@@ -158,7 +158,6 @@ class ActionPhaseViewModel(
         changeToNextCharacter()
     }
 
-    private var isSkip = false
 
     fun getActionText(
         playerId: Int,
@@ -167,8 +166,6 @@ class ActionPhaseViewModel(
         if (playerId < 0) {
             return ""
         }
-
-        isSkip = false
 
         val actionStatusName = getActionStatusName(playerId)
         val targetStatusName = getTargetStatusName(playerId)
