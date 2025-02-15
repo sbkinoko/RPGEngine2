@@ -11,6 +11,7 @@ import core.domain.item.skill.ConditionSkill
 import core.domain.item.skill.HealSkill
 import core.domain.status.ConditionType
 import core.domain.status.Status
+import core.domain.status.tryCalcPoisonDamage
 import core.domain.status.tryCureParalyze
 import core.repository.battlemonster.BattleInfoRepository
 import core.repository.player.PlayerStatusRepository
@@ -185,6 +186,10 @@ class ActionPhaseViewModel(
                         actionName
             }
 
+            ActionState.Poison -> {
+                actionStatusName + "は毒のダメージを受けた"
+            }
+
             ActionState.CureParalyze -> {
                 actionStatusName + "の麻痺が治った"
             }
@@ -299,6 +304,11 @@ class ActionPhaseViewModel(
                     }
                     delay(100)
                     // アクションの次の状態に遷移する
+                    toNextActionState()
+                    changeActionPhase()
+                }
+
+                ActionState.Poison -> {
                     toNextActionState()
                     changeActionPhase()
                 }
@@ -545,6 +555,22 @@ class ActionPhaseViewModel(
 
                 ActionState.Action -> {
                     // actionで状態を固定
+                    return
+                }
+
+                ActionState.Poison -> {
+                    val list = statusWrapperList[statusId]
+                        .status
+                        .conditionList
+
+                    val damage = list.tryCalcPoisonDamage()
+
+                    if (damage == 0) {
+                        toNextActionState()
+                        continue
+                    }
+
+                    // 毒でダメージを受けたので状態を固定
                     return
                 }
 

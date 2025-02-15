@@ -8,6 +8,7 @@ sealed class ConditionType {
         val cure: Int = 50,
     ) : ConditionType()
 
+    // fixme 割合ダメージの毒も作る
     class Poison(
         val damage: Int = 5,
         val cure: Int = 50,
@@ -27,3 +28,13 @@ fun List<ConditionType>.tryCureParalyze(): List<ConditionType> = this.filter {
     // 治るなら除去
     rand >= it.cure
 }
+
+/**
+ * リストに含まれる毒のダメージを加算
+ */
+fun List<ConditionType>.tryCalcPoisonDamage(): Int = this.map {
+    if (it !is ConditionType.Poison) {
+        return 0
+    }
+    it.damage
+}.sum()
