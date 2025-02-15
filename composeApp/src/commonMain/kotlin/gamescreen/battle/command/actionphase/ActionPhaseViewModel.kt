@@ -12,7 +12,7 @@ import core.domain.item.skill.HealSkill
 import core.domain.status.ConditionType
 import core.domain.status.Status
 import core.domain.status.tryCalcPoisonDamage
-import core.domain.status.tryCureParalyze
+import core.domain.status.tryCure
 import core.repository.battlemonster.BattleInfoRepository
 import core.repository.player.PlayerStatusRepository
 import core.usecase.item.usetool.UseToolUseCase
@@ -190,6 +190,10 @@ class ActionPhaseViewModel(
                 actionStatusName + "は毒のダメージを受けた"
             }
 
+            ActionState.CurePoison -> {
+                actionStatusName + "の毒が治った"
+            }
+
             ActionState.CureParalyze -> {
                 actionStatusName + "の麻痺が治った"
             }
@@ -315,6 +319,7 @@ class ActionPhaseViewModel(
                     changeActionPhase()
                 }
 
+                ActionState.CurePoison,
                 ActionState.CureParalyze -> {
                     toNextActionState()
                     changeActionPhase()
@@ -549,6 +554,12 @@ class ActionPhaseViewModel(
     }
 
     private fun changeActionPhase() {
+        if (statusWrapperList[statusId].status.isActive.not()) {
+            // 倒れていたらnextに変更
+            actionState.value = ActionState.Next
+            return
+        }
+
         while (true) {
             when (actionState.value) {
                 ActionState.Start -> {
@@ -614,34 +625,21 @@ class ActionPhaseViewModel(
                     return
                 }
 
+                ActionState.CurePoison -> {
+                    if (tryCure<ConditionType.Poison>()) {
+                        // 毒が治った状態で固定
+                        return
+                    }
+                    toNextActionState()
+                }
+
                 ActionState.CureParalyze -> {
-                    val beforeList = statusWrapperList[statusId]
-                        .status
-                        .conditionList
-                    val after = beforeList.tryCureParalyze()
-
-                    if (beforeList.size == after.size) {
-                        // 麻痺に関する処理はないので処理を続ける
-                        toNextActionState()
-                        continue
+                    if (tryCure<ConditionType.Paralysis>()) {
+                        // 麻痺が治った状態で固定
+                        return
                     }
 
-                    CoroutineScope(Dispatchers.Default).launch {
-                        if (isPlayer(statusId)) {
-                            updatePlayerParameter.updateConditionList(
-                                id = statusId,
-                                conditionList = after,
-                            )
-                        } else {
-                            updateEnemyParameter.updateConditionList(
-                                id = statusId.toMonster(),
-                                conditionList = after
-                            )
-                        }
-                    }
-
-                    // 麻痺が治った状態で固定
-                    return
+                    toNextActionState()
                 }
 
                 ActionState.Next -> {
@@ -650,6 +648,33 @@ class ActionPhaseViewModel(
                 }
             }
         }
+    }
+
+    private inline fun <reified T : ConditionType.CureProb> tryCure(): Boolean {
+        val beforeList = statusWrapperList[statusId]
+            .status
+            .conditionList
+        val after = beforeList
+            .tryCure<T>()
+
+        if (beforeList.size == after.size) {
+            return false
+        }
+
+        CoroutineScope(Dispatchers.Default).launch {
+            if (isPlayer(statusId)) {
+                updatePlayerParameter.updateConditionList(
+                    id = statusId,
+                    conditionList = after,
+                )
+            } else {
+                updateEnemyParameter.updateConditionList(
+                    id = statusId.toMonster(),
+                    conditionList = after
+                )
+            }
+        }
+        return true
     }
 
     private fun toNextActionState() {

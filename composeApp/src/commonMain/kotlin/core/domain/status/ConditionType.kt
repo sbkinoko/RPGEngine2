@@ -5,22 +5,27 @@ import kotlin.random.Random
 sealed class ConditionType {
     class Paralysis(
         val probability: Int = 50,
-        val cure: Int = 50,
-    ) : ConditionType()
+        override val cure: Int = 50,
+    ) : ConditionType(), CureProb
 
     // fixme 割合ダメージの毒も作る
     class Poison(
         val damage: Int = 5,
-        val cure: Int = 50,
-    ) : ConditionType()
+        override val cure: Int = 50,
+    ) : ConditionType(), CureProb
+
+    interface CureProb {
+        val cure: Int
+    }
 }
 
 /**
- * 確率によって治った麻痺を除去したリストを作成
+ * 確率によって治った状態異常リストを作成
  */
-fun List<ConditionType>.tryCureParalyze(): List<ConditionType> = this.filter {
-    // 麻痺以外は持ってくる
-    if (it !is ConditionType.Paralysis) {
+inline fun <reified T : ConditionType.CureProb> List<ConditionType>.tryCure(): List<ConditionType> =
+    this.filter {
+        // 指定した状態異常以外はそのまま
+        if (it !is T) {
         return@filter true
     }
 
