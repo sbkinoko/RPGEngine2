@@ -32,6 +32,12 @@ data class PlayerStatus(
             )
         }
     }
+
+    override fun updateConditionList(
+        conditionList: List<ConditionType>
+    ): Status = copy(
+        conditionList = conditionList
+    )
 }
 
 private val dummyHP

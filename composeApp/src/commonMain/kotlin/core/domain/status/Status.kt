@@ -18,4 +18,5 @@ interface Status {
         }
 
     val conditionList: List<ConditionType>
+    fun updateConditionList(conditionList: List<ConditionType>): Status
 }
