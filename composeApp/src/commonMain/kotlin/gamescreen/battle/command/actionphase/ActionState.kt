@@ -13,6 +13,10 @@ enum class ActionState {
     },
     Action {
         override val next: ActionState
+            get() = CureParalyze
+    },
+    CureParalyze {
+        override val next: ActionState
             get() = Next
     },
     Next {

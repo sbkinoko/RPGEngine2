@@ -29,8 +29,14 @@ interface UpdateStatusUseCase<T> {
         amount: Int,
     )
 
+    // fixme addに修正
     suspend fun setCondition(
         id: Int,
         conditionType: ConditionType,
+    )
+
+    suspend fun updateConditionList(
+        id: Int,
+        conditionList: List<ConditionType>
     )
 }
