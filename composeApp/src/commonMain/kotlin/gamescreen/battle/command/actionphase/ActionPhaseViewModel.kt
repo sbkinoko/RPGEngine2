@@ -11,6 +11,7 @@ import core.domain.item.skill.ConditionSkill
 import core.domain.item.skill.HealSkill
 import core.domain.status.ConditionType
 import core.domain.status.Status
+import core.domain.status.tryCalcPoisonDamage
 import core.domain.status.tryCureParalyze
 import core.repository.battlemonster.BattleInfoRepository
 import core.repository.player.PlayerStatusRepository
@@ -185,6 +186,10 @@ class ActionPhaseViewModel(
                         actionName
             }
 
+            ActionState.Poison -> {
+                actionStatusName + "は毒のダメージを受けた"
+            }
+
             ActionState.CureParalyze -> {
                 actionStatusName + "の麻痺が治った"
             }
@@ -303,6 +308,13 @@ class ActionPhaseViewModel(
                     changeActionPhase()
                 }
 
+                ActionState.Poison -> {
+                    checkBattleFinish()
+                    delay(100)
+                    toNextActionState()
+                    changeActionPhase()
+                }
+
                 ActionState.CureParalyze -> {
                     toNextActionState()
                     changeActionPhase()
@@ -384,6 +396,30 @@ class ActionPhaseViewModel(
             this.commandRepository.push(
                 FinishCommand(
                     isWin = false
+                )
+            )
+            return
+        }
+    }
+
+    private fun checkBattleFinish() {
+        // 同時に全滅したら負け
+
+        // プレイヤーが全滅していたらバトル終了
+        if (isPlayerAnnihilated) {
+            this.commandRepository.push(
+                FinishCommand(
+                    isWin = false
+                )
+            )
+            return
+        }
+
+        // 敵を倒していたらバトル終了
+        if (isMonsterAnnihilated) {
+            this.commandRepository.push(
+                FinishCommand(
+                    isWin = true
                 )
             )
             return
@@ -545,6 +581,36 @@ class ActionPhaseViewModel(
 
                 ActionState.Action -> {
                     // actionで状態を固定
+                    return
+                }
+
+                ActionState.Poison -> {
+                    val list = statusWrapperList[statusId]
+                        .status
+                        .conditionList
+
+                    val damage = list.tryCalcPoisonDamage()
+
+                    if (damage == 0) {
+                        toNextActionState()
+                        continue
+                    }
+
+                    CoroutineScope(Dispatchers.Default).launch {
+                        if (isPlayer(statusId)) {
+                            updatePlayerParameter.decHP(
+                                id = statusId,
+                                amount = damage,
+                            )
+                        } else {
+                            updateEnemyParameter.decHP(
+                                id = statusId.toMonster(),
+                                amount = damage,
+                            )
+                        }
+                    }
+
+                    // 毒でダメージを受けたので状態を固定
                     return
                 }
 
