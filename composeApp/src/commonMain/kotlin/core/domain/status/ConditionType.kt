@@ -7,6 +7,11 @@ sealed class ConditionType {
         val probability: Int = 50,
         val cure: Int = 50,
     ) : ConditionType()
+
+    class Poison(
+        val damage: Int = 5,
+        val cure: Int = 50,
+    ) : ConditionType()
 }
 
 /**
