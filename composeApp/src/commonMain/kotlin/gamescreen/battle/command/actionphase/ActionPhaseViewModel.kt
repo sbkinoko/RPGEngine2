@@ -9,6 +9,7 @@ import core.domain.item.TypeKind
 import core.domain.item.skill.AttackSkill
 import core.domain.item.skill.ConditionSkill
 import core.domain.item.skill.HealSkill
+import core.domain.status.ConditionType
 import core.domain.status.Status
 import core.repository.battlemonster.BattleInfoRepository
 import core.repository.player.PlayerStatusRepository
@@ -30,6 +31,7 @@ import gamescreen.battle.domain.FinishCommand
 import gamescreen.battle.domain.StatusWrapper
 import gamescreen.battle.repository.action.ActionRepository
 import gamescreen.battle.service.isannihilation.IsAnnihilationService
+import gamescreen.battle.service.judgemovebyparalyze.canMove
 import gamescreen.battle.service.monster.DecideMonsterActionService
 import gamescreen.battle.usecase.attack.AttackUseCase
 import gamescreen.battle.usecase.condition.ConditionUseCase
@@ -279,7 +281,8 @@ class ActionPhaseViewModel(
                     ActionState.Start -> Unit
 
                     ActionState.Paralyze -> {
-                        changeActionPhase()
+                        // アクションをスキップしたい
+                        actionState.value = ActionState.Action.next
                     }
 
                     ActionState.Action -> {
@@ -289,7 +292,8 @@ class ActionPhaseViewModel(
                             enemyAction()
                         }
                         delay(100)
-                        changeActionPhase()
+                        // アクションの次の状態に遷移する
+                        toNextActionState()
                     }
 
                     ActionState.Next -> {
@@ -495,36 +499,51 @@ class ActionPhaseViewModel(
     }
 
     private fun changeActionPhase() {
-        val initialState = actionState.value
         while (true) {
             when (actionState.value) {
-                ActionState.Start -> Unit
+                ActionState.Start -> {
+                    // 固定できるものを探してループ
+                    toNextActionState()
+                }
+
                 ActionState.Paralyze -> {
-                    if (initialState == ActionState.Paralyze) {
-                        actionState.value = ActionState.Next
+                    val paralyzeList = statusWrapperList[statusId]
+                        .status
+                        .conditionList
+                        .filterIsInstance<ConditionType.Paralysis>()
+
+                    if (paralyzeList.isEmpty()) {
+                        // 麻痺に関する処理はないので処理を続ける
+                        toNextActionState()
+                        continue
+                    }
+
+                    val canMove = paralyzeList.canMove()
+
+                    if (!canMove) {
+                        // 動けないので状態が確定
                         return
                     }
 
-                    // fixme サイズだけじゃなく、リストの内容で判断するように修正
-                    if (statusWrapperList[statusId].status.conditionList.isNotEmpty()
-                    ) {
-                        return
-                    }
+                    //　動けるので次のstateで処理を続ける
+                    toNextActionState()
                 }
 
                 ActionState.Action -> {
-                    if (initialState != ActionState.Action) {
-                        return
-                    }
+                    // actionで状態を固定
+                    return
                 }
 
                 ActionState.Next -> {
+                    // nextで状態を固定
                     return
                 }
             }
-
-            actionState.value = actionState.value.next
         }
+    }
+
+    private fun toNextActionState() {
+        actionState.value = actionState.value.next
     }
 
     private fun isPlayer(id: Int): Boolean {
