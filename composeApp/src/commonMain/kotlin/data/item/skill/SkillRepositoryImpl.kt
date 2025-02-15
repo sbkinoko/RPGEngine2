@@ -71,6 +71,14 @@ class SkillRepositoryImpl : SkillRepository {
                 usablePlace = Place.BATTLE,
                 conditionType = ConditionType.Paralysis(),
             )
+
+            SkillId.Poison -> ConditionSkill(
+                name = "毒",
+                needMP = 1,
+                targetNum = 1,
+                usablePlace = Place.BATTLE,
+                conditionType = ConditionType.Poison(),
+            )
         }
     }
 }
