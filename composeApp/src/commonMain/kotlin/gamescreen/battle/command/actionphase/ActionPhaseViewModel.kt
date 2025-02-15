@@ -309,6 +309,8 @@ class ActionPhaseViewModel(
                 }
 
                 ActionState.Poison -> {
+                    checkBattleFinish()
+                    delay(100)
                     toNextActionState()
                     changeActionPhase()
                 }
@@ -394,6 +396,30 @@ class ActionPhaseViewModel(
             this.commandRepository.push(
                 FinishCommand(
                     isWin = false
+                )
+            )
+            return
+        }
+    }
+
+    private fun checkBattleFinish() {
+        // 同時に全滅したら負け
+
+        // プレイヤーが全滅していたらバトル終了
+        if (isPlayerAnnihilated) {
+            this.commandRepository.push(
+                FinishCommand(
+                    isWin = false
+                )
+            )
+            return
+        }
+
+        // 敵を倒していたらバトル終了
+        if (isMonsterAnnihilated) {
+            this.commandRepository.push(
+                FinishCommand(
+                    isWin = true
                 )
             )
             return
@@ -568,6 +594,20 @@ class ActionPhaseViewModel(
                     if (damage == 0) {
                         toNextActionState()
                         continue
+                    }
+
+                    CoroutineScope(Dispatchers.Default).launch {
+                        if (isPlayer(statusId)) {
+                            updatePlayerParameter.decHP(
+                                id = statusId,
+                                amount = damage,
+                            )
+                        } else {
+                            updateEnemyParameter.decHP(
+                                id = statusId.toMonster(),
+                                amount = damage,
+                            )
+                        }
                     }
 
                     // 毒でダメージを受けたので状態を固定
