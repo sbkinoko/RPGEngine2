@@ -11,6 +11,7 @@ import core.domain.item.skill.ConditionSkill
 import core.domain.item.skill.HealSkill
 import core.domain.status.ConditionType
 import core.domain.status.Status
+import core.domain.status.tryCureParalyze
 import core.repository.battlemonster.BattleInfoRepository
 import core.repository.player.PlayerStatusRepository
 import core.usecase.item.usetool.UseToolUseCase
@@ -184,6 +185,10 @@ class ActionPhaseViewModel(
                         actionName
             }
 
+            ActionState.CureParalyze -> {
+                actionStatusName + "の麻痺が治った"
+            }
+
             // 表示するものはない
             ActionState.Start -> ""
             ActionState.Next -> ""
@@ -276,34 +281,43 @@ class ActionPhaseViewModel(
         CoroutineScope(Dispatchers.IO).launch {
             val id = statusId
 
-            while (true) {
-                when (actionState.value) {
-                    ActionState.Start -> Unit
+            when (actionState.value) {
+                ActionState.Start -> Unit
 
-                    ActionState.Paralyze -> {
-                        // アクションをスキップしたい
-                        actionState.value = ActionState.Action.next
-                    }
-
-                    ActionState.Action -> {
-                        if (isPlayer(id = id)) {
-                            playerAction()
-                        } else {
-                            enemyAction()
-                        }
-                        delay(100)
-                        // アクションの次の状態に遷移する
-                        toNextActionState()
-                    }
-
-                    ActionState.Next -> {
-                        // アクションをしてもまだ戦闘中なら次のキャラへ
-                        if (this@ActionPhaseViewModel.commandRepository.nowBattleCommandType !is FinishCommand) {
-                            changeToNextCharacter()
-                        }
-                        return@launch
-                    }
+                ActionState.Paralyze -> {
+                    // アクションをスキップしたい
+                    actionState.value = ActionState.Action
+                    toNextActionState()
+                    changeActionPhase()
                 }
+
+                ActionState.Action -> {
+                    if (isPlayer(id = id)) {
+                        playerAction()
+                    } else {
+                        enemyAction()
+                    }
+                    delay(100)
+                    // アクションの次の状態に遷移する
+                    toNextActionState()
+                    changeActionPhase()
+                }
+
+                ActionState.CureParalyze -> {
+                    toNextActionState()
+                    changeActionPhase()
+                }
+
+                // 最後の処理なので別途用意
+                ActionState.Next -> Unit
+            }
+
+            if (actionState.value == ActionState.Next) {
+                // アクションをしてもまだ戦闘中なら次のキャラへ
+                if (this@ActionPhaseViewModel.commandRepository.nowBattleCommandType !is FinishCommand) {
+                    changeToNextCharacter()
+                }
+                return@launch
             }
         }
     }
@@ -531,6 +545,36 @@ class ActionPhaseViewModel(
 
                 ActionState.Action -> {
                     // actionで状態を固定
+                    return
+                }
+
+                ActionState.CureParalyze -> {
+                    val beforeList = statusWrapperList[statusId]
+                        .status
+                        .conditionList
+                    val after = beforeList.tryCureParalyze()
+
+                    if (beforeList.size == after.size) {
+                        // 麻痺に関する処理はないので処理を続ける
+                        toNextActionState()
+                        continue
+                    }
+
+                    CoroutineScope(Dispatchers.Default).launch {
+                        if (isPlayer(statusId)) {
+                            updatePlayerParameter.updateConditionList(
+                                id = statusId,
+                                conditionList = after,
+                            )
+                        } else {
+                            updateEnemyParameter.updateConditionList(
+                                id = statusId.toMonster(),
+                                conditionList = after
+                            )
+                        }
+                    }
+
+                    // 麻痺が治った状態で固定
                     return
                 }
 

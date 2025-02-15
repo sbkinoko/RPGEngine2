@@ -85,6 +85,7 @@ class StatusRepositoryImpl : AbstractStatusRepository() {
                 skillList = listOf(
                     SkillId.AttackToTwo,
                     SkillId.CantUse,
+                    SkillId.Paralysis,
                 ),
                 toolList = listOf(
                     ToolId.HEAL1,
@@ -100,6 +101,7 @@ class StatusRepositoryImpl : AbstractStatusRepository() {
                 skillList = listOf(
                     SkillId.Heal,
                     SkillId.Revive,
+                    SkillId.Paralysis,
                 ),
                 toolList = listOf(
                     ToolId.HEAL1,

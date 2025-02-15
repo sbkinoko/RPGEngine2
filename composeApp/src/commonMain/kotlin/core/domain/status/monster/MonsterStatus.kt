@@ -20,4 +20,10 @@ data class MonsterStatus(
     val dropInfoList: List<DropItemInfo>,
     val skillList: List<SkillId>,
     val actionStyle: ActionStyle,
-) : Status
+) : Status {
+    override fun updateConditionList(
+        conditionList: List<ConditionType>,
+    ): Status = copy(
+        conditionList = conditionList,
+    )
+}
