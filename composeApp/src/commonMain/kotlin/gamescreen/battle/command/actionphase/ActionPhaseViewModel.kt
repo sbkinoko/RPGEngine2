@@ -549,18 +549,12 @@ class ActionPhaseViewModel(
         }
     }
 
-    private fun changeActionPhase() {
-        if (statusWrapperList[statusId].status.isActive.not()) {
-            // 倒れていたらnextに変更
-            actionState.value = ActionState.Next
-            return
-        }
+    fun ActionState.getNextState(): ActionState {
+        var tmpState = this
 
         while (true) {
-
-            actionState.value = actionState.value.next
-
-            when (actionState.value) {
+            tmpState = tmpState.next
+            when (tmpState) {
                 // 初期状態で固定されることはない
                 ActionState.Start -> continue
 
@@ -579,7 +573,7 @@ class ActionPhaseViewModel(
 
                     if (!canMove) {
                         // 動けないので状態が確定
-                        return
+                        return tmpState
                     }
 
                     //　動けるので次のstateで処理を続ける
@@ -588,7 +582,7 @@ class ActionPhaseViewModel(
 
                 ActionState.Action -> {
                     // actionで状態を固定
-                    return
+                    return tmpState
                 }
 
                 is ActionState.Poison -> {
@@ -617,13 +611,13 @@ class ActionPhaseViewModel(
                     }
 
                     // 毒でダメージを受けたので状態を固定
-                    return
+                    return tmpState
                 }
 
                 is ActionState.CurePoison -> {
                     if (tryCure<ConditionType.Poison>()) {
                         // 毒が治った状態で固定
-                        return
+                        return tmpState
                     }
                     // 毒を直す処理はないので次を探す
                     continue
@@ -632,7 +626,7 @@ class ActionPhaseViewModel(
                 is ActionState.CureParalyze -> {
                     if (tryCure<ConditionType.Paralysis>()) {
                         // 麻痺が治った状態で固定
-                        return
+                        return tmpState
                     }
 
                     //麻痺を直す処理はないので次を探す
@@ -641,10 +635,20 @@ class ActionPhaseViewModel(
 
                 ActionState.Next -> {
                     // nextで状態を固定
-                    return
+                    return tmpState
                 }
             }
         }
+    }
+
+    private fun changeActionPhase() {
+        if (statusWrapperList[statusId].status.isActive.not()) {
+            // 倒れていたらnextに変更
+            actionState.value = ActionState.Next
+            return
+        }
+
+        actionState.value = actionState.value.getNextState()
     }
 
     private inline fun <reified T : ConditionType.CureProb> tryCure(): Boolean {
