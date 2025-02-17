@@ -289,7 +289,8 @@ class ActionPhaseViewModel(
     override fun goNextImpl() {
         CoroutineScope(Dispatchers.IO).launch {
             when (actionState.value) {
-                ActionState.Start -> Unit
+                ActionState.Start,
+                ActionState.Next -> Unit
 
                 ActionState.Paralyze -> {
                     // アクションをスキップしたい
@@ -297,33 +298,15 @@ class ActionPhaseViewModel(
                     changeActionPhase()
                 }
 
-                ActionState.Action -> {
-                    checkBattleFinish()
-                    delay(100)
-                    changeActionPhase()
-                }
-
-                is ActionState.Poison -> {
-                    checkBattleFinish()
-                    delay(100)
-                    changeActionPhase()
-                }
-
+                ActionState.Action,
+                is ActionState.Poison,
                 is ActionState.CurePoison,
-                is ActionState.CureParalyze -> {
+                is ActionState.CureParalyze,
+                -> {
+                    delay(100)
+                    checkBattleFinish()
                     changeActionPhase()
                 }
-
-                // 最後の処理なので別途用意
-                ActionState.Next -> Unit
-            }
-
-            if (actionState.value == ActionState.Next) {
-                // アクションをしてもまだ戦闘中なら次のキャラへ
-                if (this@ActionPhaseViewModel.commandRepository.nowBattleCommandType !is FinishCommand) {
-                    changeToNextCharacter()
-                }
-                return@launch
             }
         }
     }
@@ -656,7 +639,13 @@ class ActionPhaseViewModel(
 
             is ActionState.CureParalyze -> Unit
             is ActionState.CurePoison -> Unit
-            ActionState.Next -> Unit
+            ActionState.Next -> {
+                // アクションをしてもまだ戦闘中なら次のキャラへ
+                if (this@ActionPhaseViewModel.commandRepository.nowBattleCommandType !is FinishCommand) {
+                    changeToNextCharacter()
+                }
+            }
+
             ActionState.Paralyze -> Unit
             is ActionState.Poison -> Unit
             ActionState.Start -> Unit
