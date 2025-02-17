@@ -296,7 +296,6 @@ class ActionPhaseViewModel(
                 ActionState.Paralyze -> {
                     // アクションをスキップしたい
                     actionState.value = ActionState.Action
-                    toNextActionState()
                     changeActionPhase()
                 }
 
@@ -308,20 +307,17 @@ class ActionPhaseViewModel(
                     }
                     delay(100)
                     // アクションの次の状態に遷移する
-                    toNextActionState()
                     changeActionPhase()
                 }
 
                 ActionState.Poison -> {
                     checkBattleFinish()
                     delay(100)
-                    toNextActionState()
                     changeActionPhase()
                 }
 
                 ActionState.CurePoison,
                 ActionState.CureParalyze -> {
-                    toNextActionState()
                     changeActionPhase()
                 }
 
@@ -561,11 +557,12 @@ class ActionPhaseViewModel(
         }
 
         while (true) {
+
+            actionState.value = actionState.value.next
+
             when (actionState.value) {
-                ActionState.Start -> {
-                    // 固定できるものを探してループ
-                    toNextActionState()
-                }
+                // 初期状態で固定されることはない
+                ActionState.Start -> continue
 
                 ActionState.Paralyze -> {
                     val paralyzeList = statusWrapperList[statusId]
@@ -575,7 +572,6 @@ class ActionPhaseViewModel(
 
                     if (paralyzeList.isEmpty()) {
                         // 麻痺に関する処理はないので処理を続ける
-                        toNextActionState()
                         continue
                     }
 
@@ -587,7 +583,7 @@ class ActionPhaseViewModel(
                     }
 
                     //　動けるので次のstateで処理を続ける
-                    toNextActionState()
+                    continue
                 }
 
                 ActionState.Action -> {
@@ -603,7 +599,6 @@ class ActionPhaseViewModel(
                     val damage = list.tryCalcPoisonDamage()
 
                     if (damage == 0) {
-                        toNextActionState()
                         continue
                     }
 
@@ -630,7 +625,8 @@ class ActionPhaseViewModel(
                         // 毒が治った状態で固定
                         return
                     }
-                    toNextActionState()
+                    // 毒を直す処理はないので次を探す
+                    continue
                 }
 
                 ActionState.CureParalyze -> {
@@ -639,7 +635,8 @@ class ActionPhaseViewModel(
                         return
                     }
 
-                    toNextActionState()
+                    //麻痺を直す処理はないので次を探す
+                    continue
                 }
 
                 ActionState.Next -> {
@@ -675,10 +672,6 @@ class ActionPhaseViewModel(
             }
         }
         return true
-    }
-
-    private fun toNextActionState() {
-        actionState.value = actionState.value.next
     }
 
     private fun isPlayer(id: Int): Boolean {
