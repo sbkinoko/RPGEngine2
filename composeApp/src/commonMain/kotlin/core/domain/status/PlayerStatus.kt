@@ -11,6 +11,7 @@ data class PlayerStatus(
     override val hp: HP = dummyHP,
     override val mp: MP = dummyMP,
     override val speed: Int = 0,
+    override val conditionList: List<ConditionType> = listOf(),
     val skillList: List<SkillId>,
     val toolList: List<ToolId>,
     val exp: EXP,
@@ -31,6 +32,12 @@ data class PlayerStatus(
             )
         }
     }
+
+    override fun updateConditionList(
+        conditionList: List<ConditionType>
+    ): Status = copy(
+        conditionList = conditionList
+    )
 }
 
 private val dummyHP

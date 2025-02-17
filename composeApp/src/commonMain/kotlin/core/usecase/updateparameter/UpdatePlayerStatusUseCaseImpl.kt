@@ -1,5 +1,6 @@
 package core.usecase.updateparameter
 
+import core.domain.status.ConditionType
 import core.domain.status.PlayerStatus
 import core.repository.status.StatusRepository
 
@@ -52,6 +53,20 @@ class UpdatePlayerStatusUseCaseImpl(
         statusRepository.setStatus(
             id = playerId,
             status = status,
+        )
+    }
+
+    override suspend fun setCondition(
+        id: Int,
+        conditionType: ConditionType,
+    ) {
+        val status = statusRepository.getStatus(id)
+        val updated = status.copy(
+            conditionList = status.conditionList + conditionType
+        )
+        statusRepository.setStatus(
+            id = id,
+            status = updated,
         )
     }
 }

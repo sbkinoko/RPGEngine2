@@ -1,10 +1,13 @@
 package gamescreen.battle.command.actionphase
 
+import androidx.compose.runtime.mutableStateOf
 import core.domain.item.AttackItem
+import core.domain.item.ConditionItem
 import core.domain.item.HealItem
 import core.domain.item.Item
 import core.domain.item.TypeKind
 import core.domain.item.skill.AttackSkill
+import core.domain.item.skill.ConditionSkill
 import core.domain.item.skill.HealSkill
 import core.domain.status.Status
 import core.repository.battlemonster.BattleInfoRepository
@@ -29,6 +32,7 @@ import gamescreen.battle.repository.action.ActionRepository
 import gamescreen.battle.service.isannihilation.IsAnnihilationService
 import gamescreen.battle.service.monster.DecideMonsterActionService
 import gamescreen.battle.usecase.attack.AttackUseCase
+import gamescreen.battle.usecase.condition.ConditionUseCase
 import gamescreen.battle.usecase.decideactionorder.DecideActionOrderUseCase
 import gamescreen.battle.usecase.findactivetarget.FindActiveTargetUseCase
 import gamescreen.menu.domain.SelectManager
@@ -58,9 +62,17 @@ class ActionPhaseViewModel(
     private val attackFromPlayerUseCase: AttackUseCase by inject(
         qualifier = named(QualifierAttackFromPlayer)
     )
+    private val conditionFromPlayerUseCase: ConditionUseCase by inject(
+        qualifier = named(QualifierAttackFromPlayer)
+    )
+
     private val attackFromEnemyUseCase: AttackUseCase by inject(
         qualifier = named(QualifierAttackFromEnemy)
     )
+    private val conditionFromEnemyUseCase: ConditionUseCase by inject(
+        qualifier = named(QualifierAttackFromEnemy)
+    )
+
     private val findActiveTargetUseCase: FindActiveTargetUseCase by inject()
 
     private val isAnnihilationService: IsAnnihilationService by inject()
@@ -108,38 +120,49 @@ class ActionPhaseViewModel(
 
     private val statusId: Int
         get() = speedList[attackingNumber]
-    private var statusWrapperList: MutableList<StatusWrapper> = mutableListOf()
+
+    val actionState =
+        mutableStateOf<ActionState>(ActionState.Start)
+
+    private val statusWrapperList: List<StatusWrapper>
+        get() {
+            val list = mutableListOf<StatusWrapper>()
+            playerStatusRepository.getPlayers()
+                .mapIndexed { id, status ->
+                    list += StatusWrapper(
+                        status = status,
+                        id = id,
+                        actionData = actionRepository.getAction(playerId = id),
+                    )
+                }
+
+            battleInfoRepository.getMonsters()
+                .mapIndexed { index, status ->
+                    val action = decideMonsterActionService.getAction(
+                        status,
+                        playerStatusRepository.getPlayers(),
+                    )
+                    list += StatusWrapper(
+                        status = status,
+                        id = index + playerNum,
+                        actionData = action,
+                    )
+                }
+            return list
+        }
 
     fun init() {
-        statusWrapperList = mutableListOf()
-        playerStatusRepository.getPlayers()
-            .mapIndexed { id, status ->
-                statusWrapperList += StatusWrapper(
-                    status = status,
-                    id = id,
-                    actionData = actionRepository.getAction(playerId = id),
-                )
-            }
-
-        battleInfoRepository.getMonsters()
-            .mapIndexed { index, status ->
-                val action = decideMonsterActionService.getAction(
-                    status,
-                    playerStatusRepository.getPlayers(),
-                )
-                statusWrapperList += StatusWrapper(
-                    status = status,
-                    id = index + playerNum,
-                    actionData = action,
-                )
-            }
         speedList = decideActionOrderUseCase.invoke(
             statusList = statusWrapperList,
         )
         changeToNextCharacter()
     }
 
-    fun getActionText(playerId: Int): String {
+
+    fun getActionText(
+        playerId: Int,
+        actionState: ActionState,
+    ): String {
         if (playerId < 0) {
             return ""
         }
@@ -148,9 +171,33 @@ class ActionPhaseViewModel(
         val targetStatusName = getTargetStatusName(playerId)
         val actionName = getActionItem(playerId).name
 
-        return actionStatusName + "の" +
-                targetStatusName + "への" +
-                actionName
+        return when (actionState) {
+            ActionState.Paralyze -> {
+                actionStatusName + "はしびれて動けない"
+            }
+
+            ActionState.Action -> {
+                return actionStatusName + "の" +
+                        targetStatusName + "への" +
+                        actionName
+            }
+
+            is ActionState.Poison -> {
+                actionStatusName + "は毒のダメージを受けた"
+            }
+
+            is ActionState.CurePoison -> {
+                actionStatusName + "の毒が治った"
+            }
+
+            is ActionState.CureParalyze -> {
+                actionStatusName + "の麻痺が治った"
+            }
+
+            // 表示するものはない
+            ActionState.Start -> ""
+            ActionState.Next -> ""
+        }
     }
 
     private fun getActionStatusName(id: Int): String {
@@ -186,6 +233,7 @@ class ActionPhaseViewModel(
         val item = getActionItem(id = id)
 
         return when (item as TypeKind) {
+            is ConditionItem,
             is AttackItem -> {
                 var targetId = action.target
                 if (battleInfoRepository.getStatus(targetId).isActive.not()) {
@@ -210,6 +258,7 @@ class ActionPhaseViewModel(
         val item = getActionItem(id)
 
         return when (item as TypeKind) {
+            is ConditionItem,
             is AttackItem -> {
                 var targetId = action.target
                 if (playerStatusRepository.getStatus(targetId).isActive.not()) {
@@ -235,18 +284,25 @@ class ActionPhaseViewModel(
 
     override fun goNextImpl() {
         CoroutineScope(Dispatchers.IO).launch {
-            val id = statusId
-            if (isPlayer(id = id)) {
-                playerAction()
-            } else {
-                enemyAction()
-            }
+            when (actionState.value) {
+                ActionState.Start,
+                ActionState.Next -> Unit
 
-            delay(100)
+                ActionState.Paralyze -> {
+                    // アクションをスキップしたい
+                    actionState.value = ActionState.Action
+                    changeActionPhase()
+                }
 
-            // アクションをしてもまだ戦闘中なら次のキャラへ
-            if (this@ActionPhaseViewModel.commandRepository.nowBattleCommandType !is FinishCommand) {
-                changeToNextCharacter()
+                ActionState.Action,
+                is ActionState.Poison,
+                is ActionState.CurePoison,
+                is ActionState.CureParalyze,
+                -> {
+                    delay(100)
+                    checkBattleFinish()
+                    changeActionPhase()
+                }
             }
         }
     }
@@ -270,6 +326,7 @@ class ActionPhaseViewModel(
                     actionData = actionRepository.getAction(id),
                     statusList = battleInfoRepository.getMonsters(),
                     attackUseCase = attackFromPlayerUseCase,
+                    conditionUseCase = conditionFromPlayerUseCase,
                     updateParameter = updatePlayerParameter,
                 )
             }
@@ -285,6 +342,32 @@ class ActionPhaseViewModel(
 
             ActionType.None -> Unit
         }
+    }
+
+    private suspend fun enemyAction() {
+        val id = statusId
+        skillAction(
+            id = id.toMonster(),
+            statusList = playerStatusRepository.getPlayers(),
+            actionData = statusWrapperList[id].actionData,
+            attackUseCase = attackFromEnemyUseCase,
+            conditionUseCase = conditionFromEnemyUseCase,
+            updateParameter = updateEnemyParameter,
+        )
+    }
+
+    private fun checkBattleFinish() {
+        // 同時に全滅したら負け
+
+        // プレイヤーが全滅していたらバトル終了
+        if (isPlayerAnnihilated) {
+            this.commandRepository.push(
+                FinishCommand(
+                    isWin = false
+                )
+            )
+            return
+        }
 
         // 敵を倒していたらバトル終了
         if (isMonsterAnnihilated) {
@@ -297,31 +380,12 @@ class ActionPhaseViewModel(
         }
     }
 
-    private suspend fun enemyAction() {
-        val id = statusId
-        skillAction(
-            id = id.toMonster(),
-            statusList = playerStatusRepository.getPlayers(),
-            actionData = statusWrapperList[id].actionData,
-            attackUseCase = attackFromEnemyUseCase,
-            updateParameter = updateEnemyParameter,
-        )
-
-        if (isPlayerAnnihilated) {
-            this.commandRepository.push(
-                FinishCommand(
-                    isWin = false
-                )
-            )
-            return
-        }
-    }
-
     private suspend fun skillAction(
         id: Int,
         actionData: ActionData,
         statusList: List<Status>,
         attackUseCase: AttackUseCase,
+        conditionUseCase: ConditionUseCase,
         updateParameter: UpdateStatusUseCase<*>,
     ) {
         val skill = skillRepository.getItem(
@@ -350,6 +414,21 @@ class ActionPhaseViewModel(
                     attackUseCase.invoke(
                         target = it,
                         damage = skill.damageAmount,
+                    )
+                }
+            }
+
+            is ConditionSkill -> {
+                val targetList = findActiveTargetUseCase.invoke(
+                    statusList = statusList,
+                    target = actionData.target,
+                    targetNum = skill.targetNum
+                )
+                //　複数の対象攻撃
+                targetList.forEach {
+                    conditionUseCase.invoke(
+                        target = it,
+                        conditionType = skill.conditionType,
                     )
                 }
             }
@@ -417,7 +496,81 @@ class ActionPhaseViewModel(
 
             // 行動可能なのでデータ更新
             mutableAttackingStatusId.value = id
+            actionState.value = ActionState.Start
+            changeActionPhase()
             break
+        }
+    }
+
+    private fun changeActionPhase() {
+        if (statusWrapperList[statusId].status.isActive.not()) {
+            // 倒れていたらnextに変更
+            actionState.value = ActionState.Next
+            return
+        }
+
+        // 状態の切り替え
+        val nextState = actionState.value.getNextState(
+            conditionList = statusWrapperList[statusId]
+                .status
+                .conditionList
+        )
+        actionState.value = nextState
+
+        // 切り替え後の状態で処理を実行
+        CoroutineScope(Dispatchers.Default).launch {
+            when (nextState) {
+                ActionState.Action -> {
+                    // fixme delayをなくせるようにする
+                    // delayを消すと何も表示されないことがある
+                    delay(100)
+                    if (isPlayer(id = statusId)) {
+                        playerAction()
+                    } else {
+                        enemyAction()
+                    }
+                }
+
+                is ActionState.CureParalyze,
+                is ActionState.CurePoison -> {
+                    val cured = (nextState as ActionState.Cure).list
+                    if (isPlayer(statusId)) {
+                        updatePlayerParameter.updateConditionList(
+                            id = statusId,
+                            conditionList = cured,
+                        )
+                    } else {
+                        updateEnemyParameter.updateConditionList(
+                            id = statusId.toMonster(),
+                            conditionList = cured
+                        )
+                    }
+                }
+
+                ActionState.Next -> {
+                    // アクションをしてもまだ戦闘中なら次のキャラへ
+                    if (this@ActionPhaseViewModel.commandRepository.nowBattleCommandType !is FinishCommand) {
+                        changeToNextCharacter()
+                    }
+                }
+
+                ActionState.Paralyze -> Unit
+                is ActionState.Poison -> {
+                    if (isPlayer(statusId)) {
+                        updatePlayerParameter.decHP(
+                            id = statusId,
+                            amount = nextState.damage,
+                        )
+                    } else {
+                        updateEnemyParameter.decHP(
+                            id = statusId.toMonster(),
+                            amount = nextState.damage,
+                        )
+                    }
+                }
+
+                ActionState.Start -> Unit
+            }
         }
     }
 

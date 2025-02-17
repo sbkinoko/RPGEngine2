@@ -1,5 +1,6 @@
 package core.domain.status.monster
 
+import core.domain.status.ConditionType
 import core.domain.status.DropItemInfo
 import core.domain.status.Status
 import core.domain.status.param.HP
@@ -13,9 +14,16 @@ data class MonsterStatus(
     override val hp: HP,
     override val mp: MP,
     override val speed: Int,
+    override val conditionList: List<ConditionType> = listOf(),
     val exp: Int,
     val money: Int,
     val dropInfoList: List<DropItemInfo>,
     val skillList: List<SkillId>,
     val actionStyle: ActionStyle,
-) : Status
+) : Status {
+    override fun updateConditionList(
+        conditionList: List<ConditionType>,
+    ): Status = copy(
+        conditionList = conditionList,
+    )
+}

@@ -1,17 +1,18 @@
-package gamescreen.battle.usecase.attack
+package gamescreen.battle.usecase.condition
 
+import core.domain.status.ConditionType
 import core.repository.battlemonster.BattleInfoRepository
 import core.usecase.updateparameter.UpdateMonsterStatusUseCase
 import gamescreen.battle.service.findtarget.FindTargetService
 
-class AttackFromPlayerUseCaseImpl(
+class ConditionFromPlayerUseCaseImpl(
     private val battleInfoRepository: BattleInfoRepository,
     private val findTargetService: FindTargetService,
     private val updateMonsterStatusService: UpdateMonsterStatusUseCase,
-) : AttackUseCase {
-    override suspend operator fun invoke(
+) : ConditionUseCase {
+    override suspend fun invoke(
         target: Int,
-        damage: Int,
+        conditionType: ConditionType
     ) {
         var actualTarget = target
         val monsters = battleInfoRepository.getMonsters()
@@ -22,9 +23,9 @@ class AttackFromPlayerUseCaseImpl(
             )
         }
 
-        updateMonsterStatusService.decHP(
+        updateMonsterStatusService.setCondition(
             id = actualTarget,
-            amount = damage,
+            conditionType = conditionType,
         )
     }
 }

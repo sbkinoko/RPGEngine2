@@ -24,6 +24,9 @@ import gamescreen.battle.usecase.attack.AttackFromPlayerUseCaseImpl
 import gamescreen.battle.usecase.attack.AttackUseCase
 import gamescreen.battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUseCase
 import gamescreen.battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUseCaseImpl
+import gamescreen.battle.usecase.condition.ConditionFromEnemyUseCaseImpl
+import gamescreen.battle.usecase.condition.ConditionFromPlayerUseCaseImpl
+import gamescreen.battle.usecase.condition.ConditionUseCase
 import gamescreen.battle.usecase.decideactionorder.DecideActionOrderUseCase
 import gamescreen.battle.usecase.decideactionorder.DecideActionOrderUseCaseImpl
 import gamescreen.battle.usecase.findactivetarget.FindActiveTargetUseCase
@@ -134,10 +137,30 @@ val ModuleBattle = module {
         )
     }
 
+    single<ConditionUseCase>(
+        qualifier = named(QualifierAttackFromPlayer),
+    ) {
+        ConditionFromPlayerUseCaseImpl(
+            battleInfoRepository = get(),
+            findTargetService = get(),
+            updateMonsterStatusService = get(),
+        )
+    }
+
     single<AttackUseCase>(
         qualifier = named(QualifierAttackFromEnemy),
     ) {
         AttackFromEnemyUseCaseImpl(
+            playerStatusRepository = get(),
+            findTargetService = get(),
+            updatePlayerStatusService = get(),
+        )
+    }
+
+    single<ConditionUseCase>(
+        qualifier = named(QualifierAttackFromEnemy),
+    ) {
+        ConditionFromEnemyUseCaseImpl(
             playerStatusRepository = get(),
             findTargetService = get(),
             updatePlayerStatusService = get(),
