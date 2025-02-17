@@ -63,6 +63,7 @@ sealed class ActionState {
 fun ActionState.getNextState(
     conditionList: List<ConditionType>
 ): ActionState {
+    // fixme 初期状態を保持するようにしたい
     var tmpState = this
 
     while (true) {
@@ -110,6 +111,7 @@ fun ActionState.getNextState(
             }
 
             is ActionState.CurePoison -> {
+                // fixme 改行位置修正
                 val after = conditionList.tryCure<
                         ConditionType.Poison>()
 
