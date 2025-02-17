@@ -288,8 +288,6 @@ class ActionPhaseViewModel(
 
     override fun goNextImpl() {
         CoroutineScope(Dispatchers.IO).launch {
-            val id = statusId
-
             when (actionState.value) {
                 ActionState.Start -> Unit
 
@@ -300,13 +298,8 @@ class ActionPhaseViewModel(
                 }
 
                 ActionState.Action -> {
-                    if (isPlayer(id = id)) {
-                        playerAction()
-                    } else {
-                        enemyAction()
-                    }
+                    checkBattleFinish()
                     delay(100)
-                    // アクションの次の状態に遷移する
                     changeActionPhase()
                 }
 
@@ -372,14 +365,14 @@ class ActionPhaseViewModel(
         }
 
         // 敵を倒していたらバトル終了
-        if (isMonsterAnnihilated) {
-            this.commandRepository.push(
-                FinishCommand(
-                    isWin = true
-                )
-            )
-            return
-        }
+//        if (isMonsterAnnihilated) {
+//            this.commandRepository.push(
+//                FinishCommand(
+//                    isWin = true
+//                )
+//            )
+//            return
+//        }
     }
 
     private suspend fun enemyAction() {
@@ -393,14 +386,14 @@ class ActionPhaseViewModel(
             updateParameter = updateEnemyParameter,
         )
 
-        if (isPlayerAnnihilated) {
-            this.commandRepository.push(
-                FinishCommand(
-                    isWin = false
-                )
-            )
-            return
-        }
+//        if (isPlayerAnnihilated) {
+//            this.commandRepository.push(
+//                FinishCommand(
+//                    isWin = false
+//                )
+//            )
+//            return
+//        }
     }
 
     private fun checkBattleFinish() {
@@ -549,7 +542,7 @@ class ActionPhaseViewModel(
         }
     }
 
-    fun ActionState.getNextState(): ActionState {
+    private fun ActionState.getNextState(): ActionState {
         var tmpState = this
 
         while (true) {
@@ -648,7 +641,26 @@ class ActionPhaseViewModel(
             return
         }
 
-        actionState.value = actionState.value.getNextState()
+        val nextState = actionState.value.getNextState()
+        actionState.value = nextState
+
+        when (nextState) {
+            ActionState.Action -> CoroutineScope(Dispatchers.Default).launch {
+                delay(100)
+                if (isPlayer(id = statusId)) {
+                    playerAction()
+                } else {
+                    enemyAction()
+                }
+            }
+
+            is ActionState.CureParalyze -> Unit
+            is ActionState.CurePoison -> Unit
+            ActionState.Next -> Unit
+            ActionState.Paralyze -> Unit
+            is ActionState.Poison -> Unit
+            ActionState.Start -> Unit
+        }
     }
 
     private inline fun <reified T : ConditionType.CureProb> tryCure(): Boolean {
