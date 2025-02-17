@@ -186,6 +186,7 @@ class ActionPhaseViewModel(
                 actionStatusName + "は毒のダメージを受けた"
             }
 
+            // fixme 共通化したい　〇〇が治った
             is ActionState.CurePoison -> {
                 actionStatusName + "の毒が治った"
             }
@@ -289,6 +290,7 @@ class ActionPhaseViewModel(
                 ActionState.Next -> Unit
 
                 ActionState.Paralyze -> {
+                    // fixme changeでいい感じにできるようにしたい
                     // アクションをスキップしたい
                     actionState.value = ActionState.Action
                     changeActionPhase()
@@ -503,6 +505,9 @@ class ActionPhaseViewModel(
     }
 
     private fun changeActionPhase() {
+
+        // fixme getNextStateの引数にstatusを追加して、その中で処理したい
+        // ステータスに関連する処理も内部で行うようにする
         if (statusWrapperList[statusId].status.isActive.not()) {
             // 倒れていたらnextに変更
             actionState.value = ActionState.Next
