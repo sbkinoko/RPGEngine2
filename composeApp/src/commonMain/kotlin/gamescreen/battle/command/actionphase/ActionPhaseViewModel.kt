@@ -572,22 +572,10 @@ class ActionPhaseViewModel(
                         continue
                     }
 
-                    CoroutineScope(Dispatchers.Default).launch {
-                        if (isPlayer(statusId)) {
-                            updatePlayerParameter.decHP(
-                                id = statusId,
-                                amount = damage,
-                            )
-                        } else {
-                            updateEnemyParameter.decHP(
-                                id = statusId.toMonster(),
-                                amount = damage,
-                            )
-                        }
-                    }
-
                     // 毒でダメージを受けたので状態を固定
-                    return tmpState
+                    return ActionState.Poison(
+                        damage = damage
+                    )
                 }
 
                 is ActionState.CurePoison -> {
@@ -647,7 +635,20 @@ class ActionPhaseViewModel(
             }
 
             ActionState.Paralyze -> Unit
-            is ActionState.Poison -> Unit
+            is ActionState.Poison -> CoroutineScope(Dispatchers.Default).launch {
+                if (isPlayer(statusId)) {
+                    updatePlayerParameter.decHP(
+                        id = statusId,
+                        amount = nextState.damage,
+                    )
+                } else {
+                    updateEnemyParameter.decHP(
+                        id = statusId.toMonster(),
+                        amount = nextState.damage,
+                    )
+                }
+            }
+
             ActionState.Start -> Unit
         }
     }
