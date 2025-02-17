@@ -126,7 +126,7 @@ class ActionPhaseViewModel(
         get() = speedList[attackingNumber]
 
     val actionState =
-        mutableStateOf(ActionState.Start)
+        mutableStateOf<ActionState>(ActionState.Start)
 
     private val statusWrapperList: List<StatusWrapper>
         get() {
@@ -186,15 +186,15 @@ class ActionPhaseViewModel(
                         actionName
             }
 
-            ActionState.Poison -> {
+            is ActionState.Poison -> {
                 actionStatusName + "は毒のダメージを受けた"
             }
 
-            ActionState.CurePoison -> {
+            is ActionState.CurePoison -> {
                 actionStatusName + "の毒が治った"
             }
 
-            ActionState.CureParalyze -> {
+            is ActionState.CureParalyze -> {
                 actionStatusName + "の麻痺が治った"
             }
 
@@ -310,14 +310,14 @@ class ActionPhaseViewModel(
                     changeActionPhase()
                 }
 
-                ActionState.Poison -> {
+                is ActionState.Poison -> {
                     checkBattleFinish()
                     delay(100)
                     changeActionPhase()
                 }
 
-                ActionState.CurePoison,
-                ActionState.CureParalyze -> {
+                is ActionState.CurePoison,
+                is ActionState.CureParalyze -> {
                     changeActionPhase()
                 }
 
@@ -591,7 +591,7 @@ class ActionPhaseViewModel(
                     return
                 }
 
-                ActionState.Poison -> {
+                is ActionState.Poison -> {
                     val list = statusWrapperList[statusId]
                         .status
                         .conditionList
@@ -620,7 +620,7 @@ class ActionPhaseViewModel(
                     return
                 }
 
-                ActionState.CurePoison -> {
+                is ActionState.CurePoison -> {
                     if (tryCure<ConditionType.Poison>()) {
                         // 毒が治った状態で固定
                         return
@@ -629,7 +629,7 @@ class ActionPhaseViewModel(
                     continue
                 }
 
-                ActionState.CureParalyze -> {
+                is ActionState.CureParalyze -> {
                     if (tryCure<ConditionType.Paralysis>()) {
                         // 麻痺が治った状態で固定
                         return
