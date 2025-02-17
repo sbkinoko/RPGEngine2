@@ -9,10 +9,7 @@ import core.domain.item.TypeKind
 import core.domain.item.skill.AttackSkill
 import core.domain.item.skill.ConditionSkill
 import core.domain.item.skill.HealSkill
-import core.domain.status.ConditionType
 import core.domain.status.Status
-import core.domain.status.tryCalcPoisonDamage
-import core.domain.status.tryCure
 import core.repository.battlemonster.BattleInfoRepository
 import core.repository.player.PlayerStatusRepository
 import core.usecase.item.usetool.UseToolUseCase
@@ -33,7 +30,6 @@ import gamescreen.battle.domain.FinishCommand
 import gamescreen.battle.domain.StatusWrapper
 import gamescreen.battle.repository.action.ActionRepository
 import gamescreen.battle.service.isannihilation.IsAnnihilationService
-import gamescreen.battle.service.judgemovebyparalyze.canMove
 import gamescreen.battle.service.monster.DecideMonsterActionService
 import gamescreen.battle.usecase.attack.AttackUseCase
 import gamescreen.battle.usecase.condition.ConditionUseCase
@@ -288,10 +284,9 @@ class ActionPhaseViewModel(
 
     override fun goNextImpl() {
         CoroutineScope(Dispatchers.IO).launch {
-            val id = statusId
-
             when (actionState.value) {
-                ActionState.Start -> Unit
+                ActionState.Start,
+                ActionState.Next -> Unit
 
                 ActionState.Paralyze -> {
                     // アクションをスキップしたい
@@ -299,38 +294,15 @@ class ActionPhaseViewModel(
                     changeActionPhase()
                 }
 
-                ActionState.Action -> {
-                    if (isPlayer(id = id)) {
-                        playerAction()
-                    } else {
-                        enemyAction()
-                    }
-                    delay(100)
-                    // アクションの次の状態に遷移する
-                    changeActionPhase()
-                }
-
-                is ActionState.Poison -> {
-                    checkBattleFinish()
-                    delay(100)
-                    changeActionPhase()
-                }
-
+                ActionState.Action,
+                is ActionState.Poison,
                 is ActionState.CurePoison,
-                is ActionState.CureParalyze -> {
+                is ActionState.CureParalyze,
+                -> {
+                    delay(100)
+                    checkBattleFinish()
                     changeActionPhase()
                 }
-
-                // 最後の処理なので別途用意
-                ActionState.Next -> Unit
-            }
-
-            if (actionState.value == ActionState.Next) {
-                // アクションをしてもまだ戦闘中なら次のキャラへ
-                if (this@ActionPhaseViewModel.commandRepository.nowBattleCommandType !is FinishCommand) {
-                    changeToNextCharacter()
-                }
-                return@launch
             }
         }
     }
@@ -370,16 +342,6 @@ class ActionPhaseViewModel(
 
             ActionType.None -> Unit
         }
-
-        // 敵を倒していたらバトル終了
-        if (isMonsterAnnihilated) {
-            this.commandRepository.push(
-                FinishCommand(
-                    isWin = true
-                )
-            )
-            return
-        }
     }
 
     private suspend fun enemyAction() {
@@ -392,15 +354,6 @@ class ActionPhaseViewModel(
             conditionUseCase = conditionFromEnemyUseCase,
             updateParameter = updateEnemyParameter,
         )
-
-        if (isPlayerAnnihilated) {
-            this.commandRepository.push(
-                FinishCommand(
-                    isWin = false
-                )
-            )
-            return
-        }
     }
 
     private fun checkBattleFinish() {
@@ -556,122 +509,69 @@ class ActionPhaseViewModel(
             return
         }
 
-        while (true) {
+        // 状態の切り替え
+        val nextState = actionState.value.getNextState(
+            conditionList = statusWrapperList[statusId]
+                .status
+                .conditionList
+        )
+        actionState.value = nextState
 
-            actionState.value = actionState.value.next
-
-            when (actionState.value) {
-                // 初期状態で固定されることはない
-                ActionState.Start -> continue
-
-                ActionState.Paralyze -> {
-                    val paralyzeList = statusWrapperList[statusId]
-                        .status
-                        .conditionList
-                        .filterIsInstance<ConditionType.Paralysis>()
-
-                    if (paralyzeList.isEmpty()) {
-                        // 麻痺に関する処理はないので処理を続ける
-                        continue
-                    }
-
-                    val canMove = paralyzeList.canMove()
-
-                    if (!canMove) {
-                        // 動けないので状態が確定
-                        return
-                    }
-
-                    //　動けるので次のstateで処理を続ける
-                    continue
-                }
-
+        // 切り替え後の状態で処理を実行
+        CoroutineScope(Dispatchers.Default).launch {
+            when (nextState) {
                 ActionState.Action -> {
-                    // actionで状態を固定
-                    return
+                    // fixme delayをなくせるようにする
+                    // delayを消すと何も表示されないことがある
+                    delay(100)
+                    if (isPlayer(id = statusId)) {
+                        playerAction()
+                    } else {
+                        enemyAction()
+                    }
                 }
 
-                is ActionState.Poison -> {
-                    val list = statusWrapperList[statusId]
-                        .status
-                        .conditionList
-
-                    val damage = list.tryCalcPoisonDamage()
-
-                    if (damage == 0) {
-                        continue
-                    }
-
-                    CoroutineScope(Dispatchers.Default).launch {
-                        if (isPlayer(statusId)) {
-                            updatePlayerParameter.decHP(
-                                id = statusId,
-                                amount = damage,
-                            )
-                        } else {
-                            updateEnemyParameter.decHP(
-                                id = statusId.toMonster(),
-                                amount = damage,
-                            )
-                        }
-                    }
-
-                    // 毒でダメージを受けたので状態を固定
-                    return
-                }
-
+                is ActionState.CureParalyze,
                 is ActionState.CurePoison -> {
-                    if (tryCure<ConditionType.Poison>()) {
-                        // 毒が治った状態で固定
-                        return
+                    val cured = (nextState as ActionState.Cure).list
+                    if (isPlayer(statusId)) {
+                        updatePlayerParameter.updateConditionList(
+                            id = statusId,
+                            conditionList = cured,
+                        )
+                    } else {
+                        updateEnemyParameter.updateConditionList(
+                            id = statusId.toMonster(),
+                            conditionList = cured
+                        )
                     }
-                    // 毒を直す処理はないので次を探す
-                    continue
-                }
-
-                is ActionState.CureParalyze -> {
-                    if (tryCure<ConditionType.Paralysis>()) {
-                        // 麻痺が治った状態で固定
-                        return
-                    }
-
-                    //麻痺を直す処理はないので次を探す
-                    continue
                 }
 
                 ActionState.Next -> {
-                    // nextで状態を固定
-                    return
+                    // アクションをしてもまだ戦闘中なら次のキャラへ
+                    if (this@ActionPhaseViewModel.commandRepository.nowBattleCommandType !is FinishCommand) {
+                        changeToNextCharacter()
+                    }
                 }
+
+                ActionState.Paralyze -> Unit
+                is ActionState.Poison -> {
+                    if (isPlayer(statusId)) {
+                        updatePlayerParameter.decHP(
+                            id = statusId,
+                            amount = nextState.damage,
+                        )
+                    } else {
+                        updateEnemyParameter.decHP(
+                            id = statusId.toMonster(),
+                            amount = nextState.damage,
+                        )
+                    }
+                }
+
+                ActionState.Start -> Unit
             }
         }
-    }
-
-    private inline fun <reified T : ConditionType.CureProb> tryCure(): Boolean {
-        val beforeList = statusWrapperList[statusId]
-            .status
-            .conditionList
-        val after = beforeList
-            .tryCure<T>()
-
-        if (beforeList.size == after.size) {
-            return false
-        }
-
-        CoroutineScope(Dispatchers.Default).launch {
-            if (isPlayer(statusId)) {
-                updatePlayerParameter.updateConditionList(
-                    id = statusId,
-                    conditionList = after,
-                )
-            } else {
-                updateEnemyParameter.updateConditionList(
-                    id = statusId.toMonster(),
-                    conditionList = after
-                )
-            }
-        }
-        return true
     }
 
     private fun isPlayer(id: Int): Boolean {
