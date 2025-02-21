@@ -1,7 +1,8 @@
 package core.usecase.updateparameter
 
+import core.domain.status.ConditionType
 import core.domain.status.PlayerStatus
-import core.domain.status.param.EXP
+import core.domain.status.PlayerStatusTest.Companion.testActivePlayer
 import core.domain.status.param.HP
 import core.domain.status.param.MP
 import core.repository.status.StatusRepository
@@ -11,50 +12,188 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class UpdatePlayerStatusUseCaseImplTest {
-    private val TEST_STATUS = PlayerStatus(
-        name = "test1",
+
+    val hp = 50
+    val mp = 30
+    private val status1 = testActivePlayer.copy(
         hp = HP(
+            value = hp,
             maxValue = 100,
-            value = 50,
         ),
         mp = MP(
-            maxValue = 10,
-            value = 5,
+            value = mp,
+            maxValue = 100,
         ),
-        skillList = listOf(),
         toolList = listOf(ToolId.HEAL1, ToolId.HEAL2, ToolId.HEAL2),
-        exp = EXP(
-            EXP.type1,
-        ),
     )
+    private val status2 = status1.copy()
 
     private val statusRepository: StatusRepository<PlayerStatus> =
         object : StatusRepository<PlayerStatus> {
-            var status: PlayerStatus = TEST_STATUS
+            var statusList: MutableList<PlayerStatus> = mutableListOf(
+                status1,
+                status2,
+            )
 
             override fun getStatus(id: Int): PlayerStatus {
-                return status
+                return statusList[id]
             }
 
             override suspend fun setStatus(id: Int, status: PlayerStatus) {
-                this.status = status
+                this.statusList[id] = status
             }
         }
 
+    private val updateStatusUseCase = UpdatePlayerStatusUseCaseImpl(
+        statusRepository = statusRepository,
+    )
+
     @Test
     fun deleteTool() {
-        val updateStatusService = UpdatePlayerStatusUseCaseImpl(
-            statusRepository = statusRepository,
-        )
-
         runBlocking {
-            updateStatusService.deleteToolAt(
+            updateStatusUseCase.deleteToolAt(
                 playerId = 0,
                 index = 2,
             )
             assertEquals(
                 expected = listOf(ToolId.HEAL1, ToolId.HEAL2),
                 actual = statusRepository.getStatus(0).toolList
+            )
+        }
+    }
+
+
+    @Test
+    fun decHP() {
+        runBlocking {
+            updateStatusUseCase.decHP(
+                id = 0,
+                amount = 5,
+            )
+
+            assertEquals(
+                expected = hp - 5,
+                actual = statusRepository.getStatus(0).hp.value
+            )
+
+            assertEquals(
+                expected = status2,
+                actual = statusRepository.getStatus(1)
+            )
+        }
+    }
+
+    @Test
+    fun incHP() {
+        runBlocking {
+            updateStatusUseCase.incHP(
+                id = 0,
+                amount = 5,
+            )
+
+            assertEquals(
+                expected = hp + 5,
+                actual = statusRepository.getStatus(0).hp.value
+            )
+
+            assertEquals(
+                expected = status2,
+                actual = statusRepository.getStatus(1)
+            )
+        }
+    }
+
+    @Test
+    fun decMP() {
+        runBlocking {
+            updateStatusUseCase.decMP(
+                id = 0,
+                amount = 5,
+            )
+
+            assertEquals(
+                expected = mp - 5,
+                actual = statusRepository.getStatus(0).mp.value
+            )
+
+            assertEquals(
+                expected = status2,
+                actual = statusRepository.getStatus(1)
+            )
+        }
+    }
+
+    @Test
+    fun incMP() {
+        runBlocking {
+            updateStatusUseCase.incMP(
+                id = 0,
+                amount = 5,
+            )
+
+            assertEquals(
+                expected = mp + 5,
+                actual = statusRepository.getStatus(0).mp.value
+            )
+
+            assertEquals(
+                expected = status2,
+                actual = statusRepository.getStatus(1)
+            )
+        }
+    }
+
+    @Test
+    fun addCondition() {
+        runBlocking {
+            val condition = ConditionType.Poison()
+            updateStatusUseCase.setCondition(
+                id = 0,
+                conditionType = condition,
+            )
+
+            assertEquals(
+                expected = listOf(condition),
+                actual = statusRepository.getStatus(0).conditionList
+            )
+
+            updateStatusUseCase.setCondition(
+                id = 0,
+                conditionType = condition,
+            )
+
+            assertEquals(
+                expected = listOf(condition, condition),
+                actual = statusRepository.getStatus(0).conditionList
+            )
+
+            assertEquals(
+                expected = status2,
+                actual = statusRepository.getStatus(1)
+            )
+        }
+    }
+
+    @Test
+    fun setConditionList() {
+        runBlocking {
+            val conditionList = listOf(
+                ConditionType.Poison(),
+                ConditionType.Paralysis(),
+            )
+            updateStatusUseCase.updateConditionList(
+                id = 0,
+                conditionList = conditionList,
+            )
+
+            assertEquals(
+                expected = conditionList,
+                actual = statusRepository.getStatus(0).conditionList
+            )
+
+            assertEquals(
+                expected = status2,
+                actual = statusRepository.getStatus(1)
             )
         }
     }
