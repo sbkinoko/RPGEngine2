@@ -39,7 +39,7 @@ class ActionStateTest {
     val next
         get() = initState.getNextState(conditionList)
 
-    private val repeatTime = 50
+    private val repeatTime = 100
     private val lower = (repeatTime * 0.8).toInt()
     private val upper = (repeatTime * 1.2).toInt()
 
