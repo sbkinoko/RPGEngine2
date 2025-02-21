@@ -111,7 +111,6 @@ fun ActionState.getNextState(
             }
 
             is ActionState.CurePoison -> {
-                // fixme 改行位置修正
                 val after = conditionList
                     .tryCure<ConditionType.Poison>()
 
@@ -127,8 +126,8 @@ fun ActionState.getNextState(
             }
 
             is ActionState.CureParalyze -> {
-                val after = conditionList.tryCure<
-                        ConditionType.Paralysis>()
+                val after = conditionList
+                    .tryCure<ConditionType.Paralysis>()
 
                 // 麻痺を直す処理はないので次を探す
                 if (conditionList == after) {
