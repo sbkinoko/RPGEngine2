@@ -39,6 +39,20 @@ class UpdatePlayerStatusUseCaseImpl(
         )
     }
 
+    override suspend fun addCondition(
+        id: Int,
+        conditionType: ConditionType,
+    ) {
+        val status = statusRepository.getStatus(id)
+        val updated = status.copy(
+            conditionList = status.conditionList + conditionType
+        )
+        statusRepository.setStatus(
+            id = id,
+            status = updated,
+        )
+    }
+
     override suspend fun deleteToolAt(playerId: Int, index: Int) {
         val status = statusRepository.getStatus(
             id = playerId,
@@ -53,20 +67,6 @@ class UpdatePlayerStatusUseCaseImpl(
         statusRepository.setStatus(
             id = playerId,
             status = status,
-        )
-    }
-
-    override suspend fun addCondition(
-        id: Int,
-        conditionType: ConditionType,
-    ) {
-        val status = statusRepository.getStatus(id)
-        val updated = status.copy(
-            conditionList = status.conditionList + conditionType
-        )
-        statusRepository.setStatus(
-            id = id,
-            status = updated,
         )
     }
 }
