@@ -217,5 +217,4 @@ class StartNormalBattleUseCaseImplTest {
             actual = count,
         )
     }
-
 }
