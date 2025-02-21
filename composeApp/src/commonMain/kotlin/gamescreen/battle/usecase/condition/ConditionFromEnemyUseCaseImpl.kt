@@ -23,7 +23,7 @@ class ConditionFromEnemyUseCaseImpl(
             )
         }
 
-        updatePlayerStatusService.setCondition(
+        updatePlayerStatusService.addCondition(
             id = actualTarget,
             conditionType = conditionType,
         )

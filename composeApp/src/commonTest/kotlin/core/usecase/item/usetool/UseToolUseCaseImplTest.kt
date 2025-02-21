@@ -77,7 +77,7 @@ class UseToolUseCaseImplTest : KoinTest {
             throw NotImplementedError()
         }
 
-        override suspend fun setCondition(id: Int, conditionType: ConditionType) {
+        override suspend fun addCondition(id: Int, conditionType: ConditionType) {
             throw NotImplementedError()
         }
 
