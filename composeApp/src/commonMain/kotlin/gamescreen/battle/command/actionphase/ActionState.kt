@@ -1,9 +1,9 @@
 package gamescreen.battle.command.actionphase
 
 import core.domain.status.ConditionType
+import core.domain.status.canMove
 import core.domain.status.tryCalcPoisonDamage
 import core.domain.status.tryCure
-import gamescreen.battle.service.judgemovebyparalyze.canMove
 
 sealed class ActionState {
     interface Cure {
