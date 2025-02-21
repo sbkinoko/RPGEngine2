@@ -26,21 +26,21 @@ sealed class ActionState {
             get() = Poison()
     }
 
-    class Poison(
+    data class Poison(
         var damage: Int = 0,
     ) : ActionState() {
         override val next: ActionState
             get() = CurePoison()
     }
 
-    class CurePoison(
+    data class CurePoison(
         override var list: List<ConditionType> = emptyList(),
     ) : ActionState(), Cure {
         override val next: ActionState
             get() = CureParalyze()
     }
 
-    class CureParalyze(
+    data class CureParalyze(
         override var list: List<ConditionType> = emptyList(),
     ) : ActionState(), Cure {
         override val next: ActionState
@@ -112,8 +112,8 @@ fun ActionState.getNextState(
 
             is ActionState.CurePoison -> {
                 // fixme 改行位置修正
-                val after = conditionList.tryCure<
-                        ConditionType.Poison>()
+                val after = conditionList
+                    .tryCure<ConditionType.Poison>()
 
                 // 毒を直す処理はないので次を探す
                 if (conditionList == after) {
