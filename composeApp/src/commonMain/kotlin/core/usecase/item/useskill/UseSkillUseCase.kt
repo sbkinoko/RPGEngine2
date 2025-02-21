@@ -1,7 +1,7 @@
 package core.usecase.item.useskill
 
 interface UseSkillUseCase {
-    operator fun invoke(
+    suspend operator fun invoke(
         userId: Int,
         targetId: Int,
         index: Int,

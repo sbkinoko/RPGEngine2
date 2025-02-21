@@ -10,6 +10,9 @@ import gamescreen.menu.domain.MenuType
 import gamescreen.menu.item.abstract.target.ItemTargetViewModel
 import gamescreen.menu.item.repository.index.IndexRepository
 import gamescreen.text.TextBoxData
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.core.component.inject
 
 class SkillTargetViewModel : ItemTargetViewModel<SkillId>() {
@@ -51,10 +54,12 @@ class SkillTargetViewModel : ItemTargetViewModel<SkillId>() {
         )
 
         //　スキル処理実行
-        useSkillUseCase.invoke(
-            targetId = targetRepository.target,
-            userId = userRepository.userId,
-            index = indexRepository.index,
-        )
+        CoroutineScope(Dispatchers.Default).launch {
+            useSkillUseCase.invoke(
+                targetId = targetRepository.target,
+                userId = userRepository.userId,
+                index = indexRepository.index,
+            )
+        }
     }
 }
