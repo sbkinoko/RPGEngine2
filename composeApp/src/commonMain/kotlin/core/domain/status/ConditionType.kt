@@ -3,13 +3,13 @@ package core.domain.status
 import kotlin.random.Random
 
 sealed class ConditionType {
-    class Paralysis(
+    data class Paralysis(
         val probability: Int = 50,
         override val cure: Int = 50,
     ) : ConditionType(), CureProb
 
     // fixme 割合ダメージの毒も作る
-    class Poison(
+    data class Poison(
         val damage: Int = 5,
         override val cure: Int = 50,
     ) : ConditionType(), CureProb
