@@ -5,6 +5,7 @@ import core.domain.status.monster.MonsterStatus
 import data.monster.MonsterRepository
 import gamescreen.map.domain.background.BackgroundCell
 
+// fixme dataに移動する
 class DecideBattleMonsterUseCaseImpl(
     private val monsterRepository: MonsterRepository,
 ) : DecideBattleMonsterUseCase {
