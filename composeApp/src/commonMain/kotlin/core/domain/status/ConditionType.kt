@@ -43,3 +43,17 @@ fun List<ConditionType>.tryCalcPoisonDamage(): Int = this.map {
     }
     it.damage
 }.sum()
+
+fun List<ConditionType.Paralysis>.canMove(): Boolean {
+    this.map {
+        val rand = Random.nextInt(100)
+        val prob = it.probability
+        // 麻痺で動けない
+        if (rand < prob) {
+            return false
+        }
+    }
+
+    // 麻痺状態になっているものの、動けた
+    return true
+}

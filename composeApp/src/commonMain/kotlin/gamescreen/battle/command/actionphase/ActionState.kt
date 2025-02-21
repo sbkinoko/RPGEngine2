@@ -1,9 +1,9 @@
 package gamescreen.battle.command.actionphase
 
 import core.domain.status.ConditionType
+import core.domain.status.canMove
 import core.domain.status.tryCalcPoisonDamage
 import core.domain.status.tryCure
-import gamescreen.battle.service.judgemovebyparalyze.canMove
 
 sealed class ActionState {
     interface Cure {
@@ -111,7 +111,6 @@ fun ActionState.getNextState(
             }
 
             is ActionState.CurePoison -> {
-                // fixme 改行位置修正
                 val after = conditionList
                     .tryCure<ConditionType.Poison>()
 
@@ -127,8 +126,8 @@ fun ActionState.getNextState(
             }
 
             is ActionState.CureParalyze -> {
-                val after = conditionList.tryCure<
-                        ConditionType.Paralysis>()
+                val after = conditionList
+                    .tryCure<ConditionType.Paralysis>()
 
                 // 麻痺を直す処理はないので次を探す
                 if (conditionList == after) {
