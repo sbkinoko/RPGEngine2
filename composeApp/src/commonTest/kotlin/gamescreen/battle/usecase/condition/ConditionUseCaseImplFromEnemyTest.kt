@@ -3,7 +3,7 @@ package gamescreen.battle.usecase.condition
 import core.ModuleCore
 import core.domain.status.ConditionType
 import core.domain.status.PlayerStatusTest.Companion.testActivePlayer
-import core.domain.status.param.HP
+import core.domain.status.PlayerStatusTest.Companion.testNotActivePlayer
 import core.repository.player.PlayerStatusRepository
 import data.ModuleData
 import gamescreen.battle.ModuleBattle
@@ -26,11 +26,6 @@ class ConditionUseCaseImplFromEnemyTest : KoinTest {
 
     private val playerStatusRepository: PlayerStatusRepository by inject()
 
-    private val hpValue = 50
-    val hp = HP(
-        value = hpValue,
-        maxValue = 100
-    )
 
     private val conditionType = ConditionType.Poison()
     private val expectedList = listOf(conditionType)
@@ -56,9 +51,7 @@ class ConditionUseCaseImplFromEnemyTest : KoinTest {
         runBlocking {
             playerStatusRepository.setStatus(
                 id = 0,
-                status = testActivePlayer.copy(
-                    hp = hp
-                ),
+                status = testActivePlayer,
             )
 
             conditionUseCaseImplFromEnemy.invoke(
@@ -81,9 +74,7 @@ class ConditionUseCaseImplFromEnemyTest : KoinTest {
         runBlocking {
             playerStatusRepository.setStatus(
                 id = id,
-                status = testActivePlayer.copy(
-                    hp = hp
-                ),
+                status = testActivePlayer,
             )
             conditionUseCaseImplFromEnemy.invoke(
                 target = id,
@@ -106,18 +97,11 @@ class ConditionUseCaseImplFromEnemyTest : KoinTest {
         runBlocking {
             playerStatusRepository.setStatus(
                 id = idNotActive,
-                status = testActivePlayer.copy(
-                    hp = HP(
-                        value = 0,
-                        maxValue = 100
-                    ),
-                ),
+                status = testNotActivePlayer
             )
             playerStatusRepository.setStatus(
                 id = idActive,
-                status = testActivePlayer.copy(
-                    hp = hp,
-                ),
+                status = testActivePlayer,
             )
 
             conditionUseCaseImplFromEnemy.invoke(

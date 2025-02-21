@@ -4,7 +4,6 @@ import core.ModuleCore
 import core.domain.status.ConditionType
 import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
 import core.domain.status.MonsterStatusTest.Companion.TestNotActiveMonster
-import core.domain.status.param.HP
 import core.repository.battlemonster.BattleInfoRepository
 import data.ModuleData
 import gamescreen.battle.ModuleBattle
@@ -26,12 +25,6 @@ class ConditionUseCaseImplFromPlayerTest : KoinTest {
         qualifier = named(
             QualifierAttackFromPlayer
         )
-    )
-
-    private val hpValue = 50
-    val hp = HP(
-        value = hpValue,
-        maxValue = 100
     )
 
     private val battleInfoRepository: BattleInfoRepository by inject()
@@ -58,9 +51,7 @@ class ConditionUseCaseImplFromPlayerTest : KoinTest {
             val target = 0
             battleInfoRepository.setMonsters(
                 listOf(
-                    TestActiveMonster.copy(
-                        hp = hp
-                    ),
+                    TestActiveMonster,
                 ),
             )
             conditionUseCase.invoke(
@@ -83,12 +74,8 @@ class ConditionUseCaseImplFromPlayerTest : KoinTest {
         runBlocking {
             battleInfoRepository.setMonsters(
                 listOf(
-                    TestActiveMonster.copy(
-                        hp = hp
-                    ),
-                    TestActiveMonster.copy(
-                        hp = hp
-                    ),
+                    TestActiveMonster,
+                    TestActiveMonster,
                 ),
             )
             conditionUseCase.invoke(
@@ -113,9 +100,7 @@ class ConditionUseCaseImplFromPlayerTest : KoinTest {
             battleInfoRepository.setMonsters(
                 listOf(
                     TestNotActiveMonster,
-                    TestActiveMonster.copy(
-                        hp = hp
-                    ),
+                    TestActiveMonster,
                 ),
             )
 
