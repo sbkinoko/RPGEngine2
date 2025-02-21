@@ -1,6 +1,13 @@
 package gamescreen.battle.command.actionphase
 
 import core.domain.status.ConditionType
+import core.domain.status.damage100
+import core.domain.status.damage50
+import core.domain.status.paralysis100
+import core.domain.status.paralysis50
+import core.domain.status.poison0
+import core.domain.status.poison100
+import core.domain.status.poison50
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -8,33 +15,6 @@ import kotlin.test.assertTrue
 class ActionStateTest {
     private lateinit var initState: ActionState
     private lateinit var conditionList: List<ConditionType>
-
-    private val paralysis100 = ConditionType.Paralysis(
-        probability = 100,
-        cure = 100
-    )
-
-    private val paralysis50 = ConditionType.Paralysis(
-        probability = 50,
-        cure = 50
-    )
-
-    private val damage100 = 100
-    private val poison100 = ConditionType.Poison(
-        damage = damage100,
-        cure = 100
-    )
-
-    private val damage50 = 50
-    private val poison50 = ConditionType.Poison(
-        damage = damage50,
-        cure = 50
-    )
-
-    private val poison0 = ConditionType.Poison(
-        damage = 0,
-        cure = 50,
-    )
 
     val next
         get() = initState.getNextState(conditionList)
