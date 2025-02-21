@@ -23,7 +23,7 @@ class ConditionFromPlayerUseCaseImpl(
             )
         }
 
-        updateMonsterStatusService.setCondition(
+        updateMonsterStatusService.addCondition(
             id = actualTarget,
             conditionType = conditionType,
         )

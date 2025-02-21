@@ -147,7 +147,7 @@ class UpdatePlayerStatusUseCaseImplTest {
     fun addCondition() {
         runBlocking {
             val condition = ConditionType.Poison()
-            updateStatusUseCase.setCondition(
+            updateStatusUseCase.addCondition(
                 id = 0,
                 conditionType = condition,
             )
@@ -157,7 +157,7 @@ class UpdatePlayerStatusUseCaseImplTest {
                 actual = statusRepository.getStatus(0).conditionList
             )
 
-            updateStatusUseCase.setCondition(
+            updateStatusUseCase.addCondition(
                 id = 0,
                 conditionType = condition,
             )

@@ -40,7 +40,7 @@ class UpdateMonsterStatusUseCase(
         )
     }
 
-    override suspend fun setCondition(
+    override suspend fun addCondition(
         id: Int,
         conditionType: ConditionType,
     ) {
