@@ -49,9 +49,9 @@ class StartNormalBattleUseCaseImplTest {
         }
     }
 
-    lateinit var decideBattleMonsterUseCase: DecideBattleMonsterUseCase
-    lateinit var playerCellRepository: PlayerCellRepository
-    lateinit var startBattleUseCase: StartBattleUseCase
+    private lateinit var decideBattleMonsterUseCase: DecideBattleMonsterUseCase
+    private lateinit var playerCellRepository: PlayerCellRepository
+    private lateinit var startBattleUseCase: StartBattleUseCase
 
     private val startNormalBattleUseCase: StartNormalBattleUseCase
         get() = StartNormalBattleUseCaseImpl(
