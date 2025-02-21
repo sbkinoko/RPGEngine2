@@ -38,6 +38,20 @@ class StartEventBattleUseCaseImplTest {
             battleEventCallback: BattleEventCallback,
             backgroundType: BattleBackgroundType
         ) {
+            assertEquals(
+                expected = eventBattleData.monsterList,
+                actual = monsterList,
+            )
+
+            assertEquals(
+                expected = eventBattleData.battleEventCallback,
+                actual = battleEventCallback,
+            )
+
+            assertEquals(
+                expected = eventBattleData.battleBackgroundType,
+                actual = backgroundType
+            )
             count++
         }
     }
