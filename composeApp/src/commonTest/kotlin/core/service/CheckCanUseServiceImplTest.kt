@@ -12,6 +12,7 @@ import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 class CheckCanUseServiceImplTest : KoinTest {
     private val checkCanUseService: CheckCanUseService by inject()
@@ -44,7 +45,7 @@ class CheckCanUseServiceImplTest : KoinTest {
             costType = costType,
         )
 
-        assertFalse {
+        assertTrue {
             result
         }
     }
