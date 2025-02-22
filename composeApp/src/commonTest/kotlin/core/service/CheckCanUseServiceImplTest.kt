@@ -31,6 +31,9 @@ class CheckCanUseServiceImplTest : KoinTest {
         stopKoin()
     }
 
+    /**
+     * MPが足りているので使えることを確認
+     */
     @Test
     fun canUseMp() {
         val costMP = 5
@@ -50,6 +53,9 @@ class CheckCanUseServiceImplTest : KoinTest {
         }
     }
 
+    /**
+     * MPが足りないと使えないことを確認
+     */
     @Test
     fun cannotUseMp() {
         val costMP = 5
@@ -65,6 +71,22 @@ class CheckCanUseServiceImplTest : KoinTest {
         )
 
         assertFalse {
+            result
+        }
+    }
+
+    /**
+     * ただの道具は使えることを確認
+     */
+    @Test
+    fun canUseTool() {
+        val costType = CostType.Consume
+        val result = checkCanUseService.invoke(
+            status = testActivePlayer,
+            costType = costType,
+        )
+
+        assertTrue {
             result
         }
     }

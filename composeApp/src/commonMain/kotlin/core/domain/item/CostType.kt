@@ -4,4 +4,6 @@ sealed class CostType {
     data class MP(
         val needMP: Int,
     ) : CostType()
+
+    data object Consume : CostType()
 }
