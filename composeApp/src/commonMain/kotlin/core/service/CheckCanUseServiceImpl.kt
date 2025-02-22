@@ -8,6 +8,11 @@ class CheckCanUseServiceImpl : CheckCanUseService {
         status: Status,
         costType: CostType,
     ): Boolean {
-        TODO("Not yet implemented")
+        return when (costType) {
+            is CostType.MP -> {
+                // 現在のMPがコストのMPより多ければ使用可能
+                status.mp.value >= costType.needMP
+            }
+        }
     }
 }
