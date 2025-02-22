@@ -49,6 +49,7 @@ val ModuleCore = module {
     single<CheckCanUseSkillUseCase> {
         CheckCanUseSkillUseCaseImpl(
             skillRepository = get(),
+            checkCanUseService = get(),
         )
     }
 

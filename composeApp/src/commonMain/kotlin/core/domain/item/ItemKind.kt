@@ -3,11 +3,7 @@ package core.domain.item
 sealed interface ItemKind : Item
 
 interface Skill : ItemKind {
-    val needMP: Int
-
-    // fixme コストのタイプを作成する
-    // HP MP　など
-    val canUse: (Int) -> Boolean
+    val costType: CostType
 }
 
 interface Tool : ItemKind {

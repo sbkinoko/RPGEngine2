@@ -3,6 +3,7 @@ package gamescreen.battle.command.actionphase
 import androidx.compose.runtime.mutableStateOf
 import core.domain.item.AttackItem
 import core.domain.item.ConditionItem
+import core.domain.item.CostType
 import core.domain.item.HealItem
 import core.domain.item.Item
 import core.domain.item.TypeKind
@@ -397,11 +398,15 @@ class ActionPhaseViewModel(
             id = actionData.skillId
         )
 
-        // MP減らす
-        updateParameter.decMP(
-            id = id,
-            amount = skill.needMP,
-        )
+        //コスト処理
+        when (val costType = skill.costType) {
+            is CostType.MP -> {
+                updateParameter.decMP(
+                    id = id,
+                    amount = costType.needMP,
+                )
+            }
+        }
 
         // todo 複数回攻撃する技を作ったら表示方法を考える
         // todo 味方を選択するスキルで対象が対象外になっている場合の挙動を作成する
