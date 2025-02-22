@@ -12,7 +12,7 @@ class ConditionFromPlayerUseCaseImpl(
 ) : ConditionUseCase {
     override suspend fun invoke(
         target: Int,
-        conditionType: ConditionType
+        conditionType: ConditionType,
     ) {
         var actualTarget = target
         val monsters = battleInfoRepository.getMonsters()

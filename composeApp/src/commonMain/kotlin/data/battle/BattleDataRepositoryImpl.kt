@@ -15,7 +15,7 @@ class BattleDataRepositoryImpl(
     private val monsterRepository: MonsterRepository,
     private val textRepository: TextRepository,
 
-    private val maxHealUseCase: MaxHealUseCase
+    private val maxHealUseCase: MaxHealUseCase,
 ) : BattleDataRepository {
     override fun getBattleMonsterData(battleId: BattleId): EventBattleData {
         return when (battleId) {

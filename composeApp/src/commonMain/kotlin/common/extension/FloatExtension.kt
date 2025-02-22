@@ -5,9 +5,9 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 
 @Composable
-fun Float.pxToDp():Dp {
+fun Float.pxToDp(): Dp {
     val density = LocalDensity.current
-    with(density){
+    with(density) {
         return this@pxToDp.toDp()
     }
 }

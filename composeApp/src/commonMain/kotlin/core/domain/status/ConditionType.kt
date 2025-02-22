@@ -26,13 +26,13 @@ inline fun <reified T : ConditionType.CureProb> List<ConditionType>.tryCure(): L
     this.filter {
         // 指定した状態異常以外はそのまま
         if (it !is T) {
-        return@filter true
-    }
+            return@filter true
+        }
 
-    val rand = Random.nextInt(100)
-    // 治るなら除去
-    rand >= it.cure
-}
+        val rand = Random.nextInt(100)
+        // 治るなら除去
+        rand >= it.cure
+    }
 
 /**
  * リストに含まれる毒のダメージを加算

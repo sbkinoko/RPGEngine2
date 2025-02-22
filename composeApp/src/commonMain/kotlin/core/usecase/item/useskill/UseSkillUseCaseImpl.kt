@@ -9,7 +9,7 @@ import data.item.skill.SkillRepository
 class UseSkillUseCaseImpl(
     private val playerStatusRepository: PlayerStatusRepository,
     private val skillRepository: SkillRepository,
-    private val updateStatusService: UpdatePlayerStatusUseCase
+    private val updateStatusService: UpdatePlayerStatusUseCase,
 ) : UseSkillUseCase {
     override suspend fun invoke(
         userId: Int,

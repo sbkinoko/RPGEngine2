@@ -7,7 +7,7 @@ class MoveNPCUseCaseImpl : MoveNPCUseCase {
 
     override operator fun invoke(
         velocity: Velocity,
-        npcData: NPCData
+        npcData: NPCData,
     ): NPCData {
         return npcData.map { npc ->
             npc.move(

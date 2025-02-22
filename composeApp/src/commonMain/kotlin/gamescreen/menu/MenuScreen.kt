@@ -68,7 +68,8 @@ fun MenuScreen(
             MenuType.Item3,
             MenuType.Item4,
             MenuType.Item5,
-            MenuType.Item6 -> Text(
+            MenuType.Item6,
+            -> Text(
                 modifier = menuModifier,
                 text = state.name
             )

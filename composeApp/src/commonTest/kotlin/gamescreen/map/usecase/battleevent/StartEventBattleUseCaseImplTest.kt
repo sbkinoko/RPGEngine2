@@ -36,7 +36,7 @@ class StartEventBattleUseCaseImplTest {
         override fun invoke(
             monsterList: List<MonsterStatus>,
             battleEventCallback: BattleEventCallback,
-            backgroundType: BattleBackgroundType
+            backgroundType: BattleBackgroundType,
         ) {
             assertEquals(
                 expected = eventBattleData.monsterList,

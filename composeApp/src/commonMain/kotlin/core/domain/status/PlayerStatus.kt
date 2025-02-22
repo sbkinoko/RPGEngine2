@@ -34,7 +34,7 @@ data class PlayerStatus(
     }
 
     override fun updateConditionList(
-        conditionList: List<ConditionType>
+        conditionList: List<ConditionType>,
     ): Status = copy(
         conditionList = conditionList
     )

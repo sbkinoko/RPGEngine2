@@ -84,7 +84,7 @@ fun StatusComponent(
 private fun Point(
     paramName: String,
     point: StatusPoint,
-    color: Color
+    color: Color,
 ) {
     Text(
         text = "$paramName ${point.point}/${point.maxPoint}",

@@ -61,7 +61,7 @@ sealed class ActionState {
  * 現在のアクションの状態と状態異常から次のアクションの状態を決定する
  */
 fun ActionState.getNextState(
-    conditionList: List<ConditionType>
+    conditionList: List<ConditionType>,
 ): ActionState {
     // fixme 初期状態を保持するようにしたい
     var tmpState = this

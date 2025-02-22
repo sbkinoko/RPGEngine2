@@ -3,7 +3,7 @@ package gamescreen.map.usecase
 import gamescreen.map.repository.player.PlayerPositionRepository
 
 class PlayerMoveToUseCase(
-    private val playerPositionRepository: PlayerPositionRepository
+    private val playerPositionRepository: PlayerPositionRepository,
 ) {
     suspend operator fun invoke(
         x: Float,

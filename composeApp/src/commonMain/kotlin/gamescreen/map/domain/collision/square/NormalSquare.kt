@@ -12,7 +12,7 @@ data class NormalSquare(
     constructor(
         x: Float,
         y: Float,
-        size: Float
+        size: Float,
     ) : this(
         point = Point(
             x = x,
@@ -66,7 +66,7 @@ data class NormalSquare(
     companion object {
         fun smallSquare(
             size: Int,
-            rate: Float
+            rate: Float,
         ): NormalSquare {
             return NormalSquare(
                 x = size * rate,

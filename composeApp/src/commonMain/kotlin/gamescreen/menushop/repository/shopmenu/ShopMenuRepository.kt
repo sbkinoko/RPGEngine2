@@ -9,6 +9,6 @@ interface ShopMenuRepository {
     val isVisibleStateFlow: StateFlow<Boolean>
 
     fun setList(
-        list: List<ShopItem>
+        list: List<ShopItem>,
     )
 }

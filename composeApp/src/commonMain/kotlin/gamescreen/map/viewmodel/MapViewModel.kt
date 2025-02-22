@@ -260,7 +260,7 @@ class MapViewModel(
     }
 
     override fun moveStick(
-        stick: Stick
+        stick: Stick,
     ) {
         updateVelocityByStick(
             dx = stick.x.toFloat(),

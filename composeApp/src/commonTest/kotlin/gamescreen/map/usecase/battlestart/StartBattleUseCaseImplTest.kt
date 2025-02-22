@@ -109,7 +109,7 @@ class StartBattleUseCaseImplTest : KoinTest {
                     playerId: Int,
                     actionType: ActionType,
                     itemId: Any?,
-                    itemIndex: Int?
+                    itemIndex: Int?,
                 ) {
                     throw NotImplementedError()
                 }

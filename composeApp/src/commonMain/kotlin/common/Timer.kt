@@ -13,7 +13,7 @@ class Timer(
      * 待機時間が経過していたらコールバックを呼び出す
      */
     fun callbackIfTimePassed(
-        callback: () -> Unit
+        callback: () -> Unit,
     ) {
         // 時間が立ってなければreturn
         if (nowTime.nowTime - lastUpdateTime < awaitTime) {

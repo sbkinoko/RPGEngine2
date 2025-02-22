@@ -5,6 +5,6 @@ import gamescreen.battle.domain.BattleId
 interface BattleDataRepository {
 
     fun getBattleMonsterData(
-        battleId: BattleId
+        battleId: BattleId,
     ): EventBattleData
 }
