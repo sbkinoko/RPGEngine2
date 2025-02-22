@@ -31,6 +31,10 @@ abstract class ItemCommandViewModel<T> : BattleChildViewModel() {
     private val selectedItemId: T
         get() = itemList[selectManager.selected]
 
+    abstract fun getLastSelectedItemId(): T
+
+    abstract fun canUse(position: Int): Boolean
+
     fun init() {
         // 最後に選ばれていたスキルを呼び出し
         val itemId = getLastSelectedItemId()
@@ -48,9 +52,6 @@ abstract class ItemCommandViewModel<T> : BattleChildViewModel() {
         selectManager.selected = selected
     }
 
-    //　fixme abstractの場所を揃える
-    abstract fun getLastSelectedItemId(): T
-
     override fun selectable(): Boolean {
         return canUse(selectManager.selected)
     }
@@ -59,8 +60,6 @@ abstract class ItemCommandViewModel<T> : BattleChildViewModel() {
         val id = itemList[position]
         return itemRepository.getItem(id).name
     }
-
-    abstract fun canUse(position: Int): Boolean
 
     override fun goNextImpl() {
 
