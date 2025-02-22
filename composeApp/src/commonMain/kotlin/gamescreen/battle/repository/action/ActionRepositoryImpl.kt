@@ -61,7 +61,7 @@ class ActionRepositoryImpl : ActionRepository {
 
     override fun setAlly(
         playerId: Int,
-        allyId: Int
+        allyId: Int,
     ) {
         // actionが設定されているはずなのでnullにはならない
         actionMap[playerId] = actionMap[playerId]!!.copy(

@@ -31,7 +31,7 @@ abstract class AbstractUpdateStatusUseCase<T> : UpdateStatusUseCase<T> {
 
     override suspend fun incHP(
         id: Int,
-        amount: Int
+        amount: Int,
     ) {
         val status = statusRepository.getStatus(id)
         val newStatus = incHPImpl(
@@ -73,7 +73,7 @@ abstract class AbstractUpdateStatusUseCase<T> : UpdateStatusUseCase<T> {
 
     override suspend fun incMP(
         id: Int,
-        amount: Int
+        amount: Int,
     ) {
         val status = statusRepository.getStatus(id)
         val newStatus = incMPImpl(

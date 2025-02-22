@@ -6,7 +6,7 @@ import gamescreen.map.usecase.battlestart.StartBattleUseCase
 
 class StartEventBattleUseCaseImpl(
     private val battleDataRepository: BattleDataRepository,
-    private val startBattleUseCase: StartBattleUseCase
+    private val startBattleUseCase: StartBattleUseCase,
 ) : StartEventBattleUseCase {
     override fun invoke(battleId: BattleId) {
         val eventBattleData = battleDataRepository

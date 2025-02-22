@@ -1,7 +1,7 @@
 package gamescreen.map.domain.npc
 
 data class NPCData(
-    val npcList: List<NPC>
+    val npcList: List<NPC>,
 ) {
     fun <T> map(callback: (NPC) -> T): List<T> {
         return npcList.map {

@@ -24,11 +24,11 @@ interface ActionRepository {
     )
 
     fun getAction(
-        playerId: Int
+        playerId: Int,
     ): ActionData
 
     fun getLastSelectAction(
-        playerId: Int
+        playerId: Int,
     ): ActionType
 
     /**

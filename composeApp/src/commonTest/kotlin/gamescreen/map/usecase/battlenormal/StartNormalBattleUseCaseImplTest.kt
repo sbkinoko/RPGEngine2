@@ -91,7 +91,7 @@ class StartNormalBattleUseCaseImplTest {
             override fun invoke(
                 monsterList: List<MonsterStatus>,
                 battleEventCallback: BattleEventCallback,
-                backgroundType: BattleBackgroundType
+                backgroundType: BattleBackgroundType,
             ) {
                 NotImplementedError()
             }
@@ -141,7 +141,7 @@ class StartNormalBattleUseCaseImplTest {
             override fun invoke(
                 monsterList: List<MonsterStatus>,
                 battleEventCallback: BattleEventCallback,
-                backgroundType: BattleBackgroundType
+                backgroundType: BattleBackgroundType,
             ) {
 
             }
@@ -195,7 +195,7 @@ class StartNormalBattleUseCaseImplTest {
             override fun invoke(
                 monsterList: List<MonsterStatus>,
                 battleEventCallback: BattleEventCallback,
-                backgroundType: BattleBackgroundType
+                backgroundType: BattleBackgroundType,
             ) {
                 assertEquals(
                     expected = expectedMonsterList,

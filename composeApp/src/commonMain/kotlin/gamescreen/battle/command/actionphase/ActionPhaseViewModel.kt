@@ -235,7 +235,8 @@ class ActionPhaseViewModel(
 
         return when (item as TypeKind) {
             is ConditionItem,
-            is AttackItem -> {
+            is AttackItem,
+            -> {
                 var targetId = action.target
                 if (battleInfoRepository.getStatus(targetId).isActive.not()) {
                     targetId = findActiveTargetUseCase.invoke(
@@ -260,7 +261,8 @@ class ActionPhaseViewModel(
 
         return when (item as TypeKind) {
             is ConditionItem,
-            is AttackItem -> {
+            is AttackItem,
+            -> {
                 var targetId = action.target
                 if (playerStatusRepository.getStatus(targetId).isActive.not()) {
                     targetId = findActiveTargetUseCase.invoke(
@@ -287,7 +289,8 @@ class ActionPhaseViewModel(
         CoroutineScope(Dispatchers.IO).launch {
             when (actionState.value) {
                 ActionState.Start,
-                ActionState.Next -> Unit
+                ActionState.Next,
+                -> Unit
 
                 ActionState.Paralyze -> {
                     // fixme changeでいい感じにできるようにしたい
@@ -537,7 +540,8 @@ class ActionPhaseViewModel(
                 }
 
                 is ActionState.CureParalyze,
-                is ActionState.CurePoison -> {
+                is ActionState.CurePoison,
+                -> {
                     val cured = (nextState as ActionState.Cure).list
                     if (isPlayer(statusId)) {
                         updatePlayerParameter.updateConditionList(

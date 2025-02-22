@@ -62,7 +62,8 @@ class ImageBinderBackground : KoinComponent {
             is CellType.Box -> Res.drawable.bg_00
 
             CellType.Null,
-            is CellType.TextCell -> Res.drawable.bg_null
+            is CellType.TextCell,
+            -> Res.drawable.bg_null
         }
     }
 

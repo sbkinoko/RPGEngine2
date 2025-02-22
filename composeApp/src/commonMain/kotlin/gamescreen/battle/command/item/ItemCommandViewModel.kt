@@ -80,7 +80,8 @@ abstract class ItemCommandViewModel<T> : BattleChildViewModel() {
 
         when (itemRepository.getItem(itemId) as TypeKind) {
             is ConditionItem,
-            is AttackItem -> {
+            is AttackItem,
+            -> {
                 commandRepository.push(
                     SelectEnemyCommand(playerId),
                 )

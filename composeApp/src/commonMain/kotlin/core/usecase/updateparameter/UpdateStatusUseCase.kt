@@ -36,6 +36,6 @@ interface UpdateStatusUseCase<T> {
 
     suspend fun updateConditionList(
         id: Int,
-        conditionList: List<ConditionType>
+        conditionList: List<ConditionType>,
     )
 }

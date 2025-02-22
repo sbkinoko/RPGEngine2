@@ -248,7 +248,7 @@ class MoneyRepositoryImplTest : KoinTest {
                     decMoney,
                 )
             } catch (
-                e: MoneyLackException
+                e: MoneyLackException,
             ) {
                 errorCount++
             }

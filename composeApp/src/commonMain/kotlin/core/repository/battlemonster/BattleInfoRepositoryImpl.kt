@@ -64,7 +64,7 @@ class BattleInfoRepositoryImpl : BattleInfoRepository {
 
     override suspend fun setStatus(
         id: Int,
-        status: MonsterStatus
+        status: MonsterStatus,
     ) {
         monsterList = monsterList.mapIndexed { index, oldMonster ->
             if (index != id) {

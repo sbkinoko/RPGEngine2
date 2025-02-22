@@ -16,7 +16,7 @@ import values.Colors
 fun DisableBox(
     isDisable: Boolean,
     modifier: Modifier = Modifier,
-    content: @Composable BoxScope.() -> Unit
+    content: @Composable BoxScope.() -> Unit,
 ) {
     Box(modifier = modifier) {
         // 内容表示
