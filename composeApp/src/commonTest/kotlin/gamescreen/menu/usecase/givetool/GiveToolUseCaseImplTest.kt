@@ -22,7 +22,6 @@ import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 class GiveToolUseCaseImplTest : KoinTest {
     private val playerStatusRepository: PlayerStatusRepository by inject()
@@ -99,14 +98,11 @@ class GiveToolUseCaseImplTest : KoinTest {
 
             val result = giveToolUseCase.invoke()
 
-            // todo dataclassなので全部assertEqualsでやる
-            assertTrue(
-                result is GiveResult.NG
-            )
-
             assertEquals(
-                expected = TextData.HAS_FULL_ITEM,
-                actual = result.text,
+                expected = GiveResult.NG(
+                    text = TextData.HAS_FULL_ITEM
+                ),
+                actual = result,
             )
         }
     }
