@@ -3,11 +3,13 @@ package core.usecase.item.checkcanuseskill
 import core.domain.AbleType
 import core.domain.Place
 import core.domain.status.Status
+import core.service.CheckCanUseService
 import data.item.skill.SkillId
 import data.item.skill.SkillRepository
 
 class CheckCanUseSkillUseCaseImpl(
     private val skillRepository: SkillRepository,
+    private val checkCanUseService: CheckCanUseService,
 ) : CheckCanUseSkillUseCase {
     override fun invoke(
         skillId: SkillId,
@@ -27,8 +29,9 @@ class CheckCanUseSkillUseCaseImpl(
 
         // fixme　コストのタイプで判断して、使用可否を返却する
         return if (
-            skill.canUse(
-                status.mp.value
+            checkCanUseService.invoke(
+                status = status,
+                costType = skill.costType
             )
         ) {
             AbleType.Able

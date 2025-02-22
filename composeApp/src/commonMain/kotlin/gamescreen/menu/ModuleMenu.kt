@@ -125,7 +125,7 @@ val ModuleMenu = module {
         UseSkillUseCaseImpl(
             playerStatusRepository = get(),
             skillRepository = get(),
-            updateStatusService = get(),
+            updateParameter = get(),
         )
     }
 
