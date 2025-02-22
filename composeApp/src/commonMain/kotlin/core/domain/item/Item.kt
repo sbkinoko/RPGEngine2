@@ -7,4 +7,5 @@ interface Item {
     val explain: String
     val targetNum: Int
     val usablePlace: Place
+    val costType: CostType
 }

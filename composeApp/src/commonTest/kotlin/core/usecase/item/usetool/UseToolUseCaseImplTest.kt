@@ -1,6 +1,7 @@
 package core.usecase.item.usetool
 
 import core.domain.Place
+import core.domain.item.CostType
 import core.domain.item.TargetType
 import core.domain.item.Tool
 import core.domain.item.tool.HealTool
@@ -105,7 +106,7 @@ class UseToolUseCaseImplTest : KoinTest {
                     name = "回復",
                     targetNum = 1,
                     usablePlace = Place.BOTH,
-                    isReusable = false,
+                    costType = CostType.Consume,
                     isDisposable = true,
                     healAmount = 10,
                     targetType = TargetType.ACTIVE
@@ -160,7 +161,7 @@ class UseToolUseCaseImplTest : KoinTest {
                     name = "回復",
                     targetNum = 1,
                     usablePlace = Place.BOTH,
-                    isReusable = true,
+                    costType = CostType.NotConsume,
                     isDisposable = true,
                     healAmount = 10,
                     targetType = TargetType.ACTIVE
@@ -214,7 +215,7 @@ class UseToolUseCaseImplTest : KoinTest {
                     name = "回復",
                     targetNum = 1,
                     usablePlace = Place.BOTH,
-                    isReusable = false,
+                    costType = CostType.Consume,
                     isDisposable = true,
                     healAmount = 10,
                     targetType = TargetType.ACTIVE

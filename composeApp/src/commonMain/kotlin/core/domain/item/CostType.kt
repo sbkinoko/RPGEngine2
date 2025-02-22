@@ -6,4 +6,5 @@ sealed class CostType {
     ) : CostType()
 
     data object Consume : CostType()
+    data object NotConsume : CostType()
 }

@@ -406,6 +406,11 @@ class ActionPhaseViewModel(
                     amount = costType.needMP,
                 )
             }
+
+            // 道具なので特に処理なし
+            CostType.Consume,
+            CostType.NotConsume,
+            -> Unit
         }
 
         // todo 複数回攻撃する技を作ったら表示方法を考える
