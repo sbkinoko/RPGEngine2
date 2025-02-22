@@ -1,6 +1,7 @@
 package data.item.tool
 
 import core.domain.Place
+import core.domain.item.CostType
 import core.domain.item.TargetType
 import core.domain.item.Tool
 import core.domain.item.tool.HealTool
@@ -14,7 +15,7 @@ class ToolRepositoryImpl : ToolRepository {
                 name = "回復1",
                 targetNum = 1,
                 usablePlace = Place.BOTH,
-                isReusable = false,
+                costType = CostType.Consume,
                 isDisposable = true,
                 healAmount = 10,
                 targetType = TargetType.ACTIVE
@@ -24,7 +25,7 @@ class ToolRepositoryImpl : ToolRepository {
                 name = "回復2",
                 targetNum = 1,
                 usablePlace = Place.BOTH,
-                isReusable = false,
+                costType = CostType.Consume,
                 isDisposable = true,
                 healAmount = 10,
                 targetType = TargetType.ACTIVE

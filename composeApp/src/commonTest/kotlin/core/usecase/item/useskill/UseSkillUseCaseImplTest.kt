@@ -1,6 +1,7 @@
 package core.usecase.item.useskill
 
 import core.domain.Place
+import core.domain.item.CostType
 import core.domain.item.Skill
 import core.domain.item.TargetType
 import core.domain.item.skill.AttackSkill
@@ -89,7 +90,7 @@ class UseSkillUseCaseImplTest {
         get() = UseSkillUseCaseImpl(
             playerStatusRepository = playerStatusRepository,
             skillRepository = skillRepository,
-            updateStatusService = updatePlayerStatusUseCase,
+            updateParameter = updatePlayerStatusUseCase,
         )
 
 
@@ -103,9 +104,8 @@ class UseSkillUseCaseImplTest {
             override fun getItem(id: SkillId): Skill {
                 return AttackSkill(
                     name = "",
-                    needMP = 1,
                     targetNum = 1,
-                    canUse = { true },
+                    costType = CostType.MP(1),
                     usablePlace = Place.MAP,
                     damageAmount = 1,
                 )
@@ -162,9 +162,8 @@ class UseSkillUseCaseImplTest {
 
                 return AttackSkill(
                     name = "",
-                    needMP = 1,
                     targetNum = 1,
-                    canUse = { true },
+                    costType = CostType.MP(1),
                     usablePlace = Place.MAP,
                     damageAmount = 1,
                 )
@@ -205,9 +204,8 @@ class UseSkillUseCaseImplTest {
             override fun getItem(id: SkillId): Skill {
                 return AttackSkill(
                     name = "",
-                    needMP = 1,
                     targetNum = 1,
-                    canUse = { true },
+                    costType = CostType.MP(1),
                     usablePlace = Place.MAP,
                     damageAmount = 1,
                 )
@@ -256,9 +254,8 @@ class UseSkillUseCaseImplTest {
             override fun getItem(id: SkillId): Skill {
                 return HealSkill(
                     name = "",
-                    needMP = 1,
                     targetNum = 1,
-                    canUse = { true },
+                    costType = CostType.MP(1),
                     usablePlace = Place.MAP,
                     healAmount = 1,
                     targetType = TargetType.ACTIVE,
@@ -308,9 +305,8 @@ class UseSkillUseCaseImplTest {
             override fun getItem(id: SkillId): Skill {
                 return AttackSkill(
                     name = "",
-                    needMP = 1,
                     targetNum = 1,
-                    canUse = { true },
+                    costType = CostType.MP(1),
                     usablePlace = Place.MAP,
                     damageAmount = 1,
                 )

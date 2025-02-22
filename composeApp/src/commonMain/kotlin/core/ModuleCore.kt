@@ -8,6 +8,8 @@ import core.repository.money.MoneyRepository
 import core.repository.money.MoneyRepositoryImpl
 import core.repository.player.PlayerStatusRepository
 import core.repository.player.PlayerStatusRepositoryImpl
+import core.service.CheckCanUseService
+import core.service.CheckCanUseServiceImpl
 import core.usecase.changetomap.ChangeToMapUseCase
 import core.usecase.changetomap.ChangeToMapUseCaseImpl
 import core.usecase.heal.MaxHealUseCase
@@ -47,7 +49,12 @@ val ModuleCore = module {
     single<CheckCanUseSkillUseCase> {
         CheckCanUseSkillUseCaseImpl(
             skillRepository = get(),
+            checkCanUseService = get(),
         )
+    }
+
+    single<CheckCanUseService> {
+        CheckCanUseServiceImpl()
     }
 
     single<ChangeToMapUseCase> {
