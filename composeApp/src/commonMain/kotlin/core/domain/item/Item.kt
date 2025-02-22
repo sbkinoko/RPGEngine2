@@ -7,5 +7,8 @@ interface Item {
     val explain: String
     val targetNum: Int
     val usablePlace: Place
+
+    // fixme リストで持つようにすれば処理の簡略化ができそう
+    // コストの種類が増えた時に楽できる
     val costType: CostType
 }
