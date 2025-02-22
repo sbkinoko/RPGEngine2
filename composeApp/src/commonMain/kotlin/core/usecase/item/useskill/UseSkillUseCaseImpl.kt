@@ -34,6 +34,11 @@ class UseSkillUseCaseImpl(
                     amount = costType.needMP,
                 )
             }
+
+            // 消費アイテムなのでコストなし
+            CostType.Consume,
+            CostType.NotConsume,
+            -> Unit
         }
 
         when (skill) {

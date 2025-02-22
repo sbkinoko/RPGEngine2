@@ -1,5 +1,6 @@
 package core.usecase.item.usetool
 
+import core.domain.item.CostType
 import core.domain.item.tool.HealTool
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
 import data.item.tool.ToolId
@@ -33,12 +34,19 @@ class UseToolUseCaseImpl(
                 toolId
             )
 
-            if (tool.isReusable.not()) {
-                delTool(
-                    userId = userId,
-                    index = index,
-                    toolId = toolId,
-                )
+            when (tool.costType) {
+                CostType.Consume -> {
+                    delTool(
+                        userId = userId,
+                        index = index,
+                        toolId = toolId,
+                    )
+                }
+
+                // 消費しない道具
+                CostType.NotConsume -> Unit
+
+                is CostType.MP -> TODO("道具でMPを利用する物を作る")
             }
 
             when (tool) {
