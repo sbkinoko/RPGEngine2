@@ -72,7 +72,7 @@ data class Player(
                     x = square.x,
                     y = square.y,
                 ),
-                objectHeight = ObjectHeight.GroundObject,
+                objectHeight = ObjectHeight.Ground,
             )
 
             return when (dir) {
