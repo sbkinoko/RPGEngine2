@@ -1,10 +1,14 @@
 package gamescreen.map.usecase.event.actionevent
 
+import gamescreen.map.usecase.movetowater.MoveToWaterUseCase
 import gamescreen.map.usecase.settalk.SetTalkUseCase
 import gamescreen.menu.usecase.bag.addtool.AddToolUseCase
 import gamescreen.menushop.usecase.setshopitem.SetShopItemUseCase
 import gamescreen.text.TextBoxData
 import gamescreen.text.repository.TextRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import values.event.BoxData
 import values.event.EventType
 import values.event.TalkEvent
@@ -14,6 +18,7 @@ class ActionEventUseCaseImpl(
     private val addToolUseCase: AddToolUseCase,
     private val setShopItemUseCase: SetShopItemUseCase,
     private val setTalkUseCase: SetTalkUseCase,
+    private val moveToWaterUseCase: MoveToWaterUseCase,
 ) : ActionEventUseCase {
     override fun invoke(
         eventType: EventType,
@@ -64,6 +69,9 @@ class ActionEventUseCaseImpl(
                 textRepository.push(
                     textBoxData,
                 )
+                CoroutineScope(Dispatchers.Default).launch {
+                    moveToWaterUseCase.invoke()
+                }
             }
         }
     }

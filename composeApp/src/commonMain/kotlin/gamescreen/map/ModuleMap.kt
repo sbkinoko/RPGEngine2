@@ -232,6 +232,7 @@ val ModuleMap = module {
             addToolUseCase = get(),
             setShopItemUseCase = get(),
             setTalkUseCase = get(),
+            moveToWaterUseCase = get(),
         )
     }
 
