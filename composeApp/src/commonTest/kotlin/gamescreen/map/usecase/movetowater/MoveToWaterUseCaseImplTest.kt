@@ -93,12 +93,14 @@ class MoveToWaterUseCaseImplTest : KoinTest {
 
     @Test
     fun isInWater() {
-        moveToWaterUseCase.invoke()
+        runBlocking {
+            moveToWaterUseCase.invoke()
 
-        assertEquals(
-            expected = ObjectHeight.Water,
-            actual = playerPositionRepository.getPlayerPosition().square.objectHeight
-        )
+            assertEquals(
+                expected = ObjectHeight.Water,
+                actual = playerPositionRepository.getPlayerPosition().square.objectHeight
+            )
+        }
     }
 
     @Test

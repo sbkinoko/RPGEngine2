@@ -113,7 +113,9 @@ val ModuleMap = module {
     }
 
     single<MoveToWaterUseCase> {
-        MoveToWaterUseCaseImpl()
+        MoveToWaterUseCaseImpl(
+            playerPositionRepository = get(),
+        )
     }
 
     single {
