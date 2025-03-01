@@ -30,6 +30,7 @@ class MoveBackgroundUseCaseImpl(
                     )
                 }
             }
+
         return BackgroundData(
             background
         )
