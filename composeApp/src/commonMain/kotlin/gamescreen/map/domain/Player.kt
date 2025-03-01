@@ -12,6 +12,7 @@ data class Player(
     val tentativeVelocity: Velocity,
     val moveDistance: Float,
     val eventType: EventType,
+    val height: ObjectHeight,
 ) {
     constructor(size: Float) : this(
         size = size,
@@ -25,6 +26,7 @@ data class Player(
         tentativeVelocity = Velocity(),
         moveDistance = 0f,
         eventType = EventType.None,
+        height = ObjectHeight.Ground,
     )
 
     val dir

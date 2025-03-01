@@ -1,6 +1,7 @@
 package gamescreen.map.repository.collision
 
 import core.domain.mapcell.CellType
+import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.collision.ShapeCollisionDetect
 import gamescreen.map.domain.collision.square.EventSquare
 import gamescreen.map.domain.collision.square.Square
@@ -27,6 +28,7 @@ class CollisionRepositoryImpl : CollisionRepository {
                             y = y,
                             size = size,
                             eventType = EventType.Water,
+                            objectHeight = ObjectHeight.Water,
                         )
                     )
                 }
@@ -44,7 +46,8 @@ class CollisionRepositoryImpl : CollisionRepository {
                                 )
                             } else {
                                 EventType.None
-                            }
+                            },
+                            objectHeight = ObjectHeight.GroundObject,
                         )
                     )
                 }
