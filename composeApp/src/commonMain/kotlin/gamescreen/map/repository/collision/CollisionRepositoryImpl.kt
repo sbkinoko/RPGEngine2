@@ -3,7 +3,6 @@ package gamescreen.map.repository.collision
 import core.domain.mapcell.CellType
 import gamescreen.map.domain.collision.ShapeCollisionDetect
 import gamescreen.map.domain.collision.square.EventSquare
-import gamescreen.map.domain.collision.square.NormalSquare
 import gamescreen.map.domain.collision.square.Square
 import values.event.EventType
 
@@ -23,10 +22,11 @@ class CollisionRepositoryImpl : CollisionRepository {
             CellType.Water ->
                 square.run {
                     listOf(
-                        NormalSquare(
+                        EventSquare(
                             x = x,
                             y = y,
-                            size = size
+                            size = size,
+                            eventType = EventType.Water,
                         )
                     )
                 }

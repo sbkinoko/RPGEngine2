@@ -11,6 +11,8 @@ sealed class EventType {
         val id: BoxId,
     ) : EventType()
 
+    data object Water : EventType()
+
     val canEvent: Boolean
         get() = this != None
 }
