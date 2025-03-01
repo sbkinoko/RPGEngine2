@@ -1,24 +1,31 @@
 package gamescreen.map.domain.collision.square
 
+import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.Point
 import gamescreen.map.domain.collision.ShapeCollisionDetect
 import gamescreen.map.domain.move
 
+//fixme デフォルト値削除
+//fixme このコンストラクタを利用している物は修正
 data class NormalSquare(
     val point: Point = Point(),
     override val size: Float,
+    override val objectHeight: ObjectHeight = ObjectHeight.None,
 ) : ShapeCollisionDetect,
     Square {
+
     constructor(
         x: Float,
         y: Float,
         size: Float,
+        objectHeight: ObjectHeight = ObjectHeight.None,
     ) : this(
         point = Point(
             x = x,
             y = y,
         ),
         size = size,
+        objectHeight = objectHeight,
     )
 
     override val x: Float

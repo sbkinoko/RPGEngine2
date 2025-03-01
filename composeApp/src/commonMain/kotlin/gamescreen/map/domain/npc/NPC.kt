@@ -1,6 +1,7 @@
 package gamescreen.map.domain.npc
 
 import gamescreen.map.domain.MapPoint
+import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.Velocity
 import gamescreen.map.domain.collision.square.EventSquare
 import values.event.EventType
@@ -21,6 +22,7 @@ data class NPC(
         eventSquare = EventSquare(
             eventType = eventType,
             size = size,
+            objectHeight = ObjectHeight.GroundObject,
         ),
     )
 

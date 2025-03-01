@@ -17,6 +17,7 @@ data class Player(
         size = size,
         square = NormalSquare(
             size = size,
+            objectHeight = ObjectHeight.Ground,
         ),
         actualVelocity = Velocity(
             0f,
@@ -71,6 +72,7 @@ data class Player(
                     x = square.x,
                     y = square.y,
                 ),
+                objectHeight = square.objectHeight,
             )
 
             return when (dir) {
