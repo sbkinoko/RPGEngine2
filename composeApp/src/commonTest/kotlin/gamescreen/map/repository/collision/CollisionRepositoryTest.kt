@@ -33,7 +33,7 @@ class CollisionRepositoryTest : KoinTest {
     @Test
     fun getData_0() {
         collisionRepository.collisionData(
-            cellType = CellType.Glass,
+            cellType = CellType.Road,
             square = NormalSquare(
                 x = 0f,
                 y = 0f,
