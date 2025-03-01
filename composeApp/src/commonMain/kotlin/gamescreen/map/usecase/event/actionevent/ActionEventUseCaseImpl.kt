@@ -56,6 +56,15 @@ class ActionEventUseCaseImpl(
                     textBoxDataList = textBoxData,
                 )
             }
+
+            EventType.Water -> {
+                val textBoxData = TextBoxData(
+                    text = "水上に出るイベント"
+                )
+                textRepository.push(
+                    textBoxData,
+                )
+            }
         }
     }
 }
