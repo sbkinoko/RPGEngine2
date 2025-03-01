@@ -115,6 +115,7 @@ val ModuleMap = module {
     single<MoveToWaterUseCase> {
         MoveToWaterUseCaseImpl(
             playerPositionRepository = get(),
+            isCollidedUseCase = get(),
         )
     }
 

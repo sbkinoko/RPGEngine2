@@ -33,6 +33,20 @@ class CollisionRepositoryImpl : CollisionRepository {
                     )
                 }
 
+            CellType.Glass -> {
+                square.run {
+                    listOf(
+                        EventSquare(
+                            x = x,
+                            y = y,
+                            size = size,
+                            eventType = EventType.None,
+                            objectHeight = ObjectHeight.Ground,
+                        )
+                    )
+                }
+            }
+
             is CellType.Box ->
                 square.run {
                     listOf(

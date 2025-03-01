@@ -43,7 +43,7 @@ class MoveToWaterUseCaseImplTest : KoinTest {
             get() = arrayOf(
                 arrayOf(
                     CellType.Glass,
-                    CellType.Water,
+                    CellType.Glass,
                     CellType.Glass,
                 ),
                 arrayOf(
@@ -80,7 +80,10 @@ class MoveToWaterUseCaseImplTest : KoinTest {
 
             playerPositionRepository.setPlayerPosition(
                 player = Player(
-                    size = MapViewModel.VIRTUAL_SCREEN_SIZE / 4.toFloat()
+                    // セルの大きさが画面の1/3
+                    //　その半分より小さければいいので1/6より小さければOK
+                    // 適当に1/10を採用
+                    size = MapViewModel.VIRTUAL_SCREEN_SIZE / 10.toFloat()
                 )
             )
         }
@@ -110,7 +113,7 @@ class MoveToWaterUseCaseImplTest : KoinTest {
                 copy(
                     square = square.moveTo(
                         x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.size,
-                        y = MapViewModel.VIRTUAL_PLAYER_SIZE / 3 - square.size / 2,
+                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.size / 2,
                     ),
                     tentativeVelocity = Velocity(
                         x = 1f,
@@ -135,7 +138,7 @@ class MoveToWaterUseCaseImplTest : KoinTest {
                 copy(
                     square = square.moveTo(
                         x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.size,
-                        y = MapViewModel.VIRTUAL_PLAYER_SIZE / 2 - square.size / 2,
+                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 2 - square.size / 2,
                     ),
                     tentativeVelocity = Velocity(
                         x = 1f,
@@ -160,7 +163,7 @@ class MoveToWaterUseCaseImplTest : KoinTest {
                 copy(
                     square = square.moveTo(
                         x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.size,
-                        y = MapViewModel.VIRTUAL_PLAYER_SIZE / 3 * 2 - square.size / 2,
+                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 * 2 - square.size / 2,
                     ),
                     tentativeVelocity = Velocity(
                         x = 1f,
@@ -185,7 +188,7 @@ class MoveToWaterUseCaseImplTest : KoinTest {
                 copy(
                     square = square.moveTo(
                         x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.size / 2,
-                        y = MapViewModel.VIRTUAL_PLAYER_SIZE / 3 * 2,
+                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 * 2.toFloat(),
                     ),
                     tentativeVelocity = Velocity(
                         y = -1f,
@@ -210,7 +213,7 @@ class MoveToWaterUseCaseImplTest : KoinTest {
                 copy(
                     square = square.moveTo(
                         x = MapViewModel.VIRTUAL_SCREEN_SIZE / 2 - square.size / 2,
-                        y = MapViewModel.VIRTUAL_PLAYER_SIZE / 3 * 2,
+                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 * 2.toFloat(),
                     ),
                     tentativeVelocity = Velocity(
                         y = -1f,
@@ -235,7 +238,7 @@ class MoveToWaterUseCaseImplTest : KoinTest {
                 copy(
                     square = square.moveTo(
                         x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 * 2 - square.size / 2,
-                        y = MapViewModel.VIRTUAL_PLAYER_SIZE / 3 * 2,
+                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 * 2.toFloat(),
                     ),
                     tentativeVelocity = Velocity(
                         y = -1f,
@@ -260,7 +263,7 @@ class MoveToWaterUseCaseImplTest : KoinTest {
                 copy(
                     square = square.moveTo(
                         x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 * 2.toFloat(),
-                        y = MapViewModel.VIRTUAL_PLAYER_SIZE / 3 * 2 - square.size / 2,
+                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 * 2 - square.size / 2,
                     ),
                     tentativeVelocity = Velocity(
                         x = -1f,
@@ -285,7 +288,7 @@ class MoveToWaterUseCaseImplTest : KoinTest {
                 copy(
                     square = square.moveTo(
                         x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 * 2.toFloat(),
-                        y = MapViewModel.VIRTUAL_PLAYER_SIZE / 2 - square.size / 2,
+                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 2 - square.size / 2,
                     ),
                     tentativeVelocity = Velocity(
                         x = -1f,
@@ -310,7 +313,7 @@ class MoveToWaterUseCaseImplTest : KoinTest {
                 copy(
                     square = square.moveTo(
                         x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 * 2.toFloat(),
-                        y = MapViewModel.VIRTUAL_PLAYER_SIZE / 3 - square.size / 2,
+                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.size / 2,
                     ),
                     tentativeVelocity = Velocity(
                         x = -1f,
@@ -335,7 +338,7 @@ class MoveToWaterUseCaseImplTest : KoinTest {
                 copy(
                     square = square.moveTo(
                         x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 * 2.toFloat() - square.size / 2,
-                        y = MapViewModel.VIRTUAL_PLAYER_SIZE / 3 - square.size,
+                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.size,
                     ),
                     tentativeVelocity = Velocity(
                         y = 1f,
@@ -360,7 +363,7 @@ class MoveToWaterUseCaseImplTest : KoinTest {
                 copy(
                     square = square.moveTo(
                         x = MapViewModel.VIRTUAL_SCREEN_SIZE / 2 - square.size / 2,
-                        y = MapViewModel.VIRTUAL_PLAYER_SIZE / 3 - square.size,
+                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.size,
                     ),
                     tentativeVelocity = Velocity(
                         y = 1f,
@@ -385,7 +388,7 @@ class MoveToWaterUseCaseImplTest : KoinTest {
                 copy(
                     square = square.moveTo(
                         x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.size / 2,
-                        y = MapViewModel.VIRTUAL_PLAYER_SIZE / 3 - square.size,
+                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.size,
                     ),
                     tentativeVelocity = Velocity(
                         y = 1f,
