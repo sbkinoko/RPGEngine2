@@ -11,7 +11,9 @@ class IsCollidedUseCaseImpl(
     private val getCollisionListUseCase: GetCollisionListUseCase,
     private val npcRepository: NPCRepository,
 ) : IsCollidedUseCase {
-    override fun invoke(playerSquare: Square): Boolean {
+    override fun invoke(
+        playerSquare: Square,
+    ): Boolean {
         backgroundRepository
             .backgroundStateFlow
             .value

@@ -25,6 +25,11 @@ interface Square : ShapeCollisionDetect {
     val bottomSide: Float
 
     override fun isOverlap(other: Square): Boolean {
+        //　高さが同じなら衝突しない
+        if (other.objectHeight == this.objectHeight) {
+            return false
+        }
+
         if (this.rightSide < other.leftSide)
             return false
 
