@@ -5,12 +5,13 @@ import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.npc.NPCRepository
 import gamescreen.map.usecase.collision.list.GetCollisionListUseCase
 
-// todo テスト作る
+// fixme repositoryに依存しないようにしたい
 class IsCollidedUseCaseImpl(
     private val backgroundRepository: BackgroundRepository,
     private val getCollisionListUseCase: GetCollisionListUseCase,
     private val npcRepository: NPCRepository,
 ) : IsCollidedUseCase {
+
     override fun invoke(
         playerSquare: Square,
     ): Boolean {
