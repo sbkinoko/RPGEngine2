@@ -94,6 +94,9 @@ class MoveToWaterUseCaseImplTest : KoinTest {
         stopKoin()
     }
 
+    /**
+     * プレイヤーの高さが変わることを確認
+     */
     @Test
     fun isInWater() {
         runBlocking {
@@ -106,6 +109,9 @@ class MoveToWaterUseCaseImplTest : KoinTest {
         }
     }
 
+    /**
+     * 水の左上から右下へ水の中へ移動することを確認
+     */
     @Test
     fun leftTopToRight() {
         runBlocking {
@@ -131,6 +137,9 @@ class MoveToWaterUseCaseImplTest : KoinTest {
         }
     }
 
+    /**
+     * 水の左から右へ水の中へ移動することを確認
+     */
     @Test
     fun leftToRight() {
         runBlocking {
@@ -156,6 +165,9 @@ class MoveToWaterUseCaseImplTest : KoinTest {
         }
     }
 
+    /**
+     * 水の左から右上へ水の中へ移動することを確認
+     */
     @Test
     fun leftBottomToRight() {
         runBlocking {
@@ -181,6 +193,9 @@ class MoveToWaterUseCaseImplTest : KoinTest {
         }
     }
 
+    /**
+     * 水の左下から右上へ水の中へ移動することを確認
+     */
     @Test
     fun bottomLeftToTop() {
         runBlocking {
@@ -206,6 +221,9 @@ class MoveToWaterUseCaseImplTest : KoinTest {
         }
     }
 
+    /**
+     * 水の下から上へ水の中へ移動することを確認
+     */
     @Test
     fun bottomToTop() {
         runBlocking {
@@ -231,6 +249,9 @@ class MoveToWaterUseCaseImplTest : KoinTest {
         }
     }
 
+    /**
+     * 水の右下から左上へ水の中へ移動することを確認
+     */
     @Test
     fun bottomRightToTop() {
         runBlocking {
@@ -256,6 +277,9 @@ class MoveToWaterUseCaseImplTest : KoinTest {
         }
     }
 
+    /**
+     * 水の右下から左上へ水の中へ移動することを確認
+     */
     @Test
     fun rightBottomToLeft() {
         runBlocking {
@@ -281,6 +305,9 @@ class MoveToWaterUseCaseImplTest : KoinTest {
         }
     }
 
+    /**
+     * 水の右から左へ水の中へ移動することを確認
+     */
     @Test
     fun rightToLeft() {
         runBlocking {
@@ -306,6 +333,9 @@ class MoveToWaterUseCaseImplTest : KoinTest {
         }
     }
 
+    /**
+     * 水の右上から左下へ水の中へ移動することを確認
+     */
     @Test
     fun rightTopToLeft() {
         runBlocking {
@@ -331,6 +361,9 @@ class MoveToWaterUseCaseImplTest : KoinTest {
         }
     }
 
+    /**
+     * 水の右上から左下へ水の中へ移動することを確認
+     */
     @Test
     fun topRightToBottom() {
         runBlocking {
@@ -356,6 +389,9 @@ class MoveToWaterUseCaseImplTest : KoinTest {
         }
     }
 
+    /**
+     * 水の上から下へ水の中へ移動することを確認
+     */
     @Test
     fun topToBottom() {
         runBlocking {
@@ -381,6 +417,9 @@ class MoveToWaterUseCaseImplTest : KoinTest {
         }
     }
 
+    /**
+     * 水の右上から左下へ水の中へ移動することを確認
+     */
     @Test
     fun topLeftToBottom() {
         runBlocking {

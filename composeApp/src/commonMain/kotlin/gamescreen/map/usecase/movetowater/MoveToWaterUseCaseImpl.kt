@@ -7,6 +7,7 @@ import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.usecase.collision.iscollided.IsCollidedUseCase
 import kotlin.math.abs
 
+// fixme 高さを受け取るように修正
 class MoveToWaterUseCaseImpl(
     private val playerPositionRepository: PlayerPositionRepository,
     private val isCollidedUseCase: IsCollidedUseCase,
