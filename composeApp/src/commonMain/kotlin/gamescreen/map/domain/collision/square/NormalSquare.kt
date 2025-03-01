@@ -76,7 +76,6 @@ data class NormalSquare(
                 x = size * rate,
                 y = size * rate,
                 size = size * (1 - 2 * rate),
-                objectHeight = ObjectHeight.GroundObject,
             )
         }
     }

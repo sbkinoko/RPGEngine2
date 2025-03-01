@@ -1,7 +1,6 @@
 package gamescreen.map.usecase.resetposition
 
 import gamescreen.map.data.MapData
-import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.background.BackgroundCell
 import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.domain.collision.square.NormalSquare
@@ -38,7 +37,6 @@ class ResetBackgroundPositionUseCaseImpl(
                                 x = x,
                                 y = y,
                                 size = cellSize,
-                                objectHeight = ObjectHeight.None,
                             )
 
                             BackgroundCell(
