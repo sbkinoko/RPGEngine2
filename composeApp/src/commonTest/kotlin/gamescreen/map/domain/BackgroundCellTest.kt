@@ -14,6 +14,7 @@ class BackgroundCellTest {
         x = x,
         y = y,
         size = size,
+        objectHeight = ObjectHeight.None,
     )
 
     private val mapPoint = MapPoint()
