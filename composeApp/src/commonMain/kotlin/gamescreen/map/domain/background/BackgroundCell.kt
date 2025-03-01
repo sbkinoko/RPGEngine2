@@ -2,6 +2,7 @@ package gamescreen.map.domain.background
 
 import core.domain.mapcell.CellType
 import gamescreen.map.domain.MapPoint
+import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.collision.square.Square
 import gamescreen.map.domain.collision.square.SquareWrapper
 
@@ -11,6 +12,7 @@ data class BackgroundCell(
     val mapPoint: MapPoint,
     override val square: Square,
     val cellType: CellType = CellType.Null,
+    override val objectHeight: ObjectHeight = ObjectHeight.None,
 ) : SquareWrapper<BackgroundCell>(
     square = square,
 ) {

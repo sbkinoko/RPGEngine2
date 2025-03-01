@@ -7,10 +7,10 @@ import values.event.EventType
 data class EventSquare(
     override val eventType: EventType,
     override val square: Square,
-    val objectHeight: ObjectHeight,
 ) : SquareWrapper<EventSquare>(
     square = square,
 ), EventObject {
+
     constructor(
         x: Float = 0f,
         y: Float = 0f,
@@ -19,11 +19,11 @@ data class EventSquare(
         objectHeight: ObjectHeight,
     ) : this(
         eventType = eventType,
-        objectHeight = objectHeight,
         square = NormalSquare(
             x = x,
             y = y,
             size = size,
+            objectHeight = objectHeight,
         ),
     )
 

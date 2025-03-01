@@ -8,6 +8,7 @@ import core.repository.screentype.ScreenTypeRepository
 import data.INITIAL_MAP_DATA
 import data.INITIAL_MAP_X
 import data.INITIAL_MAP_Y
+import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.Player
 import gamescreen.map.domain.Point
 import gamescreen.map.domain.Velocity
@@ -101,6 +102,7 @@ class MapViewModel(
         x = 0f,
         y = 0f,
         size = VIRTUAL_SCREEN_SIZE.toFloat(),
+        objectHeight = ObjectHeight.Ground
     )
 
     private var playerMoveArea = NormalSquare.smallSquare(

@@ -1,5 +1,6 @@
 package gamescreen.map.domain.collision
 
+import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.collision.square.NormalSquare
 import gamescreen.map.domain.collision.square.Square
 
@@ -11,5 +12,6 @@ class PlayerMoveSquare(
         x = screenSize * borderRate,
         y = screenSize * borderRate,
         size = screenSize * (1 - 2 * borderRate),
+        objectHeight = ObjectHeight.None,
     )
 }

@@ -1,5 +1,6 @@
 package gamescreen.map.domain.collision.square
 
+import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.Point
 import gamescreen.map.domain.collision.ShapeCollisionDetect
 import gamescreen.map.domain.move
@@ -7,18 +8,21 @@ import gamescreen.map.domain.move
 data class NormalSquare(
     val point: Point = Point(),
     override val size: Float,
+    override val objectHeight: ObjectHeight,
 ) : ShapeCollisionDetect,
     Square {
     constructor(
         x: Float,
         y: Float,
         size: Float,
+        objectHeight: ObjectHeight,
     ) : this(
         point = Point(
             x = x,
             y = y,
         ),
         size = size,
+        objectHeight = objectHeight,
     )
 
     override val x: Float
@@ -72,6 +76,7 @@ data class NormalSquare(
                 x = size * rate,
                 y = size * rate,
                 size = size * (1 - 2 * rate),
+                objectHeight = ObjectHeight.GroundObject,
             )
         }
     }

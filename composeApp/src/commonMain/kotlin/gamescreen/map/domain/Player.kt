@@ -12,12 +12,12 @@ data class Player(
     val tentativeVelocity: Velocity,
     val moveDistance: Float,
     val eventType: EventType,
-    val height: ObjectHeight,
 ) {
     constructor(size: Float) : this(
         size = size,
         square = NormalSquare(
             size = size,
+            objectHeight = ObjectHeight.Ground,
         ),
         actualVelocity = Velocity(
             0f,
@@ -26,7 +26,6 @@ data class Player(
         tentativeVelocity = Velocity(),
         moveDistance = 0f,
         eventType = EventType.None,
-        height = ObjectHeight.Ground,
     )
 
     val dir
@@ -73,6 +72,7 @@ data class Player(
                     x = square.x,
                     y = square.y,
                 ),
+                objectHeight = ObjectHeight.GroundObject,
             )
 
             return when (dir) {
