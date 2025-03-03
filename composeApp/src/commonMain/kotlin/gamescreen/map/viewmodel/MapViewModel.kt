@@ -12,7 +12,6 @@ import gamescreen.map.domain.Player
 import gamescreen.map.domain.Point
 import gamescreen.map.domain.Velocity
 import gamescreen.map.domain.background.BackgroundCell
-import gamescreen.map.domain.collision.square.NormalSquare
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.encouter.EncounterRepository
 import gamescreen.map.repository.npc.NPCRepository
@@ -97,17 +96,6 @@ class MapViewModel(
         }
     }
 
-    private val fieldSquare: NormalSquare = NormalSquare(
-        x = 0f,
-        y = 0f,
-        size = VIRTUAL_SCREEN_SIZE.toFloat(),
-    )
-
-    private var playerMoveArea = NormalSquare.smallSquare(
-        size = VIRTUAL_SCREEN_SIZE,
-        rate = MOVE_BORDER,
-    )
-
     /**
      * 主人公の位置を更新
      */
@@ -136,8 +124,6 @@ class MapViewModel(
         moveUseCase.invoke(
             actualVelocity = actualVelocity,
             tentativeVelocity = tentativePlayerVelocity,
-            playerMoveArea = playerMoveArea,
-            fieldSquare = fieldSquare,
         )
 
         //　プレイヤーが今いるマスに基づいてイベントを呼び出し
