@@ -11,6 +11,7 @@ import gamescreen.map.usecase.collision.geteventtype.GetEventTypeUseCase
 import gamescreen.map.usecase.movebackground.MoveBackgroundUseCase
 import gamescreen.map.usecase.movenpc.MoveNPCUseCase
 
+// todo テスト作成
 class MoveUseCaseImpl(
     private val playerPositionRepository: PlayerPositionRepository,
     private val getEventTypeUseCase: GetEventTypeUseCase,
