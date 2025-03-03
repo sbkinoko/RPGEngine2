@@ -1,4 +1,4 @@
-package gamescreen.map.usecase.movetowater
+package gamescreen.map.usecase.movetootherheight
 
 import gamescreen.map.domain.ObjectHeight
 

@@ -1,4 +1,4 @@
-package gamescreen.map.usecase.movetowater
+package gamescreen.map.usecase.movetootherheight
 
 import core.domain.mapcell.CellType
 import gamescreen.map.ModuleMap
