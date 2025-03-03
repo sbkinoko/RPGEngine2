@@ -10,5 +10,7 @@ class GameParams {
         val showCollisionObject = mutableStateOf(
             false
         )
+
+        const val DELAY = 30L
     }
 }
