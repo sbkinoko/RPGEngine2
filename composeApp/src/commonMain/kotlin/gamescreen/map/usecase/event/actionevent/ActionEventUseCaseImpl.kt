@@ -76,6 +76,20 @@ class ActionEventUseCaseImpl(
                     )
                 }
             }
+
+            EventType.Ground -> {
+                val textBoxData = TextBoxData(
+                    text = "陸上に出るイベント"
+                )
+                textRepository.push(
+                    textBoxData,
+                )
+                CoroutineScope(Dispatchers.Default).launch {
+                    moveToOtherHeightUseCase.invoke(
+                        targetHeight = ObjectHeight.Ground,
+                    )
+                }
+            }
         }
     }
 }

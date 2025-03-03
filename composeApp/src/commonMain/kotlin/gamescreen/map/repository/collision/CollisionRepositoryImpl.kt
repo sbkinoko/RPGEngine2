@@ -40,7 +40,7 @@ class CollisionRepositoryImpl : CollisionRepository {
                             x = x,
                             y = y,
                             size = size,
-                            eventType = EventType.None,
+                            eventType = EventType.Ground,
                             objectHeight = ObjectHeight.Ground,
                         )
                     )
