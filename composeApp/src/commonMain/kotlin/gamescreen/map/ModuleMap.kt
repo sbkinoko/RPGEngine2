@@ -116,6 +116,7 @@ val ModuleMap = module {
         MoveToOtherHeightUseCaseImpl(
             playerPositionRepository = get(),
             isCollidedUseCase = get(),
+            moveUseCase = get(),
         )
     }
 

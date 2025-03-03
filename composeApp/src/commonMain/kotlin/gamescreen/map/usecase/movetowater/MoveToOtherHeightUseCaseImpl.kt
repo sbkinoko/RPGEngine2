@@ -5,11 +5,13 @@ import gamescreen.map.domain.PlayerDir
 import gamescreen.map.domain.collision.square.NormalSquare
 import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.usecase.collision.iscollided.IsCollidedUseCase
+import gamescreen.map.usecase.move.MoveUseCase
 import kotlin.math.abs
 
 class MoveToOtherHeightUseCaseImpl(
     private val playerPositionRepository: PlayerPositionRepository,
     private val isCollidedUseCase: IsCollidedUseCase,
+    private val moveUseCase: MoveUseCase,
 ) : MoveToOtherHeightUseCase {
 
     override suspend fun invoke(
