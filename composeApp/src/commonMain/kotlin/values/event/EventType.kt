@@ -13,6 +13,8 @@ sealed class EventType {
 
     data object Water : EventType()
 
+    data object Ground : EventType()
+
     val canEvent: Boolean
         get() = this != None
 }
