@@ -66,7 +66,7 @@ fun MenuScreen(
             )
 
             MenuType.Item3,
-            MenuType.Item4,
+            MenuType.Collision,
             MenuType.Item5,
             MenuType.Item6,
             -> Text(

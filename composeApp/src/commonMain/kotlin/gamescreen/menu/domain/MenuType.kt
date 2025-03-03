@@ -19,7 +19,7 @@ enum class MenuType(
     TOOL_TARGET,
     TOOL_GIVE,
     Item3(title = "text3"),
-    Item4(title = "text4"),
+    Collision(title = "当たり判定:"),
     Item5(title = "text5"),
     Item6(title = "text6"),
 }
@@ -30,7 +30,7 @@ fun Int.toMenuType() = when (this) {
     0 -> MenuType.Status
     1 -> MenuType.SKILL_USER
     2 -> MenuType.TOOL_USER
-    3 -> MenuType.Item4
+    3 -> MenuType.Collision
     4 -> MenuType.Item5
     5 -> MenuType.Item6
     else -> throw RuntimeException()

@@ -41,7 +41,7 @@ class GetControllerByCommandTypeUseCaseImpl(
             MenuType.TOOL_TARGET -> toolTargetViewModel
             MenuType.TOOL_GIVE -> toolGiveUserViewModel
             MenuType.Item3 -> null
-            MenuType.Item4 -> null
+            MenuType.Collision -> null
             MenuType.Item5 -> null
             MenuType.Item6 -> null
         }
