@@ -126,6 +126,8 @@ class MapViewModel(
             tentativeVelocity = tentativePlayerVelocity,
         )
 
+        // fixme moveUseCaseに移動する
+        // 水上から陸に上がったとき、そこが移動マスならば、移動を呼び出したい
         //　プレイヤーが今いるマスに基づいてイベントを呼び出し
         playerCellRepository.eventCell?.let { cell ->
             cellEventUseCase.invoke(
