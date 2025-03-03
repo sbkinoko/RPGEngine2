@@ -1,5 +1,6 @@
 package core.menu
 
+// fixme chunkがないか調べる
 class PairedList<T> {
     fun toPairedList(list: List<T>): List<Pair<T, T?>> {
         val pairedList: MutableList<Pair<T, T?>> = mutableListOf()

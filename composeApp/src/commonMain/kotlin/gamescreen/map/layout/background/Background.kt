@@ -15,11 +15,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import common.extension.pxToDp
+import gamescreen.map.domain.background.BackgroundCell
 import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.viewmodel.MapViewModel
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import values.Colors
+import values.GameParams
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
@@ -102,32 +104,53 @@ fun Background(
                         )
                     }
 
-                    val collisionList = mapViewModel
-                        .getCollisionList(
-                            backgroundCell = this,
-                        )
-                    collisionList.forEach {
-                        Canvas(
-                            modifier = Modifier
-                                .size(
-                                    (square.size * screenRatio).pxToDp()
-                                )
-                                .offset(
-                                    x = (it.baseX * screenRatio).pxToDp(),
-                                    y = (it.baseY * screenRatio).pxToDp(),
-                                ),
-                            onDraw = {
-                                drawPath(
-                                    path = it.getPath(
-                                        screenRatio,
-                                    ),
-                                    color = Colors.CollisionColor,
-                                )
-                            }
-                        )
-                    }
+                    CollisionObjects(
+                        mapViewModel = mapViewModel,
+                        backgroundCell = this@apply,
+                        screenRatio = screenRatio,
+                    )
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun CollisionObjects(
+    mapViewModel: MapViewModel,
+    backgroundCell: BackgroundCell,
+    screenRatio: Float,
+) {
+    if (GameParams.showCollisionObject.value.not()) {
+        // 当たり判定の描画が不要ならreturn
+        return
+    }
+
+    backgroundCell.apply {
+        val collisionList = mapViewModel
+            .getCollisionList(
+                backgroundCell = this,
+            )
+
+        collisionList.forEach {
+            Canvas(
+                modifier = Modifier
+                    .size(
+                        (square.size * screenRatio).pxToDp()
+                    )
+                    .offset(
+                        x = (it.baseX * screenRatio).pxToDp(),
+                        y = (it.baseY * screenRatio).pxToDp(),
+                    ),
+                onDraw = {
+                    drawPath(
+                        path = it.getPath(
+                            screenRatio,
+                        ),
+                        color = Colors.CollisionColor,
+                    )
+                }
+            )
         }
     }
 }
