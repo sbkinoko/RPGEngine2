@@ -11,6 +11,7 @@ import gamescreen.menu.repository.menustate.MenuStateRepository
 import gamescreen.menu.usecase.backfield.CloseMenuUseCase
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import values.GameParams
 
 class MainMenuViewModel : MenuChildViewModel(),
     KoinComponent {
@@ -23,15 +24,25 @@ class MainMenuViewModel : MenuChildViewModel(),
 
     override var timer = Timer(200)
 
-    val list: List<MainMenuItem> = List(5) {
-        MainMenuItem(
-            text = it.toMenuType().title,
-        )
-    }
+    val list: List<MainMenuItem>
+        get() = List(5) {
+            val menuType = it.toMenuType()
+            if (MenuType.Collision == menuType) {
+                MainMenuItem(
+                    text = menuType.title + GameParams.showCollisionObject.value,
+                )
+            } else {
+                MainMenuItem(
+                    text = menuType.title,
+                )
+            }
+        }
+
     val itemNum: Int = list.size
 
-    val pairedList: List<Pair<MainMenuItem, MainMenuItem?>> =
-        PairedList<MainMenuItem>().toPairedList(list)
+    val pairedList: List<Pair<MainMenuItem, MainMenuItem?>>
+        get() =
+            PairedList<MainMenuItem>().toPairedList(list)
 
     override var selectManager: SelectManager = SelectManager(
         width = 2,
@@ -43,8 +54,17 @@ class MainMenuViewModel : MenuChildViewModel(),
     }
 
     override fun goNextImpl() {
+        val menuType = selectManager.selected.toMenuType()
+
+        if (menuType == MenuType.Collision) {
+            // 当たり判定の項目なら判定を反転する
+            GameParams.showCollisionObject.value = GameParams.showCollisionObject.value.not()
+            //　次の画面は存在しないので遷移はなし
+            return
+        }
+
         menuStateRepository.push(
-            selectManager.selected.toMenuType()
+            menuType = menuType,
         )
     }
 

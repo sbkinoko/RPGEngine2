@@ -1,9 +1,9 @@
 package gamescreen.map.repository.collision
 
 import core.domain.mapcell.CellType
+import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.collision.ShapeCollisionDetect
 import gamescreen.map.domain.collision.square.EventSquare
-import gamescreen.map.domain.collision.square.NormalSquare
 import gamescreen.map.domain.collision.square.Square
 import values.event.EventType
 
@@ -23,13 +23,29 @@ class CollisionRepositoryImpl : CollisionRepository {
             CellType.Water ->
                 square.run {
                     listOf(
-                        NormalSquare(
+                        EventSquare(
                             x = x,
                             y = y,
-                            size = size
+                            size = size,
+                            eventType = EventType.Water,
+                            objectHeight = ObjectHeight.Water,
                         )
                     )
                 }
+
+            CellType.Glass -> {
+                square.run {
+                    listOf(
+                        EventSquare(
+                            x = x,
+                            y = y,
+                            size = size,
+                            eventType = EventType.Ground,
+                            objectHeight = ObjectHeight.Ground,
+                        )
+                    )
+                }
+            }
 
             is CellType.Box ->
                 square.run {
@@ -44,7 +60,8 @@ class CollisionRepositoryImpl : CollisionRepository {
                                 )
                             } else {
                                 EventType.None
-                            }
+                            },
+                            objectHeight = ObjectHeight.GroundObject,
                         )
                     )
                 }

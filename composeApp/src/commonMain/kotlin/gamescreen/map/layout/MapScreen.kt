@@ -14,6 +14,7 @@ import gamescreen.map.viewmodel.MapViewModel
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
+import values.GameParams
 
 @Composable
 @Preview
@@ -24,7 +25,7 @@ fun MapScreen(
 ) {
     LaunchedEffect(Unit) {
         while (true) {
-            delay(30L)
+            delay(GameParams.DELAY)
             mapViewModel.updatePosition()
         }
     }

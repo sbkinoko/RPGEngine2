@@ -1,6 +1,7 @@
 package gamescreen.map.domain.collision.square
 
 import androidx.compose.ui.graphics.Path
+import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.collision.ShapeCollisionDetect
 
 interface Square : ShapeCollisionDetect {
@@ -25,6 +26,16 @@ interface Square : ShapeCollisionDetect {
     val bottomSide: Float
 
     override fun isOverlap(other: Square): Boolean {
+
+        //　高さが同じなら衝突しない
+        if (other.objectHeight == this.objectHeight &&
+            // ただし、Noneの場合は判定する
+            other.objectHeight != ObjectHeight.None &&
+            objectHeight != ObjectHeight.None
+        ) {
+            return false
+        }
+
         if (this.rightSide < other.leftSide)
             return false
 

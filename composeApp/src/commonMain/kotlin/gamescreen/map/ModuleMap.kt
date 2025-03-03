@@ -45,6 +45,8 @@ import gamescreen.map.usecase.movebackground.MoveBackgroundUseCase
 import gamescreen.map.usecase.movebackground.MoveBackgroundUseCaseImpl
 import gamescreen.map.usecase.movenpc.MoveNPCUseCase
 import gamescreen.map.usecase.movenpc.MoveNPCUseCaseImpl
+import gamescreen.map.usecase.movetowater.MoveToOtherHeightUseCase
+import gamescreen.map.usecase.movetowater.MoveToOtherHeightUseCaseImpl
 import gamescreen.map.usecase.resetnpc.ResetNPCPositionUseCase
 import gamescreen.map.usecase.resetnpc.ResetNPCPositionUseCaseImpl
 import gamescreen.map.usecase.resetposition.ResetBackgroundPositionUseCase
@@ -107,6 +109,14 @@ val ModuleMap = module {
             getEventTypeUseCase = get(),
             velocityManageService = get(),
             updateCellContainPlayerUseCase = get(),
+        )
+    }
+
+    single<MoveToOtherHeightUseCase> {
+        MoveToOtherHeightUseCaseImpl(
+            playerPositionRepository = get(),
+            isCollidedUseCase = get(),
+            moveUseCase = get(),
         )
     }
 
@@ -223,6 +233,7 @@ val ModuleMap = module {
             addToolUseCase = get(),
             setShopItemUseCase = get(),
             setTalkUseCase = get(),
+            moveToOtherHeightUseCase = get(),
         )
     }
 

@@ -31,7 +31,7 @@ sealed class CellType {
     }
 
 
-    data object Glass : CellType(), MonsterCell {
+    data object Glass : CellType(), MonsterCell, CollisionCell {
         override val distanceLate: Float
             get() = 2.0f
     }

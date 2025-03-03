@@ -1,5 +1,7 @@
 package gamescreen.map.domain.collision.square
 
+import gamescreen.map.domain.ObjectHeight
+
 abstract class SquareWrapper<T : Square>(
     open val square: Square,
 ) : Square {
@@ -23,6 +25,10 @@ abstract class SquareWrapper<T : Square>(
 
     override val bottomSide: Float
         get() = square.bottomSide
+
+
+    override val objectHeight: ObjectHeight
+        get() = square.objectHeight
 
     abstract override fun move(dx: Float, dy: Float): T
 
