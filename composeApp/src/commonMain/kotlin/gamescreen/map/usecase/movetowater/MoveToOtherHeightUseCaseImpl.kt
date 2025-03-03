@@ -2,14 +2,19 @@ package gamescreen.map.usecase.movetowater
 
 import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.PlayerDir
+import gamescreen.map.domain.Velocity
 import gamescreen.map.domain.collision.square.NormalSquare
 import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.usecase.collision.iscollided.IsCollidedUseCase
+import gamescreen.map.usecase.move.MoveUseCase
+import kotlinx.coroutines.delay
+import values.GameParams
 import kotlin.math.abs
 
 class MoveToOtherHeightUseCaseImpl(
     private val playerPositionRepository: PlayerPositionRepository,
     private val isCollidedUseCase: IsCollidedUseCase,
+    private val moveUseCase: MoveUseCase,
 ) : MoveToOtherHeightUseCase {
 
     override suspend fun invoke(
@@ -117,13 +122,31 @@ class MoveToOtherHeightUseCaseImpl(
             }
         }
 
+        // 高さを保存
         playerPositionRepository.setPlayerPosition(
-            heightUpdatedPlayer.copy(
-                square = heightUpdatedPlayer.square.move(
-                    dx = maxDx,
-                    dy = maxDy,
-                )
-            ),
+            heightUpdatedPlayer,
         )
+
+        while (true) {
+            val velocity = Velocity(
+                x = maxDx,
+                y = maxDy,
+            )
+
+            maxDx -= velocity.x
+            maxDy -= velocity.y
+
+            if (velocity.isMoving.not()) {
+                break
+            }
+
+            //　移動できることはわかっている
+            //　のでプレイヤーの方向と移動方向に同じ物を入力
+            moveUseCase.invoke(
+                tentativeVelocity = velocity,
+                actualVelocity = velocity,
+            )
+            delay(GameParams.DELAY)
+        }
     }
 }
