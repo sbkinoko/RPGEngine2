@@ -45,8 +45,8 @@ import gamescreen.map.usecase.movebackground.MoveBackgroundUseCase
 import gamescreen.map.usecase.movebackground.MoveBackgroundUseCaseImpl
 import gamescreen.map.usecase.movenpc.MoveNPCUseCase
 import gamescreen.map.usecase.movenpc.MoveNPCUseCaseImpl
-import gamescreen.map.usecase.movetowater.MoveToWaterUseCase
-import gamescreen.map.usecase.movetowater.MoveToWaterUseCaseImpl
+import gamescreen.map.usecase.movetowater.MoveToOtherHeightUseCase
+import gamescreen.map.usecase.movetowater.MoveToOtherHeightUseCaseImpl
 import gamescreen.map.usecase.resetnpc.ResetNPCPositionUseCase
 import gamescreen.map.usecase.resetnpc.ResetNPCPositionUseCaseImpl
 import gamescreen.map.usecase.resetposition.ResetBackgroundPositionUseCase
@@ -112,8 +112,8 @@ val ModuleMap = module {
         )
     }
 
-    single<MoveToWaterUseCase> {
-        MoveToWaterUseCaseImpl(
+    single<MoveToOtherHeightUseCase> {
+        MoveToOtherHeightUseCaseImpl(
             playerPositionRepository = get(),
             isCollidedUseCase = get(),
         )
@@ -232,7 +232,7 @@ val ModuleMap = module {
             addToolUseCase = get(),
             setShopItemUseCase = get(),
             setTalkUseCase = get(),
-            moveToWaterUseCase = get(),
+            moveToOtherHeightUseCase = get(),
         )
     }
 

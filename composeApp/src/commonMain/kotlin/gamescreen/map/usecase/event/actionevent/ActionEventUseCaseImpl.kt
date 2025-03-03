@@ -1,6 +1,7 @@
 package gamescreen.map.usecase.event.actionevent
 
-import gamescreen.map.usecase.movetowater.MoveToWaterUseCase
+import gamescreen.map.domain.ObjectHeight
+import gamescreen.map.usecase.movetowater.MoveToOtherHeightUseCase
 import gamescreen.map.usecase.settalk.SetTalkUseCase
 import gamescreen.menu.usecase.bag.addtool.AddToolUseCase
 import gamescreen.menushop.usecase.setshopitem.SetShopItemUseCase
@@ -18,7 +19,7 @@ class ActionEventUseCaseImpl(
     private val addToolUseCase: AddToolUseCase,
     private val setShopItemUseCase: SetShopItemUseCase,
     private val setTalkUseCase: SetTalkUseCase,
-    private val moveToWaterUseCase: MoveToWaterUseCase,
+    private val moveToOtherHeightUseCase: MoveToOtherHeightUseCase,
 ) : ActionEventUseCase {
     override fun invoke(
         eventType: EventType,
@@ -70,7 +71,9 @@ class ActionEventUseCaseImpl(
                     textBoxData,
                 )
                 CoroutineScope(Dispatchers.Default).launch {
-                    moveToWaterUseCase.invoke()
+                    moveToOtherHeightUseCase.invoke(
+                        targetHeight = ObjectHeight.Water,
+                    )
                 }
             }
         }

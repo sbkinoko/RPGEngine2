@@ -7,18 +7,19 @@ import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.usecase.collision.iscollided.IsCollidedUseCase
 import kotlin.math.abs
 
-// fixme 高さを受け取るように修正
-class MoveToWaterUseCaseImpl(
+class MoveToOtherHeightUseCaseImpl(
     private val playerPositionRepository: PlayerPositionRepository,
     private val isCollidedUseCase: IsCollidedUseCase,
-) : MoveToWaterUseCase {
+) : MoveToOtherHeightUseCase {
 
-    override suspend fun invoke() {
+    override suspend fun invoke(
+        targetHeight: ObjectHeight,
+    ) {
         val player = playerPositionRepository.getPlayerPosition()
 
-        val waterPlayer = player.copy(
+        val heightUpdatedPlayer = player.copy(
             square = (player.square as NormalSquare).copy(
-                objectHeight = ObjectHeight.Water
+                objectHeight = targetHeight,
             )
         )
 
@@ -26,10 +27,10 @@ class MoveToWaterUseCaseImpl(
         var maxDy = 0f
         var minDx = 0f
         var minDy = 0f
-        waterPlayer.run {
-            val firstMove = waterPlayer.size * 2
+        heightUpdatedPlayer.run {
+            val firstMove = heightUpdatedPlayer.size * 2
 
-            when (waterPlayer.dir) {
+            when (dir) {
                 PlayerDir.UP -> maxDy = -firstMove
 
                 PlayerDir.DOWN -> maxDy = firstMove
@@ -48,7 +49,7 @@ class MoveToWaterUseCaseImpl(
                     )
                 )
             ) {
-                when (waterPlayer.dir) {
+                when (dir) {
                     PlayerDir.UP,
                     PlayerDir.DOWN,
                     ->
@@ -70,7 +71,7 @@ class MoveToWaterUseCaseImpl(
                     )
                 )
             ) {
-                when (waterPlayer.dir) {
+                when (dir) {
                     PlayerDir.UP,
                     PlayerDir.DOWN,
                     ->
@@ -117,8 +118,8 @@ class MoveToWaterUseCaseImpl(
         }
 
         playerPositionRepository.setPlayerPosition(
-            waterPlayer.copy(
-                square = waterPlayer.square.move(
+            heightUpdatedPlayer.copy(
+                square = heightUpdatedPlayer.square.move(
                     dx = maxDx,
                     dy = maxDy,
                 )
