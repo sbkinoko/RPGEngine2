@@ -1,7 +1,7 @@
 package gamescreen.map.usecase.event.actionevent
 
 import gamescreen.map.domain.ObjectHeight
-import gamescreen.map.usecase.movetowater.MoveToOtherHeightUseCase
+import gamescreen.map.usecase.movetootherheight.MoveToOtherHeightUseCase
 import gamescreen.map.usecase.settalk.SetTalkUseCase
 import gamescreen.menu.usecase.bag.addtool.AddToolUseCase
 import gamescreen.menushop.usecase.setshopitem.SetShopItemUseCase

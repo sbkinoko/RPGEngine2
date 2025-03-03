@@ -1,6 +1,7 @@
-package gamescreen.map.usecase.movetowater
+package gamescreen.map.usecase.movetootherheight
 
 import gamescreen.map.domain.ObjectHeight
+import gamescreen.map.domain.Player
 import gamescreen.map.domain.PlayerDir
 import gamescreen.map.domain.Velocity
 import gamescreen.map.domain.collision.square.NormalSquare
@@ -28,12 +29,32 @@ class MoveToOtherHeightUseCaseImpl(
             )
         )
 
+        // 高さを保存
+        playerPositionRepository.setPlayerPosition(
+            heightUpdatedPlayer,
+        )
+
+        // 移動量を取得
+        val (dx, dy) = calcMoveDistance(
+            heightUpdatedPlayer,
+        )
+
+        // 実際に移動
+        move(dx, dy)
+    }
+
+    /**
+     * 移動後に衝突判定がない最小距離を計算
+     */
+    private fun calcMoveDistance(
+        player: Player,
+    ): Pair<Float, Float> {
         var maxDx = 0f
         var maxDy = 0f
         var minDx = 0f
         var minDy = 0f
-        heightUpdatedPlayer.run {
-            val firstMove = heightUpdatedPlayer.size * 2
+        player.run {
+            val firstMove = size * 2
 
             when (dir) {
                 PlayerDir.UP -> maxDy = -firstMove
@@ -122,19 +143,24 @@ class MoveToOtherHeightUseCaseImpl(
             }
         }
 
-        // 高さを保存
-        playerPositionRepository.setPlayerPosition(
-            heightUpdatedPlayer,
-        )
+        return maxDx to maxDy
+    }
+
+    private suspend fun move(
+        dx: Float,
+        dy: Float,
+    ) {
+        var restDx = dx
+        var restDy = dy
 
         while (true) {
             val velocity = Velocity(
-                x = maxDx,
-                y = maxDy,
+                x = restDx,
+                y = restDy,
             )
 
-            maxDx -= velocity.x
-            maxDy -= velocity.y
+            restDx -= velocity.x
+            restDy -= velocity.y
 
             if (velocity.isMoving.not()) {
                 break
