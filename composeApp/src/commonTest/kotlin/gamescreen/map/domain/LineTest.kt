@@ -3,42 +3,42 @@ package gamescreen.map.domain
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
+private val origin = Point(
+    0f, 0f
+)
+private val xPoint = Point(
+    x = 1f,
+    y = 0f,
+)
+private val yPoint = Point(
+    x = 0f,
+    y = 1f,
+)
+private val xyPoint = Point(
+    x = 1f,
+    y = 1f,
+)
+
+val verticalLine = Line(
+    origin,
+    yPoint,
+)
+
+val horizontal = Line(
+    origin,
+    xPoint,
+)
+
+val slope = Line(
+    origin,
+    xyPoint,
+)
+
 class LineTest {
-    private val origin = Point(
-        0f, 0f
-    )
-    private val xPoint = Point(
-        x = 1f,
-        y = 0f,
-    )
-    private val yPoint = Point(
-        x = 0f,
-        y = 1f,
-    )
-    private val xyPoint = Point(
-        x = 1f,
-        y = 1f,
-    )
-
-    private val verticalLine = Line(
-        origin,
-        yPoint,
-    )
-
-    private val horizontal = Line(
-        origin,
-        xPoint,
-    )
-
-    private val slope = Line(
-        origin,
-        xyPoint,
-    )
-
     @Test
     fun isHorizontal() {
         assertEquals(
-            expected = Inclination.Horizontal,
+            expected = Inclination.Slope(0f),
             actual = horizontal.inclination,
         )
     }
