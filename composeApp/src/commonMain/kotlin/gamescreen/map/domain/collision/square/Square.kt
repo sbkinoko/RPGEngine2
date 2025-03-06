@@ -1,7 +1,9 @@
 package gamescreen.map.domain.collision.square
 
 import androidx.compose.ui.graphics.Path
+import gamescreen.map.domain.Line
 import gamescreen.map.domain.ObjectHeight
+import gamescreen.map.domain.Point
 import gamescreen.map.domain.collision.ShapeCollisionDetect
 
 interface Square : ShapeCollisionDetect {
@@ -24,6 +26,39 @@ interface Square : ShapeCollisionDetect {
     val topSide: Float
 
     val bottomSide: Float
+
+    private val leftTop
+        get() = Point(
+            x = leftSide,
+            y = topSide,
+        )
+
+    private val leftBottom
+        get() = Point(
+            x = leftSide,
+            y = bottomSide,
+        )
+
+    private val rightTop
+        get() = Point(
+            x = rightSide,
+            y = topSide,
+        )
+
+    private val rightBottom
+        get() = Point(
+            x = rightSide,
+            y = bottomSide,
+        )
+
+    override val lines: List<Line>
+        get() = listOf(
+            Line(leftTop, leftBottom),
+            Line(leftBottom, rightBottom),
+            Line(rightBottom, rightTop),
+            Line(rightTop, leftTop),
+            Line(leftTop, rightBottom),
+        )
 
     override fun isOverlap(other: Square): Boolean {
 
