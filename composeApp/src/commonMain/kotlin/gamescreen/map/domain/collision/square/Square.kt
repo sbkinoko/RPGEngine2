@@ -99,6 +99,15 @@ interface Square : ShapeCollisionDetect {
         path.lineTo(left, size * screenRatio)
         path.lineTo(size * screenRatio, size * screenRatio)
         path.lineTo(size * screenRatio, top)
+
+        path.lineTo(left, top)
+        path.lineTo(size * screenRatio, size * screenRatio)
+
+        // 右上
+        path.moveTo(size * screenRatio, top)
+        // 左下
+        path.lineTo(left, size * screenRatio)
+
         path.close()
         return path
     }
