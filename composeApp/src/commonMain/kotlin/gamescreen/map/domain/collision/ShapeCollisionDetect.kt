@@ -26,6 +26,7 @@ interface ShapeCollisionDetect {
             return false
         }
 
+        // fixme 四角形同士の場合は簡略化したい
         other.lines.forEach { otherLine ->
             lines.forEach { thisLine ->
                 if (otherLine.isCrossWith(thisLine)) {
