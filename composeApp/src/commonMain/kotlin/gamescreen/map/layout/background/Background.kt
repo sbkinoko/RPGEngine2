@@ -13,6 +13,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
 import common.extension.pxToDp
 import gamescreen.map.domain.background.BackgroundCell
@@ -148,6 +149,7 @@ fun CollisionObjects(
                             screenRatio,
                         ),
                         color = Colors.CollisionColor,
+                        style = Stroke(width = 10f),
                     )
                 }
             )
