@@ -1,6 +1,8 @@
 package gamescreen.map.domain
 
+import gamescreen.map.domain.collision.square.EventSquare
 import gamescreen.map.domain.collision.square.NormalSquare
+import values.event.EventType
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -227,7 +229,7 @@ class SquareTest {
     }
 
     @Test
-    fun isOverlapUp() {
+    fun isOverlapTop1() {
         val baseSquare = NormalSquare(
             point = Point(10f, 10f),
             size = 10f
@@ -244,6 +246,31 @@ class SquareTest {
 
         assertFalse { baseSquare.isOverlap(square2) }
         assertFalse { square2.isOverlap(baseSquare) }
+    }
+
+    /**
+     * キリの悪い数値で確認
+     */
+    @Test
+    fun isOverlapTop2() {
+        val largeSquare = EventSquare(
+            square = NormalSquare(
+                point = Point(128.06143f, 133.4598f),
+                size = 42f,
+                objectHeight = ObjectHeight.Water,
+            ),
+            eventType = EventType.Water,
+        )
+
+        val baseSquare = NormalSquare(
+            point = Point(135.1815f, 119.99265f),
+            size = 20f,
+        )
+
+        baseSquare.apply {
+            assertTrue { largeSquare.isOverlap(this) }
+            assertTrue { this.isOverlap(largeSquare) }
+        }
     }
 
     @Test

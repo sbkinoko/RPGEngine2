@@ -57,6 +57,7 @@ interface Square : ShapeCollisionDetect {
             Line(rightBottom, rightTop),
             Line(rightTop, leftTop),
             Line(leftTop, rightBottom),
+            Line(rightTop, leftBottom)
         )
 
 

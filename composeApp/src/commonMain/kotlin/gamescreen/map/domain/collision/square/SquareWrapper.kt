@@ -26,7 +26,6 @@ abstract class SquareWrapper<T : Square>(
     override val bottomSide: Float
         get() = square.bottomSide
 
-
     override val objectHeight: ObjectHeight
         get() = square.objectHeight
 

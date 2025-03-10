@@ -21,9 +21,15 @@ data class Line(
     private val minY = min(point1.y, point2.y)
     private val maxY = max(point1.y, point2.y)
 
-    fun isInYRange(y: Float) = y in minY..maxY
+    //　桁落ちで正確な比較ができないので許容する範囲を設定
+    private val range = 0.0001
+    private val rowRange = 1 - range
+    private val highRange = 1 + range
 
-    fun isInXRange(x: Float) = x in minX..maxX
+
+    fun isInYRange(y: Float) = y in minY * rowRange..maxY * highRange
+
+    fun isInXRange(x: Float) = x in minX * rowRange..maxX * highRange
 
     private val minX = min(point1.x, point2.x)
     val maxX = max(point1.x, point2.x)

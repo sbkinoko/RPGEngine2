@@ -239,4 +239,27 @@ class LineCrossTest {
             line2.isCrossWith(line1)
         }
     }
+
+    /**
+     * 垂直と水平がキリの悪い数値で交差する
+     */
+    @Test
+    fun isOverlapTop2() {
+        val line1 = Line(
+            Point(135.1815f, y = 119.99265f),
+            Point(135.1815f, y = 139.99265f),
+        )
+
+        val line2 = Line(
+            Point(128.06143f, 133.4598f),
+            Point(170.06143f, 133.4598f),
+        )
+
+        assertTrue {
+            line1.isCrossWith(line2)
+        }
+        assertTrue {
+            line2.isCrossWith(line1)
+        }
+    }
 }
