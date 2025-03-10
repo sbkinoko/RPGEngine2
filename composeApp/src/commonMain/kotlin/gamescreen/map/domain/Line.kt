@@ -59,8 +59,11 @@ fun Line.isCrossWith(other: Line): Boolean {
         }
 
         // かぶっている範囲があるかチェック
-        return isInYRange(other.point1.y) ||
-                isInYRange(other.point2.y)
+        return (
+                isInYRange(other.point1.y) ||
+                        isInYRange(other.point2.y)) &&
+                (isInXRange(other.point1.x) ||
+                        isInXRange(other.point2.x))
     }
 
     // 垂直と斜めの場合
@@ -96,7 +99,10 @@ fun Line.isCrossWith(other: Line): Boolean {
             other.isInXRange(x)
 }
 
-private fun isCrossing(vertical: Line, slope: Line): Boolean {
+private fun isCrossing(
+    vertical: Line,
+    slope: Line,
+): Boolean {
     // 垂直なのでxはどちらをとっても同じ
     val x = vertical.maxX
 
@@ -111,5 +117,5 @@ private fun isCrossing(vertical: Line, slope: Line): Boolean {
     val y = a * x + slope.intercept
 
     // yが範囲内ならOK
-    return slope.isInYRange(y)
+    return slope.isInYRange(y) && vertical.isInYRange(y)
 }

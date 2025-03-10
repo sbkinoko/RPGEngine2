@@ -2,7 +2,6 @@ package gamescreen.map.domain.collision.square
 
 import androidx.compose.ui.graphics.Path
 import gamescreen.map.domain.Line
-import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.Point
 import gamescreen.map.domain.collision.ShapeCollisionDetect
 
@@ -60,31 +59,6 @@ interface Square : ShapeCollisionDetect {
             Line(leftTop, rightBottom),
         )
 
-    override fun isOverlap(other: Square): Boolean {
-
-        //　高さが同じなら衝突しない
-        if (other.objectHeight == this.objectHeight &&
-            // ただし、Noneの場合は判定する
-            other.objectHeight != ObjectHeight.None &&
-            objectHeight != ObjectHeight.None
-        ) {
-            return false
-        }
-
-        if (this.rightSide < other.leftSide)
-            return false
-
-        if (other.rightSide < this.leftSide)
-            return false
-
-        if (this.bottomSide < other.topSide)
-            return false
-
-        if (other.bottomSide < this.topSide)
-            return false
-
-        return true
-    }
 
     override fun getPath(
         screenRatio: Float,

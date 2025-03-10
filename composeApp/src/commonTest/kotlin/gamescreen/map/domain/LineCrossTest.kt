@@ -145,6 +145,30 @@ class LineCrossTest {
     }
 
     /**
+     * 原点以外で十字で交差しない
+     */
+    @Test
+    fun isNotCross1_2() {
+        val line1 = Line(
+            Point(10f, 21f),
+            Point(10f, 31f),
+        )
+
+        val line2 = Line(
+            Point(10f, 20f),
+            Point(20f, 20f),
+        )
+
+        assertFalse {
+            line1.isCrossWith(line2)
+        }
+
+        assertFalse {
+            line2.isCrossWith(line1)
+        }
+    }
+
+    /**
      * 斜め同士で交差しない
      */
     @Test
@@ -181,6 +205,30 @@ class LineCrossTest {
         val line2 = Line(
             Point(0f, 4f),
             Point(2f, 3f),
+        )
+
+        assertFalse {
+            line1.isCrossWith(line2)
+        }
+
+        assertFalse {
+            line2.isCrossWith(line1)
+        }
+    }
+
+    /**
+     * 水平同士で交差しない　同じ高さ
+     */
+    @Test
+    fun isNotCross4() {
+        val line1 = Line(
+            Point(-1f, 20f),
+            Point(9f, 20f),
+        )
+
+        val line2 = Line(
+            Point(10f, 20f),
+            Point(20f, 20f),
         )
 
         assertFalse {
