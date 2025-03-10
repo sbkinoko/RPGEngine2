@@ -21,9 +21,15 @@ data class Line(
     private val minY = min(point1.y, point2.y)
     private val maxY = max(point1.y, point2.y)
 
-    fun isInYRange(y: Float) = y in minY..maxY
+    //　桁落ちで正確な比較ができないので許容する範囲を設定
+    private val range = 0.0001
+    private val rowRange = 1 - range
+    private val highRange = 1 + range
 
-    fun isInXRange(x: Float) = x in minX..maxX
+
+    fun isInYRange(y: Float) = y in minY * rowRange..maxY * highRange
+
+    fun isInXRange(x: Float) = x in minX * rowRange..maxX * highRange
 
     private val minX = min(point1.x, point2.x)
     val maxX = max(point1.x, point2.x)
@@ -59,8 +65,11 @@ fun Line.isCrossWith(other: Line): Boolean {
         }
 
         // かぶっている範囲があるかチェック
-        return isInYRange(other.point1.y) ||
-                isInYRange(other.point2.y)
+        return (
+                isInYRange(other.point1.y) ||
+                        isInYRange(other.point2.y)) &&
+                (isInXRange(other.point1.x) ||
+                        isInXRange(other.point2.x))
     }
 
     // 垂直と斜めの場合
@@ -96,7 +105,10 @@ fun Line.isCrossWith(other: Line): Boolean {
             other.isInXRange(x)
 }
 
-private fun isCrossing(vertical: Line, slope: Line): Boolean {
+private fun isCrossing(
+    vertical: Line,
+    slope: Line,
+): Boolean {
     // 垂直なのでxはどちらをとっても同じ
     val x = vertical.maxX
 
@@ -111,5 +123,5 @@ private fun isCrossing(vertical: Line, slope: Line): Boolean {
     val y = a * x + slope.intercept
 
     // yが範囲内ならOK
-    return slope.isInYRange(y)
+    return slope.isInYRange(y) && vertical.isInYRange(y)
 }
