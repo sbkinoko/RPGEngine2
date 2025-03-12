@@ -2,9 +2,11 @@ package gamescreen.map.repository.collision
 
 import core.domain.mapcell.CellType
 import gamescreen.map.domain.ObjectHeight
+import gamescreen.map.domain.Point
 import gamescreen.map.domain.collision.ShapeCollisionDetect
 import gamescreen.map.domain.collision.square.EventSquare
 import gamescreen.map.domain.collision.square.Square
+import gamescreen.map.domain.collision.triangle.ConvexPolygon
 import values.event.EventType
 
 class CollisionRepositoryImpl : CollisionRepository {
@@ -65,6 +67,54 @@ class CollisionRepositoryImpl : CollisionRepository {
                         )
                     )
                 }
+
+            is CellType.BridgeLeftUnder -> {
+                square.run {
+                    listOf(
+                        ConvexPolygon(
+                            baseX = x,
+                            baseY = y,
+                            objectHeight = ObjectHeight.GroundObject,
+                            Point(0f, size),
+                            Point(size * 0.1f, size),
+                            Point(size, size * 0.5f),
+                            Point(size, size * 0.6f),
+                        )
+                    )
+                }
+            }
+
+            is CellType.BridgeRightUnder -> {
+                square.run {
+                    listOf(
+                        ConvexPolygon(
+                            baseX = x,
+                            baseY = y,
+                            objectHeight = ObjectHeight.GroundObject,
+                            Point(0f, size * 0.5f),
+                            Point(0f, size * 0.6f),
+                            Point(size, size),
+                            Point(size * 0.9f, size),
+                        )
+                    )
+                }
+            }
+
+            is CellType.Bridge -> {
+                square.run {
+                    listOf(
+                        ConvexPolygon(
+                            baseX = x,
+                            baseY = y,
+                            objectHeight = ObjectHeight.GroundObject,
+                            Point(0f, size * 0.5f),
+                            Point(0f, size * 0.6f),
+                            Point(size, size * 0.5f),
+                            Point(size, size * 0.6f),
+                        )
+                    )
+                }
+            }
         }
     }
 }
