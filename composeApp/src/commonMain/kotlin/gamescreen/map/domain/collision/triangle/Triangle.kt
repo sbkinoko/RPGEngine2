@@ -15,7 +15,7 @@ data class Triangle(
     val point1: Point,
     val point2: Point,
     val point3: Point,
-    override val objectHeight: ObjectHeight,
+    override val objectHeight: ObjectHeight = ObjectHeight.None,
 ) : ShapeCollisionDetect {
     private val actualPoint1 = point1.move(baseX, baseY)
     private val actualPoint2 = point2.move(baseX, baseY)
