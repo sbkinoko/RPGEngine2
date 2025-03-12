@@ -40,7 +40,12 @@ class ImageBinderBackground : KoinComponent {
         val imgId = aroundCellId[1][1]
 
         return when (imgId) {
-            CellType.Glass -> Res.drawable.bg_00
+            CellType.Glass,
+            CellType.BridgeLeftUnder,
+            CellType.BridgeRightUnder,
+            CellType.Bridge,
+            -> Res.drawable.bg_00
+
             CellType.Water -> Res.drawable.bg_02
             CellType.Town1I, CellType.Town1O -> Res.drawable.bg_20
             CellType.Road -> {

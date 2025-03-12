@@ -19,6 +19,18 @@ data class ConvexPolygon(
         it.move(baseX, baseY)
     }
 
+    constructor(
+        baseX: Float,
+        baseY: Float,
+        objectHeight: ObjectHeight = ObjectHeight.None,
+        vararg points: Point,
+    ) : this(
+        baseX = baseX,
+        baseY = baseY,
+        objectHeight = objectHeight,
+        pointList = points.toList(),
+    )
+
     override val lines: List<Line> = actualPointList.run {
         val lineList = mutableListOf<Line>()
 
@@ -36,8 +48,8 @@ data class ConvexPolygon(
 
     override fun getPath(screenRatio: Float): Path {
         val path = Path().also {
-            for (index1: Int in 0..pointList.size) {
-                for (index2: Int in index1 + 1..pointList.size) {
+            for (index1: Int in pointList.indices) {
+                for (index2: Int in (index1 + 1) until pointList.size) {
                     it.moveTo(pointList[index1], screenRatio)
                     it.lineTo(pointList[index2], screenRatio)
                 }
