@@ -1,18 +1,21 @@
 package gamescreen.map.domain
 
 import gamescreen.map.domain.collision.square.NormalSquare
-import gamescreen.map.domain.collision.triangle.Triangle
+import gamescreen.map.domain.collision.triangle.ConvexPolygon
 import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-class TriangleTest {
-    private val rightTriangle = Triangle(
+// todo 四角形以上の多角形のテストを作る
+class ConvexPolygonTest {
+    private val rightTriangle = ConvexPolygon(
         baseX = 0f,
         baseY = 0f,
-        point1 = Point(10f, 10f),
-        point2 = Point(10f, 20f),
-        point3 = Point(20f, 20f),
+        pointList = listOf(
+            Point(10f, 10f),
+            Point(10f, 20f),
+            Point(20f, 20f),
+        ),
     )
 
     @Test
@@ -84,12 +87,14 @@ class TriangleTest {
     }
 
 
-    private val triangle = Triangle(
+    private val triangle = ConvexPolygon(
         baseX = 10f,
         baseY = 10f,
-        point1 = Point(5f, 0f),
-        point2 = Point(0f, 10f),
-        point3 = Point(9.9f, 9.9f),
+        pointList = listOf(
+            Point(5f, 0f),
+            Point(0f, 10f),
+            Point(9.9f, 9.9f),
+        ),
     )
 
     @Test
