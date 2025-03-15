@@ -14,6 +14,11 @@ sealed class CellType {
     sealed interface EventCell
 
     /**
+     * 中心が入ったらイベントが起きるオブジェクトを持つマス
+     */
+    sealed interface EventObject
+
+    /**
      * 当たり判定を持つを持つマス
      */
     sealed interface CollisionCell
@@ -34,6 +39,8 @@ sealed class CellType {
         override val distanceLate: Float
             get() = 2.0f
     }
+
+    data object GlassEvent : CellType(), EventObject
 
     data object BridgeLeftTop : CellType(), CollisionCell, ObjectCell
     data object BridgeLeftUnder : CellType(), CollisionCell, ObjectCell

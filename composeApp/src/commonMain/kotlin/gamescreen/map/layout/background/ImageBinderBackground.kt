@@ -47,6 +47,7 @@ class ImageBinderBackground : KoinComponent {
 
         return when (imgId) {
             CellType.Glass,
+            CellType.GlassEvent,
             CellType.BridgeLeftTop,
             CellType.BridgeLeftUnder,
             CellType.BridgeRightTop,

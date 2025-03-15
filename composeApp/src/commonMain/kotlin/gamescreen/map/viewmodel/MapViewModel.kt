@@ -19,6 +19,7 @@ import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.repository.playercell.PlayerCellRepository
 import gamescreen.map.usecase.PlayerMoveManageUseCase
 import gamescreen.map.usecase.battlenormal.StartNormalBattleUseCase
+import gamescreen.map.usecase.collision.iscollidedevent.IsCollidedEventUseCase
 import gamescreen.map.usecase.collision.list.GetCollisionListUseCase
 import gamescreen.map.usecase.event.actionevent.ActionEventUseCase
 import gamescreen.map.usecase.event.cellevent.CellEventUseCase
@@ -30,6 +31,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import values.event.EventType
 
 class MapViewModel(
     private val encounterRepository: EncounterRepository,
@@ -52,6 +54,8 @@ class MapViewModel(
         getCollisionListUseCase.invoke(
             backgroundCell = backgroundCell,
         )
+
+    private val isEventCollidedEventUseCase: IsCollidedEventUseCase by inject()
 
     val playerIncludeCellFlow = playerCellRepository
         .playerIncludeCellFlow
@@ -96,6 +100,7 @@ class MapViewModel(
         }
     }
 
+    private var autoEvent: EventType? = null
     /**
      * 主人公の位置を更新
      */
@@ -125,6 +130,15 @@ class MapViewModel(
             actualVelocity = actualVelocity,
             tentativeVelocity = tentativePlayerVelocity,
         )
+
+        val preEvent = autoEvent
+        autoEvent = isEventCollidedEventUseCase.invoke(
+            playerSquare = player.square
+        )
+
+        if (autoEvent != preEvent && autoEvent != null) {
+            actionEventUseCase.invoke(autoEvent!!)
+        }
 
         // fixme moveUseCaseに移動する
         // 水上から陸に上がったとき、そこが移動マスならば、移動を呼び出したい

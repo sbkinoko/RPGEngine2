@@ -5,6 +5,8 @@ import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.backgroundcell.BackgroundRepositoryImpl
 import gamescreen.map.repository.collision.CollisionRepository
 import gamescreen.map.repository.collision.CollisionRepositoryImpl
+import gamescreen.map.repository.collisionevent.EventCollisionRepository
+import gamescreen.map.repository.collisionevent.EventCollisionRepositoryImpl
 import gamescreen.map.repository.encouter.EncounterRepository
 import gamescreen.map.repository.encouter.EncounterRepositoryImpl
 import gamescreen.map.repository.npc.NPCRepository
@@ -31,6 +33,8 @@ import gamescreen.map.usecase.collision.geteventtype.GetEventTypeUseCase
 import gamescreen.map.usecase.collision.geteventtype.GetEventTypeUseCaseImpl
 import gamescreen.map.usecase.collision.iscollided.IsCollidedUseCase
 import gamescreen.map.usecase.collision.iscollided.IsCollidedUseCaseImpl
+import gamescreen.map.usecase.collision.iscollidedevent.IsCollidedEventUseCase
+import gamescreen.map.usecase.collision.iscollidedevent.IsCollidedEventUseCaseImpl
 import gamescreen.map.usecase.collision.list.GetCollisionListUseCase
 import gamescreen.map.usecase.collision.list.GetCollisionListUseCaseImpl
 import gamescreen.map.usecase.decideconnectcype.DecideConnectTypeUseCase
@@ -89,6 +93,10 @@ val ModuleMap = module {
 
     single<CollisionRepository> {
         CollisionRepositoryImpl()
+    }
+
+    single<EventCollisionRepository> {
+        EventCollisionRepositoryImpl()
     }
 
     single<NPCRepository> {
@@ -183,6 +191,13 @@ val ModuleMap = module {
             backgroundRepository = get(),
             getCollisionListUseCase = get(),
             npcRepository = get(),
+        )
+    }
+
+    single<IsCollidedEventUseCase> {
+        IsCollidedEventUseCaseImpl(
+            backgroundRepository = get(),
+            eventCollisionRepository = get(),
         )
     }
 
