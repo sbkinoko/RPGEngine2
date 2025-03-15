@@ -30,16 +30,17 @@ sealed class CellType {
         val distanceLate: Float
     }
 
-
     data object Glass : CellType(), MonsterCell, CollisionCell {
         override val distanceLate: Float
             get() = 2.0f
     }
 
-    data object BridgeLeftUnder : CellType(), CollisionCell, ObjectCell
-    data object BridgeRightUnder : CellType(), CollisionCell
     data object BridgeLeftTop : CellType(), CollisionCell, ObjectCell
-    data object Bridge : CellType(), CollisionCell
+    data object BridgeLeftUnder : CellType(), CollisionCell, ObjectCell
+    data object BridgeRightTop : CellType(), CollisionCell, ObjectCell
+    data object BridgeRightUnder : CellType(), CollisionCell, ObjectCell
+    data object BridgeCenterTop : CellType(), CollisionCell, ObjectCell
+    data object BridgeCenterBottom : CellType(), CollisionCell, ObjectCell
 
     data object Water : CollisionCell, CellType()
 

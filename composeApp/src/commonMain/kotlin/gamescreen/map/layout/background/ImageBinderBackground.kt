@@ -25,6 +25,10 @@ import rpgengine.composeapp.generated.resources.ob_01_11
 import rpgengine.composeapp.generated.resources.ob_01_12
 import rpgengine.composeapp.generated.resources.ob_98_0
 import rpgengine.composeapp.generated.resources.ob_98_1
+import rpgengine.composeapp.generated.resources.ob_bridge_center_bottom
+import rpgengine.composeapp.generated.resources.ob_bridge_center_top
+import rpgengine.composeapp.generated.resources.ob_bridge_right_bottom
+import rpgengine.composeapp.generated.resources.ob_bridge_right_top
 import rpgengine.composeapp.generated.resources.橋_上
 import rpgengine.composeapp.generated.resources.橋_下
 
@@ -43,10 +47,12 @@ class ImageBinderBackground : KoinComponent {
 
         return when (imgId) {
             CellType.Glass,
-            CellType.BridgeLeftUnder,
             CellType.BridgeLeftTop,
+            CellType.BridgeLeftUnder,
+            CellType.BridgeRightTop,
             CellType.BridgeRightUnder,
-            CellType.Bridge,
+            CellType.BridgeCenterTop,
+            CellType.BridgeCenterBottom,
             -> Res.drawable.bg_00
 
             CellType.Water -> Res.drawable.bg_02
@@ -101,6 +107,10 @@ class ImageBinderBackground : KoinComponent {
 
             CellType.BridgeLeftUnder -> Res.drawable.橋_下
             CellType.BridgeLeftTop -> Res.drawable.橋_上
+            CellType.BridgeRightUnder -> Res.drawable.ob_bridge_right_bottom
+            CellType.BridgeRightTop -> Res.drawable.ob_bridge_right_top
+            CellType.BridgeCenterBottom -> Res.drawable.ob_bridge_center_bottom
+            CellType.BridgeCenterTop -> Res.drawable.ob_bridge_center_top
         }
     }
 }
