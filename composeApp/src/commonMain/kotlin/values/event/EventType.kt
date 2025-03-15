@@ -7,7 +7,7 @@ sealed class EventType {
         val shopId: ShopId,
     ) : EventType()
 
-    class Box(
+    data class Box(
         val id: BoxId,
     ) : EventType()
 
