@@ -9,10 +9,10 @@ import gamescreen.map.domain.move
 //fixme このコンストラクタを利用している物は修正
 data class NormalSquare(
     val point: Point = Point(),
-    override val size: Float,
+    val size: Float,
     override val objectHeight: ObjectHeight = ObjectHeight.None,
 ) : ShapeCollisionDetect,
-    Square {
+    Rectangle {
 
     constructor(
         x: Float,
@@ -27,6 +27,12 @@ data class NormalSquare(
         size = size,
         objectHeight = objectHeight,
     )
+
+    override val width: Float
+        get() = size
+
+    override val height: Float
+        get() = size
 
     override val x: Float
         get() = point.x
@@ -49,7 +55,7 @@ data class NormalSquare(
     override fun move(
         dx: Float,
         dy: Float,
-    ): Square {
+    ): Rectangle {
         return copy(
             point = point.move(
                 dx = dx,
@@ -61,7 +67,7 @@ data class NormalSquare(
     override fun moveTo(
         x: Float,
         y: Float,
-    ): Square {
+    ): Rectangle {
         return copy(
             point = Point(
                 x = x,

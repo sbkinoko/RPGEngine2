@@ -1,6 +1,6 @@
 package gamescreen.map.usecase.collision.iscollided
 
-import gamescreen.map.domain.collision.square.Square
+import gamescreen.map.domain.collision.square.Rectangle
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.npc.NPCRepository
 import gamescreen.map.usecase.collision.list.GetCollisionListUseCase
@@ -13,7 +13,7 @@ class IsCollidedUseCaseImpl(
 ) : IsCollidedUseCase {
 
     override fun invoke(
-        playerSquare: Square,
+        playerSquare: Rectangle,
     ): Boolean {
         backgroundRepository
             .backgroundStateFlow

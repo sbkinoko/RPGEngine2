@@ -1,7 +1,7 @@
 package gamescreen.map.usecase.collision.geteventtype
 
 import gamescreen.map.domain.collision.EventObject
-import gamescreen.map.domain.collision.square.Square
+import gamescreen.map.domain.collision.square.Rectangle
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.npc.NPCRepository
 import gamescreen.map.usecase.collision.list.GetCollisionListUseCase
@@ -15,7 +15,7 @@ class GetEventTypeUseCaseImpl(
 ) : GetEventTypeUseCase {
 
     override fun invoke(
-        square: Square,
+        square: Rectangle,
     ): EventType {
         backgroundRepository.backgroundStateFlow.value.fieldData.forEach { rowArray ->
             rowArray.forEach cell@{ cell ->

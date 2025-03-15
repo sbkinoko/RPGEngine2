@@ -53,7 +53,7 @@ fun Background(
                     Box(
                         modifier = Modifier
                             .size(
-                                (square.size * screenRatio).pxToDp()
+                                (square.width * screenRatio).pxToDp()
                             )
                             .offset(
                                 x = (square.leftSide * screenRatio).pxToDp(),
@@ -137,7 +137,7 @@ fun CollisionObjects(
             Canvas(
                 modifier = Modifier
                     .size(
-                        (square.size * screenRatio).pxToDp()
+                        (square.width * screenRatio).pxToDp()
                     )
                     .offset(
                         x = (it.baseX * screenRatio).pxToDp(),

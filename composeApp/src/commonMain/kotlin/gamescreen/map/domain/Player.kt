@@ -1,13 +1,13 @@
 package gamescreen.map.domain
 
 import gamescreen.map.domain.collision.square.NormalSquare
-import gamescreen.map.domain.collision.square.Square
+import gamescreen.map.domain.collision.square.Rectangle
 import gamescreen.map.viewmodel.MapViewModel.Companion.VIRTUAL_PLAYER_SIZE
 import values.event.EventType
 
 data class Player(
     val size: Float,
-    val square: Square,
+    val square: Rectangle,
     val actualVelocity: Velocity,
     val tentativeVelocity: Velocity,
     val moveDistance: Float,
@@ -64,7 +64,7 @@ data class Player(
         )
     }
 
-    val eventSquare: Square
+    val eventSquare: Rectangle
         get() {
             val square = NormalSquare(
                 size = size,
