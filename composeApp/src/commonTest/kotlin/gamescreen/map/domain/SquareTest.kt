@@ -37,7 +37,7 @@ class SquareTest {
 
             assertEquals(
                 expected = SIZE,
-                actual = size,
+                actual = width,
             )
         }
     }
@@ -73,7 +73,7 @@ class SquareTest {
 
             assertEquals(
                 expected = size,
-                actual = this.size,
+                actual = width,
             )
         }
     }

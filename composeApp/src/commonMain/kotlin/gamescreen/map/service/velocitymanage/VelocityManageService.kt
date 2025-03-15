@@ -1,7 +1,7 @@
 package gamescreen.map.service.velocitymanage
 
 import gamescreen.map.domain.Velocity
-import gamescreen.map.domain.collision.square.Square
+import gamescreen.map.domain.collision.square.Rectangle
 
 interface VelocityManageService {
 
@@ -10,7 +10,7 @@ interface VelocityManageService {
      */
     operator fun invoke(
         tentativePlayerVelocity: Velocity,
-        playerMoveArea: Square,
-        playerSquare: Square,
+        playerMoveArea: Rectangle,
+        playerSquare: Rectangle,
     ): Pair<Velocity, Velocity>
 }

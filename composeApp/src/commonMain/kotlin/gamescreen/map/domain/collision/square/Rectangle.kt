@@ -5,8 +5,9 @@ import gamescreen.map.domain.Line
 import gamescreen.map.domain.Point
 import gamescreen.map.domain.collision.ShapeCollisionDetect
 
-interface Square : ShapeCollisionDetect {
-    val size: Float
+interface Rectangle : ShapeCollisionDetect {
+    val width: Float
+    val height: Float
 
     override val baseX: Float
         get() = leftSide
@@ -71,17 +72,17 @@ interface Square : ShapeCollisionDetect {
             left,
             top,
         )
-        path.lineTo(left, size * screenRatio)
-        path.lineTo(size * screenRatio, size * screenRatio)
-        path.lineTo(size * screenRatio, top)
+        path.lineTo(left, height * screenRatio)
+        path.lineTo(width * screenRatio, height * screenRatio)
+        path.lineTo(width * screenRatio, top)
 
         path.lineTo(left, top)
-        path.lineTo(size * screenRatio, size * screenRatio)
+        path.lineTo(width * screenRatio, height * screenRatio)
 
         // 右上
-        path.moveTo(size * screenRatio, top)
+        path.moveTo(width * screenRatio, top)
         // 左下
-        path.lineTo(left, size * screenRatio)
+        path.lineTo(left, height * screenRatio)
 
         path.close()
         return path
@@ -90,26 +91,26 @@ interface Square : ShapeCollisionDetect {
     fun move(
         dx: Float = 0f,
         dy: Float = 0f,
-    ): Square
+    ): Rectangle
 
     fun moveTo(
         x: Float = 0f,
         y: Float = 0f,
-    ): Square
+    ): Rectangle
 
-    fun isLeft(other: Square): Boolean {
+    fun isLeft(other: Rectangle): Boolean {
         return this.rightSide <= other.leftSide
     }
 
-    fun isRight(other: Square): Boolean {
+    fun isRight(other: Rectangle): Boolean {
         return other.rightSide <= this.leftSide
     }
 
-    fun isDown(other: Square): Boolean {
+    fun isDown(other: Rectangle): Boolean {
         return other.bottomSide <= this.topSide
     }
 
-    fun isUp(other: Square): Boolean {
+    fun isUp(other: Rectangle): Boolean {
         return this.bottomSide <= other.topSide
     }
 
@@ -117,7 +118,7 @@ interface Square : ShapeCollisionDetect {
      * otherにこのsquareが包含されているかをチェックする
      * @param other 比較したいsquare
      */
-    fun isIn(other: Square): Boolean {
+    fun isIn(other: Rectangle): Boolean {
         if (this.leftSide < other.leftSide)
             return false
 

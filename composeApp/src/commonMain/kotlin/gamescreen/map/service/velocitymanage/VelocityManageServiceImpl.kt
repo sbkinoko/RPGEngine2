@@ -1,14 +1,14 @@
 package gamescreen.map.service.velocitymanage
 
 import gamescreen.map.domain.Velocity
-import gamescreen.map.domain.collision.square.Square
+import gamescreen.map.domain.collision.square.Rectangle
 
 class VelocityManageServiceImpl : VelocityManageService {
 
     override fun invoke(
         tentativePlayerVelocity: Velocity,
-        playerMoveArea: Square,
-        playerSquare: Square,
+        playerMoveArea: Rectangle,
+        playerSquare: Rectangle,
     ): Pair<Velocity, Velocity> {
         // 背景の移動速度
         val vbx: Float

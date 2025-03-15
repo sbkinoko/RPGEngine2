@@ -6,7 +6,7 @@ import values.event.EventType
 
 data class EventSquare(
     override val eventType: EventType,
-    override val square: Square,
+    override val square: Rectangle,
 ) : SquareWrapper<EventSquare>(
     square = square,
 ), EventObject {

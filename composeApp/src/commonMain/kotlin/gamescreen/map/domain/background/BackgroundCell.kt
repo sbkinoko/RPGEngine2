@@ -2,14 +2,14 @@ package gamescreen.map.domain.background
 
 import core.domain.mapcell.CellType
 import gamescreen.map.domain.MapPoint
-import gamescreen.map.domain.collision.square.Square
+import gamescreen.map.domain.collision.square.Rectangle
 import gamescreen.map.domain.collision.square.SquareWrapper
 
 //fixme 背景画像の情報を持たせる
 //宝箱を開けたときにすぐに更新するため
 data class BackgroundCell(
     val mapPoint: MapPoint,
-    override val square: Square,
+    override val square: Rectangle,
     val cellType: CellType = CellType.Null,
 ) : SquareWrapper<BackgroundCell>(
     square = square,
