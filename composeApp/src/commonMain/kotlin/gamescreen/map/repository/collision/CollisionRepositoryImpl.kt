@@ -68,7 +68,9 @@ class CollisionRepositoryImpl : CollisionRepository {
                     )
                 }
 
-            is CellType.BridgeLeftUnder -> {
+            is CellType.BridgeLeftTop,
+            is CellType.BridgeLeftUnder,
+            -> {
                 square.run {
                     listOf(
                         ConvexPolygon(
@@ -84,7 +86,9 @@ class CollisionRepositoryImpl : CollisionRepository {
                 }
             }
 
-            is CellType.BridgeRightUnder -> {
+            is CellType.BridgeRightTop,
+            is CellType.BridgeRightUnder,
+            -> {
                 square.run {
                     listOf(
                         ConvexPolygon(
@@ -100,7 +104,9 @@ class CollisionRepositoryImpl : CollisionRepository {
                 }
             }
 
-            is CellType.Bridge -> {
+            is CellType.BridgeCenterTop,
+            is CellType.BridgeCenterBottom,
+            -> {
                 square.run {
                     listOf(
                         ConvexPolygon(
