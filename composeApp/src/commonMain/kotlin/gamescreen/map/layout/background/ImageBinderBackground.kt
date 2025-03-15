@@ -25,6 +25,8 @@ import rpgengine.composeapp.generated.resources.ob_01_11
 import rpgengine.composeapp.generated.resources.ob_01_12
 import rpgengine.composeapp.generated.resources.ob_98_0
 import rpgengine.composeapp.generated.resources.ob_98_1
+import rpgengine.composeapp.generated.resources.橋_上
+import rpgengine.composeapp.generated.resources.橋_下
 
 class ImageBinderBackground : KoinComponent {
     private val decideConnectTypeUseCase: DecideConnectTypeUseCase by inject()
@@ -42,6 +44,7 @@ class ImageBinderBackground : KoinComponent {
         return when (imgId) {
             CellType.Glass,
             CellType.BridgeLeftUnder,
+            CellType.BridgeLeftTop,
             CellType.BridgeRightUnder,
             CellType.Bridge,
             -> Res.drawable.bg_00
@@ -95,6 +98,9 @@ class ImageBinderBackground : KoinComponent {
                     Res.drawable.ob_98_0
                 }
             }
+
+            CellType.BridgeLeftUnder -> Res.drawable.橋_下
+            CellType.BridgeLeftTop -> Res.drawable.橋_上
         }
     }
 }

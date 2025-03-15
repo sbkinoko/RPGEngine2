@@ -126,7 +126,7 @@ class NonLoopMap : MapData() {
             arrayOf(
                 CellType.Water,
                 CellType.Glass,
-                CellType.BridgeLeftUnder,
+                CellType.BridgeLeftTop,
                 CellType.Bridge,
                 CellType.Bridge,
                 CellType.BridgeRightUnder,
