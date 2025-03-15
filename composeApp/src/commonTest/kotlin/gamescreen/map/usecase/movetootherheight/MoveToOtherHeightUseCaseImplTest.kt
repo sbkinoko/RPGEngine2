@@ -138,8 +138,8 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             val player = playerPositionRepository.getPlayerPosition().run {
                 copy(
                     square = square.moveTo(
-                        x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.size,
-                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.size / 2,
+                        x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.width,
+                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.height / 2,
                     ),
                     tentativeVelocity = Velocity(
                         x = 1f,
@@ -166,8 +166,8 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             val player = playerPositionRepository.getPlayerPosition().run {
                 copy(
                     square = square.moveTo(
-                        x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.size,
-                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 2 - square.size / 2,
+                        x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.width,
+                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 2 - square.height / 2,
                     ),
                     tentativeVelocity = Velocity(
                         x = 1f,
@@ -194,8 +194,8 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             val player = playerPositionRepository.getPlayerPosition().run {
                 copy(
                     square = square.moveTo(
-                        x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.size,
-                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 * 2 - square.size / 2,
+                        x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.width,
+                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 * 2 - square.height / 2,
                     ),
                     tentativeVelocity = Velocity(
                         x = 1f,
@@ -222,7 +222,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             val player = playerPositionRepository.getPlayerPosition().run {
                 copy(
                     square = square.moveTo(
-                        x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.size / 2,
+                        x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.width / 2,
                         y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 * 2.toFloat(),
                     ),
                     tentativeVelocity = Velocity(
@@ -250,7 +250,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             val player = playerPositionRepository.getPlayerPosition().run {
                 copy(
                     square = square.moveTo(
-                        x = MapViewModel.VIRTUAL_SCREEN_SIZE / 2 - square.size / 2,
+                        x = MapViewModel.VIRTUAL_SCREEN_SIZE / 2 - square.width / 2,
                         y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 * 2.toFloat(),
                     ),
                     tentativeVelocity = Velocity(
@@ -278,7 +278,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             val player = playerPositionRepository.getPlayerPosition().run {
                 copy(
                     square = square.moveTo(
-                        x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 * 2 - square.size / 2,
+                        x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 * 2 - square.width / 2,
                         y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 * 2.toFloat(),
                     ),
                     tentativeVelocity = Velocity(
@@ -307,7 +307,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 copy(
                     square = square.moveTo(
                         x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 * 2.toFloat(),
-                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 * 2 - square.size / 2,
+                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 * 2 - square.height / 2,
                     ),
                     tentativeVelocity = Velocity(
                         x = -1f,
@@ -335,7 +335,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 copy(
                     square = square.moveTo(
                         x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 * 2.toFloat(),
-                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 2 - square.size / 2,
+                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 2 - square.height / 2,
                     ),
                     tentativeVelocity = Velocity(
                         x = -1f,
@@ -363,7 +363,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 copy(
                     square = square.moveTo(
                         x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 * 2.toFloat(),
-                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.size / 2,
+                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.height / 2,
                     ),
                     tentativeVelocity = Velocity(
                         x = -1f,
@@ -390,8 +390,8 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             val player = playerPositionRepository.getPlayerPosition().run {
                 copy(
                     square = square.moveTo(
-                        x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 * 2.toFloat() - square.size / 2,
-                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.size,
+                        x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 * 2.toFloat() - square.width / 2,
+                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.height,
                     ),
                     tentativeVelocity = Velocity(
                         y = 1f,
@@ -418,8 +418,8 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             val player = playerPositionRepository.getPlayerPosition().run {
                 copy(
                     square = square.moveTo(
-                        x = MapViewModel.VIRTUAL_SCREEN_SIZE / 2 - square.size / 2,
-                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.size,
+                        x = MapViewModel.VIRTUAL_SCREEN_SIZE / 2 - square.width / 2,
+                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.height,
                     ),
                     tentativeVelocity = Velocity(
                         y = 1f,
@@ -446,8 +446,8 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             val player = playerPositionRepository.getPlayerPosition().run {
                 copy(
                     square = square.moveTo(
-                        x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.size / 2,
-                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.size,
+                        x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.width / 2,
+                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.height,
                     ),
                     tentativeVelocity = Velocity(
                         y = 1f,
