@@ -17,13 +17,13 @@ interface ShapeCollisionDetect {
      * 別の四角形と重なっているかどうかをチェック
      */
     fun isOverlap(other: ShapeCollisionDetect): Boolean {
-        //　高さが同じなら衝突しない
-        if (other.objectHeight == this.objectHeight &&
-            // ただし、Noneの場合は判定する
-            other.objectHeight != ObjectHeight.None &&
-            objectHeight != ObjectHeight.None
-        ) {
-            return false
+        val otherHeight = other.objectHeight
+        val thisHeight = this.objectHeight
+
+        if (otherHeight::class == thisHeight::class) {
+            if (otherHeight.height != thisHeight.height) {
+                return false
+            }
         }
 
         // fixme 四角形同士の場合は簡略化したい

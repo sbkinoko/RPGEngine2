@@ -27,7 +27,7 @@ class EventCollisionRepositoryImpl : EventCollisionRepository {
                         y = y,
                         size = width,
                         eventType = EventType.Box(BoxId.Box1),
-                        objectHeight = ObjectHeight.Water,
+                        objectHeight = ObjectHeight.Water(1),
                     )
                 )
             }

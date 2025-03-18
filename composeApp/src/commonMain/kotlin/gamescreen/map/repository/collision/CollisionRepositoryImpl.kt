@@ -30,7 +30,7 @@ class CollisionRepositoryImpl : CollisionRepository {
                             y = y,
                             size = width,
                             eventType = EventType.Water,
-                            objectHeight = ObjectHeight.Water,
+                            objectHeight = ObjectHeight.Water(0),
                         )
                     )
                 }
@@ -43,7 +43,7 @@ class CollisionRepositoryImpl : CollisionRepository {
                             y = y,
                             size = width,
                             eventType = EventType.Ground,
-                            objectHeight = ObjectHeight.Ground,
+                            objectHeight = ObjectHeight.Ground(0),
                         )
                     )
                 }
@@ -63,7 +63,7 @@ class CollisionRepositoryImpl : CollisionRepository {
                             } else {
                                 EventType.None
                             },
-                            objectHeight = ObjectHeight.GroundObject,
+                            objectHeight = ObjectHeight.Ground(1),
                         )
                     )
                 }
@@ -76,12 +76,21 @@ class CollisionRepositoryImpl : CollisionRepository {
                         ConvexPolygon(
                             baseX = x,
                             baseY = y,
-                            objectHeight = ObjectHeight.GroundObject,
+                            objectHeight = ObjectHeight.Ground(1),
                             Point(0f, height),
                             Point(width * 0.1f, height),
                             Point(width, height * 0.5f),
                             Point(width, height * 0.6f),
-                        )
+                        ),
+                        ConvexPolygon(
+                            baseX = x,
+                            baseY = y,
+                            objectHeight = ObjectHeight.Ground(2),
+                            Point(0f, height),
+                            Point(width * 0.1f, height),
+                            Point(width, height * 0.5f),
+                            Point(width, height * 0.6f),
+                        ),
                     )
                 }
             }
@@ -94,12 +103,21 @@ class CollisionRepositoryImpl : CollisionRepository {
                         ConvexPolygon(
                             baseX = x,
                             baseY = y,
-                            objectHeight = ObjectHeight.GroundObject,
+                            objectHeight = ObjectHeight.Ground(1),
                             Point(0f, height * 0.5f),
                             Point(0f, height * 0.6f),
                             Point(width, height),
                             Point(width * 0.9f, height),
-                        )
+                        ),
+                        ConvexPolygon(
+                            baseX = x,
+                            baseY = y,
+                            objectHeight = ObjectHeight.Ground(2),
+                            Point(0f, height * 0.5f),
+                            Point(0f, height * 0.6f),
+                            Point(width, height),
+                            Point(width * 0.9f, height),
+                        ),
                     )
                 }
             }
@@ -112,7 +130,7 @@ class CollisionRepositoryImpl : CollisionRepository {
                         ConvexPolygon(
                             baseX = x,
                             baseY = y,
-                            objectHeight = ObjectHeight.GroundObject,
+                            objectHeight = ObjectHeight.Ground(2),
                             Point(0f, height * 0.5f),
                             Point(0f, height * 0.6f),
                             Point(width, height * 0.5f),
