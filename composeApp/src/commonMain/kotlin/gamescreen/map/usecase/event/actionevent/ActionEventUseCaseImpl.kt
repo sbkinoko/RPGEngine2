@@ -72,7 +72,7 @@ class ActionEventUseCaseImpl(
                 )
                 CoroutineScope(Dispatchers.Default).launch {
                     moveToOtherHeightUseCase.invoke(
-                        targetHeight = ObjectHeight.Water,
+                        targetHeight = ObjectHeight.Water(1),
                     )
                 }
             }
@@ -86,7 +86,7 @@ class ActionEventUseCaseImpl(
                 )
                 CoroutineScope(Dispatchers.Default).launch {
                     moveToOtherHeightUseCase.invoke(
-                        targetHeight = ObjectHeight.Ground,
+                        targetHeight = ObjectHeight.Ground(1),
                     )
                 }
             }

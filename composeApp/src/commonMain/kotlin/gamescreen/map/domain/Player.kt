@@ -17,7 +17,7 @@ data class Player(
         size = size,
         square = NormalSquare(
             size = size,
-            objectHeight = ObjectHeight.Ground,
+            objectHeight = ObjectHeight.Ground(1),
         ),
         actualVelocity = Velocity(
             0f,
