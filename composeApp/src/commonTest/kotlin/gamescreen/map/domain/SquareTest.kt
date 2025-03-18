@@ -257,7 +257,7 @@ class SquareTest {
             square = NormalSquare(
                 point = Point(128.06143f, 133.4598f),
                 size = 42f,
-                objectHeight = ObjectHeight.Water,
+                objectHeight = ObjectHeight.Water(0),
             ),
             eventType = EventType.Water,
         )

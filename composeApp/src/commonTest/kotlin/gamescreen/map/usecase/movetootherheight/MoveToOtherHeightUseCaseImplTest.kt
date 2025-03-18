@@ -99,13 +99,13 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
     @Test
     fun isInWater() {
         runBlocking {
-            val targetHeight = ObjectHeight.Water
+            val targetHeight = ObjectHeight.Water(1)
             moveToOtherHeightUseCase.invoke(
                 targetHeight,
             )
 
             assertEquals(
-                expected = ObjectHeight.Water,
+                expected = targetHeight,
                 actual = playerPositionRepository.getPlayerPosition().square.objectHeight
             )
         }
@@ -117,7 +117,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
     @Test
     fun isInGround() {
         runBlocking {
-            val targetHeight = ObjectHeight.Ground
+            val targetHeight = ObjectHeight.Ground(1)
             moveToOtherHeightUseCase.invoke(
                 targetHeight
             )
@@ -151,7 +151,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 player,
             )
 
-            moveToOtherHeightUseCase.invoke(ObjectHeight.Water)
+            moveToOtherHeightUseCase.invoke(ObjectHeight.Water(1))
 
             checkInWater()
         }
@@ -179,7 +179,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 player,
             )
 
-            moveToOtherHeightUseCase.invoke(ObjectHeight.Water)
+            moveToOtherHeightUseCase.invoke(ObjectHeight.Water(1))
 
             checkInWater()
         }
@@ -207,7 +207,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 player,
             )
 
-            moveToOtherHeightUseCase.invoke(ObjectHeight.Water)
+            moveToOtherHeightUseCase.invoke(ObjectHeight.Water(1))
 
             checkInWater()
         }
@@ -235,7 +235,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 player,
             )
 
-            moveToOtherHeightUseCase.invoke(ObjectHeight.Water)
+            moveToOtherHeightUseCase.invoke(ObjectHeight.Water(1))
 
             checkInWater()
         }
@@ -263,7 +263,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 player,
             )
 
-            moveToOtherHeightUseCase.invoke(ObjectHeight.Water)
+            moveToOtherHeightUseCase.invoke(ObjectHeight.Water(1))
 
             checkInWater()
         }
@@ -291,7 +291,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 player,
             )
 
-            moveToOtherHeightUseCase.invoke(ObjectHeight.Water)
+            moveToOtherHeightUseCase.invoke(ObjectHeight.Water(1))
 
             checkInWater()
         }
@@ -319,7 +319,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 player,
             )
 
-            moveToOtherHeightUseCase.invoke(ObjectHeight.Water)
+            moveToOtherHeightUseCase.invoke(ObjectHeight.Water(1))
 
             checkInWater()
         }
@@ -347,7 +347,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 player,
             )
 
-            moveToOtherHeightUseCase.invoke(ObjectHeight.Water)
+            moveToOtherHeightUseCase.invoke(ObjectHeight.Water(1))
 
             checkInWater()
         }
@@ -375,7 +375,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 player,
             )
 
-            moveToOtherHeightUseCase.invoke(ObjectHeight.Water)
+            moveToOtherHeightUseCase.invoke(ObjectHeight.Water(1))
 
             checkInWater()
         }
@@ -403,7 +403,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 player,
             )
 
-            moveToOtherHeightUseCase.invoke(ObjectHeight.Water)
+            moveToOtherHeightUseCase.invoke(ObjectHeight.Water(1))
 
             checkInWater()
         }
@@ -431,7 +431,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 player,
             )
 
-            moveToOtherHeightUseCase.invoke(ObjectHeight.Water)
+            moveToOtherHeightUseCase.invoke(ObjectHeight.Water(1))
 
             checkInWater()
         }
@@ -459,7 +459,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 player,
             )
 
-            moveToOtherHeightUseCase.invoke(ObjectHeight.Water)
+            moveToOtherHeightUseCase.invoke(ObjectHeight.Water(1))
 
             checkInWater()
         }
