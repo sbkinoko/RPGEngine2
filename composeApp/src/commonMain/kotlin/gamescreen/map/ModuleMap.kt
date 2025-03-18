@@ -29,6 +29,8 @@ import gamescreen.map.usecase.battlenormal.StartNormalBattleUseCase
 import gamescreen.map.usecase.battlenormal.StartNormalBattleUseCaseImpl
 import gamescreen.map.usecase.battlestart.StartBattleUseCase
 import gamescreen.map.usecase.battlestart.StartBattleUseCaseImpl
+import gamescreen.map.usecase.changeheight.ChangeHeightUseCase
+import gamescreen.map.usecase.changeheight.ChangeHeightUseCaseImpl
 import gamescreen.map.usecase.collision.geteventtype.GetEventTypeUseCase
 import gamescreen.map.usecase.collision.geteventtype.GetEventTypeUseCaseImpl
 import gamescreen.map.usecase.collision.iscollided.IsCollidedUseCase
@@ -119,6 +121,13 @@ val ModuleMap = module {
             updateCellContainPlayerUseCase = get(),
         )
     }
+
+    single<ChangeHeightUseCase> {
+        ChangeHeightUseCaseImpl(
+            playerPositionRepository = get(),
+        )
+    }
+
 
     single<MoveToOtherHeightUseCase> {
         MoveToOtherHeightUseCaseImpl(
@@ -249,6 +258,7 @@ val ModuleMap = module {
             setShopItemUseCase = get(),
             setTalkUseCase = get(),
             moveToOtherHeightUseCase = get(),
+            playerPositionRepository = get(),
         )
     }
 
