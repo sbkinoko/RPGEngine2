@@ -258,7 +258,7 @@ val ModuleMap = module {
             setShopItemUseCase = get(),
             setTalkUseCase = get(),
             moveToOtherHeightUseCase = get(),
-            playerPositionRepository = get(),
+            changeHeightUseCase = get(),
         )
     }
 
