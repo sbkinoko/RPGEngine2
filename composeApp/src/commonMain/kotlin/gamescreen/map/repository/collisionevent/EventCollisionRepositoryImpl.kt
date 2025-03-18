@@ -31,6 +31,18 @@ class EventCollisionRepositoryImpl : EventCollisionRepository {
                     )
                 )
             }
+
+            CellType.BridgeLeftUnder -> square.run {
+                listOf(
+                    EventSquare(
+                        x = x,
+                        y = y,
+                        size = width,
+                        eventType = EventType.Ground2,
+                        objectHeight = ObjectHeight.None,
+                    )
+                )
+            }
         }
     }
 }

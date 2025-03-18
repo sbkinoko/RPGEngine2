@@ -43,7 +43,7 @@ sealed class CellType {
     data object GlassEvent : CellType(), EventObject
 
     data object BridgeLeftTop : CellType(), CollisionCell, ObjectCell
-    data object BridgeLeftUnder : CellType(), CollisionCell, ObjectCell
+    data object BridgeLeftUnder : CellType(), CollisionCell, ObjectCell, EventObject
     data object BridgeRightTop : CellType(), CollisionCell, ObjectCell
     data object BridgeRightUnder : CellType(), CollisionCell, ObjectCell
     data object BridgeCenterTop : CellType(), CollisionCell, ObjectCell
