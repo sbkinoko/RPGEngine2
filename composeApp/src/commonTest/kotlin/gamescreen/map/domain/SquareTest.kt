@@ -16,10 +16,8 @@ class SquareTest {
         val dy = 1f
 
         NormalSquare(
-            point = Point(
-                x = 0f,
-                y = 0f,
-            ),
+            x = 0f,
+            y = 0f,
             size = SIZE,
         ).move(
             dx = dx,
@@ -52,10 +50,8 @@ class SquareTest {
         val size = SIZE * 2
 
         NormalSquare(
-            point = Point(
-                x = x,
-                y = y,
-            ),
+            x = x,
+            y = y,
             size = size,
         ).move(
             dx = dx,
@@ -84,10 +80,8 @@ class SquareTest {
     @Test
     fun side() {
         val square = NormalSquare(
-            point = Point(
-                x = 10f,
-                y = 15f,
-            ),
+            x = 10f,
+            y = 15f,
             size = SIZE,
         )
 
@@ -231,12 +225,14 @@ class SquareTest {
     @Test
     fun isOverlapTop1() {
         val baseSquare = NormalSquare(
-            point = Point(10f, 10f),
+            x = 10f,
+            y = 10f,
             size = 10f
         )
 
         val upSquare1 = NormalSquare(
-            point = Point(10f, 0f),
+            x = 10f,
+            y = 0f,
             size = 10f,
         )
         assertTrue { baseSquare.isOverlap(upSquare1) }
@@ -255,7 +251,8 @@ class SquareTest {
     fun isOverlapTop2() {
         val largeSquare = EventSquare(
             square = NormalSquare(
-                point = Point(128.06143f, 133.4598f),
+                x = 128.06143f,
+                y = 133.4598f,
                 size = 42f,
                 objectHeight = ObjectHeight.Water(0),
             ),
@@ -263,7 +260,8 @@ class SquareTest {
         )
 
         val baseSquare = NormalSquare(
-            point = Point(135.1815f, 119.99265f),
+            x = 135.1815f,
+            y = 119.99265f,
             size = 20f,
         )
 
@@ -276,12 +274,14 @@ class SquareTest {
     @Test
     fun isOverlapBottom() {
         val baseSquare = NormalSquare(
-            point = Point(10f, 10f),
-            size = 10f
+            x = 10f,
+            y = 10f,
+            size = 10f,
         )
 
         val upSquare1 = NormalSquare(
-            point = Point(10f, 20f),
+            x = 10f,
+            y = 20f,
             size = 10f,
         )
         assertTrue { baseSquare.isOverlap(upSquare1) }
@@ -299,12 +299,14 @@ class SquareTest {
     @Test
     fun isOverlapLeft() {
         val baseSquare = NormalSquare(
-            point = Point(10f, 10f),
+            x = 10f,
+            y = 10f,
             size = 10f
         )
 
         val upSquare1 = NormalSquare(
-            point = Point(0f, 10f),
+            x = 0f,
+            y = 10f,
             size = 10f,
         )
         assertTrue { baseSquare.isOverlap(upSquare1) }
@@ -319,12 +321,14 @@ class SquareTest {
     @Test
     fun isOverlapRight() {
         val baseSquare = NormalSquare(
-            point = Point(10f, 10f),
+            x = 10f,
+            y = 10f,
             size = 10f
         )
 
         val upSquare1 = NormalSquare(
-            point = Point(20f, 10f),
+            x = 20f,
+            y = 10f,
             size = 10f,
         )
         assertTrue { baseSquare.isOverlap(upSquare1) }
@@ -335,7 +339,6 @@ class SquareTest {
         assertFalse { baseSquare.isOverlap(square2) }
         assertFalse { square2.isOverlap(baseSquare) }
     }
-
 
     companion object {
         private const val SIZE = 10f

@@ -8,9 +8,10 @@ import gamescreen.map.domain.move
 //fixme デフォルト値削除
 //fixme このコンストラクタを利用している物は修正
 data class NormalSquare(
-    val point: Point = Point(),
-    val size: Float,
-    override val objectHeight: ObjectHeight = ObjectHeight.None,
+    val point: Point,
+    override val width: Float,
+    override val height: Float,
+    override val objectHeight: ObjectHeight,
 ) : ShapeCollisionDetect,
     Rectangle {
 
@@ -24,15 +25,27 @@ data class NormalSquare(
             x = x,
             y = y,
         ),
-        size = size,
+        width = size,
+        height = size,
         objectHeight = objectHeight,
     )
 
-    override val width: Float
-        get() = size
+    constructor(
+        x: Float,
+        y: Float,
+        width: Float,
+        height: Float,
+        objectHeight: ObjectHeight = ObjectHeight.None,
+    ) : this(
+        point = Point(
+            x = x,
+            y = y,
+        ),
+        width = width,
+        height = height,
+        objectHeight = objectHeight,
+    )
 
-    override val height: Float
-        get() = size
 
     override val x: Float
         get() = point.x
@@ -44,13 +57,13 @@ data class NormalSquare(
         get() = point.x
 
     override val rightSide: Float
-        get() = point.x + size
+        get() = point.x + width
 
     override val topSide: Float
         get() = point.y
 
     override val bottomSide: Float
-        get() = point.y + size
+        get() = point.y + height
 
     override fun move(
         dx: Float,

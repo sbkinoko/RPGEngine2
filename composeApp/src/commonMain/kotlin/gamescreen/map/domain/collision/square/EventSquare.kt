@@ -27,6 +27,23 @@ data class EventSquare(
         ),
     )
 
+    constructor(
+        x: Float = 0f,
+        y: Float = 0f,
+        width: Float,
+        height: Float,
+        eventType: EventType,
+        objectHeight: ObjectHeight,
+    ) : this(
+        eventType = eventType,
+        square = NormalSquare(
+            x = x,
+            y = y,
+            width = width,
+            height = height, objectHeight = objectHeight,
+        ),
+    )
+
     override fun move(dx: Float, dy: Float): EventSquare {
         return this.copy(
             square = square.move(
