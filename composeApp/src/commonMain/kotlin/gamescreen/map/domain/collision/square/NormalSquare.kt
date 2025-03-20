@@ -5,8 +5,6 @@ import gamescreen.map.domain.Point
 import gamescreen.map.domain.collision.ShapeCollisionDetect
 import gamescreen.map.domain.move
 
-//fixme デフォルト値削除
-//fixme このコンストラクタを利用している物は修正
 data class NormalSquare(
     val point: Point,
     override val width: Float,
@@ -16,8 +14,8 @@ data class NormalSquare(
     Rectangle {
 
     constructor(
-        x: Float,
-        y: Float,
+        x: Float = 0f,
+        y: Float = 0f,
         size: Float,
         objectHeight: ObjectHeight = ObjectHeight.None,
     ) : this(
@@ -31,8 +29,8 @@ data class NormalSquare(
     )
 
     constructor(
-        x: Float,
-        y: Float,
+        x: Float = 0f,
+        y: Float = 0f,
         width: Float,
         height: Float,
         objectHeight: ObjectHeight = ObjectHeight.None,
@@ -45,7 +43,6 @@ data class NormalSquare(
         height = height,
         objectHeight = objectHeight,
     )
-
 
     override val x: Float
         get() = point.x
