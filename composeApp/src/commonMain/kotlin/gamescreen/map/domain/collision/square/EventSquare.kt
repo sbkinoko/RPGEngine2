@@ -40,7 +40,8 @@ data class EventSquare(
             x = x,
             y = y,
             width = width,
-            height = height, objectHeight = objectHeight,
+            height = height,
+            objectHeight = objectHeight,
         ),
     )
 
