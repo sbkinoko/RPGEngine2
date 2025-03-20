@@ -1,6 +1,6 @@
 package gamescreen.map.domain
 
-import gamescreen.map.domain.collision.square.NormalSquare
+import gamescreen.map.domain.collision.square.NormalRectangle
 import gamescreen.map.domain.collision.triangle.ConvexPolygon
 import kotlin.test.Test
 import kotlin.test.assertFalse
@@ -20,7 +20,7 @@ class ConvexPolygonTest {
 
     @Test
     fun checkRightTriangleCollide1() {
-        val square = NormalSquare(
+        val square = NormalRectangle(
             size = 2f,
             x = 9f,
             y = 14f,
@@ -37,7 +37,7 @@ class ConvexPolygonTest {
 
     @Test
     fun checkRightTriangleCollide2() {
-        val square = NormalSquare(
+        val square = NormalRectangle(
             size = 2f,
             x = 14f,
             y = 19f,
@@ -54,7 +54,7 @@ class ConvexPolygonTest {
 
     @Test
     fun checkRightTriangleCollide3() {
-        val square = NormalSquare(
+        val square = NormalRectangle(
             size = 2f,
             x = 14f,
             y = 14f,
@@ -71,7 +71,7 @@ class ConvexPolygonTest {
 
     @Test
     fun checkRightTriangleNotCollide() {
-        val square = NormalSquare(
+        val square = NormalRectangle(
             size = 2f,
             x = 12f,
             y = 15f,
@@ -99,7 +99,7 @@ class ConvexPolygonTest {
 
     @Test
     fun checkTriangleNotCollide1() {
-        val square = NormalSquare(
+        val square = NormalRectangle(
             size = 2f,
             x = 8.9f,
             y = 16f,
@@ -115,7 +115,7 @@ class ConvexPolygonTest {
 
     @Test
     fun checkTriangleCollide1() {
-        val square = NormalSquare(
+        val square = NormalRectangle(
             size = 2f,
             x = 9f,
             y = 16f,
@@ -131,7 +131,7 @@ class ConvexPolygonTest {
 
     @Test
     fun checkTriangleCollide2() {
-        val square = NormalSquare(
+        val square = NormalRectangle(
             size = 2f,
             x = 12f,
             y = 16f,
@@ -147,7 +147,7 @@ class ConvexPolygonTest {
 
     @Test
     fun checkTriangleNotCollide2() {
-        val square = NormalSquare(
+        val square = NormalRectangle(
             size = 2f,
             x = 12.1f,
             y = 16f,
@@ -163,7 +163,7 @@ class ConvexPolygonTest {
 
     @Test
     fun checkTriangleCollide3() {
-        val square = NormalSquare(
+        val square = NormalRectangle(
             size = 2f,
             x = 18f,
             y = 16f,
@@ -179,7 +179,7 @@ class ConvexPolygonTest {
 
     @Test
     fun checkTriangleCollide4() {
-        val square = NormalSquare(
+        val square = NormalRectangle(
             size = 2f,
             x = 14f,
             y = 19f,

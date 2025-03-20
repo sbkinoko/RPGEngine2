@@ -38,7 +38,7 @@ class IsCollidedUseCaseImpl(
             }
 
         npcRepository.npcStateFlow.value.forEach { npc ->
-            npc.eventSquare.let {
+            npc.eventRectangle.let {
                 if (it.isOverlap(playerSquare)
                 ) {
                     return true

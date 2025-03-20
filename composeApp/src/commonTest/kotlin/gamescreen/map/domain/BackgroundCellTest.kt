@@ -1,7 +1,7 @@
 package gamescreen.map.domain
 
 import gamescreen.map.domain.background.BackgroundCell
-import gamescreen.map.domain.collision.square.NormalSquare
+import gamescreen.map.domain.collision.square.NormalRectangle
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -10,7 +10,7 @@ class BackgroundCellTest {
     private val y = 0f
     private val size = 10f
 
-    private val square = NormalSquare(
+    private val square = NormalRectangle(
         x = x,
         y = y,
         size = size,
@@ -19,7 +19,7 @@ class BackgroundCellTest {
     private val mapPoint = MapPoint()
 
     private val bgCell = BackgroundCell(
-        square = square,
+        rectangle = square,
         mapPoint = mapPoint,
     )
 
@@ -27,7 +27,7 @@ class BackgroundCellTest {
     fun checkSquare() {
         assertEquals(
             expected = square,
-            actual = bgCell.square,
+            actual = bgCell.rectangle,
         )
     }
 

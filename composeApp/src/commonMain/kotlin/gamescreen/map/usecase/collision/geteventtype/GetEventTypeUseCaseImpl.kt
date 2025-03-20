@@ -15,7 +15,7 @@ class GetEventTypeUseCaseImpl(
 ) : GetEventTypeUseCase {
 
     override fun invoke(
-        square: Rectangle,
+        rectangle: Rectangle,
     ): EventType {
         backgroundRepository.backgroundStateFlow.value.fieldData.forEach { rowArray ->
             rowArray.forEach cell@{ cell ->
@@ -30,7 +30,7 @@ class GetEventTypeUseCaseImpl(
 
                 collisionList.forEach shape@{ shape ->
                     // 重なってないので次へ
-                    if (shape.isOverlap(square).not()) {
+                    if (shape.isOverlap(rectangle).not()) {
                         return@shape
                     }
 
@@ -46,8 +46,8 @@ class GetEventTypeUseCaseImpl(
         }
 
         npcRepository.npcStateFlow.value.forEach { npc ->
-            npc.eventSquare.let {
-                if (it.isOverlap(square).not()) {
+            npc.eventRectangle.let {
+                if (it.isOverlap(rectangle).not()) {
                     return@forEach
                 }
 

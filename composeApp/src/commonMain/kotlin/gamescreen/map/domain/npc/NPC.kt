@@ -3,12 +3,12 @@ package gamescreen.map.domain.npc
 import gamescreen.map.domain.MapPoint
 import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.Velocity
-import gamescreen.map.domain.collision.square.EventSquare
+import gamescreen.map.domain.collision.square.EventRectangle
 import values.event.EventType
 
 data class NPC(
     val npcType: NPCType,
-    val eventSquare: EventSquare,
+    val eventRectangle: EventRectangle,
     val mapPoint: MapPoint,
 ) {
     constructor(
@@ -19,7 +19,7 @@ data class NPC(
     ) : this(
         npcType = npcType,
         mapPoint = mapPoint,
-        eventSquare = EventSquare(
+        eventRectangle = EventRectangle(
             eventType = eventType,
             size = size,
             objectHeight = ObjectHeight.Ground(1),
@@ -28,7 +28,7 @@ data class NPC(
 
     fun move(velocity: Velocity): NPC {
         return copy(
-            eventSquare = eventSquare.move(
+            eventRectangle = eventRectangle.move(
                 dx = velocity.x,
                 dy = velocity.y,
             )

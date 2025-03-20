@@ -54,7 +54,7 @@ class ResetBackgroundPositionUseCaseTest : KoinTest {
             x = 0,
             y = 0,
         ).apply {
-            square.apply {
+            rectangle.apply {
                 assertEquals(
                     0f,
                     x,
@@ -92,7 +92,7 @@ class ResetBackgroundPositionUseCaseTest : KoinTest {
                 x = 0,
                 y = 0,
             ).apply {
-                square.apply {
+                rectangle.apply {
                     assertEquals(
                         0f,
                         x,

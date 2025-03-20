@@ -7,7 +7,7 @@ import gamescreen.map.data.NonLoopTestMap
 import gamescreen.map.domain.MapPoint
 import gamescreen.map.domain.background.BackgroundCell
 import gamescreen.map.domain.background.BackgroundData
-import gamescreen.map.domain.collision.square.NormalSquare
+import gamescreen.map.domain.collision.square.NormalRectangle
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -31,7 +31,7 @@ class BackgroundRepositoryImplTest : KoinTest {
         { row ->
             List(3) { col ->
                 BackgroundCell(
-                    square = NormalSquare(
+                    rectangle = NormalRectangle(
                         x = row * 10f,
                         y = col * 10f,
                         size = 10f,

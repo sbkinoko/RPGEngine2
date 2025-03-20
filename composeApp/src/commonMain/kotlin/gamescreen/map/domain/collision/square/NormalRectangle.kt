@@ -5,7 +5,7 @@ import gamescreen.map.domain.Point
 import gamescreen.map.domain.collision.ShapeCollisionDetect
 import gamescreen.map.domain.move
 
-data class NormalSquare(
+data class NormalRectangle(
     val point: Point,
     override val width: Float,
     override val height: Float,
@@ -90,8 +90,8 @@ data class NormalSquare(
         fun smallSquare(
             size: Int,
             rate: Float,
-        ): NormalSquare {
-            return NormalSquare(
+        ): NormalRectangle {
+            return NormalRectangle(
                 x = size * rate,
                 y = size * rate,
                 size = size * (1 - 2 * rate),

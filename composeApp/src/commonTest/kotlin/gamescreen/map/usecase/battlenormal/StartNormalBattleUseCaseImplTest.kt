@@ -9,7 +9,7 @@ import core.usecase.restart.RestartUseCase
 import gamescreen.battle.domain.BattleBackgroundType
 import gamescreen.map.domain.MapPoint
 import gamescreen.map.domain.background.BackgroundCell
-import gamescreen.map.domain.collision.square.NormalSquare
+import gamescreen.map.domain.collision.square.NormalRectangle
 import gamescreen.map.repository.playercell.PlayerCellRepository
 import gamescreen.map.usecase.battledecidemonster.DecideBattleMonsterUseCase
 import gamescreen.map.usecase.battlestart.StartBattleUseCase
@@ -80,7 +80,7 @@ class StartNormalBattleUseCaseImplTest {
                 get() = BackgroundCell(
                     cellType = CellType.Town1O,
                     mapPoint = MapPoint(0, 0),
-                    square = NormalSquare(x = 0f, y = 0f, size = 0f)
+                    rectangle = NormalRectangle(x = 0f, y = 0f, size = 0f)
                 )
                 set(@Suppress("UNUSED_PARAMETER") value) {}
             override val eventCell: BackgroundCell
@@ -109,7 +109,7 @@ class StartNormalBattleUseCaseImplTest {
         val expectedBackgroundCell = BackgroundCell(
             cellType = cellType,
             mapPoint = MapPoint(0, 0),
-            square = NormalSquare(x = 0f, y = 0f, size = 0f)
+            rectangle = NormalRectangle(x = 0f, y = 0f, size = 0f)
         )
         var count = 0
 
@@ -162,7 +162,7 @@ class StartNormalBattleUseCaseImplTest {
         val expectedBackgroundCell = BackgroundCell(
             cellType = cellType,
             mapPoint = MapPoint(0, 0),
-            square = NormalSquare(x = 0f, y = 0f, size = 0f)
+            rectangle = NormalRectangle(x = 0f, y = 0f, size = 0f)
         )
 
         val expectedBackground = cellType.toBattleBackGround()

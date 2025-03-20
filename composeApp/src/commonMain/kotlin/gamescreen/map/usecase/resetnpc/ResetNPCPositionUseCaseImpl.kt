@@ -24,14 +24,14 @@ class ResetNPCPositionUseCaseImpl(
                 val x =
                     MapViewModel.VIRTUAL_SCREEN_SIZE / 2f +
                             (it.mapPoint.x - mapX) * MapViewModel.CELL_SIZE -
-                            it.eventSquare.square.width / 2
+                            it.eventRectangle.rectangle.width / 2
                 val y =
                     MapViewModel.VIRTUAL_SCREEN_SIZE / 2f +
                             (it.mapPoint.y - mapY) * MapViewModel.CELL_SIZE -
-                            it.eventSquare.square.height / 2
+                            it.eventRectangle.rectangle.height / 2
 
                 it.copy(
-                    eventSquare = it.eventSquare.moveTo(
+                    eventRectangle = it.eventRectangle.moveTo(
                         x = x,
                         y = y,
                     )

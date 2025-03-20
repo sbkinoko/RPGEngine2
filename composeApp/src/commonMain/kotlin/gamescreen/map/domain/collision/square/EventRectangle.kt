@@ -4,11 +4,11 @@ import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.collision.EventObject
 import values.event.EventType
 
-data class EventSquare(
+data class EventRectangle(
     override val eventType: EventType,
-    override val square: Rectangle,
-) : SquareWrapper<EventSquare>(
-    square = square,
+    override val rectangle: Rectangle,
+) : RectangleWrapper<EventRectangle>(
+    rectangle = rectangle,
 ), EventObject {
 
     constructor(
@@ -19,7 +19,7 @@ data class EventSquare(
         objectHeight: ObjectHeight,
     ) : this(
         eventType = eventType,
-        square = NormalSquare(
+        rectangle = NormalRectangle(
             x = x,
             y = y,
             size = size,
@@ -36,7 +36,7 @@ data class EventSquare(
         objectHeight: ObjectHeight,
     ) : this(
         eventType = eventType,
-        square = NormalSquare(
+        rectangle = NormalRectangle(
             x = x,
             y = y,
             width = width,
@@ -45,18 +45,18 @@ data class EventSquare(
         ),
     )
 
-    override fun move(dx: Float, dy: Float): EventSquare {
+    override fun move(dx: Float, dy: Float): EventRectangle {
         return this.copy(
-            square = square.move(
+            rectangle = rectangle.move(
                 dx = dx,
                 dy = dy,
             )
         )
     }
 
-    override fun moveTo(x: Float, y: Float): EventSquare {
+    override fun moveTo(x: Float, y: Float): EventRectangle {
         return this.copy(
-            square = square.moveTo(
+            rectangle = rectangle.moveTo(
                 x = x,
                 y = y,
             )

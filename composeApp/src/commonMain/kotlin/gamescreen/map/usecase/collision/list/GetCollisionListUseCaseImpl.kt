@@ -11,7 +11,7 @@ class GetCollisionListUseCaseImpl(
         return backgroundCell.run {
             collisionRepository
                 .collisionData(
-                    square = square,
+                    rectangle = rectangle,
                     cellType = cellType,
                 )
         }

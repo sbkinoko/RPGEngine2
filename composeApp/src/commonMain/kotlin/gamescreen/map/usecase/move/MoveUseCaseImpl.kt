@@ -1,7 +1,7 @@
 package gamescreen.map.usecase.move
 
 import gamescreen.map.domain.Velocity
-import gamescreen.map.domain.collision.square.NormalSquare
+import gamescreen.map.domain.collision.square.NormalRectangle
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.npc.NPCRepository
 import gamescreen.map.repository.player.PlayerPositionRepository
@@ -29,8 +29,8 @@ class MoveUseCaseImpl(
     override suspend fun invoke(
         actualVelocity: Velocity,
         tentativeVelocity: Velocity,
-        fieldSquare: NormalSquare,
-        playerMoveArea: NormalSquare,
+        fieldSquare: NormalRectangle,
+        playerMoveArea: NormalRectangle,
     ) {
         var player = playerPositionRepository.playerPositionStateFlow.value
 

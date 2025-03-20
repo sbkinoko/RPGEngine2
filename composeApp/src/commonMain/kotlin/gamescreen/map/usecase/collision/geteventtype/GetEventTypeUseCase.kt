@@ -5,6 +5,6 @@ import values.event.EventType
 
 interface GetEventTypeUseCase {
     operator fun invoke(
-        square: Rectangle,
+        rectangle: Rectangle,
     ): EventType
 }

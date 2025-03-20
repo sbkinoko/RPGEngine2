@@ -4,7 +4,7 @@ import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.Player
 import gamescreen.map.domain.PlayerDir
 import gamescreen.map.domain.Velocity
-import gamescreen.map.domain.collision.square.NormalSquare
+import gamescreen.map.domain.collision.square.NormalRectangle
 import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.usecase.collision.iscollided.IsCollidedUseCase
 import gamescreen.map.usecase.move.MoveUseCase
@@ -24,7 +24,7 @@ class MoveToOtherHeightUseCaseImpl(
         val player = playerPositionRepository.getPlayerPosition()
 
         val heightUpdatedPlayer = player.copy(
-            square = (player.square as NormalSquare).copy(
+            square = (player.square as NormalRectangle).copy(
                 objectHeight = targetHeight,
             )
         )

@@ -1,6 +1,6 @@
 package gamescreen.map.domain
 
-import gamescreen.map.domain.collision.square.NormalSquare
+import gamescreen.map.domain.collision.square.NormalRectangle
 import gamescreen.map.domain.collision.square.Rectangle
 import gamescreen.map.viewmodel.MapViewModel.Companion.VIRTUAL_PLAYER_SIZE
 import values.event.EventType
@@ -15,7 +15,7 @@ data class Player(
 ) {
     constructor(size: Float) : this(
         size = size,
-        square = NormalSquare(
+        square = NormalRectangle(
             x = 0f,
             y = 0f,
             size = size,
@@ -68,7 +68,7 @@ data class Player(
 
     val eventSquare: Rectangle
         get() {
-            val square = NormalSquare(
+            val square = NormalRectangle(
                 size = size,
                 x = square.x,
                 y = square.y,
