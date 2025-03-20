@@ -97,7 +97,6 @@ class CollisionRepositoryImpl : CollisionRepository {
                     )
                 }
 
-
             is CellType.BridgeLeftUnder -> square.run {
                 listOf(
                     ConvexPolygon(
@@ -178,7 +177,6 @@ class CollisionRepositoryImpl : CollisionRepository {
                     )
                 )
             }
-
 
             is CellType.BridgeCenterTop,
             is CellType.BridgeCenterBottom,
