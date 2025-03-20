@@ -94,24 +94,12 @@ class ActionEventUseCaseImpl(
             }
 
             EventType.Ground1 -> {
-                val textBoxData = TextBoxData(
-                    text = "高さ1にするイベント"
-                )
-                textRepository.push(
-                    textBoxData,
-                )
                 CoroutineScope(Dispatchers.Default).launch {
                     changeHeightUseCase.invoke(ObjectHeight.Ground(1))
                 }
             }
 
             EventType.Ground2 -> {
-                val textBoxData = TextBoxData(
-                    text = "高さ2にするイベント"
-                )
-                textRepository.push(
-                    textBoxData,
-                )
                 CoroutineScope(Dispatchers.Default).launch {
                     changeHeightUseCase.invoke(ObjectHeight.Ground(2))
                 }
