@@ -23,10 +23,11 @@ class UpdateCellContainPlayerUseCase(
             .square
 
         val center = (square as NormalSquare).copy(
-            size = 0f,
+            width = 0f,
+            height = 0f,
             point = square.point.copy(
-                x = square.point.x + square.size / 2,
-                y = square.point.y + square.size / 2,
+                x = square.point.x + square.width / 2,
+                y = square.point.y + square.height / 2,
             )
         )
         // プレイヤーを包含しているセルを保存

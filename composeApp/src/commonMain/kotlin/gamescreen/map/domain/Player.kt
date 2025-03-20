@@ -16,6 +16,8 @@ data class Player(
     constructor(size: Float) : this(
         size = size,
         square = NormalSquare(
+            x = 0f,
+            y = 0f,
             size = size,
             objectHeight = ObjectHeight.Ground(1),
         ),
@@ -68,10 +70,8 @@ data class Player(
         get() {
             val square = NormalSquare(
                 size = size,
-                point = Point(
-                    x = square.x,
-                    y = square.y,
-                ),
+                x = square.x,
+                y = square.y,
                 objectHeight = square.objectHeight,
             )
 
