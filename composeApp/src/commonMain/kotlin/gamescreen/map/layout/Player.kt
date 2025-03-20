@@ -32,7 +32,10 @@ fun Player(
                 x = (player.square.x * screenRatio).pxToDp(),
                 y = (player.square.y * screenRatio).pxToDp(),
             )
-            .size((player.square.width * screenRatio).pxToDp())
+            .size(
+                width = (player.square.width * screenRatio).pxToDp(),
+                height = (player.square.height * screenRatio).pxToDp(),
+            )
             .background(Colors.Player)
             .clickable {
                 mapViewModel.touchCharacter()
@@ -50,7 +53,10 @@ fun Player(
                 x = (player.eventSquare.x * screenRatio).pxToDp(),
                 y = (player.eventSquare.y * screenRatio).pxToDp(),
             )
-            .size((player.eventSquare.width * screenRatio).pxToDp())
+            .size(
+                width = (player.square.width * screenRatio).pxToDp(),
+                height = (player.square.height * screenRatio).pxToDp(),
+            )
             .background(
                 if (player.eventType.canEvent) {
                     Colors.CanEventCollision

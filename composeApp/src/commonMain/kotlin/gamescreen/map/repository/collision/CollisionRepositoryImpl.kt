@@ -28,7 +28,8 @@ class CollisionRepositoryImpl : CollisionRepository {
                         EventSquare(
                             x = x,
                             y = y,
-                            size = width,
+                            width = width,
+                            height = height,
                             eventType = EventType.Water,
                             objectHeight = ObjectHeight.Water(0),
                         )
@@ -41,7 +42,8 @@ class CollisionRepositoryImpl : CollisionRepository {
                         EventSquare(
                             x = x,
                             y = y,
-                            size = width,
+                            width = width,
+                            height = height,
                             eventType = EventType.Ground,
                             objectHeight = ObjectHeight.Ground(0),
                         )
@@ -55,7 +57,8 @@ class CollisionRepositoryImpl : CollisionRepository {
                         EventSquare(
                             x = x + width / 3,
                             y = y + height / 3,
-                            size = width / 3,
+                            width = width / 3,
+                            height = height / 3,
                             eventType = if (cellType.id.hasItem) {
                                 EventType.Box(
                                     id = cellType.id

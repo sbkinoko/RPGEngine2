@@ -25,7 +25,8 @@ class EventCollisionRepositoryImpl : EventCollisionRepository {
                     EventSquare(
                         x = x,
                         y = y,
-                        size = width,
+                        width = width,
+                        height = height,
                         eventType = EventType.Box(BoxId.Box1),
                         objectHeight = ObjectHeight.Water(1),
                     )
@@ -37,7 +38,8 @@ class EventCollisionRepositoryImpl : EventCollisionRepository {
                     EventSquare(
                         x = x,
                         y = y,
-                        size = width,
+                        width = width,
+                        height = height,
                         eventType = EventType.Ground2,
                         objectHeight = ObjectHeight.None,
                     )
