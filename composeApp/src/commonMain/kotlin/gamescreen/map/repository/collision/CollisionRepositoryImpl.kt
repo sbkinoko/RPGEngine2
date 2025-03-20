@@ -22,6 +22,7 @@ class CollisionRepositoryImpl : CollisionRepository {
             return emptyList()
         }
 
+        // fixme 水平方向に反転する処理を作りたい
         return when (cellType) {
             CellType.Water ->
                 square.run {
