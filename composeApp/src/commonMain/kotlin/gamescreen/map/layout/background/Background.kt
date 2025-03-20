@@ -13,6 +13,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
 import common.extension.pxToDp
 import gamescreen.map.domain.background.BackgroundCell
@@ -52,7 +53,8 @@ fun Background(
                     Box(
                         modifier = Modifier
                             .size(
-                                (square.size * screenRatio).pxToDp()
+                                width = (square.width * screenRatio).pxToDp(),
+                                height = (square.height * screenRatio).pxToDp(),
                             )
                             .offset(
                                 x = (square.leftSide * screenRatio).pxToDp(),
@@ -136,7 +138,8 @@ fun CollisionObjects(
             Canvas(
                 modifier = Modifier
                     .size(
-                        (square.size * screenRatio).pxToDp()
+                        width = (square.width * screenRatio).pxToDp(),
+                        height = (square.height * screenRatio).pxToDp(),
                     )
                     .offset(
                         x = (it.baseX * screenRatio).pxToDp(),
@@ -148,6 +151,7 @@ fun CollisionObjects(
                             screenRatio,
                         ),
                         color = Colors.CollisionColor,
+                        style = Stroke(width = 10f),
                     )
                 }
             )

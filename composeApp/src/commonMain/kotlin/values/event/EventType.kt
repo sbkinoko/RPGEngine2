@@ -7,13 +7,16 @@ sealed class EventType {
         val shopId: ShopId,
     ) : EventType()
 
-    class Box(
+    data class Box(
         val id: BoxId,
     ) : EventType()
 
     data object Water : EventType()
 
     data object Ground : EventType()
+
+    data object Ground1 : EventType()
+    data object Ground2 : EventType()
 
     val canEvent: Boolean
         get() = this != None

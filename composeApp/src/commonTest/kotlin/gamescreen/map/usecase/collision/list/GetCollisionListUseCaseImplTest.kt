@@ -5,7 +5,7 @@ import gamescreen.map.domain.MapPoint
 import gamescreen.map.domain.background.BackgroundCell
 import gamescreen.map.domain.collision.ShapeCollisionDetect
 import gamescreen.map.domain.collision.square.NormalSquare
-import gamescreen.map.domain.collision.square.Square
+import gamescreen.map.domain.collision.square.Rectangle
 import gamescreen.map.repository.collision.CollisionRepository
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -60,7 +60,7 @@ class GetCollisionListUseCaseImplTest {
         val collisionRepository = object : CollisionRepository {
             override fun collisionData(
                 cellType: CellType,
-                square: Square,
+                square: Rectangle,
             ): List<ShapeCollisionDetect> {
                 assertEquals(
                     expected = cellTypeValue,

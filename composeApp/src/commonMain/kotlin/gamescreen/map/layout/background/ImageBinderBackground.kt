@@ -25,6 +25,12 @@ import rpgengine.composeapp.generated.resources.ob_01_11
 import rpgengine.composeapp.generated.resources.ob_01_12
 import rpgengine.composeapp.generated.resources.ob_98_0
 import rpgengine.composeapp.generated.resources.ob_98_1
+import rpgengine.composeapp.generated.resources.ob_bridge_center_bottom
+import rpgengine.composeapp.generated.resources.ob_bridge_center_top
+import rpgengine.composeapp.generated.resources.ob_bridge_right_bottom
+import rpgengine.composeapp.generated.resources.ob_bridge_right_top
+import rpgengine.composeapp.generated.resources.橋_上
+import rpgengine.composeapp.generated.resources.橋_下
 
 class ImageBinderBackground : KoinComponent {
     private val decideConnectTypeUseCase: DecideConnectTypeUseCase by inject()
@@ -40,7 +46,16 @@ class ImageBinderBackground : KoinComponent {
         val imgId = aroundCellId[1][1]
 
         return when (imgId) {
-            CellType.Glass -> Res.drawable.bg_00
+            CellType.Glass,
+            CellType.GlassEvent,
+            CellType.BridgeLeftTop,
+            CellType.BridgeLeftUnder,
+            CellType.BridgeRightTop,
+            CellType.BridgeRightUnder,
+            CellType.BridgeCenterTop,
+            CellType.BridgeCenterBottom,
+            -> Res.drawable.bg_00
+
             CellType.Water -> Res.drawable.bg_02
             CellType.Town1I, CellType.Town1O -> Res.drawable.bg_20
             CellType.Road -> {
@@ -90,6 +105,13 @@ class ImageBinderBackground : KoinComponent {
                     Res.drawable.ob_98_0
                 }
             }
+
+            CellType.BridgeLeftUnder -> Res.drawable.橋_下
+            CellType.BridgeLeftTop -> Res.drawable.橋_上
+            CellType.BridgeRightUnder -> Res.drawable.ob_bridge_right_bottom
+            CellType.BridgeRightTop -> Res.drawable.ob_bridge_right_top
+            CellType.BridgeCenterBottom -> Res.drawable.ob_bridge_center_bottom
+            CellType.BridgeCenterTop -> Res.drawable.ob_bridge_center_top
         }
     }
 }

@@ -99,13 +99,13 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
     @Test
     fun isInWater() {
         runBlocking {
-            val targetHeight = ObjectHeight.Water
+            val targetHeight = ObjectHeight.Water(1)
             moveToOtherHeightUseCase.invoke(
                 targetHeight,
             )
 
             assertEquals(
-                expected = ObjectHeight.Water,
+                expected = targetHeight,
                 actual = playerPositionRepository.getPlayerPosition().square.objectHeight
             )
         }
@@ -117,7 +117,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
     @Test
     fun isInGround() {
         runBlocking {
-            val targetHeight = ObjectHeight.Ground
+            val targetHeight = ObjectHeight.Ground(1)
             moveToOtherHeightUseCase.invoke(
                 targetHeight
             )
@@ -138,8 +138,8 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             val player = playerPositionRepository.getPlayerPosition().run {
                 copy(
                     square = square.moveTo(
-                        x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.size,
-                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.size / 2,
+                        x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.width,
+                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.height / 2,
                     ),
                     tentativeVelocity = Velocity(
                         x = 1f,
@@ -151,7 +151,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 player,
             )
 
-            moveToOtherHeightUseCase.invoke(ObjectHeight.Water)
+            moveToOtherHeightUseCase.invoke(ObjectHeight.Water(1))
 
             checkInWater()
         }
@@ -166,8 +166,8 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             val player = playerPositionRepository.getPlayerPosition().run {
                 copy(
                     square = square.moveTo(
-                        x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.size,
-                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 2 - square.size / 2,
+                        x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.width,
+                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 2 - square.height / 2,
                     ),
                     tentativeVelocity = Velocity(
                         x = 1f,
@@ -179,7 +179,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 player,
             )
 
-            moveToOtherHeightUseCase.invoke(ObjectHeight.Water)
+            moveToOtherHeightUseCase.invoke(ObjectHeight.Water(1))
 
             checkInWater()
         }
@@ -194,8 +194,8 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             val player = playerPositionRepository.getPlayerPosition().run {
                 copy(
                     square = square.moveTo(
-                        x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.size,
-                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 * 2 - square.size / 2,
+                        x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.width,
+                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 * 2 - square.height / 2,
                     ),
                     tentativeVelocity = Velocity(
                         x = 1f,
@@ -207,7 +207,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 player,
             )
 
-            moveToOtherHeightUseCase.invoke(ObjectHeight.Water)
+            moveToOtherHeightUseCase.invoke(ObjectHeight.Water(1))
 
             checkInWater()
         }
@@ -222,7 +222,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             val player = playerPositionRepository.getPlayerPosition().run {
                 copy(
                     square = square.moveTo(
-                        x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.size / 2,
+                        x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.width / 2,
                         y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 * 2.toFloat(),
                     ),
                     tentativeVelocity = Velocity(
@@ -235,7 +235,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 player,
             )
 
-            moveToOtherHeightUseCase.invoke(ObjectHeight.Water)
+            moveToOtherHeightUseCase.invoke(ObjectHeight.Water(1))
 
             checkInWater()
         }
@@ -250,7 +250,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             val player = playerPositionRepository.getPlayerPosition().run {
                 copy(
                     square = square.moveTo(
-                        x = MapViewModel.VIRTUAL_SCREEN_SIZE / 2 - square.size / 2,
+                        x = MapViewModel.VIRTUAL_SCREEN_SIZE / 2 - square.width / 2,
                         y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 * 2.toFloat(),
                     ),
                     tentativeVelocity = Velocity(
@@ -263,7 +263,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 player,
             )
 
-            moveToOtherHeightUseCase.invoke(ObjectHeight.Water)
+            moveToOtherHeightUseCase.invoke(ObjectHeight.Water(1))
 
             checkInWater()
         }
@@ -278,7 +278,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             val player = playerPositionRepository.getPlayerPosition().run {
                 copy(
                     square = square.moveTo(
-                        x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 * 2 - square.size / 2,
+                        x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 * 2 - square.width / 2,
                         y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 * 2.toFloat(),
                     ),
                     tentativeVelocity = Velocity(
@@ -291,7 +291,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 player,
             )
 
-            moveToOtherHeightUseCase.invoke(ObjectHeight.Water)
+            moveToOtherHeightUseCase.invoke(ObjectHeight.Water(1))
 
             checkInWater()
         }
@@ -307,7 +307,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 copy(
                     square = square.moveTo(
                         x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 * 2.toFloat(),
-                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 * 2 - square.size / 2,
+                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 * 2 - square.height / 2,
                     ),
                     tentativeVelocity = Velocity(
                         x = -1f,
@@ -319,7 +319,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 player,
             )
 
-            moveToOtherHeightUseCase.invoke(ObjectHeight.Water)
+            moveToOtherHeightUseCase.invoke(ObjectHeight.Water(1))
 
             checkInWater()
         }
@@ -335,7 +335,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 copy(
                     square = square.moveTo(
                         x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 * 2.toFloat(),
-                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 2 - square.size / 2,
+                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 2 - square.height / 2,
                     ),
                     tentativeVelocity = Velocity(
                         x = -1f,
@@ -347,7 +347,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 player,
             )
 
-            moveToOtherHeightUseCase.invoke(ObjectHeight.Water)
+            moveToOtherHeightUseCase.invoke(ObjectHeight.Water(1))
 
             checkInWater()
         }
@@ -363,7 +363,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 copy(
                     square = square.moveTo(
                         x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 * 2.toFloat(),
-                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.size / 2,
+                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.height / 2,
                     ),
                     tentativeVelocity = Velocity(
                         x = -1f,
@@ -375,7 +375,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 player,
             )
 
-            moveToOtherHeightUseCase.invoke(ObjectHeight.Water)
+            moveToOtherHeightUseCase.invoke(ObjectHeight.Water(1))
 
             checkInWater()
         }
@@ -390,8 +390,8 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             val player = playerPositionRepository.getPlayerPosition().run {
                 copy(
                     square = square.moveTo(
-                        x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 * 2.toFloat() - square.size / 2,
-                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.size,
+                        x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 * 2.toFloat() - square.width / 2,
+                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.height,
                     ),
                     tentativeVelocity = Velocity(
                         y = 1f,
@@ -403,7 +403,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 player,
             )
 
-            moveToOtherHeightUseCase.invoke(ObjectHeight.Water)
+            moveToOtherHeightUseCase.invoke(ObjectHeight.Water(1))
 
             checkInWater()
         }
@@ -418,8 +418,8 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             val player = playerPositionRepository.getPlayerPosition().run {
                 copy(
                     square = square.moveTo(
-                        x = MapViewModel.VIRTUAL_SCREEN_SIZE / 2 - square.size / 2,
-                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.size,
+                        x = MapViewModel.VIRTUAL_SCREEN_SIZE / 2 - square.width / 2,
+                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.height,
                     ),
                     tentativeVelocity = Velocity(
                         y = 1f,
@@ -431,7 +431,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 player,
             )
 
-            moveToOtherHeightUseCase.invoke(ObjectHeight.Water)
+            moveToOtherHeightUseCase.invoke(ObjectHeight.Water(1))
 
             checkInWater()
         }
@@ -446,8 +446,8 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             val player = playerPositionRepository.getPlayerPosition().run {
                 copy(
                     square = square.moveTo(
-                        x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.size / 2,
-                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.size,
+                        x = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.width / 2,
+                        y = MapViewModel.VIRTUAL_SCREEN_SIZE / 3 - square.height,
                     ),
                     tentativeVelocity = Velocity(
                         y = 1f,
@@ -459,7 +459,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 player,
             )
 
-            moveToOtherHeightUseCase.invoke(ObjectHeight.Water)
+            moveToOtherHeightUseCase.invoke(ObjectHeight.Water(1))
 
             checkInWater()
         }

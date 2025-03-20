@@ -5,18 +5,17 @@ import gamescreen.map.domain.Point
 import gamescreen.map.domain.collision.ShapeCollisionDetect
 import gamescreen.map.domain.move
 
-//fixme デフォルト値削除
-//fixme このコンストラクタを利用している物は修正
 data class NormalSquare(
-    val point: Point = Point(),
-    override val size: Float,
-    override val objectHeight: ObjectHeight = ObjectHeight.None,
+    val point: Point,
+    override val width: Float,
+    override val height: Float,
+    override val objectHeight: ObjectHeight,
 ) : ShapeCollisionDetect,
-    Square {
+    Rectangle {
 
     constructor(
-        x: Float,
-        y: Float,
+        x: Float = 0f,
+        y: Float = 0f,
         size: Float,
         objectHeight: ObjectHeight = ObjectHeight.None,
     ) : this(
@@ -24,7 +23,24 @@ data class NormalSquare(
             x = x,
             y = y,
         ),
-        size = size,
+        width = size,
+        height = size,
+        objectHeight = objectHeight,
+    )
+
+    constructor(
+        x: Float = 0f,
+        y: Float = 0f,
+        width: Float,
+        height: Float,
+        objectHeight: ObjectHeight = ObjectHeight.None,
+    ) : this(
+        point = Point(
+            x = x,
+            y = y,
+        ),
+        width = width,
+        height = height,
         objectHeight = objectHeight,
     )
 
@@ -38,18 +54,18 @@ data class NormalSquare(
         get() = point.x
 
     override val rightSide: Float
-        get() = point.x + size
+        get() = point.x + width
 
     override val topSide: Float
         get() = point.y
 
     override val bottomSide: Float
-        get() = point.y + size
+        get() = point.y + height
 
     override fun move(
         dx: Float,
         dy: Float,
-    ): Square {
+    ): Rectangle {
         return copy(
             point = point.move(
                 dx = dx,
@@ -61,7 +77,7 @@ data class NormalSquare(
     override fun moveTo(
         x: Float,
         y: Float,
-    ): Square {
+    ): Rectangle {
         return copy(
             point = Point(
                 x = x,

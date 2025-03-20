@@ -22,7 +22,7 @@ data class NPC(
         eventSquare = EventSquare(
             eventType = eventType,
             size = size,
-            objectHeight = ObjectHeight.GroundObject,
+            objectHeight = ObjectHeight.Ground(1),
         ),
     )
 

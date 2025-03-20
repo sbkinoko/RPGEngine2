@@ -1,6 +1,7 @@
 package gamescreen.map.usecase.event.actionevent
 
 import gamescreen.map.domain.ObjectHeight
+import gamescreen.map.usecase.changeheight.ChangeHeightUseCase
 import gamescreen.map.usecase.movetootherheight.MoveToOtherHeightUseCase
 import gamescreen.map.usecase.settalk.SetTalkUseCase
 import gamescreen.menu.usecase.bag.addtool.AddToolUseCase
@@ -20,6 +21,7 @@ class ActionEventUseCaseImpl(
     private val setShopItemUseCase: SetShopItemUseCase,
     private val setTalkUseCase: SetTalkUseCase,
     private val moveToOtherHeightUseCase: MoveToOtherHeightUseCase,
+    private val changeHeightUseCase: ChangeHeightUseCase,
 ) : ActionEventUseCase {
     override fun invoke(
         eventType: EventType,
@@ -72,7 +74,7 @@ class ActionEventUseCaseImpl(
                 )
                 CoroutineScope(Dispatchers.Default).launch {
                     moveToOtherHeightUseCase.invoke(
-                        targetHeight = ObjectHeight.Water,
+                        targetHeight = ObjectHeight.Water(1),
                     )
                 }
             }
@@ -86,8 +88,20 @@ class ActionEventUseCaseImpl(
                 )
                 CoroutineScope(Dispatchers.Default).launch {
                     moveToOtherHeightUseCase.invoke(
-                        targetHeight = ObjectHeight.Ground,
+                        targetHeight = ObjectHeight.Ground(1),
                     )
+                }
+            }
+
+            EventType.Ground1 -> {
+                CoroutineScope(Dispatchers.Default).launch {
+                    changeHeightUseCase.invoke(ObjectHeight.Ground(1))
+                }
+            }
+
+            EventType.Ground2 -> {
+                CoroutineScope(Dispatchers.Default).launch {
+                    changeHeightUseCase.invoke(ObjectHeight.Ground(2))
                 }
             }
         }

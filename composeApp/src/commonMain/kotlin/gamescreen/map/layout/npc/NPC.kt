@@ -31,7 +31,8 @@ fun NPC(
                 Image(
                     modifier = Modifier
                         .size(
-                            (it.size * screenRatio).pxToDp()
+                            width = (it.width * screenRatio).pxToDp(),
+                            height = (it.height * screenRatio).pxToDp(),
                         )
                         .offset(
                             x = (it.baseX * screenRatio).pxToDp(),
