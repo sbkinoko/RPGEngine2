@@ -38,7 +38,36 @@ class EventCollisionRepositoryImpl : EventCollisionRepository {
                     EventSquare(
                         x = x,
                         y = y,
-                        width = width,
+                        width = width / 2,
+                        height = height,
+                        eventType = EventType.Ground1,
+                        objectHeight = ObjectHeight.None,
+                    ),
+                    EventSquare(
+                        x = x + width / 2,
+                        y = y,
+                        width = width / 2,
+                        height = height,
+                        eventType = EventType.Ground2,
+                        objectHeight = ObjectHeight.None,
+                    )
+                )
+            }
+
+            CellType.BridgeRightUnder -> square.run {
+                listOf(
+                    EventSquare(
+                        x = x + width / 2,
+                        y = y,
+                        width = width / 2,
+                        height = height,
+                        eventType = EventType.Ground1,
+                        objectHeight = ObjectHeight.None,
+                    ),
+                    EventSquare(
+                        x = x,
+                        y = y,
+                        width = width / 2,
                         height = height,
                         eventType = EventType.Ground2,
                         objectHeight = ObjectHeight.None,
