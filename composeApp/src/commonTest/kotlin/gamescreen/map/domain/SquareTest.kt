@@ -1,7 +1,7 @@
 package gamescreen.map.domain
 
-import gamescreen.map.domain.collision.square.EventSquare
-import gamescreen.map.domain.collision.square.NormalSquare
+import gamescreen.map.domain.collision.square.EventRectangle
+import gamescreen.map.domain.collision.square.NormalRectangle
 import values.event.EventType
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -15,7 +15,7 @@ class SquareTest {
         val dx = 1f
         val dy = 1f
 
-        NormalSquare(
+        NormalRectangle(
             x = 0f,
             y = 0f,
             size = SIZE,
@@ -49,7 +49,7 @@ class SquareTest {
         val dy = 2f
         val size = SIZE * 2
 
-        NormalSquare(
+        NormalRectangle(
             x = x,
             y = y,
             size = size,
@@ -79,7 +79,7 @@ class SquareTest {
      */
     @Test
     fun side() {
-        val square = NormalSquare(
+        val square = NormalRectangle(
             x = 10f,
             y = 15f,
             size = SIZE,
@@ -110,13 +110,13 @@ class SquareTest {
 
     @Test
     fun isLeft() {
-        val square1 = NormalSquare(
+        val square1 = NormalRectangle(
             x = 10f,
             y = 0f,
             size = SIZE,
         )
         // 半分かぶってる
-        NormalSquare(
+        NormalRectangle(
             x = 5f,
             y = 0f,
             size = SIZE,
@@ -124,7 +124,7 @@ class SquareTest {
             assertFalse { this.isLeft(square1) }
         }
         // 辺だけ接してる
-        NormalSquare(
+        NormalRectangle(
             x = 0f,
             y = 0f,
             size = SIZE,
@@ -137,14 +137,14 @@ class SquareTest {
 
     @Test
     fun isRight() {
-        val baseSquare = NormalSquare(
+        val baseSquare = NormalRectangle(
             x = 10f,
             y = 0f,
             size = SIZE,
         )
 
         // 半分かぶってる
-        NormalSquare(
+        NormalRectangle(
             x = 15f,
             y = 0f,
             size = SIZE,
@@ -153,7 +153,7 @@ class SquareTest {
         }
 
         // 辺だけ接してる
-        NormalSquare(
+        NormalRectangle(
             x = 20f,
             y = 0f,
             size = SIZE,
@@ -166,14 +166,14 @@ class SquareTest {
 
     @Test
     fun isUp() {
-        val baseSquare = NormalSquare(
+        val baseSquare = NormalRectangle(
             x = 0f,
             y = 10f,
             size = SIZE,
         )
 
         // 半分かぶってる
-        NormalSquare(
+        NormalRectangle(
             x = 0f,
             y = 5f,
             size = SIZE,
@@ -182,7 +182,7 @@ class SquareTest {
         }
 
         // 辺だけ接してる
-        NormalSquare(
+        NormalRectangle(
             x = 0f,
             y = 0f,
             size = SIZE,
@@ -195,14 +195,14 @@ class SquareTest {
 
     @Test
     fun isDown() {
-        val baseSquare = NormalSquare(
+        val baseSquare = NormalRectangle(
             x = 0f,
             y = 10f,
             size = SIZE,
         )
 
         // 半分かぶってる
-        NormalSquare(
+        NormalRectangle(
             x = 0f,
             y = 15f,
             size = SIZE,
@@ -211,7 +211,7 @@ class SquareTest {
         }
 
         // 辺だけ接してる
-        NormalSquare(
+        NormalRectangle(
             x = 0f,
             y = 20f,
             size = SIZE,
@@ -224,13 +224,13 @@ class SquareTest {
 
     @Test
     fun isOverlapTop1() {
-        val baseSquare = NormalSquare(
+        val baseSquare = NormalRectangle(
             x = 10f,
             y = 10f,
             size = 10f
         )
 
-        val upSquare1 = NormalSquare(
+        val upSquare1 = NormalRectangle(
             x = 10f,
             y = 0f,
             size = 10f,
@@ -249,8 +249,8 @@ class SquareTest {
      */
     @Test
     fun isOverlapTop2() {
-        val largeSquare = EventSquare(
-            square = NormalSquare(
+        val largeSquare = EventRectangle(
+            rectangle = NormalRectangle(
                 x = 128.06143f,
                 y = 133.4598f,
                 size = 42f,
@@ -259,7 +259,7 @@ class SquareTest {
             eventType = EventType.Water,
         )
 
-        val baseSquare = NormalSquare(
+        val baseSquare = NormalRectangle(
             x = 135.1815f,
             y = 119.99265f,
             size = 20f,
@@ -273,13 +273,13 @@ class SquareTest {
 
     @Test
     fun isOverlapBottom() {
-        val baseSquare = NormalSquare(
+        val baseSquare = NormalRectangle(
             x = 10f,
             y = 10f,
             size = 10f,
         )
 
-        val upSquare1 = NormalSquare(
+        val upSquare1 = NormalRectangle(
             x = 10f,
             y = 20f,
             size = 10f,
@@ -298,13 +298,13 @@ class SquareTest {
 
     @Test
     fun isOverlapLeft() {
-        val baseSquare = NormalSquare(
+        val baseSquare = NormalRectangle(
             x = 10f,
             y = 10f,
             size = 10f
         )
 
-        val upSquare1 = NormalSquare(
+        val upSquare1 = NormalRectangle(
             x = 0f,
             y = 10f,
             size = 10f,
@@ -320,13 +320,13 @@ class SquareTest {
 
     @Test
     fun isOverlapRight() {
-        val baseSquare = NormalSquare(
+        val baseSquare = NormalRectangle(
             x = 10f,
             y = 10f,
             size = 10f
         )
 
-        val upSquare1 = NormalSquare(
+        val upSquare1 = NormalRectangle(
             x = 20f,
             y = 10f,
             size = 10f,

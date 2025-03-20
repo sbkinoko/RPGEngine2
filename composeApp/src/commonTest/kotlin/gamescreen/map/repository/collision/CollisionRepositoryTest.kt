@@ -2,7 +2,7 @@ package gamescreen.map.repository.collision
 
 import core.domain.mapcell.CellType
 import gamescreen.map.ModuleMap
-import gamescreen.map.domain.collision.square.NormalSquare
+import gamescreen.map.domain.collision.square.NormalRectangle
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
@@ -34,7 +34,7 @@ class CollisionRepositoryTest : KoinTest {
     fun getData_0() {
         collisionRepository.collisionData(
             cellType = CellType.Road,
-            square = NormalSquare(
+            rectangle = NormalRectangle(
                 x = 0f,
                 y = 0f,
                 size = 10f
@@ -53,7 +53,7 @@ class CollisionRepositoryTest : KoinTest {
     fun getData_1() {
         collisionRepository.collisionData(
             cellType = CellType.Water,
-            square = NormalSquare(
+            rectangle = NormalRectangle(
                 x = 0f,
                 y = 0f,
                 size = 10f

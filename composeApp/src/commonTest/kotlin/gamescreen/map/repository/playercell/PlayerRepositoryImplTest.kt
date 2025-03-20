@@ -3,7 +3,7 @@ package gamescreen.map.repository.playercell
 import gamescreen.map.ModuleMap
 import gamescreen.map.domain.MapPoint
 import gamescreen.map.domain.background.BackgroundCell
-import gamescreen.map.domain.collision.square.NormalSquare
+import gamescreen.map.domain.collision.square.NormalRectangle
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -20,7 +20,7 @@ class PlayerRepositoryImplTest : KoinTest {
     private val playerCellRepository: PlayerCellRepository by inject()
 
     private val backgroundCell = BackgroundCell(
-        square = NormalSquare(
+        rectangle = NormalRectangle(
             x = 10f,
             y = 10f,
             size = 10f,
@@ -124,7 +124,7 @@ class PlayerRepositoryImplTest : KoinTest {
         playerCellRepository.playerIncludeCell = backgroundCell
 
         val backGroundCell2 = backgroundCell.copy(
-            square = NormalSquare(
+            rectangle = NormalRectangle(
                 x = 11f,
                 y = 11f,
                 size = 10f,

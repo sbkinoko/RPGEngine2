@@ -4,7 +4,7 @@ import gamescreen.map.ModuleMap
 import gamescreen.map.data.LoopTestMap
 import gamescreen.map.domain.Velocity
 import gamescreen.map.domain.background.BackgroundData
-import gamescreen.map.domain.collision.square.NormalSquare
+import gamescreen.map.domain.collision.square.NormalRectangle
 import gamescreen.map.manager.CELL_NUM
 import gamescreen.map.manager.SIDE_LENGTH
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
@@ -60,7 +60,7 @@ class MoveBackgroundUseCaseTest : KoinTest {
             y = 0,
         )
 
-        cell1.square.apply {
+        cell1.rectangle.apply {
             assertEquals(
                 expected = 0f,
                 actual = leftSide,
@@ -75,7 +75,7 @@ class MoveBackgroundUseCaseTest : KoinTest {
             x = 1,
             y = 0,
         )
-        cell2.square.apply {
+        cell2.rectangle.apply {
             assertEquals(
                 expected = 10f,
                 actual = leftSide,
@@ -90,7 +90,7 @@ class MoveBackgroundUseCaseTest : KoinTest {
             x = 0,
             y = 1,
         )
-        cell3.square.apply {
+        cell3.rectangle.apply {
             assertEquals(
                 expected = 0f,
                 actual = leftSide,
@@ -114,14 +114,14 @@ class MoveBackgroundUseCaseTest : KoinTest {
                     y = dy,
                     maxVelocity = vMax,
                 ),
-                fieldSquare = NormalSquare(
+                fieldSquare = NormalRectangle(
                     x = 0f,
                     y = 0f,
                     size = SIDE_LENGTH.toFloat(),
                 ),
                 backgroundData = backgroundData
             ).fieldData[0][0].apply {
-                square.apply {
+                rectangle.apply {
                     assertEquals(
                         expected = 10f,
                         actual = leftSide,

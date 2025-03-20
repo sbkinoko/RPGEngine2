@@ -4,8 +4,8 @@ import core.domain.mapcell.CellType
 import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.Point
 import gamescreen.map.domain.collision.ShapeCollisionDetect
-import gamescreen.map.domain.collision.square.EventSquare
-import gamescreen.map.domain.collision.square.NormalSquare
+import gamescreen.map.domain.collision.square.EventRectangle
+import gamescreen.map.domain.collision.square.NormalRectangle
 import gamescreen.map.domain.collision.square.Rectangle
 import gamescreen.map.domain.collision.triangle.ConvexPolygon
 import values.event.EventType
@@ -14,7 +14,7 @@ class CollisionRepositoryImpl : CollisionRepository {
 
     override fun collisionData(
         cellType: CellType,
-        square: Rectangle,
+        rectangle: Rectangle,
     ): List<ShapeCollisionDetect> {
 
         // 当たり判定がないマスなら空を返す
@@ -25,9 +25,9 @@ class CollisionRepositoryImpl : CollisionRepository {
         // fixme 水平方向に反転する処理を作りたい
         return when (cellType) {
             CellType.Water ->
-                square.run {
+                rectangle.run {
                     listOf(
-                        EventSquare(
+                        EventRectangle(
                             x = x,
                             y = y,
                             width = width,
@@ -39,9 +39,9 @@ class CollisionRepositoryImpl : CollisionRepository {
                 }
 
             CellType.Glass -> {
-                square.run {
+                rectangle.run {
                     listOf(
-                        EventSquare(
+                        EventRectangle(
                             x = x,
                             y = y,
                             width = width,
@@ -54,9 +54,9 @@ class CollisionRepositoryImpl : CollisionRepository {
             }
 
             is CellType.Box ->
-                square.run {
+                rectangle.run {
                     listOf(
-                        EventSquare(
+                        EventRectangle(
                             x = x + width / 3,
                             y = y + height / 3,
                             width = width / 3,
@@ -74,7 +74,7 @@ class CollisionRepositoryImpl : CollisionRepository {
                 }
 
             is CellType.BridgeLeftTop ->
-                square.run {
+                rectangle.run {
                     listOf(
                         ConvexPolygon(
                             baseX = x,
@@ -97,7 +97,7 @@ class CollisionRepositoryImpl : CollisionRepository {
                     )
                 }
 
-            is CellType.BridgeLeftUnder -> square.run {
+            is CellType.BridgeLeftUnder -> rectangle.run {
                 listOf(
                     ConvexPolygon(
                         baseX = x,
@@ -116,7 +116,7 @@ class CollisionRepositoryImpl : CollisionRepository {
                         Point(width, height),
                     ),
                     // 右端にふた
-                    NormalSquare(
+                    NormalRectangle(
                         x = x + width * 0.9f,
                         y = y,
                         width = 0.1f * width,
@@ -126,7 +126,7 @@ class CollisionRepositoryImpl : CollisionRepository {
                 )
             }
 
-            is CellType.BridgeRightTop -> square.run {
+            is CellType.BridgeRightTop -> rectangle.run {
                 listOf(
                     ConvexPolygon(
                         baseX = x,
@@ -149,7 +149,7 @@ class CollisionRepositoryImpl : CollisionRepository {
                 )
             }
 
-            is CellType.BridgeRightUnder -> square.run {
+            is CellType.BridgeRightUnder -> rectangle.run {
                 listOf(
                     ConvexPolygon(
                         baseX = x,
@@ -168,7 +168,7 @@ class CollisionRepositoryImpl : CollisionRepository {
                         Point(width, height),
                     ),
                     // 左端にふた
-                    NormalSquare(
+                    NormalRectangle(
                         x = x,
                         y = y,
                         width = 0.1f * width,
@@ -181,7 +181,7 @@ class CollisionRepositoryImpl : CollisionRepository {
             is CellType.BridgeCenterTop,
             is CellType.BridgeCenterBottom,
             -> {
-                square.run {
+                rectangle.run {
                     listOf(
                         ConvexPolygon(
                             baseX = x,

@@ -27,7 +27,7 @@ fun NPC(
 
     Box {
         npc.forEach { npc ->
-            npc.eventSquare.let {
+            npc.eventRectangle.let {
                 Image(
                     modifier = Modifier
                         .size(

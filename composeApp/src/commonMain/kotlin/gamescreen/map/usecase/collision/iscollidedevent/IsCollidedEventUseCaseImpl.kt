@@ -1,6 +1,6 @@
 package gamescreen.map.usecase.collision.iscollidedevent
 
-import gamescreen.map.domain.collision.square.NormalSquare
+import gamescreen.map.domain.collision.square.NormalRectangle
 import gamescreen.map.domain.collision.square.Rectangle
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.collisionevent.EventCollisionRepository
@@ -23,7 +23,7 @@ class IsCollidedEventUseCaseImpl(
                 rowArray.forEach cell@{ cell ->
                     val collisionList = eventCollisionRepository.collisionData(
                         cellType = cell.cellType,
-                        square = cell,
+                        rectangle = cell,
                     )
 
                     if (collisionList.isEmpty()) {
@@ -31,7 +31,7 @@ class IsCollidedEventUseCaseImpl(
                     }
 
                     val centerSquare = playerSquare.run {
-                        NormalSquare(
+                        NormalRectangle(
                             size = 0f,
                             x = leftSide + width / 2,
                             y = topSide + height / 2,

@@ -7,6 +7,6 @@ import gamescreen.map.domain.collision.square.Rectangle
 interface CollisionRepository {
     fun collisionData(
         cellType: CellType,
-        square: Rectangle,
+        rectangle: Rectangle,
     ): List<ShapeCollisionDetect>
 }

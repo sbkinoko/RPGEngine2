@@ -1,7 +1,7 @@
 package gamescreen.map.usecase
 
 import gamescreen.map.domain.background.BackgroundCell
-import gamescreen.map.domain.collision.square.NormalSquare
+import gamescreen.map.domain.collision.square.NormalRectangle
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.repository.playercell.PlayerCellRepository
@@ -22,7 +22,7 @@ class UpdateCellContainPlayerUseCase(
         val square = playerPositionRepository.getPlayerPosition()
             .square
 
-        val center = (square as NormalSquare).copy(
+        val center = (square as NormalRectangle).copy(
             width = 0f,
             height = 0f,
             point = square.point.copy(
@@ -37,13 +37,13 @@ class UpdateCellContainPlayerUseCase(
             .fieldData
             .map row@{ rowArray ->
                 rowArray.map { cell ->
-                    if (center.isIn(cell.square)) {
+                    if (center.isIn(cell.rectangle)) {
                         centerCell = cell
                     }
 
                     if (
                         square
-                            .isIn(cell.square)
+                            .isIn(cell.rectangle)
                     ) {
                         playerIncludeCell = cell
                         return@row

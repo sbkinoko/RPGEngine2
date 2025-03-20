@@ -4,7 +4,7 @@ import gamescreen.map.ModuleMap
 import gamescreen.map.data.LoopTestMap
 import gamescreen.map.domain.Velocity
 import gamescreen.map.domain.background.BackgroundData
-import gamescreen.map.domain.collision.square.NormalSquare
+import gamescreen.map.domain.collision.square.NormalRectangle
 import gamescreen.map.manager.CELL_NUM
 import gamescreen.map.manager.SIDE_LENGTH
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
@@ -60,7 +60,7 @@ class MoveBackgroundUseCaseTestLoop : KoinTest {
     @Test
     fun checkFirstPosition() {
         backgroundData.leftTopCell.apply {
-            square.apply {
+            rectangle.apply {
                 assertEquals(
                     expected = 0f,
                     actual = leftSide,
@@ -96,14 +96,14 @@ class MoveBackgroundUseCaseTestLoop : KoinTest {
                     y = -dy,
                     maxVelocity = dy,
                 ),
-                fieldSquare = NormalSquare(
+                fieldSquare = NormalRectangle(
                     x = 0f,
                     y = 0f,
                     size = SIDE_LENGTH.toFloat(),
                 ),
                 backgroundData = backgroundData,
             ).leftTopCell.apply {
-                square.apply {
+                rectangle.apply {
                     assertEquals(
                         expected = 0f,
                         actual = leftSide,
@@ -141,14 +141,14 @@ class MoveBackgroundUseCaseTestLoop : KoinTest {
                     y = dy,
                     maxVelocity = dy,
                 ),
-                fieldSquare = NormalSquare(
+                fieldSquare = NormalRectangle(
                     x = 0f,
                     y = 0f,
                     size = SIDE_LENGTH.toFloat(),
                 ),
                 backgroundData = backgroundData
             ).leftTopCell.apply {
-                square.apply {
+                rectangle.apply {
                     assertEquals(
                         expected = 0f,
                         actual = leftSide,
@@ -186,14 +186,14 @@ class MoveBackgroundUseCaseTestLoop : KoinTest {
                     y = 0f,
                     maxVelocity = dx,
                 ),
-                fieldSquare = NormalSquare(
+                fieldSquare = NormalRectangle(
                     x = 0f,
                     y = 0f,
                     size = SIDE_LENGTH.toFloat(),
                 ),
                 backgroundData = backgroundData,
             ).leftTopCell.apply {
-                square.apply {
+                rectangle.apply {
                     assertEquals(
                         expected = 25f,
                         actual = leftSide,
@@ -231,14 +231,14 @@ class MoveBackgroundUseCaseTestLoop : KoinTest {
                     y = 0f,
                     maxVelocity = dx,
                 ),
-                fieldSquare = NormalSquare(
+                fieldSquare = NormalRectangle(
                     x = 0f,
                     y = 0f,
                     size = SIDE_LENGTH.toFloat(),
                 ),
                 backgroundData = backgroundData,
             ).leftTopCell.apply {
-                square.apply {
+                rectangle.apply {
                     assertEquals(
                         expected = -dx + SIDE_LENGTH,
                         actual = leftSide,

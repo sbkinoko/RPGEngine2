@@ -5,7 +5,7 @@ import gamescreen.map.ModuleMap
 import gamescreen.map.data.MapData
 import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.Player
-import gamescreen.map.domain.collision.square.NormalSquare
+import gamescreen.map.domain.collision.square.NormalRectangle
 import gamescreen.map.domain.npc.NPC
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.usecase.resetposition.ResetBackgroundPositionUseCase
@@ -131,7 +131,7 @@ class IsCollidedUseCaseTest : KoinTest {
         )
 
         val waterPlayer = player.copy(
-            square = (player.square as NormalSquare).copy(
+            square = (player.square as NormalRectangle).copy(
                 objectHeight = ObjectHeight.Water(1),
             )
         )

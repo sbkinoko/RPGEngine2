@@ -3,7 +3,7 @@ package gamescreen.map.usecase.movebackground
 import gamescreen.map.domain.Velocity
 import gamescreen.map.domain.background.BackgroundCell
 import gamescreen.map.domain.background.BackgroundData
-import gamescreen.map.domain.collision.square.NormalSquare
+import gamescreen.map.domain.collision.square.NormalRectangle
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 
 class MoveBackgroundUseCaseImpl(
@@ -13,7 +13,7 @@ class MoveBackgroundUseCaseImpl(
     override operator fun invoke(
         velocity: Velocity,
         backgroundData: BackgroundData,
-        fieldSquare: NormalSquare,
+        fieldSquare: NormalRectangle,
     ): BackgroundData {
         val background = backgroundData
             .fieldData
@@ -42,7 +42,7 @@ class MoveBackgroundUseCaseImpl(
      */
     private fun loopBackgroundCell(
         bgCell: BackgroundCell,
-        fieldSquare: NormalSquare,
+        fieldSquare: NormalRectangle,
     ): BackgroundCell {
         // loopに必要な移動量
         val allCellNum = backgroundRepository.allCellNum
@@ -53,10 +53,10 @@ class MoveBackgroundUseCaseImpl(
         //移動後のマップのx座標
         val mapX: Int
         bgCell.apply {
-            if (square.isRight(fieldSquare)) {
+            if (rectangle.isRight(fieldSquare)) {
                 dx = -diffOfLoop
                 mapX = mapPoint.x - allCellNum
-            } else if (square.isLeft(fieldSquare)) {
+            } else if (rectangle.isLeft(fieldSquare)) {
                 dx = diffOfLoop
                 mapX = mapPoint.x + allCellNum
             } else {
@@ -70,10 +70,10 @@ class MoveBackgroundUseCaseImpl(
         //移動後のマップのy座標
         val mapY: Int
         bgCell.apply {
-            if (square.isDown(fieldSquare)) {
+            if (rectangle.isDown(fieldSquare)) {
                 dy = -diffOfLoop
                 mapY = mapPoint.y - allCellNum
-            } else if (square.isUp(fieldSquare)) {
+            } else if (rectangle.isUp(fieldSquare)) {
                 dy = diffOfLoop
                 mapY = mapPoint.y + allCellNum
             } else {

@@ -2,39 +2,35 @@ package gamescreen.map.domain.collision.square
 
 import gamescreen.map.domain.ObjectHeight
 
-abstract class SquareWrapper<T : Rectangle>(
-    open val square: Rectangle,
+abstract class RectangleWrapper<T : Rectangle>(
+    open val rectangle: Rectangle,
 ) : Rectangle {
-    // 正方形なので高さでも幅でも一緒
-    val size: Float
-        get() = square.height
-
     override val height: Float
-        get() = square.height
+        get() = rectangle.height
 
     override val width
-        get() = square.width
+        get() = rectangle.width
 
     override val x: Float
-        get() = square.x
+        get() = rectangle.x
 
     override val y: Float
-        get() = square.y
+        get() = rectangle.y
 
     override val leftSide: Float
-        get() = square.leftSide
+        get() = rectangle.leftSide
 
     override val rightSide: Float
-        get() = square.rightSide
+        get() = rectangle.rightSide
 
     override val topSide: Float
-        get() = square.topSide
+        get() = rectangle.topSide
 
     override val bottomSide: Float
-        get() = square.bottomSide
+        get() = rectangle.bottomSide
 
     override val objectHeight: ObjectHeight
-        get() = square.objectHeight
+        get() = rectangle.objectHeight
 
     abstract override fun move(dx: Float, dy: Float): T
 

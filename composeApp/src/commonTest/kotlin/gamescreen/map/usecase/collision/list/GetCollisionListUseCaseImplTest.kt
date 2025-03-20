@@ -4,7 +4,7 @@ import core.domain.mapcell.CellType
 import gamescreen.map.domain.MapPoint
 import gamescreen.map.domain.background.BackgroundCell
 import gamescreen.map.domain.collision.ShapeCollisionDetect
-import gamescreen.map.domain.collision.square.NormalSquare
+import gamescreen.map.domain.collision.square.NormalRectangle
 import gamescreen.map.domain.collision.square.Rectangle
 import gamescreen.map.repository.collision.CollisionRepository
 import kotlin.test.Test
@@ -14,7 +14,7 @@ class GetCollisionListUseCaseImplTest {
 
     @Test
     fun call1() {
-        val squareValue = NormalSquare(
+        val squareValue = NormalRectangle(
             x = 0f,
             y = 0f,
             size = 10f,
@@ -29,7 +29,7 @@ class GetCollisionListUseCaseImplTest {
 
     @Test
     fun call2() {
-        val squareValue = NormalSquare(
+        val squareValue = NormalRectangle(
             x = 10f,
             y = 10f,
             size = 10f,
@@ -46,13 +46,13 @@ class GetCollisionListUseCaseImplTest {
      * 背景セルを作成して、当たり判定を取得するテスト
      */
     private fun callUseCase(
-        squareValue: NormalSquare,
+        squareValue: NormalRectangle,
         cellTypeValue: CellType,
     ) {
         val backgroundCell = BackgroundCell(
             cellType = cellTypeValue,
             mapPoint = MapPoint(),
-            square = squareValue,
+            rectangle = squareValue,
         )
 
         var count = 0
@@ -60,7 +60,7 @@ class GetCollisionListUseCaseImplTest {
         val collisionRepository = object : CollisionRepository {
             override fun collisionData(
                 cellType: CellType,
-                square: Rectangle,
+                rectangle: Rectangle,
             ): List<ShapeCollisionDetect> {
                 assertEquals(
                     expected = cellTypeValue,
@@ -69,7 +69,7 @@ class GetCollisionListUseCaseImplTest {
 
                 assertEquals(
                     expected = squareValue,
-                    actual = square,
+                    actual = rectangle,
                 )
 
                 count++

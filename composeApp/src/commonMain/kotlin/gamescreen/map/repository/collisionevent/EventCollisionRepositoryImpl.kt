@@ -2,7 +2,7 @@ package gamescreen.map.repository.collisionevent
 
 import core.domain.mapcell.CellType
 import gamescreen.map.domain.ObjectHeight
-import gamescreen.map.domain.collision.square.EventSquare
+import gamescreen.map.domain.collision.square.EventRectangle
 import gamescreen.map.domain.collision.square.Rectangle
 import values.event.BoxId
 import values.event.EventType
@@ -11,8 +11,8 @@ class EventCollisionRepositoryImpl : EventCollisionRepository {
 
     override fun collisionData(
         cellType: CellType,
-        square: Rectangle,
-    ): List<EventSquare> {
+        rectangle: Rectangle,
+    ): List<EventRectangle> {
 
         // 当たり判定がないマスなら空を返す
         if (cellType !is CellType.EventObject) {
@@ -20,9 +20,9 @@ class EventCollisionRepositoryImpl : EventCollisionRepository {
         }
 
         return when (cellType) {
-            CellType.GlassEvent -> square.run {
+            CellType.GlassEvent -> rectangle.run {
                 listOf(
-                    EventSquare(
+                    EventRectangle(
                         x = x,
                         y = y,
                         width = width,
@@ -33,9 +33,9 @@ class EventCollisionRepositoryImpl : EventCollisionRepository {
                 )
             }
 
-            CellType.BridgeLeftUnder -> square.run {
+            CellType.BridgeLeftUnder -> rectangle.run {
                 listOf(
-                    EventSquare(
+                    EventRectangle(
                         x = x,
                         y = y,
                         width = width / 2,
@@ -43,7 +43,7 @@ class EventCollisionRepositoryImpl : EventCollisionRepository {
                         eventType = EventType.Ground1,
                         objectHeight = ObjectHeight.None,
                     ),
-                    EventSquare(
+                    EventRectangle(
                         x = x + width / 2,
                         y = y,
                         width = width / 2,
@@ -54,9 +54,9 @@ class EventCollisionRepositoryImpl : EventCollisionRepository {
                 )
             }
 
-            CellType.BridgeRightUnder -> square.run {
+            CellType.BridgeRightUnder -> rectangle.run {
                 listOf(
-                    EventSquare(
+                    EventRectangle(
                         x = x + width / 2,
                         y = y,
                         width = width / 2,
@@ -64,7 +64,7 @@ class EventCollisionRepositoryImpl : EventCollisionRepository {
                         eventType = EventType.Ground1,
                         objectHeight = ObjectHeight.None,
                     ),
-                    EventSquare(
+                    EventRectangle(
                         x = x,
                         y = y,
                         width = width / 2,
