@@ -1,13 +1,16 @@
 package gamescreen.battle.command.actionphase
 
+import constants.REPEAT_TIME
+import constants.isInRange
 import core.domain.status.ConditionType
 import core.domain.status.damage100
 import core.domain.status.damage50
 import core.domain.status.paralysis100
-import core.domain.status.paralysis50
+import core.domain.status.paralysis30
 import core.domain.status.poison0
 import core.domain.status.poison100
 import core.domain.status.poison50
+import core.domain.status.poisonCure70
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -18,11 +21,6 @@ class ActionStateTest {
 
     val next
         get() = initState.getNextState(conditionList)
-
-    private val repeatTime = 100
-    private val lower = (repeatTime * 0.8).toInt()
-    private val upper = (repeatTime * 1.2).toInt()
-
 
     /**
      * 何もないならアクションに入ることを確認
@@ -58,17 +56,28 @@ class ActionStateTest {
     @Test
     fun checkStartToProbParalyze() {
         initState = ActionState.Start
-        conditionList = listOf(paralysis50)
-        List(repeatTime * 2) {
+        val paralyze = paralysis30
+        conditionList = listOf(paralyze)
+        List(REPEAT_TIME) {
             next
         }.apply {
-            checkInRange(this.count {
-                it == ActionState.Action
-            })
+            assertTrue {
+                isInRange(
+                    count {
+                        it == ActionState.Action
+                    },
+                    100f - paralyze.probability
+                )
+            }
 
-            checkInRange(this.count {
-                it == ActionState.Paralyze
-            })
+            assertTrue {
+                isInRange(
+                    count {
+                        it == ActionState.Paralyze
+                    },
+                    paralyze.probability.toFloat()
+                )
+            }
         }
     }
 
@@ -132,18 +141,30 @@ class ActionStateTest {
     @Test
     fun checkActionToPoison0() {
         initState = ActionState.Action
-        conditionList = listOf(poison0)
 
-        List(repeatTime * 2) {
+        val poison = poison0
+        conditionList = listOf(poison)
+
+        List(REPEAT_TIME) {
             next
         }.apply {
-            checkInRange(this.count {
-                it == ActionState.CurePoison()
-            })
+            assertTrue {
+                isInRange(
+                    count {
+                        it == ActionState.CurePoison()
+                    },
+                    poison.cure.toFloat()
+                )
+            }
 
-            checkInRange(this.count {
-                it == ActionState.Next
-            })
+            assertTrue {
+                isInRange(
+                    count {
+                        it == ActionState.Next
+                    },
+                    100 - poison.cure.toFloat()
+                )
+            }
         }
     }
 
@@ -156,7 +177,7 @@ class ActionStateTest {
         initState = ActionState.Poison()
         conditionList = listOf(poison100)
 
-        List(repeatTime) {
+        List(REPEAT_TIME) {
             next
         }.map {
             assertTrue {
@@ -171,18 +192,29 @@ class ActionStateTest {
     @Test
     fun checkPoisonProb() {
         initState = ActionState.Poison()
-        conditionList = listOf(poison50)
+        val poison = poisonCure70
+        conditionList = listOf(poison)
 
-        List(repeatTime * 2) {
+        List(REPEAT_TIME) {
             next
         }.apply {
-            checkInRange(this.count {
-                it == ActionState.CurePoison()
-            })
+            assertTrue {
+                isInRange(
+                    count {
+                        it == ActionState.CurePoison()
+                    },
+                    poison.cure.toFloat()
+                )
+            }
 
-            checkInRange(this.count {
-                it == ActionState.Next
-            })
+            assertTrue {
+                isInRange(
+                    count {
+                        it == ActionState.Next
+                    },
+                    100 - poison.cure.toFloat()
+                )
+            }
         }
     }
 
@@ -192,22 +224,31 @@ class ActionStateTest {
     @Test
     fun checkTwoPoison() {
         initState = ActionState.Poison()
-        conditionList = listOf(poison100, poison50)
+        val poison = poisonCure70
+        conditionList = listOf(poison100, poison)
 
-        List(repeatTime * 2) {
+        List(REPEAT_TIME) {
             next
         }.apply {
-            checkInRange(
-                this.count {
-                    it == ActionState.CurePoison(listOf(poison50))
-                }
-            )
+            // 片方治らない
+            assertTrue {
+                isInRange(
+                    count {
+                        it == ActionState.CurePoison(listOf(poison))
+                    },
+                    100 - poison.cure.toFloat(),
+                )
+            }
 
-            checkInRange(
-                this.count {
-                    it == ActionState.CurePoison()
-                }
-            )
+            // どっちも治る
+            assertTrue {
+                isInRange(
+                    count {
+                        it == ActionState.CurePoison()
+                    },
+                    poison.cure.toFloat(),
+                )
+            }
         }
     }
 
@@ -219,7 +260,7 @@ class ActionStateTest {
         initState = ActionState.Action
         conditionList = listOf(paralysis100)
 
-        List(repeatTime) {
+        List(REPEAT_TIME) {
             next
         }.map {
             assertEquals(
@@ -235,32 +276,28 @@ class ActionStateTest {
     @Test
     fun checkParalyzeProb() {
         initState = ActionState.Action
-        conditionList = listOf(paralysis50)
-        val expectedList: List<(ActionState) -> Boolean> = listOf(
-            { it == ActionState.CureParalyze() },
-            { it == ActionState.Next }
+        val paralysis = paralysis30
+        conditionList = listOf(paralysis)
+
+        // 確率　状態
+        val expectedList: List<Pair<Float, ActionState>> = listOf(
+            Pair(paralysis.cure.toFloat(), ActionState.CureParalyze()),
+            Pair(100f - paralysis.cure.toFloat(), ActionState.Next),
         )
 
-        List(repeatTime * expectedList.size) {
+        List(REPEAT_TIME) {
             next
         }.apply {
-            expectedList.map { counter ->
-                checkInRange(
-                    this.count {
-                        counter(it)
-                    }
-                )
+            expectedList.map { p ->
+                assertTrue {
+                    isInRange(
+                        count {
+                            it == p.second
+                        },
+                        p.first,
+                    )
+                }
             }
-        }
-    }
-
-    private fun checkInRange(count: Int) {
-        assertTrue {
-            lower <= count
-        }
-
-        assertTrue {
-            count <= upper
         }
     }
 }
