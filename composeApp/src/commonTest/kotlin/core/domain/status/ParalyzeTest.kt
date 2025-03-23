@@ -1,17 +1,16 @@
 package core.domain.status
 
+import constants.REPEAT_TIME
+import constants.isInRange
 import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class ParalyzeTest {
-    private val repeatTime = 100
-    private val lower = (repeatTime * 0.8).toInt()
-    private val upper = (repeatTime * 1.2).toInt()
 
     @Test
     fun cantMove() {
-        List(repeatTime) {
+        List(REPEAT_TIME) {
             listOf(ConditionType.Paralysis(probability = 100)).canMove()
         }.map {
             assertFalse {
@@ -22,7 +21,7 @@ class ParalyzeTest {
 
     @Test
     fun canMove() {
-        List(repeatTime) {
+        List(REPEAT_TIME) {
             listOf(ConditionType.Paralysis(probability = 0)).canMove()
         }.map {
             assertTrue {
@@ -34,19 +33,60 @@ class ParalyzeTest {
 
     @Test
     fun half() {
-        List(repeatTime * 2) {
-            listOf(ConditionType.Paralysis(probability = 50)).canMove()
+        val paralyze = paralysis50
+
+        List(REPEAT_TIME) {
+            listOf(paralyze).canMove()
         }.apply {
+
+            // 動ける確率
             assertTrue {
-                count {
-                    it
-                } in lower..upper
+                isInRange(
+                    count {
+                        it
+                    },
+                    100 - paralyze.probability.toFloat()
+                )
             }
 
+            //　動けない確率
             assertTrue {
-                count {
-                    !it
-                } in lower..upper
+                isInRange(
+                    count {
+                        !it
+                    },
+                    paralyze.probability.toFloat()
+                )
+            }
+        }
+    }
+
+    @Test
+    fun prob30() {
+        val paralyze = paralysis30
+
+        List(REPEAT_TIME) {
+            listOf(paralyze).canMove()
+        }.apply {
+
+            // 動ける確率
+            assertTrue {
+                isInRange(
+                    count {
+                        it
+                    },
+                    100 - paralyze.probability.toFloat()
+                )
+            }
+
+            //　動けない確率
+            assertTrue {
+                isInRange(
+                    count {
+                        !it
+                    },
+                    paralyze.probability.toFloat()
+                )
             }
         }
     }

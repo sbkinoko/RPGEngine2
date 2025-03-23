@@ -3,6 +3,10 @@ package core.domain.status
 import kotlin.random.Random
 
 sealed class ConditionType {
+    /**
+     * @param probability 動けない確率
+     * @param cure 行動後に治る確率
+     */
     data class Paralysis(
         val probability: Int = 50,
         override val cure: Int = 50,
