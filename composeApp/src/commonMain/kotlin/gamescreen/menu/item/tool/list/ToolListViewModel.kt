@@ -26,24 +26,25 @@ class ToolListViewModel : ItemListViewModel<ToolId>() {
     }
 
     override fun goNextImpl() {
-        choiceRepository.push(listOf(
-            Choice(
-                text = "使う",
-                callBack = {
-                    super.goNextImpl()
-                }
-            ),
-            Choice(
-                text = "渡す",
-                callBack = {
-                    goGive()
-                }
-            ),
-            Choice(
-                text = "キャンセル",
-                callBack = { }
-            )
-        ))
+        choiceRepository.push(
+            listOf(
+                Choice(
+                    text = "使う",
+                    callBack = {
+                        super.goNextImpl()
+                    }
+                ),
+                Choice(
+                    text = "渡す",
+                    callBack = {
+                        goGive()
+                    }
+                ),
+                Choice(
+                    text = "キャンセル",
+                    callBack = { }
+                )
+            ))
     }
 
     private fun goGive() {

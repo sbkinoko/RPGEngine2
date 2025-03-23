@@ -36,17 +36,18 @@ fun MainScreen(
     var screenSize: Int by remember { mutableStateOf(0) }
 
     if (screenSize == 0) {
-        Box(modifier = Modifier
-            .onGloballyPositioned {
-                screenSize = it.size.width
-            }
-            .then(
-                if (screenSize != 0) {
-                    Modifier.size(screenSize.pxToDp())
-                } else {
-                    Modifier.fillMaxSize()
+        Box(
+            modifier = Modifier
+                .onGloballyPositioned {
+                    screenSize = it.size.width
                 }
-            )
+                .then(
+                    if (screenSize != 0) {
+                        Modifier.size(screenSize.pxToDp())
+                    } else {
+                        Modifier.fillMaxSize()
+                    }
+                )
         )
         return
     }

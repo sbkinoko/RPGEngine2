@@ -42,18 +42,19 @@ abstract class ItemTargetViewModel<T> : MenuChildViewModel() {
 
     override fun goNextImpl() {
         targetRepository.target = selectManager.selected
-        choiceRepository.push(listOf(
-            Choice(
-                text = "yes",
-                callBack = {
-                    selectYes()
-                }
-            ),
-            Choice(
-                text = "no",
-                callBack = { }
-            ),
-        ))
+        choiceRepository.push(
+            listOf(
+                Choice(
+                    text = "yes",
+                    callBack = {
+                        selectYes()
+                    }
+                ),
+                Choice(
+                    text = "no",
+                    callBack = { }
+                ),
+            ))
     }
 
     override var selectManager: SelectManager = SelectManager(

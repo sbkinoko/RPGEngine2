@@ -78,12 +78,12 @@ class MoveToOtherHeightUseCaseImpl(
                 when (dir) {
                     PlayerDir.UP,
                     PlayerDir.DOWN,
-                    ->
+                        ->
                         maxDx = firstMove
 
                     PlayerDir.LEFT,
                     PlayerDir.RIGHT,
-                    ->
+                        ->
                         maxDy = firstMove
 
                     PlayerDir.NONE -> Unit
@@ -100,12 +100,12 @@ class MoveToOtherHeightUseCaseImpl(
                 when (dir) {
                     PlayerDir.UP,
                     PlayerDir.DOWN,
-                    ->
+                        ->
                         maxDx = -firstMove
 
                     PlayerDir.LEFT,
                     PlayerDir.RIGHT,
-                    ->
+                        ->
                         maxDy = -firstMove
 
                     PlayerDir.NONE -> Unit

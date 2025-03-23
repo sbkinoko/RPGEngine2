@@ -237,7 +237,7 @@ class ActionPhaseViewModel(
         return when (item as TypeKind) {
             is ConditionItem,
             is AttackItem,
-            -> {
+                -> {
                 var targetId = action.target
                 if (battleInfoRepository.getStatus(targetId).isActive.not()) {
                     targetId = findActiveTargetUseCase.invoke(
@@ -263,7 +263,7 @@ class ActionPhaseViewModel(
         return when (item as TypeKind) {
             is ConditionItem,
             is AttackItem,
-            -> {
+                -> {
                 var targetId = action.target
                 if (playerStatusRepository.getStatus(targetId).isActive.not()) {
                     targetId = findActiveTargetUseCase.invoke(
@@ -291,7 +291,7 @@ class ActionPhaseViewModel(
             when (actionState.value) {
                 ActionState.Start,
                 ActionState.Next,
-                -> Unit
+                    -> Unit
 
                 ActionState.Paralyze -> {
                     // fixme changeでいい感じにできるようにしたい
@@ -304,7 +304,7 @@ class ActionPhaseViewModel(
                 is ActionState.Poison,
                 is ActionState.CurePoison,
                 is ActionState.CureParalyze,
-                -> {
+                    -> {
                     delay(100)
                     checkBattleFinish()
                     changeActionPhase()
@@ -410,7 +410,7 @@ class ActionPhaseViewModel(
             // 道具なので特に処理なし
             CostType.Consume,
             CostType.NotConsume,
-            -> Unit
+                -> Unit
         }
 
         // todo 複数回攻撃する技を作ったら表示方法を考える
@@ -551,7 +551,7 @@ class ActionPhaseViewModel(
 
                 is ActionState.CureParalyze,
                 is ActionState.CurePoison,
-                -> {
+                    -> {
                     val cured = (nextState as ActionState.Cure).list
                     if (isPlayer(statusId)) {
                         updatePlayerParameter.updateConditionList(

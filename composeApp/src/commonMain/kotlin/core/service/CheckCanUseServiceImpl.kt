@@ -17,7 +17,7 @@ class CheckCanUseServiceImpl : CheckCanUseService {
             // ただの道具ならいつでも使える
             CostType.NotConsume,
             CostType.Consume,
-            -> true
+                -> true
         }
     }
 }

@@ -100,7 +100,7 @@ class AmountDataImpl : AmountData {
 
             ArrowCommand.Right,
             ArrowCommand.Left,
-            -> {
+                -> {
                 mutableSelectedFlow.value = (mutableSelectedFlow.value + 1) % 2
             }
 
