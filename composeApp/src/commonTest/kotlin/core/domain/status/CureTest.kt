@@ -1,5 +1,7 @@
 package core.domain.status
 
+import constants.REPEAT_TIME
+import constants.isInRange
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -7,15 +9,13 @@ import kotlin.test.assertTrue
 class ConditionTypeTest {
     private lateinit var conditionList: List<ConditionType>
 
-    private val repeatTime = 100
-
     @Test
     fun checkCurePoison() {
         conditionList = listOf(
             poison100,
         )
 
-        val after = List(repeatTime) {
+        val after = List(REPEAT_TIME) {
             conditionList.tryCure<ConditionType.Poison>()
         }
 
@@ -29,20 +29,23 @@ class ConditionTypeTest {
 
     @Test
     fun checkCurePoisonProb() {
+        val poison = poisonCure70
         conditionList = listOf(
-            ConditionType.Poison(cure = 70),
+            poison,
         )
 
-        val after = List(repeatTime * 10) {
+        val after = List(REPEAT_TIME) {
             conditionList.tryCure<ConditionType.Poison>()
         }
 
         val cureNum = after.count {
             it.isEmpty()
         }
-        assertTrue {
-            cureNum in (repeatTime * 7 * 0.8).toInt()..(repeatTime * 7 * 1.2).toInt()
-        }
+
+        isInRange(
+            cureNum,
+            poison.cure.toFloat(),
+        )
     }
 
     @Test
@@ -52,59 +55,76 @@ class ConditionTypeTest {
             poisonCure40,
         )
 
-        val after = List(repeatTime * 10) {
+        val after = List(REPEAT_TIME) {
             conditionList.tryCure<ConditionType.Poison>()
         }
 
-        val totalLower = (repeatTime * 10 * 0.8).toInt()
-        val totalUpper = (repeatTime * 10 * 1.2).toInt()
-
         after.apply {
             assertTrue {
+                // 70が治らず、40が治った
                 // 0.3 * 0.4
-                val prob = 0.12
-                count {
-                    it == listOf(
-                        poisonCure70,
-                    )
-                } in (totalLower * prob).toInt()..(totalUpper * prob).toInt()
+                val prob = 12f
+                isInRange(
+                    count {
+                        it == listOf(
+                            poisonCure70,
+                        )
+                    },
+                    prob,
+                )
             }
+
             assertTrue {
+                // 7が治って、40が治らず
                 // 0.7 * 0.6
-                val prob = 0.42
-                count {
-                    it == listOf(
-                        poisonCure40,
-                    )
-                } in (totalLower * prob).toInt()..(totalUpper * prob).toInt()
+                val prob = 42f
+                isInRange(
+                    count {
+                        it == listOf(
+                            poisonCure40,
+                        )
+                    },
+                    prob,
+                )
             }
 
             assertTrue {
+                // 70で治って、40も治った
                 // 0.7 * 0.4
-                val prob = 0.28
-                count {
-                    it == emptyList<ConditionType>()
-                } in (totalLower * prob).toInt()..(totalUpper * prob).toInt()
+                val prob = 28f
+
+                isInRange(
+                    count {
+                        it == emptyList<ConditionType>()
+                    },
+                    prob,
+                )
             }
 
             assertTrue {
+                // 70で治らず、40も治らない
                 // 0.3 * 0.6
-                val prob = 0.18
-                count {
-                    it == conditionList
-                } in (totalLower * prob).toInt()..(totalUpper * prob).toInt()
+                val prob = 18f
+
+                isInRange(
+                    count {
+                        it == conditionList
+                    },
+                    prob,
+                )
             }
         }
     }
 
     @Test
     fun checkCurePoisonProbAndParalyze() {
+        val poison = poisonCure70
         conditionList = listOf(
-            ConditionType.Poison(cure = 70),
+            poison,
             ConditionType.Paralysis(),
         )
 
-        val after = List(repeatTime * 10) {
+        val after = List(REPEAT_TIME) {
             conditionList.tryCure<ConditionType.Poison>()
         }
 
@@ -113,7 +133,10 @@ class ConditionTypeTest {
         }
 
         assertTrue {
-            cureNum in (repeatTime * 7 * 0.8).toInt()..(repeatTime * 7 * 1.2).toInt()
+            isInRange(
+                cureNum,
+                poison.cure.toFloat(),
+            )
         }
     }
 }
