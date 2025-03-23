@@ -1,5 +1,6 @@
 package gamescreen.map.viewmodel
 
+import common.DefaultScope
 import controller.domain.ControllerCallback
 import controller.domain.Stick
 import core.domain.ScreenType
@@ -8,6 +9,7 @@ import core.repository.screentype.ScreenTypeRepository
 import data.INITIAL_MAP_DATA
 import data.INITIAL_MAP_X
 import data.INITIAL_MAP_Y
+import gamescreen.map.domain.MapUiState
 import gamescreen.map.domain.Player
 import gamescreen.map.domain.Point
 import gamescreen.map.domain.Velocity
@@ -27,7 +29,9 @@ import gamescreen.map.usecase.move.MoveUseCase
 import gamescreen.map.usecase.roadmap.RoadMapUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -72,7 +76,6 @@ class MapViewModel(
 
     private var tentativePlayerVelocity: Velocity = Velocity()
 
-
     private val canEvent: Boolean
         get() = playerPositionRepository.playerPositionStateFlow.value.eventType.canEvent
 
@@ -80,6 +83,13 @@ class MapViewModel(
         backgroundRepository.backgroundStateFlow
 
     val npcFlow = npcRepository.npcStateFlow
+
+    private val mutableUiStateFlow = MutableStateFlow(
+        MapUiState(
+            player = playerPositionRepository.playerPositionStateFlow.value
+        )
+    )
+    val uiStateFlow = mutableUiStateFlow.asStateFlow()
 
     init {
         backgroundRepository.cellNum = CELL_NUM
@@ -97,6 +107,16 @@ class MapViewModel(
                 mapY = INITIAL_MAP_Y,
                 mapData = INITIAL_MAP_DATA,
             )
+        }
+
+        DefaultScope.launch {
+            playerPositionRepository
+                .playerPositionStateFlow
+                .collect {
+                    mutableUiStateFlow.value = uiStateFlow.value.copy(
+                        player = it
+                    )
+                }
         }
     }
 
