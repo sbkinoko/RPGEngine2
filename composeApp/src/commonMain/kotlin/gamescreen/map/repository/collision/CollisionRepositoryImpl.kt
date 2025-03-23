@@ -180,7 +180,7 @@ class CollisionRepositoryImpl : CollisionRepository {
 
             is CellType.BridgeCenterTop,
             is CellType.BridgeCenterBottom,
-            -> {
+                -> {
                 rectangle.run {
                     listOf(
                         ConvexPolygon(

@@ -54,7 +54,7 @@ class ImageBinderBackground : KoinComponent {
             CellType.BridgeRightUnder,
             CellType.BridgeCenterTop,
             CellType.BridgeCenterBottom,
-            -> Res.drawable.bg_00
+                -> Res.drawable.bg_00
 
             CellType.Water -> Res.drawable.bg_02
             CellType.Town1I, CellType.Town1O -> Res.drawable.bg_20
@@ -78,7 +78,7 @@ class ImageBinderBackground : KoinComponent {
 
             CellType.Null,
             is CellType.TextCell,
-            -> Res.drawable.bg_null
+                -> Res.drawable.bg_null
         }
     }
 

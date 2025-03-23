@@ -101,6 +101,7 @@ class MapViewModel(
     }
 
     private var autoEvent: EventType? = null
+
     /**
      * 主人公の位置を更新
      */

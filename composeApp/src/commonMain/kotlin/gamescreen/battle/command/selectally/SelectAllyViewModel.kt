@@ -55,7 +55,7 @@ class SelectAllyViewModel : BattleChildViewModel() {
 
                 ActionType.Normal,
                 ActionType.None,
-                -> {
+                    -> {
                     throw IllegalStateException()
                 }
             }

@@ -69,7 +69,7 @@ fun MenuScreen(
             MenuType.Collision,
             MenuType.Item5,
             MenuType.Item6,
-            -> Text(
+                -> Text(
                 modifier = menuModifier,
                 text = state.name
             )
