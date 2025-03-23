@@ -101,7 +101,7 @@ class NonLoopMap : MapData() {
             ),
             arrayOf(
                 CellType.Water,
-                CellType.GlassEvent,
+                CellType.Glass,
                 CellType.Glass,
                 CellType.Glass,
                 CellType.Glass,

@@ -4,7 +4,6 @@ import core.domain.mapcell.CellType
 import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.collision.square.EventRectangle
 import gamescreen.map.domain.collision.square.Rectangle
-import values.event.BoxId
 import values.event.EventType
 
 class EventCollisionRepositoryImpl : EventCollisionRepository {
@@ -20,19 +19,6 @@ class EventCollisionRepositoryImpl : EventCollisionRepository {
         }
 
         return when (cellType) {
-            CellType.GlassEvent -> rectangle.run {
-                listOf(
-                    EventRectangle(
-                        x = x,
-                        y = y,
-                        width = width,
-                        height = height,
-                        eventType = EventType.Box(BoxId.Box1),
-                        objectHeight = ObjectHeight.Water(1),
-                    )
-                )
-            }
-
             CellType.BridgeLeftUnder -> rectangle.run {
                 listOf(
                     EventRectangle(
