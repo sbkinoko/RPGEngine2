@@ -29,7 +29,7 @@ val poison50 = ConditionType.Poison(
 
 val poison0 = ConditionType.Poison(
     damage = 0,
-    cure = 50,
+    cure = 30,
 )
 
 val poisonCure70 = ConditionType.Poison(cure = 70)
