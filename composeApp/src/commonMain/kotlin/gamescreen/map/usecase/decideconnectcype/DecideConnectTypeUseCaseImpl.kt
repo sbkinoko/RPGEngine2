@@ -5,24 +5,24 @@ import gamescreen.map.domain.ConnectType
 
 class DecideConnectTypeUseCaseImpl : DecideConnectTypeUseCase {
     override fun invoke(
-        array: Array<Array<CellType>>,
+        cellList: List<List<CellType>>,
     ): ConnectType {
-        if (array.size != 3) {
+        if (cellList.size != 3) {
             throw RuntimeException()
         }
 
-        array.forEach {
+        cellList.forEach {
             if (it.size != 3) {
                 throw RuntimeException()
             }
         }
 
-        val centerId = array[1][1]
+        val centerId = cellList[1][1]
 
-        val a0 = (array[0][1] == centerId).toInt()
-        val a1 = (array[1][0] == centerId).toInt()
-        val a2 = (array[1][2] == centerId).toInt()
-        val a3 = (array[2][1] == centerId).toInt()
+        val a0 = (cellList[0][1] == centerId).toInt()
+        val a1 = (cellList[1][0] == centerId).toInt()
+        val a2 = (cellList[1][2] == centerId).toInt()
+        val a3 = (cellList[2][1] == centerId).toInt()
 
         val sum = a0 + 2 * a1 + 4 * a2 + 8 * a3
 

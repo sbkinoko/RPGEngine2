@@ -41,7 +41,7 @@ class ImageBinderBackground : KoinComponent {
      */
     @OptIn(ExperimentalResourceApi::class)
     fun bindBackGround(
-        aroundCellId: Array<Array<CellType>>,
+        aroundCellId: List<List<CellType>>,
     ): DrawableResource {
         val imgId = aroundCellId[1][1]
 
@@ -88,7 +88,7 @@ class ImageBinderBackground : KoinComponent {
      */
     @OptIn(ExperimentalResourceApi::class)
     fun bindObject(
-        aroundCellId: Array<Array<CellType>>,
+        aroundCellId: List<List<CellType>>,
     ): DrawableResource? {
         val cellType = aroundCellId[1][1]
 

@@ -9,6 +9,6 @@ interface DecideConnectTypeUseCase {
      * 3*3のフィールドを受け取って接続の種類をチェックする
      */
     operator fun invoke(
-        array: Array<Array<CellType>>,
+        cellList: List<List<CellType>>,
     ): ConnectType
 }

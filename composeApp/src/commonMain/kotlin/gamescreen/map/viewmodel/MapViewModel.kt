@@ -243,7 +243,7 @@ class MapViewModel(
         tentativePlayerVelocity = velocity
     }
 
-    fun getAroundCellId(x: Int, y: Int): Array<Array<CellType>> {
+    fun getAroundCellId(x: Int, y: Int): List<List<CellType>> {
         return backgroundRepository.getBackgroundAround(
             x = x,
             y = y,

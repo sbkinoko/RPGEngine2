@@ -33,23 +33,23 @@ class BackgroundRepositoryImpl : BackgroundRepository {
         return backgroundStateFlow.value.fieldData[y][x]
     }
 
-    override fun getBackgroundAround(x: Int, y: Int): Array<Array<CellType>> {
-        return arrayOf(
-            arrayOf(
+    override fun getBackgroundAround(x: Int, y: Int): List<List<CellType>> {
+        return listOf(
+            listOf(
                 getIdAt(x = x - 1, y = y - 1),
                 getIdAt(x = x, y = y - 1),
                 getIdAt(x = x + 1, y = y - 1),
             ),
-            arrayOf(
+            listOf(
                 getIdAt(x = x - 1, y = y),
                 getIdAt(x = x, y = y),
                 getIdAt(x = x + 1, y = y),
             ),
-            arrayOf(
+            listOf(
                 getIdAt(x = x - 1, y = y + 1),
                 getIdAt(x = x, y = y + 1),
                 getIdAt(x = x + 1, y = y + 1),
-            )
+            ),
         )
     }
 
