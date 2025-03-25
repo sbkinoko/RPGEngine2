@@ -32,7 +32,9 @@ fun MapScreen(
         }
     }
 
-    val mapUiState by mapViewModel.uiStateFlow.collectAsState()
+    val mapUiState by mapViewModel
+        .uiStateFlow
+        .collectAsState()
 
     Box(
         modifier = modifier
@@ -63,12 +65,12 @@ fun MapScreen(
         )
 
         NPC(
-            mapViewModel = mapViewModel,
+            npcData = mapUiState.npcData,
             screenRatio = screenRatio,
         )
 
         Player(
-            mapUiState.player,
+            player = mapUiState.player,
             clickPlayer = {
                 mapViewModel.touchCharacter()
             },
