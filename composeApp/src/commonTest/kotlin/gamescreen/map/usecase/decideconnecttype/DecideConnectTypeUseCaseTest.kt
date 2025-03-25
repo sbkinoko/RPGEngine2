@@ -31,10 +31,10 @@ class DecideConnectTypeUseCaseTest : KoinTest {
 
     @Test
     fun type1() {
-        val list: Array<Array<CellType>> = arrayOf(
-            arrayOf(CellType.Null, CellType.Glass, CellType.Null),
-            arrayOf(CellType.Null, CellType.Glass, CellType.Null),
-            arrayOf(CellType.Null, CellType.Null, CellType.Null),
+        val list: List<List<CellType>> = listOf(
+            listOf(CellType.Null, CellType.Glass, CellType.Null),
+            listOf(CellType.Null, CellType.Glass, CellType.Null),
+            listOf(CellType.Null, CellType.Null, CellType.Null),
         )
 
         assertEquals(
@@ -45,10 +45,10 @@ class DecideConnectTypeUseCaseTest : KoinTest {
 
     @Test
     fun type2() {
-        val list: Array<Array<CellType>> = arrayOf(
-            arrayOf(CellType.Null, CellType.Null, CellType.Null),
-            arrayOf(CellType.Glass, CellType.Glass, CellType.Null),
-            arrayOf(CellType.Null, CellType.Null, CellType.Null),
+        val list: List<List<CellType>> = listOf(
+            listOf(CellType.Null, CellType.Null, CellType.Null),
+            listOf(CellType.Glass, CellType.Glass, CellType.Null),
+            listOf(CellType.Null, CellType.Null, CellType.Null),
         )
 
         assertEquals(
@@ -59,10 +59,10 @@ class DecideConnectTypeUseCaseTest : KoinTest {
 
     @Test
     fun type3() {
-        val list: Array<Array<CellType>> = arrayOf(
-            arrayOf(CellType.Null, CellType.Glass, CellType.Null),
-            arrayOf(CellType.Glass, CellType.Glass, CellType.Null),
-            arrayOf(CellType.Null, CellType.Null, CellType.Null),
+        val list: List<List<CellType>> = listOf(
+            listOf(CellType.Null, CellType.Glass, CellType.Null),
+            listOf(CellType.Glass, CellType.Glass, CellType.Null),
+            listOf(CellType.Null, CellType.Null, CellType.Null),
         )
 
         assertEquals(
@@ -73,10 +73,10 @@ class DecideConnectTypeUseCaseTest : KoinTest {
 
     @Test
     fun type4() {
-        val list: Array<Array<CellType>> = arrayOf(
-            arrayOf(CellType.Null, CellType.Null, CellType.Null),
-            arrayOf(CellType.Null, CellType.Glass, CellType.Glass),
-            arrayOf(CellType.Null, CellType.Null, CellType.Null),
+        val list: List<List<CellType>> = listOf(
+            listOf(CellType.Null, CellType.Null, CellType.Null),
+            listOf(CellType.Null, CellType.Glass, CellType.Glass),
+            listOf(CellType.Null, CellType.Null, CellType.Null),
         )
 
         assertEquals(
@@ -87,10 +87,10 @@ class DecideConnectTypeUseCaseTest : KoinTest {
 
     @Test
     fun type5() {
-        val list: Array<Array<CellType>> = arrayOf(
-            arrayOf(CellType.Null, CellType.Glass, CellType.Null),
-            arrayOf(CellType.Null, CellType.Glass, CellType.Glass),
-            arrayOf(CellType.Null, CellType.Null, CellType.Null),
+        val list: List<List<CellType>> = listOf(
+            listOf(CellType.Null, CellType.Glass, CellType.Null),
+            listOf(CellType.Null, CellType.Glass, CellType.Glass),
+            listOf(CellType.Null, CellType.Null, CellType.Null),
         )
 
         assertEquals(
@@ -101,10 +101,10 @@ class DecideConnectTypeUseCaseTest : KoinTest {
 
     @Test
     fun type6() {
-        val list: Array<Array<CellType>> = arrayOf(
-            arrayOf(CellType.Null, CellType.Null, CellType.Null),
-            arrayOf(CellType.Glass, CellType.Glass, CellType.Glass),
-            arrayOf(CellType.Null, CellType.Null, CellType.Null),
+        val list: List<List<CellType>> = listOf(
+            listOf(CellType.Null, CellType.Null, CellType.Null),
+            listOf(CellType.Glass, CellType.Glass, CellType.Glass),
+            listOf(CellType.Null, CellType.Null, CellType.Null),
         )
 
         assertEquals(
@@ -115,10 +115,10 @@ class DecideConnectTypeUseCaseTest : KoinTest {
 
     @Test
     fun type7() {
-        val list: Array<Array<CellType>> = arrayOf(
-            arrayOf(CellType.Null, CellType.Glass, CellType.Null),
-            arrayOf(CellType.Glass, CellType.Glass, CellType.Glass),
-            arrayOf(CellType.Null, CellType.Null, CellType.Null),
+        val list: List<List<CellType>> = listOf(
+            listOf(CellType.Null, CellType.Glass, CellType.Null),
+            listOf(CellType.Glass, CellType.Glass, CellType.Glass),
+            listOf(CellType.Null, CellType.Null, CellType.Null),
         )
 
         assertEquals(
@@ -129,10 +129,10 @@ class DecideConnectTypeUseCaseTest : KoinTest {
 
     @Test
     fun type8() {
-        val list: Array<Array<CellType>> = arrayOf(
-            arrayOf(CellType.Null, CellType.Null, CellType.Null),
-            arrayOf(CellType.Null, CellType.Glass, CellType.Null),
-            arrayOf(CellType.Null, CellType.Glass, CellType.Null),
+        val list: List<List<CellType>> = listOf(
+            listOf(CellType.Null, CellType.Null, CellType.Null),
+            listOf(CellType.Null, CellType.Glass, CellType.Null),
+            listOf(CellType.Null, CellType.Glass, CellType.Null),
         )
 
         assertEquals(
@@ -143,10 +143,10 @@ class DecideConnectTypeUseCaseTest : KoinTest {
 
     @Test
     fun type9() {
-        val list: Array<Array<CellType>> = arrayOf(
-            arrayOf(CellType.Null, CellType.Glass, CellType.Null),
-            arrayOf(CellType.Null, CellType.Glass, CellType.Null),
-            arrayOf(CellType.Null, CellType.Glass, CellType.Null),
+        val list: List<List<CellType>> = listOf(
+            listOf(CellType.Null, CellType.Glass, CellType.Null),
+            listOf(CellType.Null, CellType.Glass, CellType.Null),
+            listOf(CellType.Null, CellType.Glass, CellType.Null),
         )
 
         assertEquals(
@@ -157,10 +157,10 @@ class DecideConnectTypeUseCaseTest : KoinTest {
 
     @Test
     fun type10() {
-        val list: Array<Array<CellType>> = arrayOf(
-            arrayOf(CellType.Null, CellType.Null, CellType.Null),
-            arrayOf(CellType.Glass, CellType.Glass, CellType.Null),
-            arrayOf(CellType.Null, CellType.Glass, CellType.Null),
+        val list: List<List<CellType>> = listOf(
+            listOf(CellType.Null, CellType.Null, CellType.Null),
+            listOf(CellType.Glass, CellType.Glass, CellType.Null),
+            listOf(CellType.Null, CellType.Glass, CellType.Null),
         )
 
         assertEquals(
@@ -171,10 +171,10 @@ class DecideConnectTypeUseCaseTest : KoinTest {
 
     @Test
     fun type11() {
-        val list: Array<Array<CellType>> = arrayOf(
-            arrayOf(CellType.Null, CellType.Glass, CellType.Null),
-            arrayOf(CellType.Glass, CellType.Glass, CellType.Null),
-            arrayOf(CellType.Null, CellType.Glass, CellType.Null),
+        val list: List<List<CellType>> = listOf(
+            listOf(CellType.Null, CellType.Glass, CellType.Null),
+            listOf(CellType.Glass, CellType.Glass, CellType.Null),
+            listOf(CellType.Null, CellType.Glass, CellType.Null),
         )
 
         assertEquals(
@@ -185,10 +185,10 @@ class DecideConnectTypeUseCaseTest : KoinTest {
 
     @Test
     fun type12() {
-        val list: Array<Array<CellType>> = arrayOf(
-            arrayOf(CellType.Null, CellType.Null, CellType.Null),
-            arrayOf(CellType.Null, CellType.Glass, CellType.Glass),
-            arrayOf(CellType.Null, CellType.Glass, CellType.Null),
+        val list: List<List<CellType>> = listOf(
+            listOf(CellType.Null, CellType.Null, CellType.Null),
+            listOf(CellType.Null, CellType.Glass, CellType.Glass),
+            listOf(CellType.Null, CellType.Glass, CellType.Null),
         )
 
         assertEquals(
@@ -199,10 +199,10 @@ class DecideConnectTypeUseCaseTest : KoinTest {
 
     @Test
     fun type13() {
-        val list: Array<Array<CellType>> = arrayOf(
-            arrayOf(CellType.Null, CellType.Glass, CellType.Null),
-            arrayOf(CellType.Null, CellType.Glass, CellType.Glass),
-            arrayOf(CellType.Null, CellType.Glass, CellType.Null),
+        val list: List<List<CellType>> = listOf(
+            listOf(CellType.Null, CellType.Glass, CellType.Null),
+            listOf(CellType.Null, CellType.Glass, CellType.Glass),
+            listOf(CellType.Null, CellType.Glass, CellType.Null),
         )
 
         assertEquals(
@@ -213,10 +213,10 @@ class DecideConnectTypeUseCaseTest : KoinTest {
 
     @Test
     fun type14() {
-        val list: Array<Array<CellType>> = arrayOf(
-            arrayOf(CellType.Null, CellType.Null, CellType.Null),
-            arrayOf(CellType.Glass, CellType.Glass, CellType.Glass),
-            arrayOf(CellType.Null, CellType.Glass, CellType.Null),
+        val list: List<List<CellType>> = listOf(
+            listOf(CellType.Null, CellType.Null, CellType.Null),
+            listOf(CellType.Glass, CellType.Glass, CellType.Glass),
+            listOf(CellType.Null, CellType.Glass, CellType.Null),
         )
 
         assertEquals(
@@ -227,10 +227,10 @@ class DecideConnectTypeUseCaseTest : KoinTest {
 
     @Test
     fun type15() {
-        val list: Array<Array<CellType>> = arrayOf(
-            arrayOf(CellType.Null, CellType.Glass, CellType.Null),
-            arrayOf(CellType.Glass, CellType.Glass, CellType.Glass),
-            arrayOf(CellType.Null, CellType.Glass, CellType.Null),
+        val list: List<List<CellType>> = listOf(
+            listOf(CellType.Null, CellType.Glass, CellType.Null),
+            listOf(CellType.Glass, CellType.Glass, CellType.Glass),
+            listOf(CellType.Null, CellType.Glass, CellType.Null),
         )
 
         assertEquals(
@@ -241,10 +241,10 @@ class DecideConnectTypeUseCaseTest : KoinTest {
 
     @Test
     fun type15_2() {
-        val list: Array<Array<CellType>> = arrayOf(
-            arrayOf(CellType.Null, CellType.Water, CellType.Null),
-            arrayOf(CellType.Water, CellType.Water, CellType.Water),
-            arrayOf(CellType.Null, CellType.Water, CellType.Null),
+        val list: List<List<CellType>> = listOf(
+            listOf(CellType.Null, CellType.Water, CellType.Null),
+            listOf(CellType.Water, CellType.Water, CellType.Water),
+            listOf(CellType.Null, CellType.Water, CellType.Null),
         )
 
         assertEquals(
