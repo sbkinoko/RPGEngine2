@@ -61,7 +61,8 @@ fun MapScreen(
     ) {
         Background(
             mapViewModel = mapViewModel,
-            screenRatio = screenRatio
+            screenRatio = screenRatio,
+            backgroundCell = mapUiState.backgroundData,
         )
 
         NPC(

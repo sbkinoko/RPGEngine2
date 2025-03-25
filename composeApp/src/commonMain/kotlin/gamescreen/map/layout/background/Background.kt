@@ -28,12 +28,9 @@ import values.GameParams
 @Composable
 fun Background(
     mapViewModel: MapViewModel,
+    backgroundCell: BackgroundData,
     screenRatio: Float,
 ) {
-    val backgroundCell: BackgroundData by mapViewModel
-        .backgroundCells
-        .collectAsState()
-
     val eventCell by mapViewModel
         .playerIncludeCellFlow
         .collectAsState()

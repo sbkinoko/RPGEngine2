@@ -80,15 +80,14 @@ class MapViewModel(
     private val canEvent: Boolean
         get() = playerPositionRepository.playerPositionStateFlow.value.eventType.canEvent
 
-    val backgroundCells =
-        backgroundRepository.backgroundStateFlow
-
     private val mutableUiStateFlow = MutableStateFlow(
         MapUiState(
             player = playerPositionRepository.playerPositionStateFlow.value,
-            npcData = NPCData(emptyList())
+            npcData = NPCData(emptyList()),
+            backgroundData = backgroundRepository.backgroundStateFlow.value,
         )
     )
+
     val uiStateFlow = mutableUiStateFlow.asStateFlow()
 
     init {
@@ -123,6 +122,14 @@ class MapViewModel(
             npcRepository.npcStateFlow.collect {
                 mutableUiStateFlow.value = uiStateFlow.value.copy(
                     npcData = it,
+                )
+            }
+        }
+
+        DefaultScope.launch {
+            backgroundRepository.backgroundStateFlow.collect {
+                mutableUiStateFlow.value = uiStateFlow.value.copy(
+                    backgroundData = it,
                 )
             }
         }
