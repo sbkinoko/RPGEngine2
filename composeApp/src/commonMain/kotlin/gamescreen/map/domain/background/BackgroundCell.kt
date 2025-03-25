@@ -11,6 +11,9 @@ data class BackgroundCell(
     val mapPoint: MapPoint,
     override val rectangle: Rectangle,
     val cellType: CellType = CellType.Null,
+
+    // fixme デフォルト値削除
+    val aroundCellId: List<List<CellType>> = emptyList(),
 ) : RectangleWrapper<BackgroundCell>(
     rectangle = rectangle,
 ) {
