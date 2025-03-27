@@ -5,6 +5,8 @@ import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.util.fastAny
@@ -29,6 +31,10 @@ fun MapScreen(
             mapViewModel.updatePosition()
         }
     }
+
+    val mapUiState by mapViewModel
+        .uiStateFlow
+        .collectAsState()
 
     Box(
         modifier = modifier
@@ -55,16 +61,23 @@ fun MapScreen(
     ) {
         Background(
             mapViewModel = mapViewModel,
-            screenRatio = screenRatio
+            screenRatio = screenRatio,
+            backgroundCell = mapUiState.backgroundData,
         )
 
         NPC(
-            mapViewModel = mapViewModel,
+            npcData = mapUiState.npcData,
             screenRatio = screenRatio,
         )
 
         Player(
-            mapViewModel = mapViewModel,
+            player = mapUiState.player,
+            clickPlayer = {
+                mapViewModel.touchCharacter()
+            },
+            clickEventSquare = {
+                mapViewModel.touchEventSquare()
+            },
             screenRatio = screenRatio,
         )
     }

@@ -21,7 +21,7 @@ interface BackgroundRepository {
 
     fun getBackgroundAt(x: Int, y: Int): BackgroundCell
 
-    fun getBackgroundAround(x: Int, y: Int): Array<Array<CellType>>
+    fun getBackgroundAround(x: Int, y: Int): List<List<CellType>>
 
     suspend fun setBackground(background: BackgroundData)
 

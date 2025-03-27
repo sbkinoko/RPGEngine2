@@ -42,7 +42,7 @@ class ResetBackgroundPositionUseCaseImpl(
                             BackgroundCell(
                                 rectangle = square,
                                 mapPoint = mapPoint,
-                                cellType = cellType
+                                cellType = cellType,
                             )
                         }
                     }

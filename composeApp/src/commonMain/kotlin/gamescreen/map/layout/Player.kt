@@ -8,24 +8,20 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import common.extension.pxToDp
-import gamescreen.map.viewmodel.MapViewModel
+import gamescreen.map.domain.Player
 import values.Colors
 
 @Composable
 fun Player(
-    mapViewModel: MapViewModel,
+    player: Player,
     screenRatio: Float,
+    clickPlayer: () -> Unit,
+    clickEventSquare: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val player by mapViewModel
-        .playerSquare
-        .collectAsState()
-
     Box(
         modifier = modifier
             .offset(
@@ -37,9 +33,8 @@ fun Player(
                 height = (player.square.height * screenRatio).pxToDp(),
             )
             .background(Colors.Player)
-            .clickable {
-                mapViewModel.touchCharacter()
-            },
+            .clickable(onClick = clickPlayer),
+//
         contentAlignment = Alignment.Center,
     ) {
         Text(
@@ -64,8 +59,9 @@ fun Player(
                     Colors.NotEventCollision
                 }
             )
-            .clickable {
-                mapViewModel.touchEventSquare()
-            },
+            .clickable(
+                onClick = clickEventSquare
+            ),
+//                mapViewModel.touchEventSquare()
     )
 }
