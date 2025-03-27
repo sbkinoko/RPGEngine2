@@ -46,6 +46,7 @@ class ResetBackgroundPositionUseCaseImpl(
             }
         }
 
+        // fixme 最終的には削除
         runBlocking {
             // 更新した情報を元に背景リセット
             backgroundRepository.setBackground(

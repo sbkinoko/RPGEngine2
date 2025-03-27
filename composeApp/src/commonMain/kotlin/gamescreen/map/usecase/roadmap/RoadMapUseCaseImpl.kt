@@ -1,9 +1,7 @@
 package gamescreen.map.usecase.roadmap
 
 import gamescreen.map.data.MapData
-import gamescreen.map.domain.Player
 import gamescreen.map.domain.UIData
-import gamescreen.map.domain.npc.NPCData
 import gamescreen.map.usecase.UpdateCellContainPlayerUseCase
 import gamescreen.map.usecase.resetnpc.ResetNPCPositionUseCase
 import gamescreen.map.usecase.resetposition.ResetBackgroundPositionUseCase
@@ -36,10 +34,6 @@ class RoadMapUseCaseImpl(
 
         return UIData(
             backgroundData = backgroundData,
-            player = Player(
-                size = 0f,
-            ),
-            npcData = NPCData(emptyList()),
         )
     }
 }

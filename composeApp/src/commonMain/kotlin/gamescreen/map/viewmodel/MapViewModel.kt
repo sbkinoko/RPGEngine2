@@ -102,15 +102,17 @@ class MapViewModel(
                 )
             )
 
-            val uiData = roadMapUseCase.invoke(
+            roadMapUseCase.invoke(
                 mapX = INITIAL_MAP_X,
                 mapY = INITIAL_MAP_Y,
                 mapData = INITIAL_MAP_DATA,
-            )
+            ).apply {
 
-            mutableUiStateFlow.value = uiStateFlow.value.copy(
-                backgroundData = uiData.backgroundData!!,
-            )
+                mutableUiStateFlow.value = uiStateFlow.value
+                    .copy(
+                        backgroundData = backgroundData!!,
+                    )
+            }
         }
 
         DefaultScope.launch {
