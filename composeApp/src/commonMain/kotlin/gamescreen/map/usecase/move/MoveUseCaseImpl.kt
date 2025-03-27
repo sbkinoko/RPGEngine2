@@ -1,7 +1,10 @@
 package gamescreen.map.usecase.move
 
+import gamescreen.map.domain.Player
 import gamescreen.map.domain.Velocity
+import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.domain.collision.square.NormalRectangle
+import gamescreen.map.domain.npc.NPCData
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.npc.NPCRepository
 import gamescreen.map.repository.player.PlayerPositionRepository
@@ -83,3 +86,9 @@ class MoveUseCaseImpl(
         )
     }
 }
+
+data class UIData(
+    val player: Player,
+    val backgroundData: BackgroundData,
+    val npcData: NPCData,
+)
