@@ -1,6 +1,9 @@
 package gamescreen.map.usecase.roadmap
 
 import gamescreen.map.data.MapData
+import gamescreen.map.domain.Player
+import gamescreen.map.domain.UIData
+import gamescreen.map.domain.npc.NPCData
 import gamescreen.map.usecase.UpdateCellContainPlayerUseCase
 import gamescreen.map.usecase.resetnpc.ResetNPCPositionUseCase
 import gamescreen.map.usecase.resetposition.ResetBackgroundPositionUseCase
@@ -17,8 +20,8 @@ class RoadMapUseCaseImpl(
         mapX: Int,
         mapY: Int,
         mapData: MapData,
-    ) {
-        resetBackgroundPositionUseCase.invoke(
+    ): UIData {
+        val backgroundData = resetBackgroundPositionUseCase.invoke(
             mapData = mapData,
             mapX = mapX,
             mapY = mapY,
@@ -30,5 +33,13 @@ class RoadMapUseCaseImpl(
         )
         setPlayerCenterUseCase.invoke()
         updateCellContainPlayerUseCase.invoke()
+
+        return UIData(
+            backgroundData = backgroundData,
+            player = Player(
+                size = 0f,
+            ),
+            npcData = NPCData(emptyList()),
+        )
     }
 }

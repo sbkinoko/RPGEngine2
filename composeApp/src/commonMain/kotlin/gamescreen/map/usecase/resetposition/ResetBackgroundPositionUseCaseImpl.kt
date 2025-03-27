@@ -16,7 +16,6 @@ class ResetBackgroundPositionUseCaseImpl(
         mapX: Int,
         mapY: Int,
     ): BackgroundData {
-
         // map情報を更新
         backgroundRepository.mapData = mapData
 
