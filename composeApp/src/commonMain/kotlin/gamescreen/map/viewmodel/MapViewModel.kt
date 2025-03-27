@@ -106,14 +106,19 @@ class MapViewModel(
                 mapX = INITIAL_MAP_X,
                 mapY = INITIAL_MAP_Y,
                 mapData = INITIAL_MAP_DATA,
-            )
+            ).apply {
+
+                mutableUiStateFlow.value = uiStateFlow.value
+                    .copy(
+                        backgroundData = backgroundData!!,
+                    )
+            }
         }
 
         DefaultScope.launch {
             delay(50)
             mutableUiStateFlow.value = uiStateFlow.value.copy(
                 player = playerPositionRepository.getPlayerPosition(),
-                backgroundData = backgroundRepository.backgroundStateFlow.value,
                 npcData = npcRepository.npcStateFlow.value,
             )
         }
@@ -152,9 +157,9 @@ class MapViewModel(
         )
 
         mutableUiStateFlow.value = uiStateFlow.value.copy(
-            player = uiData.player,
-            npcData = uiData.npcData,
-            backgroundData = uiData.backgroundData,
+            player = uiData.player!!,
+            npcData = uiData.npcData!!,
+            backgroundData = uiData.backgroundData!!,
         )
 
         val preEvent = autoEvent
