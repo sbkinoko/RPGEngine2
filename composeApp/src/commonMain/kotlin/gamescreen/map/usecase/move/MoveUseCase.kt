@@ -1,5 +1,6 @@
 package gamescreen.map.usecase.move
 
+import gamescreen.map.domain.UIData
 import gamescreen.map.domain.Velocity
 import gamescreen.map.domain.collision.square.NormalRectangle
 import gamescreen.map.viewmodel.MapViewModel.Companion.MOVE_BORDER
