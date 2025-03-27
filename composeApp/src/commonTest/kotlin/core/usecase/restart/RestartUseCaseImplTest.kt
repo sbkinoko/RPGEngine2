@@ -18,8 +18,7 @@ class RestartUseCaseImplTest {
             mapX: Int,
             mapY: Int,
             mapData: MapData,
-        ):
-                UIData {
+        ): UIData {
             roadMapCount++
             return UIData()
         }
