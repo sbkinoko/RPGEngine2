@@ -34,7 +34,7 @@ class MoveUseCaseImpl(
         tentativeVelocity: Velocity,
         fieldSquare: NormalRectangle,
         playerMoveArea: NormalRectangle,
-    ) {
+    ): UIData {
         var player = playerPositionRepository.playerPositionStateFlow.value
 
         val mediatedVelocity =
@@ -83,6 +83,11 @@ class MoveUseCaseImpl(
         )
         npcRepository.setNpc(
             npcData = movedData,
+        )
+        return UIData(
+            player,
+            backgroundData,
+            npcData,
         )
     }
 }

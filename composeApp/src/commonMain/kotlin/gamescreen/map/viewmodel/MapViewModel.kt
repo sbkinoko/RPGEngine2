@@ -30,6 +30,7 @@ import gamescreen.map.usecase.move.MoveUseCase
 import gamescreen.map.usecase.roadmap.RoadMapUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -109,29 +110,12 @@ class MapViewModel(
         }
 
         DefaultScope.launch {
-            playerPositionRepository
-                .playerPositionStateFlow
-                .collect {
-                    mutableUiStateFlow.value = uiStateFlow.value.copy(
-                        player = it,
-                    )
-                }
-        }
-
-        DefaultScope.launch {
-            npcRepository.npcStateFlow.collect {
-                mutableUiStateFlow.value = uiStateFlow.value.copy(
-                    npcData = it,
-                )
-            }
-        }
-
-        DefaultScope.launch {
-            backgroundRepository.backgroundStateFlow.collect {
-                mutableUiStateFlow.value = uiStateFlow.value.copy(
-                    backgroundData = it,
-                )
-            }
+            delay(50)
+            mutableUiStateFlow.value = uiStateFlow.value.copy(
+                player = playerPositionRepository.getPlayerPosition(),
+                backgroundData = backgroundRepository.backgroundStateFlow.value,
+                npcData = npcRepository.npcStateFlow.value,
+            )
         }
     }
 
@@ -162,9 +146,15 @@ class MapViewModel(
             )
 
         // 表示物を移動
-        moveUseCase.invoke(
+        val uiData = moveUseCase.invoke(
             actualVelocity = actualVelocity,
             tentativeVelocity = tentativePlayerVelocity,
+        )
+
+        mutableUiStateFlow.value = uiStateFlow.value.copy(
+            player = uiData.player,
+            npcData = uiData.npcData,
+            backgroundData = uiData.backgroundData,
         )
 
         val preEvent = autoEvent

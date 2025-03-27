@@ -29,5 +29,5 @@ interface MoveUseCase {
         tentativeVelocity: Velocity,
         fieldSquare: NormalRectangle = pFieldSquare,
         playerMoveArea: NormalRectangle = pPlayerMoveArea,
-    )
+    ): UIData
 }
