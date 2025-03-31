@@ -9,6 +9,7 @@ import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.repository.playercell.PlayerCellRepository
 import gamescreen.map.usecase.resetposition.ResetBackgroundPositionUseCase
+import gamescreen.map.usecase.updatecellcontainplayer.UpdateCellContainPlayerUseCase
 import kotlinx.coroutines.runBlocking
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -61,7 +62,9 @@ class FindPlayerCellUseCaseTest : KoinTest {
             )
 
             // 最初に全身が入ってるからnullじゃない
-            updateCellContainPlayerUseCase.invoke()
+            updateCellContainPlayerUseCase.invoke(
+                
+            )
             assertTrue {
                 playerCellRepository.eventCell != null
             }
