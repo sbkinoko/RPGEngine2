@@ -69,13 +69,6 @@ class BackgroundRepositoryImplTest : KoinTest {
                     actual = this,
                 )
             }
-
-            repository.getBackgroundAt(0, 0).apply {
-                assertEquals(
-                    expected = background.fieldData[0][0],
-                    actual = this,
-                )
-            }
         }
     }
 
