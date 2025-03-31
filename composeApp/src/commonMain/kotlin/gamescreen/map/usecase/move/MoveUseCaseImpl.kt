@@ -7,10 +7,10 @@ import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.npc.NPCRepository
 import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.service.velocitymanage.VelocityManageService
-import gamescreen.map.usecase.UpdateCellContainPlayerUseCase
 import gamescreen.map.usecase.collision.geteventtype.GetEventTypeUseCase
 import gamescreen.map.usecase.movebackground.MoveBackgroundUseCase
 import gamescreen.map.usecase.movenpc.MoveNPCUseCase
+import gamescreen.map.usecase.updatecellcontainplayer.UpdateCellContainPlayerUseCase
 
 // todo テスト作成
 class MoveUseCaseImpl(
@@ -70,7 +70,10 @@ class MoveUseCaseImpl(
         )
 
         // playerが入っているマスを設定
-        updateCellContainPlayerUseCase.invoke()
+        updateCellContainPlayerUseCase.invoke(
+            player = player,
+            backgroundData = movedBackgroundData,
+        )
 
         playerPositionRepository.setPlayerPosition(
             player = player,

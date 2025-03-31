@@ -110,6 +110,7 @@ class MapViewModel(
 
                 mutableUiStateFlow.value = uiStateFlow.value
                     .copy(
+                        player = player!!,
                         backgroundData = backgroundData!!,
                     )
             }
@@ -118,7 +119,6 @@ class MapViewModel(
         DefaultScope.launch {
             delay(50)
             mutableUiStateFlow.value = uiStateFlow.value.copy(
-                player = playerPositionRepository.getPlayerPosition(),
                 npcData = npcRepository.npcStateFlow.value,
             )
         }

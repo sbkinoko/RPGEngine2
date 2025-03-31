@@ -9,9 +9,9 @@ class SetPlayerCenterUseCaseImpl(
     private val getScreenCenterUseCase: GetScreenCenterUseCase,
     private val playerMoveToUseCase: PlayerMoveToUseCase,
 ) : SetPlayerCenterUseCase {
-    override suspend fun invoke() {
+    override suspend fun invoke(): Player {
         val center = getScreenCenterUseCase.invoke()
-        playerMoveToUseCase.invoke(
+        return playerMoveToUseCase.invoke(
             x = center.x - player.size / 2,
             y = center.y - player.size / 2,
         )
