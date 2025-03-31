@@ -25,7 +25,7 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
     private val resetBackgroundPositionUseCase: ResetBackgroundPositionUseCase by inject()
 
     private val mapData = NonLoopTestMap()
-    private lateinit var backgroundData: BackgroundData
+    private lateinit var initializedData: BackgroundData
 
     @BeforeTest
     fun beforeTest() {
@@ -38,13 +38,11 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
         repository.cellNum = CELL_NUM
         repository.screenSize = SIDE_LENGTH
 
-        resetBackgroundPositionUseCase.invoke(
+        initializedData = resetBackgroundPositionUseCase.invoke(
             mapData = mapData,
             mapX = 0,
             mapY = 0,
         )
-
-        backgroundData = repository.backgroundStateFlow.value
     }
 
     @AfterTest
@@ -54,10 +52,7 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
 
     @Test
     fun heckFirstPosition() {
-        repository.getBackgroundAt(
-            x = 0,
-            y = 0,
-        ).apply {
+        initializedData.fieldData[0][0].apply {
             rectangle.apply {
                 assertEquals(
                     expected = 0f,
@@ -100,7 +95,7 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
                     y = 0f,
                     size = SIDE_LENGTH.toFloat(),
                 ),
-                backgroundData = backgroundData,
+                backgroundData = initializedData,
             ).fieldData[0][0].apply {
                 rectangle.apply {
                     assertEquals(
@@ -144,7 +139,7 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
                     y = 0f,
                     size = SIDE_LENGTH.toFloat(),
                 ),
-                backgroundData = backgroundData,
+                backgroundData = initializedData,
             ).fieldData[0][0].apply {
                 rectangle.apply {
                     assertEquals(
@@ -189,7 +184,7 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
                     y = 0f,
                     size = SIDE_LENGTH.toFloat(),
                 ),
-                backgroundData = backgroundData,
+                backgroundData = initializedData,
             ).fieldData[0][0].apply {
                 rectangle.apply {
                     assertEquals(
@@ -234,7 +229,7 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
                     y = 0f,
                     size = SIDE_LENGTH.toFloat(),
                 ),
-                backgroundData = backgroundData
+                backgroundData = initializedData
             ).fieldData[0][0].apply {
                 rectangle.apply {
                     assertEquals(
