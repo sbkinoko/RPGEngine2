@@ -20,7 +20,6 @@ data class MonsterStatus(
     val dropInfoList: List<DropItemInfo>,
     val skillList: List<SkillId>,
     val actionStyle: ActionStyle,
-    val isVisible: Boolean = true,
 ) : Status {
     override fun updateConditionList(
         conditionList: List<ConditionType>,

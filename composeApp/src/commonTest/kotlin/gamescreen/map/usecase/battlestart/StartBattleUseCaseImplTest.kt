@@ -150,7 +150,6 @@ class StartBattleUseCaseImplTest : KoinTest {
                 override fun flash(id: Int) {
                     throw NotImplementedError()
                 }
-
             }
         )
     }

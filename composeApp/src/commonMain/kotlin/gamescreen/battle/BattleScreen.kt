@@ -75,19 +75,19 @@ fun BattleScreen(
                 statusList = playerStatusList.value,
             )
 
-            battleViewModel.apply {
-                MonsterArea(
-                    modifier = Modifier.weight(1f)
-                        .fillMaxWidth()
-                        .border(
-                            width = 1.dp,
-                            color = Colors.MonsterArea,
-                            shape = RectangleShape,
-                        ),
-                    monsters = monsters,
-                    flashState = flashState
-                )
-            }
+
+            MonsterArea(
+                modifier = Modifier.weight(1f)
+                    .fillMaxWidth()
+                    .border(
+                        width = 1.dp,
+                        color = Colors.MonsterArea,
+                        shape = RectangleShape,
+                    ),
+                monsters = monsters,
+                flashState = flashState,
+            )
+
 
             CommandArea(
                 modifier = Modifier.weight(1f)
