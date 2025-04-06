@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,6 +20,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import core.domain.status.monster.MonsterStatus
 import gamescreen.battle.command.selectenemy.SelectEnemyViewModel
+import gamescreen.battle.repository.flash.FlashInfo
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
@@ -28,6 +28,7 @@ import org.koin.compose.koinInject
 @Composable
 fun MonsterArea(
     monsters: List<MonsterStatus>,
+    flashState: List<FlashInfo>,
     modifier: Modifier = Modifier,
     selectEnemyViewModel: SelectEnemyViewModel = koinInject(),
 ) {
@@ -68,10 +69,16 @@ fun MonsterArea(
                             }
                         },
                 ) {
-                    Monster(
-                        modifier = Modifier.fillMaxWidth(),
-                        monsterStatus = monsterStatus,
-                    )
+                    flashState[index].apply {
+                        if ((isFlashing && isVisible) ||
+                            (isFlashing.not() && monsterStatus.isActive)
+                        ) {
+                            Monster(
+                                modifier = Modifier.fillMaxWidth(),
+                                monsterStatus = monsterStatus,
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -84,20 +91,14 @@ fun Monster(
     monsterStatus: MonsterStatus,
     modifier: Modifier = Modifier,
 ) {
-    if (monsterStatus.isActive) {
-        Image(
-            modifier = modifier,
-            painter = painterResource(
-                ImageBinder.bind(
-                    imgId = monsterStatus.imgId,
-                )
-            ),
-            contentScale = ContentScale.Fit,
-            contentDescription = "monster",
-        )
-    } else {
-        Spacer(
-            modifier = modifier
-        )
-    }
+    Image(
+        modifier = modifier,
+        painter = painterResource(
+            ImageBinder.bind(
+                imgId = monsterStatus.imgId,
+            )
+        ),
+        contentScale = ContentScale.Fit,
+        contentDescription = "monster",
+    )
 }
