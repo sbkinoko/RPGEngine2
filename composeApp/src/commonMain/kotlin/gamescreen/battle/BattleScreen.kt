@@ -33,6 +33,8 @@ fun BattleScreen(
         .monsterStatusFlow
         .collectAsState()
 
+    val flashState by battleViewModel.flashStateFlow.collectAsState()
+
     val playerStatusList = battleViewModel
         .playerStatusFlow
         .collectAsState()
@@ -83,6 +85,7 @@ fun BattleScreen(
                             shape = RectangleShape,
                         ),
                     monsters = monsters,
+                    flashState = flashState
                 )
             }
 

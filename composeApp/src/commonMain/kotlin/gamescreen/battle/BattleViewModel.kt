@@ -7,13 +7,16 @@ import core.domain.status.monster.MonsterStatus
 import core.repository.battlemonster.BattleInfoRepository
 import core.repository.player.PlayerStatusRepository
 import gamescreen.battle.repository.commandstate.CommandStateRepository
+import gamescreen.battle.repository.flash.FlashRepository
 import gamescreen.battle.usecase.getcontrollerbyscreentype.GetControllerByCommandTypeUseCase
 import kotlinx.coroutines.flow.StateFlow
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import values.Constants
 
-class BattleViewModel :
+class BattleViewModel(
+    flashRepository: FlashRepository,
+) :
     ControllerCallback,
     KoinComponent {
 
@@ -38,6 +41,8 @@ class BattleViewModel :
 
     val battleBackgroundTypeFlow =
         battleInfoRepository.backgroundType
+
+    val flashStateFlow = flashRepository.flashStateFlow
 
     init {
         initPlayers()

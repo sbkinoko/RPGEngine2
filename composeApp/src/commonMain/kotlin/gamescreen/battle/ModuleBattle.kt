@@ -13,6 +13,8 @@ import gamescreen.battle.repository.action.ActionRepository
 import gamescreen.battle.repository.action.ActionRepositoryImpl
 import gamescreen.battle.repository.commandstate.CommandStateRepository
 import gamescreen.battle.repository.commandstate.CommandStateRepositoryImpl
+import gamescreen.battle.repository.flash.FlashRepository
+import gamescreen.battle.repository.flash.FlashRepositoryImpl
 import gamescreen.battle.service.findtarget.FindTargetService
 import gamescreen.battle.service.findtarget.FindTargetServiceImpl
 import gamescreen.battle.service.isannihilation.IsAnnihilationService
@@ -49,7 +51,9 @@ const val QualifierAttackFromPlayer = "PlayerAttack"
 
 val ModuleBattle = module {
     single {
-        BattleViewModel()
+        BattleViewModel(
+            flashRepository = get(),
+        )
     }
 
     single {
@@ -90,6 +94,10 @@ val ModuleBattle = module {
         BattleFinishViewModel(
             eventRepository = get(),
         )
+    }
+
+    single<FlashRepository> {
+        FlashRepositoryImpl()
     }
 
     single<ActionRepository> {
@@ -134,6 +142,7 @@ val ModuleBattle = module {
             battleInfoRepository = get(),
             findTargetService = get(),
             updateMonsterStatusService = get(),
+            flashRepository = get(),
         )
     }
 
