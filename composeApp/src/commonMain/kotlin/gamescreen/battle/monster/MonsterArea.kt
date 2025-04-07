@@ -119,6 +119,7 @@ private fun AttackEffect() {
     var center by remember {
         mutableStateOf(0f)
     }
+
     var maxHeight by remember {
         mutableStateOf(0f)
     }
