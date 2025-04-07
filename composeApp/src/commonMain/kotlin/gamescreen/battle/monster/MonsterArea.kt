@@ -20,6 +20,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import core.domain.status.monster.MonsterStatus
 import gamescreen.battle.command.selectenemy.SelectEnemyViewModel
+import gamescreen.battle.effect.AttackEffect
 import gamescreen.battle.repository.flash.FlashInfo
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
@@ -36,52 +37,59 @@ fun MonsterArea(
         .selectedEnemyState
         .collectAsState()
 
-    Row(
-        modifier = modifier,
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically,
+    Box(
+        modifier = modifier
     ) {
-        monsters.mapIndexed { index, monsterStatus ->
-            Column(
-                modifier = Modifier
-                    .padding(5.dp)
-                    .weight(1f)
-                    .fillMaxHeight(),
-                verticalArrangement = Arrangement.spacedBy(5.dp),
-            ) {
-                Arrow(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(20.dp),
-                    index = index,
-                    selectedEnemyState = selectEnemyState,
-                )
 
-                Box(
-                    contentAlignment = Alignment.Center,
+        Row(
+            modifier = Modifier.fillMaxSize(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            monsters.mapIndexed { index, monsterStatus ->
+                Column(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .clickable {
-                            if (monsterStatus.isActive) {
-                                selectEnemyViewModel.selectAttackMonster(
-                                    monsterId = index,
+                        .padding(5.dp)
+                        .weight(1f)
+                        .fillMaxHeight(),
+                    verticalArrangement = Arrangement.spacedBy(5.dp),
+                ) {
+                    Arrow(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(20.dp),
+                        index = index,
+                        selectedEnemyState = selectEnemyState,
+                    )
+
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clickable {
+                                if (monsterStatus.isActive) {
+                                    selectEnemyViewModel.selectAttackMonster(
+                                        monsterId = index,
+                                    )
+                                }
+                            },
+                    ) {
+                        flashState[index].apply {
+                            if ((isFlashing && isVisible) ||
+                                (isFlashing.not() && monsterStatus.isActive)
+                            ) {
+                                Monster(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    monsterStatus = monsterStatus,
                                 )
                             }
-                        },
-                ) {
-                    flashState[index].apply {
-                        if ((isFlashing && isVisible) ||
-                            (isFlashing.not() && monsterStatus.isActive)
-                        ) {
-                            Monster(
-                                modifier = Modifier.fillMaxWidth(),
-                                monsterStatus = monsterStatus,
-                            )
                         }
                     }
                 }
             }
         }
+
+        AttackEffect()
     }
 }
 

@@ -75,7 +75,6 @@ fun BattleScreen(
                 statusList = playerStatusList.value,
             )
 
-
             MonsterArea(
                 modifier = Modifier.weight(1f)
                     .fillMaxWidth()
@@ -87,7 +86,6 @@ fun BattleScreen(
                 monsters = monsters,
                 flashState = flashState,
             )
-
 
             CommandArea(
                 modifier = Modifier.weight(1f)
