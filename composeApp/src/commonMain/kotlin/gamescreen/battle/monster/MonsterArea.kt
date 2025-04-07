@@ -47,49 +47,53 @@ fun MonsterArea(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             monsters.mapIndexed { index, monsterStatus ->
-                Column(
+                Box(
                     modifier = Modifier
                         .padding(5.dp)
                         .weight(1f)
                         .fillMaxHeight(),
-                    verticalArrangement = Arrangement.spacedBy(5.dp),
                 ) {
-                    Arrow(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(20.dp),
-                        index = index,
-                        selectedEnemyState = selectEnemyState,
-                    )
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.spacedBy(5.dp),
+                    ) {
+                        Arrow(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(20.dp),
+                            index = index,
+                            selectedEnemyState = selectEnemyState,
+                        )
 
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .clickable {
-                                if (monsterStatus.isActive) {
-                                    selectEnemyViewModel.selectAttackMonster(
-                                        monsterId = index,
+                        Box(
+                            contentAlignment = Alignment.Center,
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .clickable {
+                                    if (monsterStatus.isActive) {
+                                        selectEnemyViewModel.selectAttackMonster(
+                                            monsterId = index,
+                                        )
+                                    }
+                                },
+                        ) {
+                            flashState[index].apply {
+                                if ((isFlashing && isVisible) ||
+                                    (isFlashing.not() && monsterStatus.isActive)
+                                ) {
+                                    Monster(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        monsterStatus = monsterStatus,
                                     )
                                 }
-                            },
-                    ) {
-                        flashState[index].apply {
-                            if ((isFlashing && isVisible) ||
-                                (isFlashing.not() && monsterStatus.isActive)
-                            ) {
-                                Monster(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    monsterStatus = monsterStatus,
-                                )
                             }
                         }
                     }
+
+                    AttackEffect()
                 }
             }
         }
-
-        AttackEffect()
     }
 }
 
