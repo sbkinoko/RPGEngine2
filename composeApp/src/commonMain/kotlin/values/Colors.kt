@@ -26,6 +26,9 @@ object Colors {
     val StatusArea = black
     val StatusComponent = blue
 
+    val AttackBorder = black
+    val AttackFill = white
+
     val IsActivePlayer = black
     val NotActivePlayer = red
 
