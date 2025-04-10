@@ -9,15 +9,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-data class FlashInfo(
-    val count: Int,
-) {
-    val isFlashing = count > 0
-
-    val isVisible: Boolean
-        get() = count % 2 == 0
-}
-
 class FlashRepositoryImpl : FlashRepository {
     private val mutableFlashStateFlow: MutableStateFlow<List<FlashInfo>> =
         MutableStateFlow(emptyList())
@@ -32,7 +23,6 @@ class FlashRepositoryImpl : FlashRepository {
                 FlashInfo(count = 0)
             }
         }
-
 
     private var job: Job = CoroutineScope(Dispatchers.Default).launch { }
 
