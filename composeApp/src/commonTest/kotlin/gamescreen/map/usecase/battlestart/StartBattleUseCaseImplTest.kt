@@ -12,6 +12,8 @@ import gamescreen.battle.domain.ActionType
 import gamescreen.battle.domain.BattleBackgroundType
 import gamescreen.battle.domain.BattleCommandType
 import gamescreen.battle.repository.action.ActionRepository
+import gamescreen.battle.repository.attackeffect.AttackEffectInfo
+import gamescreen.battle.repository.attackeffect.AttackEffectRepository
 import gamescreen.battle.repository.commandstate.CommandStateRepository
 import gamescreen.battle.repository.flash.FlashInfo
 import gamescreen.battle.repository.flash.FlashRepository
@@ -40,6 +42,7 @@ class StartBattleUseCaseImplTest : KoinTest {
     var checkMonster = 0
     var checkBackground = 0
     var flashCount = 0
+    var effectCount = 0
 
     @BeforeTest
     fun beforeTest() {
@@ -150,6 +153,19 @@ class StartBattleUseCaseImplTest : KoinTest {
                 override fun flash(id: Int) {
                     throw NotImplementedError()
                 }
+            },
+            attackEffectRepository = object : AttackEffectRepository {
+                override val effectStateFlow: StateFlow<List<AttackEffectInfo>>
+                    get() = throw NotImplementedError()
+                override var monsterNum: Int = 0
+                    set(value) {
+                        field = value
+                        effectCount++
+                    }
+
+                override fun showEffect(id: Int) {
+                    throw NotImplementedError()
+                }
             }
         )
     }
@@ -205,6 +221,11 @@ class StartBattleUseCaseImplTest : KoinTest {
             assertEquals(
                 expected = 1,
                 actual = flashCount
+            )
+
+            assertEquals(
+                expected = 1,
+                actual = effectCount
             )
 
             collectJob.cancel()
