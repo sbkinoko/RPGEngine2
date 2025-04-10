@@ -11,6 +11,8 @@ import gamescreen.battle.command.selectally.SelectAllyViewModel
 import gamescreen.battle.command.selectenemy.SelectEnemyViewModel
 import gamescreen.battle.repository.action.ActionRepository
 import gamescreen.battle.repository.action.ActionRepositoryImpl
+import gamescreen.battle.repository.attackeffect.AttackEffectRepository
+import gamescreen.battle.repository.attackeffect.AttackEffectRepositoryImpl
 import gamescreen.battle.repository.commandstate.CommandStateRepository
 import gamescreen.battle.repository.commandstate.CommandStateRepositoryImpl
 import gamescreen.battle.repository.flash.FlashRepository
@@ -53,6 +55,7 @@ val ModuleBattle = module {
     single {
         BattleViewModel(
             flashRepository = get(),
+            attackEffectInfoRepository = get(),
         )
     }
 
@@ -100,6 +103,10 @@ val ModuleBattle = module {
         FlashRepositoryImpl()
     }
 
+    single<AttackEffectRepository> {
+        AttackEffectRepositoryImpl()
+    }
+
     single<ActionRepository> {
         ActionRepositoryImpl()
     }
@@ -143,6 +150,7 @@ val ModuleBattle = module {
             findTargetService = get(),
             updateMonsterStatusService = get(),
             flashRepository = get(),
+            attackEffectRepository = get(),
         )
     }
 

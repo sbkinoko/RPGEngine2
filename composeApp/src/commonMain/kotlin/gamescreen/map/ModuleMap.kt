@@ -232,6 +232,7 @@ val ModuleMap = module {
             actionRepository = get(),
             eventRepository = get(),
             flashRepository = get(),
+            attackEffectRepository = get(),
         )
     }
 

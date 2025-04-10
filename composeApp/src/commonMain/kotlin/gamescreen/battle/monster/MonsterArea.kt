@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import core.domain.status.monster.MonsterStatus
 import gamescreen.battle.command.selectenemy.SelectEnemyViewModel
 import gamescreen.battle.effect.AttackEffect
+import gamescreen.battle.repository.attackeffect.AttackEffectInfo
 import gamescreen.battle.repository.flash.FlashInfo
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
@@ -30,6 +31,7 @@ import org.koin.compose.koinInject
 fun MonsterArea(
     monsters: List<MonsterStatus>,
     flashState: List<FlashInfo>,
+    attackEffectInfo: List<AttackEffectInfo>,
     modifier: Modifier = Modifier,
     selectEnemyViewModel: SelectEnemyViewModel = koinInject(),
 ) {
@@ -90,7 +92,9 @@ fun MonsterArea(
                         }
                     }
 
-                    AttackEffect()
+                    AttackEffect(
+                        attackEffectInfo[index],
+                    )
                 }
             }
         }
