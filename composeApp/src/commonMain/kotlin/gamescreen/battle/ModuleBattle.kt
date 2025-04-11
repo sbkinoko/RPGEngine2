@@ -11,6 +11,8 @@ import gamescreen.battle.command.selectally.SelectAllyViewModel
 import gamescreen.battle.command.selectenemy.SelectEnemyViewModel
 import gamescreen.battle.repository.action.ActionRepository
 import gamescreen.battle.repository.action.ActionRepositoryImpl
+import gamescreen.battle.repository.attackeffect.AttackEffectRepository
+import gamescreen.battle.repository.attackeffect.AttackEffectRepositoryImpl
 import gamescreen.battle.repository.commandstate.CommandStateRepository
 import gamescreen.battle.repository.commandstate.CommandStateRepositoryImpl
 import gamescreen.battle.repository.flash.FlashRepository
@@ -31,6 +33,8 @@ import gamescreen.battle.usecase.condition.ConditionFromPlayerUseCaseImpl
 import gamescreen.battle.usecase.condition.ConditionUseCase
 import gamescreen.battle.usecase.decideactionorder.DecideActionOrderUseCase
 import gamescreen.battle.usecase.decideactionorder.DecideActionOrderUseCaseImpl
+import gamescreen.battle.usecase.effect.EffectUseCase
+import gamescreen.battle.usecase.effect.EffectUseCaseImpl
 import gamescreen.battle.usecase.findactivetarget.FindActiveTargetUseCase
 import gamescreen.battle.usecase.findactivetarget.FindActiveTargetUseCaseImpl
 import gamescreen.battle.usecase.getcontrollerbyscreentype.GetControllerByCommandTypeUseCase
@@ -53,6 +57,7 @@ val ModuleBattle = module {
     single {
         BattleViewModel(
             flashRepository = get(),
+            attackEffectInfoRepository = get(),
         )
     }
 
@@ -100,6 +105,10 @@ val ModuleBattle = module {
         FlashRepositoryImpl()
     }
 
+    single<AttackEffectRepository> {
+        AttackEffectRepositoryImpl()
+    }
+
     single<ActionRepository> {
         ActionRepositoryImpl()
     }
@@ -142,7 +151,7 @@ val ModuleBattle = module {
             battleInfoRepository = get(),
             findTargetService = get(),
             updateMonsterStatusService = get(),
-            flashRepository = get(),
+            effectUseCase = get(),
         )
     }
 
@@ -163,6 +172,13 @@ val ModuleBattle = module {
             playerStatusRepository = get(),
             findTargetService = get(),
             updatePlayerStatusService = get(),
+        )
+    }
+
+    single<EffectUseCase> {
+        EffectUseCaseImpl(
+            flashRepository = get(),
+            attackEffectRepository = get(),
         )
     }
 

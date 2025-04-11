@@ -35,6 +35,8 @@ fun BattleScreen(
 
     val flashState by battleViewModel.flashStateFlow.collectAsState()
 
+    val attackEffectInfo by battleViewModel.attackEffectState.collectAsState()
+
     val playerStatusList = battleViewModel
         .playerStatusFlow
         .collectAsState()
@@ -75,7 +77,6 @@ fun BattleScreen(
                 statusList = playerStatusList.value,
             )
 
-
             MonsterArea(
                 modifier = Modifier.weight(1f)
                     .fillMaxWidth()
@@ -86,8 +87,8 @@ fun BattleScreen(
                     ),
                 monsters = monsters,
                 flashState = flashState,
+                attackEffectInfo = attackEffectInfo,
             )
-
 
             CommandArea(
                 modifier = Modifier.weight(1f)

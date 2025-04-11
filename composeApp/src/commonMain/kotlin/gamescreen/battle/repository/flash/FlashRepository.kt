@@ -7,5 +7,6 @@ interface FlashRepository {
 
     var monsterNum: Int
 
-    fun flash(id: Int)
+    fun setInfo(list: List<FlashInfo>)
+
 }

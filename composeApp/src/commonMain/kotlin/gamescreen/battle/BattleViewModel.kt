@@ -6,6 +6,7 @@ import core.domain.status.PlayerStatus
 import core.domain.status.monster.MonsterStatus
 import core.repository.battlemonster.BattleInfoRepository
 import core.repository.player.PlayerStatusRepository
+import gamescreen.battle.repository.attackeffect.AttackEffectRepository
 import gamescreen.battle.repository.commandstate.CommandStateRepository
 import gamescreen.battle.repository.flash.FlashRepository
 import gamescreen.battle.usecase.getcontrollerbyscreentype.GetControllerByCommandTypeUseCase
@@ -16,6 +17,7 @@ import values.Constants
 
 class BattleViewModel(
     flashRepository: FlashRepository,
+    attackEffectInfoRepository: AttackEffectRepository,
 ) :
     ControllerCallback,
     KoinComponent {
@@ -43,6 +45,8 @@ class BattleViewModel(
         battleInfoRepository.backgroundType
 
     val flashStateFlow = flashRepository.flashStateFlow
+
+    val attackEffectState = attackEffectInfoRepository.effectStateFlow
 
     init {
         initPlayers()
