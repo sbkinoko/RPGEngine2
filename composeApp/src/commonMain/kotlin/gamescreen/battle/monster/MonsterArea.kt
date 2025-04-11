@@ -82,9 +82,9 @@ fun MonsterArea(
                             flashState[index].apply {
                                 if (
                                 //攻撃エフェクト中
-                                    attackEffectInfo[index].isVisible
+                                    attackEffectInfo[index].isVisible ||
                                     //点滅中かつ表示中
-                                    || (isFlashing && isVisible) ||
+                                    (isFlashing && isVisible) ||
                                     //　生存状態
                                     monsterStatus.isActive
                                 ) {
