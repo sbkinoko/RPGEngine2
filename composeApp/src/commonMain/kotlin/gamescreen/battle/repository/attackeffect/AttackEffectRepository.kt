@@ -7,5 +7,5 @@ interface AttackEffectRepository {
 
     var monsterNum: Int
 
-    fun showEffect(id: Int)
+    fun setEffect(list: List<AttackEffectInfo>)
 }
