@@ -33,6 +33,8 @@ import gamescreen.battle.usecase.condition.ConditionFromPlayerUseCaseImpl
 import gamescreen.battle.usecase.condition.ConditionUseCase
 import gamescreen.battle.usecase.decideactionorder.DecideActionOrderUseCase
 import gamescreen.battle.usecase.decideactionorder.DecideActionOrderUseCaseImpl
+import gamescreen.battle.usecase.effect.EffectUseCase
+import gamescreen.battle.usecase.effect.EffectUseCaseImpl
 import gamescreen.battle.usecase.findactivetarget.FindActiveTargetUseCase
 import gamescreen.battle.usecase.findactivetarget.FindActiveTargetUseCaseImpl
 import gamescreen.battle.usecase.getcontrollerbyscreentype.GetControllerByCommandTypeUseCase
@@ -149,8 +151,7 @@ val ModuleBattle = module {
             battleInfoRepository = get(),
             findTargetService = get(),
             updateMonsterStatusService = get(),
-            flashRepository = get(),
-            attackEffectRepository = get(),
+            effectUseCase = get(),
         )
     }
 
@@ -171,6 +172,13 @@ val ModuleBattle = module {
             playerStatusRepository = get(),
             findTargetService = get(),
             updatePlayerStatusService = get(),
+        )
+    }
+
+    single<EffectUseCase> {
+        EffectUseCaseImpl(
+            flashRepository = get(),
+            attackEffectRepository = get(),
         )
     }
 
