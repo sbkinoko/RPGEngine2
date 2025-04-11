@@ -80,8 +80,13 @@ fun MonsterArea(
                                 },
                         ) {
                             flashState[index].apply {
-                                if ((isFlashing && isVisible) ||
-                                    (isFlashing.not() && monsterStatus.isActive)
+                                if (
+                                //攻撃エフェクト中
+                                    attackEffectInfo[index].isVisible
+                                    //点滅中かつ表示中
+                                    || (isFlashing && isVisible) ||
+                                    //　生存状態
+                                    monsterStatus.isActive
                                 ) {
                                     Monster(
                                         modifier = Modifier.fillMaxWidth(),
