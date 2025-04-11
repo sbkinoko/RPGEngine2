@@ -2,16 +2,14 @@ package gamescreen.battle.usecase.attack
 
 import core.repository.battlemonster.BattleInfoRepository
 import core.usecase.updateparameter.UpdateMonsterStatusUseCase
-import gamescreen.battle.repository.attackeffect.AttackEffectRepository
-import gamescreen.battle.repository.flash.FlashRepository
 import gamescreen.battle.service.findtarget.FindTargetService
+import gamescreen.battle.usecase.effect.EffectUseCase
 
 class AttackFromPlayerUseCaseImpl(
     private val battleInfoRepository: BattleInfoRepository,
     private val findTargetService: FindTargetService,
     private val updateMonsterStatusService: UpdateMonsterStatusUseCase,
-    private val flashRepository: FlashRepository,
-    private val attackEffectRepository: AttackEffectRepository,
+    private val effectUseCase: EffectUseCase,
 ) : AttackUseCase {
     override suspend operator fun invoke(
         target: Int,
@@ -31,7 +29,6 @@ class AttackFromPlayerUseCaseImpl(
             amount = damage,
         )
 
-        flashRepository.flash(actualTarget)
-        attackEffectRepository.showEffect(actualTarget)
+        effectUseCase.invoke(actualTarget)
     }
 }
