@@ -5,9 +5,11 @@ import gamescreen.map.domain.background.BackgroundCell
 import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.domain.collision.square.NormalRectangle
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
+import gamescreen.map.usecase.collision.list.GetCollisionListUseCase
 
 class MoveBackgroundUseCaseImpl(
     private val backgroundRepository: BackgroundRepository,
+    private val collisionListUseCase: GetCollisionListUseCase,
 ) : MoveBackgroundUseCase {
 
     override operator fun invoke(
@@ -92,6 +94,10 @@ class MoveBackgroundUseCaseImpl(
             return bgCell.copy(
                 mapPoint = mapPoint,
                 cellType = cellType,
+                collisionData = collisionListUseCase.invoke(
+                    rectangle = bgCell.rectangle,
+                    cellType = cellType,
+                )
             ).move(
                 dx = dx,
                 dy = dy,
