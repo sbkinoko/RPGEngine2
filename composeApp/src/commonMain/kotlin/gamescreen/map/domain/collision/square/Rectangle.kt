@@ -9,10 +9,10 @@ interface Rectangle : ShapeCollisionDetect {
     val width: Float
     val height: Float
 
-    override val baseX: Float
+    val baseX: Float
         get() = leftSide
 
-    override val baseY: Float
+    val baseY: Float
         get() = topSide
 
     val x: Float

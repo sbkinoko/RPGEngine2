@@ -9,20 +9,14 @@ import gamescreen.map.domain.Point
 import gamescreen.map.domain.collision.ShapeCollisionDetect
 
 data class ConvexPolygon(
-    override val baseX: Float,
-    override val baseY: Float,
     override val objectHeight: ObjectHeight = ObjectHeight.None,
     val pointList: List<Point>,
 ) : ShapeCollisionDetect {
 
     constructor(
-        baseX: Float,
-        baseY: Float,
         objectHeight: ObjectHeight = ObjectHeight.None,
         vararg points: Point,
     ) : this(
-        baseX = baseX,
-        baseY = baseY,
         objectHeight = objectHeight,
         pointList = points.toList(),
     )

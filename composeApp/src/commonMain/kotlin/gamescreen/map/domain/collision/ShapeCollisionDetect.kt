@@ -7,8 +7,6 @@ import gamescreen.map.domain.isCrossWith
 import gamescreen.map.domain.move
 
 interface ShapeCollisionDetect {
-    val baseX: Float
-    val baseY: Float
 
     val objectHeight: ObjectHeight
 

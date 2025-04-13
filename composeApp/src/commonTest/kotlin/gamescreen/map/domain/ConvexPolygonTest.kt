@@ -9,8 +9,6 @@ import kotlin.test.assertTrue
 // todo 四角形以上の多角形のテストを作る
 class ConvexPolygonTest {
     private val rightTriangle = ConvexPolygon(
-        baseX = 0f,
-        baseY = 0f,
         pointList = listOf(
             Point(10f, 10f),
             Point(10f, 20f),
