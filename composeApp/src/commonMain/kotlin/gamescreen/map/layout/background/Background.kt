@@ -139,8 +139,8 @@ fun CollisionObjects(
                         height = (rectangle.height * screenRatio).pxToDp(),
                     )
                     .offset(
-                        x = (it.baseX * screenRatio).pxToDp(),
-                        y = (it.baseY * screenRatio).pxToDp(),
+                        x = (x * screenRatio).pxToDp(),
+                        y = (y * screenRatio).pxToDp(),
                     ),
                 onDraw = {
                     drawPath(
