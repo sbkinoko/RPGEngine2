@@ -37,6 +37,7 @@ class BackgroundRepositoryImplTest : KoinTest {
                         size = 10f,
                     ),
                     mapPoint = MapPoint(),
+                    collisionData = emptyList(),
                 )
             }
         }
