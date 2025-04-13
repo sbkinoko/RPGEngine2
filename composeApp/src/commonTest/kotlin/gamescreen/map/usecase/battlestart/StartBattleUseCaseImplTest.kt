@@ -150,7 +150,7 @@ class StartBattleUseCaseImplTest : KoinTest {
                         flashCount++
                     }
 
-                override fun flash(id: Int) {
+                override fun setInfo(list: List<FlashInfo>) {
                     throw NotImplementedError()
                 }
             },
@@ -163,7 +163,7 @@ class StartBattleUseCaseImplTest : KoinTest {
                         effectCount++
                     }
 
-                override fun showEffect(id: Int) {
+                override fun setEffect(list: List<AttackEffectInfo>) {
                     throw NotImplementedError()
                 }
             }
