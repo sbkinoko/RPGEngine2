@@ -14,6 +14,7 @@ import common.extension.pxToDp
 import gamescreen.map.domain.Player
 import values.Colors
 
+// fixme タップ用のエリアを分ける
 @Composable
 fun Player(
     player: Player,
