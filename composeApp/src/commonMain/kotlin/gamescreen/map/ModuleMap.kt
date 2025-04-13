@@ -157,6 +157,7 @@ val ModuleMap = module {
     single<ResetBackgroundPositionUseCase> {
         ResetBackgroundPositionUseCaseImpl(
             backgroundRepository = get(),
+            collisionListUseCase = get(),
         )
     }
 
