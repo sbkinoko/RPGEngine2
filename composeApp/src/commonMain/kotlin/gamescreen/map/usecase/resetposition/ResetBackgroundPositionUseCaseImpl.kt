@@ -46,6 +46,9 @@ class ResetBackgroundPositionUseCaseImpl(
                         collisionData = collisionListUseCase.invoke(
                             rectangle = square,
                             cellType = cellType,
+                        ),
+                        aroundCellId = backgroundRepository.getBackgroundAround(
+                            mapPoint,
                         )
                     )
                 }
