@@ -198,7 +198,6 @@ val ModuleMap = module {
     single<IsCollidedUseCase> {
         IsCollidedUseCaseImpl(
             backgroundRepository = get(),
-            getCollisionListUseCase = get(),
             npcRepository = get(),
         )
     }

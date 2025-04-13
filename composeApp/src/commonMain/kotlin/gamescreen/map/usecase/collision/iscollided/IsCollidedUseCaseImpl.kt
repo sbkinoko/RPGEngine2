@@ -3,12 +3,10 @@ package gamescreen.map.usecase.collision.iscollided
 import gamescreen.map.domain.collision.square.Rectangle
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.npc.NPCRepository
-import gamescreen.map.usecase.collision.list.GetCollisionListUseCase
 
 // fixme repositoryに依存しないようにしたい
 class IsCollidedUseCaseImpl(
     private val backgroundRepository: BackgroundRepository,
-    private val getCollisionListUseCase: GetCollisionListUseCase,
     private val npcRepository: NPCRepository,
 ) : IsCollidedUseCase {
 
