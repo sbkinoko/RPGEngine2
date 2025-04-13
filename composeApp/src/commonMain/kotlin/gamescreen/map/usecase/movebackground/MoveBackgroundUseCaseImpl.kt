@@ -50,6 +50,9 @@ class MoveBackgroundUseCaseImpl(
         val allCellNum = backgroundRepository.allCellNum
         val diffOfLoop = allCellNum * backgroundRepository.cellSize
 
+        // fixme ループで情報が変わるならnewで作る
+        // それ以外の場合はcopyで作る
+
         //表示の移動量
         val dx: Float
         //移動後のマップのx座標
