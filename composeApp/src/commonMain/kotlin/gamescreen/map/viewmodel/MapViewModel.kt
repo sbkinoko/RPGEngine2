@@ -224,6 +224,8 @@ class MapViewModel(
     }
 
     private fun updateVelocityByStick(dx: Float, dy: Float) {
+        // fixme repositoryから取ってないのでデータが反映されてない
+        // maxVが0なので初回のスティックだと動かない
         val vx = playerSquare.value.maxVelocity * dx
         val vy = playerSquare.value.maxVelocity * dy
         tentativePlayerVelocity = Velocity(

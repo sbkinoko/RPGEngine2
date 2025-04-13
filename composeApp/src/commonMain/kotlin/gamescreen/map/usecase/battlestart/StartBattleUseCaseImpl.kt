@@ -9,7 +9,9 @@ import core.repository.event.EventRepository
 import core.repository.screentype.ScreenTypeRepository
 import gamescreen.battle.domain.BattleBackgroundType
 import gamescreen.battle.repository.action.ActionRepository
+import gamescreen.battle.repository.attackeffect.AttackEffectRepository
 import gamescreen.battle.repository.commandstate.CommandStateRepository
+import gamescreen.battle.repository.flash.FlashRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,6 +23,8 @@ class StartBattleUseCaseImpl(
     private val commandStateRepository: CommandStateRepository,
     private val actionRepository: ActionRepository,
     private val eventRepository: EventRepository,
+    private val flashRepository: FlashRepository,
+    private val attackEffectRepository: AttackEffectRepository,
 ) : StartBattleUseCase, KoinComponent {
 
     override operator fun invoke(
@@ -36,6 +40,9 @@ class StartBattleUseCaseImpl(
             battleInfoRepository.setMonsters(
                 monsterList
             )
+            flashRepository.monsterNum = monsterList.size
+            attackEffectRepository.monsterNum = monsterList.size
+
             battleInfoRepository.setBackgroundType(
                 backgroundType
             )

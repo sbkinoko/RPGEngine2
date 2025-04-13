@@ -12,7 +12,11 @@ import gamescreen.battle.domain.ActionType
 import gamescreen.battle.domain.BattleBackgroundType
 import gamescreen.battle.domain.BattleCommandType
 import gamescreen.battle.repository.action.ActionRepository
+import gamescreen.battle.repository.attackeffect.AttackEffectInfo
+import gamescreen.battle.repository.attackeffect.AttackEffectRepository
 import gamescreen.battle.repository.commandstate.CommandStateRepository
+import gamescreen.battle.repository.flash.FlashInfo
+import gamescreen.battle.repository.flash.FlashRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -37,6 +41,8 @@ class StartBattleUseCaseImplTest : KoinTest {
     var checkAction = 0
     var checkMonster = 0
     var checkBackground = 0
+    var flashCount = 0
+    var effectCount = 0
 
     @BeforeTest
     fun beforeTest() {
@@ -135,6 +141,32 @@ class StartBattleUseCaseImplTest : KoinTest {
                 }
             },
             eventRepository = eventRepository,
+            flashRepository = object : FlashRepository {
+                override val flashStateFlow: StateFlow<List<FlashInfo>>
+                    get() = throw NotImplementedError()
+                override var monsterNum: Int = 0
+                    set(value) {
+                        field = value
+                        flashCount++
+                    }
+
+                override fun flash(id: Int) {
+                    throw NotImplementedError()
+                }
+            },
+            attackEffectRepository = object : AttackEffectRepository {
+                override val effectStateFlow: StateFlow<List<AttackEffectInfo>>
+                    get() = throw NotImplementedError()
+                override var monsterNum: Int = 0
+                    set(value) {
+                        field = value
+                        effectCount++
+                    }
+
+                override fun showEffect(id: Int) {
+                    throw NotImplementedError()
+                }
+            }
         )
     }
 
@@ -184,6 +216,16 @@ class StartBattleUseCaseImplTest : KoinTest {
             assertEquals(
                 expected = 1,
                 actual = checkBackground,
+            )
+
+            assertEquals(
+                expected = 1,
+                actual = flashCount
+            )
+
+            assertEquals(
+                expected = 1,
+                actual = effectCount
             )
 
             collectJob.cancel()
