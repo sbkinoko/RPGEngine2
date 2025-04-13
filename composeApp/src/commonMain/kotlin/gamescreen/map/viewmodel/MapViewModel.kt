@@ -13,7 +13,6 @@ import gamescreen.map.domain.MapUiState
 import gamescreen.map.domain.Player
 import gamescreen.map.domain.Point
 import gamescreen.map.domain.Velocity
-import gamescreen.map.domain.background.BackgroundCell
 import gamescreen.map.domain.npc.NPCData
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.encouter.EncounterRepository
@@ -23,7 +22,6 @@ import gamescreen.map.repository.playercell.PlayerCellRepository
 import gamescreen.map.usecase.PlayerMoveManageUseCase
 import gamescreen.map.usecase.battlenormal.StartNormalBattleUseCase
 import gamescreen.map.usecase.collision.iscollidedevent.IsCollidedEventUseCase
-import gamescreen.map.usecase.collision.list.GetCollisionListUseCase
 import gamescreen.map.usecase.event.actionevent.ActionEventUseCase
 import gamescreen.map.usecase.event.cellevent.CellEventUseCase
 import gamescreen.map.usecase.move.MoveUseCase
@@ -54,12 +52,6 @@ class MapViewModel(
     private val playerCellRepository: PlayerCellRepository by inject()
 
     private val npcRepository: NPCRepository by inject()
-
-    private val getCollisionListUseCase: GetCollisionListUseCase by inject()
-    fun getCollisionList(backgroundCell: BackgroundCell) =
-        getCollisionListUseCase.invoke(
-            backgroundCell = backgroundCell,
-        )
 
     private val isEventCollidedEventUseCase: IsCollidedEventUseCase by inject()
 

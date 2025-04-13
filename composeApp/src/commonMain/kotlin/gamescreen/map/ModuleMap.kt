@@ -157,6 +157,7 @@ val ModuleMap = module {
     single<ResetBackgroundPositionUseCase> {
         ResetBackgroundPositionUseCaseImpl(
             backgroundRepository = get(),
+            collisionListUseCase = get(),
         )
     }
 
@@ -197,7 +198,6 @@ val ModuleMap = module {
     single<IsCollidedUseCase> {
         IsCollidedUseCaseImpl(
             backgroundRepository = get(),
-            getCollisionListUseCase = get(),
             npcRepository = get(),
         )
     }
@@ -213,7 +213,6 @@ val ModuleMap = module {
         GetEventTypeUseCaseImpl(
             backgroundRepository = get(),
             npcRepository = get(),
-            getCollisionListUseCase = get(),
         )
     }
 

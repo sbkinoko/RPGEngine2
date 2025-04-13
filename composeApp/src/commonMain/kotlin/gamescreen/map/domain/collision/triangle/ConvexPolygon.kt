@@ -7,35 +7,25 @@ import gamescreen.map.domain.Line
 import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.Point
 import gamescreen.map.domain.collision.ShapeCollisionDetect
-import gamescreen.map.domain.move
 
 data class ConvexPolygon(
-    override val baseX: Float,
-    override val baseY: Float,
     override val objectHeight: ObjectHeight = ObjectHeight.None,
     val pointList: List<Point>,
 ) : ShapeCollisionDetect {
-    private val actualPointList = pointList.map {
-        it.move(baseX, baseY)
-    }
 
     constructor(
-        baseX: Float,
-        baseY: Float,
         objectHeight: ObjectHeight = ObjectHeight.None,
         vararg points: Point,
     ) : this(
-        baseX = baseX,
-        baseY = baseY,
         objectHeight = objectHeight,
         pointList = points.toList(),
     )
 
-    override val lines: List<Line> = actualPointList.run {
+    override val lines: List<Line> = run {
         val lineList = mutableListOf<Line>()
 
-        actualPointList.map { point1 ->
-            actualPointList.map inner@{ point2 ->
+        pointList.map { point1 ->
+            pointList.map inner@{ point2 ->
                 if (point1 == point2) {
                     return@inner
                 }

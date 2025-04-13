@@ -5,10 +5,12 @@ import gamescreen.map.domain.background.BackgroundCell
 import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.domain.collision.square.NormalRectangle
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
+import gamescreen.map.usecase.collision.list.GetCollisionListUseCase
 import kotlinx.coroutines.runBlocking
 
 class ResetBackgroundPositionUseCaseImpl(
     private val backgroundRepository: BackgroundRepository,
+    private val collisionListUseCase: GetCollisionListUseCase,
 ) : ResetBackgroundPositionUseCase {
 
     override operator fun invoke(
@@ -41,7 +43,10 @@ class ResetBackgroundPositionUseCaseImpl(
                         rectangle = square,
                         mapPoint = mapPoint,
                         cellType = cellType,
-                        collisionData = emptyList(),
+                        collisionData = collisionListUseCase.invoke(
+                            rectangle = square,
+                            cellType = cellType,
+                        )
                     )
                 }
             }
