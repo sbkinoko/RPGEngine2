@@ -104,7 +104,6 @@ fun Background(
                     }
 
                     CollisionObjects(
-                        mapViewModel = mapViewModel,
                         backgroundCell = this@apply,
                         screenRatio = screenRatio,
                     )
@@ -116,7 +115,6 @@ fun Background(
 
 @Composable
 fun CollisionObjects(
-    mapViewModel: MapViewModel,
     backgroundCell: BackgroundCell,
     screenRatio: Float,
 ) {
@@ -126,12 +124,8 @@ fun CollisionObjects(
     }
 
     backgroundCell.apply {
-        val collisionList = mapViewModel
-            .getCollisionList(
-                backgroundCell = this,
-            )
 
-        collisionList.forEach {
+        collisionData.forEach {
             Canvas(
                 modifier = Modifier
                     .size(
