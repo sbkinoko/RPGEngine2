@@ -39,16 +39,13 @@ class ResetBackgroundPositionUseCaseImpl(
                         size = cellSize,
                     )
 
-                    val data = BackgroundCell(
+                    BackgroundCell(
                         rectangle = square,
                         mapPoint = mapPoint,
                         cellType = cellType,
-                        collisionData = emptyList()
-                    )
-
-                    data.copy(
                         collisionData = collisionListUseCase.invoke(
-                            data
+                            rectangle = square,
+                            cellType = cellType,
                         )
                     )
                 }

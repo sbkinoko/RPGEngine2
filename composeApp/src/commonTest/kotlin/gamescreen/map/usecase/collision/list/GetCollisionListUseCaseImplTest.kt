@@ -84,7 +84,8 @@ class GetCollisionListUseCaseImplTest {
         )
 
         useCase.invoke(
-            backgroundCell = backgroundCell,
+            backgroundCell.rectangle,
+            backgroundCell.cellType,
         )
 
         assertEquals(

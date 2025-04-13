@@ -4,6 +4,7 @@ import androidx.compose.ui.graphics.Path
 import gamescreen.map.domain.Line
 import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.isCrossWith
+import gamescreen.map.domain.move
 
 interface ShapeCollisionDetect {
     val baseX: Float
@@ -13,10 +14,32 @@ interface ShapeCollisionDetect {
 
     val lines: List<Line>
 
+    fun movedLines(
+        baseX: Float,
+        baseY: Float,
+    ): List<Line> {
+        return lines.map {
+            Line(
+                it.point1.move(
+                    dx = baseX,
+                    dy = baseY
+                ),
+                it.point2.move(
+                    dx = baseX,
+                    dy = baseY,
+                )
+            )
+        }
+    }
+
     /**
      * 別の四角形と重なっているかどうかをチェック
      */
-    fun isOverlap(other: ShapeCollisionDetect): Boolean {
+    fun isOverlap(
+        other: ShapeCollisionDetect,
+        baseX: Float = 0f,
+        baseY: Float = 0f,
+    ): Boolean {
         val otherHeight = other.objectHeight
         val thisHeight = this.objectHeight
 
@@ -28,7 +51,10 @@ interface ShapeCollisionDetect {
 
         // fixme 四角形同士の場合は簡略化したい
         other.lines.forEach { otherLine ->
-            lines.forEach { thisLine ->
+            movedLines(
+                baseX,
+                baseY,
+            ).forEach { thisLine ->
                 if (otherLine.isCrossWith(thisLine)) {
                     return true
                 }

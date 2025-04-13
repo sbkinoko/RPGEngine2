@@ -21,16 +21,20 @@ class IsCollidedUseCaseImpl(
             .fieldData
             .forEach { rowArray ->
                 rowArray.forEach cell@{ cell ->
-                    val collisionList = getCollisionListUseCase.invoke(
-                        backgroundCell = cell,
-                    )
+                    val collisionList =
+                        cell.collisionData
 
                     if (collisionList.isEmpty()) {
                         return@cell
                     }
 
                     collisionList.forEach {
-                        if (it.isOverlap(playerSquare)) {
+                        if (it.isOverlap(
+                                playerSquare,
+                                cell.baseX,
+                                cell.baseY,
+                            )
+                        ) {
                             return true
                         }
                     }

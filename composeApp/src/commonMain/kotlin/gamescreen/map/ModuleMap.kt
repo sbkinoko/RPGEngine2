@@ -214,7 +214,6 @@ val ModuleMap = module {
         GetEventTypeUseCaseImpl(
             backgroundRepository = get(),
             npcRepository = get(),
-            getCollisionListUseCase = get(),
         )
     }
 

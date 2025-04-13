@@ -4,13 +4,11 @@ import gamescreen.map.domain.collision.EventObject
 import gamescreen.map.domain.collision.square.Rectangle
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.npc.NPCRepository
-import gamescreen.map.usecase.collision.list.GetCollisionListUseCase
 import values.event.EventType
 
 // todo テスト作る
 class GetEventTypeUseCaseImpl(
     private val backgroundRepository: BackgroundRepository,
-    private val getCollisionListUseCase: GetCollisionListUseCase,
     private val npcRepository: NPCRepository,
 ) : GetEventTypeUseCase {
 
@@ -19,9 +17,8 @@ class GetEventTypeUseCaseImpl(
     ): EventType {
         backgroundRepository.backgroundStateFlow.value.fieldData.forEach { rowArray ->
             rowArray.forEach cell@{ cell ->
-                val collisionList = getCollisionListUseCase.invoke(
-                    backgroundCell = cell,
-                )
+                val collisionList = cell.collisionData
+
                 // 物がないので次を探索
                 if (collisionList.isEmpty()
                 ) {
@@ -30,7 +27,12 @@ class GetEventTypeUseCaseImpl(
 
                 collisionList.forEach shape@{ shape ->
                     // 重なってないので次へ
-                    if (shape.isOverlap(rectangle).not()) {
+                    if (shape.isOverlap(
+                            rectangle,
+                            cell.baseX,
+                            cell.baseY,
+                        ).not()
+                    ) {
                         return@shape
                     }
 
