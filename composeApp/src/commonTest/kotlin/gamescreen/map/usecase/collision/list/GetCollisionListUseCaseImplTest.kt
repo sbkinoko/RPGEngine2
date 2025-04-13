@@ -53,6 +53,7 @@ class GetCollisionListUseCaseImplTest {
             cellType = cellTypeValue,
             mapPoint = MapPoint(),
             rectangle = squareValue,
+            collisionData = emptyList(),
         )
 
         var count = 0
