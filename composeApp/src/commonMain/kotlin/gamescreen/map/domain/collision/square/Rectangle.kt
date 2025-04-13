@@ -66,23 +66,23 @@ interface Rectangle : ShapeCollisionDetect {
         screenRatio: Float,
     ): Path {
         val path = Path()
-        val left = 0f
-        val top = 0f
+        val left = x * screenRatio
+        val top = y * screenRatio
         path.moveTo(
             left,
             top,
         )
-        path.lineTo(left, height * screenRatio)
-        path.lineTo(width * screenRatio, height * screenRatio)
-        path.lineTo(width * screenRatio, top)
+        path.lineTo(left, top + height * screenRatio)
+        path.lineTo(left + width * screenRatio, top + height * screenRatio)
+        path.lineTo(left + width * screenRatio, top)
 
         path.lineTo(left, top)
-        path.lineTo(width * screenRatio, height * screenRatio)
+        path.lineTo(left + width * screenRatio, top + height * screenRatio)
 
         // 右上
-        path.moveTo(width * screenRatio, top)
+        path.moveTo(left + width * screenRatio, top)
         // 左下
-        path.lineTo(left, height * screenRatio)
+        path.lineTo(left, top + height * screenRatio)
 
         path.close()
         return path
