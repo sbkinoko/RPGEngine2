@@ -147,6 +147,7 @@ val ModuleMap = module {
     single<MoveBackgroundUseCase> {
         MoveBackgroundUseCaseImpl(
             backgroundRepository = get(),
+            collisionListUseCase = get(),
         )
     }
 
