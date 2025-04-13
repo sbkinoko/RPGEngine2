@@ -3,6 +3,7 @@ package gamescreen.map.repository.backgroundcell
 import core.domain.mapcell.CellType
 import gamescreen.map.data.LoopMap
 import gamescreen.map.data.MapData
+import gamescreen.map.domain.MapPoint
 import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.viewmodel.MapViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,6 +28,13 @@ class BackgroundRepositoryImpl : BackgroundRepository {
     override var screenSize: Int = MapViewModel.VIRTUAL_SCREEN_SIZE
     override val cellSize: Float
         get() = screenSize / cellNum.toFloat()
+
+    override fun getBackgroundAround(mapPoint: MapPoint): List<List<CellType>> {
+        return getBackgroundAround(
+            mapPoint.x,
+            mapPoint.y,
+        )
+    }
 
     override fun getBackgroundAround(x: Int, y: Int): List<List<CellType>> {
         return listOf(

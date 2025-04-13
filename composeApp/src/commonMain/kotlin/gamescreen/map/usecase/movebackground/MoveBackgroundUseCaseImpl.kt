@@ -97,6 +97,9 @@ class MoveBackgroundUseCaseImpl(
                 collisionData = collisionListUseCase.invoke(
                     rectangle = bgCell.rectangle,
                     cellType = cellType,
+                ),
+                aroundCellId = backgroundRepository.getBackgroundAround(
+                    mapPoint,
                 )
             ).move(
                 dx = dx,
