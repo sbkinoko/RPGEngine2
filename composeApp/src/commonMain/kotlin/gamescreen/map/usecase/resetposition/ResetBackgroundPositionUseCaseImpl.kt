@@ -41,6 +41,7 @@ class ResetBackgroundPositionUseCaseImpl(
                         rectangle = square,
                         mapPoint = mapPoint,
                         cellType = cellType,
+                        collisionData = emptyList(),
                     )
                 }
             }

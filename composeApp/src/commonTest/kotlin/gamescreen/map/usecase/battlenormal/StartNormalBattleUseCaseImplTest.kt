@@ -80,7 +80,8 @@ class StartNormalBattleUseCaseImplTest {
                 get() = BackgroundCell(
                     cellType = CellType.Town1O,
                     mapPoint = MapPoint(0, 0),
-                    rectangle = NormalRectangle(x = 0f, y = 0f, size = 0f)
+                    rectangle = NormalRectangle(x = 0f, y = 0f, size = 0f),
+                    collisionData = emptyList(),
                 )
                 set(@Suppress("UNUSED_PARAMETER") value) {}
             override val eventCell: BackgroundCell
@@ -109,7 +110,8 @@ class StartNormalBattleUseCaseImplTest {
         val expectedBackgroundCell = BackgroundCell(
             cellType = cellType,
             mapPoint = MapPoint(0, 0),
-            rectangle = NormalRectangle(x = 0f, y = 0f, size = 0f)
+            rectangle = NormalRectangle(x = 0f, y = 0f, size = 0f),
+            collisionData = emptyList(),
         )
         var count = 0
 
@@ -162,7 +164,8 @@ class StartNormalBattleUseCaseImplTest {
         val expectedBackgroundCell = BackgroundCell(
             cellType = cellType,
             mapPoint = MapPoint(0, 0),
-            rectangle = NormalRectangle(x = 0f, y = 0f, size = 0f)
+            rectangle = NormalRectangle(x = 0f, y = 0f, size = 0f),
+            collisionData = emptyList(),
         )
 
         val expectedBackground = cellType.toBattleBackGround()
