@@ -2,6 +2,7 @@ package gamescreen.map.usecase.move
 
 import gamescreen.map.domain.UIData
 import gamescreen.map.domain.Velocity
+import gamescreen.map.domain.background.FrontObjectData
 import gamescreen.map.domain.collision.square.NormalRectangle
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.npc.NPCRepository
@@ -85,9 +86,29 @@ class MoveUseCaseImpl(
         npcRepository.setNpc(
             npcData = movedData,
         )
+
+        val frontObjectData = FrontObjectData(
+            backgroundData.fieldData.map {
+                it.map { cell ->
+                    val frontData = cell.collisionData.filter {
+                        player.square.objectHeight < it.objectHeight
+                    }
+
+                    if (frontData.isEmpty()) {
+                        null
+                    } else {
+                        cell.copy(
+                            collisionData = frontData
+                        )
+                    }
+                }
+            }
+        )
+
         return UIData(
             player,
             backgroundData,
+            frontObjectData = frontObjectData,
             npcData,
         )
     }

@@ -2,6 +2,7 @@ package gamescreen.map.usecase.roadmap
 
 import gamescreen.map.data.MapData
 import gamescreen.map.domain.UIData
+import gamescreen.map.domain.background.FrontObjectData
 import gamescreen.map.usecase.resetnpc.ResetNPCPositionUseCase
 import gamescreen.map.usecase.resetposition.ResetBackgroundPositionUseCase
 import gamescreen.map.usecase.setplayercenter.SetPlayerCenterUseCase
@@ -35,9 +36,28 @@ class RoadMapUseCaseImpl(
             backgroundData = backgroundData,
         )
 
+        val frontObjectData = FrontObjectData(
+            backgroundData.fieldData.map {
+                it.map { cell ->
+                    val frontData = cell.collisionData.filter {
+                        player.square.objectHeight < it.objectHeight
+                    }
+
+                    if (frontData.isEmpty()) {
+                        null
+                    } else {
+                        cell.copy(
+                            collisionData = frontData
+                        )
+                    }
+                }
+            }
+        )
+
         return UIData(
             player = player,
             backgroundData = backgroundData,
+            frontObjectData = frontObjectData,
         )
     }
 }
