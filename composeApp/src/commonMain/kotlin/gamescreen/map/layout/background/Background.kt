@@ -9,8 +9,6 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.drawscope.Stroke
@@ -29,12 +27,9 @@ import values.GameParams
 fun Background(
     mapViewModel: MapViewModel,
     backgroundCell: BackgroundData,
+    eventCell: BackgroundCell?,
     screenRatio: Float,
 ) {
-    val eventCell by mapViewModel
-        .playerIncludeCellFlow
-        .collectAsState()
-
     val imageBinder = ImageBinderBackground()
 
     // fixme 背景が動いてない場合はリロードしない

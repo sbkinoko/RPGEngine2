@@ -63,6 +63,7 @@ fun MapScreen(
             mapViewModel = mapViewModel,
             screenRatio = screenRatio,
             backgroundCell = mapUiState.backgroundData,
+            eventCell = mapUiState.playerIncludeCell,
         )
 
         NPC(
