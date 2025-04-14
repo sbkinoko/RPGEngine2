@@ -55,9 +55,6 @@ class MapViewModel(
 
     private val isEventCollidedEventUseCase: IsCollidedEventUseCase by inject()
 
-    val playerIncludeCellFlow = playerCellRepository
-        .playerIncludeCellFlow
-
     private val actionEventUseCase: ActionEventUseCase by inject()
     private val cellEventUseCase: CellEventUseCase by inject()
 
@@ -78,6 +75,7 @@ class MapViewModel(
             player = playerPositionRepository.playerPositionStateFlow.value,
             npcData = NPCData(emptyList()),
             backgroundData = backgroundRepository.backgroundStateFlow.value,
+            playerIncludeCell = null,
         )
     )
 
@@ -113,6 +111,14 @@ class MapViewModel(
             mutableUiStateFlow.value = uiStateFlow.value.copy(
                 npcData = npcRepository.npcStateFlow.value,
             )
+        }
+
+        DefaultScope.launch {
+            playerCellRepository.playerIncludeCellFlow.collect {
+                mutableUiStateFlow.value = uiStateFlow.value.copy(
+                    playerIncludeCell = it,
+                )
+            }
         }
     }
 
