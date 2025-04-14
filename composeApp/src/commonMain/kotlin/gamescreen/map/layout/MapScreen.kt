@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.util.fastAny
 import gamescreen.map.layout.background.Background
+import gamescreen.map.layout.background.FrontObject
 import gamescreen.map.layout.npc.NPC
 import gamescreen.map.viewmodel.MapViewModel
 import kotlinx.coroutines.delay
@@ -60,7 +61,6 @@ fun MapScreen(
             },
     ) {
         Background(
-            mapViewModel = mapViewModel,
             screenRatio = screenRatio,
             backgroundCell = mapUiState.backgroundData,
             eventCell = mapUiState.playerIncludeCell,
@@ -80,6 +80,11 @@ fun MapScreen(
                 mapViewModel.touchEventSquare()
             },
             screenRatio = screenRatio,
+        )
+
+        FrontObject(
+            screenRatio = screenRatio,
+            backgroundCell = mapUiState.backgroundData,
         )
     }
 }

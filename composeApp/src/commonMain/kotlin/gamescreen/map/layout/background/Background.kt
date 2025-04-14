@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.dp
 import common.extension.pxToDp
 import gamescreen.map.domain.background.BackgroundCell
 import gamescreen.map.domain.background.BackgroundData
-import gamescreen.map.viewmodel.MapViewModel
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import values.Colors
@@ -25,7 +24,6 @@ import values.GameParams
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 fun Background(
-    mapViewModel: MapViewModel,
     backgroundCell: BackgroundData,
     eventCell: BackgroundCell?,
     screenRatio: Float,
@@ -37,11 +35,6 @@ fun Background(
         backgroundCell.fieldData.forEachIndexed { row, backgroundCells ->
             backgroundCells.forEachIndexed { col, cell ->
                 cell.apply {
-                    val aroundCellId = mapViewModel.getAroundCellId(
-                        x = mapPoint.x,
-                        y = mapPoint.y,
-                    )
-
                     Box(
                         modifier = Modifier
                             .size(

@@ -1,5 +1,6 @@
 package gamescreen.map.domain.background
 
+import androidx.compose.runtime.Stable
 import core.domain.mapcell.CellType
 import gamescreen.map.domain.MapPoint
 import gamescreen.map.domain.collision.ShapeCollisionDetect
@@ -8,6 +9,7 @@ import gamescreen.map.domain.collision.square.RectangleWrapper
 
 //fixme 背景画像の情報を持たせる
 //宝箱を開けたときにすぐに更新するため
+@Stable
 data class BackgroundCell(
     val mapPoint: MapPoint,
     override val rectangle: Rectangle,
