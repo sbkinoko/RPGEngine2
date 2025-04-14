@@ -37,6 +37,7 @@ class BackgroundRepositoryImplTest : KoinTest {
                         size = 10f,
                     ),
                     mapPoint = MapPoint(),
+                    collisionData = emptyList(),
                 )
             }
         }
@@ -66,13 +67,6 @@ class BackgroundRepositoryImplTest : KoinTest {
             repository.backgroundStateFlow.value.apply {
                 assertEquals(
                     expected = background,
-                    actual = this,
-                )
-            }
-
-            repository.getBackgroundAt(0, 0).apply {
-                assertEquals(
-                    expected = background.fieldData[0][0],
                     actual = this,
                 )
             }

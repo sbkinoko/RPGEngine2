@@ -42,10 +42,12 @@ class ConditionTypeTest {
             it.isEmpty()
         }
 
-        isInRange(
-            cureNum,
-            poison.cure.toFloat(),
-        )
+        assertTrue {
+            isInRange(
+                cureNum,
+                poison.cure.toFloat(),
+            )
+        }
     }
 
     @Test

@@ -9,8 +9,6 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.drawscope.Stroke
@@ -28,16 +26,10 @@ import values.GameParams
 @Composable
 fun Background(
     mapViewModel: MapViewModel,
+    backgroundCell: BackgroundData,
+    eventCell: BackgroundCell?,
     screenRatio: Float,
 ) {
-    val backgroundCell: BackgroundData by mapViewModel
-        .backgroundCells
-        .collectAsState()
-
-    val eventCell by mapViewModel
-        .playerIncludeCellFlow
-        .collectAsState()
-
     val imageBinder = ImageBinderBackground()
 
     // fixme 背景が動いてない場合はリロードしない
@@ -107,7 +99,6 @@ fun Background(
                     }
 
                     CollisionObjects(
-                        mapViewModel = mapViewModel,
                         backgroundCell = this@apply,
                         screenRatio = screenRatio,
                     )
@@ -119,7 +110,6 @@ fun Background(
 
 @Composable
 fun CollisionObjects(
-    mapViewModel: MapViewModel,
     backgroundCell: BackgroundCell,
     screenRatio: Float,
 ) {
@@ -129,12 +119,8 @@ fun CollisionObjects(
     }
 
     backgroundCell.apply {
-        val collisionList = mapViewModel
-            .getCollisionList(
-                backgroundCell = this,
-            )
 
-        collisionList.forEach {
+        collisionData.forEach {
             Canvas(
                 modifier = Modifier
                     .size(
@@ -142,8 +128,8 @@ fun CollisionObjects(
                         height = (rectangle.height * screenRatio).pxToDp(),
                     )
                     .offset(
-                        x = (it.baseX * screenRatio).pxToDp(),
-                        y = (it.baseY * screenRatio).pxToDp(),
+                        x = (x * screenRatio).pxToDp(),
+                        y = (y * screenRatio).pxToDp(),
                     ),
                 onDraw = {
                     drawPath(

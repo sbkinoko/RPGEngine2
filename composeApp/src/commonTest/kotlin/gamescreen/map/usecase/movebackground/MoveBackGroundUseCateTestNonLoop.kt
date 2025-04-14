@@ -9,7 +9,6 @@ import gamescreen.map.manager.CELL_NUM
 import gamescreen.map.manager.SIDE_LENGTH
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.usecase.resetposition.ResetBackgroundPositionUseCase
-import kotlinx.coroutines.runBlocking
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
@@ -25,7 +24,7 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
     private val resetBackgroundPositionUseCase: ResetBackgroundPositionUseCase by inject()
 
     private val mapData = NonLoopTestMap()
-    private lateinit var backgroundData: BackgroundData
+    private lateinit var initializedData: BackgroundData
 
     @BeforeTest
     fun beforeTest() {
@@ -38,13 +37,11 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
         repository.cellNum = CELL_NUM
         repository.screenSize = SIDE_LENGTH
 
-        resetBackgroundPositionUseCase.invoke(
+        initializedData = resetBackgroundPositionUseCase.invoke(
             mapData = mapData,
             mapX = 0,
             mapY = 0,
         )
-
-        backgroundData = repository.backgroundStateFlow.value
     }
 
     @AfterTest
@@ -54,10 +51,7 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
 
     @Test
     fun heckFirstPosition() {
-        repository.getBackgroundAt(
-            x = 0,
-            y = 0,
-        ).apply {
+        initializedData.fieldData[0][0].apply {
             rectangle.apply {
                 assertEquals(
                     expected = 0f,
@@ -88,40 +82,38 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
     fun checkLoop_Up() {
         val dy = 15f
 
-        runBlocking {
-            moveBackgroundUseCase.invoke(
-                velocity = Velocity(
-                    x = 0f,
-                    y = -dy,
-                    maxVelocity = dy,
-                ),
-                fieldSquare = NormalRectangle(
-                    x = 0f,
-                    y = 0f,
-                    size = SIDE_LENGTH.toFloat(),
-                ),
-                backgroundData = backgroundData,
-            ).fieldData[0][0].apply {
-                rectangle.apply {
-                    assertEquals(
-                        expected = 0f,
-                        actual = leftSide,
-                    )
-                    assertEquals(
-                        expected = 25f,
-                        actual = topSide,
-                    )
-                }
-                mapPoint.apply {
-                    assertEquals(
-                        expected = INITIAL_LEFT_TOP_MAP_X,
-                        actual = x,
-                    )
-                    assertEquals(
-                        expected = 3,
-                        actual = y,
-                    )
-                }
+        moveBackgroundUseCase.invoke(
+            velocity = Velocity(
+                x = 0f,
+                y = -dy,
+                maxVelocity = dy,
+            ),
+            fieldSquare = NormalRectangle(
+                x = 0f,
+                y = 0f,
+                size = SIDE_LENGTH.toFloat(),
+            ),
+            backgroundData = initializedData,
+        ).fieldData[0][0].apply {
+            rectangle.apply {
+                assertEquals(
+                    expected = 0f,
+                    actual = leftSide,
+                )
+                assertEquals(
+                    expected = 25f,
+                    actual = topSide,
+                )
+            }
+            mapPoint.apply {
+                assertEquals(
+                    expected = INITIAL_LEFT_TOP_MAP_X,
+                    actual = x,
+                )
+                assertEquals(
+                    expected = 3,
+                    actual = y,
+                )
             }
         }
     }
@@ -131,42 +123,42 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
      */
     @Test
     fun checkLoop_Down() {
-        runBlocking {
-            val dy = 35f
-            moveBackgroundUseCase.invoke(
-                velocity = Velocity(
-                    x = 0f,
-                    y = dy,
-                    maxVelocity = dy,
-                ),
-                fieldSquare = NormalRectangle(
-                    x = 0f,
-                    y = 0f,
-                    size = SIDE_LENGTH.toFloat(),
-                ),
-                backgroundData = backgroundData,
-            ).fieldData[0][0].apply {
-                rectangle.apply {
-                    assertEquals(
-                        expected = 0f,
-                        actual = leftSide,
-                    )
-                    assertEquals(
-                        expected = -dy + SIDE_LENGTH,
-                        actual = topSide,
-                    )
-                }
+        val dy = 35f
+        val movedData = moveBackgroundUseCase.invoke(
+            velocity = Velocity(
+                x = 0f,
+                y = dy,
+                maxVelocity = dy,
+            ),
+            fieldSquare = NormalRectangle(
+                x = 0f,
+                y = 0f,
+                size = SIDE_LENGTH.toFloat(),
+            ),
+            backgroundData = initializedData,
+        )
 
-                mapPoint.apply {
-                    assertEquals(
-                        expected = INITIAL_LEFT_TOP_MAP_X,
-                        actual = x,
-                    )
-                    assertEquals(
-                        expected = -5,
-                        actual = y,
-                    )
-                }
+        movedData.fieldData[0][0].apply {
+            rectangle.apply {
+                assertEquals(
+                    expected = 0f,
+                    actual = leftSide,
+                )
+                assertEquals(
+                    expected = -dy + SIDE_LENGTH,
+                    actual = topSide,
+                )
+            }
+
+            mapPoint.apply {
+                assertEquals(
+                    expected = INITIAL_LEFT_TOP_MAP_X,
+                    actual = x,
+                )
+                assertEquals(
+                    expected = -5,
+                    actual = y,
+                )
             }
         }
     }
@@ -177,40 +169,41 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
     @Test
     fun checkLoop_Left() {
         val dx = 15f
-        runBlocking {
-            moveBackgroundUseCase.invoke(
-                velocity = Velocity(
-                    x = -dx,
-                    y = 0f,
-                    maxVelocity = dx,
-                ),
-                fieldSquare = NormalRectangle(
-                    x = 0f,
-                    y = 0f,
-                    size = SIDE_LENGTH.toFloat(),
-                ),
-                backgroundData = backgroundData,
-            ).fieldData[0][0].apply {
-                rectangle.apply {
-                    assertEquals(
-                        expected = 25f,
-                        actual = leftSide,
-                    )
-                    assertEquals(
-                        expected = 0f,
-                        actual = topSide,
-                    )
-                }
-                mapPoint.apply {
-                    assertEquals(
-                        expected = 3,
-                        actual = x,
-                    )
-                    assertEquals(
-                        expected = INITIAL_LEFT_TOP_MAP_Y,
-                        actual = y,
-                    )
-                }
+
+        val movedData = moveBackgroundUseCase.invoke(
+            velocity = Velocity(
+                x = -dx,
+                y = 0f,
+                maxVelocity = dx,
+            ),
+            fieldSquare = NormalRectangle(
+                x = 0f,
+                y = 0f,
+                size = SIDE_LENGTH.toFloat(),
+            ),
+            backgroundData = initializedData,
+        )
+
+        movedData.fieldData[0][0].apply {
+            rectangle.apply {
+                assertEquals(
+                    expected = 25f,
+                    actual = leftSide,
+                )
+                assertEquals(
+                    expected = 0f,
+                    actual = topSide,
+                )
+            }
+            mapPoint.apply {
+                assertEquals(
+                    expected = 3,
+                    actual = x,
+                )
+                assertEquals(
+                    expected = INITIAL_LEFT_TOP_MAP_Y,
+                    actual = y,
+                )
             }
         }
     }
@@ -222,40 +215,40 @@ class MoveBackGroundUseCateTestNonLoop : KoinTest {
     fun checkLoop_Right() {
         val dx = 35f
 
-        runBlocking {
-            moveBackgroundUseCase.invoke(
-                velocity = Velocity(
-                    x = dx,
-                    y = 0f,
-                    maxVelocity = dx,
-                ),
-                fieldSquare = NormalRectangle(
-                    x = 0f,
-                    y = 0f,
-                    size = SIDE_LENGTH.toFloat(),
-                ),
-                backgroundData = backgroundData
-            ).fieldData[0][0].apply {
-                rectangle.apply {
-                    assertEquals(
-                        expected = -dx + SIDE_LENGTH,
-                        actual = leftSide,
-                    )
-                    assertEquals(
-                        expected = 0f,
-                        actual = topSide,
-                    )
-                }
-                mapPoint.apply {
-                    assertEquals(
-                        expected = -5,
-                        actual = x,
-                    )
-                    assertEquals(
-                        expected = INITIAL_LEFT_TOP_MAP_Y,
-                        actual = y,
-                    )
-                }
+        val movedData = moveBackgroundUseCase.invoke(
+            velocity = Velocity(
+                x = dx,
+                y = 0f,
+                maxVelocity = dx,
+            ),
+            fieldSquare = NormalRectangle(
+                x = 0f,
+                y = 0f,
+                size = SIDE_LENGTH.toFloat(),
+            ),
+            backgroundData = initializedData,
+        )
+
+        movedData.fieldData[0][0].apply {
+            rectangle.apply {
+                assertEquals(
+                    expected = -dx + SIDE_LENGTH,
+                    actual = leftSide,
+                )
+                assertEquals(
+                    expected = 0f,
+                    actual = topSide,
+                )
+            }
+            mapPoint.apply {
+                assertEquals(
+                    expected = -5,
+                    actual = x,
+                )
+                assertEquals(
+                    expected = INITIAL_LEFT_TOP_MAP_Y,
+                    actual = y,
+                )
             }
         }
     }

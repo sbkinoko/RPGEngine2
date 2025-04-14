@@ -1,6 +1,7 @@
 package gamescreen.map.usecase.roadmap
 
 import gamescreen.map.data.MapData
+import gamescreen.map.domain.UIData
 
 // todo test作る
 interface RoadMapUseCase {
@@ -11,5 +12,5 @@ interface RoadMapUseCase {
         mapX: Int,
         mapY: Int,
         mapData: MapData,
-    )
+    ): UIData
 }

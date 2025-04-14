@@ -26,7 +26,7 @@ class MoveBackgroundUseCaseTest : KoinTest {
 
     private val mapData = LoopTestMap()
 
-    private lateinit var backgroundData: BackgroundData
+    private lateinit var initializedData: BackgroundData
 
     @BeforeTest
     fun beforeTest() {
@@ -39,13 +39,11 @@ class MoveBackgroundUseCaseTest : KoinTest {
         repository.cellNum = CELL_NUM
         repository.screenSize = SIDE_LENGTH
 
-        resetBackgroundPositionUseCase(
+        initializedData = resetBackgroundPositionUseCase(
             mapData = mapData,
             mapX = 0,
             mapY = 0,
         )
-
-        backgroundData = repository.backgroundStateFlow.value
     }
 
     @AfterTest
@@ -54,11 +52,8 @@ class MoveBackgroundUseCaseTest : KoinTest {
     }
 
     @Test
-    fun checkInitPosition() {
-        val cell1 = repository.getBackgroundAt(
-            x = 0,
-            y = 0,
-        )
+    fun checkInit0_0() {
+        val cell1 = initializedData.fieldData[0][0]
 
         cell1.rectangle.apply {
             assertEquals(
@@ -70,11 +65,12 @@ class MoveBackgroundUseCaseTest : KoinTest {
                 actual = topSide,
             )
         }
+    }
 
-        val cell2 = repository.getBackgroundAt(
-            x = 1,
-            y = 0,
-        )
+    @Test
+    fun checkInit0_1() {
+        val cell2 = initializedData.fieldData[0][1]
+
         cell2.rectangle.apply {
             assertEquals(
                 expected = 10f,
@@ -85,11 +81,12 @@ class MoveBackgroundUseCaseTest : KoinTest {
                 actual = topSide,
             )
         }
+    }
 
-        val cell3 = repository.getBackgroundAt(
-            x = 0,
-            y = 1,
-        )
+    @Test
+    fun checkInit1_0() {
+        val cell3 = initializedData.fieldData[1][0]
+
         cell3.rectangle.apply {
             assertEquals(
                 expected = 0f,
@@ -107,6 +104,7 @@ class MoveBackgroundUseCaseTest : KoinTest {
         val dx = 10f
         val dy = 5f
         val vMax = 20f
+
         runBlocking {
             moveBackgroundUseCase.invoke(
                 velocity = Velocity(
@@ -119,15 +117,15 @@ class MoveBackgroundUseCaseTest : KoinTest {
                     y = 0f,
                     size = SIDE_LENGTH.toFloat(),
                 ),
-                backgroundData = backgroundData
+                backgroundData = initializedData,
             ).fieldData[0][0].apply {
                 rectangle.apply {
                     assertEquals(
-                        expected = 10f,
+                        expected = dx,
                         actual = leftSide,
                     )
                     assertEquals(
-                        expected = 5f,
+                        expected = dy,
                         actual = topSide,
                     )
                 }

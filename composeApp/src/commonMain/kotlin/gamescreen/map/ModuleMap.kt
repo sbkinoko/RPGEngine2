@@ -20,7 +20,6 @@ import gamescreen.map.service.velocitymanage.VelocityManageServiceImpl
 import gamescreen.map.usecase.GetScreenCenterUseCase
 import gamescreen.map.usecase.PlayerMoveManageUseCase
 import gamescreen.map.usecase.PlayerMoveToUseCase
-import gamescreen.map.usecase.UpdateCellContainPlayerUseCase
 import gamescreen.map.usecase.battledecidemonster.DecideBattleMonsterUseCase
 import gamescreen.map.usecase.battledecidemonster.DecideBattleMonsterUseCaseImpl
 import gamescreen.map.usecase.battleevent.StartEventBattleUseCase
@@ -63,6 +62,8 @@ import gamescreen.map.usecase.setplayercenter.SetPlayerCenterUseCase
 import gamescreen.map.usecase.setplayercenter.SetPlayerCenterUseCaseImpl
 import gamescreen.map.usecase.settalk.SetTalkUseCase
 import gamescreen.map.usecase.settalk.SetTalkUseCaseImpl
+import gamescreen.map.usecase.updatecellcontainplayer.UpdateCellContainPlayerUseCase
+import gamescreen.map.usecase.updatecellcontainplayer.UpdateCellContainPlayerUseCaseImpl
 import gamescreen.map.viewmodel.MapViewModel
 import org.koin.dsl.module
 
@@ -146,6 +147,7 @@ val ModuleMap = module {
     single<MoveBackgroundUseCase> {
         MoveBackgroundUseCaseImpl(
             backgroundRepository = get(),
+            collisionListUseCase = get(),
         )
     }
 
@@ -156,6 +158,7 @@ val ModuleMap = module {
     single<ResetBackgroundPositionUseCase> {
         ResetBackgroundPositionUseCaseImpl(
             backgroundRepository = get(),
+            collisionListUseCase = get(),
         )
     }
 
@@ -165,11 +168,9 @@ val ModuleMap = module {
         )
     }
 
-    single {
-        UpdateCellContainPlayerUseCase(
-            playerPositionRepository = get(),
+    single<UpdateCellContainPlayerUseCase> {
+        UpdateCellContainPlayerUseCaseImpl(
             playerCellRepository = get(),
-            backgroundRepository = get(),
         )
     }
 
@@ -198,7 +199,6 @@ val ModuleMap = module {
     single<IsCollidedUseCase> {
         IsCollidedUseCaseImpl(
             backgroundRepository = get(),
-            getCollisionListUseCase = get(),
             npcRepository = get(),
         )
     }
@@ -214,7 +214,6 @@ val ModuleMap = module {
         GetEventTypeUseCaseImpl(
             backgroundRepository = get(),
             npcRepository = get(),
-            getCollisionListUseCase = get(),
         )
     }
 

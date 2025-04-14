@@ -1,10 +1,12 @@
 package gamescreen.map.domain
 
+import androidx.compose.runtime.Stable
 import gamescreen.map.domain.collision.square.NormalRectangle
 import gamescreen.map.domain.collision.square.Rectangle
 import gamescreen.map.viewmodel.MapViewModel.Companion.VIRTUAL_PLAYER_SIZE
 import values.event.EventType
 
+@Stable
 data class Player(
     val size: Float,
     val square: Rectangle,

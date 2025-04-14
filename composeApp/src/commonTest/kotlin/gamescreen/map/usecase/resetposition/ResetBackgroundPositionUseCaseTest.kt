@@ -2,11 +2,10 @@ package gamescreen.map.usecase.resetposition
 
 import gamescreen.map.ModuleMap
 import gamescreen.map.data.LoopTestMap
+import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.manager.CELL_NUM
 import gamescreen.map.manager.SIDE_LENGTH
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
@@ -22,6 +21,7 @@ class ResetBackgroundPositionUseCaseTest : KoinTest {
     private val resetBackgroundPositionUseCase: ResetBackgroundPositionUseCase
             by inject()
     private val repository: BackgroundRepository by inject()
+    private lateinit var initializedData: BackgroundData
 
     @BeforeTest
     fun beforeTest() {
@@ -33,7 +33,7 @@ class ResetBackgroundPositionUseCaseTest : KoinTest {
 
         repository.cellNum = CELL_NUM
         repository.screenSize = SIDE_LENGTH
-        resetBackgroundPositionUseCase.invoke(
+        initializedData = resetBackgroundPositionUseCase.invoke(
             mapData = mapData,
             mapX = 0,
             mapY = 0,
@@ -50,10 +50,7 @@ class ResetBackgroundPositionUseCaseTest : KoinTest {
      */
     @Test
     fun initPosition() {
-        repository.getBackgroundAt(
-            x = 0,
-            y = 0,
-        ).apply {
+        initializedData.fieldData[0][0].apply {
             rectangle.apply {
                 assertEquals(
                     0f,
@@ -79,40 +76,33 @@ class ResetBackgroundPositionUseCaseTest : KoinTest {
 
     @Test
     fun resetPosition() {
-        runBlocking {
-            resetBackgroundPositionUseCase.invoke(
-                mapData = mapData,
-                mapX = 1,
-                mapY = 1,
-            )
+        val newData = resetBackgroundPositionUseCase.invoke(
+            mapData = mapData,
+            mapX = 1,
+            mapY = 1,
+        )
 
-            delay(50)
+        newData.fieldData[0][0].apply {
+            rectangle.apply {
+                assertEquals(
+                    0f,
+                    x,
+                )
+                assertEquals(
+                    0f,
+                    y,
+                )
+            }
 
-            repository.getBackgroundAt(
-                x = 0,
-                y = 0,
-            ).apply {
-                rectangle.apply {
-                    assertEquals(
-                        0f,
-                        x,
-                    )
-                    assertEquals(
-                        0f,
-                        y,
-                    )
-                }
-
-                mapPoint.apply {
-                    assertEquals(
-                        0,
-                        x,
-                    )
-                    assertEquals(
-                        0,
-                        y,
-                    )
-                }
+            mapPoint.apply {
+                assertEquals(
+                    0,
+                    x,
+                )
+                assertEquals(
+                    0,
+                    y,
+                )
             }
         }
     }

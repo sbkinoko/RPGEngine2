@@ -53,6 +53,7 @@ class GetCollisionListUseCaseImplTest {
             cellType = cellTypeValue,
             mapPoint = MapPoint(),
             rectangle = squareValue,
+            collisionData = emptyList(),
         )
 
         var count = 0
@@ -83,7 +84,8 @@ class GetCollisionListUseCaseImplTest {
         )
 
         useCase.invoke(
-            backgroundCell = backgroundCell,
+            backgroundCell.rectangle,
+            backgroundCell.cellType,
         )
 
         assertEquals(

@@ -1,15 +1,16 @@
 package gamescreen.map.usecase.move
 
+import gamescreen.map.domain.UIData
 import gamescreen.map.domain.Velocity
 import gamescreen.map.domain.collision.square.NormalRectangle
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.npc.NPCRepository
 import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.service.velocitymanage.VelocityManageService
-import gamescreen.map.usecase.UpdateCellContainPlayerUseCase
 import gamescreen.map.usecase.collision.geteventtype.GetEventTypeUseCase
 import gamescreen.map.usecase.movebackground.MoveBackgroundUseCase
 import gamescreen.map.usecase.movenpc.MoveNPCUseCase
+import gamescreen.map.usecase.updatecellcontainplayer.UpdateCellContainPlayerUseCase
 
 // todo テスト作成
 class MoveUseCaseImpl(
@@ -31,7 +32,7 @@ class MoveUseCaseImpl(
         tentativeVelocity: Velocity,
         fieldSquare: NormalRectangle,
         playerMoveArea: NormalRectangle,
-    ) {
+    ): UIData {
         var player = playerPositionRepository.playerPositionStateFlow.value
 
         val mediatedVelocity =
@@ -69,7 +70,10 @@ class MoveUseCaseImpl(
         )
 
         // playerが入っているマスを設定
-        updateCellContainPlayerUseCase.invoke()
+        updateCellContainPlayerUseCase.invoke(
+            player = player,
+            backgroundData = movedBackgroundData,
+        )
 
         playerPositionRepository.setPlayerPosition(
             player = player,
@@ -80,6 +84,11 @@ class MoveUseCaseImpl(
         )
         npcRepository.setNpc(
             npcData = movedData,
+        )
+        return UIData(
+            player,
+            backgroundData,
+            npcData,
         )
     }
 }

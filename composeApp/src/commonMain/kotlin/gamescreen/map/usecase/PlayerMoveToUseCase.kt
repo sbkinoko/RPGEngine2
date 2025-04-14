@@ -1,5 +1,6 @@
 package gamescreen.map.usecase
 
+import gamescreen.map.domain.Player
 import gamescreen.map.repository.player.PlayerPositionRepository
 
 class PlayerMoveToUseCase(
@@ -8,7 +9,7 @@ class PlayerMoveToUseCase(
     suspend operator fun invoke(
         x: Float,
         y: Float,
-    ) {
+    ): Player {
         val player = playerPositionRepository
             .getPlayerPosition()
             .moveTo(
@@ -19,5 +20,7 @@ class PlayerMoveToUseCase(
         playerPositionRepository.setPlayerPosition(
             player = player,
         )
+
+        return player
     }
 }

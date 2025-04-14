@@ -5,9 +5,11 @@ import gamescreen.map.domain.background.BackgroundCell
 import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.domain.collision.square.NormalRectangle
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
+import gamescreen.map.usecase.collision.list.GetCollisionListUseCase
 
 class MoveBackgroundUseCaseImpl(
     private val backgroundRepository: BackgroundRepository,
+    private val collisionListUseCase: GetCollisionListUseCase,
 ) : MoveBackgroundUseCase {
 
     override operator fun invoke(
@@ -47,6 +49,9 @@ class MoveBackgroundUseCaseImpl(
         // loopに必要な移動量
         val allCellNum = backgroundRepository.allCellNum
         val diffOfLoop = allCellNum * backgroundRepository.cellSize
+
+        // fixme ループで情報が変わるならnewで作る
+        // それ以外の場合はcopyで作る
 
         //表示の移動量
         val dx: Float
@@ -92,6 +97,13 @@ class MoveBackgroundUseCaseImpl(
             return bgCell.copy(
                 mapPoint = mapPoint,
                 cellType = cellType,
+                collisionData = collisionListUseCase.invoke(
+                    rectangle = bgCell.rectangle,
+                    cellType = cellType,
+                ),
+                aroundCellId = backgroundRepository.getBackgroundAround(
+                    mapPoint,
+                )
             ).move(
                 dx = dx,
                 dy = dy,

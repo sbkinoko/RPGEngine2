@@ -1,26 +1,23 @@
-package gamescreen.map.usecase
+package gamescreen.map.usecase.updatecellcontainplayer
 
+import gamescreen.map.domain.Player
 import gamescreen.map.domain.background.BackgroundCell
+import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.domain.collision.square.NormalRectangle
-import gamescreen.map.repository.backgroundcell.BackgroundRepository
-import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.repository.playercell.PlayerCellRepository
 
-/**
- * プレイヤーが入っているセルを更新
- */
-class UpdateCellContainPlayerUseCase(
-    private val playerPositionRepository: PlayerPositionRepository,
+class UpdateCellContainPlayerUseCaseImpl(
     private val playerCellRepository: PlayerCellRepository,
-    private val backgroundRepository: BackgroundRepository,
-) {
-    // fixme プレイヤーの位置と背景の位置は外から入れる
-    operator fun invoke() {
+) : UpdateCellContainPlayerUseCase {
+
+    override operator fun invoke(
+        player: Player,
+        backgroundData: BackgroundData,
+    ) {
         var playerIncludeCell: BackgroundCell? = null
         lateinit var centerCell: BackgroundCell
 
-        val square = playerPositionRepository.getPlayerPosition()
-            .square
+        val square = player.square
 
         val center = (square as NormalRectangle).copy(
             width = 0f,
@@ -30,11 +27,9 @@ class UpdateCellContainPlayerUseCase(
                 y = square.point.y + square.height / 2,
             )
         )
+
         // プレイヤーを包含しているセルを保存
-        backgroundRepository
-            .backgroundStateFlow
-            .value
-            .fieldData
+        backgroundData.fieldData
             .map row@{ rowArray ->
                 rowArray.map { cell ->
                     if (center.isIn(cell.rectangle)) {

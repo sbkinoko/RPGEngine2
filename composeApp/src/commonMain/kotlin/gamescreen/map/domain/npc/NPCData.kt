@@ -1,5 +1,8 @@
 package gamescreen.map.domain.npc
 
+import androidx.compose.runtime.Stable
+
+@Stable
 data class NPCData(
     val npcList: List<NPC>,
 ) {

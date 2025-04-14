@@ -2,6 +2,7 @@ package gamescreen.map.domain.background
 
 import core.domain.mapcell.CellType
 import gamescreen.map.domain.MapPoint
+import gamescreen.map.domain.collision.ShapeCollisionDetect
 import gamescreen.map.domain.collision.square.Rectangle
 import gamescreen.map.domain.collision.square.RectangleWrapper
 
@@ -11,6 +12,11 @@ data class BackgroundCell(
     val mapPoint: MapPoint,
     override val rectangle: Rectangle,
     val cellType: CellType = CellType.Null,
+
+    // fixme デフォルト値削除
+    val aroundCellId: List<List<CellType>> = emptyList(),
+
+    val collisionData: List<ShapeCollisionDetect>,
 ) : RectangleWrapper<BackgroundCell>(
     rectangle = rectangle,
 ) {

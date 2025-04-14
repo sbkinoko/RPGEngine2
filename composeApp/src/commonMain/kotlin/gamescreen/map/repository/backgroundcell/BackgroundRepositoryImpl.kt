@@ -3,7 +3,7 @@ package gamescreen.map.repository.backgroundcell
 import core.domain.mapcell.CellType
 import gamescreen.map.data.LoopMap
 import gamescreen.map.data.MapData
-import gamescreen.map.domain.background.BackgroundCell
+import gamescreen.map.domain.MapPoint
 import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.viewmodel.MapViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,27 +29,30 @@ class BackgroundRepositoryImpl : BackgroundRepository {
     override val cellSize: Float
         get() = screenSize / cellNum.toFloat()
 
-    override fun getBackgroundAt(x: Int, y: Int): BackgroundCell {
-        return backgroundStateFlow.value.fieldData[y][x]
+    override fun getBackgroundAround(mapPoint: MapPoint): List<List<CellType>> {
+        return getBackgroundAround(
+            mapPoint.x,
+            mapPoint.y,
+        )
     }
 
-    override fun getBackgroundAround(x: Int, y: Int): Array<Array<CellType>> {
-        return arrayOf(
-            arrayOf(
+    override fun getBackgroundAround(x: Int, y: Int): List<List<CellType>> {
+        return listOf(
+            listOf(
                 getIdAt(x = x - 1, y = y - 1),
                 getIdAt(x = x, y = y - 1),
                 getIdAt(x = x + 1, y = y - 1),
             ),
-            arrayOf(
+            listOf(
                 getIdAt(x = x - 1, y = y),
                 getIdAt(x = x, y = y),
                 getIdAt(x = x + 1, y = y),
             ),
-            arrayOf(
+            listOf(
                 getIdAt(x = x - 1, y = y + 1),
                 getIdAt(x = x, y = y + 1),
                 getIdAt(x = x + 1, y = y + 1),
-            )
+            ),
         )
     }
 

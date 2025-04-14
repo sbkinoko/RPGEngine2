@@ -21,6 +21,7 @@ class BackgroundCellTest {
     private val bgCell = BackgroundCell(
         rectangle = square,
         mapPoint = mapPoint,
+        collisionData = emptyList(),
     )
 
     @Test

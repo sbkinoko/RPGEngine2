@@ -1,6 +1,7 @@
 package gamescreen.map.usecase.resetposition
 
 import gamescreen.map.data.MapData
+import gamescreen.map.domain.background.BackgroundData
 
 interface ResetBackgroundPositionUseCase {
 
@@ -11,5 +12,5 @@ interface ResetBackgroundPositionUseCase {
         mapData: MapData,
         mapX: Int,
         mapY: Int,
-    )
+    ): BackgroundData
 }

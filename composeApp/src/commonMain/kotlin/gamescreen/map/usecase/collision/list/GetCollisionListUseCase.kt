@@ -1,11 +1,13 @@
 package gamescreen.map.usecase.collision.list
 
-import gamescreen.map.domain.background.BackgroundCell
+import core.domain.mapcell.CellType
 import gamescreen.map.domain.collision.ShapeCollisionDetect
+import gamescreen.map.domain.collision.square.Rectangle
 
 interface GetCollisionListUseCase {
 
     operator fun invoke(
-        backgroundCell: BackgroundCell,
+        rectangle: Rectangle,
+        cellType: CellType,
     ): List<ShapeCollisionDetect>
 }

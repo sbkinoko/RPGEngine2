@@ -28,8 +28,8 @@ class CollisionRepositoryImpl : CollisionRepository {
                 rectangle.run {
                     listOf(
                         EventRectangle(
-                            x = x,
-                            y = y,
+                            x = 0f,
+                            y = 0f,
                             width = width,
                             height = height,
                             eventType = EventType.Water,
@@ -42,8 +42,8 @@ class CollisionRepositoryImpl : CollisionRepository {
                 rectangle.run {
                     listOf(
                         EventRectangle(
-                            x = x,
-                            y = y,
+                            x = 0f,
+                            y = 0f,
                             width = width,
                             height = height,
                             eventType = EventType.Ground,
@@ -57,8 +57,8 @@ class CollisionRepositoryImpl : CollisionRepository {
                 rectangle.run {
                     listOf(
                         EventRectangle(
-                            x = x + width / 3,
-                            y = y + height / 3,
+                            x = width / 3,
+                            y = height / 3,
                             width = width / 3,
                             height = height / 3,
                             eventType = if (cellType.id.hasItem) {
@@ -77,8 +77,6 @@ class CollisionRepositoryImpl : CollisionRepository {
                 rectangle.run {
                     listOf(
                         ConvexPolygon(
-                            baseX = x,
-                            baseY = y,
                             objectHeight = ObjectHeight.Ground(1),
                             Point(0f, height),
                             Point(width * 0.1f, height),
@@ -86,8 +84,6 @@ class CollisionRepositoryImpl : CollisionRepository {
                             Point(width, height * 0.6f),
                         ),
                         ConvexPolygon(
-                            baseX = x,
-                            baseY = y,
                             objectHeight = ObjectHeight.Ground(2),
                             Point(0f, height),
                             Point(width * 0.1f, height),
@@ -100,16 +96,12 @@ class CollisionRepositoryImpl : CollisionRepository {
             is CellType.BridgeLeftUnder -> rectangle.run {
                 listOf(
                     ConvexPolygon(
-                        baseX = x,
-                        baseY = y,
                         objectHeight = ObjectHeight.Ground(1),
                         Point(0f, height),
                         Point(width, height * 0.5f),
                         Point(width, height),
                     ),
                     ConvexPolygon(
-                        baseX = x,
-                        baseY = y,
                         objectHeight = ObjectHeight.Ground(2),
                         Point(0f, height),
                         Point(width, height * 0.5f),
@@ -117,8 +109,8 @@ class CollisionRepositoryImpl : CollisionRepository {
                     ),
                     // 右端にふた
                     NormalRectangle(
-                        x = x + width * 0.9f,
-                        y = y,
+                        x = width * 0.9f,
+                        y = 0f,
                         width = 0.1f * width,
                         height = height,
                         objectHeight = ObjectHeight.Ground(1)
@@ -129,8 +121,6 @@ class CollisionRepositoryImpl : CollisionRepository {
             is CellType.BridgeRightTop -> rectangle.run {
                 listOf(
                     ConvexPolygon(
-                        baseX = x,
-                        baseY = y,
                         objectHeight = ObjectHeight.Ground(1),
                         Point(0f, height * 0.5f),
                         Point(0f, height * 0.6f),
@@ -138,8 +128,6 @@ class CollisionRepositoryImpl : CollisionRepository {
                         Point(width * 0.9f, height),
                     ),
                     ConvexPolygon(
-                        baseX = x,
-                        baseY = y,
                         objectHeight = ObjectHeight.Ground(2),
                         Point(0f, height * 0.5f),
                         Point(0f, height * 0.6f),
@@ -152,16 +140,12 @@ class CollisionRepositoryImpl : CollisionRepository {
             is CellType.BridgeRightUnder -> rectangle.run {
                 listOf(
                     ConvexPolygon(
-                        baseX = x,
-                        baseY = y,
                         objectHeight = ObjectHeight.Ground(1),
                         Point(0f, height * 0.5f),
                         Point(0f, height),
                         Point(width, height),
                     ),
                     ConvexPolygon(
-                        baseX = x,
-                        baseY = y,
                         objectHeight = ObjectHeight.Ground(2),
                         Point(0f, height * 0.5f),
                         Point(0f, height),
@@ -169,8 +153,8 @@ class CollisionRepositoryImpl : CollisionRepository {
                     ),
                     // 左端にふた
                     NormalRectangle(
-                        x = x,
-                        y = y,
+                        x = 0f,
+                        y = 0f,
                         width = 0.1f * width,
                         height = height,
                         objectHeight = ObjectHeight.Ground(1)
@@ -184,8 +168,6 @@ class CollisionRepositoryImpl : CollisionRepository {
                 rectangle.run {
                     listOf(
                         ConvexPolygon(
-                            baseX = x,
-                            baseY = y,
                             objectHeight = ObjectHeight.Ground(2),
                             Point(0f, height * 0.5f),
                             Point(0f, height * 0.6f),
