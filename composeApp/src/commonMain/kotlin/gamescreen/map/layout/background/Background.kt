@@ -46,19 +46,6 @@ fun Background(
                             ),
                             contentDescription = "background"
                         )
-
-                        imageBinder.bindObject(
-                            aroundCellId = aroundCellId,
-                        )?.let {
-                            Image(
-                                modifier = Modifier
-                                    .fillMaxSize(),
-                                painter = painterResource(
-                                    it,
-                                ),
-                                contentDescription = "mapObject"
-                            )
-                        }
                     }
                 }
             }

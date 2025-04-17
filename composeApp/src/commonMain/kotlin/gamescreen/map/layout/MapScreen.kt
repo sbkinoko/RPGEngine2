@@ -12,7 +12,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.util.fastAny
 import gamescreen.map.layout.background.Background
 import gamescreen.map.layout.background.DebugInfo
-import gamescreen.map.layout.background.FrontObject
+import gamescreen.map.layout.background.ObjectData
 import gamescreen.map.layout.npc.NPC
 import gamescreen.map.viewmodel.MapViewModel
 import kotlinx.coroutines.delay
@@ -71,6 +71,11 @@ fun MapScreen(
             screenRatio = screenRatio,
         )
 
+        ObjectData(
+            screenRatio = screenRatio,
+            objectData = mapUiState.backObjectData,
+        )
+
         Player(
             player = mapUiState.player,
             clickPlayer = {
@@ -82,9 +87,9 @@ fun MapScreen(
             screenRatio = screenRatio,
         )
 
-        FrontObject(
+        ObjectData(
             screenRatio = screenRatio,
-            frontObjectData = mapUiState.frontObjectData,
+            objectData = mapUiState.frontObjectData,
         )
 
         DebugInfo(

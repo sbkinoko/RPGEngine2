@@ -8,21 +8,21 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import common.extension.pxToDp
-import gamescreen.map.domain.background.FrontObjectData
+import gamescreen.map.domain.background.ObjectData
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-fun FrontObject(
-    frontObjectData: FrontObjectData,
+fun ObjectData(
+    objectData: ObjectData,
     screenRatio: Float,
 ) {
     val imageBinder = ImageBinderBackground()
 
     // fixme 背景が動いてない場合はリロードしない
     Box {
-        frontObjectData.fieldData.forEach { backgroundCells ->
+        objectData.fieldData.forEach { backgroundCells ->
             backgroundCells.forEach inner@{ cell ->
                 if (cell == null) {
                     return@inner

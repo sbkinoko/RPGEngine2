@@ -94,10 +94,11 @@ class MoveUseCaseImpl(
         )
 
         return UIData(
-            player,
-            backgroundData,
-            frontObjectData = frontObjectData,
-            npcData,
+            player = player,
+            backgroundData = backgroundData,
+            frontObjectData = frontObjectData.first,
+            backObjectData = frontObjectData.second,
+            npcData = npcData,
         )
     }
 }

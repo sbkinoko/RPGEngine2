@@ -14,7 +14,7 @@ import gamescreen.map.domain.Player
 import gamescreen.map.domain.Point
 import gamescreen.map.domain.Velocity
 import gamescreen.map.domain.background.BackgroundData
-import gamescreen.map.domain.background.FrontObjectData
+import gamescreen.map.domain.background.ObjectData
 import gamescreen.map.domain.npc.NPCData
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.encouter.EncounterRepository
@@ -77,7 +77,8 @@ class MapViewModel(
             player = playerPositionRepository.playerPositionStateFlow.value,
             npcData = NPCData(emptyList()),
             backgroundData = BackgroundData(emptyList()),
-            frontObjectData = FrontObjectData(emptyList()),
+            frontObjectData = ObjectData(emptyList()),
+            backObjectData = ObjectData(emptyList()),
             playerIncludeCell = null,
         )
     )
@@ -104,7 +105,8 @@ class MapViewModel(
                     .copy(
                         player = player!!,
                         backgroundData = backgroundData!!,
-                        frontObjectData = frontObjectData!!
+                        frontObjectData = frontObjectData!!,
+                        backObjectData = backObjectData!!,
                     )
             }
         }
@@ -161,6 +163,7 @@ class MapViewModel(
             player = uiData.player!!,
             npcData = uiData.npcData!!,
             backgroundData = uiData.backgroundData!!,
+            backObjectData = uiData.backObjectData!!,
             frontObjectData = uiData.frontObjectData!!,
         )
 

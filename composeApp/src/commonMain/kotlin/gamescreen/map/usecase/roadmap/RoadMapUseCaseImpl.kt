@@ -46,7 +46,8 @@ class RoadMapUseCaseImpl(
         return UIData(
             player = player,
             backgroundData = backgroundData,
-            frontObjectData = frontObjectData,
+            frontObjectData = frontObjectData.first,
+            backObjectData = frontObjectData.second,
         )
     }
 }
