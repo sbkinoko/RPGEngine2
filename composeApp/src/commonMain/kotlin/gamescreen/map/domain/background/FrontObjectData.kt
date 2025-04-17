@@ -6,8 +6,3 @@ import androidx.compose.runtime.Stable
 data class FrontObjectData(
     val fieldData: List<List<BackgroundCell?>>,
 )
-
-fun BackgroundData.toFrontData(): FrontObjectData =
-    FrontObjectData(
-        this.fieldData
-    )
