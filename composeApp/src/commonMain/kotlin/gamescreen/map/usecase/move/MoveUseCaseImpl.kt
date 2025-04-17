@@ -6,6 +6,7 @@ import gamescreen.map.domain.collision.square.NormalRectangle
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.npc.NPCRepository
 import gamescreen.map.repository.player.PlayerPositionRepository
+import gamescreen.map.service.makefrontdata.MakeFrontDateService
 import gamescreen.map.service.velocitymanage.VelocityManageService
 import gamescreen.map.usecase.collision.geteventtype.GetEventTypeUseCase
 import gamescreen.map.usecase.movebackground.MoveBackgroundUseCase
@@ -25,6 +26,7 @@ class MoveUseCaseImpl(
     private val moveNPCUseCase: MoveNPCUseCase,
 
     private val velocityManageService: VelocityManageService,
+    private val makeFrontDateService: MakeFrontDateService,
 ) : MoveUseCase {
 
     override suspend fun invoke(
@@ -85,9 +87,16 @@ class MoveUseCaseImpl(
         npcRepository.setNpc(
             npcData = movedData,
         )
+
+        val frontObjectData = makeFrontDateService.invoke(
+            backgroundData = backgroundData,
+            player = player
+        )
+
         return UIData(
             player,
             backgroundData,
+            frontObjectData = frontObjectData,
             npcData,
         )
     }

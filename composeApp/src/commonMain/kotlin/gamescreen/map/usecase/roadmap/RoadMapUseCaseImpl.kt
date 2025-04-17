@@ -2,6 +2,7 @@ package gamescreen.map.usecase.roadmap
 
 import gamescreen.map.data.MapData
 import gamescreen.map.domain.UIData
+import gamescreen.map.service.makefrontdata.MakeFrontDateService
 import gamescreen.map.usecase.resetnpc.ResetNPCPositionUseCase
 import gamescreen.map.usecase.resetposition.ResetBackgroundPositionUseCase
 import gamescreen.map.usecase.setplayercenter.SetPlayerCenterUseCase
@@ -12,6 +13,8 @@ class RoadMapUseCaseImpl(
     private val resetBackgroundPositionUseCase: ResetBackgroundPositionUseCase,
     private val resetNPCPositionUseCase: ResetNPCPositionUseCase,
     private val updateCellContainPlayerUseCase: UpdateCellContainPlayerUseCase,
+
+    private val makeFrontDateService: MakeFrontDateService,
 ) : RoadMapUseCase {
 
     override suspend fun invoke(
@@ -35,9 +38,15 @@ class RoadMapUseCaseImpl(
             backgroundData = backgroundData,
         )
 
+        val frontObjectData = makeFrontDateService(
+            backgroundData = backgroundData,
+            player = player,
+        )
+
         return UIData(
             player = player,
             backgroundData = backgroundData,
+            frontObjectData = frontObjectData,
         )
     }
 }

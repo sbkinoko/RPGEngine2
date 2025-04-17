@@ -15,6 +15,8 @@ import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.repository.player.PlayerPositionRepositoryImpl
 import gamescreen.map.repository.playercell.PlayerCellRepository
 import gamescreen.map.repository.playercell.PlayerCellRepositoryImpl
+import gamescreen.map.service.makefrontdata.MakeFrontDataServiceImpl
+import gamescreen.map.service.makefrontdata.MakeFrontDateService
 import gamescreen.map.service.velocitymanage.VelocityManageService
 import gamescreen.map.service.velocitymanage.VelocityManageServiceImpl
 import gamescreen.map.usecase.GetScreenCenterUseCase
@@ -120,6 +122,7 @@ val ModuleMap = module {
             getEventTypeUseCase = get(),
             velocityManageService = get(),
             updateCellContainPlayerUseCase = get(),
+            makeFrontDateService = get(),
         )
     }
 
@@ -184,6 +187,10 @@ val ModuleMap = module {
         PlayerMoveManageUseCase(
             isCollidedUseCase = get(),
         )
+    }
+
+    single<MakeFrontDateService> {
+        MakeFrontDataServiceImpl()
     }
 
     single<VelocityManageService> {
@@ -284,6 +291,7 @@ val ModuleMap = module {
             resetBackgroundPositionUseCase = get(),
             resetNPCPositionUseCase = get(),
             updateCellContainPlayerUseCase = get(),
+            makeFrontDateService = get(),
         )
     }
 

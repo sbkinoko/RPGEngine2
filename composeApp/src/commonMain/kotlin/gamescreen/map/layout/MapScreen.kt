@@ -84,7 +84,7 @@ fun MapScreen(
 
         FrontObject(
             screenRatio = screenRatio,
-            backgroundCell = mapUiState.backgroundData,
+            frontObjectData = mapUiState.frontObjectData,
         )
     }
 }

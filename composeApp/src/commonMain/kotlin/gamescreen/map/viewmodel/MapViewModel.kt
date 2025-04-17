@@ -13,6 +13,8 @@ import gamescreen.map.domain.MapUiState
 import gamescreen.map.domain.Player
 import gamescreen.map.domain.Point
 import gamescreen.map.domain.Velocity
+import gamescreen.map.domain.background.BackgroundData
+import gamescreen.map.domain.background.FrontObjectData
 import gamescreen.map.domain.npc.NPCData
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.encouter.EncounterRepository
@@ -74,7 +76,8 @@ class MapViewModel(
         MapUiState(
             player = playerPositionRepository.playerPositionStateFlow.value,
             npcData = NPCData(emptyList()),
-            backgroundData = backgroundRepository.backgroundStateFlow.value,
+            backgroundData = BackgroundData(emptyList()),
+            frontObjectData = FrontObjectData(emptyList()),
             playerIncludeCell = null,
         )
     )
@@ -97,11 +100,11 @@ class MapViewModel(
                 mapY = INITIAL_MAP_Y,
                 mapData = INITIAL_MAP_DATA,
             ).apply {
-
                 mutableUiStateFlow.value = uiStateFlow.value
                     .copy(
                         player = player!!,
                         backgroundData = backgroundData!!,
+                        frontObjectData = frontObjectData!!
                     )
             }
         }
@@ -158,6 +161,7 @@ class MapViewModel(
             player = uiData.player!!,
             npcData = uiData.npcData!!,
             backgroundData = uiData.backgroundData!!,
+            frontObjectData = uiData.frontObjectData!!,
         )
 
         val preEvent = autoEvent
