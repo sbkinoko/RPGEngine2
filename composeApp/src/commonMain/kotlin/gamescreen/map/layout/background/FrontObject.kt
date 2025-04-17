@@ -49,7 +49,7 @@ fun FrontObject(
                                 painter = painterResource(
                                     it,
                                 ),
-                                contentDescription = "background"
+                                contentDescription = "mapObject"
                             )
                         }
                     }
