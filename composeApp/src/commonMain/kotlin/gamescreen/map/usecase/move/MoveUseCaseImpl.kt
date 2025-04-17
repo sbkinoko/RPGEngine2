@@ -2,11 +2,11 @@ package gamescreen.map.usecase.move
 
 import gamescreen.map.domain.UIData
 import gamescreen.map.domain.Velocity
-import gamescreen.map.domain.background.FrontObjectData
 import gamescreen.map.domain.collision.square.NormalRectangle
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.npc.NPCRepository
 import gamescreen.map.repository.player.PlayerPositionRepository
+import gamescreen.map.service.makefrontdata.MakeFrontDateService
 import gamescreen.map.service.velocitymanage.VelocityManageService
 import gamescreen.map.usecase.collision.geteventtype.GetEventTypeUseCase
 import gamescreen.map.usecase.movebackground.MoveBackgroundUseCase
@@ -26,6 +26,7 @@ class MoveUseCaseImpl(
     private val moveNPCUseCase: MoveNPCUseCase,
 
     private val velocityManageService: VelocityManageService,
+    private val makeFrontDateService: MakeFrontDateService,
 ) : MoveUseCase {
 
     override suspend fun invoke(
@@ -87,22 +88,9 @@ class MoveUseCaseImpl(
             npcData = movedData,
         )
 
-        val frontObjectData = FrontObjectData(
-            backgroundData.fieldData.map {
-                it.map { cell ->
-                    val frontData = cell.collisionData.filter {
-                        player.square.objectHeight < it.objectHeight
-                    }
-
-                    if (frontData.isEmpty()) {
-                        null
-                    } else {
-                        cell.copy(
-                            collisionData = frontData
-                        )
-                    }
-                }
-            }
+        val frontObjectData = makeFrontDateService.invoke(
+            backgroundData = backgroundData,
+            player = player
         )
 
         return UIData(
