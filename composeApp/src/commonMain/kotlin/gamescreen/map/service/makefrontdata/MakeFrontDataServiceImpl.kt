@@ -5,6 +5,7 @@ import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.domain.background.FrontObjectData
 
 class MakeFrontDataServiceImpl : MakeFrontDateService {
+    // todo テストを作る
     override fun invoke(
         backgroundData: BackgroundData,
         player: Player,
