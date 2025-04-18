@@ -1,35 +1,30 @@
 package gamescreen.map.layout.background
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 import common.extension.pxToDp
+import gamescreen.map.domain.Player
 import gamescreen.map.domain.background.ObjectData
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
-import values.Colors
 
 class MapClip(
     val width: Float,
     val height: Float,
+    val player: Player,
+    val screenRatio: Float,
 ) : Shape {
     private val rate = 0.2f
     val path = Path().apply {
@@ -38,24 +33,23 @@ class MapClip(
         lineTo(width, height)
         lineTo(width, 0f)
         lineTo(0f, 0f)
+        val horizontalCenter = (player.square.leftSide + player.square.rightSide) / 2f * screenRatio
+        val verticalCenter = (player.square.topSide + player.square.bottomSide) / 2f * screenRatio
+        val rect = Rect(
+            left = horizontalCenter - width * rate / 2,
+            right = horizontalCenter + width * rate / 2,
+            top = verticalCenter - height * rate / 2,
+            bottom = verticalCenter + height * rate / 2,
+        )
+
         arcTo(
-            rect = Rect(
-                left = width * (0.5f - rate / 2),
-                right = width * (0.5f + rate / 2),
-                top = height * (0.5f - rate / 2),
-                bottom = height * (0.5f + rate / 2),
-            ),
+            rect = rect,
             startAngleDegrees = 0f,
             sweepAngleDegrees = 180f,
             forceMoveTo = true,
         )
         arcTo(
-            rect = Rect(
-                left = width * (0.5f - rate / 2),
-                right = width * (0.5f + rate / 2),
-                top = height * (0.5f - rate / 2),
-                bottom = height * (0.5f + rate / 2),
-            ),
+            rect = rect,
             startAngleDegrees = 180f,
             sweepAngleDegrees = 180f,
             forceMoveTo = true,
@@ -78,34 +72,15 @@ class MapClip(
 fun ObjectData(
     objectData: ObjectData,
     screenRatio: Float,
+    modifier: Modifier = Modifier,
 ) {
     val imageBinder = ImageBinderBackground()
 
-    var width by remember {
-        mutableStateOf(0)
-    }
-    var height by remember {
-        mutableStateOf(0)
-    }
-
     // fixme 背景が動いてない場合はリロードしない
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .onGloballyPositioned {
-                width = it.size.width
-                height = it.size.height
-            }
-            .clip(
-                shape = MapClip(
-                    width = width.toFloat(),
-                    height = height.toFloat(),
-                ),
-            )
-            .background(
-                color = Colors.Disabled,
-            )
-    ) {
+        modifier = modifier,
+
+        ) {
         objectData.fieldData.forEach { backgroundCells ->
             backgroundCells.forEach inner@{ cell ->
                 if (cell == null) {
