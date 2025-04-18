@@ -31,34 +31,34 @@ class MapClip(
     val width: Float,
     val height: Float,
 ) : Shape {
+    private val rate = 0.2f
     val path = Path().apply {
         moveTo(0f, 0f)
         lineTo(0f, height)
         lineTo(width, height)
         lineTo(width, 0f)
         lineTo(0f, 0f)
-        moveTo(width, height / 2)
         arcTo(
             rect = Rect(
-                left = 0f,
-                right = width,
-                top = 0f,
-                bottom = height,
+                left = width * (0.5f - rate / 2),
+                right = width * (0.5f + rate / 2),
+                top = height * (0.5f - rate / 2),
+                bottom = height * (0.5f + rate / 2),
             ),
             startAngleDegrees = 0f,
             sweepAngleDegrees = 180f,
-            forceMoveTo = false,
+            forceMoveTo = true,
         )
         arcTo(
             rect = Rect(
-                left = 0f,
-                right = width,
-                top = 0f,
-                bottom = height,
+                left = width * (0.5f - rate / 2),
+                right = width * (0.5f + rate / 2),
+                top = height * (0.5f - rate / 2),
+                bottom = height * (0.5f + rate / 2),
             ),
             startAngleDegrees = 180f,
             sweepAngleDegrees = 180f,
-            forceMoveTo = false,
+            forceMoveTo = true,
         )
 
         close()
