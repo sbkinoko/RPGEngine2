@@ -88,7 +88,6 @@ fun ObjectData(
         mutableStateOf(0)
     }
 
-
     // fixme 背景が動いてない場合はリロードしない
     Box(
         modifier = Modifier
