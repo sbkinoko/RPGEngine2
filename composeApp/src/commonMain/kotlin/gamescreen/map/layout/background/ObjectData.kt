@@ -28,11 +28,14 @@ class MapClip(
 ) : Shape {
     private val rate = 0.2f
     val path = Path().apply {
+        // 画面全体を覆う四角形
         moveTo(0f, 0f)
         lineTo(0f, height)
         lineTo(width, height)
         lineTo(width, 0f)
         lineTo(0f, 0f)
+
+        //プレイヤーを中心として全体に対して大きさ比rateの四角形
         val horizontalCenter = (player.square.leftSide + player.square.rightSide) / 2f * screenRatio
         val verticalCenter = (player.square.topSide + player.square.bottomSide) / 2f * screenRatio
         val rect = Rect(
@@ -42,6 +45,7 @@ class MapClip(
             bottom = verticalCenter + height * rate / 2,
         )
 
+        //rectに内接する円を透過
         arcTo(
             rect = rect,
             startAngleDegrees = 0f,
@@ -79,8 +83,7 @@ fun ObjectData(
     // fixme 背景が動いてない場合はリロードしない
     Box(
         modifier = modifier,
-
-        ) {
+    ) {
         objectData.fieldData.forEach { backgroundCells ->
             backgroundCells.forEach inner@{ cell ->
                 if (cell == null) {
