@@ -17,11 +17,14 @@ import org.jetbrains.compose.resources.painterResource
 fun ObjectData(
     objectData: ObjectData,
     screenRatio: Float,
+    modifier: Modifier = Modifier,
 ) {
     val imageBinder = ImageBinderBackground()
 
     // fixme 背景が動いてない場合はリロードしない
-    Box {
+    Box(
+        modifier = modifier,
+    ) {
         objectData.fieldData.forEach { backgroundCells ->
             backgroundCells.forEach inner@{ cell ->
                 if (cell == null) {

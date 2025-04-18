@@ -3,15 +3,22 @@ package gamescreen.map.layout
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.util.fastAny
 import gamescreen.map.layout.background.Background
 import gamescreen.map.layout.background.DebugInfo
+import gamescreen.map.layout.background.MapClip
 import gamescreen.map.layout.background.ObjectData
 import gamescreen.map.layout.npc.NPC
 import gamescreen.map.viewmodel.MapViewModel
@@ -74,6 +81,7 @@ fun MapScreen(
         ObjectData(
             screenRatio = screenRatio,
             objectData = mapUiState.backObjectData,
+            modifier = Modifier.fillMaxSize()
         )
 
         Player(
@@ -87,9 +95,31 @@ fun MapScreen(
             screenRatio = screenRatio,
         )
 
+        var width by remember {
+            mutableStateOf(0)
+        }
+        var height by remember {
+            mutableStateOf(0)
+        }
+
         ObjectData(
             screenRatio = screenRatio,
             objectData = mapUiState.frontObjectData,
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .onGloballyPositioned {
+                        width = it.size.width
+                        height = it.size.height
+                    }
+                    .clip(
+                        shape = MapClip(
+                            width = width.toFloat(),
+                            height = height.toFloat(),
+                            player = mapUiState.player,
+                            screenRatio = screenRatio,
+                        ),
+                    )
         )
 
         DebugInfo(
