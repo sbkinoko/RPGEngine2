@@ -20,10 +20,6 @@ interface Status {
     fun updateConditionList(conditionList: List<ConditionType>): Status
 }
 
-interface StatusWrapper<T : Status> : Status {
-    override fun updateConditionList(conditionList: List<ConditionType>): T
-}
-
 data class StatusData(
     override var name: String,
     override val hp: HP = dummyHP,
