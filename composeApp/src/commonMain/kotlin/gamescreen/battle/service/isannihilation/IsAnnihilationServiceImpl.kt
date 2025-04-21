@@ -1,14 +1,14 @@
 package gamescreen.battle.service.isannihilation
 
-import core.domain.status.Status
+import core.domain.status.Character
 
 class IsAnnihilationServiceImpl : IsAnnihilationService {
     override fun invoke(
-        statusList: List<Status>,
+        statusList: List<Character>,
     ): Boolean {
         //どれか一つでもActiveであれば全滅はしていない
         return !statusList.any {
-            it.isActive
+            it.statusData.isActive
         }
     }
 }

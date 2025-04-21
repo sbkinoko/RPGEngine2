@@ -30,7 +30,7 @@ fun PlayerAction(
             modifier = Modifier
                 .fillMaxWidth(),
             textAlign = TextAlign.Start,
-            text = playerStatus.name,
+            text = playerStatus.statusData.name,
         )
 
         Row(

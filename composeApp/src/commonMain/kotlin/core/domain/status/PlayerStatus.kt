@@ -7,45 +7,27 @@ import data.item.skill.SkillId
 import data.item.tool.ToolId
 
 data class PlayerStatus(
-    override var name: String,
-    override val hp: HP = dummyHP,
-    override val mp: MP = dummyMP,
-    override val speed: Int = 0,
-    override val conditionList: List<ConditionType> = listOf(),
+    override val statusData: StatusData,
     val skillList: List<SkillId>,
     val toolList: List<ToolId>,
     val exp: EXP,
-) : Status {
+) : Character {
 
     fun addStatus(
         statusIncrease: StatusIncrease,
     ): PlayerStatus {
         return statusIncrease.let {
             copy(
-                hp = HP(
-                    hp.maxValue + it.hp,
-                ),
-                mp = MP(
-                    mp.maxValue + it.mp,
-                ),
-                speed = speed + it.speed,
+                statusData = statusData.copy(
+                    hp = HP(
+                        statusData.hp.maxValue + it.hp,
+                    ),
+                    mp = MP(
+                        statusData.mp.maxValue + it.mp,
+                    ),
+                    speed = statusData.speed + it.speed,
+                )
             )
         }
     }
-
-    override fun updateConditionList(
-        conditionList: List<ConditionType>,
-    ): Status = copy(
-        conditionList = conditionList
-    )
 }
-
-private val dummyHP
-    get() = HP(
-        0, 0,
-    )
-
-private val dummyMP
-    get() = MP(
-        0, 0
-    )

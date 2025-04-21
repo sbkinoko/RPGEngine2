@@ -1,6 +1,7 @@
 package data.monster
 
 import core.domain.status.DropItemInfo
+import core.domain.status.StatusData
 import core.domain.status.monster.ActionStyle
 import core.domain.status.monster.MonsterStatus
 import core.domain.status.param.HP
@@ -12,14 +13,18 @@ class MonsterRepositoryImpl : MonsterRepository {
     override fun getMonster(id: Int): MonsterStatus {
         // fixme モンスターの種類を増やす
         return MonsterStatus(
-            1, "花",
-            hp = HP(
-                maxValue = 10,
+            statusData = StatusData(
+                "花",
+                hp = HP(
+                    maxValue = 10,
+                ),
+                mp = MP(
+                    maxValue = 10,
+                ),
+                speed = 10,
+                conditionList = emptyList(),
             ),
-            mp = MP(
-                maxValue = 10,
-            ),
-            speed = 10,
+            imgId = 1,
             exp = 2,
             money = 1,
             dropInfoList = listOf(

@@ -6,10 +6,7 @@ import core.domain.status.param.MP
 interface Status {
     var name: String
 
-    // fixme 変更用の関数を作る
     val hp: HP
-
-    // fixme 変更用の関数を作る
     val mp: MP
 
     val speed: Int
@@ -22,3 +19,73 @@ interface Status {
     val conditionList: List<ConditionType>
     fun updateConditionList(conditionList: List<ConditionType>): Status
 }
+
+interface StatusWrapper<T : Status> : Status {
+    override fun updateConditionList(conditionList: List<ConditionType>): T
+}
+
+data class StatusData(
+    override var name: String,
+    override val hp: HP = dummyHP,
+    override val mp: MP = dummyMP,
+    override val speed: Int = 0,
+    override val conditionList: List<ConditionType> = emptyList(),
+) : Status {
+    override fun updateConditionList(conditionList: List<ConditionType>): StatusData {
+        return copy(
+            conditionList = conditionList,
+        )
+    }
+
+    fun addConditionType(conditionType: ConditionType): StatusData {
+        return this.copy(
+            conditionList = conditionList + conditionType,
+        )
+    }
+
+    fun decMP(amount: Int): StatusData {
+        return this.copy(
+            mp = mp.copy(
+                value = mp.value - amount
+            )
+        )
+    }
+
+    fun incMP(amount: Int): StatusData {
+        return this.copy(
+            mp = mp.copy(
+                value = mp.value + amount
+            )
+        )
+    }
+
+    fun decHP(amount: Int): StatusData {
+        return this.copy(
+            hp = hp.copy(
+                value = hp.value - amount
+            )
+        )
+    }
+
+    fun incHP(amount: Int): StatusData {
+        return this.copy(
+            hp = hp.copy(
+                value = hp.value + amount
+            )
+        )
+    }
+}
+
+interface Character {
+    val statusData: StatusData
+}
+
+private val dummyHP
+    get() = HP(
+        0, 0,
+    )
+
+private val dummyMP
+    get() = MP(
+        0, 0
+    )

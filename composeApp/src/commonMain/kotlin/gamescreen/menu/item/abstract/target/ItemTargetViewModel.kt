@@ -77,7 +77,7 @@ abstract class ItemTargetViewModel<T> : MenuChildViewModel() {
 
         val targetType = skill.targetType
 
-        if (targetType.canSelect(targetStatus).not()) {
+        if (targetType.canSelect(targetStatus.statusData).not()) {
             // 対象にとれなかった
             return false
         }

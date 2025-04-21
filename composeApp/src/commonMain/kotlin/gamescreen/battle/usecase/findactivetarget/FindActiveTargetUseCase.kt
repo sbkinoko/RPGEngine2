@@ -1,11 +1,11 @@
 package gamescreen.battle.usecase.findactivetarget
 
-import core.domain.status.Status
+import core.domain.status.Character
 
 interface FindActiveTargetUseCase {
 
     operator fun invoke(
-        statusList: List<Status>,
+        statusList: List<Character>,
         target: Int,
         targetNum: Int,
     ): List<Int>

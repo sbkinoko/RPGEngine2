@@ -1,9 +1,9 @@
 package gamescreen.battle.domain
 
-import core.domain.status.Status
+import core.domain.status.Character
 
 data class StatusWrapper(
     val id: Int,
-    val status: Status,
+    val status: Character,
     val actionData: ActionData,
 )

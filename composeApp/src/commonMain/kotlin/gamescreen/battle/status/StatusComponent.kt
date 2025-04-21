@@ -14,7 +14,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import common.extension.menuItem
 import common.layout.DisableBox
-import core.domain.status.Status
+import core.domain.status.StatusData
 import gamescreen.battle.command.selectally.SelectAllyViewModel
 import org.koin.compose.koinInject
 import values.Colors
@@ -22,7 +22,7 @@ import core.domain.status.param.Point as StatusPoint
 
 @Composable
 fun StatusComponent(
-    status: Status,
+    status: StatusData,
     index: Int,
     modifier: Modifier = Modifier,
     selectAllyViewModel: SelectAllyViewModel = koinInject(),

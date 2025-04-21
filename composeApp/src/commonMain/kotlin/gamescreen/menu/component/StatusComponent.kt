@@ -23,9 +23,11 @@ fun StatusComponent(
     ) {
         if (statusId < Constants.playerNum) {
             val status = state.value[statusId]
-            Text(status.name)
-            Text("HP : ${status.hp.value}/${status.hp.maxValue}")
-            Text("MP : ${status.mp.value}/${status.mp.maxValue}")
+            status.statusData.run {
+                Text(name)
+                Text("HP : ${hp.value}/${hp.maxValue}")
+                Text("MP : ${mp.value}/${mp.maxValue}")
+            }
             Text("レベル : ${status.exp.level}")
             Text("経験値 : ${status.exp.value}")
             Text("次のレベルまで : ${status.exp.needExp}")

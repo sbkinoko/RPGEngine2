@@ -1,6 +1,7 @@
 package data.status
 
 import core.domain.status.PlayerStatus
+import core.domain.status.StatusData
 import core.domain.status.StatusIncrease
 import core.domain.status.param.EXP
 import data.item.skill.SkillId
@@ -57,7 +58,9 @@ class StatusRepositoryImpl : AbstractStatusRepository() {
         when (it) {
             0 ->
                 PlayerStatus(
-                    name = "test1",
+                    statusData = StatusData(
+                        name = "test1",
+                    ),
                     skillList = listOf(
                         SkillId.AttackToTwo,
                         SkillId.CantUse,
@@ -82,7 +85,9 @@ class StatusRepositoryImpl : AbstractStatusRepository() {
                 )
 
             1 -> PlayerStatus(
-                name = "test2",
+                StatusData(
+                    name = "test2",
+                ),
                 skillList = listOf(
                     SkillId.AttackToTwo,
                     SkillId.CantUse,
@@ -99,7 +104,9 @@ class StatusRepositoryImpl : AbstractStatusRepository() {
             )
 
             2 -> PlayerStatus(
-                name = "test3",
+                StatusData(
+                    name = "test3",
+                ),
                 skillList = listOf(
                     SkillId.Heal,
                     SkillId.Revive,
@@ -116,7 +123,9 @@ class StatusRepositoryImpl : AbstractStatusRepository() {
             )
 
             3 -> PlayerStatus(
-                name = "MPたくさん",
+                statusData = StatusData(
+                    name = "MPたくさん",
+                ),
                 skillList = listOf(
                     SkillId.Heal,
                     SkillId.Revive,

@@ -1,10 +1,9 @@
 package core.usecase.updateparameter
 
-import core.domain.status.ConditionType
-import core.domain.status.Status
+import core.domain.status.Character
 import core.repository.status.StatusRepository
 
-abstract class AbstractUpdateStatusUseCase<T> : UpdateStatusUseCase<T> {
+abstract class AbstractUpdateStatusUseCase<T : Character> : UpdateStatusUseCase<T> {
     abstract val statusRepository: StatusRepository<T>
 
     override suspend fun decHP(
@@ -91,20 +90,4 @@ abstract class AbstractUpdateStatusUseCase<T> : UpdateStatusUseCase<T> {
         status: T,
     ): T
 
-    override suspend fun updateConditionList(
-        id: Int,
-        conditionList: List<ConditionType>,
-    ) {
-        val status = statusRepository.getStatus(id)
-
-        // fixme 型を指定できるように修正
-        val updated = (status as Status).updateConditionList(
-            conditionList = conditionList,
-        ) as T
-
-        statusRepository.setStatus(
-            id = id,
-            status = updated,
-        )
-    }
 }

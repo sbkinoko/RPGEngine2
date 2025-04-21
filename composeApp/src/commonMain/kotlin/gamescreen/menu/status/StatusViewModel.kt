@@ -1,7 +1,7 @@
 package gamescreen.menu.status
 
 import common.Timer
-import core.domain.status.Status
+import core.domain.status.Character
 import core.menu.SelectableWindowViewModel
 import core.repository.player.PlayerStatusRepository
 import gamescreen.menu.domain.SelectManager
@@ -22,7 +22,7 @@ class StatusViewModel : SelectableWindowViewModel(),
 
     override var timer: Timer = Timer(200)
 
-    fun getStatusAt(id: Int): Status {
+    fun getStatusAt(id: Int): Character {
         return repository.getStatus(id)
     }
 

@@ -55,7 +55,7 @@ fun StatusMenu(
                             else Colors.MenuFrame,
                             shape = RectangleShape,
                         ),
-                    text = statusViewModel.getStatusAt(i).name,
+                    text = statusViewModel.getStatusAt(i).statusData.name,
                 )
             }
         }

@@ -1,16 +1,16 @@
 package core.domain.item
 
-import core.domain.status.Status
+import core.domain.status.StatusData
 
 enum class TargetType {
     ACTIVE {
-        override fun canSelect(status: Status): Boolean {
+        override fun canSelect(status: StatusData): Boolean {
             return status.isActive
         }
     },
 
     INACTIVE {
-        override fun canSelect(status: Status): Boolean {
+        override fun canSelect(status: StatusData): Boolean {
             return status.isActive.not()
         }
     }
@@ -20,5 +20,5 @@ enum class TargetType {
     /**
      * 対象のstatusが選択可能かどうかを返す
      */
-    abstract fun canSelect(status: Status): Boolean
+    abstract fun canSelect(status: StatusData): Boolean
 }
