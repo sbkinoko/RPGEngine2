@@ -1,5 +1,6 @@
 package common.extension.mutablemap
 
+import common.extension.MapCounter
 import common.extension.sortByCount
 import core.domain.mapcell.CellType
 import kotlin.test.Test
@@ -9,11 +10,13 @@ class SortByCountTest {
 
     @Test
     fun test1() {
-        val map = mutableMapOf(
-            CellType.Glass to 1,
-            CellType.Sand to 2,
-        )
-        val ans = map.sortByCount()
+        val mapCounter = MapCounter<CellType>()
+
+        mapCounter.inc(CellType.Sand)
+        mapCounter.inc(CellType.Sand)
+        mapCounter.inc(CellType.Glass)
+
+        val ans = mapCounter.ranking
 
         assertEquals(
             expected = CellType.Sand,
