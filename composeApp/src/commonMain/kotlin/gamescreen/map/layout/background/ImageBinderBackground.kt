@@ -1,6 +1,6 @@
 package gamescreen.map.layout.background
 
-import common.extension.sortByCount
+import common.extension.MapCounter
 import core.domain.mapcell.CellType
 import gamescreen.map.domain.ConnectType
 import gamescreen.map.usecase.decideconnectcype.DecideConnectTypeUseCase
@@ -103,18 +103,14 @@ class ImageBinderBackground : KoinComponent {
     private fun getMajorityBackGround(
         aroundCellId: List<List<CellType>>,
     ): DrawableResource {
-        val map = mutableMapOf<CellType, Int>()
+        val mapCounter = MapCounter<CellType>()
         aroundCellId.map { list ->
             list.map {
-                if (map[it] == null) {
-                    map[it] = 1
-                } else {
-                    map[it] = map[it]!!.plus(1)
-                }
+                mapCounter.inc(it)
             }
         }
 
-        val countList = map.sortByCount()
+        val countList = mapCounter.ranking
 
         return bindBackGround(
             cellType = countList[0],
