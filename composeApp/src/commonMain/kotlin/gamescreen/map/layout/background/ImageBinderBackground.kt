@@ -100,7 +100,7 @@ class ImageBinderBackground : KoinComponent {
     }
 
     @OptIn(ExperimentalResourceApi::class)
-    fun getMajorityBackGround(
+    private fun getMajorityBackGround(
         aroundCellId: List<List<CellType>>,
     ): DrawableResource {
         val map = mutableMapOf<CellType, Int>()
