@@ -40,6 +40,8 @@ sealed class CellType {
             get() = 2.0f
     }
 
+    data object Sand : CellType()
+
     data object BridgeLeftTop : CellType(), CollisionCell, ObjectCell
     data object BridgeLeftUnder : CellType(), CollisionCell, ObjectCell, EventObject
     data object BridgeRightTop : CellType(), CollisionCell, ObjectCell

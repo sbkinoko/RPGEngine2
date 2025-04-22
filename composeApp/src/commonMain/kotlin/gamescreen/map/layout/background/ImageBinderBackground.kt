@@ -1,5 +1,6 @@
 package gamescreen.map.layout.background
 
+import common.extension.sortByCount
 import core.domain.mapcell.CellType
 import gamescreen.map.domain.ConnectType
 import gamescreen.map.usecase.decideconnectcype.DecideConnectTypeUseCase
@@ -11,6 +12,7 @@ import rpgengine.composeapp.generated.resources.Res
 import rpgengine.composeapp.generated.resources.bg_00
 import rpgengine.composeapp.generated.resources.bg_02
 import rpgengine.composeapp.generated.resources.bg_20
+import rpgengine.composeapp.generated.resources.bg_8
 import rpgengine.composeapp.generated.resources.bg_null
 import rpgengine.composeapp.generated.resources.ob_01_01
 import rpgengine.composeapp.generated.resources.ob_01_02
@@ -45,7 +47,18 @@ class ImageBinderBackground : KoinComponent {
     ): DrawableResource {
         val imgId = aroundCellId[1][1]
 
-        return when (imgId) {
+        return bindBackGround(
+            imgId,
+            aroundCellId,
+        )
+    }
+
+    @OptIn(ExperimentalResourceApi::class)
+    private fun bindBackGround(
+        cellType: CellType,
+        aroundCellId: List<List<CellType>>,
+    ): DrawableResource {
+        return when (cellType) {
             CellType.Glass,
             CellType.BridgeLeftTop,
             CellType.BridgeLeftUnder,
@@ -54,6 +67,9 @@ class ImageBinderBackground : KoinComponent {
             CellType.BridgeCenterTop,
             CellType.BridgeCenterBottom,
                 -> Res.drawable.bg_00
+
+            CellType.Sand,
+                -> Res.drawable.bg_8
 
             CellType.Water -> Res.drawable.bg_02
             CellType.Town1I, CellType.Town1O -> Res.drawable.bg_20
@@ -73,7 +89,9 @@ class ImageBinderBackground : KoinComponent {
                 }
             }
 
-            is CellType.Box -> Res.drawable.bg_00
+            is CellType.Box -> return getMajorityBackGround(
+                aroundCellId = aroundCellId,
+            )
 
             CellType.Null,
             is CellType.TextCell,
@@ -81,6 +99,28 @@ class ImageBinderBackground : KoinComponent {
         }
     }
 
+    @OptIn(ExperimentalResourceApi::class)
+    private fun getMajorityBackGround(
+        aroundCellId: List<List<CellType>>,
+    ): DrawableResource {
+        val map = mutableMapOf<CellType, Int>()
+        aroundCellId.map { list ->
+            list.map {
+                if (map[it] == null) {
+                    map[it] = 1
+                } else {
+                    map[it] = map[it]!!.plus(1)
+                }
+            }
+        }
+
+        val countList = map.sortByCount()
+
+        return bindBackGround(
+            cellType = countList[0],
+            aroundCellId = aroundCellId,
+        )
+    }
 
     /**
      * idと画像を紐づけ
