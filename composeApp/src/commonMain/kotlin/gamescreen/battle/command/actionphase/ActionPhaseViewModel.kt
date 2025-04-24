@@ -10,7 +10,7 @@ import core.domain.item.TypeKind
 import core.domain.item.skill.AttackSkill
 import core.domain.item.skill.ConditionSkill
 import core.domain.item.skill.HealSkill
-import core.domain.status.Status
+import core.domain.status.Character
 import core.repository.battlemonster.BattleInfoRepository
 import core.repository.player.PlayerStatusRepository
 import core.usecase.item.usetool.UseToolUseCase
@@ -203,7 +203,7 @@ class ActionPhaseViewModel(
     }
 
     private fun getActionStatusName(id: Int): String {
-        return statusWrapperList[id].status.name
+        return statusWrapperList[id].status.statusData.name
     }
 
     private fun getActionData(id: Int): ActionData {
@@ -239,19 +239,21 @@ class ActionPhaseViewModel(
             is AttackItem,
                 -> {
                 var targetId = action.target
-                if (battleInfoRepository.getStatus(targetId).isActive.not()) {
+                if (battleInfoRepository.getStatus(targetId)
+                        .statusData.isActive.not()
+                ) {
                     targetId = findActiveTargetUseCase.invoke(
                         statusList = battleInfoRepository.getMonsters(),
                         target = targetId,
                         targetNum = item.targetNum,
                     ).first()
                 }
-                battleInfoRepository.getStatus(targetId).name
+                battleInfoRepository.getStatus(targetId).statusData.name
             }
 
             is HealItem -> {
                 val targetId = action.ally
-                playerStatusRepository.getStatus(targetId).name
+                playerStatusRepository.getStatus(targetId).statusData.name
             }
         }
     }
@@ -265,19 +267,19 @@ class ActionPhaseViewModel(
             is AttackItem,
                 -> {
                 var targetId = action.target
-                if (playerStatusRepository.getStatus(targetId).isActive.not()) {
+                if (playerStatusRepository.getStatus(targetId).statusData.isActive.not()) {
                     targetId = findActiveTargetUseCase.invoke(
                         statusList = playerStatusRepository.getPlayers(),
                         target = targetId,
                         targetNum = item.targetNum,
                     ).first()
                 }
-                playerStatusRepository.getStatus(targetId).name
+                playerStatusRepository.getStatus(targetId).statusData.name
             }
 
             is HealItem -> {
                 val targetId = action.ally
-                battleInfoRepository.getStatus(targetId).name
+                battleInfoRepository.getStatus(targetId).statusData.name
             }
         }
     }
@@ -389,7 +391,7 @@ class ActionPhaseViewModel(
     private suspend fun skillAction(
         id: Int,
         actionData: ActionData,
-        statusList: List<Status>,
+        statusList: List<Character>,
         attackUseCase: AttackUseCase,
         conditionUseCase: ConditionUseCase,
         updateParameter: UpdateStatusUseCase<*>,
@@ -489,7 +491,7 @@ class ActionPhaseViewModel(
                 //　playerを確認
 
                 val player = playerStatusRepository.getStatus(id = id)
-                if (player.isActive.not()) {
+                if (player.statusData.isActive.not()) {
                     continue
                 }
 
@@ -504,7 +506,7 @@ class ActionPhaseViewModel(
                     .getStatus(id = monsterId)
 
                 //　monsterを確認
-                if (monster.isActive.not()) {
+                if (monster.statusData.isActive.not()) {
                     continue
                 }
             }
@@ -521,7 +523,7 @@ class ActionPhaseViewModel(
 
         // fixme getNextStateの引数にstatusを追加して、その中で処理したい
         // ステータスに関連する処理も内部で行うようにする
-        if (statusWrapperList[statusId].status.isActive.not()) {
+        if (statusWrapperList[statusId].status.statusData.isActive.not()) {
             // 倒れていたらnextに変更
             actionState.value = ActionState.Next
             return
@@ -531,6 +533,7 @@ class ActionPhaseViewModel(
         val nextState = actionState.value.getNextState(
             conditionList = statusWrapperList[statusId]
                 .status
+                .statusData
                 .conditionList
         )
         actionState.value = nextState

@@ -40,9 +40,11 @@ class CheckCanUseServiceImplTest : KoinTest {
         val costType = CostType.MP(costMP)
         val result = checkCanUseService.invoke(
             status = testActivePlayer.copy(
-                mp = MP(
-                    value = costMP,
-                    maxValue = costMP,
+                statusData = testActivePlayer.statusData.copy(
+                    mp = MP(
+                        value = costMP,
+                        maxValue = costMP,
+                    )
                 )
             ),
             costType = costType,
@@ -62,9 +64,11 @@ class CheckCanUseServiceImplTest : KoinTest {
         val costType = CostType.MP(costMP)
         val result = checkCanUseService.invoke(
             status = testActivePlayer.copy(
-                mp = MP(
-                    value = costMP - 1,
-                    maxValue = costMP,
+                statusData = testActivePlayer.statusData.copy(
+                    mp = MP(
+                        value = costMP - 1,
+                        maxValue = costMP,
+                    )
                 )
             ),
             costType = costType,

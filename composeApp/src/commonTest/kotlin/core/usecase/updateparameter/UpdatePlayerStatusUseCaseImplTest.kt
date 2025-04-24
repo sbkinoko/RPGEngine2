@@ -15,17 +15,21 @@ class UpdatePlayerStatusUseCaseImplTest {
 
     val hp = 50
     val mp = 30
-    private val status1 = testActivePlayer.copy(
-        hp = HP(
-            value = hp,
-            maxValue = 100,
-        ),
-        mp = MP(
-            value = mp,
-            maxValue = 100,
-        ),
-        toolList = listOf(ToolId.HEAL1, ToolId.HEAL2, ToolId.HEAL2),
-    )
+    private val status1 = testActivePlayer.run {
+        copy(
+            statusData = statusData.copy(
+                hp = HP(
+                    value = hp,
+                    maxValue = 100,
+                ),
+                mp = MP(
+                    value = mp,
+                    maxValue = 100,
+                ),
+            ),
+            toolList = listOf(ToolId.HEAL1, ToolId.HEAL2, ToolId.HEAL2),
+        )
+    }
     private val status2 = status1.copy()
 
     private val statusRepository: StatusRepository<PlayerStatus> =
@@ -73,7 +77,7 @@ class UpdatePlayerStatusUseCaseImplTest {
 
             assertEquals(
                 expected = hp - 5,
-                actual = statusRepository.getStatus(0).hp.value
+                actual = statusRepository.getStatus(0).statusData.hp.value
             )
 
             assertEquals(
@@ -93,7 +97,7 @@ class UpdatePlayerStatusUseCaseImplTest {
 
             assertEquals(
                 expected = hp + 5,
-                actual = statusRepository.getStatus(0).hp.value
+                actual = statusRepository.getStatus(0).statusData.hp.value
             )
 
             assertEquals(
@@ -113,7 +117,7 @@ class UpdatePlayerStatusUseCaseImplTest {
 
             assertEquals(
                 expected = mp - 5,
-                actual = statusRepository.getStatus(0).mp.value
+                actual = statusRepository.getStatus(0).statusData.mp.value
             )
 
             assertEquals(
@@ -133,7 +137,7 @@ class UpdatePlayerStatusUseCaseImplTest {
 
             assertEquals(
                 expected = mp + 5,
-                actual = statusRepository.getStatus(0).mp.value
+                actual = statusRepository.getStatus(0).statusData.mp.value
             )
 
             assertEquals(
@@ -154,7 +158,7 @@ class UpdatePlayerStatusUseCaseImplTest {
 
             assertEquals(
                 expected = listOf(condition),
-                actual = statusRepository.getStatus(0).conditionList
+                actual = statusRepository.getStatus(0).statusData.conditionList
             )
 
             updateStatusUseCase.addCondition(
@@ -164,7 +168,7 @@ class UpdatePlayerStatusUseCaseImplTest {
 
             assertEquals(
                 expected = listOf(condition, condition),
-                actual = statusRepository.getStatus(0).conditionList
+                actual = statusRepository.getStatus(0).statusData.conditionList
             )
 
             assertEquals(
@@ -188,7 +192,7 @@ class UpdatePlayerStatusUseCaseImplTest {
 
             assertEquals(
                 expected = conditionList,
-                actual = statusRepository.getStatus(0).conditionList
+                actual = statusRepository.getStatus(0).statusData.conditionList
             )
 
             assertEquals(

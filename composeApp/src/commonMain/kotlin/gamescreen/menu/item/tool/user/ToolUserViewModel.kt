@@ -50,7 +50,7 @@ class ToolUserViewModel : ItemUserViewModel<ToolId>(),
 
     override fun getPlayerNameAt(id: Int): String {
         return if (id < Constants.playerNum) {
-            playerStatusRepository.getStatus(id).name
+            playerStatusRepository.getStatus(id).statusData.name
         } else {
             "バッグ"
         }

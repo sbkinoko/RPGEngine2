@@ -28,7 +28,7 @@ class SkillUserViewModel : ItemUserViewModel<SkillId>() {
         )
 
     override fun getPlayerNameAt(id: Int): String {
-        return playerStatusRepository.getStatus(id).name
+        return playerStatusRepository.getStatus(id).statusData.name
     }
 
     override fun getPlayerItemIdListAt(id: Int): List<SkillId> {

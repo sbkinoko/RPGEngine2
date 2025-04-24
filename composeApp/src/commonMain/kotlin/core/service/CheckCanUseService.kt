@@ -1,11 +1,11 @@
 package core.service
 
 import core.domain.item.CostType
-import core.domain.status.Status
+import core.domain.status.Character
 
 interface CheckCanUseService {
     operator fun invoke(
-        status: Status,
+        status: Character,
         costType: CostType,
     ): Boolean
 }

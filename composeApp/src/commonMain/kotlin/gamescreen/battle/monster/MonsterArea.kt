@@ -72,7 +72,7 @@ fun MonsterArea(
                             modifier = Modifier
                                 .fillMaxSize()
                                 .clickable {
-                                    if (monsterStatus.isActive) {
+                                    if (monsterStatus.statusData.isActive) {
                                         selectEnemyViewModel.selectAttackMonster(
                                             monsterId = index,
                                         )
@@ -86,7 +86,7 @@ fun MonsterArea(
                                     //点滅中かつ表示中
                                     (isFlashing && isVisible) ||
                                     //　生存状態
-                                    monsterStatus.isActive
+                                    monsterStatus.statusData.isActive
                                 ) {
                                     Monster(
                                         modifier = Modifier.fillMaxWidth(),

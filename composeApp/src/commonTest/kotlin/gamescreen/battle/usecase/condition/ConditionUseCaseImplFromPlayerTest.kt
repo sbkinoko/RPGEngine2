@@ -62,7 +62,7 @@ class ConditionUseCaseImplFromPlayerTest : KoinTest {
             battleInfoRepository.getStatus(target).apply {
                 assertEquals(
                     expected = listOf(ConditionType.Poison()),
-                    actual = conditionList
+                    actual = statusData.conditionList
                 )
             }
         }
@@ -86,7 +86,7 @@ class ConditionUseCaseImplFromPlayerTest : KoinTest {
             battleInfoRepository.getStatus(id).apply {
                 assertEquals(
                     expected = listOf(ConditionType.Poison()),
-                    actual = conditionList
+                    actual = statusData.conditionList
                 )
             }
         }
@@ -112,7 +112,7 @@ class ConditionUseCaseImplFromPlayerTest : KoinTest {
             battleInfoRepository.getStatus(idActive).apply {
                 assertEquals(
                     expected = listOf(ConditionType.Poison()),
-                    actual = conditionList
+                    actual = statusData.conditionList
                 )
             }
         }

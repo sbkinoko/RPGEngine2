@@ -16,7 +16,7 @@ class AttackFromEnemyUseCaseImpl(
     ) {
         var actualTarget = target
         val players = playerStatusRepository.getPlayers()
-        if (players[target].isActive.not()) {
+        if (players[target].statusData.isActive.not()) {
             actualTarget = findTargetService.findNext(
                 statusList = players,
                 target = target,

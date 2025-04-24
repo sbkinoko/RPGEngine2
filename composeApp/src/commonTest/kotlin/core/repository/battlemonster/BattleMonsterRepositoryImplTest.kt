@@ -98,17 +98,25 @@ class BattleMonsterRepositoryImplTest : KoinTest {
 
             battleInfoRepository.getStatus(0).apply {
                 assertEquals(
-                    expected = monster1.copy(
-                        name = monster1.name + "1"
-                    ),
+                    expected = monster1.run {
+                        copy(
+                            statusData = statusData.updateName(
+                                name = statusData.name + "1"
+                            )
+                        )
+                    },
                     actual = this,
                 )
             }
             battleInfoRepository.getStatus(1).apply {
                 assertEquals(
-                    expected = monster1.copy(
-                        name = monster1.name + "2"
-                    ),
+                    expected = monster1.run {
+                        copy(
+                            statusData = statusData.updateName(
+                                name = statusData.name + "2"
+                            )
+                        )
+                    },
                     actual = this,
                 )
             }

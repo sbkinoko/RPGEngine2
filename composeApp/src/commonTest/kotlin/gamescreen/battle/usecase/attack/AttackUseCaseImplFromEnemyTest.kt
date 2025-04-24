@@ -53,7 +53,9 @@ class AttackUseCaseImplFromEnemyTest : KoinTest {
             playerStatusRepository.setStatus(
                 id = 0,
                 status = testActivePlayer.copy(
-                    hp = hp
+                    statusData = testActivePlayer.statusData.copy(
+                        hp = hp,
+                    ),
                 ),
             )
             val damage = 5
@@ -65,7 +67,7 @@ class AttackUseCaseImplFromEnemyTest : KoinTest {
             playerStatusRepository.getStatus(0).apply {
                 assertEquals(
                     expected = hpValue - damage,
-                    actual = this.hp.value
+                    actual = this.statusData.hp.value
                 )
             }
         }
@@ -78,7 +80,9 @@ class AttackUseCaseImplFromEnemyTest : KoinTest {
             playerStatusRepository.setStatus(
                 id = id,
                 status = testActivePlayer.copy(
-                    hp = hp
+                    statusData = testActivePlayer.statusData.copy(
+                        hp = hp,
+                    ),
                 ),
             )
             val damage = 5
@@ -90,7 +94,7 @@ class AttackUseCaseImplFromEnemyTest : KoinTest {
             playerStatusRepository.getStatus(id).apply {
                 assertEquals(
                     expected = hpValue - damage,
-                    actual = this.hp.value
+                    actual = this.statusData.hp.value
                 )
             }
         }
@@ -104,16 +108,20 @@ class AttackUseCaseImplFromEnemyTest : KoinTest {
             playerStatusRepository.setStatus(
                 id = idNotActive,
                 status = testActivePlayer.copy(
-                    hp = HP(
-                        value = 0,
-                        maxValue = 100
+                    statusData = testActivePlayer.statusData.copy(
+                        hp = HP(
+                            value = 0,
+                            maxValue = 100
+                        ),
                     ),
                 ),
             )
             playerStatusRepository.setStatus(
                 id = idActive,
                 status = testActivePlayer.copy(
-                    hp = hp,
+                    statusData = testActivePlayer.statusData.copy(
+                        hp = hp,
+                    ),
                 ),
             )
 
@@ -127,7 +135,7 @@ class AttackUseCaseImplFromEnemyTest : KoinTest {
             playerStatusRepository.getStatus(idActive).apply {
                 assertEquals(
                     expected = hpValue - damage,
-                    actual = this.hp.value
+                    actual = this.statusData.hp.value
                 )
             }
         }

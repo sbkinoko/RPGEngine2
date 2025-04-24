@@ -1,13 +1,13 @@
 package gamescreen.battle.usecase.findactivetarget
 
-import core.domain.status.Status
+import core.domain.status.Character
 import gamescreen.battle.service.findtarget.FindTargetService
 
 class FindActiveTargetUseCaseImpl(
     private val findTargetService: FindTargetService,
 ) : FindActiveTargetUseCase {
     override fun invoke(
-        statusList: List<Status>,
+        statusList: List<Character>,
         target: Int,
         targetNum: Int,
     ): List<Int> {
@@ -15,7 +15,7 @@ class FindActiveTargetUseCaseImpl(
 
         var tmpTarget = target
         for (i in 0 until targetNum) {
-            while (statusList[tmpTarget].isActive.not()) {
+            while (statusList[tmpTarget].statusData.isActive.not()) {
                 tmpTarget = findTargetService.findNext(
                     statusList = statusList,
                     target = tmpTarget,

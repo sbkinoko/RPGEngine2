@@ -56,9 +56,13 @@ class AttackUseCaseImplFromPlayerTest : KoinTest {
         runBlocking {
             battleInfoRepository.setMonsters(
                 listOf(
-                    TestActiveMonster.copy(
-                        hp = hp
-                    ),
+                    TestActiveMonster.run {
+                        copy(
+                            statusData = statusData.copy(
+                                hp = hp
+                            ),
+                        )
+                    }
                 ),
             )
             val damage = 5
@@ -70,7 +74,7 @@ class AttackUseCaseImplFromPlayerTest : KoinTest {
             battleInfoRepository.getStatus(0).apply {
                 assertEquals(
                     expected = hpValue - damage,
-                    actual = this.hp.value
+                    actual = this.statusData.hp.value
                 )
             }
         }
@@ -82,12 +86,20 @@ class AttackUseCaseImplFromPlayerTest : KoinTest {
         runBlocking {
             battleInfoRepository.setMonsters(
                 listOf(
-                    TestActiveMonster.copy(
-                        hp = hp
-                    ),
-                    TestActiveMonster.copy(
-                        hp = hp
-                    ),
+                    TestActiveMonster.run {
+                        copy(
+                            statusData = statusData.copy(
+                                hp = hp,
+                            ),
+                        )
+                    },
+                    TestActiveMonster.run {
+                        copy(
+                            statusData = statusData.copy(
+                                hp = hp,
+                            ),
+                        )
+                    },
                 ),
             )
             val damage = 5
@@ -99,7 +111,7 @@ class AttackUseCaseImplFromPlayerTest : KoinTest {
             battleInfoRepository.getStatus(id).apply {
                 assertEquals(
                     expected = hpValue - damage,
-                    actual = this.hp.value
+                    actual = this.statusData.hp.value
                 )
             }
         }
@@ -113,9 +125,13 @@ class AttackUseCaseImplFromPlayerTest : KoinTest {
             battleInfoRepository.setMonsters(
                 listOf(
                     TestNotActiveMonster,
-                    TestActiveMonster.copy(
-                        hp = hp
-                    ),
+                    TestActiveMonster.run {
+                        copy(
+                            statusData = statusData.copy(
+                                hp = hp,
+                            ),
+                        )
+                    },
                 ),
             )
             val damage = 5
@@ -127,7 +143,7 @@ class AttackUseCaseImplFromPlayerTest : KoinTest {
             battleInfoRepository.getStatus(idActive).apply {
                 assertEquals(
                     expected = hpValue - damage,
-                    actual = this.hp.value
+                    actual = this.statusData.hp.value
                 )
             }
         }

@@ -10,16 +10,20 @@ import core.usecase.updateparameter.UpdateParameterTest.Companion.MP
 import kotlin.test.Test
 
 class UpdateMonsterParameterUseCaseTest {
-    private val status1 = TestActiveMonster.copy(
-        hp = HP(
-            value = HP,
-            maxValue = 100,
-        ),
-        mp = MP(
-            value = MP,
-            maxValue = 100,
-        ),
-    )
+    private val status1 = TestActiveMonster.run {
+        copy(
+            statusData = statusData.copy(
+                hp = HP(
+                    value = HP,
+                    maxValue = 100,
+                ),
+                mp = MP(
+                    value = MP,
+                    maxValue = 100,
+                ),
+            ),
+        )
+    }
     private val status2 = status1.copy()
 
     private val statusRepository: StatusRepository<MonsterStatus> =
@@ -42,7 +46,7 @@ class UpdateMonsterParameterUseCaseTest {
         statusRepository = statusRepository,
     )
 
-    private val updateParameterTest = UpdateParameterTest<MonsterStatus>(
+    private val updateParameterTest = UpdateParameterTest(
         updateStatusUseCase,
         statusRepository,
         status2,

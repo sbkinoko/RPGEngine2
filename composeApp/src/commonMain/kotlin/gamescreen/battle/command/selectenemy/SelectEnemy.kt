@@ -24,7 +24,7 @@ fun SelectEnemy(
         Text(
             modifier = Modifier
                 .align(Alignment.Center),
-            text = playerStatus.name + "の攻撃",
+            text = playerStatus.statusData.name + "の攻撃",
         )
     }
 }

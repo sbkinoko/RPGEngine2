@@ -19,6 +19,6 @@ fun SelectAllyCommandWindow(
     }
     CenterText(
         modifier = modifier,
-        text = playerStatus.name + "の回復",
+        text = playerStatus.statusData.name + "の回復",
     )
 }

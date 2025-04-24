@@ -7,9 +7,7 @@ import core.domain.item.Tool
 import core.domain.item.tool.HealTool
 import core.domain.status.ConditionType
 import core.domain.status.PlayerStatus
-import core.domain.status.param.EXP
-import core.domain.status.param.HP
-import core.domain.status.param.MP
+import core.domain.status.PlayerStatusTest
 import core.repository.status.StatusRepository
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
 import data.item.tool.ToolId
@@ -23,22 +21,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class UseToolUseCaseImplTest : KoinTest {
-    private val TEST_STATUS = PlayerStatus(
-        name = "test1",
-        hp = HP(
-            maxValue = 100,
-            value = 50,
-        ),
-        mp = MP(
-            maxValue = 10,
-            value = 5,
-        ),
-        skillList = listOf(),
-        toolList = listOf(),
-        exp = EXP(
-            EXP.type1,
-        ),
-    )
 
     private lateinit var useToolUseCase: UseToolUseCase
 
@@ -82,6 +64,10 @@ class UseToolUseCaseImplTest : KoinTest {
             throw NotImplementedError()
         }
 
+        override suspend fun updateConditionList(id: Int, conditionList: List<ConditionType>) {
+            throw NotImplementedError()
+        }
+
         override suspend fun deleteToolAt(playerId: Int, index: Int) {
             countDelTool++
         }
@@ -93,7 +79,7 @@ class UseToolUseCaseImplTest : KoinTest {
                 }
 
                 override fun getStatus(id: Int): PlayerStatus {
-                    return TEST_STATUS
+                    return PlayerStatusTest.testActivePlayer
                 }
             }
     }

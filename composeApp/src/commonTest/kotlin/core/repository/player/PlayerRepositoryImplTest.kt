@@ -2,6 +2,7 @@ package core.repository.player
 
 import core.ModuleCore
 import core.domain.status.PlayerStatus
+import core.domain.status.StatusData
 import core.domain.status.param.EXP
 import core.domain.status.param.HP
 import core.domain.status.param.MP
@@ -48,14 +49,16 @@ class PlayerStatusRepositoryImplTest : KoinTest {
 
             val id = 0
             val playerStatus = PlayerStatus(
-                name = "test",
-                hp = HP(
-                    maxValue = 100,
-                    value = 50,
-                ),
-                mp = MP(
-                    maxValue = 10,
-                    value = 5,
+                statusData = StatusData(
+                    name = "test",
+                    hp = HP(
+                        maxValue = 100,
+                        value = 50,
+                    ),
+                    mp = MP(
+                        maxValue = 10,
+                        value = 5,
+                    ),
                 ),
                 skillList = listOf(),
                 toolList = listOf(),

@@ -16,12 +16,16 @@ class MaxHealUseCaseImplTest {
         private var statusList = MutableList(2) {
             testActivePlayer.run {
                 copy(
-                    hp = hp.copy(
-                        value = 0,
-                    ),
-                    mp = mp.copy(
-                        value = 0
-                    )
+                    statusData = statusData.run {
+                        copy(
+                            hp = hp.copy(
+                                value = 0,
+                            ),
+                            mp = mp.copy(
+                                value = 0
+                            )
+                        )
+                    },
                 )
             }
         }
@@ -65,15 +69,17 @@ class MaxHealUseCaseImplTest {
             maxHealUseCase.invoke()
 
             playerStatusRepository.getPlayers().map {
-                assertEquals(
-                    expected = it.hp.maxValue,
-                    actual = it.hp.value
-                )
+                it.statusData.apply {
+                    assertEquals(
+                        expected = hp.maxValue,
+                        actual = hp.value
+                    )
 
-                assertEquals(
-                    expected = it.mp.maxValue,
-                    actual = it.mp.value
-                )
+                    assertEquals(
+                        expected = mp.maxValue,
+                        actual = mp.value
+                    )
+                }
             }
         }
     }

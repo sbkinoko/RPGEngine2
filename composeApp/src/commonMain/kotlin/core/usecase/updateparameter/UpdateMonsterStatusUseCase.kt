@@ -10,33 +10,33 @@ class UpdateMonsterStatusUseCase(
 
     override fun decHPImpl(amount: Int, status: MonsterStatus): MonsterStatus {
         return status.copy(
-            hp = status.hp.copy(
-                value = status.hp.value - amount
-            )
+            statusData = status.statusData.decHP(
+                amount = amount,
+            ),
         )
     }
 
     override fun incHPImpl(amount: Int, status: MonsterStatus): MonsterStatus {
         return status.copy(
-            hp = status.hp.copy(
-                value = status.hp.value + amount
-            )
+            statusData = status.statusData.incHP(
+                amount = amount,
+            ),
         )
     }
 
     override fun decMPImpl(amount: Int, status: MonsterStatus): MonsterStatus {
         return status.copy(
-            mp = status.mp.copy(
-                value = status.mp.value - amount
-            )
+            statusData = status.statusData.decMP(
+                amount = amount,
+            ),
         )
     }
 
     override fun incMPImpl(amount: Int, status: MonsterStatus): MonsterStatus {
         return status.copy(
-            mp = status.mp.copy(
-                value = status.mp.value + amount
-            )
+            statusData = status.statusData.incMP(
+                amount = amount,
+            ),
         )
     }
 
@@ -46,9 +46,23 @@ class UpdateMonsterStatusUseCase(
     ) {
         val status = statusRepository.getStatus(id)
         val updated = status.copy(
-            conditionList = status.conditionList + conditionType,
+            statusData = status.statusData.addConditionType(
+                conditionType = conditionType,
+            )
         )
+        statusRepository.setStatus(
+            id = id,
+            status = updated,
+        )
+    }
 
+    override suspend fun updateConditionList(id: Int, conditionList: List<ConditionType>) {
+        val status = statusRepository.getStatus(id)
+        val updated = status.copy(
+            statusData = status.statusData.updateConditionList(
+                conditionList = conditionList
+            )
+        )
         statusRepository.setStatus(
             id = id,
             status = updated,

@@ -1,8 +1,7 @@
 package core.domain.status
 
+import core.domain.status.StatusDataTest.Companion.zeroStatus
 import core.domain.status.param.EXP
-import core.domain.status.param.HP
-import core.domain.status.param.MP
 
 class PlayerStatusTest {
     companion object {
@@ -10,9 +9,7 @@ class PlayerStatusTest {
 
         val testPlayerStatus
             get() = PlayerStatus(
-                name = NAME,
-                hp = HP(0),
-                mp = MP(0),
+                statusData = zeroStatus,
                 toolList = listOf(),
                 skillList = listOf(),
                 exp = EXP(
@@ -22,18 +19,9 @@ class PlayerStatusTest {
                 )
             )
 
-        private const val MAX_HP = 100
-        private const val MAX_MP = 100
-
         val testActivePlayer
             get() = PlayerStatus(
-                name = "テスト",
-                hp = HP(
-                    maxValue = MAX_HP,
-                ),
-                mp = MP(
-                    maxValue = MAX_MP,
-                ),
+                statusData = StatusDataTest.normalStatus,
                 skillList = listOf(),
                 toolList = listOf(),
                 exp = EXP(
@@ -42,11 +30,14 @@ class PlayerStatusTest {
             )
 
         val testNotActivePlayer
-            get() = testActivePlayer.copy(
-                hp = HP(
-                    maxValue = MAX_HP,
-                    value = 0,
-                ),
-            )
+            get() = testActivePlayer.run {
+                copy(
+                    statusData = statusData.copy(
+                        hp = statusData.hp.copy(
+                            value = 0,
+                        )
+                    )
+                )
+            }
     }
 }

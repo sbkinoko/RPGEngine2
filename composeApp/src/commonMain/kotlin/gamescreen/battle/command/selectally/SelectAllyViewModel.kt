@@ -84,7 +84,7 @@ class SelectAllyViewModel : BattleChildViewModel() {
 
     override fun selectable(): Boolean {
         val id = selectManager.selected
-        val status = playerStatusRepository.getStatus(id)
+        val status = playerStatusRepository.getStatus(id).statusData
         return targetType.canSelect(status)
     }
 
