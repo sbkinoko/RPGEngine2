@@ -1,5 +1,6 @@
 package core.domain.status.param
 
+// fixme valにする
 abstract class Point {
     var point: Int = 0
         set(value) {

@@ -1,6 +1,5 @@
 package gamescreen.battle.usecase.decideactionorder
 
-import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
 import core.domain.status.PlayerStatusTest.Companion.testActivePlayer
 import gamescreen.battle.ModuleBattle
 import gamescreen.battle.domain.ActionData
@@ -42,21 +41,33 @@ class DecideActionOderUseCaseImplTest : KoinTest {
         val list = listOf(
             defaultData.copy(
                 id = 0,
-                status = testActivePlayer.copy(
-                    speed = 1,
-                ),
+                status = testActivePlayer.run {
+                    copy(
+                        statusData = statusData.copy(
+                            speed = 1,
+                        ),
+                    )
+                },
             ),
             defaultData.copy(
                 id = 1,
-                status = testActivePlayer.copy(
-                    speed = 3,
-                ),
+                status = testActivePlayer.run {
+                    copy(
+                        statusData = statusData.copy(
+                            speed = 3,
+                        ),
+                    )
+                },
             ),
             defaultData.copy(
                 id = 2,
-                status = testActivePlayer.copy(
-                    speed = 5,
-                )
+                status = testActivePlayer.run {
+                    copy(
+                        statusData = statusData.copy(
+                            speed = 5,
+                        ),
+                    )
+                },
             ),
         )
 
@@ -72,27 +83,43 @@ class DecideActionOderUseCaseImplTest : KoinTest {
         val list = listOf(
             defaultData.copy(
                 id = 0,
-                status = testActivePlayer.copy(
-                    speed = 1,
-                ),
+                status = testActivePlayer.run {
+                    copy(
+                        statusData = statusData.copy(
+                            speed = 1,
+                        ),
+                    )
+                },
             ),
             defaultData.copy(
                 id = 1,
-                status = testActivePlayer.copy(
-                    speed = 3,
-                ),
+                status = testActivePlayer.run {
+                    copy(
+                        statusData = statusData.copy(
+                            speed = 3,
+                        ),
+                    )
+                },
             ),
             defaultData.copy(
                 id = 2,
-                status = testActivePlayer.copy(
-                    speed = 5,
-                )
+                status = testActivePlayer.run {
+                    copy(
+                        statusData = statusData.copy(
+                            speed = 5,
+                        ),
+                    )
+                },
             ),
             defaultData.copy(
                 id = 3,
-                status = TestActiveMonster.copy(
-                    speed = 4,
-                )
+                status = testActivePlayer.run {
+                    copy(
+                        statusData = statusData.copy(
+                            speed = 4,
+                        ),
+                    )
+                },
             )
         )
 

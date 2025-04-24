@@ -29,10 +29,14 @@ class AddExpUseCaseImplFor2PlayerTest {
         override val statusBaseList: List<PlayerStatus>
             get() = listOf(
                 testPlayerStatus.copy(
-                    name = name1,
+                    statusData = testPlayerStatus.statusData.copy(
+                        name = name1,
+                    ),
                 ),
                 testPlayerStatus.copy(
-                    name = name2,
+                    statusData = testPlayerStatus.statusData.copy(
+                        name = name2,
+                    ),
                 )
             )
     }

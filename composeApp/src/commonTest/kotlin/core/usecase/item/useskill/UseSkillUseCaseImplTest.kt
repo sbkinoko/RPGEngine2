@@ -82,6 +82,10 @@ class UseSkillUseCaseImplTest {
         override suspend fun decMP(id: Int, amount: Int) {
 
         }
+
+        override suspend fun updateConditionList(id: Int, conditionList: List<ConditionType>) {
+
+        }
     }
 
     private lateinit var skillRepository: SkillRepository
@@ -223,6 +227,10 @@ class UseSkillUseCaseImplTest {
                 count++
             }
 
+            override suspend fun updateConditionList(id: Int, conditionList: List<ConditionType>) {
+
+            }
+
             override suspend fun incHP(id: Int, amount: Int) {
 
             }
@@ -277,6 +285,10 @@ class UseSkillUseCaseImplTest {
             override suspend fun decMP(id: Int, amount: Int) {
 
             }
+
+            override suspend fun updateConditionList(id: Int, conditionList: List<ConditionType>) {
+
+            }
         }
 
         runBlocking {
@@ -327,6 +339,10 @@ class UseSkillUseCaseImplTest {
             override suspend fun decMP(id: Int, amount: Int) {
 
             }
+
+            override suspend fun updateConditionList(id: Int, conditionList: List<ConditionType>) {
+
+            }
         }
 
         runBlocking {
@@ -342,4 +358,6 @@ class UseSkillUseCaseImplTest {
             actual = count,
         )
     }
+
+    // todo 状態異常を変えるスキルを使った場合のテストを作る
 }

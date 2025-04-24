@@ -1,5 +1,6 @@
 package core.repository.status
 
+// fixme statusDataに変更したい
 interface StatusRepository<T> {
     /**
      * @param id id番目のstatusを取得

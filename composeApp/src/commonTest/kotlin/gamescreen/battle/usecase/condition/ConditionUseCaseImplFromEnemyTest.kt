@@ -62,7 +62,7 @@ class ConditionUseCaseImplFromEnemyTest : KoinTest {
             playerStatusRepository.getStatus(0).apply {
                 assertEquals(
                     expected = expectedList,
-                    actual = this.conditionList,
+                    actual = this.statusData.conditionList,
                 )
             }
         }
@@ -84,7 +84,7 @@ class ConditionUseCaseImplFromEnemyTest : KoinTest {
             playerStatusRepository.getStatus(id).apply {
                 assertEquals(
                     expected = expectedList,
-                    actual = this.conditionList,
+                    actual = this.statusData.conditionList,
                 )
             }
         }
@@ -112,7 +112,7 @@ class ConditionUseCaseImplFromEnemyTest : KoinTest {
             playerStatusRepository.getStatus(idActive).apply {
                 assertEquals(
                     expected = expectedList,
-                    actual = this.conditionList
+                    actual = this.statusData.conditionList
                 )
             }
         }

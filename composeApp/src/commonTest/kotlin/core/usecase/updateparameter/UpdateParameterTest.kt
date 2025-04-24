@@ -1,12 +1,12 @@
 package core.usecase.updateparameter
 
+import core.domain.status.Character
 import core.domain.status.ConditionType
-import core.domain.status.Status
 import core.repository.status.StatusRepository
 import kotlinx.coroutines.runBlocking
 import kotlin.test.assertEquals
 
-class UpdateParameterTest<T : Status>(
+class UpdateParameterTest<T : Character>(
     private val updateStatusUseCase: UpdateStatusUseCase<T>,
     private val statusRepository: StatusRepository<T>,
     private val status2: T,
@@ -25,7 +25,7 @@ class UpdateParameterTest<T : Status>(
 
             assertEquals(
                 expected = HP - 5,
-                actual = statusRepository.getStatus(0).hp.value
+                actual = statusRepository.getStatus(0).statusData.hp.value
             )
 
             assertEquals(
@@ -44,7 +44,7 @@ class UpdateParameterTest<T : Status>(
 
             assertEquals(
                 expected = HP + 5,
-                actual = statusRepository.getStatus(0).hp.value
+                actual = statusRepository.getStatus(0).statusData.hp.value
             )
 
             assertEquals(
@@ -63,7 +63,7 @@ class UpdateParameterTest<T : Status>(
 
             assertEquals(
                 expected = MP - 5,
-                actual = statusRepository.getStatus(0).mp.value
+                actual = statusRepository.getStatus(0).statusData.mp.value
             )
 
             assertEquals(
@@ -82,7 +82,7 @@ class UpdateParameterTest<T : Status>(
 
             assertEquals(
                 expected = MP + 5,
-                actual = statusRepository.getStatus(0).mp.value
+                actual = statusRepository.getStatus(0).statusData.mp.value
             )
 
             assertEquals(
@@ -102,7 +102,7 @@ class UpdateParameterTest<T : Status>(
 
             assertEquals(
                 expected = listOf(condition),
-                actual = statusRepository.getStatus(0).conditionList
+                actual = statusRepository.getStatus(0).statusData.conditionList
             )
 
             updateStatusUseCase.addCondition(
@@ -112,7 +112,7 @@ class UpdateParameterTest<T : Status>(
 
             assertEquals(
                 expected = listOf(condition, condition),
-                actual = statusRepository.getStatus(0).conditionList
+                actual = statusRepository.getStatus(0).statusData.conditionList
             )
 
             assertEquals(
@@ -135,7 +135,7 @@ class UpdateParameterTest<T : Status>(
 
             assertEquals(
                 expected = conditionList,
-                actual = statusRepository.getStatus(0).conditionList
+                actual = statusRepository.getStatus(0).statusData.conditionList
             )
 
             assertEquals(

@@ -33,9 +33,23 @@ data class StatusData(
         )
     }
 
+    fun updateName(name: String): StatusData {
+        return this.copy(
+            name = name,
+        )
+    }
+
     fun addConditionType(conditionType: ConditionType): StatusData {
         return this.copy(
             conditionList = conditionList + conditionType,
+        )
+    }
+
+    fun setMP(amount: Int): StatusData {
+        return this.copy(
+            mp = mp.copy(
+                value = amount,
+            )
         )
     }
 
@@ -51,6 +65,14 @@ data class StatusData(
         return this.copy(
             mp = mp.copy(
                 value = mp.value + amount
+            )
+        )
+    }
+
+    fun setHP(amount: Int): StatusData {
+        return this.copy(
+            hp = hp.copy(
+                value = amount,
             )
         )
     }

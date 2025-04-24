@@ -1,6 +1,7 @@
 package data.status
 
 import core.domain.status.PlayerStatus
+import core.domain.status.StatusData
 import core.domain.status.StatusIncrease
 import core.domain.status.StatusIncreaseTest
 import core.domain.status.StatusIncreaseTest.Companion.TEST_LV1_HP
@@ -36,9 +37,11 @@ class AbstractStatusRepositoryTest {
         override val statusBaseList: List<PlayerStatus>
             get() = listOf(
                 PlayerStatus(
+                    statusData = StatusData(
+                        name = nameValue
+                    ),
                     toolList = toolListValue,
                     skillList = skillListValue,
-                    name = nameValue,
                     exp = expValue,
                 )
             )
@@ -52,21 +55,6 @@ class AbstractStatusRepositoryTest {
         )
 
         status.apply {
-            assertEquals(
-                expected = TEST_LV1_HP,
-                actual = hp.maxValue,
-            )
-
-            assertEquals(
-                expected = TEST_LV1_MP,
-                actual = mp.maxValue,
-            )
-
-            assertEquals(
-                expected = TEST_LV1_SPEED,
-                actual = speed,
-            )
-
             assertEquals(
                 expected = toolListValue,
                 actual = toolList,
@@ -82,6 +70,23 @@ class AbstractStatusRepositoryTest {
                 actual = exp,
             )
         }
+
+        status.statusData.apply {
+            assertEquals(
+                expected = TEST_LV1_HP,
+                actual = hp.maxValue,
+            )
+
+            assertEquals(
+                expected = TEST_LV1_MP,
+                actual = mp.maxValue,
+            )
+
+            assertEquals(
+                expected = TEST_LV1_SPEED,
+                actual = speed,
+            )
+        }
     }
 
     @Test
@@ -92,21 +97,6 @@ class AbstractStatusRepositoryTest {
         )
 
         status.apply {
-            assertEquals(
-                expected = TEST_LV1_HP + TEST_LV2_HP,
-                actual = hp.maxValue,
-            )
-
-            assertEquals(
-                expected = TEST_LV1_MP + TEST_LV2_MP,
-                actual = mp.maxValue,
-            )
-
-            assertEquals(
-                expected = TEST_LV1_SPEED + TEST_LV2_SPEED,
-                actual = speed
-            )
-
             assertEquals(
                 expected = toolListValue,
                 actual = toolList,
@@ -120,6 +110,23 @@ class AbstractStatusRepositoryTest {
             assertEquals(
                 expected = expValue,
                 actual = exp,
+            )
+        }
+
+        status.statusData.apply {
+            assertEquals(
+                expected = TEST_LV1_HP + TEST_LV2_HP,
+                actual = hp.maxValue,
+            )
+
+            assertEquals(
+                expected = TEST_LV1_MP + TEST_LV2_MP,
+                actual = mp.maxValue,
+            )
+
+            assertEquals(
+                expected = TEST_LV1_SPEED + TEST_LV2_SPEED,
+                actual = speed
             )
         }
     }

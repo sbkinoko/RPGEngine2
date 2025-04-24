@@ -22,7 +22,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class AddExpUseCaseImplTest {
-
     private val statusRepository = object : AbstractStatusRepository() {
         override val statusUpList: List<List<StatusIncrease>>
             get() = listOf(
@@ -41,7 +40,6 @@ class AddExpUseCaseImplTest {
     fun beforeTest() {
         Constants.playerNum = 1
 
-
         playerStatusRepository = PlayerStatusRepositoryImpl(
             statusRepository = statusRepository,
         )
@@ -59,7 +57,6 @@ class AddExpUseCaseImplTest {
 
     @Test
     fun notLvUp() {
-
         runBlocking {
             val result = addExpUseCase.invoke(
                 exp = 0,
@@ -89,7 +86,7 @@ class AddExpUseCaseImplTest {
                 actual = result.first()
             )
 
-            playerStatusRepository.getStatus(0).apply {
+            playerStatusRepository.getStatus(0).statusData.apply {
                 assertEquals(
                     expected = TEST_LV1_HP,
                     actual = hp.value,

@@ -6,10 +6,7 @@ import core.domain.item.CostType
 import core.domain.item.Skill
 import core.domain.item.TargetType
 import core.domain.item.skill.HealSkill
-import core.domain.status.PlayerStatus
-import core.domain.status.param.EXP
-import core.domain.status.param.HP
-import core.domain.status.param.MP
+import core.domain.status.PlayerStatusTest
 import core.service.CheckCanUseService
 import data.item.skill.SkillId
 import data.item.skill.SkillRepository
@@ -35,28 +32,13 @@ class CheckCanUseSkillUseCaseImplTest : KoinTest {
         usablePlace = Place.MAP,
     )
 
-    // todo testPlayerを使う
-    private val playerStatusWithMP = PlayerStatus(
-        name = "test",
-        hp = HP(maxValue = 10, value = 10),
-        mp = MP(maxValue = 10, value = 10),
-        skillList = listOf(),
-        toolList = listOf(),
-        exp = EXP(
-            EXP.type1,
-        ),
-    )
+    private val playerStatusWithMP = PlayerStatusTest.testActivePlayer
 
-    private val playerStatusNoMP = PlayerStatus(
-        name = "test",
-        hp = HP(maxValue = 10, value = 10),
-        mp = MP(maxValue = 10, value = 0),
-        skillList = listOf(),
-        toolList = listOf(),
-        exp = EXP(
-            EXP.type1,
-        ),
-    )
+    private val playerStatusNoMP = playerStatusWithMP.run {
+        copy(
+            statusData = statusData.setMP(0),
+        )
+    }
 
     @BeforeTest
     fun beforeTest() {

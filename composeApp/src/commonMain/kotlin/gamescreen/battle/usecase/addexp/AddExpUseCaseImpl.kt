@@ -34,10 +34,10 @@ class AddExpUseCaseImpl(
                     after = after.copy(
                         statusData = statusData.copy(
                             hp = after.statusData.hp.copy(
-                                maxValue = after.statusData.hp.maxValue
+                                maxValue = statusData.hp.maxValue
                             ),
                             mp = after.statusData.mp.copy(
-                                maxValue = after.statusData.mp.maxValue
+                                maxValue = statusData.mp.maxValue
                             ),
                         ),
                     )
