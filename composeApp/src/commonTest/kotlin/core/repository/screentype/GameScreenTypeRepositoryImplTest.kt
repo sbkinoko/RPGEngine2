@@ -1,6 +1,6 @@
 package core.repository.screentype
 
-import core.domain.ScreenType
+import gamescreen.GameScreenType
 import gamescreen.ModuleMain
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -14,7 +14,7 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class ScreenTypeRepositoryImplTest : KoinTest {
+class GameScreenTypeRepositoryImplTest : KoinTest {
     private val screenTypeRepository: ScreenTypeRepository by inject()
 
     @BeforeTest
@@ -35,7 +35,7 @@ class ScreenTypeRepositoryImplTest : KoinTest {
     fun checkSet() {
         var count = 0
         runBlocking {
-            lateinit var result: ScreenType
+            lateinit var result: GameScreenType
             val collectJob = launch {
                 screenTypeRepository.screenStateFlow.collect {
                     count++
@@ -44,13 +44,13 @@ class ScreenTypeRepositoryImplTest : KoinTest {
             }
 
             screenTypeRepository.setScreenType(
-                screenType = ScreenType.BATTLE,
+                gameScreenType = GameScreenType.BATTLE,
             )
 
             delay(100)
 
             assertEquals(
-                expected = ScreenType.BATTLE,
+                expected = GameScreenType.BATTLE,
                 actual = result,
             )
 

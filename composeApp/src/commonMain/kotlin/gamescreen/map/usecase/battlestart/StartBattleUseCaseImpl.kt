@@ -2,11 +2,11 @@ package gamescreen.map.usecase.battlestart
 
 import core.domain.BattleEventCallback
 import core.domain.BattleResult
-import core.domain.ScreenType
 import core.domain.status.monster.MonsterStatus
 import core.repository.battlemonster.BattleInfoRepository
 import core.repository.event.EventRepository
 import core.repository.screentype.ScreenTypeRepository
+import gamescreen.GameScreenType
 import gamescreen.battle.domain.BattleBackgroundType
 import gamescreen.battle.repository.action.ActionRepository
 import gamescreen.battle.repository.attackeffect.AttackEffectRepository
@@ -47,7 +47,7 @@ class StartBattleUseCaseImpl(
                 backgroundType
             )
             screenTypeRepository.setScreenType(
-                screenType = ScreenType.BATTLE,
+                gameScreenType = GameScreenType.BATTLE,
             )
             commandStateRepository.init()
             actionRepository.resetTarget()

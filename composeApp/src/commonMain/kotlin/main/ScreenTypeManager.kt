@@ -1,8 +1,8 @@
 package main
 
 import controller.domain.ControllerCallback
-import core.domain.ScreenType
 import core.repository.screentype.ScreenTypeRepository
+import gamescreen.GameScreenType
 import gamescreen.battle.BattleViewModel
 import gamescreen.choice.Choice
 import gamescreen.choice.ChoiceViewModel
@@ -45,7 +45,7 @@ class ScreenTypeManager(
 
     private var choiceList: List<Choice> = emptyList()
     private var textBoxData: TextBoxData? = null
-    private var screenType: ScreenType = ScreenType.FIELD
+    private var gameScreenType: GameScreenType = GameScreenType.FIELD
     private var isShop: Boolean = false
 
 
@@ -66,7 +66,7 @@ class ScreenTypeManager(
 
         CoroutineScope(Dispatchers.Main).launch {
             screenTypeRepository.screenStateFlow.collect {
-                screenType = it
+                gameScreenType = it
                 updateScreenType()
             }
         }
@@ -95,10 +95,10 @@ class ScreenTypeManager(
             return
         }
 
-        mutableControllerFlow.value = when (screenType) {
-            ScreenType.BATTLE -> battleViewModel
-            ScreenType.FIELD -> mapViewModel
-            ScreenType.MENU -> menuViewModel
+        mutableControllerFlow.value = when (gameScreenType) {
+            GameScreenType.BATTLE -> battleViewModel
+            GameScreenType.FIELD -> mapViewModel
+            GameScreenType.MENU -> menuViewModel
         }
     }
 }

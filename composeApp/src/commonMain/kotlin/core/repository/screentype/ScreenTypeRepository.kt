@@ -1,14 +1,14 @@
 package core.repository.screentype
 
-import core.domain.ScreenType
+import gamescreen.GameScreenType
 import kotlinx.coroutines.flow.StateFlow
 
 interface ScreenTypeRepository {
-    val screenStateFlow: StateFlow<ScreenType>
+    val screenStateFlow: StateFlow<GameScreenType>
 
-    fun setScreenType(screenType: ScreenType)
+    fun setScreenType(gameScreenType: GameScreenType)
 
     companion object {
-        val INITIAL_SCREEN_TYPE: ScreenType = ScreenType.FIELD
+        val INITIAL_SCREEN_TYPE: GameScreenType = GameScreenType.FIELD
     }
 }
