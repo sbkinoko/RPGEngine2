@@ -1,4 +1,4 @@
-package main
+package gamescreen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
