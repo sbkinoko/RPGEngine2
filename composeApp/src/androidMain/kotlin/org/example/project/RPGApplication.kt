@@ -3,13 +3,13 @@ package org.example.project
 import android.app.Application
 import core.ModuleCore
 import data.ModuleData
+import gamescreen.ModuleMain
 import gamescreen.battle.ModuleBattle
 import gamescreen.choice.ModuleChoice
 import gamescreen.map.ModuleMap
 import gamescreen.menu.ModuleMenu
 import gamescreen.menushop.ModuleShop
 import gamescreen.text.ModuleText
-import main.ModuleMain
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
