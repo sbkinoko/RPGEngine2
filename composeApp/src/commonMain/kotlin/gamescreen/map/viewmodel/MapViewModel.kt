@@ -3,12 +3,12 @@ package gamescreen.map.viewmodel
 import common.DefaultScope
 import controller.domain.ControllerCallback
 import controller.domain.Stick
-import core.domain.ScreenType
 import core.domain.mapcell.CellType
 import core.repository.screentype.ScreenTypeRepository
 import data.INITIAL_MAP_DATA
 import data.INITIAL_MAP_X
 import data.INITIAL_MAP_Y
+import gamescreen.GameScreenType
 import gamescreen.map.domain.MapUiState
 import gamescreen.map.domain.Player
 import gamescreen.map.domain.Point
@@ -295,7 +295,7 @@ class MapViewModel(
 
     private fun showMenu() {
         screenTypeRepository.setScreenType(
-            screenType = ScreenType.MENU
+            gameScreenType = GameScreenType.MENU
         )
     }
 

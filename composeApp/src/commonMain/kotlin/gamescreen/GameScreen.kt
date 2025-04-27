@@ -58,7 +58,7 @@ fun GameScreen(
             PlayArea(
                 modifier = Modifier
                     .size(size = screenSize.pxToDp()),
-                screenType = screenType.value,
+                gameScreenType = screenType.value,
                 screenSize = screenSize,
             )
 

@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import core.domain.ScreenType
 import gamescreen.battle.BattleScreen
 import gamescreen.choice.ChoiceWindow
 import gamescreen.map.layout.MapScreen
@@ -17,26 +16,26 @@ import values.Colors
 
 @Composable
 fun PlayArea(
-    screenType: ScreenType,
+    gameScreenType: GameScreenType,
     screenSize: Int,
     modifier: Modifier = Modifier,
 ) {
     Box(modifier = modifier) {
-        when (screenType) {
-            ScreenType.FIELD -> {
+        when (gameScreenType) {
+            GameScreenType.FIELD -> {
                 MapScreen(
                     modifier = Modifier.fillMaxSize(),
                     screenRatio = screenSize / MapViewModel.VIRTUAL_SCREEN_SIZE.toFloat()
                 )
             }
 
-            ScreenType.BATTLE -> {
+            GameScreenType.BATTLE -> {
                 BattleScreen(
                     modifier = Modifier.fillMaxSize(),
                 )
             }
 
-            ScreenType.MENU -> {
+            GameScreenType.MENU -> {
                 MenuScreen(
                     modifier = Modifier.fillMaxSize(),
                 )
