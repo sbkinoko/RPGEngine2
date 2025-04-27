@@ -9,12 +9,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun StartScreen() {
+fun StartScreen(
+    onClick: () -> Unit,
+) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center,
     ) {
-        Button(onClick = {}) {
+        Button(onClick = onClick) {
             Text("開始")
         }
     }
