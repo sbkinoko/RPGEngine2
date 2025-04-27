@@ -1,10 +1,10 @@
 package core.repository.screentype
 
 import core.domain.ScreenType
+import gamescreen.ModuleMain
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import main.ModuleMain
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest

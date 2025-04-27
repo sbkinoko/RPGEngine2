@@ -2,6 +2,7 @@ package gamescreen.map.viewmodel
 
 import core.ModuleCore
 import data.ModuleData
+import gamescreen.ModuleMain
 import gamescreen.battle.ModuleBattle
 import gamescreen.choice.ModuleChoice
 import gamescreen.map.ModuleMap
@@ -12,7 +13,6 @@ import gamescreen.text.ModuleText
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import main.ModuleMain
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
