@@ -17,9 +17,11 @@ fun MainScreen() {
     }
 
     when (screenType) {
-        ScreenType.Start -> StartScreen {
-            screenType = ScreenType.Game
-        }
+        ScreenType.Start -> StartScreen(
+            onClick = {
+                screenType = ScreenType.Game
+            }
+        )
 
         ScreenType.Game -> GameScreen()
     }
