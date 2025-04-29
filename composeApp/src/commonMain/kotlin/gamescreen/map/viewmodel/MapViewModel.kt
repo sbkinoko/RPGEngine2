@@ -3,6 +3,7 @@ package gamescreen.map.viewmodel
 import common.DefaultScope
 import controller.domain.ControllerCallback
 import controller.domain.Stick
+import core.domain.Position
 import core.domain.mapcell.CellType
 import core.repository.screentype.ScreenTypeRepository
 import data.INITIAL_MAP_DATA
@@ -28,6 +29,9 @@ import gamescreen.map.usecase.event.actionevent.ActionEventUseCase
 import gamescreen.map.usecase.event.cellevent.CellEventUseCase
 import gamescreen.map.usecase.move.MoveUseCase
 import gamescreen.map.usecase.roadmap.RoadMapUseCase
+import io.realm.kotlin.Realm
+import io.realm.kotlin.RealmConfiguration
+import io.realm.kotlin.ext.query
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -85,6 +89,30 @@ class MapViewModel(
 
     val uiStateFlow = mutableUiStateFlow.asStateFlow()
 
+    private val config: RealmConfiguration =
+        RealmConfiguration.create(schema = setOf(Position::class))
+    private val realm = Realm.open(config)
+    val position: Position
+        get() {
+            val data = realm.query<Position>().first().find()
+            if (data != null) {
+                return data
+            }
+
+            val position = Position().apply {
+                mapX = INITIAL_MAP_X
+                mapY = INITIAL_MAP_Y
+            }
+
+            realm.writeBlocking {
+                copyToRealm(
+                    position
+                )
+            }
+
+            return position
+        }
+
     init {
         backgroundRepository.cellNum = CELL_NUM
         backgroundRepository.screenSize = VIRTUAL_SCREEN_SIZE
@@ -96,9 +124,11 @@ class MapViewModel(
                 )
             )
 
+            val data = position
+
             roadMapUseCase.invoke(
-                mapX = INITIAL_MAP_X,
-                mapY = INITIAL_MAP_Y,
+                mapX = data.mapX,
+                mapY = data.mapY,
                 mapData = INITIAL_MAP_DATA,
             ).apply {
                 mutableUiStateFlow.value = uiStateFlow.value
@@ -109,9 +139,7 @@ class MapViewModel(
                         backObjectData = backObjectData!!,
                     )
             }
-        }
 
-        DefaultScope.launch {
             delay(50)
             mutableUiStateFlow.value = uiStateFlow.value.copy(
                 npcData = npcRepository.npcStateFlow.value,
@@ -166,6 +194,14 @@ class MapViewModel(
             backObjectData = uiData.backObjectData!!,
             frontObjectData = uiData.frontObjectData!!,
         )
+
+        realm.writeBlocking {
+            findLatest(position)!!.apply {
+                mapY = playerCellRepository.playerCenterCell.mapPoint.y
+
+                mapX = playerCellRepository.playerCenterCell.mapPoint.x
+            }
+        }
 
         val preEvent = autoEvent
         autoEvent = isEventCollidedEventUseCase.invoke(
