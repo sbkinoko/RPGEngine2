@@ -6,8 +6,6 @@ import controller.domain.Stick
 import core.domain.mapcell.CellType
 import core.repository.screentype.ScreenTypeRepository
 import data.INITIAL_MAP_DATA
-import data.INITIAL_MAP_X
-import data.INITIAL_MAP_Y
 import gamescreen.GameScreenType
 import gamescreen.map.domain.MapUiState
 import gamescreen.map.domain.Player
@@ -21,6 +19,7 @@ import gamescreen.map.repository.encouter.EncounterRepository
 import gamescreen.map.repository.npc.NPCRepository
 import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.repository.playercell.PlayerCellRepository
+import gamescreen.map.repository.position.PositionRepository
 import gamescreen.map.usecase.PlayerMoveManageUseCase
 import gamescreen.map.usecase.battlenormal.StartNormalBattleUseCase
 import gamescreen.map.usecase.collision.iscollidedevent.IsCollidedEventUseCase
@@ -43,6 +42,7 @@ class MapViewModel(
     private val encounterRepository: EncounterRepository,
     private val startNormalBattleUseCase: StartNormalBattleUseCase,
 
+    private val positionRepository: PositionRepository,
     private val moveUseCase: MoveUseCase,
 ) : ControllerCallback, KoinComponent {
     private val playerPositionRepository: PlayerPositionRepository by inject()
@@ -96,9 +96,11 @@ class MapViewModel(
                 )
             )
 
+            val data = positionRepository.position()
+
             roadMapUseCase.invoke(
-                mapX = INITIAL_MAP_X,
-                mapY = INITIAL_MAP_Y,
+                mapX = data.mapX,
+                mapY = data.mapY,
                 mapData = INITIAL_MAP_DATA,
             ).apply {
                 mutableUiStateFlow.value = uiStateFlow.value
@@ -109,9 +111,7 @@ class MapViewModel(
                         backObjectData = backObjectData!!,
                     )
             }
-        }
 
-        DefaultScope.launch {
             delay(50)
             mutableUiStateFlow.value = uiStateFlow.value.copy(
                 npcData = npcRepository.npcStateFlow.value,
@@ -165,6 +165,11 @@ class MapViewModel(
             backgroundData = uiData.backgroundData!!,
             backObjectData = uiData.backObjectData!!,
             frontObjectData = uiData.frontObjectData!!,
+        )
+
+        positionRepository.save(
+            x = playerCellRepository.playerCenterCell.mapPoint.x,
+            y = playerCellRepository.playerCenterCell.mapPoint.y,
         )
 
         val preEvent = autoEvent
