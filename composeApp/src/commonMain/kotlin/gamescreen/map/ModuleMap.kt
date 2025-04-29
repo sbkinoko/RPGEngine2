@@ -15,6 +15,8 @@ import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.repository.player.PlayerPositionRepositoryImpl
 import gamescreen.map.repository.playercell.PlayerCellRepository
 import gamescreen.map.repository.playercell.PlayerCellRepositoryImpl
+import gamescreen.map.repository.position.PositionRepository
+import gamescreen.map.repository.position.PositionRepositoryImpl
 import gamescreen.map.service.makefrontdata.MakeFrontDataServiceImpl
 import gamescreen.map.service.makefrontdata.MakeFrontDateService
 import gamescreen.map.service.velocitymanage.VelocityManageService
@@ -75,6 +77,7 @@ val ModuleMap = module {
             encounterRepository = get(),
             moveUseCase = get(),
             startNormalBattleUseCase = get(),
+            positionRepository = get(),
         )
     }
 
@@ -82,6 +85,10 @@ val ModuleMap = module {
         Player(
             MapViewModel.VIRTUAL_PLAYER_SIZE,
         )
+    }
+
+    single<PositionRepository> {
+        PositionRepositoryImpl()
     }
 
     single<PlayerPositionRepository> {

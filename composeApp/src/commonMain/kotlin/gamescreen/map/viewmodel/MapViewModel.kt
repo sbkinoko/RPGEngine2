@@ -3,12 +3,9 @@ package gamescreen.map.viewmodel
 import common.DefaultScope
 import controller.domain.ControllerCallback
 import controller.domain.Stick
-import core.domain.Position
 import core.domain.mapcell.CellType
 import core.repository.screentype.ScreenTypeRepository
 import data.INITIAL_MAP_DATA
-import data.INITIAL_MAP_X
-import data.INITIAL_MAP_Y
 import gamescreen.GameScreenType
 import gamescreen.map.domain.MapUiState
 import gamescreen.map.domain.Player
@@ -22,6 +19,7 @@ import gamescreen.map.repository.encouter.EncounterRepository
 import gamescreen.map.repository.npc.NPCRepository
 import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.repository.playercell.PlayerCellRepository
+import gamescreen.map.repository.position.PositionRepository
 import gamescreen.map.usecase.PlayerMoveManageUseCase
 import gamescreen.map.usecase.battlenormal.StartNormalBattleUseCase
 import gamescreen.map.usecase.collision.iscollidedevent.IsCollidedEventUseCase
@@ -29,9 +27,6 @@ import gamescreen.map.usecase.event.actionevent.ActionEventUseCase
 import gamescreen.map.usecase.event.cellevent.CellEventUseCase
 import gamescreen.map.usecase.move.MoveUseCase
 import gamescreen.map.usecase.roadmap.RoadMapUseCase
-import io.realm.kotlin.Realm
-import io.realm.kotlin.RealmConfiguration
-import io.realm.kotlin.ext.query
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -47,6 +42,7 @@ class MapViewModel(
     private val encounterRepository: EncounterRepository,
     private val startNormalBattleUseCase: StartNormalBattleUseCase,
 
+    private val positionRepository: PositionRepository,
     private val moveUseCase: MoveUseCase,
 ) : ControllerCallback, KoinComponent {
     private val playerPositionRepository: PlayerPositionRepository by inject()
@@ -89,30 +85,6 @@ class MapViewModel(
 
     val uiStateFlow = mutableUiStateFlow.asStateFlow()
 
-    private val config: RealmConfiguration =
-        RealmConfiguration.create(schema = setOf(Position::class))
-    private val realm = Realm.open(config)
-    val position: Position
-        get() {
-            val data = realm.query<Position>().first().find()
-            if (data != null) {
-                return data
-            }
-
-            val position = Position().apply {
-                mapX = INITIAL_MAP_X
-                mapY = INITIAL_MAP_Y
-            }
-
-            realm.writeBlocking {
-                copyToRealm(
-                    position
-                )
-            }
-
-            return position
-        }
-
     init {
         backgroundRepository.cellNum = CELL_NUM
         backgroundRepository.screenSize = VIRTUAL_SCREEN_SIZE
@@ -124,7 +96,7 @@ class MapViewModel(
                 )
             )
 
-            val data = position
+            val data = positionRepository.position()
 
             roadMapUseCase.invoke(
                 mapX = data.mapX,
@@ -195,13 +167,10 @@ class MapViewModel(
             frontObjectData = uiData.frontObjectData!!,
         )
 
-        realm.writeBlocking {
-            findLatest(position)!!.apply {
-                mapY = playerCellRepository.playerCenterCell.mapPoint.y
-
-                mapX = playerCellRepository.playerCenterCell.mapPoint.x
-            }
-        }
+        positionRepository.save(
+            x = playerCellRepository.playerCenterCell.mapPoint.x,
+            y = playerCellRepository.playerCenterCell.mapPoint.y,
+        )
 
         val preEvent = autoEvent
         autoEvent = isEventCollidedEventUseCase.invoke(
