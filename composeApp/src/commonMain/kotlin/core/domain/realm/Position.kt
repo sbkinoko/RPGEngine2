@@ -8,4 +8,5 @@ data class Position(
     var playerX: Float = 0f,
     var playerY: Float = 0f,
     var objectHeight: ObjectHeight,
+    var mapId: Int = 0,
 )

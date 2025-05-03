@@ -1,7 +1,8 @@
 package gamescreen.map.usecase.event.cellevent
 
 import core.domain.mapcell.CellType
-import gamescreen.map.data.LoopMap
+import gamescreen.map.data.ID_LOOP
+import gamescreen.map.data.ID_NON_LOOP
 import gamescreen.map.data.NonLoopMap
 import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
@@ -25,7 +26,7 @@ class CellEventUseCaseImpl(
                 roadMapDataUseCase.invoke(
                     mapX = 0,
                     mapY = 2,
-                    mapData = NonLoopMap(),
+                    mapId = ID_NON_LOOP,
                     playerHeight = ObjectHeight.Ground(1),
                 )
             }
@@ -34,7 +35,7 @@ class CellEventUseCaseImpl(
                 roadMapDataUseCase.invoke(
                     mapX = 4,
                     mapY = 9,
-                    mapData = LoopMap(),
+                    mapId = ID_LOOP,
                     playerHeight = ObjectHeight.Ground(1),
                 )
             }

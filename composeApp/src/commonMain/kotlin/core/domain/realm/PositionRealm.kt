@@ -14,6 +14,7 @@ class PositionRealm : RealmObject {
     var playerY: Float = 0f
     var height: Int = 2
     var heightDetail: Int = 1
+    var mapId: Int = 0
 }
 
 fun PositionRealm.convert(): Position = Position(
@@ -24,5 +25,6 @@ fun PositionRealm.convert(): Position = Position(
     objectHeight = ObjectHeight.ObjectHeight(
         height,
         heightDetail,
-    )
+    ),
+    mapId = this.mapId,
 )
