@@ -102,6 +102,7 @@ class MapViewModel(
                 mapX = data.mapX,
                 mapY = data.mapY,
                 mapData = INITIAL_MAP_DATA,
+                playerHeight = data.objectHeight,
             ).apply {
                 mutableUiStateFlow.value = uiStateFlow.value
                     .copy(
@@ -117,12 +118,11 @@ class MapViewModel(
                     )
             }
 
+            delay(10)
             // fixme UIDataが真になるようにする
             playerPositionRepository.setPlayerPosition(
                 player = mutableUiStateFlow.value.player
             )
-
-            delay(50)
             mutableUiStateFlow.value = uiStateFlow.value.copy(
                 npcData = npcRepository.npcStateFlow.value,
             )
@@ -183,6 +183,7 @@ class MapViewModel(
                 y = it.mapPoint.y,
                 playerDx = uiData.player.square.centerHorizontal - it.centerHorizontal,
                 playerDy = uiData.player.square.centerVertical - it.centerVertical,
+                objectHeight = uiData.player.square.objectHeight
             )
         }
 

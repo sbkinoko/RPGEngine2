@@ -5,6 +5,7 @@ import core.domain.realm.PositionRealm
 import core.domain.realm.convert
 import data.INITIAL_MAP_X
 import data.INITIAL_MAP_Y
+import gamescreen.map.domain.ObjectHeight
 import io.realm.kotlin.Realm
 import io.realm.kotlin.RealmConfiguration
 import io.realm.kotlin.ext.query
@@ -40,6 +41,7 @@ class PositionRepositoryImpl : PositionRepository {
         y: Int,
         playerDx: Float,
         playerDy: Float,
+        objectHeight: ObjectHeight,
     ) {
         realm.writeBlocking {
             findLatest(position)!!.apply {
@@ -47,6 +49,8 @@ class PositionRepositoryImpl : PositionRepository {
                 mapX = x
                 playerX = playerDx
                 playerY = playerDy
+                height = objectHeight.toInt()
+                heightDetail = objectHeight.height
             }
         }
     }

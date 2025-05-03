@@ -20,6 +20,7 @@ class MoveToOtherHeightUseCaseImpl(
 
     override suspend fun invoke(
         targetHeight: ObjectHeight,
+        update: (Player) -> Unit,
     ) {
         val player = playerPositionRepository.getPlayerPosition()
 
@@ -41,6 +42,8 @@ class MoveToOtherHeightUseCaseImpl(
 
         // 実際に移動
         move(dx, dy)
+
+        update(heightUpdatedPlayer)
     }
 
     /**
