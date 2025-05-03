@@ -1,5 +1,7 @@
 package gamescreen.map.domain
 
+
+//fixme マジックナンバー消す
 sealed class ObjectHeight(
     open val height: Int,
 ) : Comparable<ObjectHeight> {
@@ -21,11 +23,26 @@ sealed class ObjectHeight(
         return this.height - other.height
     }
 
-    private fun toInt(): Int {
+    fun toInt(): Int {
         return when (this) {
             None -> 3
             is Ground -> 2
             is Water -> 1
+        }
+    }
+
+    companion object {
+        fun ObjectHeight(
+            height: Int,
+            heightDetail: Int,
+        ): ObjectHeight {
+            return when (height) {
+                2 -> Ground(heightDetail)
+
+                1 -> Water(heightDetail)
+
+                else -> None
+            }
         }
     }
 }

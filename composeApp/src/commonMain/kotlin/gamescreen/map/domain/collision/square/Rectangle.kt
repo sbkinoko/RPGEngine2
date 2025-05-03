@@ -27,6 +27,12 @@ interface Rectangle : ShapeCollisionDetect {
 
     val bottomSide: Float
 
+    val centerHorizontal
+        get() = leftSide + width / 2
+
+    val centerVertical
+        get() = topSide + height / 2
+
     private val leftTop
         get() = Point(
             x = leftSide,
@@ -60,7 +66,6 @@ interface Rectangle : ShapeCollisionDetect {
             Line(leftTop, rightBottom),
             Line(rightTop, leftBottom)
         )
-
 
     override fun getPath(
         screenRatio: Float,

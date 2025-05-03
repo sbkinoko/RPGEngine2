@@ -1,7 +1,7 @@
 package core.usecase.restart
 
 import core.usecase.heal.MaxHealUseCase
-import gamescreen.map.data.MapData
+import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.UIData
 import gamescreen.map.usecase.roadmap.RoadMapUseCase
 import kotlinx.coroutines.runBlocking
@@ -17,7 +17,8 @@ class RestartUseCaseImplTest {
         override suspend fun invoke(
             mapX: Int,
             mapY: Int,
-            mapData: MapData,
+            mapId: Int,
+            playerHeight: ObjectHeight,
         ): UIData {
             roadMapCount++
             return UIData()
