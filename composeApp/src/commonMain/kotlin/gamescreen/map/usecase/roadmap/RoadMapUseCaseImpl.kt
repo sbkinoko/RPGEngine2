@@ -1,8 +1,10 @@
 package gamescreen.map.usecase.roadmap
 
 import gamescreen.map.data.MapData
+import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.UIData
 import gamescreen.map.service.makefrontdata.MakeFrontDateService
+import gamescreen.map.usecase.movetootherheight.MoveToOtherHeightUseCase
 import gamescreen.map.usecase.resetnpc.ResetNPCPositionUseCase
 import gamescreen.map.usecase.resetposition.ResetBackgroundPositionUseCase
 import gamescreen.map.usecase.setplayercenter.SetPlayerCenterUseCase
@@ -13,6 +15,7 @@ class RoadMapUseCaseImpl(
     private val resetBackgroundPositionUseCase: ResetBackgroundPositionUseCase,
     private val resetNPCPositionUseCase: ResetNPCPositionUseCase,
     private val updateCellContainPlayerUseCase: UpdateCellContainPlayerUseCase,
+    private val moveToOtherHeightUseCase: MoveToOtherHeightUseCase,
 
     private val makeFrontDateService: MakeFrontDateService,
 ) : RoadMapUseCase {
@@ -21,6 +24,7 @@ class RoadMapUseCaseImpl(
         mapX: Int,
         mapY: Int,
         mapData: MapData,
+        playerHeight: ObjectHeight,
     ): UIData {
         val backgroundData = resetBackgroundPositionUseCase.invoke(
             mapData = mapData,
@@ -32,11 +36,17 @@ class RoadMapUseCaseImpl(
             mapX = mapX,
             mapY = mapY,
         )
-        val player = setPlayerCenterUseCase.invoke()
+        var player = setPlayerCenterUseCase.invoke()
         updateCellContainPlayerUseCase.invoke(
             player = player,
             backgroundData = backgroundData,
         )
+
+        moveToOtherHeightUseCase.invoke(
+            targetHeight = playerHeight,
+        ) {
+            player = it
+        }
 
         val frontObjectData = makeFrontDateService(
             backgroundData = backgroundData,
