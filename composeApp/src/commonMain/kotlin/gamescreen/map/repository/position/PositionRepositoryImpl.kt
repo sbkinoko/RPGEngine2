@@ -35,12 +35,18 @@ class PositionRepositoryImpl : PositionRepository {
             return position
         }
 
-    override fun save(x: Int, y: Int) {
-
+    override fun save(
+        x: Int,
+        y: Int,
+        playerDx: Float,
+        playerDy: Float,
+    ) {
         realm.writeBlocking {
             findLatest(position)!!.apply {
                 mapY = y
                 mapX = x
+                playerX = playerDx
+                playerY = playerDy
             }
         }
     }

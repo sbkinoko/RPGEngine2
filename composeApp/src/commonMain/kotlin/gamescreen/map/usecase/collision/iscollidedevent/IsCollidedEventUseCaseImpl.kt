@@ -21,6 +21,7 @@ class IsCollidedEventUseCaseImpl(
             .fieldData
             .forEach { rowArray ->
                 rowArray.forEach cell@{ cell ->
+                    // fixme  backgroundの情報を使う
                     val collisionList = eventCollisionRepository.collisionData(
                         cellType = cell.cellType,
                         rectangle = cell,

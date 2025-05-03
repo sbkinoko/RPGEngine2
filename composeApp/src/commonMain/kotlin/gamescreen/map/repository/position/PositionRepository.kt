@@ -6,6 +6,8 @@ interface PositionRepository {
     fun save(
         x: Int,
         y: Int,
+        playerDx: Float,
+        playerDy: Float,
     )
 
     fun position(): Position
