@@ -1,12 +1,17 @@
 package gamescreen.map.viewmodel
 
 import core.ModuleCore
+import core.domain.realm.Position
 import data.ModuleData
 import gamescreen.ModuleMain
 import gamescreen.battle.ModuleBattle
 import gamescreen.choice.ModuleChoice
 import gamescreen.map.ModuleMap
 import gamescreen.map.domain.Player
+import gamescreen.map.repository.encouter.EncounterRepository
+import gamescreen.map.repository.position.PositionRepository
+import gamescreen.map.usecase.battlenormal.StartNormalBattleUseCase
+import gamescreen.map.usecase.move.MoveUseCase
 import gamescreen.menu.ModuleMenu
 import gamescreen.menushop.ModuleShop
 import gamescreen.text.ModuleText
@@ -23,7 +28,11 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class MapViewModelTest : KoinTest {
-    private val mapViewModel: MapViewModel by inject()
+    private val encounterRepository: EncounterRepository by inject()
+    private val startNormalBattleUseCase: StartNormalBattleUseCase by inject()
+    private val moveUseCase: MoveUseCase by inject()
+
+    private lateinit var mapViewModel: MapViewModel
 
     @BeforeTest
     fun beforeTest() {
@@ -43,6 +52,22 @@ class MapViewModelTest : KoinTest {
                 ModuleData,
             )
         }
+
+        mapViewModel = MapViewModel(
+            encounterRepository = encounterRepository,
+            startNormalBattleUseCase = startNormalBattleUseCase,
+            positionRepository = object : PositionRepository {
+                override fun save(x: Int, y: Int, playerDx: Float, playerDy: Float) {
+
+                }
+
+                override fun position(): Position {
+                    return Position()
+                }
+
+            },
+            moveUseCase = moveUseCase,
+        )
     }
 
     @AfterTest
@@ -170,6 +195,7 @@ class MapViewModelTest : KoinTest {
 //        }
 //    }
 
+    // fixme プレイヤーの位置の設定をわかりやすくする
     @Test
     fun resetTapPoint() {
         val x = MapViewModel.VIRTUAL_SCREEN_SIZE + 2f
