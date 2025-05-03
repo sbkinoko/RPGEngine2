@@ -105,12 +105,22 @@ class MapViewModel(
             ).apply {
                 mutableUiStateFlow.value = uiStateFlow.value
                     .copy(
-                        player = player!!,
+                        player = player!!.copy(
+                            square = player.square.move(
+                                dx = data.playerX,
+                                dy = data.playerY,
+                            )
+                        ),
                         backgroundData = backgroundData!!,
                         frontObjectData = frontObjectData!!,
                         backObjectData = backObjectData!!,
                     )
             }
+
+            // fixme UIDataが真になるようにする
+            playerPositionRepository.setPlayerPosition(
+                player = mutableUiStateFlow.value.player
+            )
 
             delay(50)
             mutableUiStateFlow.value = uiStateFlow.value.copy(
@@ -167,10 +177,15 @@ class MapViewModel(
             frontObjectData = uiData.frontObjectData!!,
         )
 
-        positionRepository.save(
-            x = playerCellRepository.playerCenterCell.mapPoint.x,
-            y = playerCellRepository.playerCenterCell.mapPoint.y,
-        )
+        playerCellRepository.playerCenterCell.let {
+            positionRepository.save(
+                x = it.mapPoint.x,
+                y = it.mapPoint.y,
+                playerDx = uiData.player.square.centerHorizontal - it.centerHorizontal,
+                playerDy = uiData.player.square.centerVertical - it.centerVertical,
+            )
+        }
+
 
         val preEvent = autoEvent
         autoEvent = isEventCollidedEventUseCase.invoke(
