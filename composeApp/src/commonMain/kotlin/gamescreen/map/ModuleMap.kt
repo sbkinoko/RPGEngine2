@@ -62,6 +62,8 @@ import gamescreen.map.usecase.resetposition.ResetBackgroundPositionUseCase
 import gamescreen.map.usecase.resetposition.ResetBackgroundPositionUseCaseImpl
 import gamescreen.map.usecase.roadmap.RoadMapUseCase
 import gamescreen.map.usecase.roadmap.RoadMapUseCaseImpl
+import gamescreen.map.usecase.save.SaveUseCase
+import gamescreen.map.usecase.save.SaveUseCaseImpl
 import gamescreen.map.usecase.setplayercenter.SetPlayerCenterUseCase
 import gamescreen.map.usecase.setplayercenter.SetPlayerCenterUseCaseImpl
 import gamescreen.map.usecase.settalk.SetTalkUseCase
@@ -78,6 +80,7 @@ val ModuleMap = module {
             moveUseCase = get(),
             startNormalBattleUseCase = get(),
             positionRepository = get(),
+            saveUseCase = get(),
         )
     }
 
@@ -313,5 +316,13 @@ val ModuleMap = module {
 
     single<DecideConnectTypeUseCase> {
         DecideConnectTypeUseCaseImpl()
+    }
+
+    single<SaveUseCase> {
+        SaveUseCaseImpl(
+            playerCellRepository = get(),
+            positionRepository = get(),
+            backgroundRepository = get(),
+        )
     }
 }
