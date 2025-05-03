@@ -239,8 +239,4 @@ class MapViewModelTest : KoinTest {
             collectJob.cancel()
         }
     }
-
-    companion object {
-        private const val CENTER = MapViewModel.VIRTUAL_SCREEN_SIZE / 2f
-    }
 }
