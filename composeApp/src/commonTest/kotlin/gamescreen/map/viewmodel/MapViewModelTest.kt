@@ -7,6 +7,7 @@ import gamescreen.ModuleMain
 import gamescreen.battle.ModuleBattle
 import gamescreen.choice.ModuleChoice
 import gamescreen.map.ModuleMap
+import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.Player
 import gamescreen.map.repository.encouter.EncounterRepository
 import gamescreen.map.repository.position.PositionRepository
@@ -57,12 +58,20 @@ class MapViewModelTest : KoinTest {
             encounterRepository = encounterRepository,
             startNormalBattleUseCase = startNormalBattleUseCase,
             positionRepository = object : PositionRepository {
-                override fun save(x: Int, y: Int, playerDx: Float, playerDy: Float) {
+                override fun save(
+                    x: Int,
+                    y: Int,
+                    playerDx: Float,
+                    playerDy: Float,
+                    objectHeight: ObjectHeight,
+                ) {
 
                 }
 
                 override fun position(): Position {
-                    return Position()
+                    return Position(
+                        objectHeight = ObjectHeight.None
+                    )
                 }
 
             },
@@ -232,7 +241,7 @@ class MapViewModelTest : KoinTest {
             )
 
             assertEquals(
-                expected = 2,
+                expected = 3,
                 actual = count
             )
 
