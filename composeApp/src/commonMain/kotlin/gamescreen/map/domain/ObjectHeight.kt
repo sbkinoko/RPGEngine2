@@ -1,5 +1,7 @@
 package gamescreen.map.domain
 
+
+//fixme マジックナンバー消す
 sealed class ObjectHeight(
     open val height: Int,
 ) : Comparable<ObjectHeight> {
