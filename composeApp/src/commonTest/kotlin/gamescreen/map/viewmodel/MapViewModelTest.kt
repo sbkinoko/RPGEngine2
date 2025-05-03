@@ -7,6 +7,7 @@ import gamescreen.ModuleMain
 import gamescreen.battle.ModuleBattle
 import gamescreen.choice.ModuleChoice
 import gamescreen.map.ModuleMap
+import gamescreen.map.data.MapData
 import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.Player
 import gamescreen.map.repository.encouter.EncounterRepository
@@ -64,6 +65,7 @@ class MapViewModelTest : KoinTest {
                     playerDx: Float,
                     playerDy: Float,
                     objectHeight: ObjectHeight,
+                    mapData: MapData,
                 ) {
 
                 }

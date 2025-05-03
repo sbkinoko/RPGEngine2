@@ -5,7 +5,6 @@ import controller.domain.ControllerCallback
 import controller.domain.Stick
 import core.domain.mapcell.CellType
 import core.repository.screentype.ScreenTypeRepository
-import data.INITIAL_MAP_DATA
 import gamescreen.GameScreenType
 import gamescreen.map.domain.MapUiState
 import gamescreen.map.domain.Player
@@ -101,7 +100,7 @@ class MapViewModel(
             roadMapUseCase.invoke(
                 mapX = data.mapX,
                 mapY = data.mapY,
-                mapData = INITIAL_MAP_DATA,
+                mapId = data.mapId,
                 playerHeight = data.objectHeight,
             ).apply {
                 mutableUiStateFlow.value = uiStateFlow.value
@@ -183,7 +182,8 @@ class MapViewModel(
                 y = it.mapPoint.y,
                 playerDx = uiData.player.square.centerHorizontal - it.centerHorizontal,
                 playerDy = uiData.player.square.centerVertical - it.centerVertical,
-                objectHeight = uiData.player.square.objectHeight
+                objectHeight = uiData.player.square.objectHeight,
+                mapData = backgroundRepository.mapData,
             )
         }
 

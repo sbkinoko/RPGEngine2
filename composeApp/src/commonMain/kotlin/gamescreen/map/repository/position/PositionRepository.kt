@@ -1,6 +1,7 @@
 package gamescreen.map.repository.position
 
 import core.domain.realm.Position
+import gamescreen.map.data.MapData
 import gamescreen.map.domain.ObjectHeight
 
 interface PositionRepository {
@@ -10,6 +11,7 @@ interface PositionRepository {
         playerDx: Float,
         playerDy: Float,
         objectHeight: ObjectHeight,
+        mapData: MapData,
     )
 
     fun position(): Position

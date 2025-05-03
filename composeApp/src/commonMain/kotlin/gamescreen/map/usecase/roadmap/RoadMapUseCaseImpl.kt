@@ -1,6 +1,6 @@
 package gamescreen.map.usecase.roadmap
 
-import gamescreen.map.data.MapData
+import gamescreen.map.data.toMap
 import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.UIData
 import gamescreen.map.service.makefrontdata.MakeFrontDateService
@@ -23,9 +23,11 @@ class RoadMapUseCaseImpl(
     override suspend fun invoke(
         mapX: Int,
         mapY: Int,
-        mapData: MapData,
+        mapId: Int,
         playerHeight: ObjectHeight,
     ): UIData {
+        val mapData = mapId.toMap()
+
         val backgroundData = resetBackgroundPositionUseCase.invoke(
             mapData = mapData,
             mapX = mapX,
