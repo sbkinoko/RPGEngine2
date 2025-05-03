@@ -14,6 +14,7 @@ import gamescreen.map.repository.encouter.EncounterRepository
 import gamescreen.map.repository.position.PositionRepository
 import gamescreen.map.usecase.battlenormal.StartNormalBattleUseCase
 import gamescreen.map.usecase.move.MoveUseCase
+import gamescreen.map.usecase.save.SaveUseCase
 import gamescreen.menu.ModuleMenu
 import gamescreen.menushop.ModuleShop
 import gamescreen.text.ModuleText
@@ -78,6 +79,11 @@ class MapViewModelTest : KoinTest {
 
             },
             moveUseCase = moveUseCase,
+            saveUseCase = object : SaveUseCase {
+                override fun save(player: Player) {
+
+                }
+            }
         )
     }
 

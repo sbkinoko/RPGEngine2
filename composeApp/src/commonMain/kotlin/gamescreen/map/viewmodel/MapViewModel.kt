@@ -26,6 +26,7 @@ import gamescreen.map.usecase.event.actionevent.ActionEventUseCase
 import gamescreen.map.usecase.event.cellevent.CellEventUseCase
 import gamescreen.map.usecase.move.MoveUseCase
 import gamescreen.map.usecase.roadmap.RoadMapUseCase
+import gamescreen.map.usecase.save.SaveUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -42,6 +43,8 @@ class MapViewModel(
     private val startNormalBattleUseCase: StartNormalBattleUseCase,
 
     private val positionRepository: PositionRepository,
+    private val saveUseCase: SaveUseCase,
+
     private val moveUseCase: MoveUseCase,
 ) : ControllerCallback, KoinComponent {
     private val playerPositionRepository: PlayerPositionRepository by inject()
@@ -176,17 +179,9 @@ class MapViewModel(
             frontObjectData = uiData.frontObjectData!!,
         )
 
-        playerCellRepository.playerCenterCell.let {
-            positionRepository.save(
-                x = it.mapPoint.x,
-                y = it.mapPoint.y,
-                playerDx = uiData.player.square.centerHorizontal - it.centerHorizontal,
-                playerDy = uiData.player.square.centerVertical - it.centerVertical,
-                objectHeight = uiData.player.square.objectHeight,
-                mapData = backgroundRepository.mapData,
-            )
-        }
-
+        saveUseCase.save(
+            player = uiData.player,
+        )
 
         val preEvent = autoEvent
         autoEvent = isEventCollidedEventUseCase.invoke(
