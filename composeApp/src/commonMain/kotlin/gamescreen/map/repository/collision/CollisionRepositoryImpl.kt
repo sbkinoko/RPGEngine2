@@ -38,7 +38,8 @@ class CollisionRepositoryImpl : CollisionRepository {
                     )
                 }
 
-            CellType.Glass -> {
+            CellType.Glass,
+                -> {
                 rectangle.run {
                     listOf(
                         EventRectangle(
