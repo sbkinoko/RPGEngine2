@@ -3,12 +3,9 @@ package gamescreen.map.viewmodel
 import common.DefaultScope
 import controller.domain.ControllerCallback
 import controller.domain.Stick
-import core.domain.ScreenType
 import core.domain.mapcell.CellType
 import core.repository.screentype.ScreenTypeRepository
-import data.INITIAL_MAP_DATA
-import data.INITIAL_MAP_X
-import data.INITIAL_MAP_Y
+import gamescreen.GameScreenType
 import gamescreen.map.domain.MapUiState
 import gamescreen.map.domain.Player
 import gamescreen.map.domain.Point
@@ -21,6 +18,7 @@ import gamescreen.map.repository.encouter.EncounterRepository
 import gamescreen.map.repository.npc.NPCRepository
 import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.repository.playercell.PlayerCellRepository
+import gamescreen.map.repository.position.PositionRepository
 import gamescreen.map.usecase.PlayerMoveManageUseCase
 import gamescreen.map.usecase.battlenormal.StartNormalBattleUseCase
 import gamescreen.map.usecase.collision.iscollidedevent.IsCollidedEventUseCase
@@ -28,6 +26,7 @@ import gamescreen.map.usecase.event.actionevent.ActionEventUseCase
 import gamescreen.map.usecase.event.cellevent.CellEventUseCase
 import gamescreen.map.usecase.move.MoveUseCase
 import gamescreen.map.usecase.roadmap.RoadMapUseCase
+import gamescreen.map.usecase.save.SaveUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -42,6 +41,9 @@ import values.event.EventType
 class MapViewModel(
     private val encounterRepository: EncounterRepository,
     private val startNormalBattleUseCase: StartNormalBattleUseCase,
+
+    private val positionRepository: PositionRepository,
+    private val saveUseCase: SaveUseCase,
 
     private val moveUseCase: MoveUseCase,
 ) : ControllerCallback, KoinComponent {
@@ -96,23 +98,33 @@ class MapViewModel(
                 )
             )
 
+            val data = positionRepository.position()
+
             roadMapUseCase.invoke(
-                mapX = INITIAL_MAP_X,
-                mapY = INITIAL_MAP_Y,
-                mapData = INITIAL_MAP_DATA,
+                mapX = data.mapX,
+                mapY = data.mapY,
+                mapId = data.mapId,
+                playerHeight = data.objectHeight,
             ).apply {
                 mutableUiStateFlow.value = uiStateFlow.value
                     .copy(
-                        player = player!!,
+                        player = player!!.copy(
+                            square = player.square.move(
+                                dx = data.playerX,
+                                dy = data.playerY,
+                            )
+                        ),
                         backgroundData = backgroundData!!,
                         frontObjectData = frontObjectData!!,
                         backObjectData = backObjectData!!,
                     )
             }
-        }
 
-        DefaultScope.launch {
-            delay(50)
+            delay(10)
+            // fixme UIDataが真になるようにする
+            playerPositionRepository.setPlayerPosition(
+                player = mutableUiStateFlow.value.player
+            )
             mutableUiStateFlow.value = uiStateFlow.value.copy(
                 npcData = npcRepository.npcStateFlow.value,
             )
@@ -165,6 +177,10 @@ class MapViewModel(
             backgroundData = uiData.backgroundData!!,
             backObjectData = uiData.backObjectData!!,
             frontObjectData = uiData.frontObjectData!!,
+        )
+
+        saveUseCase.save(
+            player = uiData.player,
         )
 
         val preEvent = autoEvent
@@ -295,7 +311,7 @@ class MapViewModel(
 
     private fun showMenu() {
         screenTypeRepository.setScreenType(
-            screenType = ScreenType.MENU
+            gameScreenType = GameScreenType.MENU
         )
     }
 

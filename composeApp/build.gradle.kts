@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.realm)
 }
 
 kotlin {
@@ -45,6 +46,7 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
+            implementation(libs.realm.library.base)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

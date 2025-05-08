@@ -1,18 +1,26 @@
 package gamescreen.map.viewmodel
 
 import core.ModuleCore
+import core.domain.realm.Position
 import data.ModuleData
+import gamescreen.ModuleMain
 import gamescreen.battle.ModuleBattle
 import gamescreen.choice.ModuleChoice
 import gamescreen.map.ModuleMap
+import gamescreen.map.data.MapData
+import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.Player
+import gamescreen.map.repository.encouter.EncounterRepository
+import gamescreen.map.repository.position.PositionRepository
+import gamescreen.map.usecase.battlenormal.StartNormalBattleUseCase
+import gamescreen.map.usecase.move.MoveUseCase
+import gamescreen.map.usecase.save.SaveUseCase
 import gamescreen.menu.ModuleMenu
 import gamescreen.menushop.ModuleShop
 import gamescreen.text.ModuleText
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import main.ModuleMain
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
@@ -23,7 +31,11 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class MapViewModelTest : KoinTest {
-    private val mapViewModel: MapViewModel by inject()
+    private val encounterRepository: EncounterRepository by inject()
+    private val startNormalBattleUseCase: StartNormalBattleUseCase by inject()
+    private val moveUseCase: MoveUseCase by inject()
+
+    private lateinit var mapViewModel: MapViewModel
 
     @BeforeTest
     fun beforeTest() {
@@ -43,6 +55,36 @@ class MapViewModelTest : KoinTest {
                 ModuleData,
             )
         }
+
+        mapViewModel = MapViewModel(
+            encounterRepository = encounterRepository,
+            startNormalBattleUseCase = startNormalBattleUseCase,
+            positionRepository = object : PositionRepository {
+                override fun save(
+                    x: Int,
+                    y: Int,
+                    playerDx: Float,
+                    playerDy: Float,
+                    objectHeight: ObjectHeight,
+                    mapData: MapData,
+                ) {
+
+                }
+
+                override fun position(): Position {
+                    return Position(
+                        objectHeight = ObjectHeight.None
+                    )
+                }
+
+            },
+            moveUseCase = moveUseCase,
+            saveUseCase = object : SaveUseCase {
+                override fun save(player: Player) {
+
+                }
+            }
+        )
     }
 
     @AfterTest
@@ -170,6 +212,7 @@ class MapViewModelTest : KoinTest {
 //        }
 //    }
 
+    // fixme プレイヤーの位置の設定をわかりやすくする
     @Test
     fun resetTapPoint() {
         val x = MapViewModel.VIRTUAL_SCREEN_SIZE + 2f
@@ -206,15 +249,11 @@ class MapViewModelTest : KoinTest {
             )
 
             assertEquals(
-                expected = 2,
+                expected = 3,
                 actual = count
             )
 
             collectJob.cancel()
         }
-    }
-
-    companion object {
-        private const val CENTER = MapViewModel.VIRTUAL_SCREEN_SIZE / 2f
     }
 }

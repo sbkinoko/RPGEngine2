@@ -15,6 +15,8 @@ import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.repository.player.PlayerPositionRepositoryImpl
 import gamescreen.map.repository.playercell.PlayerCellRepository
 import gamescreen.map.repository.playercell.PlayerCellRepositoryImpl
+import gamescreen.map.repository.position.PositionRepository
+import gamescreen.map.repository.position.PositionRepositoryImpl
 import gamescreen.map.service.makefrontdata.MakeFrontDataServiceImpl
 import gamescreen.map.service.makefrontdata.MakeFrontDateService
 import gamescreen.map.service.velocitymanage.VelocityManageService
@@ -60,6 +62,8 @@ import gamescreen.map.usecase.resetposition.ResetBackgroundPositionUseCase
 import gamescreen.map.usecase.resetposition.ResetBackgroundPositionUseCaseImpl
 import gamescreen.map.usecase.roadmap.RoadMapUseCase
 import gamescreen.map.usecase.roadmap.RoadMapUseCaseImpl
+import gamescreen.map.usecase.save.SaveUseCase
+import gamescreen.map.usecase.save.SaveUseCaseImpl
 import gamescreen.map.usecase.setplayercenter.SetPlayerCenterUseCase
 import gamescreen.map.usecase.setplayercenter.SetPlayerCenterUseCaseImpl
 import gamescreen.map.usecase.settalk.SetTalkUseCase
@@ -75,6 +79,8 @@ val ModuleMap = module {
             encounterRepository = get(),
             moveUseCase = get(),
             startNormalBattleUseCase = get(),
+            positionRepository = get(),
+            saveUseCase = get(),
         )
     }
 
@@ -82,6 +88,10 @@ val ModuleMap = module {
         Player(
             MapViewModel.VIRTUAL_PLAYER_SIZE,
         )
+    }
+
+    single<PositionRepository> {
+        PositionRepositoryImpl()
     }
 
     single<PlayerPositionRepository> {
@@ -291,6 +301,7 @@ val ModuleMap = module {
             resetBackgroundPositionUseCase = get(),
             resetNPCPositionUseCase = get(),
             updateCellContainPlayerUseCase = get(),
+            moveToOtherHeightUseCase = get(),
             makeFrontDateService = get(),
         )
     }
@@ -305,5 +316,13 @@ val ModuleMap = module {
 
     single<DecideConnectTypeUseCase> {
         DecideConnectTypeUseCaseImpl()
+    }
+
+    single<SaveUseCase> {
+        SaveUseCaseImpl(
+            playerCellRepository = get(),
+            positionRepository = get(),
+            backgroundRepository = get(),
+        )
     }
 }

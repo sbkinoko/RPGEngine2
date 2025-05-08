@@ -1,7 +1,7 @@
 package gamescreen.battle.command.escape
 
-import core.domain.ScreenType
 import core.repository.screentype.ScreenTypeRepository
+import gamescreen.GameScreenType
 import gamescreen.battle.BattleChildViewModel
 import gamescreen.battle.domain.BattleCommandType
 import gamescreen.battle.domain.EscapeCommand
@@ -26,7 +26,7 @@ class EscapeViewModel : BattleChildViewModel() {
 
             escapeCommand -> {
                 screenTypeRepository.setScreenType(
-                    screenType = ScreenType.FIELD,
+                    gameScreenType = GameScreenType.FIELD,
                 )
             }
         }

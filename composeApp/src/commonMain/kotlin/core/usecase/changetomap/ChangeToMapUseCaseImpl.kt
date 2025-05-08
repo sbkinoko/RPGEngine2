@@ -1,7 +1,7 @@
 package core.usecase.changetomap
 
-import core.domain.ScreenType
 import core.repository.screentype.ScreenTypeRepository
+import gamescreen.GameScreenType
 
 class ChangeToMapUseCaseImpl(
     private val screenTypeRepository: ScreenTypeRepository,
@@ -9,7 +9,7 @@ class ChangeToMapUseCaseImpl(
 
     override fun invoke() {
         screenTypeRepository.setScreenType(
-            screenType = ScreenType.FIELD,
+            gameScreenType = GameScreenType.FIELD,
         )
     }
 }

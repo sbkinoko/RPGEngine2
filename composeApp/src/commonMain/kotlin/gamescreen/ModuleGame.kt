@@ -1,7 +1,9 @@
-package main
+package gamescreen
 
 import core.repository.screentype.ScreenTypeRepository
 import core.repository.screentype.ScreenTypeRepositoryImpl
+import main.MainViewModel
+import main.ScreenTypeManager
 import org.koin.dsl.module
 
 val ModuleMain = module {

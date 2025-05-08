@@ -1,12 +1,13 @@
 package gamescreen.map.usecase.battlestart
 
 import core.ModuleCore
-import core.domain.ScreenType
 import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
 import core.domain.status.monster.MonsterStatus
 import core.repository.battlemonster.BattleInfoRepository
 import core.repository.event.EventRepository
 import core.repository.screentype.ScreenTypeRepository
+import gamescreen.GameScreenType
+import gamescreen.ModuleMain
 import gamescreen.battle.domain.ActionData
 import gamescreen.battle.domain.ActionType
 import gamescreen.battle.domain.BattleBackgroundType
@@ -21,7 +22,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import main.ModuleMain
 import org.koin.core.context.startKoin
 import org.koin.mp.KoinPlatform.stopKoin
 import org.koin.test.KoinTest
@@ -178,7 +178,7 @@ class StartBattleUseCaseImplTest : KoinTest {
     @Test
     fun checkStart() {
         runBlocking {
-            lateinit var result: ScreenType
+            lateinit var result: GameScreenType
             val collectJob = launch {
                 screenTypeRepository.screenStateFlow.collect {
                     result = it
@@ -195,7 +195,7 @@ class StartBattleUseCaseImplTest : KoinTest {
             delay(100)
 
             assertEquals(
-                actual = ScreenType.BATTLE,
+                actual = GameScreenType.BATTLE,
                 expected = result,
             )
 
