@@ -13,7 +13,6 @@ import rpgengine.composeapp.generated.resources.bg_00
 import rpgengine.composeapp.generated.resources.bg_02
 import rpgengine.composeapp.generated.resources.bg_20
 import rpgengine.composeapp.generated.resources.bg_8
-import rpgengine.composeapp.generated.resources.bg_8_2
 import rpgengine.composeapp.generated.resources.bg_null
 import rpgengine.composeapp.generated.resources.ob_01_01
 import rpgengine.composeapp.generated.resources.ob_01_02
@@ -69,8 +68,6 @@ class ImageBinderBackground : KoinComponent {
             CellType.BridgeCenterBottom,
                 -> Res.drawable.bg_00
 
-            CellType.GlassSand ->
-                Res.drawable.bg_8_2
             CellType.Sand,
                 -> Res.drawable.bg_8
 

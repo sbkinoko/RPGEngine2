@@ -27,6 +27,12 @@ class DecideBattleMonsterUseCaseImpl(
             ) {
                 monsterRepository.getMonster(1)
             }
+
+            CellType.Sand -> List(
+                1,
+            ) {
+                monsterRepository.getMonster(1)
+            }
         }
     }
 }

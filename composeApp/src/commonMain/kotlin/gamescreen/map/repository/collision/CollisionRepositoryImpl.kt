@@ -38,7 +38,6 @@ class CollisionRepositoryImpl : CollisionRepository {
                     )
                 }
 
-            CellType.GlassSand,
             CellType.Glass,
                 -> {
                 rectangle.run {

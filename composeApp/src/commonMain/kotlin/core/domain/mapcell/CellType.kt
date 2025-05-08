@@ -40,9 +40,10 @@ sealed class CellType {
             get() = 2.0f
     }
 
-    data object GlassSand : CellType(), CollisionCell
-
-    data object Sand : CellType()
+    data object Sand : CellType(), MonsterCell {
+        override val distanceLate: Float
+            get() = 1.0f
+    }
 
     data object BridgeLeftTop : CellType(), CollisionCell, ObjectCell
     data object BridgeLeftUnder : CellType(), CollisionCell, ObjectCell, EventObject
