@@ -1,6 +1,9 @@
 package gamescreen.map.usecase.event.actionevent
 
+import core.domain.mapcell.CellType
+import gamescreen.map.domain.MapUiState
 import gamescreen.map.domain.ObjectHeight
+import gamescreen.map.service.makefrontdata.MakeFrontDateService
 import gamescreen.map.usecase.changeheight.ChangeHeightUseCase
 import gamescreen.map.usecase.movetootherheight.MoveToOtherHeightUseCase
 import gamescreen.map.usecase.settalk.SetTalkUseCase
@@ -22,9 +25,13 @@ class ActionEventUseCaseImpl(
     private val setTalkUseCase: SetTalkUseCase,
     private val moveToOtherHeightUseCase: MoveToOtherHeightUseCase,
     private val changeHeightUseCase: ChangeHeightUseCase,
+    private val makeFrontDateService: MakeFrontDateService,
 ) : ActionEventUseCase {
+
     override fun invoke(
         eventType: EventType,
+        uiState: MapUiState,
+        callback: (MapUiState) -> Unit,
     ) {
         when (eventType) {
             EventType.None -> Unit
@@ -40,8 +47,37 @@ class ActionEventUseCaseImpl(
                         id = eventType.id,
                     ),
                 )
-                eventType.id.hasItem = false
-                //fixme 画面にすぐ反映できるようにする
+
+                val backgroundData = uiState.backgroundData.copy(
+                    uiState.backgroundData.fieldData.map {
+                        it.map {
+                            if (it.cellType is CellType.Box &&
+                                it.cellType.id == eventType.id
+                            ) {
+                                it.copy(
+                                    cellType = it.cellType.copy(
+                                        hasItem = false,
+                                    )
+                                )
+                            } else {
+                                it
+                            }
+                        }
+                    }
+                )
+
+                val objectData = makeFrontDateService(
+                    backgroundData = backgroundData,
+                    player = uiState.player,
+                )
+
+                callback(
+                    uiState.copy(
+                        backgroundData = backgroundData,
+                        backObjectData = objectData.second,
+                        frontObjectData = objectData.first,
+                    )
+                )
             }
 
             is TalkEvent -> {

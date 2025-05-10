@@ -46,6 +46,7 @@ class LoopMap : MapData() {
                 CellType.Glass,
                 CellType.Box(
                     id = BoxId.Box1,
+                    hasItem = true,
                 ),
                 CellType.Glass,
                 CellType.Glass,
@@ -60,6 +61,7 @@ class LoopMap : MapData() {
                 CellType.Sand,
                 CellType.Box(
                     id = BoxId.Box2,
+                    hasItem = true,
                 ),
                 CellType.Sand,
                 CellType.Glass,

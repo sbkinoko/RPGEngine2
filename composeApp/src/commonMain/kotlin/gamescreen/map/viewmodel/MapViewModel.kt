@@ -189,7 +189,12 @@ class MapViewModel(
         )
 
         if (autoEvent != preEvent && autoEvent != null) {
-            actionEventUseCase.invoke(autoEvent!!)
+            actionEventUseCase.invoke(
+                eventType = autoEvent!!,
+                uiState = uiStateFlow.value,
+            ) {
+                mutableUiStateFlow.value = it
+            }
         }
 
         // fixme moveUseCaseに移動する
@@ -278,7 +283,10 @@ class MapViewModel(
     private fun event() {
         actionEventUseCase.invoke(
             eventType = playerSquare.value.eventType,
-        )
+            uiState = uiStateFlow.value,
+        ) {
+            mutableUiStateFlow.value = it
+        }
     }
 
     fun touchCharacter() {

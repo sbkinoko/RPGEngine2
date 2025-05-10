@@ -44,7 +44,7 @@ fun ObjectData(
                             ),
                     ) {
                         imageBinder.bindObject(
-                            aroundCellId = aroundCellId,
+                            cellType = cellType,
                         )?.let {
                             Image(
                                 modifier = Modifier

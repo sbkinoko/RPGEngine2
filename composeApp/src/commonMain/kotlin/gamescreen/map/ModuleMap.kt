@@ -277,6 +277,7 @@ val ModuleMap = module {
             setTalkUseCase = get(),
             moveToOtherHeightUseCase = get(),
             changeHeightUseCase = get(),
+            makeFrontDateService = get(),
         )
     }
 

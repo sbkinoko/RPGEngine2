@@ -124,9 +124,8 @@ class ImageBinderBackground : KoinComponent {
      */
     @OptIn(ExperimentalResourceApi::class)
     fun bindObject(
-        aroundCellId: List<List<CellType>>,
+        cellType: CellType,
     ): DrawableResource? {
-        val cellType = aroundCellId[1][1]
 
         if (cellType !is CellType.ObjectCell) {
             return null
@@ -134,7 +133,7 @@ class ImageBinderBackground : KoinComponent {
 
         return when (cellType) {
             is CellType.Box -> {
-                if (cellType.id.hasItem) {
+                if (cellType.hasItem) {
                     Res.drawable.ob_98_1
                 } else {
                     Res.drawable.ob_98_0
