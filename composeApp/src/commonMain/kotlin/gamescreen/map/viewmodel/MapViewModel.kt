@@ -169,6 +169,7 @@ class MapViewModel(
         val uiData = moveUseCase.invoke(
             actualVelocity = actualVelocity,
             tentativeVelocity = tentativePlayerVelocity,
+            backgroundData = uiStateFlow.value.backgroundData,
         )
 
         mutableUiStateFlow.value = uiStateFlow.value.copy(

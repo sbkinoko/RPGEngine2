@@ -2,6 +2,7 @@ package gamescreen.map.usecase.move
 
 import gamescreen.map.domain.UIData
 import gamescreen.map.domain.Velocity
+import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.domain.collision.square.NormalRectangle
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.npc.NPCRepository
@@ -34,6 +35,7 @@ class MoveUseCaseImpl(
         tentativeVelocity: Velocity,
         fieldSquare: NormalRectangle,
         playerMoveArea: NormalRectangle,
+        backgroundData: BackgroundData?,
     ): UIData {
         var player = playerPositionRepository.playerPositionStateFlow.value
 
@@ -44,7 +46,7 @@ class MoveUseCaseImpl(
                 playerSquare = player.square,
             )
 
-        val backgroundData = backgroundRepository
+        val actualBackgroundData = backgroundData ?: backgroundRepository
             .backgroundStateFlow
             .value
 
@@ -56,7 +58,7 @@ class MoveUseCaseImpl(
         val movedBackgroundData = moveBackgroundUseCase.invoke(
             velocity = mediatedVelocity.second,
             fieldSquare = fieldSquare,
-            backgroundData = backgroundData
+            backgroundData = actualBackgroundData
         )
 
         val npcData = npcRepository.npcStateFlow.value
@@ -89,13 +91,13 @@ class MoveUseCaseImpl(
         )
 
         val frontObjectData = makeFrontDateService.invoke(
-            backgroundData = backgroundData,
+            backgroundData = actualBackgroundData,
             player = player
         )
 
         return UIData(
             player = player,
-            backgroundData = backgroundData,
+            backgroundData = actualBackgroundData,
             frontObjectData = frontObjectData.first,
             backObjectData = frontObjectData.second,
             npcData = npcData,

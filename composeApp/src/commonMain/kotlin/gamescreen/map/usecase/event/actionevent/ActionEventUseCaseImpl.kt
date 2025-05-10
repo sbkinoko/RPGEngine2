@@ -54,10 +54,18 @@ class ActionEventUseCaseImpl(
                             if (it.cellType is CellType.Box &&
                                 it.cellType.id == eventType.id
                             ) {
+                                val updated = it.cellType.copy(
+                                    hasItem = false,
+                                )
+                                val newAround = it.aroundCellId.map {
+                                    it.toMutableList()
+                                }.toMutableList()
+
+                                newAround[1][1] = updated
+
                                 it.copy(
-                                    cellType = it.cellType.copy(
-                                        hasItem = false,
-                                    )
+                                    cellType = updated,
+                                    aroundCellId = newAround,
                                 )
                             } else {
                                 it
