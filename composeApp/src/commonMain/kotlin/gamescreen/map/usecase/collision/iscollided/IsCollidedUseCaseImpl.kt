@@ -1,21 +1,19 @@
 package gamescreen.map.usecase.collision.iscollided
 
+import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.domain.collision.square.Rectangle
-import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.npc.NPCRepository
 
 // fixme repositoryに依存しないようにしたい
 class IsCollidedUseCaseImpl(
-    private val backgroundRepository: BackgroundRepository,
     private val npcRepository: NPCRepository,
 ) : IsCollidedUseCase {
 
     override fun invoke(
         playerSquare: Rectangle,
+        backgroundData: BackgroundData,
     ): Boolean {
-        backgroundRepository
-            .backgroundStateFlow
-            .value
+        backgroundData
             .fieldData
             .forEach { rowArray ->
                 rowArray.forEach cell@{ cell ->

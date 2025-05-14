@@ -5,6 +5,7 @@ import gamescreen.map.ModuleMap
 import gamescreen.map.data.MapData
 import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.Player
+import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.domain.collision.square.NormalRectangle
 import gamescreen.map.domain.npc.NPC
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
@@ -28,6 +29,7 @@ class IsCollidedUseCaseTest : KoinTest {
     private val restBackgroundPositionUseCase: ResetBackgroundPositionUseCase by inject()
 
     private val backgroundRepository: BackgroundRepository by inject()
+    private lateinit var backgroundData: BackgroundData
 
     private val mapData = object : MapData() {
         override val isLoop: Boolean
@@ -94,7 +96,9 @@ class IsCollidedUseCaseTest : KoinTest {
                 mapData = mapData,
                 mapX = 2,
                 mapY = 2,
-            )
+            ).let {
+                backgroundData = it
+            }
         }
     }
 
@@ -115,7 +119,8 @@ class IsCollidedUseCaseTest : KoinTest {
 
         assertTrue {
             isCollidedUseCase.invoke(
-                playerSquare = player.square
+                playerSquare = player.square,
+                backgroundData = backgroundData,
             )
         }
     }
@@ -138,8 +143,10 @@ class IsCollidedUseCaseTest : KoinTest {
 
         assertFalse {
             isCollidedUseCase.invoke(
-                playerSquare = waterPlayer.square
-            )
+                playerSquare = waterPlayer.square,
+                backgroundData = backgroundData,
+
+                )
         }
     }
 
@@ -154,7 +161,8 @@ class IsCollidedUseCaseTest : KoinTest {
 
         assertFalse {
             isCollidedUseCase.invoke(
-                playerSquare = player.square
+                playerSquare = player.square,
+                backgroundData = backgroundData,
             )
         }
     }

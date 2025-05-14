@@ -1,21 +1,21 @@
 package gamescreen.map.usecase.collision.geteventtype
 
+import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.domain.collision.EventObject
 import gamescreen.map.domain.collision.square.Rectangle
-import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.npc.NPCRepository
 import values.event.EventType
 
 // todo テスト作る
 class GetEventTypeUseCaseImpl(
-    private val backgroundRepository: BackgroundRepository,
     private val npcRepository: NPCRepository,
 ) : GetEventTypeUseCase {
 
     override fun invoke(
         rectangle: Rectangle,
+        backgroundData: BackgroundData,
     ): EventType {
-        backgroundRepository.backgroundStateFlow.value.fieldData.forEach { rowArray ->
+        backgroundData.fieldData.forEach { rowArray ->
             rowArray.forEach cell@{ cell ->
                 val collisionList = cell.collisionData
 

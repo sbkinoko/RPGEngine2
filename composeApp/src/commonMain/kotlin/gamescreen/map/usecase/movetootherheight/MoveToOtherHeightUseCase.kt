@@ -2,6 +2,7 @@ package gamescreen.map.usecase.movetootherheight
 
 import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.Player
+import gamescreen.map.domain.background.BackgroundData
 
 interface MoveToOtherHeightUseCase {
 
@@ -10,6 +11,7 @@ interface MoveToOtherHeightUseCase {
      */
     suspend operator fun invoke(
         targetHeight: ObjectHeight,
+        backgroundData: BackgroundData,
         update: (Player) -> Unit = {},
     )
 }

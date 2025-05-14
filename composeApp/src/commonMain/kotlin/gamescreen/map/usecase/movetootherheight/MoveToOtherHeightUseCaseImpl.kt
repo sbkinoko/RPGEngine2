@@ -4,6 +4,7 @@ import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.Player
 import gamescreen.map.domain.PlayerDir
 import gamescreen.map.domain.Velocity
+import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.domain.collision.square.NormalRectangle
 import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.usecase.collision.iscollided.IsCollidedUseCase
@@ -20,6 +21,7 @@ class MoveToOtherHeightUseCaseImpl(
 
     override suspend fun invoke(
         targetHeight: ObjectHeight,
+        backgroundData: BackgroundData,
         update: (Player) -> Unit,
     ) {
         val player = playerPositionRepository.getPlayerPosition()
@@ -38,10 +40,15 @@ class MoveToOtherHeightUseCaseImpl(
         // 移動量を取得
         val (dx, dy) = calcMoveDistance(
             heightUpdatedPlayer,
+            backgroundData,
         )
 
         // 実際に移動
-        move(dx, dy)
+        move(
+            dx,
+            dy,
+            backgroundData = backgroundData,
+        )
 
         update(heightUpdatedPlayer)
     }
@@ -51,6 +58,7 @@ class MoveToOtherHeightUseCaseImpl(
      */
     private fun calcMoveDistance(
         player: Player,
+        backgroundData: BackgroundData,
     ): Pair<Float, Float> {
         var maxDx = 0f
         var maxDy = 0f
@@ -75,7 +83,8 @@ class MoveToOtherHeightUseCaseImpl(
                     square.move(
                         dx = maxDx,
                         dy = maxDy,
-                    )
+                    ),
+                    backgroundData = backgroundData,
                 )
             ) {
                 when (dir) {
@@ -97,7 +106,8 @@ class MoveToOtherHeightUseCaseImpl(
                     square.move(
                         dx = maxDx,
                         dy = maxDy,
-                    )
+                    ),
+                    backgroundData = backgroundData,
                 )
             ) {
                 when (dir) {
@@ -121,7 +131,8 @@ class MoveToOtherHeightUseCaseImpl(
                         square.move(
                             dx = ave,
                             dy = maxDy,
-                        )
+                        ),
+                        backgroundData = backgroundData,
                     )
                 ) {
                     minDx = ave
@@ -136,7 +147,8 @@ class MoveToOtherHeightUseCaseImpl(
                         square.move(
                             dx = maxDx,
                             dy = ave,
-                        )
+                        ),
+                        backgroundData = backgroundData,
                     )
                 ) {
                     minDy = ave
@@ -152,6 +164,7 @@ class MoveToOtherHeightUseCaseImpl(
     private suspend fun move(
         dx: Float,
         dy: Float,
+        backgroundData: BackgroundData,
     ) {
         var restDx = dx
         var restDy = dy
@@ -174,6 +187,7 @@ class MoveToOtherHeightUseCaseImpl(
             moveUseCase.invoke(
                 tentativeVelocity = velocity,
                 actualVelocity = velocity,
+                backgroundData = backgroundData,
             )
             delay(GameParams.DELAY)
         }

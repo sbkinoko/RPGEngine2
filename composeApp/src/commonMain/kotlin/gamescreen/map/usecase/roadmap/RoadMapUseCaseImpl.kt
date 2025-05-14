@@ -46,6 +46,7 @@ class RoadMapUseCaseImpl(
 
         moveToOtherHeightUseCase.invoke(
             targetHeight = playerHeight,
+            backgroundData = backgroundData,
         ) {
             player = it
         }

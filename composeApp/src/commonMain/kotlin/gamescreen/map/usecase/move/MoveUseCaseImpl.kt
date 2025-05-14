@@ -2,8 +2,8 @@ package gamescreen.map.usecase.move
 
 import gamescreen.map.domain.UIData
 import gamescreen.map.domain.Velocity
+import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.domain.collision.square.NormalRectangle
-import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.npc.NPCRepository
 import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.service.makefrontdata.MakeFrontDateService
@@ -19,7 +19,6 @@ class MoveUseCaseImpl(
     private val getEventTypeUseCase: GetEventTypeUseCase,
     private val updateCellContainPlayerUseCase: UpdateCellContainPlayerUseCase,
 
-    private val backgroundRepository: BackgroundRepository,
     private val moveBackgroundUseCase: MoveBackgroundUseCase,
 
     private val npcRepository: NPCRepository,
@@ -32,6 +31,7 @@ class MoveUseCaseImpl(
     override suspend fun invoke(
         actualVelocity: Velocity,
         tentativeVelocity: Velocity,
+        backgroundData: BackgroundData,
         fieldSquare: NormalRectangle,
         playerMoveArea: NormalRectangle,
     ): UIData {
@@ -44,10 +44,6 @@ class MoveUseCaseImpl(
                 playerSquare = player.square,
             )
 
-        val backgroundData = backgroundRepository
-            .backgroundStateFlow
-            .value
-
         player = player.copy(
             actualVelocity = mediatedVelocity.first,
             tentativeVelocity = tentativeVelocity,
@@ -56,7 +52,7 @@ class MoveUseCaseImpl(
         val movedBackgroundData = moveBackgroundUseCase.invoke(
             velocity = mediatedVelocity.second,
             fieldSquare = fieldSquare,
-            backgroundData = backgroundData
+            backgroundData = backgroundData,
         )
 
         val npcData = npcRepository.npcStateFlow.value
@@ -67,7 +63,8 @@ class MoveUseCaseImpl(
 
         player = player.copy(
             eventType = getEventTypeUseCase.invoke(
-                player.eventSquare
+                player.eventSquare,
+                backgroundData = movedBackgroundData,
             )
         )
 
@@ -81,21 +78,18 @@ class MoveUseCaseImpl(
             player = player,
         )
 
-        backgroundRepository.setBackground(
-            background = movedBackgroundData,
-        )
         npcRepository.setNpc(
             npcData = movedData,
         )
 
         val frontObjectData = makeFrontDateService.invoke(
-            backgroundData = backgroundData,
+            backgroundData = movedBackgroundData,
             player = player
         )
 
         return UIData(
             player = player,
-            backgroundData = backgroundData,
+            backgroundData = movedBackgroundData,
             frontObjectData = frontObjectData.first,
             backObjectData = frontObjectData.second,
             npcData = npcData,
