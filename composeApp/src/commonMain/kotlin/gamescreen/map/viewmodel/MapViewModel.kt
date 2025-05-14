@@ -159,16 +159,20 @@ class MapViewModel(
 
         val player = playerSquare.value
 
+        val backgroundData = uiStateFlow.value.backgroundData
+
         val actualVelocity = playerMoveManageUseCase
             .getMovableVelocity(
                 player = player,
                 tentativePlayerVelocity = tentativePlayerVelocity,
+                backgroundData = backgroundData,
             )
 
         // 表示物を移動
         val uiData = moveUseCase.invoke(
             actualVelocity = actualVelocity,
             tentativeVelocity = tentativePlayerVelocity,
+            backgroundData = backgroundData,
         )
 
         mutableUiStateFlow.value = uiStateFlow.value.copy(
@@ -179,17 +183,23 @@ class MapViewModel(
             frontObjectData = uiData.frontObjectData!!,
         )
 
+        val updatedBackground: BackgroundData = uiData.backgroundData
+
         saveUseCase.save(
             player = uiData.player,
         )
 
         val preEvent = autoEvent
         autoEvent = isEventCollidedEventUseCase.invoke(
-            playerSquare = player.square
+            playerSquare = player.square,
+            backgroundData = updatedBackground,
         )
 
         if (autoEvent != preEvent && autoEvent != null) {
-            actionEventUseCase.invoke(autoEvent!!)
+            actionEventUseCase.invoke(
+                autoEvent!!,
+                backgroundData = updatedBackground,
+            )
         }
 
         // fixme moveUseCaseに移動する
@@ -198,7 +208,11 @@ class MapViewModel(
         playerCellRepository.eventCell?.let { cell ->
             cellEventUseCase.invoke(
                 cell.cellType,
-            )
+            )?.let {
+                mutableUiStateFlow.value = uiStateFlow.value.copy(
+                    backgroundData = it.backgroundData!!
+                )
+            }
             // 戦闘せずに終了
             return
         }
@@ -278,6 +292,7 @@ class MapViewModel(
     private fun event() {
         actionEventUseCase.invoke(
             eventType = playerSquare.value.eventType,
+            backgroundData = uiStateFlow.value.backgroundData,
         )
     }
 

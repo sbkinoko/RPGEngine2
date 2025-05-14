@@ -127,7 +127,6 @@ val ModuleMap = module {
             playerPositionRepository = get(),
             moveNPCUseCase = get(),
             npcRepository = get(),
-            backgroundRepository = get(),
             moveBackgroundUseCase = get(),
             getEventTypeUseCase = get(),
             velocityManageService = get(),
@@ -215,21 +214,18 @@ val ModuleMap = module {
 
     single<IsCollidedUseCase> {
         IsCollidedUseCaseImpl(
-            backgroundRepository = get(),
             npcRepository = get(),
         )
     }
 
     single<IsCollidedEventUseCase> {
         IsCollidedEventUseCaseImpl(
-            backgroundRepository = get(),
             eventCollisionRepository = get(),
         )
     }
 
     single<GetEventTypeUseCase> {
         GetEventTypeUseCaseImpl(
-            backgroundRepository = get(),
             npcRepository = get(),
         )
     }

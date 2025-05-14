@@ -1,5 +1,6 @@
 package gamescreen.map.usecase.collision.iscollided
 
+import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.domain.collision.square.Rectangle
 
 interface IsCollidedUseCase {
@@ -8,5 +9,6 @@ interface IsCollidedUseCase {
      */
     operator fun invoke(
         playerSquare: Rectangle,
+        backgroundData: BackgroundData,
     ): Boolean
 }
