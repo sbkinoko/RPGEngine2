@@ -28,7 +28,7 @@ class MoveBackgroundUseCaseTestLoop : KoinTest {
 
     private lateinit var backgroundData: BackgroundData
 
-    val BackgroundData.leftTopCell
+    private val BackgroundData.leftTopCell
         get() = this.fieldData[0][0]
 
 
@@ -43,13 +43,11 @@ class MoveBackgroundUseCaseTestLoop : KoinTest {
         repository.cellNum = CELL_NUM
         repository.screenSize = SIDE_LENGTH
 
-        resetBackgroundPositionUseCase(
+        backgroundData = resetBackgroundPositionUseCase(
             mapData = mapData,
             mapX = 0,
             mapY = 0,
         )
-
-        backgroundData = repository.backgroundStateFlow.value
     }
 
     @AfterTest

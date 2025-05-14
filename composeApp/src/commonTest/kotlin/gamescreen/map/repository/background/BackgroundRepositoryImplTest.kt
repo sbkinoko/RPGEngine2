@@ -4,15 +4,7 @@ import core.domain.mapcell.CellType
 import gamescreen.map.ModuleMap
 import gamescreen.map.data.LoopTestMap
 import gamescreen.map.data.NonLoopTestMap
-import gamescreen.map.domain.MapPoint
-import gamescreen.map.domain.background.BackgroundCell
-import gamescreen.map.domain.background.BackgroundData
-import gamescreen.map.domain.collision.square.NormalRectangle
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
@@ -26,23 +18,6 @@ class BackgroundRepositoryImplTest : KoinTest {
 
     private val repository: BackgroundRepository by inject()
 
-    private val background = BackgroundData(
-        List(3)
-        { row ->
-            List(3) { col ->
-                BackgroundCell(
-                    rectangle = NormalRectangle(
-                        x = row * 10f,
-                        y = col * 10f,
-                        size = 10f,
-                    ),
-                    mapPoint = MapPoint(),
-                    collisionData = emptyList(),
-                )
-            }
-        }
-    )
-
     @BeforeTest
     fun beforeTest() {
         startKoin {
@@ -55,53 +30,6 @@ class BackgroundRepositoryImplTest : KoinTest {
     @AfterTest
     fun afterTest() {
         stopKoin()
-    }
-
-    @Test
-    fun setTest() {
-        runBlocking {
-            repository.setBackground(
-                background = background
-            )
-
-            repository.backgroundStateFlow.value.apply {
-                assertEquals(
-                    expected = background,
-                    actual = this,
-                )
-            }
-        }
-    }
-
-    @Test
-    fun checkFlow() {
-        runBlocking {
-            lateinit var result: BackgroundData
-            var count = 0
-            val collectJob: Job = launch {
-                repository.backgroundStateFlow.collect {
-                    count++
-                    result = it
-                }
-            }
-
-            repository.setBackground(
-                background = background
-            )
-
-            delay(100)
-
-            assertEquals(
-                expected = background,
-                actual = result,
-            )
-            assertEquals(
-                expected = 1,
-                actual = count
-            )
-
-            collectJob.cancel()
-        }
     }
 
     @Test

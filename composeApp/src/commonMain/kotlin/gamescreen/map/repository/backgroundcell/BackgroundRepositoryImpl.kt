@@ -4,20 +4,9 @@ import core.domain.mapcell.CellType
 import gamescreen.map.data.LoopMap
 import gamescreen.map.data.MapData
 import gamescreen.map.domain.MapPoint
-import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.viewmodel.MapViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 
 class BackgroundRepositoryImpl : BackgroundRepository {
-    private val mutableBackgroundStateFlow = MutableStateFlow(
-        BackgroundRepository.initialBackground
-    )
-
-    override val backgroundStateFlow: StateFlow<BackgroundData>
-        get() = mutableBackgroundStateFlow.asStateFlow()
-
     override var mapData: MapData = LoopMap()
 
     override var cellNum: Int = 3
@@ -54,10 +43,6 @@ class BackgroundRepositoryImpl : BackgroundRepository {
                 getIdAt(x = x + 1, y = y + 1),
             ),
         )
-    }
-
-    override suspend fun setBackground(background: BackgroundData) {
-        mutableBackgroundStateFlow.value = background
     }
 
     private fun getIdAt(x: Int, y: Int): CellType {
