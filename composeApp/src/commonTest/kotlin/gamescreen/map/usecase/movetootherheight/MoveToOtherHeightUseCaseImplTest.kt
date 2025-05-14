@@ -6,6 +6,7 @@ import gamescreen.map.data.MapData
 import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.Player
 import gamescreen.map.domain.Velocity
+import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.domain.npc.NPC
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.player.PlayerPositionRepository
@@ -30,6 +31,8 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
     private val restBackgroundPositionUseCase: ResetBackgroundPositionUseCase by inject()
 
     private val backgroundRepository: BackgroundRepository by inject()
+
+    private lateinit var backgroundData: BackgroundData
 
     private val mapData = object : MapData() {
         override val isLoop: Boolean
@@ -71,7 +74,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
         runBlocking {
             backgroundRepository.cellNum = 3
 
-            restBackgroundPositionUseCase.invoke(
+            backgroundData = restBackgroundPositionUseCase.invoke(
                 mapData = mapData,
                 mapX = 1,
                 mapY = 1,
@@ -102,6 +105,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             val targetHeight = ObjectHeight.Water(1)
             moveToOtherHeightUseCase.invoke(
                 targetHeight,
+                backgroundData = backgroundData,
             )
 
             assertEquals(
@@ -119,7 +123,8 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
         runBlocking {
             val targetHeight = ObjectHeight.Ground(1)
             moveToOtherHeightUseCase.invoke(
-                targetHeight
+                targetHeight,
+                backgroundData = backgroundData,
             )
 
             assertEquals(
@@ -151,7 +156,10 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 player,
             )
 
-            moveToOtherHeightUseCase.invoke(ObjectHeight.Water(1))
+            moveToOtherHeightUseCase.invoke(
+                ObjectHeight.Water(1),
+                backgroundData = backgroundData,
+            )
 
             checkInWater()
         }
@@ -179,7 +187,10 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 player,
             )
 
-            moveToOtherHeightUseCase.invoke(ObjectHeight.Water(1))
+            moveToOtherHeightUseCase.invoke(
+                ObjectHeight.Water(1),
+                backgroundData = backgroundData,
+            )
 
             checkInWater()
         }
@@ -207,7 +218,10 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 player,
             )
 
-            moveToOtherHeightUseCase.invoke(ObjectHeight.Water(1))
+            moveToOtherHeightUseCase.invoke(
+                ObjectHeight.Water(1),
+                backgroundData = backgroundData,
+            )
 
             checkInWater()
         }
@@ -235,7 +249,10 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 player,
             )
 
-            moveToOtherHeightUseCase.invoke(ObjectHeight.Water(1))
+            moveToOtherHeightUseCase.invoke(
+                ObjectHeight.Water(1),
+                backgroundData = backgroundData,
+            )
 
             checkInWater()
         }
@@ -263,7 +280,10 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 player,
             )
 
-            moveToOtherHeightUseCase.invoke(ObjectHeight.Water(1))
+            moveToOtherHeightUseCase.invoke(
+                ObjectHeight.Water(1),
+                backgroundData = backgroundData,
+            )
 
             checkInWater()
         }
@@ -291,7 +311,10 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 player,
             )
 
-            moveToOtherHeightUseCase.invoke(ObjectHeight.Water(1))
+            moveToOtherHeightUseCase.invoke(
+                ObjectHeight.Water(1),
+                backgroundData = backgroundData,
+            )
 
             checkInWater()
         }
@@ -319,7 +342,10 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 player,
             )
 
-            moveToOtherHeightUseCase.invoke(ObjectHeight.Water(1))
+            moveToOtherHeightUseCase.invoke(
+                ObjectHeight.Water(1),
+                backgroundData = backgroundData,
+            )
 
             checkInWater()
         }
@@ -347,7 +373,10 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 player,
             )
 
-            moveToOtherHeightUseCase.invoke(ObjectHeight.Water(1))
+            moveToOtherHeightUseCase.invoke(
+                ObjectHeight.Water(1),
+                backgroundData = backgroundData,
+            )
 
             checkInWater()
         }
@@ -375,7 +404,10 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 player,
             )
 
-            moveToOtherHeightUseCase.invoke(ObjectHeight.Water(1))
+            moveToOtherHeightUseCase.invoke(
+                ObjectHeight.Water(1),
+                backgroundData = backgroundData,
+            )
 
             checkInWater()
         }
@@ -403,7 +435,10 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 player,
             )
 
-            moveToOtherHeightUseCase.invoke(ObjectHeight.Water(1))
+            moveToOtherHeightUseCase.invoke(
+                ObjectHeight.Water(1),
+                backgroundData = backgroundData,
+            )
 
             checkInWater()
         }
@@ -431,7 +466,10 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 player,
             )
 
-            moveToOtherHeightUseCase.invoke(ObjectHeight.Water(1))
+            moveToOtherHeightUseCase.invoke(
+                ObjectHeight.Water(1),
+                backgroundData = backgroundData,
+            )
 
             checkInWater()
         }
@@ -459,7 +497,10 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 player,
             )
 
-            moveToOtherHeightUseCase.invoke(ObjectHeight.Water(1))
+            moveToOtherHeightUseCase.invoke(
+                ObjectHeight.Water(1),
+                backgroundData = backgroundData,
+            )
 
             checkInWater()
         }
