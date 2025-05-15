@@ -5,6 +5,7 @@ import gamescreen.map.data.ID_LOOP
 import gamescreen.map.data.ID_NON_LOOP
 import gamescreen.map.data.NonLoopMap
 import gamescreen.map.domain.ObjectHeight
+import gamescreen.map.domain.Player
 import gamescreen.map.domain.UIData
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.usecase.roadmap.RoadMapUseCase
@@ -15,6 +16,7 @@ class CellEventUseCaseImpl(
 ) : CellEventUseCase {
     override suspend fun invoke(
         cellId: CellType,
+        player: Player,
     ): UIData? {
         // セルがイベントでなければ何もしない
         if (cellId !is CellType.EventCell) {
@@ -29,6 +31,7 @@ class CellEventUseCaseImpl(
                     mapY = 2,
                     mapId = ID_NON_LOOP,
                     playerHeight = ObjectHeight.Ground(1),
+                    player = player,
                 )
             }
 
@@ -38,6 +41,7 @@ class CellEventUseCaseImpl(
                     mapY = 9,
                     mapId = ID_LOOP,
                     playerHeight = ObjectHeight.Ground(1),
+                    player = player,
                 )
             }
         }

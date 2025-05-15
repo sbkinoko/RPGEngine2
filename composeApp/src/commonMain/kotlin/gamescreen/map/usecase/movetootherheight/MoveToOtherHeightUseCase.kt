@@ -12,6 +12,7 @@ interface MoveToOtherHeightUseCase {
     suspend operator fun invoke(
         targetHeight: ObjectHeight,
         backgroundData: BackgroundData,
+        player: Player,
         update: (Player) -> Unit = {},
     )
 }

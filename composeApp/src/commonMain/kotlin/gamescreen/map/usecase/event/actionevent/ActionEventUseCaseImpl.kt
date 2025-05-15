@@ -1,6 +1,7 @@
 package gamescreen.map.usecase.event.actionevent
 
 import gamescreen.map.domain.ObjectHeight
+import gamescreen.map.domain.Player
 import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.usecase.changeheight.ChangeHeightUseCase
 import gamescreen.map.usecase.movetootherheight.MoveToOtherHeightUseCase
@@ -16,6 +17,7 @@ import values.event.BoxData
 import values.event.EventType
 import values.event.TalkEvent
 
+// todo 画面に反映できるようにする
 class ActionEventUseCaseImpl(
     private val textRepository: TextRepository,
     private val addToolUseCase: AddToolUseCase,
@@ -27,6 +29,7 @@ class ActionEventUseCaseImpl(
     override fun invoke(
         eventType: EventType,
         backgroundData: BackgroundData,
+        player: Player,
     ) {
         when (eventType) {
             EventType.None -> Unit
@@ -78,6 +81,7 @@ class ActionEventUseCaseImpl(
                     moveToOtherHeightUseCase.invoke(
                         targetHeight = ObjectHeight.Water(1),
                         backgroundData = backgroundData,
+                        player = player,
                     )
                 }
             }
@@ -93,19 +97,26 @@ class ActionEventUseCaseImpl(
                     moveToOtherHeightUseCase.invoke(
                         targetHeight = ObjectHeight.Ground(1),
                         backgroundData = backgroundData,
+                        player = player,
                     )
                 }
             }
 
             EventType.Ground1 -> {
                 CoroutineScope(Dispatchers.Default).launch {
-                    changeHeightUseCase.invoke(ObjectHeight.Ground(1))
+                    changeHeightUseCase.invoke(
+                        ObjectHeight.Ground(1),
+                        player = player,
+                    )
                 }
             }
 
             EventType.Ground2 -> {
                 CoroutineScope(Dispatchers.Default).launch {
-                    changeHeightUseCase.invoke(ObjectHeight.Ground(2))
+                    changeHeightUseCase.invoke(
+                        ObjectHeight.Ground(2),
+                        player = player,
+                    )
                 }
             }
         }

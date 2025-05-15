@@ -6,7 +6,6 @@ import gamescreen.map.domain.PlayerDir
 import gamescreen.map.domain.Velocity
 import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.domain.collision.square.NormalRectangle
-import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.usecase.collision.iscollided.IsCollidedUseCase
 import gamescreen.map.usecase.move.MoveUseCase
 import kotlinx.coroutines.delay
@@ -14,27 +13,21 @@ import values.GameParams
 import kotlin.math.abs
 
 class MoveToOtherHeightUseCaseImpl(
-    private val playerPositionRepository: PlayerPositionRepository,
     private val isCollidedUseCase: IsCollidedUseCase,
     private val moveUseCase: MoveUseCase,
 ) : MoveToOtherHeightUseCase {
 
+    //todo callbackでUIを更新するようにする
     override suspend fun invoke(
         targetHeight: ObjectHeight,
         backgroundData: BackgroundData,
+        player: Player,
         update: (Player) -> Unit,
     ) {
-        val player = playerPositionRepository.getPlayerPosition()
-
         val heightUpdatedPlayer = player.copy(
             square = (player.square as NormalRectangle).copy(
                 objectHeight = targetHeight,
             )
-        )
-
-        // 高さを保存
-        playerPositionRepository.setPlayerPosition(
-            heightUpdatedPlayer,
         )
 
         // 移動量を取得
@@ -48,8 +41,11 @@ class MoveToOtherHeightUseCaseImpl(
             dx,
             dy,
             backgroundData = backgroundData,
+            player = player,
         )
 
+        // fixme 暫定処理
+        // callbackを完成させたら削除
         update(heightUpdatedPlayer)
     }
 
@@ -165,6 +161,7 @@ class MoveToOtherHeightUseCaseImpl(
         dx: Float,
         dy: Float,
         backgroundData: BackgroundData,
+        player: Player,
     ) {
         var restDx = dx
         var restDy = dy
@@ -182,12 +179,14 @@ class MoveToOtherHeightUseCaseImpl(
                 break
             }
 
+            // fixme ここでUI更新処理を呼び出す
             //　移動できることはわかっている
             //　のでプレイヤーの方向と移動方向に同じ物を入力
             moveUseCase.invoke(
                 tentativeVelocity = velocity,
                 actualVelocity = velocity,
                 backgroundData = backgroundData,
+                player = player,
             )
             delay(GameParams.DELAY)
         }

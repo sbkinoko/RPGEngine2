@@ -11,8 +11,6 @@ import gamescreen.map.repository.encouter.EncounterRepository
 import gamescreen.map.repository.encouter.EncounterRepositoryImpl
 import gamescreen.map.repository.npc.NPCRepository
 import gamescreen.map.repository.npc.NPCRepositoryImpl
-import gamescreen.map.repository.player.PlayerPositionRepository
-import gamescreen.map.repository.player.PlayerPositionRepositoryImpl
 import gamescreen.map.repository.playercell.PlayerCellRepository
 import gamescreen.map.repository.playercell.PlayerCellRepositoryImpl
 import gamescreen.map.repository.position.PositionRepository
@@ -94,10 +92,6 @@ val ModuleMap = module {
         PositionRepositoryImpl()
     }
 
-    single<PlayerPositionRepository> {
-        PlayerPositionRepositoryImpl()
-    }
-
     single<BackgroundRepository> {
         BackgroundRepositoryImpl()
     }
@@ -124,7 +118,6 @@ val ModuleMap = module {
 
     single<MoveUseCase> {
         MoveUseCaseImpl(
-            playerPositionRepository = get(),
             moveNPCUseCase = get(),
             npcRepository = get(),
             moveBackgroundUseCase = get(),
@@ -136,24 +129,19 @@ val ModuleMap = module {
     }
 
     single<ChangeHeightUseCase> {
-        ChangeHeightUseCaseImpl(
-            playerPositionRepository = get(),
-        )
+        ChangeHeightUseCaseImpl()
     }
 
 
     single<MoveToOtherHeightUseCase> {
         MoveToOtherHeightUseCaseImpl(
-            playerPositionRepository = get(),
             isCollidedUseCase = get(),
             moveUseCase = get(),
         )
     }
 
     single {
-        PlayerMoveToUseCase(
-            playerPositionRepository = get(),
-        )
+        PlayerMoveToUseCase()
     }
 
     single<MoveBackgroundUseCase> {
@@ -304,7 +292,6 @@ val ModuleMap = module {
 
     single<SetPlayerCenterUseCase> {
         SetPlayerCenterUseCaseImpl(
-            player = get(),
             getScreenCenterUseCase = get(),
             playerMoveToUseCase = get(),
         )
