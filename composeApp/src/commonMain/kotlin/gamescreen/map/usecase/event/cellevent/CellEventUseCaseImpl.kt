@@ -40,7 +40,8 @@ class CellEventUseCaseImpl(
                     mapX = 4,
                     mapY = 9,
                     mapId = ID_LOOP,
-                    playerHeight = ObjectHeight.Ground(1), player = player,
+                    playerHeight = ObjectHeight.Ground(1),
+                    player = player,
                 )
             }
         }
