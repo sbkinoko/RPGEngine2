@@ -6,7 +6,6 @@ import gamescreen.map.domain.Velocity
 import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.domain.collision.square.NormalRectangle
 import gamescreen.map.repository.npc.NPCRepository
-import gamescreen.map.repository.player.PlayerPositionRepository
 import gamescreen.map.service.makefrontdata.MakeFrontDateService
 import gamescreen.map.service.velocitymanage.VelocityManageService
 import gamescreen.map.usecase.collision.geteventtype.GetEventTypeUseCase
@@ -16,7 +15,6 @@ import gamescreen.map.usecase.updatecellcontainplayer.UpdateCellContainPlayerUse
 
 // todo テスト作成
 class MoveUseCaseImpl(
-    private val playerPositionRepository: PlayerPositionRepository,
     private val getEventTypeUseCase: GetEventTypeUseCase,
     private val updateCellContainPlayerUseCase: UpdateCellContainPlayerUseCase,
 
