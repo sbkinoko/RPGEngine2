@@ -17,6 +17,7 @@ import values.event.BoxData
 import values.event.EventType
 import values.event.TalkEvent
 
+// todo 画面に反映できるようにする
 class ActionEventUseCaseImpl(
     private val textRepository: TextRepository,
     private val addToolUseCase: AddToolUseCase,
