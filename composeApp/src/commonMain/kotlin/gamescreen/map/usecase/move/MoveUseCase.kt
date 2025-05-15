@@ -1,5 +1,6 @@
 package gamescreen.map.usecase.move
 
+import gamescreen.map.domain.Player
 import gamescreen.map.domain.UIData
 import gamescreen.map.domain.Velocity
 import gamescreen.map.domain.background.BackgroundData
@@ -30,6 +31,7 @@ interface MoveUseCase {
         actualVelocity: Velocity,
         tentativeVelocity: Velocity,
         backgroundData: BackgroundData,
+        player: Player,
         fieldSquare: NormalRectangle = pFieldSquare,
         playerMoveArea: NormalRectangle = pPlayerMoveArea,
     ): UIData

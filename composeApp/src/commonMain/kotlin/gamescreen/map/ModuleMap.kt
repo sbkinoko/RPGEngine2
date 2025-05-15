@@ -136,24 +136,19 @@ val ModuleMap = module {
     }
 
     single<ChangeHeightUseCase> {
-        ChangeHeightUseCaseImpl(
-            playerPositionRepository = get(),
-        )
+        ChangeHeightUseCaseImpl()
     }
 
 
     single<MoveToOtherHeightUseCase> {
         MoveToOtherHeightUseCaseImpl(
-            playerPositionRepository = get(),
             isCollidedUseCase = get(),
             moveUseCase = get(),
         )
     }
 
     single {
-        PlayerMoveToUseCase(
-            playerPositionRepository = get(),
-        )
+        PlayerMoveToUseCase()
     }
 
     single<MoveBackgroundUseCase> {
@@ -304,7 +299,6 @@ val ModuleMap = module {
 
     single<SetPlayerCenterUseCase> {
         SetPlayerCenterUseCaseImpl(
-            player = get(),
             getScreenCenterUseCase = get(),
             playerMoveToUseCase = get(),
         )

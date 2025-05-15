@@ -222,7 +222,7 @@ class MapViewModelTest : KoinTest {
         runBlocking {
             lateinit var result: Player
             val collectJob = launch {
-                mapViewModel.playerSquare.collect {
+                mapViewModel.player.collect {
                     result = it
                     count++
                 }

@@ -2,6 +2,7 @@ package gamescreen.map.usecase.roadmap
 
 import gamescreen.map.data.toMap
 import gamescreen.map.domain.ObjectHeight
+import gamescreen.map.domain.Player
 import gamescreen.map.domain.UIData
 import gamescreen.map.service.makefrontdata.MakeFrontDateService
 import gamescreen.map.usecase.movetootherheight.MoveToOtherHeightUseCase
@@ -25,6 +26,7 @@ class RoadMapUseCaseImpl(
         mapY: Int,
         mapId: Int,
         playerHeight: ObjectHeight,
+        player: Player,
     ): UIData {
         val mapData = mapId.toMap()
 
@@ -38,26 +40,31 @@ class RoadMapUseCaseImpl(
             mapX = mapX,
             mapY = mapY,
         )
-        var player = setPlayerCenterUseCase.invoke()
-        updateCellContainPlayerUseCase.invoke(
+
+        val newPlayer = setPlayerCenterUseCase.invoke(
             player = player,
+        )
+
+        updateCellContainPlayerUseCase.invoke(
+            player = newPlayer,
             backgroundData = backgroundData,
         )
 
         moveToOtherHeightUseCase.invoke(
             targetHeight = playerHeight,
             backgroundData = backgroundData,
+            player = newPlayer
         ) {
-            player = it
+//            newPlayer = it
         }
 
         val frontObjectData = makeFrontDateService(
             backgroundData = backgroundData,
-            player = player,
+            player = newPlayer,
         )
 
         return UIData(
-            player = player,
+            player = newPlayer,
             backgroundData = backgroundData,
             frontObjectData = frontObjectData.first,
             backObjectData = frontObjectData.second,

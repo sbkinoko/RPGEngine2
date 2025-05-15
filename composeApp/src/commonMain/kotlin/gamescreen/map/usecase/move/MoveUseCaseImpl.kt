@@ -1,5 +1,6 @@
 package gamescreen.map.usecase.move
 
+import gamescreen.map.domain.Player
 import gamescreen.map.domain.UIData
 import gamescreen.map.domain.Velocity
 import gamescreen.map.domain.background.BackgroundData
@@ -32,11 +33,10 @@ class MoveUseCaseImpl(
         actualVelocity: Velocity,
         tentativeVelocity: Velocity,
         backgroundData: BackgroundData,
+        player: Player,
         fieldSquare: NormalRectangle,
         playerMoveArea: NormalRectangle,
     ): UIData {
-        var player = playerPositionRepository.playerPositionStateFlow.value
-
         val mediatedVelocity =
             velocityManageService.invoke(
                 tentativePlayerVelocity = actualVelocity,
@@ -44,7 +44,7 @@ class MoveUseCaseImpl(
                 playerSquare = player.square,
             )
 
-        player = player.copy(
+        var movedPlayer = player.copy(
             actualVelocity = mediatedVelocity.first,
             tentativeVelocity = tentativeVelocity,
         ).move()
@@ -61,21 +61,17 @@ class MoveUseCaseImpl(
             npcData = npcData,
         )
 
-        player = player.copy(
+        movedPlayer = movedPlayer.copy(
             eventType = getEventTypeUseCase.invoke(
-                player.eventSquare,
+                movedPlayer.eventSquare,
                 backgroundData = movedBackgroundData,
             )
         )
 
         // playerが入っているマスを設定
         updateCellContainPlayerUseCase.invoke(
-            player = player,
+            player = movedPlayer,
             backgroundData = movedBackgroundData,
-        )
-
-        playerPositionRepository.setPlayerPosition(
-            player = player,
         )
 
         npcRepository.setNpc(
@@ -84,11 +80,11 @@ class MoveUseCaseImpl(
 
         val frontObjectData = makeFrontDateService.invoke(
             backgroundData = movedBackgroundData,
-            player = player
+            player = movedPlayer
         )
 
         return UIData(
-            player = player,
+            player = movedPlayer,
             backgroundData = movedBackgroundData,
             frontObjectData = frontObjectData.first,
             backObjectData = frontObjectData.second,

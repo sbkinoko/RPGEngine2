@@ -31,7 +31,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
@@ -64,19 +63,16 @@ class MapViewModel(
 
     private val roadMapUseCase: RoadMapUseCase by inject()
 
-    val playerSquare: StateFlow<Player> =
-        playerPositionRepository.playerPositionStateFlow
-
     private var tapPoint: Point? = null
 
     private var tentativePlayerVelocity: Velocity = Velocity()
 
     private val canEvent: Boolean
-        get() = playerPositionRepository.playerPositionStateFlow.value.eventType.canEvent
+        get() = uiStateFlow.value.player.eventType.canEvent
 
     private val mutableUiStateFlow = MutableStateFlow(
         MapUiState(
-            player = playerPositionRepository.playerPositionStateFlow.value,
+            player = Player(size = 0f),
             npcData = NPCData(emptyList()),
             backgroundData = BackgroundData(emptyList()),
             frontObjectData = ObjectData(emptyList()),
@@ -92,10 +88,8 @@ class MapViewModel(
         backgroundRepository.screenSize = VIRTUAL_SCREEN_SIZE
 
         CoroutineScope(Dispatchers.Default).launch {
-            playerPositionRepository.setPlayerPosition(
-                player = Player(
-                    size = VIRTUAL_PLAYER_SIZE,
-                )
+            val initPlayer = Player(
+                size = VIRTUAL_PLAYER_SIZE,
             )
 
             val data = positionRepository.position()
@@ -105,6 +99,7 @@ class MapViewModel(
                 mapY = data.mapY,
                 mapId = data.mapId,
                 playerHeight = data.objectHeight,
+                player = initPlayer,
             ).apply {
                 mutableUiStateFlow.value = uiStateFlow.value
                     .copy(
@@ -121,10 +116,7 @@ class MapViewModel(
             }
 
             delay(10)
-            // fixme UIDataが真になるようにする
-            playerPositionRepository.setPlayerPosition(
-                player = mutableUiStateFlow.value.player
-            )
+
             mutableUiStateFlow.value = uiStateFlow.value.copy(
                 npcData = npcRepository.npcStateFlow.value,
             )
@@ -157,14 +149,13 @@ class MapViewModel(
             return
         }
 
-        val player = playerSquare.value
-
         val backgroundData = uiStateFlow.value.backgroundData
+        val player = uiStateFlow.value.player
 
         val actualVelocity = playerMoveManageUseCase
             .getMovableVelocity(
-                player = player,
                 tentativePlayerVelocity = tentativePlayerVelocity,
+                player = player,
                 backgroundData = backgroundData,
             )
 
@@ -173,6 +164,7 @@ class MapViewModel(
             actualVelocity = actualVelocity,
             tentativeVelocity = tentativePlayerVelocity,
             backgroundData = backgroundData,
+            player = player,
         )
 
         mutableUiStateFlow.value = uiStateFlow.value.copy(
@@ -184,6 +176,7 @@ class MapViewModel(
         )
 
         val updatedBackground: BackgroundData = uiData.backgroundData
+        val updatedPlayer: Player = uiData.player
 
         saveUseCase.save(
             player = uiData.player,
@@ -191,7 +184,7 @@ class MapViewModel(
 
         val preEvent = autoEvent
         autoEvent = isEventCollidedEventUseCase.invoke(
-            playerSquare = player.square,
+            playerSquare = updatedPlayer.square,
             backgroundData = updatedBackground,
         )
 
@@ -199,6 +192,7 @@ class MapViewModel(
             actionEventUseCase.invoke(
                 autoEvent!!,
                 backgroundData = updatedBackground,
+                player = updatedPlayer,
             )
         }
 
@@ -208,9 +202,13 @@ class MapViewModel(
         playerCellRepository.eventCell?.let { cell ->
             cellEventUseCase.invoke(
                 cell.cellType,
+                player = updatedPlayer,
             )?.let {
                 mutableUiStateFlow.value = uiStateFlow.value.copy(
-                    backgroundData = it.backgroundData!!
+                    backgroundData = it.backgroundData!!,
+                    frontObjectData = it.frontObjectData!!,
+                    backObjectData = it.backObjectData!!,
+                    player = it.player!!,
                 )
             }
             // 戦闘せずに終了
@@ -226,7 +224,7 @@ class MapViewModel(
                 distance = encounterDistance
             )
         ) {
-            startNormalBattleUseCase.invoke()
+            startBattle()
             resetTapPoint()
         }
     }
@@ -249,9 +247,10 @@ class MapViewModel(
      * タップの位置に対して速度を計算
      */
     private fun updateVelocityByTap(tapPoint: Point) {
-        val square = playerPositionRepository.getPlayerPosition().square
-        val dx = (tapPoint.x) - (square.x + playerSquare.value.size / 2)
-        val dy = (tapPoint.y) - (square.y + playerSquare.value.size / 2)
+        val square = uiStateFlow.value.player.square
+        val size = uiStateFlow.value.player.size
+        val dx = (tapPoint.x) - (square.x + size / 2)
+        val dy = (tapPoint.y) - (square.y + size / 2)
         tentativePlayerVelocity = Velocity(
             x = dx,
             y = dy,
@@ -261,8 +260,9 @@ class MapViewModel(
     private fun updateVelocityByStick(dx: Float, dy: Float) {
         // fixme repositoryから取ってないのでデータが反映されてない
         // maxVが0なので初回のスティックだと動かない
-        val vx = playerSquare.value.maxVelocity * dx
-        val vy = playerSquare.value.maxVelocity * dy
+        val player = uiStateFlow.value.player
+        val vx = player.maxVelocity * dx
+        val vy = player.maxVelocity * dy
         tentativePlayerVelocity = Velocity(
             x = vx,
             y = vy,
@@ -291,8 +291,9 @@ class MapViewModel(
 
     private fun event() {
         actionEventUseCase.invoke(
-            eventType = playerSquare.value.eventType,
+            eventType = uiStateFlow.value.player.eventType,
             backgroundData = uiStateFlow.value.backgroundData,
+            player = uiStateFlow.value.player
         )
     }
 
@@ -317,7 +318,18 @@ class MapViewModel(
     }
 
     override fun pressB() {
-        startNormalBattleUseCase.invoke()
+        startBattle()
+    }
+
+    private fun startBattle() {
+        startNormalBattleUseCase.invoke(
+            player = uiStateFlow.value.player
+        ) {
+            mutableUiStateFlow.value = uiStateFlow.value.copy(
+                player = it.player!!,
+                backgroundData = it.backgroundData!!,
+            )
+        }
     }
 
     override fun pressM() {
