@@ -9,6 +9,7 @@ import gamescreen.map.domain.Player
 import gamescreen.map.domain.UIData
 import gamescreen.map.usecase.roadmap.RoadMapUseCase
 
+// fixme 再スタート先を場合によって変えられるようにする
 class RestartUseCaseImpl(
     private val maxHealUseCase: MaxHealUseCase,
     private val roadMapUseCase: RoadMapUseCase,

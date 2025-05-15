@@ -222,8 +222,8 @@ class MapViewModelTest : KoinTest {
         runBlocking {
             lateinit var result: Player
             val collectJob = launch {
-                mapViewModel.player.collect {
-                    result = it
+                mapViewModel.uiStateFlow.collect {
+                    result = it.player
                     count++
                 }
             }
