@@ -4,9 +4,7 @@ import gamescreen.map.data.toMap
 import gamescreen.map.domain.MapUiState
 import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.Player
-import gamescreen.map.domain.background.ObjectData
 import gamescreen.map.service.makefrontdata.MakeFrontDateService
-import gamescreen.map.usecase.movetootherheight.MoveToOtherHeightUseCase
 import gamescreen.map.usecase.resetnpc.ResetNPCPositionUseCase
 import gamescreen.map.usecase.resetposition.ResetBackgroundPositionUseCase
 import gamescreen.map.usecase.setplayercenter.SetPlayerCenterUseCase
@@ -17,7 +15,6 @@ class RoadMapUseCaseImpl(
     private val resetBackgroundPositionUseCase: ResetBackgroundPositionUseCase,
     private val resetNPCPositionUseCase: ResetNPCPositionUseCase,
     private val updateCellContainPlayerUseCase: UpdateCellContainPlayerUseCase,
-    private val moveToOtherHeightUseCase: MoveToOtherHeightUseCase,
 
     private val makeFrontDateService: MakeFrontDateService,
 ) : RoadMapUseCase {
@@ -45,6 +42,8 @@ class RoadMapUseCaseImpl(
 
         val newPlayer = setPlayerCenterUseCase.invoke(
             player = player,
+        ).changeHeight(
+            targetHeight = playerHeight,
         )
 
         val cell = updateCellContainPlayerUseCase.invoke(
@@ -52,28 +51,18 @@ class RoadMapUseCaseImpl(
             backgroundData = backgroundData,
         )
 
-        val tmp = MapUiState(
-            player = newPlayer,
-            backgroundData = backgroundData,
-            frontObjectData = ObjectData(
-                fieldData = emptyList(),
-            ),
-            backObjectData = ObjectData(
-                fieldData = emptyList(),
-            ),
-            npcData = npcData,
-            playerIncludeCell = cell,
-        )
-
-
         val frontObjectData = makeFrontDateService(
             backgroundData = backgroundData,
             player = newPlayer,
         )
 
-        return tmp.copy(
+        return MapUiState(
+            player = newPlayer,
+            backgroundData = backgroundData,
             frontObjectData = frontObjectData.first,
             backObjectData = frontObjectData.second,
+            npcData = npcData,
+            playerIncludeCell = cell,
         )
     }
 }
