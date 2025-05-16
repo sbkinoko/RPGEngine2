@@ -15,7 +15,6 @@ import gamescreen.map.domain.background.ObjectData
 import gamescreen.map.domain.npc.NPCData
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.encouter.EncounterRepository
-import gamescreen.map.repository.npc.NPCRepository
 import gamescreen.map.repository.playercell.PlayerCellRepository
 import gamescreen.map.repository.position.PositionRepository
 import gamescreen.map.usecase.PlayerMoveManageUseCase
@@ -51,8 +50,6 @@ class MapViewModel(
 
     private val backgroundRepository: BackgroundRepository by inject()
     private val playerCellRepository: PlayerCellRepository by inject()
-
-    private val npcRepository: NPCRepository by inject()
 
     private val isEventCollidedEventUseCase: IsCollidedEventUseCase by inject()
 

@@ -9,8 +9,6 @@ import gamescreen.map.repository.collisionevent.EventCollisionRepository
 import gamescreen.map.repository.collisionevent.EventCollisionRepositoryImpl
 import gamescreen.map.repository.encouter.EncounterRepository
 import gamescreen.map.repository.encouter.EncounterRepositoryImpl
-import gamescreen.map.repository.npc.NPCRepository
-import gamescreen.map.repository.npc.NPCRepositoryImpl
 import gamescreen.map.repository.playercell.PlayerCellRepository
 import gamescreen.map.repository.playercell.PlayerCellRepositoryImpl
 import gamescreen.map.repository.position.PositionRepository
@@ -108,9 +106,6 @@ val ModuleMap = module {
         EventCollisionRepositoryImpl()
     }
 
-    single<NPCRepository> {
-        NPCRepositoryImpl()
-    }
 
     single<EncounterRepository> {
         EncounterRepositoryImpl()
@@ -119,7 +114,6 @@ val ModuleMap = module {
     single<MoveUseCase> {
         MoveUseCaseImpl(
             moveNPCUseCase = get(),
-            npcRepository = get(),
             moveBackgroundUseCase = get(),
             getEventTypeUseCase = get(),
             velocityManageService = get(),

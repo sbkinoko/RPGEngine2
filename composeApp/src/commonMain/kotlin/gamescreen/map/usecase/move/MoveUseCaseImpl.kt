@@ -6,7 +6,6 @@ import gamescreen.map.domain.Velocity
 import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.domain.collision.square.NormalRectangle
 import gamescreen.map.domain.npc.NPCData
-import gamescreen.map.repository.npc.NPCRepository
 import gamescreen.map.service.makefrontdata.MakeFrontDateService
 import gamescreen.map.service.velocitymanage.VelocityManageService
 import gamescreen.map.usecase.collision.geteventtype.GetEventTypeUseCase
@@ -21,7 +20,6 @@ class MoveUseCaseImpl(
 
     private val moveBackgroundUseCase: MoveBackgroundUseCase,
 
-    private val npcRepository: NPCRepository,
     private val moveNPCUseCase: MoveNPCUseCase,
 
     private val velocityManageService: VelocityManageService,
