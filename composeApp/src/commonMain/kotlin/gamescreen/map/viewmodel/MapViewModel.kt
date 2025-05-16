@@ -154,9 +154,7 @@ class MapViewModel(
         val uiData = moveUseCase.invoke(
             actualVelocity = actualVelocity,
             tentativeVelocity = tentativePlayerVelocity,
-            backgroundData = backgroundData,
-            player = player,
-            npcData = npcData,
+            mapUiState = uiStateFlow.value
         )
 
         mutableUiStateFlow.value = uiStateFlow.value.copy(
@@ -184,10 +182,10 @@ class MapViewModel(
         if (autoEvent != preEvent && autoEvent != null) {
             actionEventUseCase.invoke(
                 autoEvent!!,
-                backgroundData = updatedBackground,
-                player = updatedPlayer,
-                npcData = updatedNPCData,
-            )
+                mapUiState = uiStateFlow.value,
+            ) {
+                mutableUiStateFlow.value = it
+            }
         }
 
         // fixme moveUseCaseに移動する
@@ -279,10 +277,10 @@ class MapViewModel(
     private fun event() {
         actionEventUseCase.invoke(
             eventType = uiStateFlow.value.player.eventType,
-            backgroundData = uiStateFlow.value.backgroundData,
-            player = uiStateFlow.value.player,
-            npcData = uiStateFlow.value.npcData,
-        )
+            mapUiState = uiStateFlow.value,
+        ) {
+            mutableUiStateFlow.value = it
+        }
     }
 
     fun touchCharacter() {
