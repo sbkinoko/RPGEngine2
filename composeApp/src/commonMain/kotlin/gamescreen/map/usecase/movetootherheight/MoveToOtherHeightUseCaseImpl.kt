@@ -4,7 +4,6 @@ import gamescreen.map.domain.MapUiState
 import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.PlayerDir
 import gamescreen.map.domain.Velocity
-import gamescreen.map.domain.collision.square.NormalRectangle
 import gamescreen.map.usecase.collision.iscollided.IsCollidedUseCase
 import gamescreen.map.usecase.move.MoveUseCase
 import kotlinx.coroutines.delay
@@ -24,11 +23,7 @@ class MoveToOtherHeightUseCaseImpl(
     ) {
         val heightUpdatedPlayer = mapUiState.run {
             copy(
-                player = player.copy(
-                    square = (player.square as NormalRectangle).copy(
-                        objectHeight = targetHeight,
-                    )
-                )
+                player = player.changeHeight(targetHeight)
             )
         }
 
