@@ -1,11 +1,11 @@
 package gamescreen.map.usecase.move
 
+import gamescreen.map.domain.Player
 import gamescreen.map.domain.UIData
 import gamescreen.map.domain.Velocity
+import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.domain.collision.square.NormalRectangle
-import gamescreen.map.repository.backgroundcell.BackgroundRepository
-import gamescreen.map.repository.npc.NPCRepository
-import gamescreen.map.repository.player.PlayerPositionRepository
+import gamescreen.map.domain.npc.NPCData
 import gamescreen.map.service.makefrontdata.MakeFrontDateService
 import gamescreen.map.service.velocitymanage.VelocityManageService
 import gamescreen.map.usecase.collision.geteventtype.GetEventTypeUseCase
@@ -15,14 +15,11 @@ import gamescreen.map.usecase.updatecellcontainplayer.UpdateCellContainPlayerUse
 
 // todo テスト作成
 class MoveUseCaseImpl(
-    private val playerPositionRepository: PlayerPositionRepository,
     private val getEventTypeUseCase: GetEventTypeUseCase,
     private val updateCellContainPlayerUseCase: UpdateCellContainPlayerUseCase,
 
-    private val backgroundRepository: BackgroundRepository,
     private val moveBackgroundUseCase: MoveBackgroundUseCase,
 
-    private val npcRepository: NPCRepository,
     private val moveNPCUseCase: MoveNPCUseCase,
 
     private val velocityManageService: VelocityManageService,
@@ -32,11 +29,12 @@ class MoveUseCaseImpl(
     override suspend fun invoke(
         actualVelocity: Velocity,
         tentativeVelocity: Velocity,
+        backgroundData: BackgroundData,
+        player: Player,
+        npcData: NPCData,
         fieldSquare: NormalRectangle,
         playerMoveArea: NormalRectangle,
     ): UIData {
-        var player = playerPositionRepository.playerPositionStateFlow.value
-
         val mediatedVelocity =
             velocityManageService.invoke(
                 tentativePlayerVelocity = actualVelocity,
@@ -44,11 +42,7 @@ class MoveUseCaseImpl(
                 playerSquare = player.square,
             )
 
-        val backgroundData = backgroundRepository
-            .backgroundStateFlow
-            .value
-
-        player = player.copy(
+        var movedPlayer = player.copy(
             actualVelocity = mediatedVelocity.first,
             tentativeVelocity = tentativeVelocity,
         ).move()
@@ -56,49 +50,39 @@ class MoveUseCaseImpl(
         val movedBackgroundData = moveBackgroundUseCase.invoke(
             velocity = mediatedVelocity.second,
             fieldSquare = fieldSquare,
-            backgroundData = backgroundData
+            backgroundData = backgroundData,
         )
 
-        val npcData = npcRepository.npcStateFlow.value
-        val movedData = moveNPCUseCase.invoke(
+        val movedNPCData = moveNPCUseCase.invoke(
             velocity = mediatedVelocity.second,
             npcData = npcData,
         )
 
-        player = player.copy(
+        movedPlayer = movedPlayer.copy(
             eventType = getEventTypeUseCase.invoke(
-                player.eventSquare
+                rectangle = movedPlayer.eventSquare,
+                backgroundData = movedBackgroundData,
+                npcData = npcData,
             )
         )
 
         // playerが入っているマスを設定
         updateCellContainPlayerUseCase.invoke(
-            player = player,
+            player = movedPlayer,
             backgroundData = movedBackgroundData,
         )
 
-        playerPositionRepository.setPlayerPosition(
-            player = player,
-        )
-
-        backgroundRepository.setBackground(
-            background = movedBackgroundData,
-        )
-        npcRepository.setNpc(
-            npcData = movedData,
-        )
-
         val frontObjectData = makeFrontDateService.invoke(
-            backgroundData = backgroundData,
-            player = player
+            backgroundData = movedBackgroundData,
+            player = movedPlayer
         )
 
         return UIData(
-            player = player,
-            backgroundData = backgroundData,
+            player = movedPlayer,
+            backgroundData = movedBackgroundData,
             frontObjectData = frontObjectData.first,
             backObjectData = frontObjectData.second,
-            npcData = npcData,
+            npcData = movedNPCData,
         )
     }
 }

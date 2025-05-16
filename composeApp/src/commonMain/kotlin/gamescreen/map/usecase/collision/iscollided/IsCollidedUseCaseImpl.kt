@@ -1,21 +1,18 @@
 package gamescreen.map.usecase.collision.iscollided
 
+import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.domain.collision.square.Rectangle
-import gamescreen.map.repository.backgroundcell.BackgroundRepository
-import gamescreen.map.repository.npc.NPCRepository
+import gamescreen.map.domain.npc.NPCData
 
 // fixme repositoryに依存しないようにしたい
-class IsCollidedUseCaseImpl(
-    private val backgroundRepository: BackgroundRepository,
-    private val npcRepository: NPCRepository,
-) : IsCollidedUseCase {
+class IsCollidedUseCaseImpl : IsCollidedUseCase {
 
     override fun invoke(
         playerSquare: Rectangle,
+        backgroundData: BackgroundData,
+        npcData: NPCData,
     ): Boolean {
-        backgroundRepository
-            .backgroundStateFlow
-            .value
+        backgroundData
             .fieldData
             .forEach { rowArray ->
                 rowArray.forEach cell@{ cell ->
@@ -39,7 +36,7 @@ class IsCollidedUseCaseImpl(
                 }
             }
 
-        npcRepository.npcStateFlow.value.forEach { npc ->
+        npcData.npcList.forEach { npc ->
             npc.eventRectangle.let {
                 if (it.isOverlap(playerSquare)
                 ) {

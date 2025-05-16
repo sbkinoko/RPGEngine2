@@ -4,8 +4,9 @@ import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.Player
 import gamescreen.map.domain.PlayerDir
 import gamescreen.map.domain.Velocity
+import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.domain.collision.square.NormalRectangle
-import gamescreen.map.repository.player.PlayerPositionRepository
+import gamescreen.map.domain.npc.NPCData
 import gamescreen.map.usecase.collision.iscollided.IsCollidedUseCase
 import gamescreen.map.usecase.move.MoveUseCase
 import kotlinx.coroutines.delay
@@ -13,36 +14,42 @@ import values.GameParams
 import kotlin.math.abs
 
 class MoveToOtherHeightUseCaseImpl(
-    private val playerPositionRepository: PlayerPositionRepository,
     private val isCollidedUseCase: IsCollidedUseCase,
     private val moveUseCase: MoveUseCase,
 ) : MoveToOtherHeightUseCase {
 
+    //todo callbackでUIを更新するようにする
     override suspend fun invoke(
         targetHeight: ObjectHeight,
+        backgroundData: BackgroundData,
+        player: Player,
+        npcData: NPCData,
         update: (Player) -> Unit,
     ) {
-        val player = playerPositionRepository.getPlayerPosition()
-
         val heightUpdatedPlayer = player.copy(
             square = (player.square as NormalRectangle).copy(
                 objectHeight = targetHeight,
             )
         )
 
-        // 高さを保存
-        playerPositionRepository.setPlayerPosition(
-            heightUpdatedPlayer,
-        )
-
         // 移動量を取得
         val (dx, dy) = calcMoveDistance(
             heightUpdatedPlayer,
+            backgroundData,
+            npcData,
         )
 
         // 実際に移動
-        move(dx, dy)
+        move(
+            dx,
+            dy,
+            backgroundData = backgroundData,
+            player = player,
+            npcData = npcData,
+        )
 
+        // fixme 暫定処理
+        // callbackを完成させたら削除
         update(heightUpdatedPlayer)
     }
 
@@ -51,6 +58,8 @@ class MoveToOtherHeightUseCaseImpl(
      */
     private fun calcMoveDistance(
         player: Player,
+        backgroundData: BackgroundData,
+        npcData: NPCData,
     ): Pair<Float, Float> {
         var maxDx = 0f
         var maxDy = 0f
@@ -75,7 +84,9 @@ class MoveToOtherHeightUseCaseImpl(
                     square.move(
                         dx = maxDx,
                         dy = maxDy,
-                    )
+                    ),
+                    backgroundData = backgroundData,
+                    npcData = npcData,
                 )
             ) {
                 when (dir) {
@@ -97,7 +108,9 @@ class MoveToOtherHeightUseCaseImpl(
                     square.move(
                         dx = maxDx,
                         dy = maxDy,
-                    )
+                    ),
+                    backgroundData = backgroundData,
+                    npcData = npcData,
                 )
             ) {
                 when (dir) {
@@ -121,7 +134,9 @@ class MoveToOtherHeightUseCaseImpl(
                         square.move(
                             dx = ave,
                             dy = maxDy,
-                        )
+                        ),
+                        backgroundData = backgroundData,
+                        npcData = npcData,
                     )
                 ) {
                     minDx = ave
@@ -136,7 +151,9 @@ class MoveToOtherHeightUseCaseImpl(
                         square.move(
                             dx = maxDx,
                             dy = ave,
-                        )
+                        ),
+                        backgroundData = backgroundData,
+                        npcData = npcData,
                     )
                 ) {
                     minDy = ave
@@ -152,6 +169,9 @@ class MoveToOtherHeightUseCaseImpl(
     private suspend fun move(
         dx: Float,
         dy: Float,
+        backgroundData: BackgroundData,
+        player: Player,
+        npcData: NPCData,
     ) {
         var restDx = dx
         var restDy = dy
@@ -169,11 +189,15 @@ class MoveToOtherHeightUseCaseImpl(
                 break
             }
 
+            // fixme ここでUI更新処理を呼び出す
             //　移動できることはわかっている
             //　のでプレイヤーの方向と移動方向に同じ物を入力
             moveUseCase.invoke(
                 tentativeVelocity = velocity,
                 actualVelocity = velocity,
+                backgroundData = backgroundData,
+                player = player,
+                npcData = npcData,
             )
             delay(GameParams.DELAY)
         }

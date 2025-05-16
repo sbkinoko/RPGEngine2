@@ -6,7 +6,6 @@ import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.domain.collision.square.NormalRectangle
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.usecase.collision.list.GetCollisionListUseCase
-import kotlinx.coroutines.runBlocking
 
 class ResetBackgroundPositionUseCaseImpl(
     private val backgroundRepository: BackgroundRepository,
@@ -53,16 +52,6 @@ class ResetBackgroundPositionUseCaseImpl(
                     )
                 }
             }
-        }
-
-        // fixme 最終的には削除
-        runBlocking {
-            // 更新した情報を元に背景リセット
-            backgroundRepository.setBackground(
-                background = BackgroundData(
-                    fieldData = fieldData,
-                ),
-            )
         }
 
         return BackgroundData(
