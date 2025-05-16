@@ -273,7 +273,6 @@ val ModuleMap = module {
             resetBackgroundPositionUseCase = get(),
             resetNPCPositionUseCase = get(),
             updateCellContainPlayerUseCase = get(),
-            moveToOtherHeightUseCase = get(),
             makeFrontDateService = get(),
         )
     }

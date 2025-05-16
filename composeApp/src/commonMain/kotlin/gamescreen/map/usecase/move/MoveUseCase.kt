@@ -1,11 +1,8 @@
 package gamescreen.map.usecase.move
 
-import gamescreen.map.domain.Player
-import gamescreen.map.domain.UIData
+import gamescreen.map.domain.MapUiState
 import gamescreen.map.domain.Velocity
-import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.domain.collision.square.NormalRectangle
-import gamescreen.map.domain.npc.NPCData
 import gamescreen.map.viewmodel.MapViewModel.Companion.MOVE_BORDER
 import gamescreen.map.viewmodel.MapViewModel.Companion.VIRTUAL_SCREEN_SIZE
 
@@ -31,10 +28,8 @@ interface MoveUseCase {
     suspend operator fun invoke(
         actualVelocity: Velocity,
         tentativeVelocity: Velocity,
-        backgroundData: BackgroundData,
-        player: Player,
-        npcData: NPCData,
+        mapUiState: MapUiState,
         fieldSquare: NormalRectangle = pFieldSquare,
         playerMoveArea: NormalRectangle = pPlayerMoveArea,
-    ): UIData
+    ): MapUiState
 }

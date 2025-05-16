@@ -1,10 +1,9 @@
 package core.usecase.restart
 
-import gamescreen.map.domain.Player
-import gamescreen.map.domain.UIData
+import gamescreen.map.domain.MapUiState
 
 interface RestartUseCase {
     suspend operator fun invoke(
-        player: Player,
-    ): UIData
+        mapUiState: MapUiState,
+    ): MapUiState
 }

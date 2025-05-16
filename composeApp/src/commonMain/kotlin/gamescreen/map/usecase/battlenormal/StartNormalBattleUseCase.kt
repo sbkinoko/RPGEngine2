@@ -1,11 +1,10 @@
 package gamescreen.map.usecase.battlenormal
 
-import gamescreen.map.domain.Player
-import gamescreen.map.domain.UIData
+import gamescreen.map.domain.MapUiState
 
 interface StartNormalBattleUseCase {
     operator fun invoke(
-        player: Player,
-        updateScreen: (UIData) -> Unit,
+        mapUiState: MapUiState,
+        updateScreen: (MapUiState) -> Unit,
     )
 }

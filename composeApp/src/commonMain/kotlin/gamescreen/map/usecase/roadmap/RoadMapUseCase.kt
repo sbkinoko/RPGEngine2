@@ -1,8 +1,8 @@
 package gamescreen.map.usecase.roadmap
 
+import gamescreen.map.domain.MapUiState
 import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.Player
-import gamescreen.map.domain.UIData
 
 // todo test作る
 interface RoadMapUseCase {
@@ -15,5 +15,5 @@ interface RoadMapUseCase {
         mapId: Int,
         playerHeight: ObjectHeight,
         player: Player,
-    ): UIData
+    ): MapUiState
 }

@@ -1,8 +1,7 @@
 package gamescreen.map.usecase.event.cellevent
 
 import core.domain.mapcell.CellType
-import gamescreen.map.domain.Player
-import gamescreen.map.domain.UIData
+import gamescreen.map.domain.MapUiState
 
 interface CellEventUseCase {
     /**
@@ -10,6 +9,6 @@ interface CellEventUseCase {
      */
     suspend operator fun invoke(
         cellId: CellType,
-        player: Player,
-    ): UIData?
+        mapUiState: MapUiState,
+    ): MapUiState
 }

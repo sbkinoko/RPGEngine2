@@ -1,9 +1,7 @@
 package gamescreen.map.usecase.event.actionevent
 
+import gamescreen.map.domain.MapUiState
 import gamescreen.map.domain.ObjectHeight
-import gamescreen.map.domain.Player
-import gamescreen.map.domain.background.BackgroundData
-import gamescreen.map.domain.npc.NPCData
 import gamescreen.map.usecase.changeheight.ChangeHeightUseCase
 import gamescreen.map.usecase.movetootherheight.MoveToOtherHeightUseCase
 import gamescreen.map.usecase.settalk.SetTalkUseCase
@@ -29,9 +27,8 @@ class ActionEventUseCaseImpl(
 ) : ActionEventUseCase {
     override fun invoke(
         eventType: EventType,
-        backgroundData: BackgroundData,
-        npcData: NPCData,
-        player: Player,
+        mapUiState: MapUiState,
+        update: (MapUiState) -> Unit,
     ) {
         when (eventType) {
             EventType.None -> Unit
@@ -82,9 +79,8 @@ class ActionEventUseCaseImpl(
                 CoroutineScope(Dispatchers.Default).launch {
                     moveToOtherHeightUseCase.invoke(
                         targetHeight = ObjectHeight.Water(1),
-                        backgroundData = backgroundData,
-                        player = player,
-                        npcData = npcData,
+                        mapUiState = mapUiState,
+                        update = update,
                     )
                 }
             }
@@ -99,27 +95,34 @@ class ActionEventUseCaseImpl(
                 CoroutineScope(Dispatchers.Default).launch {
                     moveToOtherHeightUseCase.invoke(
                         targetHeight = ObjectHeight.Ground(1),
-                        backgroundData = backgroundData,
-                        player = player,
-                        npcData = npcData,
+                        mapUiState = mapUiState,
+                        update = update,
                     )
                 }
             }
 
             EventType.Ground1 -> {
                 CoroutineScope(Dispatchers.Default).launch {
-                    changeHeightUseCase.invoke(
-                        ObjectHeight.Ground(1),
-                        player = player,
+                    update(
+                        mapUiState.copy(
+                            player = changeHeightUseCase.invoke(
+                                ObjectHeight.Ground(1),
+                                mapUiState.player,
+                            )
+                        )
                     )
                 }
             }
 
             EventType.Ground2 -> {
                 CoroutineScope(Dispatchers.Default).launch {
-                    changeHeightUseCase.invoke(
-                        ObjectHeight.Ground(2),
-                        player = player,
+                    update(
+                        mapUiState.copy(
+                            player = changeHeightUseCase.invoke(
+                                ObjectHeight.Ground(2),
+                                mapUiState.player,
+                            )
+                        )
                     )
                 }
             }

@@ -94,20 +94,15 @@ class MapViewModel(
                 mapId = data.mapId,
                 playerHeight = data.objectHeight,
                 player = initPlayer,
-            ).apply {
-                mutableUiStateFlow.value = uiStateFlow.value
-                    .copy(
-                        player = player!!.copy(
-                            square = player.square.move(
-                                dx = data.playerX,
-                                dy = data.playerY,
-                            )
-                        ),
-                        backgroundData = backgroundData!!,
-                        frontObjectData = frontObjectData!!,
-                        backObjectData = backObjectData!!,
-                        npcData = npcData!!,
-                    )
+            ).let {
+                mutableUiStateFlow.value = it.copy(
+                    player = it.player.copy(
+                        square = it.player.square.move(
+                            dx = data.playerX,
+                            dy = data.playerY,
+                        )
+                    ),
+                )
             }
         }
 
@@ -151,61 +146,39 @@ class MapViewModel(
             )
 
         // 表示物を移動
-        val uiData = moveUseCase.invoke(
+        mutableUiStateFlow.value = moveUseCase.invoke(
             actualVelocity = actualVelocity,
             tentativeVelocity = tentativePlayerVelocity,
-            backgroundData = backgroundData,
-            player = player,
-            npcData = npcData,
+            mapUiState = uiStateFlow.value
         )
-
-        mutableUiStateFlow.value = uiStateFlow.value.copy(
-            player = uiData.player!!,
-            npcData = uiData.npcData!!,
-            backgroundData = uiData.backgroundData!!,
-            backObjectData = uiData.backObjectData!!,
-            frontObjectData = uiData.frontObjectData!!,
-        )
-
-        val updatedBackground: BackgroundData = uiData.backgroundData
-        val updatedPlayer: Player = uiData.player
-        val updatedNPCData: NPCData = uiData.npcData
 
         saveUseCase.save(
-            player = uiData.player,
+            player = uiStateFlow.value.player,
         )
 
         val preEvent = autoEvent
         autoEvent = isEventCollidedEventUseCase.invoke(
-            playerSquare = updatedPlayer.square,
-            backgroundData = updatedBackground,
+            playerSquare = uiStateFlow.value.player.square,
+            backgroundData = uiStateFlow.value.backgroundData,
         )
 
         if (autoEvent != preEvent && autoEvent != null) {
             actionEventUseCase.invoke(
                 autoEvent!!,
-                backgroundData = updatedBackground,
-                player = updatedPlayer,
-                npcData = updatedNPCData,
-            )
+                mapUiState = uiStateFlow.value,
+            ) {
+                mutableUiStateFlow.value = it
+            }
         }
 
         // fixme moveUseCaseに移動する
         // 水上から陸に上がったとき、そこが移動マスならば、移動を呼び出したい
         //　プレイヤーが今いるマスに基づいてイベントを呼び出し
         playerCellRepository.eventCell?.let { cell ->
-            cellEventUseCase.invoke(
+            mutableUiStateFlow.value = cellEventUseCase.invoke(
                 cell.cellType,
-                player = updatedPlayer,
-            )?.let {
-                mutableUiStateFlow.value = uiStateFlow.value.copy(
-                    backgroundData = it.backgroundData!!,
-                    frontObjectData = it.frontObjectData!!,
-                    backObjectData = it.backObjectData!!,
-                    npcData = it.npcData!!,
-                    player = it.player!!,
-                )
-            }
+                mapUiState = uiStateFlow.value,
+            )
             // 戦闘せずに終了
             return
         }
@@ -287,10 +260,10 @@ class MapViewModel(
     private fun event() {
         actionEventUseCase.invoke(
             eventType = uiStateFlow.value.player.eventType,
-            backgroundData = uiStateFlow.value.backgroundData,
-            player = uiStateFlow.value.player,
-            npcData = uiStateFlow.value.npcData,
-        )
+            mapUiState = uiStateFlow.value,
+        ) {
+            mutableUiStateFlow.value = it
+        }
     }
 
     fun touchCharacter() {
@@ -319,12 +292,9 @@ class MapViewModel(
 
     private fun startBattle() {
         startNormalBattleUseCase.invoke(
-            player = uiStateFlow.value.player
+            mapUiState = uiStateFlow.value
         ) {
-            mutableUiStateFlow.value = uiStateFlow.value.copy(
-                player = it.player!!,
-                backgroundData = it.backgroundData!!,
-            )
+            mutableUiStateFlow.value = it
         }
     }
 
