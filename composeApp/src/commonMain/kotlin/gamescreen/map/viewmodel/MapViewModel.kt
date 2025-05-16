@@ -146,32 +146,20 @@ class MapViewModel(
             )
 
         // 表示物を移動
-        val uiData = moveUseCase.invoke(
+        mutableUiStateFlow.value = moveUseCase.invoke(
             actualVelocity = actualVelocity,
             tentativeVelocity = tentativePlayerVelocity,
             mapUiState = uiStateFlow.value
         )
 
-        mutableUiStateFlow.value = uiStateFlow.value.copy(
-            player = uiData.player,
-            npcData = uiData.npcData,
-            backgroundData = uiData.backgroundData,
-            backObjectData = uiData.backObjectData,
-            frontObjectData = uiData.frontObjectData,
-        )
-
-        val updatedBackground: BackgroundData = uiData.backgroundData
-        val updatedPlayer: Player = uiData.player
-        val updatedNPCData: NPCData = uiData.npcData
-
         saveUseCase.save(
-            player = uiData.player,
+            player = uiStateFlow.value.player,
         )
 
         val preEvent = autoEvent
         autoEvent = isEventCollidedEventUseCase.invoke(
-            playerSquare = updatedPlayer.square,
-            backgroundData = updatedBackground,
+            playerSquare = uiStateFlow.value.player.square,
+            backgroundData = uiStateFlow.value.backgroundData,
         )
 
         if (autoEvent != preEvent && autoEvent != null) {
