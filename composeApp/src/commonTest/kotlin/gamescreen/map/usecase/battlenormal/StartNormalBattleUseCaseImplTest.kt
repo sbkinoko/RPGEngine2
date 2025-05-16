@@ -5,11 +5,11 @@ import core.domain.mapcell.CellType
 import core.domain.mapcell.toBattleBackGround
 import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
 import core.domain.status.monster.MonsterStatus
+import core.domain.testMapUiState
 import core.usecase.restart.RestartUseCase
 import gamescreen.battle.domain.BattleBackgroundType
 import gamescreen.map.domain.MapPoint
-import gamescreen.map.domain.Player
-import gamescreen.map.domain.UIData
+import gamescreen.map.domain.MapUiState
 import gamescreen.map.domain.background.BackgroundCell
 import gamescreen.map.domain.collision.square.NormalRectangle
 import gamescreen.map.repository.playercell.PlayerCellRepository
@@ -48,7 +48,7 @@ class StartNormalBattleUseCaseImplTest {
     }
 
     private val restartUseCase = object : RestartUseCase {
-        override suspend fun invoke(player: Player): UIData {
+        override suspend fun invoke(mapUiState: MapUiState): MapUiState {
             throw NotImplementedError()
         }
     }
@@ -103,7 +103,7 @@ class StartNormalBattleUseCaseImplTest {
         }
 
         startNormalBattleUseCase.invoke(
-            Player(size = 0f)
+            testMapUiState,
         ) {}
 
         // エラーが起こらなければOK
@@ -157,7 +157,7 @@ class StartNormalBattleUseCaseImplTest {
 
 
         startNormalBattleUseCase.invoke(
-            player = Player(size = 0f),
+            testMapUiState,
         ) {
 
         }
@@ -224,7 +224,7 @@ class StartNormalBattleUseCaseImplTest {
         }
 
         startNormalBattleUseCase.invoke(
-            player = Player(size = 0f)
+            testMapUiState,
         ) {
 
         }
