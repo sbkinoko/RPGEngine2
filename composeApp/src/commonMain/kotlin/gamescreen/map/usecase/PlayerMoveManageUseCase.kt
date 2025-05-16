@@ -3,6 +3,7 @@ package gamescreen.map.usecase
 import gamescreen.map.domain.Player
 import gamescreen.map.domain.Velocity
 import gamescreen.map.domain.background.BackgroundData
+import gamescreen.map.domain.npc.NPCData
 import gamescreen.map.usecase.collision.iscollided.IsCollidedUseCase
 import kotlin.math.abs
 
@@ -20,6 +21,7 @@ class PlayerMoveManageUseCase(
         player: Player,
         tentativePlayerVelocity: Velocity,
         backgroundData: BackgroundData,
+        npcData: NPCData,
     ): Velocity {
         this.player = player
         val square = player.square
@@ -34,6 +36,7 @@ class PlayerMoveManageUseCase(
         if (isCollidedUseCase.invoke(
                 playerSquare = moveBoth,
                 backgroundData = backgroundData,
+                npcData = npcData,
             ).not()
         ) {
             return tentativePlayerVelocity
@@ -48,6 +51,7 @@ class PlayerMoveManageUseCase(
             isCollidedUseCase.invoke(
                 onlyMoveX,
                 backgroundData = backgroundData,
+                npcData = npcData,
             ).not()
 
         //　y方向だけの移動ができるかチェック
@@ -59,6 +63,7 @@ class PlayerMoveManageUseCase(
             isCollidedUseCase.invoke(
                 onlyMoveY,
                 backgroundData = backgroundData,
+                npcData = npcData,
             ).not()
 
         // 両方に移動できる場合は速い方に動かす
@@ -77,6 +82,7 @@ class PlayerMoveManageUseCase(
             canMoveX = canMoveX,
             canMoveY = canMoveY,
             backgroundData = backgroundData,
+            npcData = npcData,
         )
     }
 
@@ -85,6 +91,7 @@ class PlayerMoveManageUseCase(
         canMoveX: Boolean,
         canMoveY: Boolean,
         backgroundData: BackgroundData,
+        npcData: NPCData,
     ): Velocity {
         val vx =
             if (canMoveX) {
@@ -93,6 +100,7 @@ class PlayerMoveManageUseCase(
                 getVx(
                     velocity = velocity,
                     backgroundData = backgroundData,
+                    npcData = npcData,
                 )
             }
 
@@ -103,6 +111,7 @@ class PlayerMoveManageUseCase(
                 getVy(
                     velocity = velocity,
                     backgroundData = backgroundData,
+                    npcData = npcData,
                 )
             }
 
@@ -115,6 +124,7 @@ class PlayerMoveManageUseCase(
     private fun getVy(
         velocity: Velocity,
         backgroundData: BackgroundData,
+        npcData: NPCData,
     ): Float {
         val dir = velocity.y.toDir()
         var section = Section(
@@ -128,6 +138,7 @@ class PlayerMoveManageUseCase(
                 dy = section.average * dir,
                 section = section,
                 backgroundData = backgroundData,
+                npcData = npcData,
             )
         }
 
@@ -137,6 +148,7 @@ class PlayerMoveManageUseCase(
     private fun getVx(
         velocity: Velocity,
         backgroundData: BackgroundData,
+        npcData: NPCData,
     ): Float {
         val dir = velocity.x.toDir()
         var section = Section(
@@ -150,6 +162,7 @@ class PlayerMoveManageUseCase(
                 dy = velocity.y,
                 section = section,
                 backgroundData = backgroundData,
+                npcData = npcData,
             )
         }
 
@@ -161,6 +174,7 @@ class PlayerMoveManageUseCase(
         dy: Float,
         section: Section,
         backgroundData: BackgroundData,
+        npcData: NPCData,
     ): Section {
         val square = player.square.move(
             dx = dx,
@@ -170,6 +184,7 @@ class PlayerMoveManageUseCase(
         return if (isCollidedUseCase.invoke(
                 square,
                 backgroundData = backgroundData,
+                npcData = npcData,
             )
         ) {
             // 動けないなら最大を更新

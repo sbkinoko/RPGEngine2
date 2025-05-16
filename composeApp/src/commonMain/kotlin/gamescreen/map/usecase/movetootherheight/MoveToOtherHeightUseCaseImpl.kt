@@ -6,6 +6,7 @@ import gamescreen.map.domain.PlayerDir
 import gamescreen.map.domain.Velocity
 import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.domain.collision.square.NormalRectangle
+import gamescreen.map.domain.npc.NPCData
 import gamescreen.map.usecase.collision.iscollided.IsCollidedUseCase
 import gamescreen.map.usecase.move.MoveUseCase
 import kotlinx.coroutines.delay
@@ -22,6 +23,7 @@ class MoveToOtherHeightUseCaseImpl(
         targetHeight: ObjectHeight,
         backgroundData: BackgroundData,
         player: Player,
+        npcData: NPCData,
         update: (Player) -> Unit,
     ) {
         val heightUpdatedPlayer = player.copy(
@@ -34,6 +36,7 @@ class MoveToOtherHeightUseCaseImpl(
         val (dx, dy) = calcMoveDistance(
             heightUpdatedPlayer,
             backgroundData,
+            npcData,
         )
 
         // 実際に移動
@@ -42,6 +45,7 @@ class MoveToOtherHeightUseCaseImpl(
             dy,
             backgroundData = backgroundData,
             player = player,
+            npcData = npcData,
         )
 
         // fixme 暫定処理
@@ -55,6 +59,7 @@ class MoveToOtherHeightUseCaseImpl(
     private fun calcMoveDistance(
         player: Player,
         backgroundData: BackgroundData,
+        npcData: NPCData,
     ): Pair<Float, Float> {
         var maxDx = 0f
         var maxDy = 0f
@@ -81,6 +86,7 @@ class MoveToOtherHeightUseCaseImpl(
                         dy = maxDy,
                     ),
                     backgroundData = backgroundData,
+                    npcData = npcData,
                 )
             ) {
                 when (dir) {
@@ -104,6 +110,7 @@ class MoveToOtherHeightUseCaseImpl(
                         dy = maxDy,
                     ),
                     backgroundData = backgroundData,
+                    npcData = npcData,
                 )
             ) {
                 when (dir) {
@@ -129,6 +136,7 @@ class MoveToOtherHeightUseCaseImpl(
                             dy = maxDy,
                         ),
                         backgroundData = backgroundData,
+                        npcData = npcData,
                     )
                 ) {
                     minDx = ave
@@ -145,6 +153,7 @@ class MoveToOtherHeightUseCaseImpl(
                             dy = ave,
                         ),
                         backgroundData = backgroundData,
+                        npcData = npcData,
                     )
                 ) {
                     minDy = ave
@@ -162,6 +171,7 @@ class MoveToOtherHeightUseCaseImpl(
         dy: Float,
         backgroundData: BackgroundData,
         player: Player,
+        npcData: NPCData,
     ) {
         var restDx = dx
         var restDy = dy
@@ -187,6 +197,7 @@ class MoveToOtherHeightUseCaseImpl(
                 actualVelocity = velocity,
                 backgroundData = backgroundData,
                 player = player,
+                npcData = npcData,
             )
             delay(GameParams.DELAY)
         }

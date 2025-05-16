@@ -163,9 +163,7 @@ val ModuleMap = module {
     }
 
     single<ResetNPCPositionUseCase> {
-        ResetNPCPositionUseCaseImpl(
-            npcRepository = get(),
-        )
+        ResetNPCPositionUseCaseImpl()
     }
 
     single<UpdateCellContainPlayerUseCase> {
@@ -201,9 +199,7 @@ val ModuleMap = module {
     }
 
     single<IsCollidedUseCase> {
-        IsCollidedUseCaseImpl(
-            npcRepository = get(),
-        )
+        IsCollidedUseCaseImpl()
     }
 
     single<IsCollidedEventUseCase> {
@@ -213,9 +209,7 @@ val ModuleMap = module {
     }
 
     single<GetEventTypeUseCase> {
-        GetEventTypeUseCaseImpl(
-            npcRepository = get(),
-        )
+        GetEventTypeUseCaseImpl()
     }
 
     single<DecideBattleMonsterUseCase> {

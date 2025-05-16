@@ -3,17 +3,16 @@ package gamescreen.map.usecase.collision.geteventtype
 import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.domain.collision.EventObject
 import gamescreen.map.domain.collision.square.Rectangle
-import gamescreen.map.repository.npc.NPCRepository
+import gamescreen.map.domain.npc.NPCData
 import values.event.EventType
 
 // todo テスト作る
-class GetEventTypeUseCaseImpl(
-    private val npcRepository: NPCRepository,
-) : GetEventTypeUseCase {
+class GetEventTypeUseCaseImpl : GetEventTypeUseCase {
 
     override fun invoke(
         rectangle: Rectangle,
         backgroundData: BackgroundData,
+        npcData: NPCData,
     ): EventType {
         backgroundData.fieldData.forEach { rowArray ->
             rowArray.forEach cell@{ cell ->
@@ -47,7 +46,7 @@ class GetEventTypeUseCaseImpl(
             }
         }
 
-        npcRepository.npcStateFlow.value.forEach { npc ->
+        npcData.npcList.forEach { npc ->
             npc.eventRectangle.let {
                 if (it.isOverlap(rectangle).not()) {
                     return@forEach

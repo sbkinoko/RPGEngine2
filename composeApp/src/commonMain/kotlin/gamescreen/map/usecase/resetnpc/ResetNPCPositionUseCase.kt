@@ -1,6 +1,7 @@
 package gamescreen.map.usecase.resetnpc
 
 import gamescreen.map.data.MapData
+import gamescreen.map.domain.npc.NPCData
 
 interface ResetNPCPositionUseCase {
 
@@ -11,5 +12,5 @@ interface ResetNPCPositionUseCase {
         mapData: MapData,
         mapX: Int,
         mapY: Int,
-    )
+    ): NPCData
 }

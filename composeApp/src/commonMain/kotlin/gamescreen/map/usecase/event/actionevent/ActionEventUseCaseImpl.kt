@@ -3,6 +3,7 @@ package gamescreen.map.usecase.event.actionevent
 import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.Player
 import gamescreen.map.domain.background.BackgroundData
+import gamescreen.map.domain.npc.NPCData
 import gamescreen.map.usecase.changeheight.ChangeHeightUseCase
 import gamescreen.map.usecase.movetootherheight.MoveToOtherHeightUseCase
 import gamescreen.map.usecase.settalk.SetTalkUseCase
@@ -29,6 +30,7 @@ class ActionEventUseCaseImpl(
     override fun invoke(
         eventType: EventType,
         backgroundData: BackgroundData,
+        npcData: NPCData,
         player: Player,
     ) {
         when (eventType) {
@@ -82,6 +84,7 @@ class ActionEventUseCaseImpl(
                         targetHeight = ObjectHeight.Water(1),
                         backgroundData = backgroundData,
                         player = player,
+                        npcData = npcData,
                     )
                 }
             }
@@ -98,6 +101,7 @@ class ActionEventUseCaseImpl(
                         targetHeight = ObjectHeight.Ground(1),
                         backgroundData = backgroundData,
                         player = player,
+                        npcData = npcData,
                     )
                 }
             }
