@@ -27,7 +27,6 @@ import gamescreen.map.usecase.roadmap.RoadMapUseCase
 import gamescreen.map.usecase.save.SaveUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -110,8 +109,6 @@ class MapViewModel(
                         npcData = npcData!!,
                     )
             }
-
-            delay(10)
         }
 
         DefaultScope.launch {
