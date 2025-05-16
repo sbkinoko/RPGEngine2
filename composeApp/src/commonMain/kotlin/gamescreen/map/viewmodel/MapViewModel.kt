@@ -94,20 +94,15 @@ class MapViewModel(
                 mapId = data.mapId,
                 playerHeight = data.objectHeight,
                 player = initPlayer,
-            ).apply {
-                mutableUiStateFlow.value = uiStateFlow.value
-                    .copy(
-                        player = player.copy(
-                            square = player.square.move(
-                                dx = data.playerX,
-                                dy = data.playerY,
-                            )
-                        ),
-                        backgroundData = backgroundData,
-                        frontObjectData = frontObjectData,
-                        backObjectData = backObjectData,
-                        npcData = npcData,
-                    )
+            ).let {
+                mutableUiStateFlow.value = it.copy(
+                    player = it.player.copy(
+                        square = it.player.square.move(
+                            dx = data.playerX,
+                            dy = data.playerY,
+                        )
+                    ),
+                )
             }
         }
 
