@@ -35,7 +35,8 @@ class RoadMapUseCaseImpl(
             mapX = mapX,
             mapY = mapY,
         )
-        resetNPCPositionUseCase.invoke(
+
+        val npcData = resetNPCPositionUseCase.invoke(
             mapData = mapData,
             mapX = mapX,
             mapY = mapY,
@@ -53,7 +54,8 @@ class RoadMapUseCaseImpl(
         moveToOtherHeightUseCase.invoke(
             targetHeight = playerHeight,
             backgroundData = backgroundData,
-            player = newPlayer
+            player = newPlayer,
+            npcData = npcData,
         ) {
 //            newPlayer = it
         }
@@ -68,6 +70,7 @@ class RoadMapUseCaseImpl(
             backgroundData = backgroundData,
             frontObjectData = frontObjectData.first,
             backObjectData = frontObjectData.second,
+            npcData = npcData,
         )
     }
 }

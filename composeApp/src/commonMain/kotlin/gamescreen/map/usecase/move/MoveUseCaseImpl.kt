@@ -5,7 +5,7 @@ import gamescreen.map.domain.UIData
 import gamescreen.map.domain.Velocity
 import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.domain.collision.square.NormalRectangle
-import gamescreen.map.repository.npc.NPCRepository
+import gamescreen.map.domain.npc.NPCData
 import gamescreen.map.service.makefrontdata.MakeFrontDateService
 import gamescreen.map.service.velocitymanage.VelocityManageService
 import gamescreen.map.usecase.collision.geteventtype.GetEventTypeUseCase
@@ -20,7 +20,6 @@ class MoveUseCaseImpl(
 
     private val moveBackgroundUseCase: MoveBackgroundUseCase,
 
-    private val npcRepository: NPCRepository,
     private val moveNPCUseCase: MoveNPCUseCase,
 
     private val velocityManageService: VelocityManageService,
@@ -32,6 +31,7 @@ class MoveUseCaseImpl(
         tentativeVelocity: Velocity,
         backgroundData: BackgroundData,
         player: Player,
+        npcData: NPCData,
         fieldSquare: NormalRectangle,
         playerMoveArea: NormalRectangle,
     ): UIData {
@@ -53,16 +53,16 @@ class MoveUseCaseImpl(
             backgroundData = backgroundData,
         )
 
-        val npcData = npcRepository.npcStateFlow.value
-        val movedData = moveNPCUseCase.invoke(
+        val movedNPCData = moveNPCUseCase.invoke(
             velocity = mediatedVelocity.second,
             npcData = npcData,
         )
 
         movedPlayer = movedPlayer.copy(
             eventType = getEventTypeUseCase.invoke(
-                movedPlayer.eventSquare,
+                rectangle = movedPlayer.eventSquare,
                 backgroundData = movedBackgroundData,
+                npcData = npcData,
             )
         )
 
@@ -70,10 +70,6 @@ class MoveUseCaseImpl(
         updateCellContainPlayerUseCase.invoke(
             player = movedPlayer,
             backgroundData = movedBackgroundData,
-        )
-
-        npcRepository.setNpc(
-            npcData = movedData,
         )
 
         val frontObjectData = makeFrontDateService.invoke(
@@ -86,7 +82,7 @@ class MoveUseCaseImpl(
             backgroundData = movedBackgroundData,
             frontObjectData = frontObjectData.first,
             backObjectData = frontObjectData.second,
-            npcData = npcData,
+            npcData = movedNPCData,
         )
     }
 }

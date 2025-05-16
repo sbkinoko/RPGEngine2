@@ -15,7 +15,6 @@ import gamescreen.map.domain.background.ObjectData
 import gamescreen.map.domain.npc.NPCData
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.encouter.EncounterRepository
-import gamescreen.map.repository.npc.NPCRepository
 import gamescreen.map.repository.playercell.PlayerCellRepository
 import gamescreen.map.repository.position.PositionRepository
 import gamescreen.map.usecase.PlayerMoveManageUseCase
@@ -28,7 +27,6 @@ import gamescreen.map.usecase.roadmap.RoadMapUseCase
 import gamescreen.map.usecase.save.SaveUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -51,8 +49,6 @@ class MapViewModel(
 
     private val backgroundRepository: BackgroundRepository by inject()
     private val playerCellRepository: PlayerCellRepository by inject()
-
-    private val npcRepository: NPCRepository by inject()
 
     private val isEventCollidedEventUseCase: IsCollidedEventUseCase by inject()
 
@@ -110,14 +106,9 @@ class MapViewModel(
                         backgroundData = backgroundData!!,
                         frontObjectData = frontObjectData!!,
                         backObjectData = backObjectData!!,
+                        npcData = npcData!!,
                     )
             }
-
-            delay(10)
-
-            mutableUiStateFlow.value = uiStateFlow.value.copy(
-                npcData = npcRepository.npcStateFlow.value,
-            )
         }
 
         DefaultScope.launch {
@@ -149,12 +140,14 @@ class MapViewModel(
 
         val backgroundData = uiStateFlow.value.backgroundData
         val player = uiStateFlow.value.player
+        val npcData = uiStateFlow.value.npcData
 
         val actualVelocity = playerMoveManageUseCase
             .getMovableVelocity(
                 tentativePlayerVelocity = tentativePlayerVelocity,
                 player = player,
                 backgroundData = backgroundData,
+                npcData = npcData,
             )
 
         // 表示物を移動
@@ -163,6 +156,7 @@ class MapViewModel(
             tentativeVelocity = tentativePlayerVelocity,
             backgroundData = backgroundData,
             player = player,
+            npcData = npcData,
         )
 
         mutableUiStateFlow.value = uiStateFlow.value.copy(
@@ -175,6 +169,7 @@ class MapViewModel(
 
         val updatedBackground: BackgroundData = uiData.backgroundData
         val updatedPlayer: Player = uiData.player
+        val updatedNPCData: NPCData = uiData.npcData
 
         saveUseCase.save(
             player = uiData.player,
@@ -191,6 +186,7 @@ class MapViewModel(
                 autoEvent!!,
                 backgroundData = updatedBackground,
                 player = updatedPlayer,
+                npcData = updatedNPCData,
             )
         }
 
@@ -206,6 +202,7 @@ class MapViewModel(
                     backgroundData = it.backgroundData!!,
                     frontObjectData = it.frontObjectData!!,
                     backObjectData = it.backObjectData!!,
+                    npcData = it.npcData!!,
                     player = it.player!!,
                 )
             }
@@ -291,7 +288,8 @@ class MapViewModel(
         actionEventUseCase.invoke(
             eventType = uiStateFlow.value.player.eventType,
             backgroundData = uiStateFlow.value.backgroundData,
-            player = uiStateFlow.value.player
+            player = uiStateFlow.value.player,
+            npcData = uiStateFlow.value.npcData,
         )
     }
 

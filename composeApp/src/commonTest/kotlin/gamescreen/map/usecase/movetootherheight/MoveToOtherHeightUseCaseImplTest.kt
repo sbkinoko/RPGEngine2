@@ -8,6 +8,7 @@ import gamescreen.map.domain.Player
 import gamescreen.map.domain.Velocity
 import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.domain.npc.NPC
+import gamescreen.map.domain.npc.NPCData
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.usecase.resetposition.ResetBackgroundPositionUseCase
 import gamescreen.map.viewmodel.MapViewModel
@@ -37,6 +38,8 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
     private val backgroundRepository: BackgroundRepository by inject()
 
     private lateinit var backgroundData: BackgroundData
+
+    private val npcData = NPCData(emptyList())
 
     private val mapData = object : MapData() {
         override val isLoop: Boolean
@@ -102,6 +105,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 targetHeight,
                 player = initPlayer,
                 backgroundData = backgroundData,
+                npcData = npcData,
             )
 
             // todo 高さを外に出せるようになったら修正
@@ -123,6 +127,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 targetHeight,
                 backgroundData = backgroundData,
                 player = initPlayer,
+                npcData = npcData,
             )
 
             // todo 高さを外に出せるようになったら修正
@@ -155,6 +160,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 ObjectHeight.Water(1),
                 backgroundData = backgroundData,
                 player = player,
+                npcData = npcData,
             )
 
             // todo 高さを外に出せるようになったら修正
@@ -184,6 +190,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 ObjectHeight.Water(1),
                 player = player,
                 backgroundData = backgroundData,
+                npcData = npcData,
             )
 
 // todo 高さを外に出せるようになったら修正
@@ -213,6 +220,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 ObjectHeight.Water(1),
                 backgroundData = backgroundData,
                 player = player,
+                npcData = npcData,
             )
 // todo 高さを外に出せるようになったら修正
 //            checkInWater()
@@ -241,6 +249,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 ObjectHeight.Water(1),
                 backgroundData = backgroundData,
                 player = player,
+                npcData = npcData,
             )
 
 // todo 高さを外に出せるようになったら修正
@@ -270,6 +279,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 ObjectHeight.Water(1),
                 backgroundData = backgroundData,
                 player = player,
+                npcData = npcData,
             )
 
             // todo 高さを外に出せるようになったら修正
@@ -299,6 +309,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 ObjectHeight.Water(1),
                 backgroundData = backgroundData,
                 player = player,
+                npcData = npcData,
             )
 
             // todo 高さを外に出せるようになったら修正
@@ -327,7 +338,8 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             moveToOtherHeightUseCase.invoke(
                 ObjectHeight.Water(1),
                 backgroundData = backgroundData,
-                player = player
+                player = player,
+                npcData = npcData,
             )
 
 // todo 高さを外に出せるようになったら修正
@@ -357,6 +369,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 ObjectHeight.Water(1),
                 backgroundData = backgroundData,
                 player = player,
+                npcData = npcData,
             )
 
             // todo 高さを外に出せるようになったら修正
@@ -386,6 +399,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 ObjectHeight.Water(1),
                 backgroundData = backgroundData,
                 player = player,
+                npcData = npcData,
             )
 
 // todo 高さを外に出せるようになったら修正
@@ -415,6 +429,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 ObjectHeight.Water(1),
                 backgroundData = backgroundData,
                 player = player,
+                npcData = npcData,
             )
 
             // todo 高さを外に出せるようになったら修正
@@ -444,6 +459,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 ObjectHeight.Water(1),
                 backgroundData = backgroundData,
                 player = player,
+                npcData = npcData,
             )
 
             // todo 高さを外に出せるようになったら修正
@@ -473,6 +489,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
                 ObjectHeight.Water(1),
                 backgroundData = backgroundData,
                 player = player,
+                npcData = npcData,
             )
 // todo 高さを外に出せるようになったら修正
 //            checkInWater()
