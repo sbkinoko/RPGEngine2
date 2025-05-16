@@ -1,15 +1,12 @@
 package gamescreen.map.usecase.event.actionevent
 
-import gamescreen.map.domain.Player
-import gamescreen.map.domain.background.BackgroundData
-import gamescreen.map.domain.npc.NPCData
+import gamescreen.map.domain.MapUiState
 import values.event.EventType
 
 interface ActionEventUseCase {
     operator fun invoke(
         eventType: EventType,
-        backgroundData: BackgroundData,
-        npcData: NPCData,
-        player: Player,
+        mapUiState: MapUiState,
+        update: (MapUiState) -> Unit,
     )
 }

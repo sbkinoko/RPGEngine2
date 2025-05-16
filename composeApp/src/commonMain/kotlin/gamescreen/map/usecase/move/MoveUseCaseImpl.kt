@@ -1,11 +1,8 @@
 package gamescreen.map.usecase.move
 
-import gamescreen.map.domain.Player
-import gamescreen.map.domain.UIData
+import gamescreen.map.domain.MapUiState
 import gamescreen.map.domain.Velocity
-import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.domain.collision.square.NormalRectangle
-import gamescreen.map.domain.npc.NPCData
 import gamescreen.map.service.makefrontdata.MakeFrontDateService
 import gamescreen.map.service.velocitymanage.VelocityManageService
 import gamescreen.map.usecase.collision.geteventtype.GetEventTypeUseCase
@@ -29,20 +26,18 @@ class MoveUseCaseImpl(
     override suspend fun invoke(
         actualVelocity: Velocity,
         tentativeVelocity: Velocity,
-        backgroundData: BackgroundData,
-        player: Player,
-        npcData: NPCData,
+        mapUiState: MapUiState,
         fieldSquare: NormalRectangle,
         playerMoveArea: NormalRectangle,
-    ): UIData {
+    ): MapUiState {
         val mediatedVelocity =
             velocityManageService.invoke(
                 tentativePlayerVelocity = actualVelocity,
                 playerMoveArea = playerMoveArea,
-                playerSquare = player.square,
+                playerSquare = mapUiState.player.square,
             )
 
-        var movedPlayer = player.copy(
+        var movedPlayer = mapUiState.player.copy(
             actualVelocity = mediatedVelocity.first,
             tentativeVelocity = tentativeVelocity,
         ).move()
@@ -50,24 +45,24 @@ class MoveUseCaseImpl(
         val movedBackgroundData = moveBackgroundUseCase.invoke(
             velocity = mediatedVelocity.second,
             fieldSquare = fieldSquare,
-            backgroundData = backgroundData,
+            backgroundData = mapUiState.backgroundData,
         )
 
         val movedNPCData = moveNPCUseCase.invoke(
             velocity = mediatedVelocity.second,
-            npcData = npcData,
+            npcData = mapUiState.npcData,
         )
 
         movedPlayer = movedPlayer.copy(
             eventType = getEventTypeUseCase.invoke(
                 rectangle = movedPlayer.eventSquare,
                 backgroundData = movedBackgroundData,
-                npcData = npcData,
+                npcData = mapUiState.npcData,
             )
         )
 
         // playerが入っているマスを設定
-        updateCellContainPlayerUseCase.invoke(
+        val cell = updateCellContainPlayerUseCase.invoke(
             player = movedPlayer,
             backgroundData = movedBackgroundData,
         )
@@ -77,12 +72,13 @@ class MoveUseCaseImpl(
             player = movedPlayer
         )
 
-        return UIData(
+        return MapUiState(
             player = movedPlayer,
             backgroundData = movedBackgroundData,
             frontObjectData = frontObjectData.first,
             backObjectData = frontObjectData.second,
             npcData = movedNPCData,
+            playerIncludeCell = cell,
         )
     }
 }

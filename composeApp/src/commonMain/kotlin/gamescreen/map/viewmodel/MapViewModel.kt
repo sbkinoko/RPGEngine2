@@ -97,16 +97,16 @@ class MapViewModel(
             ).apply {
                 mutableUiStateFlow.value = uiStateFlow.value
                     .copy(
-                        player = player!!.copy(
+                        player = player.copy(
                             square = player.square.move(
                                 dx = data.playerX,
                                 dy = data.playerY,
                             )
                         ),
-                        backgroundData = backgroundData!!,
-                        frontObjectData = frontObjectData!!,
-                        backObjectData = backObjectData!!,
-                        npcData = npcData!!,
+                        backgroundData = backgroundData,
+                        frontObjectData = frontObjectData,
+                        backObjectData = backObjectData,
+                        npcData = npcData,
                     )
             }
         }
@@ -160,11 +160,11 @@ class MapViewModel(
         )
 
         mutableUiStateFlow.value = uiStateFlow.value.copy(
-            player = uiData.player!!,
-            npcData = uiData.npcData!!,
-            backgroundData = uiData.backgroundData!!,
-            backObjectData = uiData.backObjectData!!,
-            frontObjectData = uiData.frontObjectData!!,
+            player = uiData.player,
+            npcData = uiData.npcData,
+            backgroundData = uiData.backgroundData,
+            backObjectData = uiData.backObjectData,
+            frontObjectData = uiData.frontObjectData,
         )
 
         val updatedBackground: BackgroundData = uiData.backgroundData
@@ -194,18 +194,10 @@ class MapViewModel(
         // 水上から陸に上がったとき、そこが移動マスならば、移動を呼び出したい
         //　プレイヤーが今いるマスに基づいてイベントを呼び出し
         playerCellRepository.eventCell?.let { cell ->
-            cellEventUseCase.invoke(
+            mutableUiStateFlow.value = cellEventUseCase.invoke(
                 cell.cellType,
-                player = updatedPlayer,
-            )?.let {
-                mutableUiStateFlow.value = uiStateFlow.value.copy(
-                    backgroundData = it.backgroundData!!,
-                    frontObjectData = it.frontObjectData!!,
-                    backObjectData = it.backObjectData!!,
-                    npcData = it.npcData!!,
-                    player = it.player!!,
-                )
-            }
+                mapUiState = uiStateFlow.value,
+            )
             // 戦闘せずに終了
             return
         }
@@ -319,12 +311,9 @@ class MapViewModel(
 
     private fun startBattle() {
         startNormalBattleUseCase.invoke(
-            player = uiStateFlow.value.player
+            mapUiState = uiStateFlow.value
         ) {
-            mutableUiStateFlow.value = uiStateFlow.value.copy(
-                player = it.player!!,
-                backgroundData = it.backgroundData!!,
-            )
+            mutableUiStateFlow.value = it
         }
     }
 

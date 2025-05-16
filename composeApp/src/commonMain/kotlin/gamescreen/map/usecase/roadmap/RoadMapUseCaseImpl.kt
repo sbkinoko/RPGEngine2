@@ -1,9 +1,10 @@
 package gamescreen.map.usecase.roadmap
 
 import gamescreen.map.data.toMap
+import gamescreen.map.domain.MapUiState
 import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.Player
-import gamescreen.map.domain.UIData
+import gamescreen.map.domain.background.ObjectData
 import gamescreen.map.service.makefrontdata.MakeFrontDateService
 import gamescreen.map.usecase.movetootherheight.MoveToOtherHeightUseCase
 import gamescreen.map.usecase.resetnpc.ResetNPCPositionUseCase
@@ -27,7 +28,7 @@ class RoadMapUseCaseImpl(
         mapId: Int,
         playerHeight: ObjectHeight,
         player: Player,
-    ): UIData {
+    ): MapUiState {
         val mapData = mapId.toMap()
 
         val backgroundData = resetBackgroundPositionUseCase.invoke(
@@ -46,31 +47,33 @@ class RoadMapUseCaseImpl(
             player = player,
         )
 
-        updateCellContainPlayerUseCase.invoke(
+        val cell = updateCellContainPlayerUseCase.invoke(
             player = newPlayer,
             backgroundData = backgroundData,
         )
 
-        moveToOtherHeightUseCase.invoke(
-            targetHeight = playerHeight,
-            backgroundData = backgroundData,
+        val tmp = MapUiState(
             player = newPlayer,
+            backgroundData = backgroundData,
+            frontObjectData = ObjectData(
+                fieldData = emptyList(),
+            ),
+            backObjectData = ObjectData(
+                fieldData = emptyList(),
+            ),
             npcData = npcData,
-        ) {
-//            newPlayer = it
-        }
+            playerIncludeCell = cell,
+        )
+
 
         val frontObjectData = makeFrontDateService(
             backgroundData = backgroundData,
             player = newPlayer,
         )
 
-        return UIData(
-            player = newPlayer,
-            backgroundData = backgroundData,
+        return tmp.copy(
             frontObjectData = frontObjectData.first,
             backObjectData = frontObjectData.second,
-            npcData = npcData,
         )
     }
 }

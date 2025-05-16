@@ -1,12 +1,10 @@
 package gamescreen.map.usecase.movetootherheight
 
+import gamescreen.map.domain.MapUiState
 import gamescreen.map.domain.ObjectHeight
-import gamescreen.map.domain.Player
 import gamescreen.map.domain.PlayerDir
 import gamescreen.map.domain.Velocity
-import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.domain.collision.square.NormalRectangle
-import gamescreen.map.domain.npc.NPCData
 import gamescreen.map.usecase.collision.iscollided.IsCollidedUseCase
 import gamescreen.map.usecase.move.MoveUseCase
 import kotlinx.coroutines.delay
@@ -21,31 +19,29 @@ class MoveToOtherHeightUseCaseImpl(
     //todo callbackでUIを更新するようにする
     override suspend fun invoke(
         targetHeight: ObjectHeight,
-        backgroundData: BackgroundData,
-        player: Player,
-        npcData: NPCData,
-        update: (Player) -> Unit,
+        mapUiState: MapUiState,
+        update: (MapUiState) -> Unit,
     ) {
-        val heightUpdatedPlayer = player.copy(
-            square = (player.square as NormalRectangle).copy(
-                objectHeight = targetHeight,
+        val heightUpdatedPlayer = mapUiState.run {
+            copy(
+                player = player.copy(
+                    square = (player.square as NormalRectangle).copy(
+                        objectHeight = targetHeight,
+                    )
+                )
             )
-        )
+        }
 
         // 移動量を取得
         val (dx, dy) = calcMoveDistance(
-            heightUpdatedPlayer,
-            backgroundData,
-            npcData,
+            mapUiState,
         )
 
         // 実際に移動
         move(
             dx,
             dy,
-            backgroundData = backgroundData,
-            player = player,
-            npcData = npcData,
+            mapUiState = mapUiState,
         )
 
         // fixme 暫定処理
@@ -57,108 +53,108 @@ class MoveToOtherHeightUseCaseImpl(
      * 移動後に衝突判定がない最小距離を計算
      */
     private fun calcMoveDistance(
-        player: Player,
-        backgroundData: BackgroundData,
-        npcData: NPCData,
+        mapUiState: MapUiState,
     ): Pair<Float, Float> {
         var maxDx = 0f
         var maxDy = 0f
         var minDx = 0f
         var minDy = 0f
-        player.run {
-            val firstMove = size * 2
+        mapUiState.apply {
+            player.run {
+                val firstMove = size * 2
 
-            when (dir) {
-                PlayerDir.UP -> maxDy = -firstMove
-
-                PlayerDir.DOWN -> maxDy = firstMove
-
-                PlayerDir.LEFT -> maxDx = -firstMove
-
-                PlayerDir.RIGHT -> maxDx = firstMove
-
-                PlayerDir.NONE -> Unit
-            }
-
-            if (isCollidedUseCase(
-                    square.move(
-                        dx = maxDx,
-                        dy = maxDy,
-                    ),
-                    backgroundData = backgroundData,
-                    npcData = npcData,
-                )
-            ) {
                 when (dir) {
-                    PlayerDir.UP,
-                    PlayerDir.DOWN,
-                        ->
-                        maxDx = firstMove
+                    PlayerDir.UP -> maxDy = -firstMove
 
-                    PlayerDir.LEFT,
-                    PlayerDir.RIGHT,
-                        ->
-                        maxDy = firstMove
+                    PlayerDir.DOWN -> maxDy = firstMove
+
+                    PlayerDir.LEFT -> maxDx = -firstMove
+
+                    PlayerDir.RIGHT -> maxDx = firstMove
 
                     PlayerDir.NONE -> Unit
                 }
-            }
 
-            if (isCollidedUseCase(
-                    square.move(
-                        dx = maxDx,
-                        dy = maxDy,
-                    ),
-                    backgroundData = backgroundData,
-                    npcData = npcData,
-                )
-            ) {
-                when (dir) {
-                    PlayerDir.UP,
-                    PlayerDir.DOWN,
-                        ->
-                        maxDx = -firstMove
-
-                    PlayerDir.LEFT,
-                    PlayerDir.RIGHT,
-                        ->
-                        maxDy = -firstMove
-
-                    PlayerDir.NONE -> Unit
-                }
-            }
-
-            while (abs(minDx - maxDx) > 1) {
-                val ave = (minDx + maxDx) / 2
                 if (isCollidedUseCase(
                         square.move(
-                            dx = ave,
+                            dx = maxDx,
                             dy = maxDy,
                         ),
                         backgroundData = backgroundData,
                         npcData = npcData,
                     )
                 ) {
-                    minDx = ave
-                } else {
-                    maxDx = ave
-                }
-            }
+                    when (dir) {
+                        PlayerDir.UP,
+                        PlayerDir.DOWN,
+                            ->
+                            maxDx = firstMove
 
-            while (abs(minDy - maxDy) > 1) {
-                val ave = (minDy + maxDy) / 2
+                        PlayerDir.LEFT,
+                        PlayerDir.RIGHT,
+                            ->
+                            maxDy = firstMove
+
+                        PlayerDir.NONE -> Unit
+                    }
+                }
+
                 if (isCollidedUseCase(
                         square.move(
                             dx = maxDx,
-                            dy = ave,
+                            dy = maxDy,
                         ),
                         backgroundData = backgroundData,
                         npcData = npcData,
                     )
                 ) {
-                    minDy = ave
-                } else {
-                    maxDy = ave
+                    when (dir) {
+                        PlayerDir.UP,
+                        PlayerDir.DOWN,
+                            ->
+                            maxDx = -firstMove
+
+                        PlayerDir.LEFT,
+                        PlayerDir.RIGHT,
+                            ->
+                            maxDy = -firstMove
+
+                        PlayerDir.NONE -> Unit
+                    }
+                }
+
+                while (abs(minDx - maxDx) > 1) {
+                    val ave = (minDx + maxDx) / 2
+                    if (isCollidedUseCase(
+                            square.move(
+                                dx = ave,
+                                dy = maxDy,
+                            ),
+                            backgroundData = backgroundData,
+                            npcData = npcData,
+                        )
+                    ) {
+                        minDx = ave
+                    } else {
+                        maxDx = ave
+                    }
+                }
+
+                while (abs(minDy - maxDy) > 1) {
+                    val ave = (minDy + maxDy) / 2
+                    if (isCollidedUseCase(
+                            square.move(
+                                dx = maxDx,
+                                dy = ave,
+                            ),
+                            backgroundData = backgroundData,
+                            npcData = npcData,
+                        )
+                    ) {
+                        minDy = ave
+                    } else {
+                        maxDy = ave
+                    }
                 }
             }
         }
@@ -169,9 +165,7 @@ class MoveToOtherHeightUseCaseImpl(
     private suspend fun move(
         dx: Float,
         dy: Float,
-        backgroundData: BackgroundData,
-        player: Player,
-        npcData: NPCData,
+        mapUiState: MapUiState,
     ) {
         var restDx = dx
         var restDy = dy
@@ -195,9 +189,7 @@ class MoveToOtherHeightUseCaseImpl(
             moveUseCase.invoke(
                 tentativeVelocity = velocity,
                 actualVelocity = velocity,
-                backgroundData = backgroundData,
-                player = player,
-                npcData = npcData,
+                mapUiState = mapUiState,
             )
             delay(GameParams.DELAY)
         }
