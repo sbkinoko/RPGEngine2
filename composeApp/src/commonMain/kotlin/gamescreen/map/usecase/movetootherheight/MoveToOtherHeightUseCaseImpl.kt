@@ -15,7 +15,6 @@ class MoveToOtherHeightUseCaseImpl(
     private val moveUseCase: MoveUseCase,
 ) : MoveToOtherHeightUseCase {
 
-    //todo callbackでUIを更新するようにする
     override suspend fun invoke(
         targetHeight: ObjectHeight,
         mapUiState: MapUiState,
@@ -29,19 +28,16 @@ class MoveToOtherHeightUseCaseImpl(
 
         // 移動量を取得
         val (dx, dy) = calcMoveDistance(
-            mapUiState,
+            heightUpdatedPlayer,
         )
 
         // 実際に移動
         move(
             dx,
             dy,
-            mapUiState = mapUiState,
+            mapUiState = heightUpdatedPlayer,
+            update = update,
         )
-
-        // fixme 暫定処理
-        // callbackを完成させたら削除
-        update(heightUpdatedPlayer)
     }
 
     /**
@@ -161,9 +157,11 @@ class MoveToOtherHeightUseCaseImpl(
         dx: Float,
         dy: Float,
         mapUiState: MapUiState,
+        update: (MapUiState) -> Unit,
     ) {
         var restDx = dx
         var restDy = dy
+        var updatedState = mapUiState
 
         while (true) {
             val velocity = Velocity(
@@ -178,13 +176,16 @@ class MoveToOtherHeightUseCaseImpl(
                 break
             }
 
-            // fixme ここでUI更新処理を呼び出す
-            //　移動できることはわかっている
-            //　のでプレイヤーの方向と移動方向に同じ物を入力
-            moveUseCase.invoke(
+            updatedState = moveUseCase.invoke(
                 tentativeVelocity = velocity,
                 actualVelocity = velocity,
-                mapUiState = mapUiState,
+                mapUiState = updatedState,
+            )
+
+            //　移動できることはわかっている
+            //　のでプレイヤーの方向と移動方向に同じ物を入力
+            update(
+                updatedState,
             )
             delay(GameParams.DELAY)
         }
