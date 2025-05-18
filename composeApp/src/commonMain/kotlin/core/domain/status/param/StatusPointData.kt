@@ -1,12 +1,10 @@
 package core.domain.status.param
 
-
 data class StatusPointData(
     val maxPoint: Int,
     val point: Int = maxPoint,
 ) {
-
-    fun correct(): StatusPointData {
+    private fun correct(): StatusPointData {
         if (point < 0) {
             return copy(
                 point = 0,
