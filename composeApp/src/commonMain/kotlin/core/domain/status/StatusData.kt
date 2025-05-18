@@ -38,10 +38,14 @@ data class StatusData(
         )
     }
 
-    fun setMP(amount: Int): StatusData {
+    fun setMP(
+        value: Int = hp.value,
+        max: Int = hp.max,
+    ): StatusData {
         return this.copy(
             mp = mp.set(
-                value = amount,
+                value = value,
+                maxValue = max,
             ),
         )
     }
@@ -58,10 +62,22 @@ data class StatusData(
         )
     }
 
-    fun setHP(amount: Int): StatusData {
+    fun incMaxMP(amount: Int): StatusData {
+        return this.copy(
+            mp = mp.incMax(
+                amount = amount,
+            )
+        )
+    }
+
+    fun setHP(
+        value: Int = hp.value,
+        max: Int = hp.max,
+    ): StatusData {
         return this.copy(
             hp = hp.set(
-                value = amount,
+                value = value,
+                maxValue = max,
             ),
         )
     }
@@ -75,6 +91,14 @@ data class StatusData(
     fun incHP(amount: Int): StatusData {
         return this.copy(
             hp = hp.inc(amount),
+        )
+    }
+
+    fun incMaxHP(amount: Int): StatusData {
+        return this.copy(
+            hp = hp.incMax(
+                amount = amount,
+            )
         )
     }
 }

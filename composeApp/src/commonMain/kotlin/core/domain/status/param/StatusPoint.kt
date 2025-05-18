@@ -1,6 +1,6 @@
 package core.domain.status.param
 
-abstract class StatusPoint<T>(
+abstract class StatusPoint<T : StatusPoint<T>>(
     open val data: StatusPointData,
 ) {
     val value
@@ -9,6 +9,8 @@ abstract class StatusPoint<T>(
     val max
         get() = data.maxPoint
 
+
+    // fixme abstractじゃなくする方法を探す
     abstract fun incMax(
         amount: Int,
     ): T
