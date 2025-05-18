@@ -17,8 +17,12 @@ data class PlayerStatus(
         return statusIncrease.let {
             copy(
                 statusData = statusData
-                    .incHP(it.hp)
-                    .incMP(it.mp)
+                    .incMaxHP(
+                        amount = it.hp,
+                    )
+                    .incMaxMP(
+                        amount = it.mp,
+                    )
                     // fixme incを作る
                     .copy(
                         speed = statusData.speed + it.speed,

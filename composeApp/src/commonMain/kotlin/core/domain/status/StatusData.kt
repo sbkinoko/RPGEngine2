@@ -62,6 +62,14 @@ data class StatusData(
         )
     }
 
+    fun incMaxMP(amount: Int): StatusData {
+        return this.copy(
+            mp = mp.incMax(
+                amount = amount,
+            )
+        )
+    }
+
     fun setHP(
         value: Int = hp.value,
         max: Int = hp.max,
@@ -83,6 +91,14 @@ data class StatusData(
     fun incHP(amount: Int): StatusData {
         return this.copy(
             hp = hp.inc(amount),
+        )
+    }
+
+    fun incMaxHP(amount: Int): StatusData {
+        return this.copy(
+            hp = hp.incMax(
+                amount = amount,
+            )
         )
     }
 }
