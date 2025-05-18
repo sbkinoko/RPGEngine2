@@ -39,8 +39,8 @@ data class StatusPointData(
     }
 
     fun set(
-        value: Int,
-        maxValue: Int,
+        value: Int = point,
+        maxValue: Int = maxPoint,
     ): StatusPointData {
         return copy(
             point = value,
