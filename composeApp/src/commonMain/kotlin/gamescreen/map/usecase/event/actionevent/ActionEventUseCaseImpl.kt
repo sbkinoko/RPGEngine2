@@ -1,7 +1,9 @@
 package gamescreen.map.usecase.event.actionevent
 
+import core.domain.mapcell.CellType
 import gamescreen.map.domain.MapUiState
 import gamescreen.map.domain.ObjectHeight
+import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.service.makefrontdata.MakeFrontDateService
 import gamescreen.map.usecase.changeheight.ChangeHeightUseCase
 import gamescreen.map.usecase.movetootherheight.MoveToOtherHeightUseCase
@@ -48,39 +50,42 @@ class ActionEventUseCaseImpl(
                     ),
                 )
 
-                val backgroundData = uiState.backgroundData.copy(
-                    uiState.backgroundData.fieldData.map {
-                        it.map {
-                            if (it.cellType is CellType.Box &&
-                                it.cellType.id == eventType.id
-                            ) {
-                                val updated = it.cellType.copy(
-                                    hasItem = false,
-                                )
-                                val newAround = it.aroundCellId.map {
-                                    it.toMutableList()
-                                }.toMutableList()
 
-                                newAround[1][1] = updated
+                val fieldData = mapUiState.backgroundData.fieldData.map { list ->
+                    list.map { cell ->
+                        if (cell.cellType is CellType.Box &&
+                            cell.cellType.id == eventType.id
+                        ) {
+                            val updated = cell.cellType.copy(
+                                hasItem = false,
+                            )
+                            val newAround = cell.aroundCellId.map {
+                                it.toMutableList()
+                            }.toMutableList()
 
-                                it.copy(
-                                    cellType = updated,
-                                    aroundCellId = newAround,
-                                )
-                            } else {
-                                it
-                            }
+                            newAround[1][1] = updated
+
+                            cell.copy(
+                                cellType = updated,
+                                aroundCellId = newAround,
+                            )
+                        } else {
+                            cell
                         }
                     }
+                }
+
+                val backgroundData = BackgroundData(
+                    fieldData = fieldData,
                 )
 
                 val objectData = makeFrontDateService(
                     backgroundData = backgroundData,
-                    player = uiState.player,
+                    player = mapUiState.player,
                 )
 
-                callback(
-                    uiState.copy(
+                update(
+                    mapUiState.copy(
                         backgroundData = backgroundData,
                         backObjectData = objectData.second,
                         frontObjectData = objectData.first,
