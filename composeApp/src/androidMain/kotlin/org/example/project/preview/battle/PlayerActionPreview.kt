@@ -7,6 +7,7 @@ import core.domain.status.StatusData
 import core.domain.status.param.EXP
 import core.domain.status.param.HP
 import core.domain.status.param.MP
+import core.domain.status.param.StatusPointData
 import data.item.skill.SkillId
 import data.item.tool.ToolId
 import gamescreen.battle.command.playeraction.PlayerAction
@@ -21,12 +22,16 @@ fun PlayerActionPreview() {
             statusData = StatusData(
                 "test",
                 hp = HP(
-                    maxValue = 100,
-                    value = 50,
+                    StatusPointData(
+                        maxPoint = 100,
+                        point = 50,
+                    )
                 ),
                 mp = MP(
-                    maxValue = 10,
-                    value = 5,
+                    StatusPointData(
+                        maxPoint = 10,
+                        point = 5,
+                    )
                 ),
                 speed = 10,
                 conditionList = emptyList(),

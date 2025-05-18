@@ -13,7 +13,7 @@ interface Status {
 
     val isActive: Boolean
         get() {
-            return 0 < hp.point
+            return 0 < hp.value
         }
 
     val conditionList: List<ConditionType>

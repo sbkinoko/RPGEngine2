@@ -1,8 +1,6 @@
 package core.domain.status
 
 import core.domain.status.param.EXP
-import core.domain.status.param.HP
-import core.domain.status.param.MP
 import data.item.skill.SkillId
 import data.item.tool.ToolId
 
@@ -19,12 +17,8 @@ data class PlayerStatus(
         return statusIncrease.let {
             copy(
                 statusData = statusData.copy(
-                    hp = HP(
-                        statusData.hp.maxValue + it.hp,
-                    ),
-                    mp = MP(
-                        statusData.mp.maxValue + it.mp,
-                    ),
+                    hp = statusData.hp.incMax(it.hp),
+                    mp = statusData.mp.incMax(it.mp),
                     speed = statusData.speed + it.speed,
                 )
             )

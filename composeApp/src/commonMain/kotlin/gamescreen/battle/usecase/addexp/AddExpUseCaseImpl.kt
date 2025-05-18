@@ -33,11 +33,11 @@ class AddExpUseCaseImpl(
                     //ステータスに反映する
                     after = after.copy(
                         statusData = statusData.copy(
-                            hp = after.statusData.hp.copy(
-                                maxValue = statusData.hp.maxValue
+                            hp = after.statusData.hp.set(
+                                maxValue = statusData.hp.max,
                             ),
-                            mp = after.statusData.mp.copy(
-                                maxValue = statusData.mp.maxValue
+                            mp = after.statusData.mp.set(
+                                maxValue = statusData.mp.max,
                             ),
                         ),
                     )

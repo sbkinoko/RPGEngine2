@@ -16,7 +16,7 @@ class MonsterRepositoryImpl : MonsterRepository {
             statusData = StatusData(
                 "花",
                 hp = HP(
-                    maxValue = 10,
+                    maxValue = 10
                 ),
                 mp = MP(
                     maxValue = 10,

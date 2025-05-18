@@ -40,49 +40,41 @@ data class StatusData(
 
     fun setMP(amount: Int): StatusData {
         return this.copy(
-            mp = mp.copy(
+            mp = mp.set(
                 value = amount,
-            )
+            ),
         )
     }
 
     fun decMP(amount: Int): StatusData {
         return this.copy(
-            mp = mp.copy(
-                value = mp.value - amount
-            )
+            mp = mp.dec(amount),
         )
     }
 
     fun incMP(amount: Int): StatusData {
         return this.copy(
-            mp = mp.copy(
-                value = mp.value + amount
-            )
+            mp = mp.inc(amount),
         )
     }
 
     fun setHP(amount: Int): StatusData {
         return this.copy(
-            hp = hp.copy(
+            hp = hp.set(
                 value = amount,
-            )
+            ),
         )
     }
 
     fun decHP(amount: Int): StatusData {
         return this.copy(
-            hp = hp.copy(
-                value = hp.value - amount
-            )
+            hp = hp.dec(amount),
         )
     }
 
     fun incHP(amount: Int): StatusData {
         return this.copy(
-            hp = hp.copy(
-                value = hp.value + amount
-            )
+            hp = hp.inc(amount),
         )
     }
 }
