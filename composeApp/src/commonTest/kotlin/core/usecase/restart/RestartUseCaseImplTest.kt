@@ -1,8 +1,10 @@
 package core.usecase.restart
 
+import core.domain.testMapUiState
 import core.usecase.heal.MaxHealUseCase
+import gamescreen.map.domain.MapUiState
 import gamescreen.map.domain.ObjectHeight
-import gamescreen.map.domain.UIData
+import gamescreen.map.domain.Player
 import gamescreen.map.usecase.roadmap.RoadMapUseCase
 import kotlinx.coroutines.runBlocking
 import kotlin.test.BeforeTest
@@ -19,9 +21,10 @@ class RestartUseCaseImplTest {
             mapY: Int,
             mapId: Int,
             playerHeight: ObjectHeight,
-        ): UIData {
+            player: Player,
+        ): MapUiState {
             roadMapCount++
-            return UIData()
+            return testMapUiState
         }
     }
 
@@ -43,7 +46,9 @@ class RestartUseCaseImplTest {
     @Test
     fun checkCall() {
         runBlocking {
-            restartUseCase.invoke()
+            restartUseCase.invoke(
+                testMapUiState
+            )
 
             assertEquals(
                 expected = 1,

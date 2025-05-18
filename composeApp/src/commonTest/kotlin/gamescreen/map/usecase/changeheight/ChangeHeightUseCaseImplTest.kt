@@ -2,7 +2,6 @@ package gamescreen.map.usecase.changeheight
 
 import gamescreen.map.ModuleMap
 import gamescreen.map.domain.ObjectHeight
-import gamescreen.map.repository.player.PlayerPositionRepository
 import kotlinx.coroutines.runBlocking
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -16,7 +15,6 @@ import kotlin.test.assertEquals
 class ChangeHeightUseCaseImplTest : KoinTest {
 
     private val changeHeightUseCase: ChangeHeightUseCase by inject()
-    private val playerPositionRepository: PlayerPositionRepository by inject()
 
     @BeforeTest
     fun beforeTest() {
@@ -36,10 +34,14 @@ class ChangeHeightUseCaseImplTest : KoinTest {
     fun moveToWater() {
         runBlocking {
             val target = ObjectHeight.Water(height = 1)
-            changeHeightUseCase.invoke(target)
+            val player = gamescreen.map.domain.Player(size = 0f)
+            val newPlayer = changeHeightUseCase.invoke(
+                target,
+                player = player
+            )
 
             assertEquals(
-                actual = playerPositionRepository.getPlayerPosition().square.objectHeight,
+                actual = newPlayer.square.objectHeight,
                 expected = target,
             )
         }
@@ -49,10 +51,16 @@ class ChangeHeightUseCaseImplTest : KoinTest {
     fun moveToGround() {
         runBlocking {
             val target = ObjectHeight.Ground(height = 2)
-            changeHeightUseCase.invoke(target)
+
+            val player = gamescreen.map.domain.Player(size = 0f)
+
+            val newPlayer = changeHeightUseCase.invoke(
+                target,
+                player = player,
+            )
 
             assertEquals(
-                actual = playerPositionRepository.getPlayerPosition().square.objectHeight,
+                actual = newPlayer.square.objectHeight,
                 expected = target,
             )
         }

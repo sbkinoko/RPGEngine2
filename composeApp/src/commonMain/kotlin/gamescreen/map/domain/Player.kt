@@ -68,6 +68,14 @@ data class Player(
         )
     }
 
+    fun changeHeight(targetHeight: ObjectHeight): Player {
+        return copy(
+            square = (square as NormalRectangle).copy(
+                objectHeight = targetHeight,
+            )
+        )
+    }
+
     val eventSquare: Rectangle
         get() {
             val square = NormalRectangle(

@@ -13,7 +13,7 @@ class UpdateCellContainPlayerUseCaseImpl(
     override operator fun invoke(
         player: Player,
         backgroundData: BackgroundData,
-    ) {
+    ): BackgroundCell? {
         var playerIncludeCell: BackgroundCell? = null
         lateinit var centerCell: BackgroundCell
 
@@ -48,5 +48,7 @@ class UpdateCellContainPlayerUseCaseImpl(
 
         playerCellRepository.playerIncludeCell = playerIncludeCell
         playerCellRepository.playerCenterCell = centerCell
+
+        return playerIncludeCell
     }
 }

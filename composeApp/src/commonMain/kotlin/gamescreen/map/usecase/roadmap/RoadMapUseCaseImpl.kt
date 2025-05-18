@@ -1,10 +1,10 @@
 package gamescreen.map.usecase.roadmap
 
 import gamescreen.map.data.toMap
+import gamescreen.map.domain.MapUiState
 import gamescreen.map.domain.ObjectHeight
-import gamescreen.map.domain.UIData
+import gamescreen.map.domain.Player
 import gamescreen.map.service.makefrontdata.MakeFrontDateService
-import gamescreen.map.usecase.movetootherheight.MoveToOtherHeightUseCase
 import gamescreen.map.usecase.resetnpc.ResetNPCPositionUseCase
 import gamescreen.map.usecase.resetposition.ResetBackgroundPositionUseCase
 import gamescreen.map.usecase.setplayercenter.SetPlayerCenterUseCase
@@ -15,7 +15,6 @@ class RoadMapUseCaseImpl(
     private val resetBackgroundPositionUseCase: ResetBackgroundPositionUseCase,
     private val resetNPCPositionUseCase: ResetNPCPositionUseCase,
     private val updateCellContainPlayerUseCase: UpdateCellContainPlayerUseCase,
-    private val moveToOtherHeightUseCase: MoveToOtherHeightUseCase,
 
     private val makeFrontDateService: MakeFrontDateService,
 ) : RoadMapUseCase {
@@ -25,7 +24,8 @@ class RoadMapUseCaseImpl(
         mapY: Int,
         mapId: Int,
         playerHeight: ObjectHeight,
-    ): UIData {
+        player: Player,
+    ): MapUiState {
         val mapData = mapId.toMap()
 
         val backgroundData = resetBackgroundPositionUseCase.invoke(
@@ -33,33 +33,36 @@ class RoadMapUseCaseImpl(
             mapX = mapX,
             mapY = mapY,
         )
-        resetNPCPositionUseCase.invoke(
+
+        val npcData = resetNPCPositionUseCase.invoke(
             mapData = mapData,
             mapX = mapX,
             mapY = mapY,
         )
-        var player = setPlayerCenterUseCase.invoke()
-        updateCellContainPlayerUseCase.invoke(
+
+        val newPlayer = setPlayerCenterUseCase.invoke(
             player = player,
-            backgroundData = backgroundData,
+        ).changeHeight(
+            targetHeight = playerHeight,
         )
 
-        moveToOtherHeightUseCase.invoke(
-            targetHeight = playerHeight,
-        ) {
-            player = it
-        }
+        val cell = updateCellContainPlayerUseCase.invoke(
+            player = newPlayer,
+            backgroundData = backgroundData,
+        )
 
         val frontObjectData = makeFrontDateService(
             backgroundData = backgroundData,
-            player = player,
+            player = newPlayer,
         )
 
-        return UIData(
-            player = player,
+        return MapUiState(
+            player = newPlayer,
             backgroundData = backgroundData,
             frontObjectData = frontObjectData.first,
             backObjectData = frontObjectData.second,
+            npcData = npcData,
+            playerIncludeCell = cell,
         )
     }
 }

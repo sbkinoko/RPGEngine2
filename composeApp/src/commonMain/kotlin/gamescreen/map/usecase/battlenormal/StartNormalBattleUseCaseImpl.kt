@@ -4,6 +4,7 @@ import core.domain.BattleEventCallback
 import core.domain.mapcell.CellType
 import core.domain.mapcell.toBattleBackGround
 import core.usecase.restart.RestartUseCase
+import gamescreen.map.domain.MapUiState
 import gamescreen.map.repository.playercell.PlayerCellRepository
 import gamescreen.map.usecase.battledecidemonster.DecideBattleMonsterUseCase
 import gamescreen.map.usecase.battlestart.StartBattleUseCase
@@ -21,7 +22,10 @@ class StartNormalBattleUseCaseImpl(
     private val textRepository: TextRepository,
     private val restartUseCase: RestartUseCase,
 ) : StartNormalBattleUseCase {
-    override fun invoke() {
+    override fun invoke(
+        mapUiState: MapUiState,
+        updateScreen: (MapUiState) -> Unit,
+    ) {
         val backgroundCell = playerCellRepository.playerCenterCell
 
         val cellType = backgroundCell.cellType as? CellType.MonsterCell
@@ -40,7 +44,11 @@ class StartNormalBattleUseCaseImpl(
                 winCallback = {},
                 loseCallback = {
                     CoroutineScope(Dispatchers.Default).launch {
-                        restartUseCase.invoke()
+                        updateScreen(
+                            restartUseCase.invoke(
+                                mapUiState = mapUiState,
+                            ),
+                        )
                         textRepository.push(
                             textBoxData = TextBoxData(
                                 text = "全滅してしまった",

@@ -6,7 +6,7 @@ import values.event.EventType
 interface ActionEventUseCase {
     operator fun invoke(
         eventType: EventType,
-        uiState: MapUiState,
-        callback: (MapUiState) -> Unit,
+        mapUiState: MapUiState,
+        update: (MapUiState) -> Unit,
     )
 }

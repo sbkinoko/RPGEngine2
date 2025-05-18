@@ -5,9 +5,11 @@ import core.domain.mapcell.CellType
 import core.domain.mapcell.toBattleBackGround
 import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
 import core.domain.status.monster.MonsterStatus
+import core.domain.testMapUiState
 import core.usecase.restart.RestartUseCase
 import gamescreen.battle.domain.BattleBackgroundType
 import gamescreen.map.domain.MapPoint
+import gamescreen.map.domain.MapUiState
 import gamescreen.map.domain.background.BackgroundCell
 import gamescreen.map.domain.collision.square.NormalRectangle
 import gamescreen.map.repository.playercell.PlayerCellRepository
@@ -19,6 +21,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
+
+//todo 敗北時の呼び出しを確認する
 class StartNormalBattleUseCaseImplTest {
     private val textRepository = object : TextRepository {
         override val callBack: (() -> Unit)
@@ -44,7 +48,7 @@ class StartNormalBattleUseCaseImplTest {
     }
 
     private val restartUseCase = object : RestartUseCase {
-        override suspend fun invoke() {
+        override suspend fun invoke(mapUiState: MapUiState): MapUiState {
             throw NotImplementedError()
         }
     }
@@ -98,7 +102,9 @@ class StartNormalBattleUseCaseImplTest {
             }
         }
 
-        startNormalBattleUseCase.invoke()
+        startNormalBattleUseCase.invoke(
+            testMapUiState,
+        ) {}
 
         // エラーが起こらなければOK
     }
@@ -150,7 +156,11 @@ class StartNormalBattleUseCaseImplTest {
         }
 
 
-        startNormalBattleUseCase.invoke()
+        startNormalBattleUseCase.invoke(
+            testMapUiState,
+        ) {
+
+        }
 
         assertEquals(
             expected = 1,
@@ -213,7 +223,11 @@ class StartNormalBattleUseCaseImplTest {
             }
         }
 
-        startNormalBattleUseCase.invoke()
+        startNormalBattleUseCase.invoke(
+            testMapUiState,
+        ) {
+
+        }
 
         assertEquals(
             expected = 1,
