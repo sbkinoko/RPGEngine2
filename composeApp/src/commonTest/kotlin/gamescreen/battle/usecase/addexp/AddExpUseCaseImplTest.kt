@@ -94,7 +94,7 @@ class AddExpUseCaseImplTest {
 
                 assertEquals(
                     expected = TEST_LV1_HP + TEST_LV2_HP,
-                    actual = hp.maxValue,
+                    actual = hp.max,
                 )
 
                 assertEquals(
@@ -104,7 +104,7 @@ class AddExpUseCaseImplTest {
 
                 assertEquals(
                     expected = TEST_LV1_MP + TEST_LV2_MP,
-                    actual = mp.maxValue,
+                    actual = mp.max,
                 )
             }
         }

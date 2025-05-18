@@ -1,28 +1,46 @@
 package core.domain.status.param
 
 data class HP(
-    var maxValue: Int,
-    var value: Int = maxValue,
-) : Point() {
-    override var maxPoint = maxValue
-        set(value) {
-            field = if (value < MIN_MAX_VALUE) {
-                MIN_MAX_VALUE
-            } else {
-                value
-            }
+    override val data: StatusPointData,
+) : StatusPoint<HP>(data) {
 
-            if (maxPoint < point) {
-                point = maxPoint
-            }
-        }
+    constructor(
+        maxValue: Int,
+        value: Int = maxValue,
+    ) : this(
+        data = StatusPointData(
+            maxPoint = maxValue,
+            point = value
+        )
+    )
 
-    init {
-        maxPoint = maxValue
-        point = value
+    override fun incMax(amount: Int): HP {
+        return copy(
+            data = data.incMax(amount)
+        )
     }
 
-    companion object {
-        const val MIN_MAX_VALUE = 1
+    override fun inc(amount: Int): HP {
+        return copy(
+            data = data.inc(amount)
+        )
+    }
+
+    override fun dec(amount: Int): HP {
+        return copy(
+            data = data.dec(amount),
+        )
+    }
+
+    override fun set(
+        maxValue: Int,
+        value: Int,
+    ): HP {
+        return copy(
+            data = data.set(
+                maxValue = maxValue,
+                value = value,
+            )
+        )
     }
 }

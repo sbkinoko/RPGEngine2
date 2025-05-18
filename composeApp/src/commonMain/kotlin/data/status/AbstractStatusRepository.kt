@@ -19,7 +19,15 @@ abstract class AbstractStatusRepository : StatusRepository {
             )
         }
 
-        return statusSum
+        // fixme セーブするようになったらvalueをセーブデータから読み取る
+        return statusSum.run {
+            copy(
+                statusData = statusData.copy(
+                    hp = statusData.hp.set(value = Int.MAX_VALUE),
+                    mp = statusData.mp.set(value = Int.MAX_VALUE),
+                )
+            )
+        }
     }
 
     protected abstract val statusUpList: List<List<StatusIncrease>>

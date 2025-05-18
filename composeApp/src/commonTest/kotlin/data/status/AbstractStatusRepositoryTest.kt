@@ -74,12 +74,12 @@ class AbstractStatusRepositoryTest {
         status.statusData.apply {
             assertEquals(
                 expected = TEST_LV1_HP,
-                actual = hp.maxValue,
+                actual = hp.max,
             )
 
             assertEquals(
                 expected = TEST_LV1_MP,
-                actual = mp.maxValue,
+                actual = mp.max,
             )
 
             assertEquals(
@@ -116,12 +116,12 @@ class AbstractStatusRepositoryTest {
         status.statusData.apply {
             assertEquals(
                 expected = TEST_LV1_HP + TEST_LV2_HP,
-                actual = hp.maxValue,
+                actual = hp.max,
             )
 
             assertEquals(
                 expected = TEST_LV1_MP + TEST_LV2_MP,
-                actual = mp.maxValue,
+                actual = mp.max,
             )
 
             assertEquals(

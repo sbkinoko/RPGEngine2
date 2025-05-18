@@ -10,9 +10,7 @@ class StatusTest {
     fun isActive() {
         val updated = StatusDataTest.normalStatus.run {
             copy(
-                hp = hp.copy(
-                    value = 1,
-                )
+                hp = hp.set(value = 1)
             )
         }
         assertEquals(
@@ -25,9 +23,7 @@ class StatusTest {
     fun isNotActive() {
         val updated = StatusDataTest.normalStatus.run {
             copy(
-                hp = hp.copy(
-                    value = 0,
-                )
+                hp = hp.set(value = 0)
             )
         }
         assertEquals(
