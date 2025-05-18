@@ -1,5 +1,8 @@
 package values.event
 
+import androidx.compose.runtime.Stable
+
+@Stable
 sealed class EventType {
     data object None : EventType()
 

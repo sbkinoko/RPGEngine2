@@ -62,7 +62,7 @@ class CollisionRepositoryImpl : CollisionRepository {
                             y = height / 3,
                             width = width / 3,
                             height = height / 3,
-                            eventType = if (cellType.id.hasItem) {
+                            eventType = if (cellType.hasItem) {
                                 EventType.Box(
                                     id = cellType.id
                                 )

@@ -15,9 +15,7 @@ class BoxData {
     }
 }
 
-sealed class BoxId(
-    var hasItem: Boolean = true,
-) {
-    data object Box1 : BoxId()
-    data object Box2 : BoxId()
+enum class BoxId {
+    Box1,
+    Box2,
 }

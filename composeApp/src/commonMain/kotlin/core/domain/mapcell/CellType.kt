@@ -63,8 +63,9 @@ sealed class CellType {
             get() = 1.0f
     }
 
-    class Box(
+    data class Box(
         val id: BoxId,
+        val hasItem: Boolean,
     ) : CollisionCell,
         ObjectCell,
         CellType()
