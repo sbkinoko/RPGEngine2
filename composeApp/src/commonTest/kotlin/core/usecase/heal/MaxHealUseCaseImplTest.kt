@@ -18,10 +18,10 @@ class MaxHealUseCaseImplTest {
                 copy(
                     statusData = statusData.run {
                         copy(
-                            hp = hp.copy(
+                            hp = hp.set(
                                 value = 0,
                             ),
-                            mp = mp.copy(
+                            mp = mp.set(
                                 value = 0
                             )
                         )
@@ -71,12 +71,12 @@ class MaxHealUseCaseImplTest {
             playerStatusRepository.getPlayers().map {
                 it.statusData.apply {
                     assertEquals(
-                        expected = hp.maxValue,
+                        expected = hp.max,
                         actual = hp.value
                     )
 
                     assertEquals(
-                        expected = mp.maxValue,
+                        expected = mp.max,
                         actual = mp.value
                     )
                 }

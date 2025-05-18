@@ -33,7 +33,7 @@ class PlayerStatusTest {
             get() = testActivePlayer.run {
                 copy(
                     statusData = statusData.copy(
-                        hp = statusData.hp.copy(
+                        hp = statusData.hp.set(
                             value = 0,
                         )
                     )
