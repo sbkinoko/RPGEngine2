@@ -16,11 +16,13 @@ data class PlayerStatus(
     ): PlayerStatus {
         return statusIncrease.let {
             copy(
-                statusData = statusData.copy(
-                    hp = statusData.hp.incMax(it.hp),
-                    mp = statusData.mp.incMax(it.mp),
-                    speed = statusData.speed + it.speed,
-                )
+                statusData = statusData
+                    .incHP(it.hp)
+                    .incMP(it.mp)
+                    // fixme incを作る
+                    .copy(
+                        speed = statusData.speed + it.speed,
+                    )
             )
         }
     }

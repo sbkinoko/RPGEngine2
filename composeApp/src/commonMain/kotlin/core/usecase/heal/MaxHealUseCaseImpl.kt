@@ -10,14 +10,12 @@ class MaxHealUseCaseImpl(
             playerStatusRepository.setStatus(
                 id = index,
                 status = playerStatus.copy(
-                    statusData = playerStatus.statusData.copy(
-                        hp = playerStatus.statusData.hp.set(
+                    statusData = playerStatus.statusData
+                        .setHP(
+                            value = Int.MAX_VALUE,
+                        ).setMP(
                             value = Int.MAX_VALUE,
                         ),
-                        mp = playerStatus.statusData.mp.set(
-                            value = Int.MAX_VALUE,
-                        ),
-                    ),
                 )
             )
         }
