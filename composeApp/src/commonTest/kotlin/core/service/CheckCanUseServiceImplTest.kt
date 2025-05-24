@@ -3,7 +3,7 @@ package core.service
 import core.ModuleCore
 import core.domain.item.CostType
 import core.domain.status.PlayerStatusTest.Companion.testActivePlayer
-import core.domain.status.param.MP
+import core.domain.status.param.statusParameterWithMax.MP
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest

@@ -2,8 +2,8 @@ package core.usecase.updateparameter
 
 import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
 import core.domain.status.monster.MonsterStatus
-import core.domain.status.param.HP
-import core.domain.status.param.MP
+import core.domain.status.param.statusParameterWithMax.HP
+import core.domain.status.param.statusParameterWithMax.MP
 import core.repository.status.StatusRepository
 import core.usecase.updateparameter.UpdateParameterTest.Companion.HP
 import core.usecase.updateparameter.UpdateParameterTest.Companion.MP

@@ -1,7 +1,7 @@
-package core.domain.status.param
+package core.domain.status.param.statusParameterWithMax
 
-abstract class StatusPoint<T : StatusPoint<T>>(
-    open val data: StatusPointData,
+abstract class StatusParameterWithMax<T : StatusParameterWithMax<T>>(
+    open val data: StatusParameterData,
 ) {
     val value
         get() = data.point
