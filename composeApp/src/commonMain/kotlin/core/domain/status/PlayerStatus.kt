@@ -14,17 +14,11 @@ data class PlayerStatus(
     fun addStatus(
         statusIncrease: StatusIncrease,
     ): PlayerStatus {
-        return statusIncrease.let {
-            copy(
-                statusData = statusData
-                    .incMaxHP(
-                        amount = it.hp,
-                    )
-                    .incMaxMP(
-                        amount = it.mp,
-                    )
-                    .incSpd(amount = it.speed)
-            )
-        }
+        return copy(
+            statusData = statusData
+                .incStatus(
+                    statusIncrease
+                )
+        )
     }
 }

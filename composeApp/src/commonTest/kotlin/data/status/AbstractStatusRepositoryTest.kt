@@ -4,9 +4,13 @@ import core.domain.status.PlayerStatus
 import core.domain.status.StatusData
 import core.domain.status.StatusIncrease
 import core.domain.status.StatusIncreaseTest
+import core.domain.status.StatusIncreaseTest.Companion.TEST_LV1_ATK
+import core.domain.status.StatusIncreaseTest.Companion.TEST_LV1_DEF
 import core.domain.status.StatusIncreaseTest.Companion.TEST_LV1_HP
 import core.domain.status.StatusIncreaseTest.Companion.TEST_LV1_MP
 import core.domain.status.StatusIncreaseTest.Companion.TEST_LV1_SPEED
+import core.domain.status.StatusIncreaseTest.Companion.TEST_LV2_ATK
+import core.domain.status.StatusIncreaseTest.Companion.TEST_LV2_DEF
 import core.domain.status.StatusIncreaseTest.Companion.TEST_LV2_HP
 import core.domain.status.StatusIncreaseTest.Companion.TEST_LV2_MP
 import core.domain.status.StatusIncreaseTest.Companion.TEST_LV2_SPEED
@@ -84,8 +88,18 @@ class AbstractStatusRepositoryTest {
             )
 
             assertEquals(
+                expected = StatusParameter(TEST_LV1_ATK),
+                actual = atk
+            )
+
+            assertEquals(
+                expected = StatusParameter(TEST_LV1_DEF),
+                actual = def
+            )
+
+            assertEquals(
                 expected = StatusParameter(TEST_LV1_SPEED),
-                actual = (speed),
+                actual = speed,
             )
         }
     }
@@ -126,8 +140,18 @@ class AbstractStatusRepositoryTest {
             )
 
             assertEquals(
+                expected = StatusParameter(TEST_LV1_ATK + TEST_LV2_ATK),
+                actual = atk,
+            )
+
+            assertEquals(
+                expected = StatusParameter(TEST_LV1_DEF + TEST_LV2_DEF),
+                actual = def,
+            )
+
+            assertEquals(
                 expected = StatusParameter(TEST_LV1_SPEED + TEST_LV2_SPEED),
-                actual = speed
+                actual = speed,
             )
         }
     }

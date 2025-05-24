@@ -1,5 +1,6 @@
 package core.domain.status.param.statusParameter
 
+import core.domain.status.IncData
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -28,7 +29,7 @@ class StatusParameterTest {
         val status = StatusParameter<ParameterType.SPD>(value)
 
         val inc = 5
-        val incStatus = status.inc(inc)
+        val incStatus = status.inc(IncData(inc))
 
         assertEquals(
             expected = value + inc,
