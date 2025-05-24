@@ -3,7 +3,7 @@ package core.service
 import core.ModuleCore
 import core.domain.item.CostType
 import core.domain.status.PlayerStatusTest.Companion.testActivePlayer
-import core.domain.status.param.statusParameterWithMax.MP
+import core.domain.status.param.StatusParameterWithMax
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
@@ -41,9 +41,9 @@ class CheckCanUseServiceImplTest : KoinTest {
         val result = checkCanUseService.invoke(
             status = testActivePlayer.copy(
                 statusData = testActivePlayer.statusData.copy(
-                    mp = MP(
-                        value = costMP,
-                        maxValue = costMP,
+                    mp = StatusParameterWithMax(
+                        point = costMP,
+                        maxPoint = costMP,
                     )
                 )
             ),
@@ -65,9 +65,9 @@ class CheckCanUseServiceImplTest : KoinTest {
         val result = checkCanUseService.invoke(
             status = testActivePlayer.copy(
                 statusData = testActivePlayer.statusData.copy(
-                    mp = MP(
-                        value = costMP - 1,
-                        maxValue = costMP,
+                    mp = StatusParameterWithMax(
+                        point = costMP - 1,
+                        maxPoint = costMP,
                     )
                 )
             ),

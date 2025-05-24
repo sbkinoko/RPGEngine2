@@ -24,16 +24,16 @@ class StatusIncreaseTest {
                 StatusIncrease(
                     hp = TEST_LV1_HP,
                     mp = TEST_LV1_MP,
-                    speed = IncData(TEST_LV1_SPEED),
-                    atk = IncData(TEST_LV1_ATK),
-                    def = IncData(TEST_LV1_DEF),
+                    speed = TEST_LV1_SPEED,
+                    atk = TEST_LV1_ATK,
+                    def = TEST_LV1_DEF,
                 ),
                 StatusIncrease(
                     hp = TEST_LV2_HP,
                     mp = TEST_LV2_MP,
-                    speed = IncData(TEST_LV2_SPEED),
-                    atk = IncData(TEST_LV2_ATK),
-                    def = IncData(TEST_LV2_DEF),
+                    speed = TEST_LV2_SPEED,
+                    atk = TEST_LV2_ATK,
+                    def = TEST_LV2_DEF,
                 ),
             )
     }

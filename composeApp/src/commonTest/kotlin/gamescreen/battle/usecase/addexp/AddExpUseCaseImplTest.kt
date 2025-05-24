@@ -89,22 +89,22 @@ class AddExpUseCaseImplTest {
             playerStatusRepository.getStatus(0).statusData.apply {
                 assertEquals(
                     expected = TEST_LV1_HP,
-                    actual = hp.value,
+                    actual = hp.point,
                 )
 
                 assertEquals(
                     expected = TEST_LV1_HP + TEST_LV2_HP,
-                    actual = hp.max,
+                    actual = hp.maxPoint,
                 )
 
                 assertEquals(
                     expected = TEST_LV1_MP,
-                    actual = mp.value,
+                    actual = mp.point,
                 )
 
                 assertEquals(
                     expected = TEST_LV1_MP + TEST_LV2_MP,
-                    actual = mp.max,
+                    actual = mp.maxPoint,
                 )
             }
         }

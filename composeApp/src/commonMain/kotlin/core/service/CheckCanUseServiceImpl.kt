@@ -11,7 +11,7 @@ class CheckCanUseServiceImpl : CheckCanUseService {
         return when (costType) {
             is CostType.MP -> {
                 // 現在のMPがコストのMPより多ければ使用可能
-                status.statusData.mp.value >= costType.needMP
+                status.statusData.mp.point >= costType.needMP
             }
 
             // ただの道具ならいつでも使える

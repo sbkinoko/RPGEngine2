@@ -1,4 +1,4 @@
-package core.domain.status.param.statusParameter
+package core.domain.status.param
 
 import core.domain.status.IncData
 import kotlin.test.Test

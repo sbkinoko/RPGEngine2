@@ -14,15 +14,15 @@ class StatusRepositoryImpl : AbstractStatusRepository() {
         when (it) {
             0 -> listOf(
                 StatusIncrease(
-                    hp = 100,
-                    mp = 10,
+                    hp = IncData(100),
+                    mp = IncData(10),
                     speed = IncData(11),
                     atk = IncData(0),
                     def = IncData(0),
                 ),
                 StatusIncrease(
-                    hp = 100,
-                    mp = 10,
+                    hp = IncData(100),
+                    mp = IncData(10),
                     speed = IncData(10),
                     atk = IncData(0),
                     def = IncData(0),
@@ -31,8 +31,8 @@ class StatusRepositoryImpl : AbstractStatusRepository() {
 
             1 -> listOf(
                 StatusIncrease(
-                    hp = 100,
-                    mp = 111,
+                    hp = IncData(100),
+                    mp = IncData(111),
                     speed = IncData(9),
                     atk = IncData(0),
                     def = IncData(0),
@@ -43,9 +43,9 @@ class StatusRepositoryImpl : AbstractStatusRepository() {
                 StatusIncrease(
                     hp = 100,
                     mp = 100,
-                    speed = IncData(9),
-                    atk = IncData(0),
-                    def = IncData(0),
+                    speed = 9,
+                    atk = 0,
+                    def = 0,
                 )
             )
 
@@ -53,9 +53,9 @@ class StatusRepositoryImpl : AbstractStatusRepository() {
                 StatusIncrease(
                     hp = 100,
                     mp = 500,
-                    speed = IncData(9),
-                    atk = IncData(0),
-                    def = IncData(0),
+                    speed = 9,
+                    atk = 0,
+                    def = 0,
                 )
             )
 

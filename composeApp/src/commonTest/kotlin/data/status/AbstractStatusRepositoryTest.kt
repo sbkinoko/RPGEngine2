@@ -15,7 +15,7 @@ import core.domain.status.StatusIncreaseTest.Companion.TEST_LV2_HP
 import core.domain.status.StatusIncreaseTest.Companion.TEST_LV2_MP
 import core.domain.status.StatusIncreaseTest.Companion.TEST_LV2_SPEED
 import core.domain.status.param.EXP
-import core.domain.status.param.statusParameter.StatusParameter
+import core.domain.status.param.StatusParameter
 import data.item.skill.SkillId
 import data.item.tool.ToolId
 import kotlin.test.Test
@@ -79,12 +79,12 @@ class AbstractStatusRepositoryTest {
         status.statusData.apply {
             assertEquals(
                 expected = TEST_LV1_HP,
-                actual = hp.max,
+                actual = hp.maxPoint,
             )
 
             assertEquals(
                 expected = TEST_LV1_MP,
-                actual = mp.max,
+                actual = mp.maxPoint,
             )
 
             assertEquals(
@@ -131,12 +131,12 @@ class AbstractStatusRepositoryTest {
         status.statusData.apply {
             assertEquals(
                 expected = TEST_LV1_HP + TEST_LV2_HP,
-                actual = hp.max,
+                actual = hp.maxPoint,
             )
 
             assertEquals(
                 expected = TEST_LV1_MP + TEST_LV2_MP,
-                actual = mp.max,
+                actual = mp.maxPoint,
             )
 
             assertEquals(

@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import common.extension.menuItem
 import common.layout.DisableBox
 import core.domain.status.StatusData
-import core.domain.status.param.statusParameterWithMax.StatusParameterWithMax
+import core.domain.status.param.StatusParameterWithMax
 import gamescreen.battle.command.selectally.SelectAllyViewModel
 import org.koin.compose.koinInject
 import values.Colors
@@ -87,7 +87,7 @@ private fun Point(
     color: Color,
 ) {
     Text(
-        text = "$paramName ${point.value}/${point.max}",
+        text = "$paramName ${point.point}/${point.maxPoint}",
         color = color,
     )
 }

@@ -1,6 +1,8 @@
 package common.status.param
 
-import core.domain.status.param.statusParameterWithMax.StatusParameterData
+import core.domain.status.IncData
+import core.domain.status.param.ParameterType
+import core.domain.status.param.StatusParameterWithMax
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -10,7 +12,7 @@ class StatusDataPointTest {
         private const val POINT = 5
     }
 
-    val data = StatusParameterData(
+    val data = StatusParameterWithMax<ParameterType.HP>(
         maxPoint = MAX,
         point = POINT,
     )
@@ -21,7 +23,7 @@ class StatusDataPointTest {
     @Test
     fun checkInit1Param() {
         val val1 = 10
-        val data = StatusParameterData(
+        val data = StatusParameterWithMax<ParameterType.HP>(
             maxPoint = val1,
         )
 
@@ -43,7 +45,7 @@ class StatusDataPointTest {
     fun checkInit2Param() {
         val val1 = 10
         val val2 = 11
-        val data = StatusParameterData(
+        val data = StatusParameterWithMax<ParameterType.HP>(
             maxPoint = val1,
             point = val2,
         )
@@ -65,7 +67,7 @@ class StatusDataPointTest {
     @Test
     fun incMax() {
         val dif = 5
-        val updated = data.incMax(dif)
+        val updated = data.incMax(IncData(dif))
 
         assertEquals(
             expected = MAX + dif,

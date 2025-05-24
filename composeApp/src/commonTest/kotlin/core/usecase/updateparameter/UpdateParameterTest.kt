@@ -25,7 +25,7 @@ class UpdateParameterTest<T : Character>(
 
             assertEquals(
                 expected = HP - 5,
-                actual = statusRepository.getStatus(0).statusData.hp.value
+                actual = statusRepository.getStatus(0).statusData.hp.point
             )
 
             assertEquals(
@@ -44,7 +44,7 @@ class UpdateParameterTest<T : Character>(
 
             assertEquals(
                 expected = HP + 5,
-                actual = statusRepository.getStatus(0).statusData.hp.value
+                actual = statusRepository.getStatus(0).statusData.hp.point
             )
 
             assertEquals(
@@ -63,7 +63,7 @@ class UpdateParameterTest<T : Character>(
 
             assertEquals(
                 expected = MP - 5,
-                actual = statusRepository.getStatus(0).statusData.mp.value
+                actual = statusRepository.getStatus(0).statusData.mp.point
             )
 
             assertEquals(
@@ -82,7 +82,7 @@ class UpdateParameterTest<T : Character>(
 
             assertEquals(
                 expected = MP + 5,
-                actual = statusRepository.getStatus(0).statusData.mp.value
+                actual = statusRepository.getStatus(0).statusData.mp.point
             )
 
             assertEquals(
