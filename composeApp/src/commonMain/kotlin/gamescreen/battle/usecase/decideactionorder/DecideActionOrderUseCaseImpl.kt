@@ -19,6 +19,6 @@ class DecideActionOrderUseCaseImpl : DecideActionOrderUseCase {
     }
 
     private val speedComparator: Comparator<StatusWrapper> = compareBy {
-        it.status.statusData.speed
+        it.status.statusData.speed.value
     }
 }

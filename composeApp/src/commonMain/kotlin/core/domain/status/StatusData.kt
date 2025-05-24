@@ -1,5 +1,7 @@
 package core.domain.status
 
+import core.domain.status.param.statusParameter.ParameterType
+import core.domain.status.param.statusParameter.StatusParameter
 import core.domain.status.param.statusParameterWithMax.HP
 import core.domain.status.param.statusParameterWithMax.MP
 
@@ -17,7 +19,7 @@ data class StatusData(
     override var name: String,
     override val hp: HP = dummyHP,
     override val mp: MP = dummyMP,
-    override val speed: Int = 0,
+    override val speed: StatusParameter<ParameterType.SPD> = StatusParameter(0),
     override val conditionList: List<ConditionType> = emptyList(),
 ) : Status {
     override fun updateConditionList(conditionList: List<ConditionType>): StatusData {
@@ -99,6 +101,12 @@ data class StatusData(
             hp = hp.incMax(
                 amount = amount,
             )
+        )
+    }
+
+    fun incSpd(amount: Int): StatusData {
+        return this.copy(
+            speed = speed.inc(amount),
         )
     }
 }

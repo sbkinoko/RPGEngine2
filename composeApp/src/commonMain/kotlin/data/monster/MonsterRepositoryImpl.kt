@@ -4,6 +4,7 @@ import core.domain.status.DropItemInfo
 import core.domain.status.StatusData
 import core.domain.status.monster.ActionStyle
 import core.domain.status.monster.MonsterStatus
+import core.domain.status.param.statusParameter.StatusParameter
 import core.domain.status.param.statusParameterWithMax.HP
 import core.domain.status.param.statusParameterWithMax.MP
 import data.item.skill.SkillId
@@ -21,7 +22,7 @@ class MonsterRepositoryImpl : MonsterRepository {
                 mp = MP(
                     maxValue = 10,
                 ),
-                speed = 10,
+                speed = StatusParameter(10),
                 conditionList = emptyList(),
             ),
             imgId = 1,

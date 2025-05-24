@@ -5,6 +5,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import core.domain.status.PlayerStatus
 import core.domain.status.StatusData
 import core.domain.status.param.EXP
+import core.domain.status.param.statusParameter.StatusParameter
 import core.domain.status.param.statusParameterWithMax.HP
 import core.domain.status.param.statusParameterWithMax.MP
 import core.domain.status.param.statusParameterWithMax.StatusParameterData
@@ -33,7 +34,7 @@ fun PlayerActionPreview() {
                         point = 5,
                     )
                 ),
-                speed = 10,
+                speed = StatusParameter(10),
                 conditionList = emptyList(),
             ),
             skillList = listOf(

@@ -23,10 +23,7 @@ data class PlayerStatus(
                     .incMaxMP(
                         amount = it.mp,
                     )
-                    // fixme incを作る
-                    .copy(
-                        speed = statusData.speed + it.speed,
-                    )
+                    .incSpd(amount = it.speed)
             )
         }
     }

@@ -1,5 +1,5 @@
 package core.domain.status.param.statusParameter
 
-enum class ParameterType {
-    SPD,
+sealed class ParameterType {
+    data object SPD : ParameterType()
 }
