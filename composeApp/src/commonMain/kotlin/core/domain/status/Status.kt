@@ -1,5 +1,7 @@
 package core.domain.status
 
+import core.domain.status.param.statusParameter.ParameterType
+import core.domain.status.param.statusParameter.StatusParameter
 import core.domain.status.param.statusParameterWithMax.HP
 import core.domain.status.param.statusParameterWithMax.MP
 
@@ -9,7 +11,7 @@ interface Status {
     val hp: HP
     val mp: MP
 
-    val speed: Int
+    val speed: StatusParameter<ParameterType.SPD>
 
     val isActive: Boolean
         get() {

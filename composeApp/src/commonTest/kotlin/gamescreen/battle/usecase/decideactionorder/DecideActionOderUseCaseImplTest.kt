@@ -1,6 +1,7 @@
 package gamescreen.battle.usecase.decideactionorder
 
 import core.domain.status.PlayerStatusTest.Companion.testActivePlayer
+import core.domain.status.param.statusParameter.StatusParameter
 import gamescreen.battle.ModuleBattle
 import gamescreen.battle.domain.ActionData
 import gamescreen.battle.domain.StatusWrapper
@@ -44,7 +45,7 @@ class DecideActionOderUseCaseImplTest : KoinTest {
                 status = testActivePlayer.run {
                     copy(
                         statusData = statusData.copy(
-                            speed = 1,
+                            speed = StatusParameter(1),
                         ),
                     )
                 },
@@ -54,7 +55,7 @@ class DecideActionOderUseCaseImplTest : KoinTest {
                 status = testActivePlayer.run {
                     copy(
                         statusData = statusData.copy(
-                            speed = 3,
+                            speed = StatusParameter(3),
                         ),
                     )
                 },
@@ -64,7 +65,7 @@ class DecideActionOderUseCaseImplTest : KoinTest {
                 status = testActivePlayer.run {
                     copy(
                         statusData = statusData.copy(
-                            speed = 5,
+                            speed = StatusParameter(5),
                         ),
                     )
                 },
@@ -86,7 +87,7 @@ class DecideActionOderUseCaseImplTest : KoinTest {
                 status = testActivePlayer.run {
                     copy(
                         statusData = statusData.copy(
-                            speed = 1,
+                            speed = StatusParameter(1),
                         ),
                     )
                 },
@@ -96,7 +97,7 @@ class DecideActionOderUseCaseImplTest : KoinTest {
                 status = testActivePlayer.run {
                     copy(
                         statusData = statusData.copy(
-                            speed = 3,
+                            speed = StatusParameter(3),
                         ),
                     )
                 },
@@ -106,7 +107,7 @@ class DecideActionOderUseCaseImplTest : KoinTest {
                 status = testActivePlayer.run {
                     copy(
                         statusData = statusData.copy(
-                            speed = 5,
+                            speed = StatusParameter(5),
                         ),
                     )
                 },
@@ -116,7 +117,7 @@ class DecideActionOderUseCaseImplTest : KoinTest {
                 status = testActivePlayer.run {
                     copy(
                         statusData = statusData.copy(
-                            speed = 4,
+                            speed = StatusParameter(4),
                         ),
                     )
                 },

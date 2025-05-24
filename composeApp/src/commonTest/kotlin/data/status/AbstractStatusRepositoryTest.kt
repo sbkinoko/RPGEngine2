@@ -11,6 +11,7 @@ import core.domain.status.StatusIncreaseTest.Companion.TEST_LV2_HP
 import core.domain.status.StatusIncreaseTest.Companion.TEST_LV2_MP
 import core.domain.status.StatusIncreaseTest.Companion.TEST_LV2_SPEED
 import core.domain.status.param.EXP
+import core.domain.status.param.statusParameter.StatusParameter
 import data.item.skill.SkillId
 import data.item.tool.ToolId
 import kotlin.test.Test
@@ -83,8 +84,8 @@ class AbstractStatusRepositoryTest {
             )
 
             assertEquals(
-                expected = TEST_LV1_SPEED,
-                actual = speed,
+                expected = StatusParameter(TEST_LV1_SPEED),
+                actual = (speed),
             )
         }
     }
@@ -125,7 +126,7 @@ class AbstractStatusRepositoryTest {
             )
 
             assertEquals(
-                expected = TEST_LV1_SPEED + TEST_LV2_SPEED,
+                expected = StatusParameter(TEST_LV1_SPEED + TEST_LV2_SPEED),
                 actual = speed
             )
         }
