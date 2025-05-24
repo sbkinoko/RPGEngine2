@@ -2,7 +2,7 @@ package gamescreen.battle.usecase.attack
 
 import core.ModuleCore
 import core.domain.status.PlayerStatusTest.Companion.testActivePlayer
-import core.domain.status.param.HP
+import core.domain.status.param.statusParameterWithMax.HP
 import core.repository.player.PlayerStatusRepository
 import data.ModuleData
 import gamescreen.battle.ModuleBattle

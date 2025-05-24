@@ -3,8 +3,8 @@ package core.usecase.updateparameter
 import core.domain.status.ConditionType
 import core.domain.status.PlayerStatus
 import core.domain.status.PlayerStatusTest.Companion.testActivePlayer
-import core.domain.status.param.HP
-import core.domain.status.param.MP
+import core.domain.status.param.statusParameterWithMax.HP
+import core.domain.status.param.statusParameterWithMax.MP
 import core.repository.status.StatusRepository
 import data.item.tool.ToolId
 import kotlinx.coroutines.runBlocking

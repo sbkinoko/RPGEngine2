@@ -3,7 +3,7 @@ package gamescreen.battle.usecase.attack
 import core.ModuleCore
 import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
 import core.domain.status.MonsterStatusTest.Companion.TestNotActiveMonster
-import core.domain.status.param.HP
+import core.domain.status.param.statusParameterWithMax.HP
 import core.repository.battlemonster.BattleInfoRepository
 import data.ModuleData
 import gamescreen.battle.ModuleBattle

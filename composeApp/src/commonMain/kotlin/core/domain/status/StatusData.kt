@@ -1,7 +1,7 @@
 package core.domain.status
 
-import core.domain.status.param.HP
-import core.domain.status.param.MP
+import core.domain.status.param.statusParameterWithMax.HP
+import core.domain.status.param.statusParameterWithMax.MP
 
 private val dummyHP
     get() = HP(

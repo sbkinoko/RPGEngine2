@@ -1,8 +1,8 @@
 package core.domain.status
 
 import core.domain.status.PlayerStatusTest.Companion.NAME
-import core.domain.status.param.HP
-import core.domain.status.param.MP
+import core.domain.status.param.statusParameterWithMax.HP
+import core.domain.status.param.statusParameterWithMax.MP
 
 class StatusDataTest {
 

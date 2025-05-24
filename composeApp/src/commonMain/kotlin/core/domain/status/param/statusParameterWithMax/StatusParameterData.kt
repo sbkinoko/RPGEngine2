@@ -1,10 +1,10 @@
-package core.domain.status.param
+package core.domain.status.param.statusParameterWithMax
 
-data class StatusPointData(
+data class StatusParameterData(
     val maxPoint: Int,
     val point: Int = maxPoint,
 ) {
-    private fun correct(): StatusPointData {
+    private fun correct(): StatusParameterData {
         if (point < 0) {
             return copy(
                 point = 0,
@@ -20,19 +20,19 @@ data class StatusPointData(
         return this
     }
 
-    fun incMax(amount: Int): StatusPointData {
+    fun incMax(amount: Int): StatusParameterData {
         return copy(
             maxPoint = maxPoint + amount,
         )
     }
 
-    fun inc(amount: Int): StatusPointData {
+    fun inc(amount: Int): StatusParameterData {
         return copy(
             point = point + amount,
         ).correct()
     }
 
-    fun dec(amount: Int): StatusPointData {
+    fun dec(amount: Int): StatusParameterData {
         return copy(
             point = point - amount,
         ).correct()
@@ -41,7 +41,7 @@ data class StatusPointData(
     fun set(
         value: Int = point,
         maxValue: Int = maxPoint,
-    ): StatusPointData {
+    ): StatusParameterData {
         return copy(
             point = value,
             maxPoint = maxValue,

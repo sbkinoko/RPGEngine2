@@ -4,8 +4,8 @@ import core.domain.status.DropItemInfo
 import core.domain.status.StatusData
 import core.domain.status.monster.ActionStyle
 import core.domain.status.monster.MonsterStatus
-import core.domain.status.param.HP
-import core.domain.status.param.MP
+import core.domain.status.param.statusParameterWithMax.HP
+import core.domain.status.param.statusParameterWithMax.MP
 import data.item.skill.SkillId
 import data.item.tool.ToolId
 

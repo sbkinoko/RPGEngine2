@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import common.extension.menuItem
 import common.layout.DisableBox
 import core.domain.status.StatusData
-import core.domain.status.param.StatusPoint
+import core.domain.status.param.statusParameterWithMax.StatusParameterWithMax
 import gamescreen.battle.command.selectally.SelectAllyViewModel
 import org.koin.compose.koinInject
 import values.Colors
@@ -83,7 +83,7 @@ fun StatusComponent(
 @Composable
 private fun Point(
     paramName: String,
-    point: StatusPoint<*>,
+    point: StatusParameterWithMax<*>,
     color: Color,
 ) {
     Text(

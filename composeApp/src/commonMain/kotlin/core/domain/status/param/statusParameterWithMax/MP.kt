@@ -1,13 +1,13 @@
-package core.domain.status.param
+package core.domain.status.param.statusParameterWithMax
 
 data class MP(
-    override val data: StatusPointData,
-) : StatusPoint<MP>(data) {
+    override val data: StatusParameterData,
+) : StatusParameterWithMax<MP>(data) {
     constructor(
         maxValue: Int,
         value: Int = maxValue,
     ) : this(
-        data = StatusPointData(
+        data = StatusParameterData(
             maxPoint = maxValue,
             point = value
         )
