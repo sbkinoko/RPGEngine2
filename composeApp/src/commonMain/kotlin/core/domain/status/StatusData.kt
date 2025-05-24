@@ -114,5 +114,4 @@ data class StatusData(
             speed = speed.inc(statusIncrease.speed),
         )
     }
-
 }
