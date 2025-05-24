@@ -1,8 +1,7 @@
 package core.domain.status
 
 import core.domain.status.PlayerStatusTest.Companion.NAME
-import core.domain.status.param.statusParameterWithMax.HP
-import core.domain.status.param.statusParameterWithMax.MP
+import core.domain.status.param.StatusParameterWithMax
 
 class StatusDataTest {
 
@@ -12,17 +11,17 @@ class StatusDataTest {
 
         val zeroStatus = StatusData(
             name = NAME,
-            hp = HP(0),
-            mp = MP(0),
+            hp = StatusParameterWithMax(0),
+            mp = StatusParameterWithMax(0),
         )
 
         val normalStatus = StatusData(
             name = "テスト",
-            hp = HP(
-                maxValue = MAX_HP,
+            hp = StatusParameterWithMax(
+                maxPoint = MAX_HP,
             ),
-            mp = MP(
-                maxValue = MAX_MP,
+            mp = StatusParameterWithMax(
+                maxPoint = MAX_MP,
             ),
         )
     }

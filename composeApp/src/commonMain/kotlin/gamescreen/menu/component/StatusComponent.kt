@@ -25,8 +25,8 @@ fun StatusComponent(
             val status = state.value[statusId]
             status.statusData.run {
                 Text(name)
-                Text("HP : ${hp.value}/${hp.max}")
-                Text("MP : ${mp.value}/${mp.max}")
+                Text("HP : ${hp.point}/${hp.maxPoint}")
+                Text("MP : ${mp.point}/${mp.maxPoint}")
             }
             Text("レベル : ${status.exp.level}")
             Text("経験値 : ${status.exp.value}")

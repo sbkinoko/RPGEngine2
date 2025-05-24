@@ -2,7 +2,8 @@ package gamescreen.battle.usecase.attack
 
 import core.ModuleCore
 import core.domain.status.PlayerStatusTest.Companion.testActivePlayer
-import core.domain.status.param.statusParameterWithMax.HP
+import core.domain.status.param.ParameterType
+import core.domain.status.param.StatusParameterWithMax
 import core.repository.player.PlayerStatusRepository
 import data.ModuleData
 import gamescreen.battle.ModuleBattle
@@ -26,9 +27,9 @@ class AttackUseCaseImplFromEnemyTest : KoinTest {
     private val playerStatusRepository: PlayerStatusRepository by inject()
 
     private val hpValue = 50
-    val hp = HP(
-        value = hpValue,
-        maxValue = 100
+    val hp = StatusParameterWithMax<ParameterType.HP>(
+        point = hpValue,
+        maxPoint = 100,
     )
 
     @BeforeTest
@@ -67,7 +68,7 @@ class AttackUseCaseImplFromEnemyTest : KoinTest {
             playerStatusRepository.getStatus(0).apply {
                 assertEquals(
                     expected = hpValue - damage,
-                    actual = this.statusData.hp.value
+                    actual = this.statusData.hp.point
                 )
             }
         }
@@ -94,7 +95,7 @@ class AttackUseCaseImplFromEnemyTest : KoinTest {
             playerStatusRepository.getStatus(id).apply {
                 assertEquals(
                     expected = hpValue - damage,
-                    actual = this.statusData.hp.value
+                    actual = this.statusData.hp.point
                 )
             }
         }
@@ -109,9 +110,9 @@ class AttackUseCaseImplFromEnemyTest : KoinTest {
                 id = idNotActive,
                 status = testActivePlayer.copy(
                     statusData = testActivePlayer.statusData.copy(
-                        hp = HP(
-                            value = 0,
-                            maxValue = 100
+                        hp = StatusParameterWithMax(
+                            point = 0,
+                            maxPoint = 100
                         ),
                     ),
                 ),
@@ -135,7 +136,7 @@ class AttackUseCaseImplFromEnemyTest : KoinTest {
             playerStatusRepository.getStatus(idActive).apply {
                 assertEquals(
                     expected = hpValue - damage,
-                    actual = this.statusData.hp.value
+                    actual = this.statusData.hp.point
                 )
             }
         }

@@ -2,8 +2,7 @@ package core.usecase.updateparameter
 
 import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
 import core.domain.status.monster.MonsterStatus
-import core.domain.status.param.statusParameterWithMax.HP
-import core.domain.status.param.statusParameterWithMax.MP
+import core.domain.status.param.StatusParameterWithMax
 import core.repository.status.StatusRepository
 import core.usecase.updateparameter.UpdateParameterTest.Companion.HP
 import core.usecase.updateparameter.UpdateParameterTest.Companion.MP
@@ -13,13 +12,13 @@ class UpdateMonsterParameterUseCaseTest {
     private val status1 = TestActiveMonster.run {
         copy(
             statusData = statusData.copy(
-                hp = HP(
-                    value = HP,
-                    maxValue = 100,
+                hp = StatusParameterWithMax(
+                    point = HP,
+                    maxPoint = 100,
                 ),
-                mp = MP(
-                    value = MP,
-                    maxValue = 100,
+                mp = StatusParameterWithMax(
+                    point = MP,
+                    maxPoint = 100,
                 ),
             ),
         )

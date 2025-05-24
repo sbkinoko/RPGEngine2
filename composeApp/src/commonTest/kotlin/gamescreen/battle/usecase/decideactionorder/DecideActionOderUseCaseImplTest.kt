@@ -1,7 +1,7 @@
 package gamescreen.battle.usecase.decideactionorder
 
 import core.domain.status.PlayerStatusTest.Companion.testActivePlayer
-import core.domain.status.param.statusParameter.StatusParameter
+import core.domain.status.param.StatusParameter
 import gamescreen.battle.ModuleBattle
 import gamescreen.battle.domain.ActionData
 import gamescreen.battle.domain.StatusWrapper

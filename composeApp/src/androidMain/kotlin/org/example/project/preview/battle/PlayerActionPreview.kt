@@ -5,10 +5,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import core.domain.status.PlayerStatus
 import core.domain.status.StatusData
 import core.domain.status.param.EXP
-import core.domain.status.param.statusParameter.StatusParameter
-import core.domain.status.param.statusParameterWithMax.HP
-import core.domain.status.param.statusParameterWithMax.MP
-import core.domain.status.param.statusParameterWithMax.StatusParameterData
+import core.domain.status.param.StatusParameter
+import core.domain.status.param.StatusParameterWithMax
 import data.item.skill.SkillId
 import data.item.tool.ToolId
 import gamescreen.battle.command.playeraction.PlayerAction
@@ -22,17 +20,13 @@ fun PlayerActionPreview() {
         playerStatus = PlayerStatus(
             statusData = StatusData(
                 "test",
-                hp = HP(
-                    StatusParameterData(
-                        maxPoint = 100,
-                        point = 50,
-                    )
+                hp = StatusParameterWithMax(
+                    maxPoint = 100,
+                    point = 50,
                 ),
-                mp = MP(
-                    StatusParameterData(
-                        maxPoint = 10,
-                        point = 5,
-                    )
+                mp = StatusParameterWithMax(
+                    maxPoint = 10,
+                    point = 5,
                 ),
                 speed = StatusParameter(10),
                 conditionList = emptyList(),

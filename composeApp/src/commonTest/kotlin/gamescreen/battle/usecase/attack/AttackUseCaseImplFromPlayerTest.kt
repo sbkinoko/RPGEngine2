@@ -3,7 +3,8 @@ package gamescreen.battle.usecase.attack
 import core.ModuleCore
 import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
 import core.domain.status.MonsterStatusTest.Companion.TestNotActiveMonster
-import core.domain.status.param.statusParameterWithMax.HP
+import core.domain.status.param.ParameterType
+import core.domain.status.param.StatusParameterWithMax
 import core.repository.battlemonster.BattleInfoRepository
 import data.ModuleData
 import gamescreen.battle.ModuleBattle
@@ -28,9 +29,9 @@ class AttackUseCaseImplFromPlayerTest : KoinTest {
     )
 
     private val hpValue = 50
-    val hp = HP(
-        value = hpValue,
-        maxValue = 100
+    val hp = StatusParameterWithMax<ParameterType.HP>(
+        point = hpValue,
+        maxPoint = 100
     )
 
     private val battleInfoRepository: BattleInfoRepository by inject()
@@ -74,7 +75,7 @@ class AttackUseCaseImplFromPlayerTest : KoinTest {
             battleInfoRepository.getStatus(0).apply {
                 assertEquals(
                     expected = hpValue - damage,
-                    actual = this.statusData.hp.value
+                    actual = this.statusData.hp.point
                 )
             }
         }
@@ -111,7 +112,7 @@ class AttackUseCaseImplFromPlayerTest : KoinTest {
             battleInfoRepository.getStatus(id).apply {
                 assertEquals(
                     expected = hpValue - damage,
-                    actual = this.statusData.hp.value
+                    actual = this.statusData.hp.point
                 )
             }
         }
@@ -143,7 +144,7 @@ class AttackUseCaseImplFromPlayerTest : KoinTest {
             battleInfoRepository.getStatus(idActive).apply {
                 assertEquals(
                     expected = hpValue - damage,
-                    actual = this.statusData.hp.value
+                    actual = this.statusData.hp.point
                 )
             }
         }

@@ -4,9 +4,8 @@ import core.domain.status.DropItemInfo
 import core.domain.status.StatusData
 import core.domain.status.monster.ActionStyle
 import core.domain.status.monster.MonsterStatus
-import core.domain.status.param.statusParameter.StatusParameter
-import core.domain.status.param.statusParameterWithMax.HP
-import core.domain.status.param.statusParameterWithMax.MP
+import core.domain.status.param.StatusParameter
+import core.domain.status.param.StatusParameterWithMax
 import data.item.skill.SkillId
 import data.item.tool.ToolId
 
@@ -16,11 +15,11 @@ class MonsterRepositoryImpl : MonsterRepository {
         return MonsterStatus(
             statusData = StatusData(
                 "花",
-                hp = HP(
-                    maxValue = 10,
+                hp = StatusParameterWithMax(
+                    maxPoint = 10,
                 ),
-                mp = MP(
-                    maxValue = 10,
+                mp = StatusParameterWithMax(
+                    maxPoint = 10,
                 ),
                 speed = StatusParameter(10),
                 conditionList = emptyList(),

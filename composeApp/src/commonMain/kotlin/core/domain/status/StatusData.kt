@@ -1,33 +1,32 @@
 package core.domain.status
 
-import core.domain.status.param.statusParameter.ParameterType
-import core.domain.status.param.statusParameter.StatusParameter
-import core.domain.status.param.statusParameterWithMax.HP
-import core.domain.status.param.statusParameterWithMax.MP
-
-private val dummyHP
-    get() = HP(
-        0, 0,
-    )
-
-private val dummyMP
-    get() = MP(
-        0, 0
-    )
+import core.domain.status.param.ParameterType
+import core.domain.status.param.StatusParameter
+import core.domain.status.param.StatusParameterWithMax
 
 data class StatusData(
     val name: String,
-    val hp: HP = dummyHP,
-    val mp: MP = dummyMP,
-    val speed: StatusParameter<ParameterType.SPD> = StatusParameter(0),
-    val atk: StatusParameter<ParameterType.ATK> = StatusParameter(0),
-    val def: StatusParameter<ParameterType.DEF> = StatusParameter(0),
-    val conditionList: List<ConditionType> = emptyList(),
+    val hp: StatusParameterWithMax<ParameterType.HP> =
+        StatusParameterWithMax(
+            0, 0,
+        ),
+    val mp: StatusParameterWithMax<ParameterType.MP> =
+        StatusParameterWithMax(
+            0, 0,
+        ),
+    val speed: StatusParameter<ParameterType.SPD> =
+        StatusParameter(0),
+    val atk: StatusParameter<ParameterType.ATK> =
+        StatusParameter(0),
+    val def: StatusParameter<ParameterType.DEF> =
+        StatusParameter(0),
+    val conditionList: List<ConditionType> =
+        emptyList(),
 ) {
 
     val isActive: Boolean
         get() {
-            return 0 < hp.value
+            return 0 < hp.point
         }
 
     fun updateName(name: String): StatusData {
@@ -37,8 +36,8 @@ data class StatusData(
     }
 
     fun setHP(
-        value: Int = hp.value,
-        max: Int = hp.max,
+        value: Int = hp.point,
+        max: Int = hp.maxPoint,
     ): StatusData {
         return this.copy(
             hp = hp.set(
@@ -61,8 +60,8 @@ data class StatusData(
     }
 
     fun setMP(
-        value: Int = hp.value,
-        max: Int = hp.max,
+        value: Int = hp.point,
+        max: Int = hp.maxPoint,
     ): StatusData {
         return this.copy(
             mp = mp.set(
@@ -103,12 +102,8 @@ data class StatusData(
         statusIncrease: StatusIncrease,
     ): StatusData {
         return copy(
-            hp = hp.incMax(
-                amount = statusIncrease.hp,
-            ),
-            mp = mp.incMax(
-                amount = statusIncrease.mp,
-            ),
+            hp = hp.incMax(statusIncrease.hp),
+            mp = mp.incMax(statusIncrease.mp),
             atk = atk.inc(statusIncrease.atk),
             def = def.inc(statusIncrease.def),
             speed = speed.inc(statusIncrease.speed),

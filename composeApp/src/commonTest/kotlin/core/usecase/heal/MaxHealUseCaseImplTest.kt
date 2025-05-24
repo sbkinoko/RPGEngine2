@@ -71,13 +71,13 @@ class MaxHealUseCaseImplTest {
             playerStatusRepository.getPlayers().map {
                 it.statusData.apply {
                     assertEquals(
-                        expected = hp.max,
-                        actual = hp.value
+                        expected = hp.maxPoint,
+                        actual = hp.point
                     )
 
                     assertEquals(
-                        expected = mp.max,
-                        actual = mp.value
+                        expected = mp.maxPoint,
+                        actual = mp.point
                     )
                 }
             }
