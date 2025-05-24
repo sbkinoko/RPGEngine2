@@ -1,5 +1,7 @@
 package core.domain.status.param.statusParameter
 
+import core.domain.status.IncData
+
 /**
  * @param baseValue ステータスの基本値
  * // todo 補正用の項目を作る
@@ -10,9 +12,9 @@ data class StatusParameter<T : ParameterType>(
     val value
         get() = baseValue
 
-    fun inc(value: Int): StatusParameter<T> {
+    fun inc(incData: IncData<T>): StatusParameter<T> {
         return copy(
-            baseValue = baseValue + value,
+            baseValue = baseValue + incData.value,
         )
     }
 }

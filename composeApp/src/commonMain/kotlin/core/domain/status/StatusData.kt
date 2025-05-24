@@ -16,59 +16,23 @@ private val dummyMP
     )
 
 data class StatusData(
-    override var name: String,
-    override val hp: HP = dummyHP,
-    override val mp: MP = dummyMP,
-    override val speed: StatusParameter<ParameterType.SPD> = StatusParameter(0),
-    override val conditionList: List<ConditionType> = emptyList(),
-) : Status {
-    override fun updateConditionList(conditionList: List<ConditionType>): StatusData {
-        return copy(
-            conditionList = conditionList,
-        )
-    }
+    val name: String,
+    val hp: HP = dummyHP,
+    val mp: MP = dummyMP,
+    val speed: StatusParameter<ParameterType.SPD> = StatusParameter(0),
+    val atk: StatusParameter<ParameterType.ATK> = StatusParameter(0),
+    val def: StatusParameter<ParameterType.DEF> = StatusParameter(0),
+    val conditionList: List<ConditionType> = emptyList(),
+) {
+
+    val isActive: Boolean
+        get() {
+            return 0 < hp.value
+        }
 
     fun updateName(name: String): StatusData {
         return this.copy(
             name = name,
-        )
-    }
-
-    fun addConditionType(conditionType: ConditionType): StatusData {
-        return this.copy(
-            conditionList = conditionList + conditionType,
-        )
-    }
-
-    fun setMP(
-        value: Int = hp.value,
-        max: Int = hp.max,
-    ): StatusData {
-        return this.copy(
-            mp = mp.set(
-                value = value,
-                maxValue = max,
-            ),
-        )
-    }
-
-    fun decMP(amount: Int): StatusData {
-        return this.copy(
-            mp = mp.dec(amount),
-        )
-    }
-
-    fun incMP(amount: Int): StatusData {
-        return this.copy(
-            mp = mp.inc(amount),
-        )
-    }
-
-    fun incMaxMP(amount: Int): StatusData {
-        return this.copy(
-            mp = mp.incMax(
-                amount = amount,
-            )
         )
     }
 
@@ -96,17 +60,59 @@ data class StatusData(
         )
     }
 
-    fun incMaxHP(amount: Int): StatusData {
+    fun setMP(
+        value: Int = hp.value,
+        max: Int = hp.max,
+    ): StatusData {
         return this.copy(
-            hp = hp.incMax(
-                amount = amount,
-            )
+            mp = mp.set(
+                value = value,
+                maxValue = max,
+            ),
         )
     }
 
-    fun incSpd(amount: Int): StatusData {
+    fun decMP(amount: Int): StatusData {
         return this.copy(
-            speed = speed.inc(amount),
+            mp = mp.dec(amount),
         )
     }
+
+    fun incMP(amount: Int): StatusData {
+        return this.copy(
+            mp = mp.inc(amount),
+        )
+    }
+
+    fun updateConditionList(conditionList: List<ConditionType>): StatusData {
+        return copy(
+            conditionList = conditionList,
+        )
+    }
+
+    fun addConditionType(conditionType: ConditionType): StatusData {
+        return this.copy(
+            conditionList = conditionList + conditionType,
+        )
+    }
+
+    /**
+     * レベルアップ時の全能力アップ処理
+     */
+    fun incStatus(
+        statusIncrease: StatusIncrease,
+    ): StatusData {
+        return copy(
+            hp = hp.incMax(
+                amount = statusIncrease.hp,
+            ),
+            mp = mp.incMax(
+                amount = statusIncrease.mp,
+            ),
+            atk = atk.inc(statusIncrease.atk),
+            def = def.inc(statusIncrease.def),
+            speed = speed.inc(statusIncrease.speed),
+        )
+    }
+
 }

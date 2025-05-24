@@ -1,5 +1,6 @@
 package data.status
 
+import core.domain.status.IncData
 import core.domain.status.PlayerStatus
 import core.domain.status.StatusData
 import core.domain.status.StatusIncrease
@@ -15,12 +16,16 @@ class StatusRepositoryImpl : AbstractStatusRepository() {
                 StatusIncrease(
                     hp = 100,
                     mp = 10,
-                    speed = 11,
+                    speed = IncData(11),
+                    atk = IncData(0),
+                    def = IncData(0),
                 ),
                 StatusIncrease(
                     hp = 100,
                     mp = 10,
-                    speed = 10
+                    speed = IncData(10),
+                    atk = IncData(0),
+                    def = IncData(0),
                 ),
             )
 
@@ -28,7 +33,9 @@ class StatusRepositoryImpl : AbstractStatusRepository() {
                 StatusIncrease(
                     hp = 100,
                     mp = 111,
-                    speed = 9,
+                    speed = IncData(9),
+                    atk = IncData(0),
+                    def = IncData(0),
                 )
             )
 
@@ -36,7 +43,9 @@ class StatusRepositoryImpl : AbstractStatusRepository() {
                 StatusIncrease(
                     hp = 100,
                     mp = 100,
-                    speed = 9,
+                    speed = IncData(9),
+                    atk = IncData(0),
+                    def = IncData(0),
                 )
             )
 
@@ -44,7 +53,9 @@ class StatusRepositoryImpl : AbstractStatusRepository() {
                 StatusIncrease(
                     hp = 100,
                     mp = 500,
-                    speed = 9,
+                    speed = IncData(9),
+                    atk = IncData(0),
+                    def = IncData(0),
                 )
             )
 
