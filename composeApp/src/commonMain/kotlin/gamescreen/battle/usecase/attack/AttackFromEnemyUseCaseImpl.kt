@@ -1,18 +1,21 @@
 package gamescreen.battle.usecase.attack
 
+import core.domain.status.StatusData
 import core.repository.player.PlayerStatusRepository
-import core.usecase.updateparameter.UpdatePlayerStatusUseCase
+import gamescreen.battle.service.attackcalc.AttackCalcService
 import gamescreen.battle.service.findtarget.FindTargetService
 
 class AttackFromEnemyUseCaseImpl(
     private val playerStatusRepository: PlayerStatusRepository,
+
     private val findTargetService: FindTargetService,
-    private val updatePlayerStatusService: UpdatePlayerStatusUseCase,
-) : AttackUseCase {
+    private val attackCalcService: AttackCalcService,
+
+    ) : AttackUseCase {
 
     override suspend fun invoke(
         target: Int,
-        damage: Int,
+        attacker: StatusData,
     ) {
         var actualTarget = target
         val players = playerStatusRepository.getPlayers()
@@ -23,9 +26,18 @@ class AttackFromEnemyUseCaseImpl(
             )
         }
 
-        updatePlayerStatusService.decHP(
+        val attacked = playerStatusRepository.getStatus(actualTarget)
+
+        val damaged = attackCalcService.invoke(
+            attacker = attacker,
+            attacked = attacked.statusData,
+        )
+
+        playerStatusRepository.setStatus(
             id = actualTarget,
-            amount = damage,
+            status = attacked.copy(
+                statusData = damaged,
+            )
         )
     }
 }

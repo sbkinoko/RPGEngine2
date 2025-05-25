@@ -1,19 +1,20 @@
 package gamescreen.battle.usecase.attack
 
+import core.domain.status.StatusData
 import core.repository.battlemonster.BattleInfoRepository
-import core.usecase.updateparameter.UpdateMonsterStatusUseCase
+import gamescreen.battle.service.attackcalc.AttackCalcService
 import gamescreen.battle.service.findtarget.FindTargetService
 import gamescreen.battle.usecase.effect.EffectUseCase
 
 class AttackFromPlayerUseCaseImpl(
     private val battleInfoRepository: BattleInfoRepository,
     private val findTargetService: FindTargetService,
-    private val updateMonsterStatusService: UpdateMonsterStatusUseCase,
+    private val attackCalcService: AttackCalcService,
     private val effectUseCase: EffectUseCase,
 ) : AttackUseCase {
     override suspend operator fun invoke(
         target: Int,
-        damage: Int,
+        attacker: StatusData,
     ) {
         var actualTarget = target
         val monsters = battleInfoRepository.getMonsters()
@@ -25,9 +26,20 @@ class AttackFromPlayerUseCaseImpl(
             )
         }
 
-        updateMonsterStatusService.decHP(
+        val attacked = battleInfoRepository.getStatus(
             id = actualTarget,
-            amount = damage,
+        )
+
+        val damaged = attackCalcService.invoke(
+            attacker = attacker,
+            attacked = attacked.statusData,
+        )
+
+        battleInfoRepository.setStatus(
+            id = actualTarget,
+            status = attacked.copy(
+                statusData = damaged,
+            )
         )
 
         effectUseCase.invoke(actualTarget)
