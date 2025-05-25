@@ -10,8 +10,7 @@ class AttackFromEnemyUseCaseImpl(
 
     private val findTargetService: FindTargetService,
     private val attackCalcService: AttackCalcService,
-
-    ) : AttackUseCase {
+) : AttackUseCase {
 
     override suspend fun invoke(
         target: Int,
