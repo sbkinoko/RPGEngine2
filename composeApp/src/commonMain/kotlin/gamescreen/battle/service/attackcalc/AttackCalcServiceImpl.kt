@@ -1,8 +1,8 @@
-package gamescreen.battle.usecase.attackcalc
+package gamescreen.battle.service.attackcalc
 
 import core.domain.status.StatusData
 
-class AttackUseCaseImpl : AttackCalcUseCase {
+class AttackCalcServiceImpl : AttackCalcService {
     // todo ダメージのパターンを追加する
     // 固定ダメージ
     // 割合ダメージ
@@ -12,7 +12,10 @@ class AttackUseCaseImpl : AttackCalcUseCase {
         attacked: StatusData,
     ): StatusData {
         return attacked.decHP(
-            attacker.atk.value - attacked.def.value,
+            kotlin.math.max(
+                attacker.atk.value - attacked.def.value,
+                1,
+            )
         )
     }
 }

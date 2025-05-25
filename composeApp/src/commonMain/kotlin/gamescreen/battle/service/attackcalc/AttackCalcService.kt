@@ -1,8 +1,8 @@
-package gamescreen.battle.usecase.attackcalc
+package gamescreen.battle.service.attackcalc
 
 import core.domain.status.StatusData
 
-interface AttackCalcUseCase {
+interface AttackCalcService {
     operator fun invoke(
         attacker: StatusData,
         attacked: StatusData,
