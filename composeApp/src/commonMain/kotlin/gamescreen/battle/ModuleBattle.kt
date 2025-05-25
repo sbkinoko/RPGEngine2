@@ -17,6 +17,8 @@ import gamescreen.battle.repository.commandstate.CommandStateRepository
 import gamescreen.battle.repository.commandstate.CommandStateRepositoryImpl
 import gamescreen.battle.repository.flash.FlashRepository
 import gamescreen.battle.repository.flash.FlashRepositoryImpl
+import gamescreen.battle.service.attackcalc.AttackCalcService
+import gamescreen.battle.service.attackcalc.AttackCalcServiceImpl
 import gamescreen.battle.service.findtarget.FindTargetService
 import gamescreen.battle.service.findtarget.FindTargetServiceImpl
 import gamescreen.battle.service.isannihilation.IsAnnihilationService
@@ -115,6 +117,10 @@ val ModuleBattle = module {
 
     single<FindTargetService> {
         FindTargetServiceImpl()
+    }
+
+    single<AttackCalcService> {
+        AttackCalcServiceImpl()
     }
 
     single<IsAnnihilationService> {
