@@ -17,14 +17,14 @@ class StatusRepositoryImpl : AbstractStatusRepository() {
                     hp = IncData(100),
                     mp = IncData(10),
                     speed = IncData(11),
-                    atk = IncData(0),
+                    atk = IncData(10),
                     def = IncData(0),
                 ),
                 StatusIncrease(
                     hp = IncData(100),
                     mp = IncData(10),
                     speed = IncData(10),
-                    atk = IncData(0),
+                    atk = IncData(5),
                     def = IncData(0),
                 ),
             )
@@ -34,7 +34,7 @@ class StatusRepositoryImpl : AbstractStatusRepository() {
                     hp = IncData(100),
                     mp = IncData(111),
                     speed = IncData(9),
-                    atk = IncData(0),
+                    atk = IncData(5),
                     def = IncData(0),
                 )
             )
@@ -44,7 +44,7 @@ class StatusRepositoryImpl : AbstractStatusRepository() {
                     hp = 100,
                     mp = 100,
                     speed = 9,
-                    atk = 0,
+                    atk = 5,
                     def = 0,
                 )
             )
@@ -54,7 +54,7 @@ class StatusRepositoryImpl : AbstractStatusRepository() {
                     hp = 100,
                     mp = 500,
                     speed = 9,
-                    atk = 0,
+                    atk = 5,
                     def = 0,
                 )
             )

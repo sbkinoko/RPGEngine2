@@ -22,6 +22,7 @@ class MonsterRepositoryImpl : MonsterRepository {
                     maxPoint = 10,
                 ),
                 speed = StatusParameter(10),
+                atk = StatusParameter(10),
                 conditionList = emptyList(),
             ),
             imgId = 1,

@@ -11,6 +11,7 @@ import core.domain.item.skill.AttackSkill
 import core.domain.item.skill.ConditionSkill
 import core.domain.item.skill.HealSkill
 import core.domain.status.Character
+import core.domain.status.StatusData
 import core.repository.battlemonster.BattleInfoRepository
 import core.repository.player.PlayerStatusRepository
 import core.usecase.item.usetool.UseToolUseCase
@@ -125,34 +126,35 @@ class ActionPhaseViewModel(
     val actionState =
         mutableStateOf<ActionState>(ActionState.Start)
 
-    private val statusWrapperList: List<StatusWrapper>
-        get() {
-            val list = mutableListOf<StatusWrapper>()
-            playerStatusRepository.getPlayers()
-                .mapIndexed { id, status ->
-                    list += StatusWrapper(
-                        status = status,
-                        id = id,
-                        actionData = actionRepository.getAction(playerId = id),
-                    )
-                }
 
-            battleInfoRepository.getMonsters()
-                .mapIndexed { index, status ->
-                    val action = decideMonsterActionService.getAction(
-                        status,
-                        playerStatusRepository.getPlayers(),
-                    )
-                    list += StatusWrapper(
-                        status = status,
-                        id = index + playerNum,
-                        actionData = action,
-                    )
-                }
-            return list
-        }
+    private var statusWrapperList: List<StatusWrapper> = emptyList()
+
 
     fun init() {
+        val list = mutableListOf<StatusWrapper>()
+        playerStatusRepository.getPlayers()
+            .mapIndexed { id, status ->
+                list += StatusWrapper(
+                    status = status,
+                    id = id,
+                    actionData = actionRepository.getAction(playerId = id),
+                )
+            }
+
+        battleInfoRepository.getMonsters()
+            .mapIndexed { index, status ->
+                val action = decideMonsterActionService.getAction(
+                    status,
+                    playerStatusRepository.getPlayers(),
+                )
+                list += StatusWrapper(
+                    status = status,
+                    id = index + playerNum,
+                    actionData = action,
+                )
+            }
+        statusWrapperList = list
+
         speedList = decideActionOrderUseCase.invoke(
             statusList = statusWrapperList,
         )
@@ -324,13 +326,14 @@ class ActionPhaseViewModel(
                 //　攻撃
                 attackFromPlayerUseCase(
                     target = actionRepository.getAction(id).target,
-                    damage = 10,
+                    attacker = statusWrapperList[id].status.statusData,
                 )
             }
 
             ActionType.Skill -> {
                 skillAction(
                     id = id,
+                    statusData = statusWrapperList[id].status.statusData,
                     actionData = actionRepository.getAction(id),
                     statusList = battleInfoRepository.getMonsters(),
                     attackUseCase = attackFromPlayerUseCase,
@@ -356,6 +359,7 @@ class ActionPhaseViewModel(
         val id = statusId
         skillAction(
             id = id.toMonster(),
+            statusData = statusWrapperList[id].status.statusData,
             statusList = playerStatusRepository.getPlayers(),
             actionData = statusWrapperList[id].actionData,
             attackUseCase = attackFromEnemyUseCase,
@@ -390,6 +394,7 @@ class ActionPhaseViewModel(
 
     private suspend fun skillAction(
         id: Int,
+        statusData: StatusData,
         actionData: ActionData,
         statusList: List<Character>,
         attackUseCase: AttackUseCase,
@@ -430,7 +435,7 @@ class ActionPhaseViewModel(
                 targetList.forEach {
                     attackUseCase.invoke(
                         target = it,
-                        damage = skill.damageAmount,
+                        attacker = statusData,
                     )
                 }
             }

@@ -156,7 +156,7 @@ val ModuleBattle = module {
         AttackFromPlayerUseCaseImpl(
             battleInfoRepository = get(),
             findTargetService = get(),
-            updateMonsterStatusService = get(),
+            attackCalcService = get(),
             effectUseCase = get(),
         )
     }
@@ -177,7 +177,7 @@ val ModuleBattle = module {
         AttackFromEnemyUseCaseImpl(
             playerStatusRepository = get(),
             findTargetService = get(),
-            updatePlayerStatusService = get(),
+            attackCalcService = get(),
         )
     }
 

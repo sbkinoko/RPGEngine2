@@ -1,8 +1,10 @@
 package gamescreen.battle.usecase.attack
 
 import core.ModuleCore
+import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
 import core.domain.status.PlayerStatusTest.Companion.testActivePlayer
 import core.domain.status.param.ParameterType
+import core.domain.status.param.StatusParameter
 import core.domain.status.param.StatusParameterWithMax
 import core.repository.player.PlayerStatusRepository
 import data.ModuleData
@@ -32,6 +34,15 @@ class AttackUseCaseImplFromEnemyTest : KoinTest {
         maxPoint = 100,
     )
 
+    private val atk = 5
+    private val statusData = TestActiveMonster.run {
+        copy(
+            this.statusData.copy(
+                atk = StatusParameter(atk)
+            )
+        )
+    }
+
     @BeforeTest
     fun beforeTest() {
         startKoin {
@@ -59,15 +70,15 @@ class AttackUseCaseImplFromEnemyTest : KoinTest {
                     ),
                 ),
             )
-            val damage = 5
+
             attackUseCaseImplFromEnemy.invoke(
                 target = 0,
-                damage = damage,
+                attacker = statusData.statusData,
             )
 
             playerStatusRepository.getStatus(0).apply {
                 assertEquals(
-                    expected = hpValue - damage,
+                    expected = hpValue - atk,
                     actual = this.statusData.hp.point
                 )
             }
@@ -89,7 +100,7 @@ class AttackUseCaseImplFromEnemyTest : KoinTest {
             val damage = 5
             attackUseCaseImplFromEnemy.invoke(
                 target = id,
-                damage = damage,
+                attacker = statusData.statusData,
             )
 
             playerStatusRepository.getStatus(id).apply {
@@ -126,16 +137,14 @@ class AttackUseCaseImplFromEnemyTest : KoinTest {
                 ),
             )
 
-            playerStatusRepository
-            val damage = 5
             attackUseCaseImplFromEnemy.invoke(
                 target = idNotActive,
-                damage = damage,
+                attacker = statusData.statusData,
             )
 
             playerStatusRepository.getStatus(idActive).apply {
                 assertEquals(
-                    expected = hpValue - damage,
+                    expected = hpValue - atk,
                     actual = this.statusData.hp.point
                 )
             }
