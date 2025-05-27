@@ -27,7 +27,7 @@ class MenuStateRepositoryImpl : MenuStateRepository {
         if (mutableList.size == 1) {
             return
         }
-        mutableList.removeLast()
+        mutableList.removeAt(mutableList.size - 1)
         emit()
     }
 
@@ -36,9 +36,7 @@ class MenuStateRepositoryImpl : MenuStateRepository {
     }
 
     override fun reset() {
-        while (mutableList.size != 0) {
-            mutableList.removeLast()
-        }
+        mutableList.clear()
         push(MenuStateRepository.INITIAL_MENU_TYPE)
     }
 }
