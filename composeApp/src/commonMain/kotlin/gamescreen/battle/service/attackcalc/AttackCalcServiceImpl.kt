@@ -2,6 +2,7 @@ package gamescreen.battle.service.attackcalc
 
 import core.domain.item.DamageType
 import core.domain.status.StatusData
+import kotlin.math.max
 
 class AttackCalcServiceImpl : AttackCalcService {
     // todo ダメージのパターンを追加する
@@ -13,7 +14,7 @@ class AttackCalcServiceImpl : AttackCalcService {
     ): StatusData {
         return when (damageType) {
             is DamageType.Multiple -> attacked.decHP(
-                kotlin.math.max(
+                max(
                     attacker.atk.value * damageType.rate - attacked.def.value,
                     1,
                 )
@@ -21,6 +22,10 @@ class AttackCalcServiceImpl : AttackCalcService {
 
             is DamageType.Rate -> attacked.decHP(
                 amount = attacked.hp.point * damageType.rate / 100
+            )
+
+            is DamageType.Fixed -> attacked.decHP(
+                amount = damageType.amount,
             )
         }
     }

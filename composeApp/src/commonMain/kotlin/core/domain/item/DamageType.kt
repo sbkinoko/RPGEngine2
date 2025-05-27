@@ -12,4 +12,8 @@ sealed class DamageType {
     class Rate(
         val rate: Int,
     ) : DamageType()
+
+    class Fixed(
+        val amount: Int,
+    ) : DamageType()
 }
