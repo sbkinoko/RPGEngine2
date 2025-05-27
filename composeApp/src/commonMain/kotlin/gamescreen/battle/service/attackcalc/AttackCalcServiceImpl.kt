@@ -7,17 +7,18 @@ class AttackCalcServiceImpl : AttackCalcService {
     // todo ダメージのパターンを追加する
     // 固定ダメージ
     // 割合ダメージ
-    // スキルによる倍率変更
     override fun invoke(
         attacker: StatusData,
         attacked: StatusData,
         damageType: DamageType,
     ): StatusData {
-        return attacked.decHP(
-            kotlin.math.max(
-                attacker.atk.value - attacked.def.value,
-                1,
+        return when (damageType) {
+            is DamageType.Multiple -> attacked.decHP(
+                kotlin.math.max(
+                    attacker.atk.value * damageType.rate - attacked.def.value,
+                    1,
+                )
             )
-        )
+        }
     }
 }
