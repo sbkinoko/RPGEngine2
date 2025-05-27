@@ -5,8 +5,7 @@ import core.domain.status.StatusData
 import kotlin.math.max
 
 class AttackCalcServiceImpl : AttackCalcService {
-    // todo ダメージのパターンを追加する
-    // 固定ダメージ
+
     override fun invoke(
         attacker: StatusData,
         attacked: StatusData,
