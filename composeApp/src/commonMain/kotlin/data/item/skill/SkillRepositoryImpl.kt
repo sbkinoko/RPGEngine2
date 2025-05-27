@@ -2,6 +2,7 @@ package data.item.skill
 
 import core.domain.Place
 import core.domain.item.CostType
+import core.domain.item.DamageType
 import core.domain.item.Skill
 import core.domain.item.TargetType
 import core.domain.item.skill.AttackSkill
@@ -17,7 +18,7 @@ class SkillRepositoryImpl : SkillRepository {
 
             SkillId.CantUse -> AttackSkill(
                 name = "使えないよ",
-                damageAmount = 0,
+                damageType = DamageType.Multiple(1),
                 costType = CostType.MP(9999),
                 targetNum = 1,
                 usablePlace = Place.NEITHER,
@@ -25,7 +26,7 @@ class SkillRepositoryImpl : SkillRepository {
 
             SkillId.AttackToTwo -> AttackSkill(
                 name = "２体攻撃",
-                damageAmount = 10,
+                damageType = DamageType.Multiple(1),
                 costType = CostType.MP(1),
                 targetNum = 2,
                 usablePlace = Place.BATTLE
@@ -33,7 +34,7 @@ class SkillRepositoryImpl : SkillRepository {
 
             SkillId.Normal1 -> AttackSkill(
                 name = "通常攻撃",
-                damageAmount = 20,
+                damageType = DamageType.Multiple(1),
                 costType = CostType.MP(0),
                 targetNum = 1,
                 usablePlace = Place.BATTLE,
@@ -41,7 +42,7 @@ class SkillRepositoryImpl : SkillRepository {
 
             SkillId.Normal2 -> AttackSkill(
                 name = "通常攻撃2",
-                damageAmount = 10,
+                damageType = DamageType.Multiple(2),
                 costType = CostType.MP(0),
                 targetNum = 1,
                 usablePlace = Place.BATTLE,

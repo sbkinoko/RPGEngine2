@@ -1,5 +1,6 @@
 package gamescreen.battle.usecase.attack
 
+import core.domain.item.DamageType
 import core.domain.status.StatusData
 import core.repository.battlemonster.BattleInfoRepository
 import gamescreen.battle.service.attackcalc.AttackCalcService
@@ -15,6 +16,7 @@ class AttackFromPlayerUseCaseImpl(
     override suspend operator fun invoke(
         target: Int,
         attacker: StatusData,
+        damageType: DamageType,
     ) {
         var actualTarget = target
         val monsters = battleInfoRepository.getMonsters()
@@ -33,6 +35,7 @@ class AttackFromPlayerUseCaseImpl(
         val damaged = attackCalcService.invoke(
             attacker = attacker,
             attacked = attacked.statusData,
+            damageType = damageType,
         )
 
         battleInfoRepository.setStatus(

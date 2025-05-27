@@ -3,6 +3,7 @@ package core.domain.item.skill
 import core.domain.Place
 import core.domain.item.AttackItem
 import core.domain.item.CostType
+import core.domain.item.DamageType
 import core.domain.item.Skill
 
 data class AttackSkill(
@@ -10,7 +11,7 @@ data class AttackSkill(
     override val targetNum: Int,
     override val costType: CostType,
     override val usablePlace: Place,
-    override val damageAmount: Int,
+    override val damageType: DamageType,
 ) : Skill, AttackItem {
     override val explain: String
         get() {

@@ -20,7 +20,7 @@ interface HealItem : TypeKind {
 }
 
 interface AttackItem : TypeKind {
-    val damageAmount: Int
+    val damageType: DamageType
 }
 
 interface ConditionItem : TypeKind {

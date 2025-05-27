@@ -2,6 +2,7 @@ package core.usecase.item.useskill
 
 import core.domain.Place
 import core.domain.item.CostType
+import core.domain.item.DamageType
 import core.domain.item.Skill
 import core.domain.item.TargetType
 import core.domain.item.skill.AttackSkill
@@ -111,7 +112,7 @@ class UseSkillUseCaseImplTest {
                     targetNum = 1,
                     costType = CostType.MP(1),
                     usablePlace = Place.MAP,
-                    damageAmount = 1,
+                    damageType = DamageType.Multiple(1),
                 )
             }
         }
@@ -169,7 +170,7 @@ class UseSkillUseCaseImplTest {
                     targetNum = 1,
                     costType = CostType.MP(1),
                     usablePlace = Place.MAP,
-                    damageAmount = 1,
+                    damageType = DamageType.Multiple(1),
                 )
             }
         }
@@ -211,7 +212,7 @@ class UseSkillUseCaseImplTest {
                     targetNum = 1,
                     costType = CostType.MP(1),
                     usablePlace = Place.MAP,
-                    damageAmount = 1,
+                    damageType = DamageType.Multiple(1),
                 )
             }
         }
@@ -320,7 +321,7 @@ class UseSkillUseCaseImplTest {
                     targetNum = 1,
                     costType = CostType.MP(1),
                     usablePlace = Place.MAP,
-                    damageAmount = 1,
+                    damageType = DamageType.Multiple(1),
                 )
             }
         }
