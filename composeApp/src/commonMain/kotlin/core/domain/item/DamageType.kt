@@ -13,6 +13,10 @@ sealed class DamageType {
         val rate: Int,
     ) : DamageType()
 
+    /**
+     * 敵の能力に依存しない固定ダメージ
+     * @param amount ダメージ量
+     */
     class Fixed(
         val amount: Int,
     ) : DamageType()
