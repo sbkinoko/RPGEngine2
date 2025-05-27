@@ -1,5 +1,6 @@
 package gamescreen.battle.service.attackcalc
 
+import core.domain.item.DamageType
 import core.domain.status.StatusData
 
 class AttackCalcServiceImpl : AttackCalcService {
@@ -10,6 +11,7 @@ class AttackCalcServiceImpl : AttackCalcService {
     override fun invoke(
         attacker: StatusData,
         attacked: StatusData,
+        damageType: DamageType,
     ): StatusData {
         return attacked.decHP(
             kotlin.math.max(

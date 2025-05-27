@@ -4,6 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import core.domain.item.AttackItem
 import core.domain.item.ConditionItem
 import core.domain.item.CostType
+import core.domain.item.DamageType
 import core.domain.item.HealItem
 import core.domain.item.Item
 import core.domain.item.TypeKind
@@ -327,6 +328,7 @@ class ActionPhaseViewModel(
                 attackFromPlayerUseCase(
                     target = actionRepository.getAction(id).target,
                     attacker = statusWrapperList[id].status.statusData,
+                    damageType = DamageType.Multiple(1),
                 )
             }
 
@@ -428,7 +430,7 @@ class ActionPhaseViewModel(
                 val targetList = findActiveTargetUseCase.invoke(
                     statusList = statusList,
                     target = actionData.target,
-                    targetNum = skill.targetNum
+                    targetNum = skill.targetNum,
                 )
 
                 //　複数の対象攻撃
@@ -436,6 +438,7 @@ class ActionPhaseViewModel(
                     attackUseCase.invoke(
                         target = it,
                         attacker = statusData,
+                        damageType = skill.damageType,
                     )
                 }
             }
