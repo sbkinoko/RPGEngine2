@@ -306,53 +306,11 @@ class AttackServiceImplTest : KoinTest {
      */
     @Test
     fun fixAttack1() {
-        val atk = 11
-        val def = 20
+        val atk = 20
+        val def = 10
         val maxPoint = 80
         val amount = 25
 
-        val updated = attack(
-            atk = atk,
-            def = def,
-            maxPoint = maxPoint,
-            damageType = DamageType.Fixed(amount),
-        )
-
-        assertEquals(
-            expected = 55,
-            actual = updated.hp.point
-        )
-    }
-
-    /**
-     * 固定ダメージ確認1
-     */
-    @Test
-    fun fixAttack2() {
-        val atk = 11
-        val def = 20
-        val maxPoint = 70
-        val amount = 60
-
-        val updated = attack(
-            atk = atk,
-            def = def,
-            maxPoint = maxPoint,
-            damageType = DamageType.Fixed(amount),
-        )
-
-        assertEquals(
-            expected = 10,
-            actual = updated.hp.point
-        )
-    }
-
-    private fun attack(
-        atk: Int,
-        def: Int,
-        maxPoint: Int,
-        damageType: DamageType,
-    ): StatusData {
         val attacker = testActivePlayer.run {
             copy(
                 statusData = statusData.copy(
@@ -372,10 +330,56 @@ class AttackServiceImplTest : KoinTest {
             )
         }
 
-        return attackCalcService.invoke(
+        val updated = attackCalcService.invoke(
             attacker = attacker.statusData,
             attacked = attacked.statusData,
-            damageType = damageType,
+            damageType = DamageType.Fixed(amount),
+        )
+
+        assertEquals(
+            expected = 55,
+            actual = updated.hp.point,
+        )
+    }
+
+    /**
+     * 固定ダメージ確認2
+     */
+    @Test
+    fun fixAttack2() {
+        val atk = 11
+        val def = 20
+        val maxPoint = 70
+        val amount = 60
+
+        val attacker = testActivePlayer.run {
+            copy(
+                statusData = statusData.copy(
+                    atk = StatusParameter(atk),
+                )
+            )
+        }
+
+        val attacked = TestActiveMonster.run {
+            copy(
+                statusData = statusData.copy(
+                    def = StatusParameter(def),
+                    hp = StatusParameterWithMax(
+                        maxPoint = maxPoint,
+                    )
+                )
+            )
+        }
+
+        val updated = attackCalcService.invoke(
+            attacker = attacker.statusData,
+            attacked = attacked.statusData,
+            damageType = DamageType.Fixed(amount),
+        )
+
+        assertEquals(
+            expected = 10,
+            actual = updated.hp.point,
         )
     }
 }
