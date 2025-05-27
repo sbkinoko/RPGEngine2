@@ -3,6 +3,7 @@ package gamescreen.battle.service.attackcalc
 import core.domain.item.DamageType
 import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
 import core.domain.status.PlayerStatusTest.Companion.testActivePlayer
+import core.domain.status.StatusData
 import core.domain.status.param.StatusParameter
 import core.domain.status.param.StatusParameterWithMax
 import gamescreen.battle.ModuleBattle
@@ -108,6 +109,79 @@ class AttackServiceImplTest : KoinTest {
         assertEquals(
             expected = hp - atk + def,
             actual = updated.hp.point
+        )
+    }
+
+    /**
+     * 攻撃力を乗じてから引き算
+     */
+    @Test
+    fun attackMulti1() {
+        val atk = 11
+        val def = 7
+        val rate = 2
+
+        val updated = attackByMulti(
+            atk = atk,
+            def = def,
+            rate = rate,
+        )
+
+        assertEquals(
+            expected = hp - atk * rate + def,
+            actual = updated.hp.point
+        )
+    }
+
+    /**
+     * 攻撃力を乗じてから引き算
+     */
+    @Test
+    fun attackMulti2() {
+        val atk = 10
+        val def = 3
+        val rate = 3
+
+        val updated = attackByMulti(
+            atk = atk,
+            def = def,
+            rate = rate,
+        )
+
+        assertEquals(
+            expected = hp - atk * rate + def,
+            actual = updated.hp.point
+        )
+    }
+
+    private fun attackByMulti(
+        atk: Int,
+        def: Int,
+        rate: Int,
+    ): StatusData {
+        val attacker = testActivePlayer.run {
+            copy(
+                statusData = statusData.copy(
+                    atk = StatusParameter(atk),
+                )
+            )
+        }
+
+        val attacked = TestActiveMonster.run {
+            copy(
+                statusData = statusData.copy(
+                    def = StatusParameter(def),
+                    hp = StatusParameterWithMax(
+                        maxPoint = 50,
+                    )
+                )
+            )
+        }
+
+        return attackCalcService.invoke(
+            attacker = attacker.statusData,
+            attacked = attacked.statusData,
+            damageType = DamageType.Multiple(rate = rate),
         )
     }
 
