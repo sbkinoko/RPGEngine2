@@ -1,5 +1,6 @@
 package gamescreen.battle.service.attackcalc
 
+import core.domain.item.DamageType
 import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
 import core.domain.status.PlayerStatusTest.Companion.testActivePlayer
 import core.domain.status.param.StatusParameter
@@ -63,6 +64,7 @@ class AttackServiceImplTest : KoinTest {
         val updated = attackCalcService.invoke(
             attacker = attacker.statusData,
             attacked = attacked.statusData,
+            damageType = DamageType.Multiple(1),
         )
 
         assertEquals(
@@ -100,6 +102,7 @@ class AttackServiceImplTest : KoinTest {
         val updated = attackCalcService.invoke(
             attacker = attacker.statusData,
             attacked = attacked.statusData,
+            damageType = DamageType.Multiple(1),
         )
 
         assertEquals(
@@ -137,6 +140,7 @@ class AttackServiceImplTest : KoinTest {
         val updated = attackCalcService.invoke(
             attacker = attacker.statusData,
             attacked = attacked.statusData,
+            damageType = DamageType.Multiple(1),
         )
 
         assertEquals(

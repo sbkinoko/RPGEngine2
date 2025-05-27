@@ -1,6 +1,7 @@
 package gamescreen.battle.usecase.attack
 
 import core.ModuleCore
+import core.domain.item.DamageType
 import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
 import core.domain.status.PlayerStatusTest.Companion.testActivePlayer
 import core.domain.status.param.ParameterType
@@ -74,6 +75,7 @@ class AttackUseCaseImplFromEnemyTest : KoinTest {
             attackUseCaseImplFromEnemy.invoke(
                 target = 0,
                 attacker = statusData.statusData,
+                damageType = DamageType.Multiple(1),
             )
 
             playerStatusRepository.getStatus(0).apply {
@@ -101,6 +103,7 @@ class AttackUseCaseImplFromEnemyTest : KoinTest {
             attackUseCaseImplFromEnemy.invoke(
                 target = id,
                 attacker = statusData.statusData,
+                damageType = DamageType.Multiple(1),
             )
 
             playerStatusRepository.getStatus(id).apply {
@@ -140,6 +143,7 @@ class AttackUseCaseImplFromEnemyTest : KoinTest {
             attackUseCaseImplFromEnemy.invoke(
                 target = idNotActive,
                 attacker = statusData.statusData,
+                damageType = DamageType.Multiple(1),
             )
 
             playerStatusRepository.getStatus(idActive).apply {
