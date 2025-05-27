@@ -82,7 +82,7 @@ class AttackUseCaseImplFromPlayerTest : KoinTest {
             attackUseCase.invoke(
                 target = 0,
                 attacker = statusData.statusData,
-                damageType = DamageType.Multiple(1),
+                damageType = DamageType.AtkMultiple(1),
             )
 
             battleInfoRepository.getStatus(0).apply {
@@ -120,7 +120,7 @@ class AttackUseCaseImplFromPlayerTest : KoinTest {
             attackUseCase.invoke(
                 target = id,
                 attacker = statusData.statusData,
-                damageType = DamageType.Multiple(1),
+                damageType = DamageType.AtkMultiple(1),
             )
 
             battleInfoRepository.getStatus(id).apply {
@@ -153,7 +153,7 @@ class AttackUseCaseImplFromPlayerTest : KoinTest {
             attackUseCase.invoke(
                 target = idNotActive,
                 attacker = statusData.statusData,
-                damageType = DamageType.Multiple(1),
+                damageType = DamageType.AtkMultiple(1),
             )
 
             battleInfoRepository.getStatus(idActive).apply {

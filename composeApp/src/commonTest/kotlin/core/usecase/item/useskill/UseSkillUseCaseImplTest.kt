@@ -112,7 +112,7 @@ class UseSkillUseCaseImplTest {
                     targetNum = 1,
                     costType = CostType.MP(1),
                     usablePlace = Place.MAP,
-                    damageType = DamageType.Multiple(1),
+                    damageType = DamageType.AtkMultiple(1),
                 )
             }
         }
@@ -170,7 +170,7 @@ class UseSkillUseCaseImplTest {
                     targetNum = 1,
                     costType = CostType.MP(1),
                     usablePlace = Place.MAP,
-                    damageType = DamageType.Multiple(1),
+                    damageType = DamageType.AtkMultiple(1),
                 )
             }
         }
@@ -212,7 +212,7 @@ class UseSkillUseCaseImplTest {
                     targetNum = 1,
                     costType = CostType.MP(1),
                     usablePlace = Place.MAP,
-                    damageType = DamageType.Multiple(1),
+                    damageType = DamageType.AtkMultiple(1),
                 )
             }
         }
@@ -321,7 +321,7 @@ class UseSkillUseCaseImplTest {
                     targetNum = 1,
                     costType = CostType.MP(1),
                     usablePlace = Place.MAP,
-                    damageType = DamageType.Multiple(1),
+                    damageType = DamageType.AtkMultiple(1),
                 )
             }
         }

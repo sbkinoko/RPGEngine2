@@ -18,7 +18,7 @@ class SkillRepositoryImpl : SkillRepository {
 
             SkillId.CantUse -> AttackSkill(
                 name = "使えないよ",
-                damageType = DamageType.Multiple(1),
+                damageType = DamageType.AtkMultiple(1),
                 costType = CostType.MP(9999),
                 targetNum = 1,
                 usablePlace = Place.NEITHER,
@@ -26,7 +26,7 @@ class SkillRepositoryImpl : SkillRepository {
 
             SkillId.AttackToTwo -> AttackSkill(
                 name = "２体攻撃",
-                damageType = DamageType.Multiple(1),
+                damageType = DamageType.AtkMultiple(1),
                 costType = CostType.MP(1),
                 targetNum = 2,
                 usablePlace = Place.BATTLE
@@ -34,7 +34,7 @@ class SkillRepositoryImpl : SkillRepository {
 
             SkillId.Normal1 -> AttackSkill(
                 name = "通常攻撃",
-                damageType = DamageType.Multiple(1),
+                damageType = DamageType.AtkMultiple(1),
                 costType = CostType.MP(0),
                 targetNum = 1,
                 usablePlace = Place.BATTLE,
@@ -42,7 +42,7 @@ class SkillRepositoryImpl : SkillRepository {
 
             SkillId.Normal2 -> AttackSkill(
                 name = "通常攻撃2",
-                damageType = DamageType.Multiple(2),
+                damageType = DamageType.AtkMultiple(2),
                 costType = CostType.MP(0),
                 targetNum = 1,
                 usablePlace = Place.BATTLE,

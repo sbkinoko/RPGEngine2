@@ -65,7 +65,7 @@ class AttackServiceImplTest : KoinTest {
         val updated = attackCalcService.invoke(
             attacker = attacker.statusData,
             attacked = attacked.statusData,
-            damageType = DamageType.Multiple(1),
+            damageType = DamageType.AtkMultiple(1),
         )
 
         assertEquals(
@@ -103,7 +103,7 @@ class AttackServiceImplTest : KoinTest {
         val updated = attackCalcService.invoke(
             attacker = attacker.statusData,
             attacked = attacked.statusData,
-            damageType = DamageType.Multiple(1),
+            damageType = DamageType.AtkMultiple(1),
         )
 
         assertEquals(
@@ -181,7 +181,7 @@ class AttackServiceImplTest : KoinTest {
         return attackCalcService.invoke(
             attacker = attacker.statusData,
             attacked = attacked.statusData,
-            damageType = DamageType.Multiple(rate = rate),
+            damageType = DamageType.AtkMultiple(rate = rate),
         )
     }
 
@@ -214,7 +214,7 @@ class AttackServiceImplTest : KoinTest {
         val updated = attackCalcService.invoke(
             attacker = attacker.statusData,
             attacked = attacked.statusData,
-            damageType = DamageType.Multiple(1),
+            damageType = DamageType.AtkMultiple(1),
         )
 
         assertEquals(

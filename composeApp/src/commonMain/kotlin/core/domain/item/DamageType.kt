@@ -1,7 +1,11 @@
 package core.domain.item
 
 sealed class DamageType {
-    class Multiple(
+    /**
+     * 攻撃力に依存した倍率ダメージ
+     * @param rate  攻撃力の乗算率
+     */
+    class AtkMultiple(
         val rate: Int,
     ) : DamageType()
 
