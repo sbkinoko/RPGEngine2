@@ -222,4 +222,82 @@ class AttackServiceImplTest : KoinTest {
             actual = updated.hp.point
         )
     }
+
+    /**
+     * 割合ダメージ確認1
+     */
+    @Test
+    fun rateAttack1() {
+        val atk = 11
+        val def = 20
+        val maxPoint = 50
+        val rate = 20
+
+        val updated = rateAttack(
+            atk = atk,
+            def = def,
+            maxPoint = maxPoint,
+            rate = rate,
+        )
+
+        assertEquals(
+            expected = 40,
+            actual = updated.hp.point
+        )
+    }
+
+    /**
+     * 割合ダメージ確認2
+     */
+    @Test
+    fun rateAttack2() {
+        val atk = 11
+        val def = 20
+        val maxPoint = 80
+        val rate = 25
+
+        val updated = rateAttack(
+            atk = atk,
+            def = def,
+            maxPoint = maxPoint,
+            rate = rate,
+        )
+
+        assertEquals(
+            expected = 60,
+            actual = updated.hp.point
+        )
+    }
+
+    private fun rateAttack(
+        atk: Int,
+        def: Int,
+        maxPoint: Int,
+        rate: Int,
+    ): StatusData {
+        val attacker = testActivePlayer.run {
+            copy(
+                statusData = statusData.copy(
+                    atk = StatusParameter(atk),
+                )
+            )
+        }
+
+        val attacked = TestActiveMonster.run {
+            copy(
+                statusData = statusData.copy(
+                    def = StatusParameter(def),
+                    hp = StatusParameterWithMax(
+                        maxPoint = maxPoint,
+                    )
+                )
+            )
+        }
+
+        return attackCalcService.invoke(
+            attacker = attacker.statusData,
+            attacked = attacked.statusData,
+            damageType = DamageType.Rate(rate),
+        )
+    }
 }
