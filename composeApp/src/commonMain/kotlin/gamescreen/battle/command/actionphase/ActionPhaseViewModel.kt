@@ -328,7 +328,7 @@ class ActionPhaseViewModel(
                 attackFromPlayerUseCase(
                     target = actionRepository.getAction(id).target,
                     attacker = statusWrapperList[id].status.statusData,
-                    damageType = DamageType.Multiple(1),
+                    damageType = DamageType.AtkMultiple(1),
                 )
             }
 
