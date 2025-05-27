@@ -19,6 +19,8 @@ class AttackCalcServiceImpl : AttackCalcService {
                     1,
                 )
             )
+
+            is DamageType.Rate -> TODO()
         }
     }
 }
