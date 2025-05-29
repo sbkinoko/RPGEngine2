@@ -1,9 +1,5 @@
 package core.domain.status.param
 
-sealed class BufType {
-    data object Add : BufType()
-}
-
 data class Buf<T : BufType>(
     val value: Int,
     val rest: Int,
