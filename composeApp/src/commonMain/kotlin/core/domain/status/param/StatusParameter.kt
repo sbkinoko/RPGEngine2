@@ -40,9 +40,9 @@ data class StatusParameter<T : ParameterType>(
 
     fun reduceBuf(): StatusParameter<T> {
         return copy(
-            addBuf = addBuf.map {
+            addBuf = addBuf.mapNotNull {
                 it.reduceTurn()
-            }
+            },
         )
     }
 }
