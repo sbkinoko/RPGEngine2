@@ -1,6 +1,7 @@
 package core.domain.status.param
 
 import core.domain.status.IncData
+import kotlin.math.max
 
 /**
  * @param baseValue ステータスの基本値
@@ -11,7 +12,11 @@ data class StatusParameter<T : ParameterType>(
     val addBuf: List<Buf<BufType.Add>> = emptyList(),
 ) {
     val value
-        get() = baseValue + addBuf.sumOf { it.value }
+        get() = max(
+            // 最小値は1
+            baseValue + addBuf.sumOf { it.value },
+            1,
+        )
 
     fun inc(incData: IncData<T>): StatusParameter<T> {
         return copy(
