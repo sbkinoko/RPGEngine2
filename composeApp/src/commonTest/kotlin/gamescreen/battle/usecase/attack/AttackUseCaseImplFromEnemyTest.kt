@@ -39,7 +39,7 @@ class AttackUseCaseImplFromEnemyTest : KoinTest {
     private val statusData = TestActiveMonster.run {
         copy(
             this.statusData.copy(
-                atk = StatusParameter(atk)
+                atk = StatusParameter(atk),
             )
         )
     }

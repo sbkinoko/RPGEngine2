@@ -36,4 +36,76 @@ class StatusParameterTest {
             actual = incStatus.value
         )
     }
+
+    /**
+     * 正の場合のテスト
+     */
+    @Test
+    fun bufTestAdd() {
+        val value = 10
+        val buf = 5
+        val status = StatusParameter<ParameterType.SPD>(value)
+        val updated = status.grantBuf(
+            Buf(
+                buf,
+                1,
+                BufType.Add,
+            ),
+        )
+
+        assertEquals(
+            expected = value + buf,
+            actual = updated.value,
+        )
+
+        val buf2 = 6
+        val updated2 = updated.grantBuf(
+            Buf(
+                buf2,
+                1,
+                BufType.Add,
+            )
+        )
+
+        assertEquals(
+            expected = value + buf + buf2,
+            actual = updated2.value,
+        )
+    }
+
+    /**
+     * 負の場合のテスト
+     */
+    @Test
+    fun bufTestAdd2() {
+        val value = 10
+        val buf = -5
+        val status = StatusParameter<ParameterType.SPD>(value)
+        val updated = status.grantBuf(
+            Buf(
+                buf,
+                1,
+                BufType.Add,
+            ),
+        )
+
+        assertEquals(
+            expected = value + buf,
+            actual = updated.value,
+        )
+
+        val buf2 = -6
+        val updated2 = updated.grantBuf(
+            Buf(
+                buf2,
+                1,
+                BufType.Add,
+            )
+        )
+
+        assertEquals(
+            expected = 0,
+            actual = updated2.value,
+        )
+    }
 }
