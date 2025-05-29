@@ -108,4 +108,56 @@ class StatusParameterTest {
             actual = updated2.value,
         )
     }
+
+    /**
+     * ターン経過でバフが減ることの確認
+     */
+    @Test
+    fun reduceTest() {
+        val value = 10
+        val buf = 5
+
+        val status = StatusParameter<ParameterType.SPD>(value)
+        var updated = status.grantBuf(
+            Buf(
+                buf,
+                3,
+                BufType.Add,
+            ),
+        ).grantBuf(
+            Buf(
+                buf,
+                4,
+                BufType.Add,
+            ),
+        )
+
+        updated = updated.reduceBuf().apply {
+            assertEquals(
+                expected = 2,
+                actual = addBuf.size,
+            )
+        }
+
+        updated = updated.reduceBuf().apply {
+            assertEquals(
+                expected = 2,
+                actual = addBuf.size,
+            )
+        }
+
+        updated = updated.reduceBuf().apply {
+            assertEquals(
+                expected = 1,
+                actual = addBuf.size,
+            )
+        }
+
+        updated.reduceBuf().apply {
+            assertEquals(
+                expected = 0,
+                actual = addBuf.size,
+            )
+        }
+    }
 }
