@@ -15,7 +15,7 @@ data class StatusParameter<T : ParameterType>(
         get() = max(
             // 最小値は1
             baseValue + addBuf.sumOf { it.value },
-            1,
+            0,
         )
 
     fun inc(incData: IncData<T>): StatusParameter<T> {
