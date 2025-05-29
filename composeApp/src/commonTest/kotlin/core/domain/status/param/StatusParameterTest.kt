@@ -118,45 +118,30 @@ class StatusParameterTest {
         val buf = 5
 
         val status = StatusParameter<ParameterType.SPD>(value)
-        var updated = status.grantBuf(
-            Buf(
-                buf,
-                3,
-                BufType.Add,
-            ),
-        ).grantBuf(
-            Buf(
-                buf,
-                4,
-                BufType.Add,
-            ),
-        )
+        var updated = status
+        val addList = listOf(3, 4)
 
-        updated = updated.reduceBuf().apply {
-            assertEquals(
-                expected = 2,
-                actual = addBuf.size,
+        addList.map {
+            updated = updated.grantBuf(
+                Buf(
+                    buf,
+                    it,
+                    BufType.Add,
+                ),
             )
         }
 
-        updated = updated.reduceBuf().apply {
-            assertEquals(
-                expected = 2,
-                actual = addBuf.size,
-            )
+        val addListSize = List(5) { turn ->
+            addList.count {
+                it - turn - 1 > 0
+            }
         }
 
-        updated = updated.reduceBuf().apply {
+        for (i: Int in 0 until 5) {
+            updated = updated.reduceBuf()
             assertEquals(
-                expected = 1,
-                actual = addBuf.size,
-            )
-        }
-
-        updated.reduceBuf().apply {
-            assertEquals(
-                expected = 0,
-                actual = addBuf.size,
+                expected = addListSize[i],
+                actual = updated.addBuf.size,
             )
         }
     }
