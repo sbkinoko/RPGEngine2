@@ -7,4 +7,5 @@ data class StatusWrapper(
     val status: Character,
     val actionData: ActionData,
     val statusType: StatusType,
+    val newId: Int,
 )

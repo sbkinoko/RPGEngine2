@@ -141,6 +141,7 @@ class ActionPhaseViewModel(
                     id = id,
                     actionData = actionRepository.getAction(playerId = id),
                     statusType = StatusType.Player,
+                    newId = id,
                 )
             }
 
@@ -155,6 +156,7 @@ class ActionPhaseViewModel(
                     id = index + playerNum,
                     actionData = action,
                     statusType = StatusType.Enemy,
+                    newId = index,
                 )
             }
         statusWrapperList = list
