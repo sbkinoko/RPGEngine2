@@ -341,7 +341,7 @@ class ActionPhaseViewModel(
                 //　攻撃
                 attackFromPlayerUseCase(
                     target = actionRepository.getAction(id).target,
-                    attacker = statusWrapperList[id].status.statusData,
+                    attacker = getStatus(statusId),
                     damageType = DamageType.AtkMultiple(1),
                 )
             }
@@ -349,7 +349,7 @@ class ActionPhaseViewModel(
             ActionType.Skill -> {
                 skillAction(
                     id = id,
-                    statusData = statusWrapperList[id].status.statusData,
+                    statusData = getStatus(statusId),
                     actionData = actionRepository.getAction(id),
                     statusList = battleInfoRepository.getMonsters(),
                     attackUseCase = attackFromPlayerUseCase,
@@ -375,7 +375,7 @@ class ActionPhaseViewModel(
         val id = statusId
         skillAction(
             id = id.toMonster(),
-            statusData = statusWrapperList[id].status.statusData,
+            statusData = getStatus(statusId),
             statusList = playerStatusRepository.getPlayers(),
             actionData = statusWrapperList[id].actionData,
             attackUseCase = attackFromEnemyUseCase,
@@ -549,7 +549,7 @@ class ActionPhaseViewModel(
 
         // fixme getNextStateの引数にstatusを追加して、その中で処理したい
         // ステータスに関連する処理も内部で行うようにする
-        if (statusWrapperList[statusId].status.statusData.isActive.not()) {
+        if (getStatus(statusId).isActive.not()) {
             // 倒れていたらnextに変更
             actionState.value = ActionState.Next
             return
@@ -557,9 +557,7 @@ class ActionPhaseViewModel(
 
         // 状態の切り替え
         val nextState = actionState.value.getNextState(
-            conditionList = statusWrapperList[statusId]
-                .status
-                .statusData
+            conditionList = getStatus(statusId)
                 .conditionList
         )
         actionState.value = nextState
@@ -581,17 +579,14 @@ class ActionPhaseViewModel(
                 is ActionState.CurePoison,
                     -> {
                     val cured = (nextState as ActionState.Cure).list
-                    when (statusWrapperList[statusId].statusType) {
-                        StatusType.Player -> updatePlayerParameter.updateConditionList(
-                            id = statusId,
-                            conditionList = cured,
-                        )
 
-                        StatusType.Enemy -> updateEnemyParameter.updateConditionList(
-                            id = statusId.toMonster(),
-                            conditionList = cured
-                        )
-                    }
+                    when (statusWrapperList[statusId].statusType) {
+                        StatusType.Player -> updatePlayerParameter
+                        StatusType.Enemy -> updateEnemyParameter
+                    }.updateConditionList(
+                        id = statusWrapperList[statusId].newId,
+                        conditionList = cured,
+                    )
                 }
 
                 ActionState.Next -> {
