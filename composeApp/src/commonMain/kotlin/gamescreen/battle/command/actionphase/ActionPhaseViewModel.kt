@@ -241,10 +241,9 @@ class ActionPhaseViewModel(
     }
 
     private fun getTargetStatusName(id: Int): String {
-        return if (isPlayer(id = id)) {
-            getPlayerActionTargetName(id = id)
-        } else {
-            getMonsterTargetName(id = id)
+        return when (statusWrapperList[id].statusType) {
+            StatusType.Player -> getPlayerActionTargetName(id = id)
+            StatusType.Enemy -> getMonsterTargetName(id = id)
         }
     }
 
@@ -510,27 +509,31 @@ class ActionPhaseViewModel(
 
             val id = statusId
 
-            if (isPlayer(id = id)) {
-                //　playerを確認
+            when (statusWrapperList[id].statusType) {
+                StatusType.Player -> {
+                    //　playerを確認
 
-                val player = playerStatusRepository.getStatus(id = id)
-                if (player.statusData.isActive.not()) {
-                    continue
+                    val player = playerStatusRepository.getStatus(id = id)
+                    if (player.statusData.isActive.not()) {
+                        continue
+                    }
+
+                    val action = actionRepository.getAction(playerId = id)
+                    val actionType = action.thisTurnAction
+                    if (actionType == ActionType.None) {
+                        continue
+                    }
                 }
 
-                val action = actionRepository.getAction(playerId = id)
-                val actionType = action.thisTurnAction
-                if (actionType == ActionType.None) {
-                    continue
-                }
-            } else {
-                val monsterId = id.toMonster()
-                val monster = battleInfoRepository
-                    .getStatus(id = monsterId)
+                StatusType.Enemy -> {
+                    val monsterId = id.toMonster()
+                    val monster = battleInfoRepository
+                        .getStatus(id = monsterId)
 
-                //　monsterを確認
-                if (monster.statusData.isActive.not()) {
-                    continue
+                    //　monsterを確認
+                    if (monster.statusData.isActive.not()) {
+                        continue
+                    }
                 }
             }
 
@@ -568,10 +571,9 @@ class ActionPhaseViewModel(
                     // fixme delayをなくせるようにする
                     // delayを消すと何も表示されないことがある
                     delay(100)
-                    if (isPlayer(id = statusId)) {
-                        playerAction()
-                    } else {
-                        enemyAction()
+                    when (statusWrapperList[statusId].statusType) {
+                        StatusType.Player -> playerAction()
+                        StatusType.Enemy -> enemyAction()
                     }
                 }
 
@@ -579,13 +581,13 @@ class ActionPhaseViewModel(
                 is ActionState.CurePoison,
                     -> {
                     val cured = (nextState as ActionState.Cure).list
-                    if (isPlayer(statusId)) {
-                        updatePlayerParameter.updateConditionList(
+                    when (statusWrapperList[statusId].statusType) {
+                        StatusType.Player -> updatePlayerParameter.updateConditionList(
                             id = statusId,
                             conditionList = cured,
                         )
-                    } else {
-                        updateEnemyParameter.updateConditionList(
+
+                        StatusType.Enemy -> updateEnemyParameter.updateConditionList(
                             id = statusId.toMonster(),
                             conditionList = cured
                         )
@@ -601,13 +603,13 @@ class ActionPhaseViewModel(
 
                 ActionState.Paralyze -> Unit
                 is ActionState.Poison -> {
-                    if (isPlayer(statusId)) {
-                        updatePlayerParameter.decHP(
+                    when (statusWrapperList[statusId].statusType) {
+                        StatusType.Player -> updatePlayerParameter.decHP(
                             id = statusId,
                             amount = nextState.damage,
                         )
-                    } else {
-                        updateEnemyParameter.decHP(
+
+                        StatusType.Enemy -> updateEnemyParameter.decHP(
                             id = statusId.toMonster(),
                             amount = nextState.damage,
                         )
@@ -617,10 +619,6 @@ class ActionPhaseViewModel(
                 ActionState.Start -> Unit
             }
         }
-    }
-
-    private fun isPlayer(id: Int): Boolean {
-        return id < playerNum
     }
 
     private fun Int.toMonster(): Int = this - playerNum
