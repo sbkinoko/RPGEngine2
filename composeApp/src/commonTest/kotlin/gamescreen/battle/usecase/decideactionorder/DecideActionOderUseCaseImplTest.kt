@@ -4,6 +4,7 @@ import core.domain.status.PlayerStatusTest.Companion.testActivePlayer
 import core.domain.status.param.StatusParameter
 import gamescreen.battle.ModuleBattle
 import gamescreen.battle.domain.ActionData
+import gamescreen.battle.domain.StatusType
 import gamescreen.battle.domain.StatusWrapper
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -21,6 +22,7 @@ class DecideActionOderUseCaseImplTest : KoinTest {
         id = 0,
         status = testActivePlayer,
         ActionData(),
+        statusType = StatusType.Player,
     )
 
     @BeforeTest
