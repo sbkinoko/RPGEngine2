@@ -167,7 +167,6 @@ class ActionPhaseViewModel(
         changeToNextCharacter()
     }
 
-
     fun getActionText(
         playerId: Int,
         actionState: ActionState,
@@ -372,16 +371,17 @@ class ActionPhaseViewModel(
     }
 
     private suspend fun enemyAction() {
-        val id = statusId
-        skillAction(
-            id = id.toMonster(),
-            statusData = getStatus(statusId),
-            statusList = playerStatusRepository.getPlayers(),
-            actionData = statusWrapperList[id].actionData,
-            attackUseCase = attackFromEnemyUseCase,
-            conditionUseCase = conditionFromEnemyUseCase,
-            updateParameter = updateEnemyParameter,
-        )
+        statusWrapperList[statusId].apply {
+            skillAction(
+                id = newId,
+                statusData = getStatus(statusId),
+                statusList = playerStatusRepository.getPlayers(),
+                actionData = actionData,
+                attackUseCase = attackFromEnemyUseCase,
+                conditionUseCase = conditionFromEnemyUseCase,
+                updateParameter = updateEnemyParameter,
+            )
+        }
     }
 
     private fun checkBattleFinish() {
@@ -513,7 +513,9 @@ class ActionPhaseViewModel(
                 StatusType.Player -> {
                     //　playerを確認
 
-                    val player = playerStatusRepository.getStatus(id = id)
+                    val player = playerStatusRepository.getStatus(
+                        id = statusWrapperList[id].newId,
+                    )
                     if (player.statusData.isActive.not()) {
                         continue
                     }
@@ -526,7 +528,7 @@ class ActionPhaseViewModel(
                 }
 
                 StatusType.Enemy -> {
-                    val monsterId = id.toMonster()
+                    val monsterId = statusWrapperList[id].newId
                     val monster = battleInfoRepository
                         .getStatus(id = monsterId)
 
@@ -598,14 +600,13 @@ class ActionPhaseViewModel(
 
                 ActionState.Paralyze -> Unit
                 is ActionState.Poison -> {
-                    when (statusWrapperList[statusId].statusType) {
-                        StatusType.Player -> updatePlayerParameter.decHP(
-                            id = statusId,
-                            amount = nextState.damage,
-                        )
+                    statusWrapperList[statusId].apply {
+                        when (statusType) {
+                            StatusType.Player -> updatePlayerParameter
 
-                        StatusType.Enemy -> updateEnemyParameter.decHP(
-                            id = statusId.toMonster(),
+                            StatusType.Enemy -> updateEnemyParameter
+                        }.decHP(
+                            id = newId,
                             amount = nextState.damage,
                         )
                     }
@@ -615,9 +616,6 @@ class ActionPhaseViewModel(
             }
         }
     }
-
-    private fun Int.toMonster(): Int = this - playerNum
-
 
     private fun initAction() {
         resetAttackingPlayer()
