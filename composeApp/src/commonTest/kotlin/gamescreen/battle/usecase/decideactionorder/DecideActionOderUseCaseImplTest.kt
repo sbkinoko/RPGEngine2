@@ -19,9 +19,8 @@ class DecideActionOderUseCaseImplTest : KoinTest {
     private val decideActionOrderUseCase: DecideActionOrderUseCase by inject()
 
     private val defaultData = StatusWrapper(
-        id = 0,
         status = testActivePlayer,
-        ActionData(),
+        actionData = ActionData(),
         statusType = StatusType.Player,
         newId = 0,
     )
@@ -44,7 +43,7 @@ class DecideActionOderUseCaseImplTest : KoinTest {
     fun check1() {
         val list = listOf(
             defaultData.copy(
-                id = 0,
+                newId = 1,
                 status = testActivePlayer.run {
                     copy(
                         statusData = statusData.copy(
@@ -54,7 +53,7 @@ class DecideActionOderUseCaseImplTest : KoinTest {
                 },
             ),
             defaultData.copy(
-                id = 1,
+                newId = 2,
                 status = testActivePlayer.run {
                     copy(
                         statusData = statusData.copy(
@@ -64,7 +63,7 @@ class DecideActionOderUseCaseImplTest : KoinTest {
                 },
             ),
             defaultData.copy(
-                id = 2,
+                newId = 3,
                 status = testActivePlayer.run {
                     copy(
                         statusData = statusData.copy(
@@ -76,9 +75,18 @@ class DecideActionOderUseCaseImplTest : KoinTest {
         )
 
         val result = decideActionOrderUseCase.invoke(list)
+
         assertEquals(
-            expected = listOf(2, 1, 0),
-            actual = result,
+            expected = 3,
+            actual = result[0].newId,
+        )
+        assertEquals(
+            expected = 2,
+            actual = result[1].newId,
+        )
+        assertEquals(
+            expected = 1,
+            actual = result[2].newId,
         )
     }
 
@@ -86,7 +94,7 @@ class DecideActionOderUseCaseImplTest : KoinTest {
     fun check2() {
         val list = listOf(
             defaultData.copy(
-                id = 0,
+                newId = 0,
                 status = testActivePlayer.run {
                     copy(
                         statusData = statusData.copy(
@@ -96,7 +104,7 @@ class DecideActionOderUseCaseImplTest : KoinTest {
                 },
             ),
             defaultData.copy(
-                id = 1,
+                newId = 1,
                 status = testActivePlayer.run {
                     copy(
                         statusData = statusData.copy(
@@ -106,7 +114,7 @@ class DecideActionOderUseCaseImplTest : KoinTest {
                 },
             ),
             defaultData.copy(
-                id = 2,
+                newId = 2,
                 status = testActivePlayer.run {
                     copy(
                         statusData = statusData.copy(
@@ -116,7 +124,7 @@ class DecideActionOderUseCaseImplTest : KoinTest {
                 },
             ),
             defaultData.copy(
-                id = 3,
+                newId = 3,
                 status = testActivePlayer.run {
                     copy(
                         statusData = statusData.copy(
@@ -128,9 +136,13 @@ class DecideActionOderUseCaseImplTest : KoinTest {
         )
 
         val result = decideActionOrderUseCase.invoke(list)
-        assertEquals(
-            expected = listOf(2, 3, 1, 0),
-            actual = result,
-        )
+
+        val expect = listOf(2, 3, 1, 0)
+        for (id: Int in 0 until expect.size) {
+            assertEquals(
+                expected = expect[id],
+                actual = result[id].newId,
+            )
+        }
     }
 }
