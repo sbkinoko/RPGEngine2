@@ -176,7 +176,9 @@ class ActionPhaseViewModel(
             return ""
         }
 
-        val actionStatusName = getActionStatusName(playerId)
+        val actionStatusName = getStatus(playerId)
+            .name
+
         val targetStatusName = getTargetStatusName(playerId)
         val actionName = getActionItem(playerId).name
 
@@ -210,12 +212,20 @@ class ActionPhaseViewModel(
         }
     }
 
-    private fun getActionStatusName(id: Int): String {
-        return statusWrapperList[id].status.statusData.name
-    }
 
     private fun getActionData(id: Int): ActionData {
         return statusWrapperList[id].actionData
+    }
+
+    private fun getStatus(characterId: Int): StatusData {
+        val repo = when (statusWrapperList[characterId].statusType) {
+            StatusType.Player -> playerStatusRepository
+            StatusType.Enemy -> battleInfoRepository
+        }
+
+        return repo
+            .getStatus(statusWrapperList[characterId].newId)
+            .statusData
     }
 
     private fun getActionItem(id: Int): Item {
