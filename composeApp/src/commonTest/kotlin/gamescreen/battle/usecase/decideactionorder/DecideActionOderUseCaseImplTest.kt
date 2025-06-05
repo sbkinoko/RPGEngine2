@@ -23,6 +23,7 @@ class DecideActionOderUseCaseImplTest : KoinTest {
         status = testActivePlayer,
         ActionData(),
         statusType = StatusType.Player,
+        newId = 0,
     )
 
     @BeforeTest
