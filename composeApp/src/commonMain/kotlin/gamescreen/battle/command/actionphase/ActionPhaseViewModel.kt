@@ -12,7 +12,9 @@ import core.domain.item.skill.AttackSkill
 import core.domain.item.skill.ConditionSkill
 import core.domain.item.skill.HealSkill
 import core.domain.status.Character
+import core.domain.status.PlayerStatus
 import core.domain.status.StatusData
+import core.domain.status.param.EXP
 import core.repository.battlemonster.BattleInfoRepository
 import core.repository.player.PlayerStatusRepository
 import core.usecase.item.usetool.UseToolUseCase
@@ -107,8 +109,8 @@ class ActionPhaseViewModel(
 
     private var attackingNumber = NONE_PLAYER
 
-    private val mutableAttackingStatusId: MutableStateFlow<Int> =
-        MutableStateFlow(NONE_PLAYER)
+    private val mutableAttackingStatusId: MutableStateFlow<StatusWrapper> =
+        MutableStateFlow(dummyStatus)
     val attackingStatusId = mutableAttackingStatusId.asStateFlow()
 
     private val monsterNum: Int
@@ -120,17 +122,15 @@ class ActionPhaseViewModel(
         itemNum = 1,
     )
 
-    private lateinit var speedList: List<Int>
+    private lateinit var speedList: List<StatusWrapper>
 
-    private val statusId: Int
+    private val actionStatusWrapper: StatusWrapper
         get() = speedList[attackingNumber]
 
     val actionState =
         mutableStateOf<ActionState>(ActionState.Start)
 
-
     private var statusWrapperList: List<StatusWrapper> = emptyList()
-
 
     fun init() {
         val list = mutableListOf<StatusWrapper>()
@@ -138,7 +138,6 @@ class ActionPhaseViewModel(
             .mapIndexed { id, status ->
                 list += StatusWrapper(
                     status = status,
-                    id = id,
                     actionData = actionRepository.getAction(playerId = id),
                     statusType = StatusType.Player,
                     newId = id,
@@ -153,7 +152,6 @@ class ActionPhaseViewModel(
                 )
                 list += StatusWrapper(
                     status = status,
-                    id = index + playerNum,
                     actionData = action,
                     statusType = StatusType.Enemy,
                     newId = index,
@@ -168,18 +166,18 @@ class ActionPhaseViewModel(
     }
 
     fun getActionText(
-        playerId: Int,
+        statusWrapper: StatusWrapper,
         actionState: ActionState,
     ): String {
-        if (playerId < 0) {
+        if (statusWrapper.statusType == StatusType.None) {
             return ""
         }
 
-        val actionStatusName = getStatus(playerId)
+        val actionStatusName = getStatus(statusWrapper)
             .name
 
-        val targetStatusName = getTargetStatusName(playerId)
-        val actionName = getActionItem(playerId).name
+        val targetStatusName = getTargetStatusName(statusWrapper)
+        val actionName = getActionItem(statusWrapper).name
 
         return when (actionState) {
             ActionState.Paralyze -> {
@@ -211,24 +209,23 @@ class ActionPhaseViewModel(
         }
     }
 
-
-    private fun getActionData(id: Int): ActionData {
-        return statusWrapperList[id].actionData
-    }
-
-    private fun getStatus(characterId: Int): StatusData {
-        val repo = when (statusWrapperList[characterId].statusType) {
+    /**
+     * statusWrapperを入れて対応するステータスを取得
+     */
+    private fun getStatus(statusWrapper: StatusWrapper): StatusData {
+        val repo = when (statusWrapper.statusType) {
             StatusType.Player -> playerStatusRepository
             StatusType.Enemy -> battleInfoRepository
+            StatusType.None -> throw RuntimeException("Noneで処理はない")
         }
 
         return repo
-            .getStatus(statusWrapperList[characterId].newId)
+            .getStatus(statusWrapper.newId)
             .statusData
     }
 
-    private fun getActionItem(id: Int): Item {
-        val action = getActionData(id = id)
+    private fun getActionItem(statusWrapper: StatusWrapper): Item {
+        val action = statusWrapper.actionData
         return when (action.thisTurnAction) {
             ActionType.Normal -> skillRepository.getItem(SkillId.Normal1)
             ActionType.Skill -> skillRepository.getItem(action.skillId)
@@ -239,16 +236,19 @@ class ActionPhaseViewModel(
         }
     }
 
-    private fun getTargetStatusName(id: Int): String {
-        return when (statusWrapperList[id].statusType) {
-            StatusType.Player -> getPlayerActionTargetName(id = id)
-            StatusType.Enemy -> getMonsterTargetName(id = id)
+    private fun getTargetStatusName(statusWrapper: StatusWrapper): String {
+        return when (statusWrapper.statusType) {
+            StatusType.Player -> getPlayerActionTargetName(statusWrapper = statusWrapper)
+            StatusType.Enemy -> getMonsterTargetName(statusWrapper = statusWrapper)
+            StatusType.None -> throw RuntimeException("Noneで処理はない")
         }
     }
 
-    private fun getPlayerActionTargetName(id: Int): String {
-        val action = statusWrapperList[id].actionData
-        val item = getActionItem(id = id)
+    private fun getPlayerActionTargetName(statusWrapper: StatusWrapper): String {
+        val action = statusWrapper.actionData
+        val item = getActionItem(statusWrapper = statusWrapper)
+
+        val attackerRepository = playerStatusRepository
 
         return when (item as TypeKind) {
             is ConditionItem,
@@ -269,14 +269,14 @@ class ActionPhaseViewModel(
 
             is HealItem -> {
                 val targetId = action.ally
-                playerStatusRepository.getStatus(targetId).statusData.name
+                attackerRepository.getStatus(targetId).statusData.name
             }
         }
     }
 
-    private fun getMonsterTargetName(id: Int): String {
-        val action = statusWrapperList[id].actionData
-        val item = getActionItem(id)
+    private fun getMonsterTargetName(statusWrapper: StatusWrapper): String {
+        val action = statusWrapper.actionData
+        val item = getActionItem(statusWrapper = statusWrapper)
 
         return when (item as TypeKind) {
             is ConditionItem,
@@ -332,24 +332,23 @@ class ActionPhaseViewModel(
     }
 
     private suspend fun playerAction() {
-        val id = statusId
-        val actionType = statusWrapperList[id].actionData.thisTurnAction
+        val actionType = actionStatusWrapper.actionData.thisTurnAction
 
         when (actionType) {
             ActionType.Normal -> {
                 //　攻撃
                 attackFromPlayerUseCase(
-                    target = actionRepository.getAction(id).target,
-                    attacker = getStatus(statusId),
+                    target = actionRepository.getAction(actionStatusWrapper.newId).target,
+                    attacker = getStatus(actionStatusWrapper),
                     damageType = DamageType.AtkMultiple(1),
                 )
             }
 
             ActionType.Skill -> {
                 skillAction(
-                    id = id,
-                    statusData = getStatus(statusId),
-                    actionData = actionRepository.getAction(id),
+                    id = actionStatusWrapper.newId,
+                    statusData = getStatus(actionStatusWrapper),
+                    actionData = actionRepository.getAction(actionStatusWrapper.newId),
                     statusList = battleInfoRepository.getMonsters(),
                     attackUseCase = attackFromPlayerUseCase,
                     conditionUseCase = conditionFromPlayerUseCase,
@@ -359,9 +358,9 @@ class ActionPhaseViewModel(
 
             ActionType.TOOL -> {
                 toolAction(
-                    userId = id,
+                    userId = actionStatusWrapper.newId,
                     actionData = actionRepository.getAction(
-                        id,
+                        actionStatusWrapper.newId,
                     ),
                 )
             }
@@ -371,10 +370,10 @@ class ActionPhaseViewModel(
     }
 
     private suspend fun enemyAction() {
-        statusWrapperList[statusId].apply {
+        actionStatusWrapper.apply {
             skillAction(
                 id = newId,
-                statusData = getStatus(statusId),
+                statusData = getStatus(actionStatusWrapper),
                 statusList = playerStatusRepository.getPlayers(),
                 actionData = actionData,
                 attackUseCase = attackFromEnemyUseCase,
@@ -507,20 +506,18 @@ class ActionPhaseViewModel(
                 break
             }
 
-            val id = statusId
-
-            when (statusWrapperList[id].statusType) {
+            when (actionStatusWrapper.statusType) {
                 StatusType.Player -> {
                     //　playerを確認
 
                     val player = playerStatusRepository.getStatus(
-                        id = statusWrapperList[id].newId,
+                        id = actionStatusWrapper.newId,
                     )
                     if (player.statusData.isActive.not()) {
                         continue
                     }
 
-                    val action = actionRepository.getAction(playerId = id)
+                    val action = actionRepository.getAction(playerId = actionStatusWrapper.newId)
                     val actionType = action.thisTurnAction
                     if (actionType == ActionType.None) {
                         continue
@@ -528,7 +525,7 @@ class ActionPhaseViewModel(
                 }
 
                 StatusType.Enemy -> {
-                    val monsterId = statusWrapperList[id].newId
+                    val monsterId = actionStatusWrapper.newId
                     val monster = battleInfoRepository
                         .getStatus(id = monsterId)
 
@@ -537,10 +534,12 @@ class ActionPhaseViewModel(
                         continue
                     }
                 }
+
+                StatusType.None -> throw RuntimeException("Noneで処理はない")
             }
 
             // 行動可能なのでデータ更新
-            mutableAttackingStatusId.value = id
+            mutableAttackingStatusId.value = actionStatusWrapper
             actionState.value = ActionState.Start
             changeActionPhase()
             break
@@ -551,7 +550,7 @@ class ActionPhaseViewModel(
 
         // fixme getNextStateの引数にstatusを追加して、その中で処理したい
         // ステータスに関連する処理も内部で行うようにする
-        if (getStatus(statusId).isActive.not()) {
+        if (getStatus(actionStatusWrapper).isActive.not()) {
             // 倒れていたらnextに変更
             actionState.value = ActionState.Next
             return
@@ -559,7 +558,7 @@ class ActionPhaseViewModel(
 
         // 状態の切り替え
         val nextState = actionState.value.getNextState(
-            conditionList = getStatus(statusId)
+            conditionList = getStatus(actionStatusWrapper)
                 .conditionList
         )
         actionState.value = nextState
@@ -571,9 +570,10 @@ class ActionPhaseViewModel(
                     // fixme delayをなくせるようにする
                     // delayを消すと何も表示されないことがある
                     delay(100)
-                    when (statusWrapperList[statusId].statusType) {
+                    when (actionStatusWrapper.statusType) {
                         StatusType.Player -> playerAction()
                         StatusType.Enemy -> enemyAction()
+                        StatusType.None -> throw RuntimeException("Noneで処理はない")
                     }
                 }
 
@@ -582,11 +582,12 @@ class ActionPhaseViewModel(
                     -> {
                     val cured = (nextState as ActionState.Cure).list
 
-                    when (statusWrapperList[statusId].statusType) {
+                    when (actionStatusWrapper.statusType) {
                         StatusType.Player -> updatePlayerParameter
                         StatusType.Enemy -> updateEnemyParameter
+                        StatusType.None -> throw RuntimeException("Noneで処理はない")
                     }.updateConditionList(
-                        id = statusWrapperList[statusId].newId,
+                        id = actionStatusWrapper.newId,
                         conditionList = cured,
                     )
                 }
@@ -600,11 +601,12 @@ class ActionPhaseViewModel(
 
                 ActionState.Paralyze -> Unit
                 is ActionState.Poison -> {
-                    statusWrapperList[statusId].apply {
+                    actionStatusWrapper.apply {
                         when (statusType) {
                             StatusType.Player -> updatePlayerParameter
 
                             StatusType.Enemy -> updateEnemyParameter
+                            StatusType.None -> throw RuntimeException("Noneで処理はない")
                         }.decHP(
                             id = newId,
                             amount = nextState.damage,
@@ -623,7 +625,7 @@ class ActionPhaseViewModel(
     }
 
     private fun resetAttackingPlayer() {
-        mutableAttackingStatusId.value = NONE_PLAYER
+        mutableAttackingStatusId.value = dummyStatus
         attackingNumber = NONE_PLAYER
     }
 
@@ -633,5 +635,17 @@ class ActionPhaseViewModel(
 
     companion object {
         private const val NONE_PLAYER = -1
+        private val dummyStatus = StatusWrapper(
+            newId = -1,
+            statusType = StatusType.None,
+            status = PlayerStatus(
+                statusData = StatusData(name = ""),
+                toolList = listOf(),
+                skillList = listOf(),
+                exp = EXP(listOf()),
+            ),
+            actionData = ActionData(),
+
+            )
     }
 }

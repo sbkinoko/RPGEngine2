@@ -5,5 +5,5 @@ import gamescreen.battle.domain.StatusWrapper
 interface DecideActionOrderUseCase {
     operator fun invoke(
         statusList: List<StatusWrapper>,
-    ): List<Int>
+    ): List<StatusWrapper>
 }
