@@ -30,6 +30,7 @@ import gamescreen.battle.domain.ActionType
 import gamescreen.battle.domain.AttackPhaseCommand
 import gamescreen.battle.domain.BattleCommandType
 import gamescreen.battle.domain.FinishCommand
+import gamescreen.battle.domain.StatusType
 import gamescreen.battle.domain.StatusWrapper
 import gamescreen.battle.repository.action.ActionRepository
 import gamescreen.battle.service.isannihilation.IsAnnihilationService
@@ -139,6 +140,7 @@ class ActionPhaseViewModel(
                     status = status,
                     id = id,
                     actionData = actionRepository.getAction(playerId = id),
+                    statusType = StatusType.Player,
                 )
             }
 
@@ -152,6 +154,7 @@ class ActionPhaseViewModel(
                     status = status,
                     id = index + playerNum,
                     actionData = action,
+                    statusType = StatusType.Enemy,
                 )
             }
         statusWrapperList = list
