@@ -115,6 +115,21 @@ class SkillRepositoryImpl : SkillRepository {
                     rest = 5,
                 )
             )
+
+            SkillId.DeBufAtk -> BufSkill(
+                name = "攻撃ダウン",
+                costType = CostType.MP(1),
+                targetNum = 1,
+                usablePlace = Place.BATTLE,
+                targetType = TargetType.Enemy,
+                targetStatusType = TargetStatusType.ACTIVE,
+                parameterType = ParameterType.ATK,
+                buf = Buf(
+                    bufType = BufType.Add,
+                    value = -10,
+                    rest = 5,
+                )
+            )
         }
     }
 }

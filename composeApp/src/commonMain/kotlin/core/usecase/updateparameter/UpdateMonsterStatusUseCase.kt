@@ -3,6 +3,7 @@ package core.usecase.updateparameter
 import core.domain.item.BufEffect
 import core.domain.status.ConditionType
 import core.domain.status.monster.MonsterStatus
+import core.domain.status.param.ParameterType
 import core.repository.status.StatusRepository
 
 class UpdateMonsterStatusUseCase(
@@ -71,7 +72,29 @@ class UpdateMonsterStatusUseCase(
     }
 
     override suspend fun addBuf(id: Int, buf: BufEffect) {
-        TODO("Not yet implemented")
+        val status = statusRepository.getStatus(id)
+
+        val updated = when (buf.parameterType) {
+            ParameterType.ATK -> {
+                status.statusData.copy(
+                    atk = status.statusData.atk.grantBuf(
+                        buf = buf.buf
+                    )
+                )
+            }
+
+            ParameterType.DEF -> TODO()
+            ParameterType.HP -> TODO()
+            ParameterType.MP -> TODO()
+            ParameterType.SPD -> TODO()
+        }
+
+        statusRepository.setStatus(
+            id = id,
+            status = status.copy(
+                statusData = updated
+            ),
+        )
     }
 
     override suspend fun spendTurn(id: Int) {
