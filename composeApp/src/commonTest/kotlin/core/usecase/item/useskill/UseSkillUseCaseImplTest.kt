@@ -4,7 +4,7 @@ import core.domain.Place
 import core.domain.item.CostType
 import core.domain.item.DamageType
 import core.domain.item.Skill
-import core.domain.item.TargetType
+import core.domain.item.TargetStatusType
 import core.domain.item.skill.AttackSkill
 import core.domain.item.skill.HealSkill
 import core.domain.status.ConditionType
@@ -267,7 +267,7 @@ class UseSkillUseCaseImplTest {
                     costType = CostType.MP(1),
                     usablePlace = Place.MAP,
                     healAmount = 1,
-                    targetType = TargetType.ACTIVE,
+                    targetStatusType = TargetStatusType.ACTIVE,
                 )
             }
         }

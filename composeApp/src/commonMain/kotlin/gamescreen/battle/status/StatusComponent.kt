@@ -42,7 +42,7 @@ fun StatusComponent(
     DisableBox(
         modifier = modifier,
         isDisable = (isAllySelecting &&
-                selectAllyViewModel.targetType.canSelect(status).not()),
+                selectAllyViewModel.targetStatusType.canSelect(status).not()),
     ) {
         Column(
             modifier = Modifier.fillMaxSize().then(

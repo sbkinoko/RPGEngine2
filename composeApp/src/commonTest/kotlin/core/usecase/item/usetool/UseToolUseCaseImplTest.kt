@@ -2,7 +2,7 @@ package core.usecase.item.usetool
 
 import core.domain.Place
 import core.domain.item.CostType
-import core.domain.item.TargetType
+import core.domain.item.TargetStatusType
 import core.domain.item.Tool
 import core.domain.item.tool.HealTool
 import core.domain.status.ConditionType
@@ -95,7 +95,7 @@ class UseToolUseCaseImplTest : KoinTest {
                     costType = CostType.Consume,
                     isDisposable = true,
                     healAmount = 10,
-                    targetType = TargetType.ACTIVE
+                    targetStatusType = TargetStatusType.ACTIVE
                 )
             }
         }
@@ -150,7 +150,7 @@ class UseToolUseCaseImplTest : KoinTest {
                     costType = CostType.NotConsume,
                     isDisposable = true,
                     healAmount = 10,
-                    targetType = TargetType.ACTIVE
+                    targetStatusType = TargetStatusType.ACTIVE
                 )
             }
         }
@@ -204,7 +204,7 @@ class UseToolUseCaseImplTest : KoinTest {
                     costType = CostType.Consume,
                     isDisposable = true,
                     healAmount = 10,
-                    targetType = TargetType.ACTIVE
+                    targetStatusType = TargetStatusType.ACTIVE
                 )
             }
         }

@@ -2,7 +2,7 @@ package core.domain.item
 
 import core.domain.status.StatusData
 
-enum class TargetType {
+enum class TargetStatusType {
     ACTIVE {
         override fun canSelect(status: StatusData): Boolean {
             return status.isActive

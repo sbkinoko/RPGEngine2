@@ -4,7 +4,7 @@ import core.ModuleCore
 import core.domain.Place
 import core.domain.item.CostType
 import core.domain.item.Skill
-import core.domain.item.TargetType
+import core.domain.item.TargetStatusType
 import core.domain.item.skill.HealSkill
 import core.domain.status.PlayerStatusTest
 import core.service.CheckCanUseService
@@ -28,7 +28,7 @@ class CheckCanUseSkillUseCaseImplTest : KoinTest {
         healAmount = 1,
         costType = CostType.MP(1),
         targetNum = 1,
-        targetType = TargetType.ACTIVE,
+        targetStatusType = TargetStatusType.ACTIVE,
         usablePlace = Place.MAP,
     )
 

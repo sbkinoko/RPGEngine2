@@ -16,7 +16,7 @@ interface HealItem : TypeKind {
     /**
      * 回復対象にとれる状態
      */
-    val targetType: TargetType
+    val targetStatusType: TargetStatusType
 }
 
 interface AttackItem : TypeKind {

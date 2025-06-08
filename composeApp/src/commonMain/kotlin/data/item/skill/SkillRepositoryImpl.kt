@@ -4,7 +4,7 @@ import core.domain.Place
 import core.domain.item.CostType
 import core.domain.item.DamageType
 import core.domain.item.Skill
-import core.domain.item.TargetType
+import core.domain.item.TargetStatusType
 import core.domain.item.skill.AttackSkill
 import core.domain.item.skill.ConditionSkill
 import core.domain.item.skill.HealSkill
@@ -53,7 +53,7 @@ class SkillRepositoryImpl : SkillRepository {
                 healAmount = 10,
                 costType = CostType.MP(1),
                 targetNum = 1,
-                targetType = TargetType.ACTIVE,
+                targetStatusType = TargetStatusType.ACTIVE,
                 usablePlace = Place.BOTH,
             )
 
@@ -62,7 +62,7 @@ class SkillRepositoryImpl : SkillRepository {
                 healAmount = 10,
                 costType = CostType.MP(1),
                 targetNum = 1,
-                targetType = TargetType.INACTIVE,
+                targetStatusType = TargetStatusType.INACTIVE,
                 usablePlace = Place.BOTH,
             )
 
