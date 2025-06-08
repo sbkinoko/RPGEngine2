@@ -109,4 +109,12 @@ data class StatusData(
             speed = speed.inc(statusIncrease.speed),
         )
     }
+
+    fun reduceBuf(): StatusData {
+        return copy(
+            atk = atk.reduceBuf(),
+            def = def.reduceBuf(),
+            speed = speed.reduceBuf(),
+        )
+    }
 }

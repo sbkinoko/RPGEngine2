@@ -1,6 +1,8 @@
 package core.domain.item
 
 import core.domain.status.ConditionType
+import core.domain.status.param.Buf
+import core.domain.status.param.ParameterType
 
 sealed interface EffectKind : Item
 
@@ -20,4 +22,9 @@ interface AttackEffect : EffectKind {
 
 interface ConditionEffect : EffectKind {
     val conditionType: ConditionType
+}
+
+interface BufEffect : EffectKind {
+    val parameterType: ParameterType
+    val buf: Buf<*>
 }

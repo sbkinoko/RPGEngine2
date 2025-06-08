@@ -1,6 +1,7 @@
 package core.usecase.item.useskill
 
 import core.domain.Place
+import core.domain.item.BufEffect
 import core.domain.item.CostType
 import core.domain.item.DamageType
 import core.domain.item.Skill
@@ -87,6 +88,14 @@ class UseSkillUseCaseImplTest {
 
         override suspend fun updateConditionList(id: Int, conditionList: List<ConditionType>) {
 
+        }
+
+        override suspend fun addBuf(id: Int, buf: BufEffect) {
+            throw NotImplementedError()
+        }
+
+        override suspend fun spendTurn(id: Int) {
+            throw NotImplementedError()
         }
     }
 
@@ -239,6 +248,14 @@ class UseSkillUseCaseImplTest {
 
             }
 
+            override suspend fun addBuf(id: Int, buf: BufEffect) {
+                throw NotImplementedError()
+            }
+
+            override suspend fun spendTurn(id: Int) {
+                throw NotImplementedError()
+            }
+
             override suspend fun incHP(id: Int, amount: Int) {
 
             }
@@ -296,7 +313,15 @@ class UseSkillUseCaseImplTest {
             }
 
             override suspend fun updateConditionList(id: Int, conditionList: List<ConditionType>) {
+                throw NotImplementedError()
+            }
 
+            override suspend fun addBuf(id: Int, buf: BufEffect) {
+                throw NotImplementedError()
+            }
+
+            override suspend fun spendTurn(id: Int) {
+                throw NotImplementedError()
             }
         }
 
@@ -353,6 +378,14 @@ class UseSkillUseCaseImplTest {
 
             override suspend fun updateConditionList(id: Int, conditionList: List<ConditionType>) {
 
+            }
+
+            override suspend fun addBuf(id: Int, buf: BufEffect) {
+                throw NotImplementedError()
+            }
+
+            override suspend fun spendTurn(id: Int) {
+                throw NotImplementedError()
             }
         }
 
