@@ -4,6 +4,7 @@ import core.domain.Place
 import core.domain.item.ConditionItem
 import core.domain.item.CostType
 import core.domain.item.Skill
+import core.domain.item.TargetType
 import core.domain.status.ConditionType
 
 class ConditionSkill(
@@ -12,6 +13,7 @@ class ConditionSkill(
     override val costType: CostType,
     override val usablePlace: Place,
     override val conditionType: ConditionType,
+    override val targetType: TargetType,
 ) : Skill, ConditionItem {
     override val explain: String
         get() {
