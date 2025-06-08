@@ -24,6 +24,7 @@ class SkillRepositoryImpl : SkillRepository {
                 targetNum = 1,
                 usablePlace = Place.NEITHER,
                 targetType = TargetType.Enemy,
+                targetStatusType = TargetStatusType.ACTIVE,
             )
 
             SkillId.AttackToTwo -> AttackSkill(
@@ -33,6 +34,7 @@ class SkillRepositoryImpl : SkillRepository {
                 targetNum = 2,
                 usablePlace = Place.BATTLE,
                 targetType = TargetType.Enemy,
+                targetStatusType = TargetStatusType.ACTIVE,
             )
 
             SkillId.Normal1 -> AttackSkill(
@@ -42,6 +44,7 @@ class SkillRepositoryImpl : SkillRepository {
                 targetNum = 1,
                 usablePlace = Place.BATTLE,
                 targetType = TargetType.Enemy,
+                targetStatusType = TargetStatusType.ACTIVE,
             )
 
             SkillId.Normal2 -> AttackSkill(
@@ -51,6 +54,7 @@ class SkillRepositoryImpl : SkillRepository {
                 targetNum = 1,
                 usablePlace = Place.BATTLE,
                 targetType = TargetType.Enemy,
+                targetStatusType = TargetStatusType.ACTIVE,
             )
 
             SkillId.Heal -> HealSkill(
@@ -80,6 +84,7 @@ class SkillRepositoryImpl : SkillRepository {
                 usablePlace = Place.BATTLE,
                 conditionType = ConditionType.Paralysis(),
                 targetType = TargetType.Enemy,
+                targetStatusType = TargetStatusType.ACTIVE,
             )
 
             SkillId.Poison -> ConditionSkill(
@@ -89,6 +94,7 @@ class SkillRepositoryImpl : SkillRepository {
                 usablePlace = Place.BATTLE,
                 conditionType = ConditionType.Poison(),
                 targetType = TargetType.Enemy,
+                targetStatusType = TargetStatusType.ACTIVE,
             )
         }
     }
