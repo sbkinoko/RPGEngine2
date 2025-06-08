@@ -60,6 +60,7 @@ class SelectAllyViewModel : BattleChildViewModel() {
                 }
             }
 
+            // fixme targetStatusTypeを上のクラスに移動
             if (item is HealItem) {
                 return item.targetStatusType
             }

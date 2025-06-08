@@ -5,6 +5,7 @@ import core.domain.Place
 import core.domain.item.CostType
 import core.domain.item.Skill
 import core.domain.item.TargetStatusType
+import core.domain.item.TargetType
 import core.domain.item.skill.HealSkill
 import core.domain.status.PlayerStatusTest
 import core.service.CheckCanUseService
@@ -30,6 +31,7 @@ class CheckCanUseSkillUseCaseImplTest : KoinTest {
         targetNum = 1,
         targetStatusType = TargetStatusType.ACTIVE,
         usablePlace = Place.MAP,
+        targetType = TargetType.Ally,
     )
 
     private val playerStatusWithMP = PlayerStatusTest.testActivePlayer

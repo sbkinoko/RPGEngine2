@@ -5,6 +5,7 @@ import core.domain.item.CostType
 import core.domain.item.HealItem
 import core.domain.item.Skill
 import core.domain.item.TargetStatusType
+import core.domain.item.TargetType
 
 data class HealSkill(
     override val name: String,
@@ -13,6 +14,7 @@ data class HealSkill(
     override val usablePlace: Place,
     override val healAmount: Int,
     override val targetStatusType: TargetStatusType,
+    override val targetType: TargetType,
 ) : Skill, HealItem {
     override val explain: String
         get() {

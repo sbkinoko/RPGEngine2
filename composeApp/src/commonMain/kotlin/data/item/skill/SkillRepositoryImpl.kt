@@ -5,6 +5,7 @@ import core.domain.item.CostType
 import core.domain.item.DamageType
 import core.domain.item.Skill
 import core.domain.item.TargetStatusType
+import core.domain.item.TargetType
 import core.domain.item.skill.AttackSkill
 import core.domain.item.skill.ConditionSkill
 import core.domain.item.skill.HealSkill
@@ -22,6 +23,7 @@ class SkillRepositoryImpl : SkillRepository {
                 costType = CostType.MP(9999),
                 targetNum = 1,
                 usablePlace = Place.NEITHER,
+                targetType = TargetType.Enemy,
             )
 
             SkillId.AttackToTwo -> AttackSkill(
@@ -29,7 +31,8 @@ class SkillRepositoryImpl : SkillRepository {
                 damageType = DamageType.AtkMultiple(1),
                 costType = CostType.MP(1),
                 targetNum = 2,
-                usablePlace = Place.BATTLE
+                usablePlace = Place.BATTLE,
+                targetType = TargetType.Enemy,
             )
 
             SkillId.Normal1 -> AttackSkill(
@@ -38,6 +41,7 @@ class SkillRepositoryImpl : SkillRepository {
                 costType = CostType.MP(0),
                 targetNum = 1,
                 usablePlace = Place.BATTLE,
+                targetType = TargetType.Enemy,
             )
 
             SkillId.Normal2 -> AttackSkill(
@@ -46,6 +50,7 @@ class SkillRepositoryImpl : SkillRepository {
                 costType = CostType.MP(0),
                 targetNum = 1,
                 usablePlace = Place.BATTLE,
+                targetType = TargetType.Enemy,
             )
 
             SkillId.Heal -> HealSkill(
@@ -55,6 +60,7 @@ class SkillRepositoryImpl : SkillRepository {
                 targetNum = 1,
                 targetStatusType = TargetStatusType.ACTIVE,
                 usablePlace = Place.BOTH,
+                targetType = TargetType.Ally,
             )
 
             SkillId.Revive -> HealSkill(
@@ -64,6 +70,7 @@ class SkillRepositoryImpl : SkillRepository {
                 targetNum = 1,
                 targetStatusType = TargetStatusType.INACTIVE,
                 usablePlace = Place.BOTH,
+                targetType = TargetType.Ally,
             )
 
             SkillId.Paralysis -> ConditionSkill(
@@ -72,6 +79,7 @@ class SkillRepositoryImpl : SkillRepository {
                 targetNum = 1,
                 usablePlace = Place.BATTLE,
                 conditionType = ConditionType.Paralysis(),
+                targetType = TargetType.Enemy,
             )
 
             SkillId.Poison -> ConditionSkill(
@@ -80,6 +88,7 @@ class SkillRepositoryImpl : SkillRepository {
                 targetNum = 1,
                 usablePlace = Place.BATTLE,
                 conditionType = ConditionType.Poison(),
+                targetType = TargetType.Enemy,
             )
         }
     }
