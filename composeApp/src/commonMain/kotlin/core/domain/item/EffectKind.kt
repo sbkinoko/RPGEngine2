@@ -2,22 +2,22 @@ package core.domain.item
 
 import core.domain.status.ConditionType
 
-sealed interface TypeKind : Item
+sealed interface EffectKind : Item
 
 /**
  * 回復itemに必要な変数
  */
-interface HealItem : TypeKind {
+interface HealEffect : EffectKind {
     /**
      * 回復量
      */
     val healAmount: Int
 }
 
-interface AttackItem : TypeKind {
+interface AttackEffect : EffectKind {
     val damageType: DamageType
 }
 
-interface ConditionItem : TypeKind {
+interface ConditionEffect : EffectKind {
     val conditionType: ConditionType
 }

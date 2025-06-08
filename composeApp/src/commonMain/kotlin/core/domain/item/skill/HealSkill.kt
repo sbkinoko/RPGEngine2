@@ -2,7 +2,7 @@ package core.domain.item.skill
 
 import core.domain.Place
 import core.domain.item.CostType
-import core.domain.item.HealItem
+import core.domain.item.HealEffect
 import core.domain.item.Skill
 import core.domain.item.TargetStatusType
 import core.domain.item.TargetType
@@ -15,7 +15,7 @@ data class HealSkill(
     override val healAmount: Int,
     override val targetStatusType: TargetStatusType,
     override val targetType: TargetType,
-) : Skill, HealItem {
+) : Skill, HealEffect {
     override val explain: String
         get() {
             return name
