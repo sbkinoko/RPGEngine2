@@ -12,4 +12,9 @@ interface Item {
     // fixme リストで持つようにすれば処理の簡略化ができそう
     // コストの種類が増えた時に楽できる
     val costType: CostType
+
+    /**
+     * 対象にとれるステータスの状態
+     */
+    val targetStatusType: TargetStatusType
 }

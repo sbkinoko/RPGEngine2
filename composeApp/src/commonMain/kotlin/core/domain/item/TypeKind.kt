@@ -12,11 +12,6 @@ interface HealItem : TypeKind {
      * 回復量
      */
     val healAmount: Int
-
-    /**
-     * 回復対象にとれる状態
-     */
-    val targetStatusType: TargetStatusType
 }
 
 interface AttackItem : TypeKind {
