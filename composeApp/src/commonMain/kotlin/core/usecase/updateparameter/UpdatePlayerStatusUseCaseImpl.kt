@@ -67,7 +67,7 @@ class UpdatePlayerStatusUseCaseImpl(
 
     override suspend fun addBuf(
         id: Int,
-        buf: BufEffect
+        buf: BufEffect,
     ) {
         val status = statusRepository.getStatus(id)
 
