@@ -115,6 +115,7 @@ class UseSkillUseCaseImplTest {
                     usablePlace = Place.MAP,
                     damageType = DamageType.AtkMultiple(1),
                     targetType = TargetType.Enemy,
+                    targetStatusType = TargetStatusType.ACTIVE,
                 )
             }
         }
@@ -174,6 +175,7 @@ class UseSkillUseCaseImplTest {
                     usablePlace = Place.MAP,
                     damageType = DamageType.AtkMultiple(1),
                     targetType = TargetType.Enemy,
+                    targetStatusType = TargetStatusType.ACTIVE,
                 )
             }
         }
@@ -217,6 +219,7 @@ class UseSkillUseCaseImplTest {
                     usablePlace = Place.MAP,
                     damageType = DamageType.AtkMultiple(1),
                     targetType = TargetType.Enemy,
+                    targetStatusType = TargetStatusType.ACTIVE,
                 )
             }
         }
@@ -327,8 +330,8 @@ class UseSkillUseCaseImplTest {
                     costType = CostType.MP(1),
                     usablePlace = Place.MAP,
                     damageType = DamageType.AtkMultiple(1),
-
                     targetType = TargetType.Enemy,
+                    targetStatusType = TargetStatusType.ACTIVE,
                 )
             }
         }
