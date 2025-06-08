@@ -5,6 +5,7 @@ import core.domain.item.CostType
 import core.domain.item.DamageType
 import core.domain.item.Skill
 import core.domain.item.TargetStatusType
+import core.domain.item.TargetType
 import core.domain.item.skill.AttackSkill
 import core.domain.item.skill.HealSkill
 import core.domain.status.ConditionType
@@ -113,6 +114,7 @@ class UseSkillUseCaseImplTest {
                     costType = CostType.MP(1),
                     usablePlace = Place.MAP,
                     damageType = DamageType.AtkMultiple(1),
+                    targetType = TargetType.Enemy,
                 )
             }
         }
@@ -171,6 +173,7 @@ class UseSkillUseCaseImplTest {
                     costType = CostType.MP(1),
                     usablePlace = Place.MAP,
                     damageType = DamageType.AtkMultiple(1),
+                    targetType = TargetType.Enemy,
                 )
             }
         }
@@ -213,6 +216,7 @@ class UseSkillUseCaseImplTest {
                     costType = CostType.MP(1),
                     usablePlace = Place.MAP,
                     damageType = DamageType.AtkMultiple(1),
+                    targetType = TargetType.Enemy,
                 )
             }
         }
@@ -268,6 +272,7 @@ class UseSkillUseCaseImplTest {
                     usablePlace = Place.MAP,
                     healAmount = 1,
                     targetStatusType = TargetStatusType.ACTIVE,
+                    targetType = TargetType.Enemy,
                 )
             }
         }
@@ -322,6 +327,8 @@ class UseSkillUseCaseImplTest {
                     costType = CostType.MP(1),
                     usablePlace = Place.MAP,
                     damageType = DamageType.AtkMultiple(1),
+
+                    targetType = TargetType.Enemy,
                 )
             }
         }
