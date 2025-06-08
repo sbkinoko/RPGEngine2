@@ -1,7 +1,6 @@
 package gamescreen.menu.item.abstract.target
 
 import core.domain.AbleType
-import core.domain.item.HealEffect
 import core.repository.player.PlayerStatusRepository
 import data.item.ItemRepository
 import gamescreen.choice.Choice
@@ -69,11 +68,6 @@ abstract class ItemTargetViewModel<T> : MenuChildViewModel() {
     fun canSelect(target: Int): Boolean {
         val targetStatus = playerStatusRepository.getStatus(id = target)
         val skill = itemRepository.getItem(itemId)
-
-        if (skill !is HealEffect) {
-            // 回復じゃなかったら使えないはず
-            return false
-        }
 
         val targetType = skill.targetStatusType
 
