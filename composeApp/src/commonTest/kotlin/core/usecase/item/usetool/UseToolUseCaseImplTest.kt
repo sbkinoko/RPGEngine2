@@ -1,6 +1,7 @@
 package core.usecase.item.usetool
 
 import core.domain.Place
+import core.domain.item.BufEffect
 import core.domain.item.CostType
 import core.domain.item.TargetStatusType
 import core.domain.item.TargetType
@@ -66,6 +67,14 @@ class UseToolUseCaseImplTest : KoinTest {
         }
 
         override suspend fun updateConditionList(id: Int, conditionList: List<ConditionType>) {
+            throw NotImplementedError()
+        }
+
+        override suspend fun addBuf(id: Int, buf: BufEffect) {
+            throw NotImplementedError()
+        }
+
+        override suspend fun spendTurn(id: Int) {
             throw NotImplementedError()
         }
 
