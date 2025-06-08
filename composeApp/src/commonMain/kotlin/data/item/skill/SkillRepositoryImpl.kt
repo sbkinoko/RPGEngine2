@@ -11,6 +11,7 @@ import core.domain.item.skill.BufSkill
 import core.domain.item.skill.ConditionSkill
 import core.domain.item.skill.HealSkill
 import core.domain.status.ConditionType
+import core.domain.status.param.Buf
 import core.domain.status.param.BufType
 import core.domain.status.param.ParameterType
 
@@ -108,8 +109,11 @@ class SkillRepositoryImpl : SkillRepository {
                 targetType = TargetType.Ally,
                 targetStatusType = TargetStatusType.ACTIVE,
                 parameterType = ParameterType.ATK,
-                amount = 10,
-                bufType = BufType.Add,
+                buf = Buf(
+                    bufType = BufType.Add,
+                    value = 10,
+                    rest = 5,
+                )
             )
         }
     }

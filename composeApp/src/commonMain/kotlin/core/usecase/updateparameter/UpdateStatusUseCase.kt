@@ -1,5 +1,6 @@
 package core.usecase.updateparameter
 
+import core.domain.item.BufEffect
 import core.domain.status.ConditionType
 
 interface UpdateStatusUseCase<T> {
@@ -37,5 +38,14 @@ interface UpdateStatusUseCase<T> {
     suspend fun updateConditionList(
         id: Int,
         conditionList: List<ConditionType>,
+    )
+
+    suspend fun addBuf(
+        id: Int,
+        buf: BufEffect
+    )
+
+    suspend fun spendTurn(
+        id: Int,
     )
 }

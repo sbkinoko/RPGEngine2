@@ -1,13 +1,15 @@
 package gamescreen.battle.command.actionphase
 
 import androidx.compose.runtime.mutableStateOf
+import core.domain.item.AttackEffect
+import core.domain.item.BufEffect
+import core.domain.item.ConditionEffect
 import core.domain.item.CostType
 import core.domain.item.DamageType
+import core.domain.item.EffectKind
+import core.domain.item.HealEffect
 import core.domain.item.Item
 import core.domain.item.TargetType
-import core.domain.item.skill.AttackSkill
-import core.domain.item.skill.ConditionSkill
-import core.domain.item.skill.HealSkill
 import core.domain.status.Character
 import core.domain.status.PlayerStatus
 import core.domain.status.StatusData
@@ -432,8 +434,8 @@ class ActionPhaseViewModel(
         // todo 複数回攻撃する技を作ったら表示方法を考える
         // todo 味方を選択するスキルで対象が対象外になっている場合の挙動を作成する
         // todo 敵のスキルをつくってからマップとの共通化を考える
-        when (skill) {
-            is AttackSkill -> {
+        when (skill as EffectKind) {
+            is AttackEffect -> {
                 val targetList = findActiveTargetUseCase.invoke(
                     statusList = statusList,
                     target = actionData.target,
@@ -445,12 +447,12 @@ class ActionPhaseViewModel(
                     attackUseCase.invoke(
                         target = it,
                         attacker = statusData,
-                        damageType = skill.damageType,
+                        damageType = (skill as AttackEffect).damageType,
                     )
                 }
             }
 
-            is ConditionSkill -> {
+            is ConditionEffect -> {
                 val targetList = findActiveTargetUseCase.invoke(
                     statusList = statusList,
                     target = actionData.target,
@@ -460,16 +462,24 @@ class ActionPhaseViewModel(
                 targetList.forEach {
                     conditionUseCase.invoke(
                         target = it,
-                        conditionType = skill.conditionType,
+                        conditionType = (skill as ConditionEffect).conditionType,
                     )
                 }
             }
 
-            is HealSkill -> {
+            is HealEffect -> {
                 val target = actionData.ally
                 updateParameter.incHP(
                     id = target,
-                    amount = skill.healAmount,
+                    amount = (skill as HealEffect).healAmount,
+                )
+            }
+
+            is BufEffect -> {
+                val target = actionData.ally
+                updateParameter.addBuf(
+                    id = target,
+                    buf = (skill as BufEffect)
                 )
             }
         }
@@ -569,6 +579,7 @@ class ActionPhaseViewModel(
                         StatusType.Enemy -> enemyAction()
                         StatusType.None -> throw RuntimeException("Noneで処理はない")
                     }
+                    spendTurn()
                 }
 
                 is ActionState.CureParalyze,
@@ -621,6 +632,16 @@ class ActionPhaseViewModel(
     private fun resetAttackingPlayer() {
         mutableAttackingStatusId.value = dummyStatus
         attackingNumber = NONE_PLAYER
+    }
+
+    private suspend fun spendTurn() {
+        when (actionStatusWrapper.statusType) {
+            StatusType.Player -> updatePlayerParameter
+            StatusType.Enemy -> updateEnemyParameter
+            StatusType.None -> TODO()
+        }.spendTurn(
+            id = actionStatusWrapper.newId,
+        )
     }
 
     override fun pressB() {

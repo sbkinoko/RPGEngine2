@@ -6,7 +6,7 @@ import core.domain.item.CostType
 import core.domain.item.Skill
 import core.domain.item.TargetStatusType
 import core.domain.item.TargetType
-import core.domain.status.param.BufType
+import core.domain.status.param.Buf
 import core.domain.status.param.ParameterType
 
 data class BufSkill(
@@ -17,8 +17,7 @@ data class BufSkill(
     override val targetStatusType: TargetStatusType,
     override val targetType: TargetType,
     override val parameterType: ParameterType,
-    override val bufType: BufType,
-    override val amount: Int,
+    override val buf: Buf<*>,
 ) : Skill, BufEffect {
     override val explain: String
         get() {

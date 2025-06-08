@@ -1,5 +1,6 @@
 package core.usecase.updateparameter
 
+import core.domain.item.BufEffect
 import core.domain.status.ConditionType
 import core.domain.status.monster.MonsterStatus
 import core.repository.status.StatusRepository
@@ -67,5 +68,20 @@ class UpdateMonsterStatusUseCase(
             id = id,
             status = updated,
         )
+    }
+
+    override suspend fun addBuf(id: Int, buf: BufEffect) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun spendTurn(id: Int) {
+        statusRepository.getStatus(id).let {
+            statusRepository.setStatus(
+                id = id,
+                status = it.copy(
+                    statusData = it.statusData.reduceBuf()
+                )
+            )
+        }
     }
 }

@@ -1,6 +1,7 @@
 package core.usecase.item.useskill
 
 import core.domain.Place
+import core.domain.item.BufEffect
 import core.domain.item.CostType
 import core.domain.item.DamageType
 import core.domain.item.Skill
@@ -86,6 +87,14 @@ class UseSkillUseCaseImplTest {
         }
 
         override suspend fun updateConditionList(id: Int, conditionList: List<ConditionType>) {
+
+        }
+
+        override suspend fun addBuf(id: Int, buf: BufEffect) {
+
+        }
+
+        override suspend fun spendTurn(id: Int) {
 
         }
     }
@@ -239,6 +248,14 @@ class UseSkillUseCaseImplTest {
 
             }
 
+            override suspend fun addBuf(id: Int, buf: BufEffect) {
+
+            }
+
+            override suspend fun spendTurn(id: Int) {
+
+            }
+
             override suspend fun incHP(id: Int, amount: Int) {
 
             }
@@ -298,6 +315,14 @@ class UseSkillUseCaseImplTest {
             override suspend fun updateConditionList(id: Int, conditionList: List<ConditionType>) {
 
             }
+
+            override suspend fun addBuf(id: Int, buf: BufEffect) {
+
+            }
+
+            override suspend fun spendTurn(id: Int) {
+
+            }
         }
 
         runBlocking {
@@ -353,6 +378,14 @@ class UseSkillUseCaseImplTest {
 
             override suspend fun updateConditionList(id: Int, conditionList: List<ConditionType>) {
 
+            }
+
+            override suspend fun addBuf(id: Int, buf: BufEffect) {
+
+            }
+
+            override suspend fun spendTurn(id: Int) {
+            
             }
         }
 
