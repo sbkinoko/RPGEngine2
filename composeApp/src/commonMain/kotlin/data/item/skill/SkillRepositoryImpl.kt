@@ -7,9 +7,12 @@ import core.domain.item.Skill
 import core.domain.item.TargetStatusType
 import core.domain.item.TargetType
 import core.domain.item.skill.AttackSkill
+import core.domain.item.skill.BufSkill
 import core.domain.item.skill.ConditionSkill
 import core.domain.item.skill.HealSkill
 import core.domain.status.ConditionType
+import core.domain.status.param.BufType
+import core.domain.status.param.ParameterType
 
 class SkillRepositoryImpl : SkillRepository {
 
@@ -95,6 +98,18 @@ class SkillRepositoryImpl : SkillRepository {
                 conditionType = ConditionType.Poison(),
                 targetType = TargetType.Enemy,
                 targetStatusType = TargetStatusType.ACTIVE,
+            )
+
+            SkillId.BufAtk -> BufSkill(
+                name = "攻撃アップ",
+                costType = CostType.MP(1),
+                targetNum = 1,
+                usablePlace = Place.BATTLE,
+                targetType = TargetType.Ally,
+                targetStatusType = TargetStatusType.ACTIVE,
+                parameterType = ParameterType.ATK,
+                amount = 10,
+                bufType = BufType.Add,
             )
         }
     }

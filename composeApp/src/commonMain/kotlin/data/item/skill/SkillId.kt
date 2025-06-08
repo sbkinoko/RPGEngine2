@@ -16,4 +16,6 @@ sealed class SkillId {
     data object Paralysis : SkillId()
     data object Poison : SkillId()
 
+    data object BufAtk : SkillId()
+
 }

@@ -2,7 +2,7 @@ package core.domain.item
 
 import core.domain.status.ConditionType
 import core.domain.status.param.BufType
-import gamescreen.battle.domain.StatusType
+import core.domain.status.param.ParameterType
 
 sealed interface EffectKind : Item
 
@@ -25,7 +25,7 @@ interface ConditionEffect : EffectKind {
 }
 
 interface BufEffect : EffectKind {
-    val targetStatus: StatusType
+    val parameterType: ParameterType
     val bufType: BufType
     val amount: Int
 }
