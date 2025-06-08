@@ -1,7 +1,7 @@
 package core.domain.item.skill
 
 import core.domain.Place
-import core.domain.item.ConditionItem
+import core.domain.item.ConditionEffect
 import core.domain.item.CostType
 import core.domain.item.Skill
 import core.domain.item.TargetStatusType
@@ -16,7 +16,7 @@ class ConditionSkill(
     override val conditionType: ConditionType,
     override val targetType: TargetType,
     override val targetStatusType: TargetStatusType,
-) : Skill, ConditionItem {
+) : Skill, ConditionEffect {
     override val explain: String
         get() {
             return name

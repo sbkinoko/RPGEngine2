@@ -7,17 +7,17 @@ sealed interface EffectKind : Item
 /**
  * 回復itemに必要な変数
  */
-interface HealItem : EffectKind {
+interface HealEffect : EffectKind {
     /**
      * 回復量
      */
     val healAmount: Int
 }
 
-interface AttackItem : EffectKind {
+interface AttackEffect : EffectKind {
     val damageType: DamageType
 }
 
-interface ConditionItem : EffectKind {
+interface ConditionEffect : EffectKind {
     val conditionType: ConditionType
 }
