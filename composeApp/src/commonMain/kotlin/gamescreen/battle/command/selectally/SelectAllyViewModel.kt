@@ -1,6 +1,5 @@
 package gamescreen.battle.command.selectally
 
-import core.domain.item.HealEffect
 import core.domain.item.TargetStatusType
 import core.repository.player.PlayerStatusRepository
 import data.item.skill.SkillRepository
@@ -60,12 +59,7 @@ class SelectAllyViewModel : BattleChildViewModel() {
                 }
             }
 
-            // fixme targetStatusTypeを上のクラスに移動
-            if (item is HealEffect) {
-                return item.targetStatusType
-            }
-
-            throw RuntimeException("Heal以外でここにいないはず")
+            return item.targetStatusType
         }
 
     init {
