@@ -2,7 +2,7 @@ package data.item.tool
 
 import core.domain.Place
 import core.domain.item.CostType
-import core.domain.item.TargetType
+import core.domain.item.TargetStatusType
 import core.domain.item.Tool
 import core.domain.item.tool.HealTool
 
@@ -18,7 +18,7 @@ class ToolRepositoryImpl : ToolRepository {
                 costType = CostType.Consume,
                 isDisposable = true,
                 healAmount = 10,
-                targetType = TargetType.ACTIVE
+                targetStatusType = TargetStatusType.ACTIVE
             )
 
             ToolId.HEAL2 -> HealTool(
@@ -28,7 +28,7 @@ class ToolRepositoryImpl : ToolRepository {
                 costType = CostType.Consume,
                 isDisposable = true,
                 healAmount = 10,
-                targetType = TargetType.ACTIVE
+                targetStatusType = TargetStatusType.ACTIVE
             )
         }
     }

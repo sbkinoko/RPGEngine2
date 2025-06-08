@@ -1,7 +1,7 @@
 package gamescreen.battle.command.selectally
 
 import core.domain.item.HealItem
-import core.domain.item.TargetType
+import core.domain.item.TargetStatusType
 import core.repository.player.PlayerStatusRepository
 import data.item.skill.SkillRepository
 import data.item.tool.ToolRepository
@@ -36,7 +36,7 @@ class SelectAllyViewModel : BattleChildViewModel() {
     private val _isAllySelecting: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val isAllySelecting = _isAllySelecting.asStateFlow()
 
-    val targetType: TargetType
+    val targetStatusType: TargetStatusType
         get() {
             val actionType = actionRepository.getAction(playerId).thisTurnAction
 
@@ -61,7 +61,7 @@ class SelectAllyViewModel : BattleChildViewModel() {
             }
 
             if (item is HealItem) {
-                return item.targetType
+                return item.targetStatusType
             }
 
             throw RuntimeException("Heal以外でここにいないはず")
@@ -85,7 +85,7 @@ class SelectAllyViewModel : BattleChildViewModel() {
     override fun selectable(): Boolean {
         val id = selectManager.selected
         val status = playerStatusRepository.getStatus(id).statusData
-        return targetType.canSelect(status)
+        return targetStatusType.canSelect(status)
     }
 
     override fun goNextImpl() {
