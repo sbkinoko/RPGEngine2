@@ -91,11 +91,11 @@ class UseSkillUseCaseImplTest {
         }
 
         override suspend fun addBuf(id: Int, buf: BufEffect) {
-
+            throw NotImplementedError()
         }
 
         override suspend fun spendTurn(id: Int) {
-
+            throw NotImplementedError()
         }
     }
 
@@ -249,11 +249,11 @@ class UseSkillUseCaseImplTest {
             }
 
             override suspend fun addBuf(id: Int, buf: BufEffect) {
-
+                throw NotImplementedError()
             }
 
             override suspend fun spendTurn(id: Int) {
-
+                throw NotImplementedError()
             }
 
             override suspend fun incHP(id: Int, amount: Int) {
@@ -313,15 +313,15 @@ class UseSkillUseCaseImplTest {
             }
 
             override suspend fun updateConditionList(id: Int, conditionList: List<ConditionType>) {
-
+                throw NotImplementedError()
             }
 
             override suspend fun addBuf(id: Int, buf: BufEffect) {
-
+                throw NotImplementedError()
             }
 
             override suspend fun spendTurn(id: Int) {
-
+                throw NotImplementedError()
             }
         }
 
@@ -381,11 +381,11 @@ class UseSkillUseCaseImplTest {
             }
 
             override suspend fun addBuf(id: Int, buf: BufEffect) {
-
+                throw NotImplementedError()
             }
 
             override suspend fun spendTurn(id: Int) {
-            
+                throw NotImplementedError()
             }
         }
 
