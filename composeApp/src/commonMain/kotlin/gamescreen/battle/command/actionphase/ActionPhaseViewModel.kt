@@ -348,7 +348,8 @@ class ActionPhaseViewModel(
                     statusList = battleInfoRepository.getMonsters(),
                     attackUseCase = attackFromPlayerUseCase,
                     conditionUseCase = conditionFromPlayerUseCase,
-                    updateParameter = updatePlayerParameter,
+                    updateAllyParameter = updatePlayerParameter,
+                    updateEnemyParameter = updateEnemyParameter,
                 )
             }
 
@@ -374,7 +375,8 @@ class ActionPhaseViewModel(
                 actionData = actionData,
                 attackUseCase = attackFromEnemyUseCase,
                 conditionUseCase = conditionFromEnemyUseCase,
-                updateParameter = updateEnemyParameter,
+                updateAllyParameter = updateEnemyParameter,
+                updateEnemyParameter = updatePlayerParameter,
             )
         }
     }
@@ -410,7 +412,8 @@ class ActionPhaseViewModel(
         statusList: List<Character>,
         attackUseCase: AttackUseCase,
         conditionUseCase: ConditionUseCase,
-        updateParameter: UpdateStatusUseCase<*>,
+        updateAllyParameter: UpdateStatusUseCase<*>,
+        updateEnemyParameter: UpdateStatusUseCase<*>,
     ) {
         val skill = skillRepository.getItem(
             id = actionData.skillId
@@ -419,7 +422,7 @@ class ActionPhaseViewModel(
         //コスト処理
         when (val costType = skill.costType) {
             is CostType.MP -> {
-                updateParameter.decMP(
+                updateAllyParameter.decMP(
                     id = id,
                     amount = costType.needMP,
                 )
@@ -469,18 +472,31 @@ class ActionPhaseViewModel(
 
             is HealEffect -> {
                 val target = actionData.ally
-                updateParameter.incHP(
+                updateAllyParameter.incHP(
                     id = target,
                     amount = (skill as HealEffect).healAmount,
                 )
             }
 
             is BufEffect -> {
-                val target = actionData.ally
-                updateParameter.addBuf(
-                    id = target,
-                    buf = (skill as BufEffect)
-                )
+                when (skill.targetType) {
+                    TargetType.Ally -> {
+                        val target = actionData.ally
+                        updateAllyParameter.addBuf(
+                            id = target,
+                            buf = (skill as BufEffect)
+                        )
+                    }
+
+                    TargetType.Enemy -> {
+                        val target = actionData.target
+                        updateEnemyParameter.addBuf(
+                            id = target,
+                            buf = (skill as BufEffect)
+                        )
+                    }
+                }
+
             }
         }
     }
