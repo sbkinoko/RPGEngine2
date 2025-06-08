@@ -15,8 +15,7 @@ data class HealSkill(
     override val healAmount: Int,
     override val targetStatusType: TargetStatusType,
     override val targetType: TargetType,
-
-    ) : Skill, HealItem {
+) : Skill, HealItem {
     override val explain: String
         get() {
             return name
