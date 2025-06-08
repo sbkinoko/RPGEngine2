@@ -1,13 +1,10 @@
 package gamescreen.battle.command.actionphase
 
 import androidx.compose.runtime.mutableStateOf
-import core.domain.item.AttackItem
-import core.domain.item.ConditionItem
 import core.domain.item.CostType
 import core.domain.item.DamageType
-import core.domain.item.HealItem
 import core.domain.item.Item
-import core.domain.item.TypeKind
+import core.domain.item.TargetType
 import core.domain.item.skill.AttackSkill
 import core.domain.item.skill.ConditionSkill
 import core.domain.item.skill.HealSkill
@@ -250,9 +247,8 @@ class ActionPhaseViewModel(
 
         val attackerRepository = playerStatusRepository
 
-        return when (item as TypeKind) {
-            is ConditionItem,
-            is AttackItem,
+        return when (item.targetType) {
+            TargetType.Enemy
                 -> {
                 var targetId = action.target
                 if (battleInfoRepository.getStatus(targetId)
@@ -267,7 +263,7 @@ class ActionPhaseViewModel(
                 battleInfoRepository.getStatus(targetId).statusData.name
             }
 
-            is HealItem -> {
+            TargetType.Ally -> {
                 val targetId = action.ally
                 attackerRepository.getStatus(targetId).statusData.name
             }
@@ -278,10 +274,8 @@ class ActionPhaseViewModel(
         val action = statusWrapper.actionData
         val item = getActionItem(statusWrapper = statusWrapper)
 
-        return when (item as TypeKind) {
-            is ConditionItem,
-            is AttackItem,
-                -> {
+        return when (item.targetType) {
+            TargetType.Enemy -> {
                 var targetId = action.target
                 if (playerStatusRepository.getStatus(targetId).statusData.isActive.not()) {
                     targetId = findActiveTargetUseCase.invoke(
@@ -293,7 +287,7 @@ class ActionPhaseViewModel(
                 playerStatusRepository.getStatus(targetId).statusData.name
             }
 
-            is HealItem -> {
+            TargetType.Ally -> {
                 val targetId = action.ally
                 battleInfoRepository.getStatus(targetId).statusData.name
             }
