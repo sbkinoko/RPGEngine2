@@ -45,4 +45,13 @@ data class StatusParameter<T : ParameterType>(
             },
         )
     }
+
+    override fun toString(): String {
+        var s = "\n base:$baseValue"
+        s += "\n AddBuf"
+        addBuf.forEach {
+            s += "\n  ${it.value} ${it.rest}"
+        }
+        return s
+    }
 }
