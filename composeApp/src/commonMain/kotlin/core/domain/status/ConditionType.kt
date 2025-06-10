@@ -2,7 +2,6 @@ package core.domain.status
 
 import kotlin.random.Random
 
-
 sealed class ConditionType {
     /**
      * @param probability 動けない確率
