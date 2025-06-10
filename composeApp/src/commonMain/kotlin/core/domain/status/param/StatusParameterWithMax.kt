@@ -35,4 +35,8 @@ data class StatusParameterWithMax<T : ParameterType>(
             maxPoint = maxValue,
         )
     }
+
+    override fun toString(): String {
+        return "$point/$maxPoint"
+    }
 }

@@ -29,6 +29,8 @@ object Colors {
     val AttackBorder = black
     val AttackFill = white
 
+    val BattleDebugBackGround = white
+
     val IsActivePlayer = black
     val NotActivePlayer = red
 

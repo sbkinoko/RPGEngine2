@@ -10,13 +10,21 @@ sealed class ConditionType {
     data class Paralysis(
         val probability: Int = 50,
         override val cure: Int = 50,
-    ) : ConditionType(), CureProb
+    ) : ConditionType(), CureProb {
+        override fun toString(): String {
+            return " 麻痺\np  $probability\n  cure $cure"
+        }
+    }
 
     // fixme 割合ダメージの毒も作る
     data class Poison(
         val damage: Int = 5,
         override val cure: Int = 50,
-    ) : ConditionType(), CureProb
+    ) : ConditionType(), CureProb {
+        override fun toString(): String {
+            return " 毒\n  damage $damage\n  cure $cure"
+        }
+    }
 
     interface CureProb {
         val cure: Int
