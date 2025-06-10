@@ -45,7 +45,7 @@ fun MonsterArea(
         .collectAsState()
 
     var boxSize by remember {
-        mutableIntStateOf(0)
+        mutableIntStateOf(Int.MAX_VALUE)
     }
 
     Box(
