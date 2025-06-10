@@ -25,7 +25,7 @@ data class StatusParameter<T : ParameterType>(
     }
 
     fun grantBuf(
-        buf: Buf<*>
+        buf: Buf<*>,
     ): StatusParameter<T> {
         return when (buf.bufType) {
             BufType.Add -> {
