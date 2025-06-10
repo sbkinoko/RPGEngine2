@@ -314,7 +314,7 @@ class AttackServiceImplTest : KoinTest {
      */
     private fun fixDamage(
         maxPoint: Int,
-        amount: Int
+        amount: Int,
     ): StatusData {
         val attacker = testActivePlayer
 

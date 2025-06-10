@@ -250,7 +250,7 @@ class ActionPhaseViewModel(
         val attackerRepository = playerStatusRepository
 
         return when (item.targetType) {
-            TargetType.Enemy
+            TargetType.Enemy,
                 -> {
                 var targetId = action.target
                 if (battleInfoRepository.getStatus(targetId)

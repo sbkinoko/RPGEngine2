@@ -42,7 +42,7 @@ interface UpdateStatusUseCase<T> {
 
     suspend fun addBuf(
         id: Int,
-        buf: BufEffect
+        buf: BufEffect,
     )
 
     suspend fun spendTurn(
