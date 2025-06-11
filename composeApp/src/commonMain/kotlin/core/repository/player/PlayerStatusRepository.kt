@@ -11,7 +11,13 @@ interface PlayerStatusRepository : StatusRepository<PlayerStatus> {
 
     fun getPlayers(): List<PlayerStatus>
 
-    fun getTool(playerId: Int, index: Int): ToolId
+    fun getTool(
+        playerId: Int,
+        index: Int,
+    ): ToolId
 
-    fun getSkill(playerId: Int, index: Int): SkillId
+    fun getSkill(
+        playerId: Int,
+        index: Int,
+    ): SkillId
 }

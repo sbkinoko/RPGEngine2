@@ -21,12 +21,18 @@ class GetToolIdUseCaseImplTest {
             throw NotImplementedError()
         }
 
-        override fun getTool(playerId: Int, index: Int): ToolId {
+        override fun getTool(
+            playerId: Int,
+            index: Int,
+        ): ToolId {
             countPlayer++
             return ToolId.HEAL1
         }
 
-        override fun getSkill(playerId: Int, index: Int): SkillId {
+        override fun getSkill(
+            playerId: Int,
+            index: Int,
+        ): SkillId {
             throw NotImplementedError()
         }
 
@@ -34,7 +40,10 @@ class GetToolIdUseCaseImplTest {
             throw NotImplementedError()
         }
 
-        override suspend fun setStatus(id: Int, status: PlayerStatus) {
+        override suspend fun setStatus(
+            id: Int,
+            status: PlayerStatus,
+        ) {
             throw NotImplementedError()
         }
     }

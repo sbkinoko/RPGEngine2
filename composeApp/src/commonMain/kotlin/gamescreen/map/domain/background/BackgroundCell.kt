@@ -22,7 +22,10 @@ data class BackgroundCell(
 ) : RectangleWrapper<BackgroundCell>(
     rectangle = rectangle,
 ) {
-    override fun move(dx: Float, dy: Float): BackgroundCell {
+    override fun move(
+        dx: Float,
+        dy: Float,
+    ): BackgroundCell {
         return this.copy(
             rectangle = rectangle.move(
                 dx = dx,
@@ -31,7 +34,10 @@ data class BackgroundCell(
         )
     }
 
-    override fun moveTo(x: Float, y: Float): BackgroundCell {
+    override fun moveTo(
+        x: Float,
+        y: Float,
+    ): BackgroundCell {
         return this.copy(
             rectangle = rectangle.moveTo(
                 x = x,

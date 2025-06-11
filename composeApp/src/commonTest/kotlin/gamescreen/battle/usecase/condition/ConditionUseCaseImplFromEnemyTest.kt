@@ -26,7 +26,6 @@ class ConditionUseCaseImplFromEnemyTest : KoinTest {
 
     private val playerStatusRepository: PlayerStatusRepository by inject()
 
-
     private val conditionType = ConditionType.Poison()
     private val expectedList = listOf(conditionType)
 

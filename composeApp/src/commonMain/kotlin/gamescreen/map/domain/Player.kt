@@ -49,7 +49,10 @@ data class Player(
     }
 
     //fixme 不要なので削除
-    fun move(dx: Float, dy: Float): Player {
+    fun move(
+        dx: Float,
+        dy: Float,
+    ): Player {
         return copy(
             square = square.move(
                 dx = dx,
@@ -58,7 +61,10 @@ data class Player(
         )
     }
 
-    fun moveTo(x: Float, y: Float): Player {
+    fun moveTo(
+        x: Float,
+        y: Float,
+    ): Player {
         return copy(
             square = square.moveTo(
                 x = x,

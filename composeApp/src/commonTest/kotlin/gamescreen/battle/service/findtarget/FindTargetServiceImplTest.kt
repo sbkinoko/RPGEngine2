@@ -65,7 +65,6 @@ class FindTargetServiceImplTest {
         }
     }
 
-
     @Test
     fun attackTo1When1And2IsNotActive() {
         val activeId = 2

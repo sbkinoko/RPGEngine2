@@ -79,7 +79,11 @@ class StartNormalBattleUseCaseImplTest {
                 get() = throw NotImplementedError()
             override var playerIncludeCell: BackgroundCell?
                 get() = throw NotImplementedError()
-                set(@Suppress("UNUSED_PARAMETER") value) {}
+                set(
+                    @Suppress("UNUSED_PARAMETER")
+                    value,
+                ) {
+                }
             override var playerCenterCell: BackgroundCell
                 get() = BackgroundCell(
                     cellType = CellType.Town1O,
@@ -87,7 +91,11 @@ class StartNormalBattleUseCaseImplTest {
                     rectangle = NormalRectangle(x = 0f, y = 0f, size = 0f),
                     collisionData = emptyList(),
                 )
-                set(@Suppress("UNUSED_PARAMETER") value) {}
+                set(
+                    @Suppress("UNUSED_PARAMETER")
+                    value,
+                ) {
+                }
             override val eventCell: BackgroundCell
                 get() = throw NotImplementedError()
         }
@@ -109,7 +117,6 @@ class StartNormalBattleUseCaseImplTest {
         // エラーが起こらなければOK
     }
 
-
     @Test
     fun checkMonster() {
         val cellType = CellType.Road
@@ -126,10 +133,18 @@ class StartNormalBattleUseCaseImplTest {
                 get() = throw NotImplementedError()
             override var playerIncludeCell: BackgroundCell?
                 get() = throw NotImplementedError()
-                set(@Suppress("UNUSED_PARAMETER") value) {}
+                set(
+                    @Suppress("UNUSED_PARAMETER")
+                    value,
+                ) {
+                }
             override var playerCenterCell: BackgroundCell
                 get() = expectedBackgroundCell
-                set(@Suppress("UNUSED_PARAMETER") value) {}
+                set(
+                    @Suppress("UNUSED_PARAMETER")
+                    value,
+                ) {
+                }
             override val eventCell: BackgroundCell
                 get() = throw NotImplementedError()
         }
@@ -151,7 +166,6 @@ class StartNormalBattleUseCaseImplTest {
                 battleEventCallback: BattleEventCallback,
                 backgroundType: BattleBackgroundType,
             ) {
-
             }
         }
 
@@ -190,10 +204,18 @@ class StartNormalBattleUseCaseImplTest {
                 get() = throw NotImplementedError()
             override var playerIncludeCell: BackgroundCell?
                 get() = throw NotImplementedError()
-                set(@Suppress("UNUSED_PARAMETER") value) {}
+                set(
+                    @Suppress("UNUSED_PARAMETER")
+                    value,
+                ) {
+                }
             override var playerCenterCell: BackgroundCell
                 get() = expectedBackgroundCell
-                set(@Suppress("UNUSED_PARAMETER") value) {}
+                set(
+                    @Suppress("UNUSED_PARAMETER")
+                    value,
+                ) {
+                }
             override val eventCell: BackgroundCell
                 get() = throw NotImplementedError()
         }

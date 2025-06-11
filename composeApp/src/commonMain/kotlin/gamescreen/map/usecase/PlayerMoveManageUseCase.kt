@@ -69,11 +69,11 @@ class PlayerMoveManageUseCase(
         // 両方に移動できる場合は速い方に動かす
         if (canMoveX && canMoveY) {
             if (tentativePlayerVelocity.y <= tentativePlayerVelocity.x) {
-//                canMoveX = true
+                //                canMoveX = true
                 canMoveY = false
             } else {
                 canMoveX = false
-//                canMoveY = true
+                //                canMoveY = true
             }
         }
 

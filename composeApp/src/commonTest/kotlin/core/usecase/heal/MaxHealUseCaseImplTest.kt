@@ -37,11 +37,17 @@ class MaxHealUseCaseImplTest {
             return statusList
         }
 
-        override fun getTool(playerId: Int, index: Int): ToolId {
+        override fun getTool(
+            playerId: Int,
+            index: Int,
+        ): ToolId {
             throw NotImplementedError()
         }
 
-        override fun getSkill(playerId: Int, index: Int): SkillId {
+        override fun getSkill(
+            playerId: Int,
+            index: Int,
+        ): SkillId {
             throw NotImplementedError()
         }
 
@@ -49,7 +55,10 @@ class MaxHealUseCaseImplTest {
             return statusList[id]
         }
 
-        override suspend fun setStatus(id: Int, status: PlayerStatus) {
+        override suspend fun setStatus(
+            id: Int,
+            status: PlayerStatus,
+        ) {
             this.statusList[id] = status
         }
     }

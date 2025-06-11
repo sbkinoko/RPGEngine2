@@ -30,7 +30,6 @@ class ParalyzeTest {
         }
     }
 
-
     @Test
     fun half() {
         val paralyze = paralysis50

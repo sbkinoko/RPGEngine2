@@ -202,7 +202,6 @@ class VelocityManagerUseCaseTest : KoinTest {
             vbx = 0f,
             vby = 0f,
         )
-
     }
 
     /**

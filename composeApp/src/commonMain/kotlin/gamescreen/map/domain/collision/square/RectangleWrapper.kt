@@ -32,7 +32,13 @@ abstract class RectangleWrapper<T : Rectangle>(
     override val objectHeight: ObjectHeight
         get() = rectangle.objectHeight
 
-    abstract override fun move(dx: Float, dy: Float): T
+    abstract override fun move(
+        dx: Float,
+        dy: Float,
+    ): T
 
-    abstract override fun moveTo(x: Float, y: Float): T
+    abstract override fun moveTo(
+        x: Float,
+        y: Float,
+    ): T
 }

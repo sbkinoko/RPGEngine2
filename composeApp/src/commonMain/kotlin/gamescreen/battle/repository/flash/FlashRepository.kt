@@ -8,5 +8,4 @@ interface FlashRepository {
     var monsterNum: Int
 
     fun setInfo(list: List<FlashInfo>)
-
 }

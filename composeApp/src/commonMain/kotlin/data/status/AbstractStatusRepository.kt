@@ -5,7 +5,10 @@ import core.domain.status.StatusIncrease
 
 abstract class AbstractStatusRepository : StatusRepository {
 
-    override fun getStatus(id: Int, level: Int): PlayerStatus {
+    override fun getStatus(
+        id: Int,
+        level: Int,
+    ): PlayerStatus {
         var statusSum = statusBaseList[id]
 
         for (lv: Int in 0 until level) {
@@ -31,7 +34,6 @@ abstract class AbstractStatusRepository : StatusRepository {
     }
 
     protected abstract val statusUpList: List<List<StatusIncrease>>
-
 
     protected abstract val statusBaseList: List<PlayerStatus>
 }

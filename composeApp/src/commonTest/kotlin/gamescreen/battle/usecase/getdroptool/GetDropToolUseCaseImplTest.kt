@@ -194,7 +194,6 @@ class GetDropToolUseCaseImplTest {
             }
         )
 
-
         //どっちも
         assertTrue(
             actual = idList.any {

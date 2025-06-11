@@ -21,17 +21,17 @@ class DecideBattleMonsterUseCaseImplTest {
         )
 
         // fixme 敵をランダムで出すようにしたらテスト作成
-//        // 回数を確保してテスト
-//        val list = List(50) {
-//            useCase.invoke()
-//        }
-//
-//        for (size: Int in 1..5) {
-//            assertTrue(
-//                list.any {
-//                    it.size == size
-//                }
-//            )
-//        }
+        //        // 回数を確保してテスト
+        //        val list = List(50) {
+        //            useCase.invoke()
+        //        }
+        //
+        //        for (size: Int in 1..5) {
+        //            assertTrue(
+        //                list.any {
+        //                    it.size == size
+        //                }
+        //            )
+        //        }
     }
 }

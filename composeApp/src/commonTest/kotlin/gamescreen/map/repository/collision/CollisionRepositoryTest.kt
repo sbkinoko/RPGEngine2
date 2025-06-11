@@ -47,7 +47,6 @@ class CollisionRepositoryTest : KoinTest {
         }
     }
 
-
     // 当たり判定を含むマスであることを確認
     @Test
     fun getData_1() {

@@ -23,5 +23,4 @@ class FlashRepositoryImpl : FlashRepository {
     override fun setInfo(list: List<FlashInfo>) {
         mutableFlashStateFlow.value = list
     }
-
 }

@@ -8,5 +8,4 @@ interface StatusRepository {
         id: Int,
         level: Int,
     ): PlayerStatus
-
 }
