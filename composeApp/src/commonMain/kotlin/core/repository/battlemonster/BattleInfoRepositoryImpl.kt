@@ -33,6 +33,10 @@ class BattleInfoRepositoryImpl : BattleInfoRepository {
         return monsterList.toList()
     }
 
+    override fun getStatusList(): List<MonsterStatus> {
+        return monsterList
+    }
+
     override fun setMonsters(monsters: List<MonsterStatus>) {
         val nameNum: MutableMap<String, Int> = mutableMapOf()
         monsters.map { mon ->
