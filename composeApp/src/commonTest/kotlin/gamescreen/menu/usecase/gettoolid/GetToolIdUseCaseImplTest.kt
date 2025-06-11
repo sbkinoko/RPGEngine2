@@ -21,6 +21,10 @@ class GetToolIdUseCaseImplTest {
             throw NotImplementedError()
         }
 
+        override fun getStatusList(): List<PlayerStatus> {
+            throw NotImplementedError()
+        }
+
         override fun getTool(
             playerId: Int,
             index: Int,

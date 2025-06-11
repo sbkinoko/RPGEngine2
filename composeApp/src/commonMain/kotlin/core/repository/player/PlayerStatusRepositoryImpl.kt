@@ -63,6 +63,10 @@ class PlayerStatusRepositoryImpl(
         return players
     }
 
+    override fun getStatusList(): List<PlayerStatus> {
+        return players
+    }
+
     override fun getTool(
         playerId: Int,
         index: Int,
