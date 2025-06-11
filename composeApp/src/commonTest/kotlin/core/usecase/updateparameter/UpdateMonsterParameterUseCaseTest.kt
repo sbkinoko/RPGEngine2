@@ -27,24 +27,24 @@ class UpdateMonsterParameterUseCaseTest {
 
     private val statusRepository: StatusRepository<MonsterStatus> =
         object : StatusRepository<MonsterStatus> {
-            var statusList: MutableList<MonsterStatus> = mutableListOf(
+            var _statusList: MutableList<MonsterStatus> = mutableListOf(
                 status1,
                 status2,
             )
 
             override fun getStatus(id: Int): MonsterStatus {
-                return statusList[id]
+                return _statusList[id]
             }
 
             override fun getStatusList(): List<MonsterStatus> {
-                return statusList
+                return _statusList
             }
 
             override suspend fun setStatus(
                 id: Int,
                 status: MonsterStatus,
             ) {
-                this.statusList[id] = status
+                this._statusList[id] = status
             }
         }
 

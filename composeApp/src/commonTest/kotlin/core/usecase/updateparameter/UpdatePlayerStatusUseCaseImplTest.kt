@@ -33,24 +33,24 @@ class UpdatePlayerStatusUseCaseImplTest {
 
     private val statusRepository: StatusRepository<PlayerStatus> =
         object : StatusRepository<PlayerStatus> {
-            var statusList: MutableList<PlayerStatus> = mutableListOf(
+            var _statusList: MutableList<PlayerStatus> = mutableListOf(
                 status1,
                 status2,
             )
 
             override fun getStatus(id: Int): PlayerStatus {
-                return statusList[id]
+                return _statusList[id]
             }
 
             override fun getStatusList(): List<PlayerStatus> {
-                return statusList
+                return _statusList
             }
 
             override suspend fun setStatus(
                 id: Int,
                 status: PlayerStatus,
             ) {
-                this.statusList[id] = status
+                this._statusList[id] = status
             }
         }
 
