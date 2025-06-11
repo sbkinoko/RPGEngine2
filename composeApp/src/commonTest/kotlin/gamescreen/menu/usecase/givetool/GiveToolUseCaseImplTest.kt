@@ -34,11 +34,11 @@ class GiveToolUseCaseImplTest : KoinTest {
 
     private val fromPlayer = 0
     private val fromPlayerStatus
-        get() = playerStatusRepository.getPlayers()[fromPlayer]
+        get() = playerStatusRepository.getStatusList()[fromPlayer]
 
     private val toPlayer = 0
     private val toPlayerStatus
-        get() = playerStatusRepository.getPlayers()[toPlayer]
+        get() = playerStatusRepository.getStatusList()[toPlayer]
 
     @BeforeTest
     fun beforeTest() {
@@ -70,7 +70,7 @@ class GiveToolUseCaseImplTest : KoinTest {
             val itemId = ToolId.HEAL1
 
             //　対象の持ち物をいっぱいにする
-            val player1 = playerStatusRepository.getPlayers()[target]
+            val player1 = playerStatusRepository.getStatusList()[target]
             playerStatusRepository.setStatus(
                 id = target,
                 status = player1.copy(
@@ -84,7 +84,7 @@ class GiveToolUseCaseImplTest : KoinTest {
             val from = 1
             userRepository.userId = from
 
-            val fromPlayer = playerStatusRepository.getPlayers()[from]
+            val fromPlayer = playerStatusRepository.getStatusList()[from]
             playerStatusRepository.setStatus(
                 id = from,
                 status = fromPlayer.copy(

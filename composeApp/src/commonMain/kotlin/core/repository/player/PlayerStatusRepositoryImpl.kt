@@ -59,10 +59,6 @@ class PlayerStatusRepositoryImpl(
         return players[id]
     }
 
-    override fun getPlayers(): List<PlayerStatus> {
-        return players
-    }
-
     override fun getStatusList(): List<PlayerStatus> {
         return players
     }

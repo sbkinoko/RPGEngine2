@@ -33,10 +33,6 @@ class MaxHealUseCaseImplTest {
         override val playerStatusFlow: StateFlow<List<PlayerStatus>>
             get() = throw NotImplementedError()
 
-        override fun getPlayers(): List<PlayerStatus> {
-            return statusList
-        }
-
         override fun getStatusList(): List<PlayerStatus> {
             return statusList
         }
@@ -81,7 +77,7 @@ class MaxHealUseCaseImplTest {
         runBlocking {
             maxHealUseCase.invoke()
 
-            playerStatusRepository.getPlayers().map {
+            playerStatusRepository.getStatusList().map {
                 it.statusData.apply {
                     assertEquals(
                         expected = hp.maxPoint,
