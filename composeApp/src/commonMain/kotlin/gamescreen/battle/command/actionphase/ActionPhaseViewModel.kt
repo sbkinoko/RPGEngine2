@@ -91,7 +91,7 @@ class ActionPhaseViewModel(
 
     private val isPlayerAnnihilated: Boolean
         get() = isAnnihilationService(
-            playerStatusRepository.getPlayers()
+            playerStatusRepository.getStatusList()
         )
 
     private val useToolUseCase: UseToolUseCase by inject()
@@ -133,7 +133,7 @@ class ActionPhaseViewModel(
 
     fun init() {
         val list = mutableListOf<StatusWrapper>()
-        playerStatusRepository.getPlayers()
+        playerStatusRepository.getStatusList()
             .mapIndexed { id, status ->
                 list += StatusWrapper(
                     status = status,
@@ -147,7 +147,7 @@ class ActionPhaseViewModel(
             .mapIndexed { index, status ->
                 val action = decideMonsterActionService.getAction(
                     status,
-                    playerStatusRepository.getPlayers(),
+                    playerStatusRepository.getStatusList(),
                 )
                 list += StatusWrapper(
                     status = status,
@@ -281,7 +281,7 @@ class ActionPhaseViewModel(
                 var targetId = action.target
                 if (playerStatusRepository.getStatus(targetId).statusData.isActive.not()) {
                     targetId = findActiveTargetUseCase.invoke(
-                        statusList = playerStatusRepository.getPlayers(),
+                        statusList = playerStatusRepository.getStatusList(),
                         target = targetId,
                         targetNum = item.targetNum,
                     ).first()
@@ -371,7 +371,7 @@ class ActionPhaseViewModel(
             skillAction(
                 id = newId,
                 statusData = getStatus(actionStatusWrapper),
-                statusList = playerStatusRepository.getPlayers(),
+                statusList = playerStatusRepository.getStatusList(),
                 actionData = actionData,
                 attackUseCase = attackFromEnemyUseCase,
                 conditionUseCase = conditionFromEnemyUseCase,

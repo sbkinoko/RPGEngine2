@@ -15,7 +15,7 @@ class ConditionFromEnemyUseCaseImpl(
         conditionType: ConditionType,
     ) {
         var actualTarget = target
-        val players = playerStatusRepository.getPlayers()
+        val players = playerStatusRepository.getStatusList()
         if (players[target].statusData.isActive.not()) {
             actualTarget = findTargetService.findNext(
                 statusList = players,
