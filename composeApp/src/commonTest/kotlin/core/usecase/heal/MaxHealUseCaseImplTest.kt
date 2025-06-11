@@ -37,6 +37,10 @@ class MaxHealUseCaseImplTest {
             return statusList
         }
 
+        override fun getStatusList(): List<PlayerStatus> {
+            return statusList
+        }
+
         override fun getTool(
             playerId: Int,
             index: Int,

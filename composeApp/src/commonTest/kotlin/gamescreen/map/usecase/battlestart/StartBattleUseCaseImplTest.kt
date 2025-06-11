@@ -69,6 +69,10 @@ class StartBattleUseCaseImplTest : KoinTest {
                     throw NotImplementedError()
                 }
 
+                override fun getStatusList(): List<MonsterStatus> {
+                    throw NotImplementedError()
+                }
+
                 override fun setMonsters(monsters: List<MonsterStatus>) {
                     checkMonster++
                 }

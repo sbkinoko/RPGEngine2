@@ -29,6 +29,17 @@ class GetMoneyUseCaseTestImpl : KoinTest {
                     )
                 )
             }
+
+            override fun getStatusList(): List<MonsterStatus> {
+                return listOf(
+                    TestActiveMonster.copy(
+                        money = money1,
+                    ),
+                    TestActiveMonster.copy(
+                        money = money2,
+                    )
+                )
+            }
         }
 
         getMoneyUseCase = GetMoneyUseCaseImpl(
@@ -54,6 +65,20 @@ class GetMoneyUseCaseTestImpl : KoinTest {
 
         val battleMonsterRepository = object : TestBattleInfoRepository {
             override fun getMonsters(): List<MonsterStatus> {
+                return listOf(
+                    TestActiveMonster.copy(
+                        money = money1,
+                    ),
+                    TestActiveMonster.copy(
+                        money = money2,
+                    ),
+                    TestActiveMonster.copy(
+                        money = money3,
+                    )
+                )
+            }
+
+            override fun getStatusList(): List<MonsterStatus> {
                 return listOf(
                     TestActiveMonster.copy(
                         money = money1,

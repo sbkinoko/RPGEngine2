@@ -42,6 +42,10 @@ class UpdatePlayerStatusUseCaseImplTest {
                 return statusList[id]
             }
 
+            override fun getStatusList(): List<PlayerStatus> {
+                return statusList
+            }
+
             override suspend fun setStatus(
                 id: Int,
                 status: PlayerStatus,

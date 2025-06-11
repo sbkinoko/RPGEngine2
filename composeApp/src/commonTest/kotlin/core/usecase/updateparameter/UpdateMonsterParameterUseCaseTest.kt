@@ -36,6 +36,10 @@ class UpdateMonsterParameterUseCaseTest {
                 return statusList[id]
             }
 
+            override fun getStatusList(): List<MonsterStatus> {
+                return statusList
+            }
+
             override suspend fun setStatus(
                 id: Int,
                 status: MonsterStatus,

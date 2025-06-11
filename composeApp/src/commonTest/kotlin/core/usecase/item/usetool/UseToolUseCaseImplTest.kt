@@ -124,6 +124,10 @@ class UseToolUseCaseImplTest : KoinTest {
                 override fun getStatus(id: Int): PlayerStatus {
                     return PlayerStatusTest.testActivePlayer
                 }
+
+                override fun getStatusList(): List<PlayerStatus> {
+                    throw NotImplementedError()
+                }
             }
     }
 
