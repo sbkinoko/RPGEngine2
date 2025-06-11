@@ -86,12 +86,12 @@ class ActionPhaseViewModel(
 
     private val isMonsterAnnihilated: Boolean
         get() = isAnnihilationService(
-            battleInfoRepository.getMonsters()
+            battleInfoRepository.getStatusList()
         )
 
     private val isPlayerAnnihilated: Boolean
         get() = isAnnihilationService(
-            playerStatusRepository.getPlayers()
+            playerStatusRepository.getStatusList()
         )
 
     private val useToolUseCase: UseToolUseCase by inject()
@@ -113,7 +113,7 @@ class ActionPhaseViewModel(
     val attackingStatusId = mutableAttackingStatusId.asStateFlow()
 
     private val monsterNum: Int
-        get() = battleInfoRepository.getMonsters().size
+        get() = battleInfoRepository.getStatusList().size
 
     // 使わないので適当
     override var selectManager: SelectManager = SelectManager(
@@ -133,7 +133,7 @@ class ActionPhaseViewModel(
 
     fun init() {
         val list = mutableListOf<StatusWrapper>()
-        playerStatusRepository.getPlayers()
+        playerStatusRepository.getStatusList()
             .mapIndexed { id, status ->
                 list += StatusWrapper(
                     status = status,
@@ -143,11 +143,11 @@ class ActionPhaseViewModel(
                 )
             }
 
-        battleInfoRepository.getMonsters()
+        battleInfoRepository.getStatusList()
             .mapIndexed { index, status ->
                 val action = decideMonsterActionService.getAction(
                     status,
-                    playerStatusRepository.getPlayers(),
+                    playerStatusRepository.getStatusList(),
                 )
                 list += StatusWrapper(
                     status = status,
@@ -257,7 +257,7 @@ class ActionPhaseViewModel(
                         .statusData.isActive.not()
                 ) {
                     targetId = findActiveTargetUseCase.invoke(
-                        statusList = battleInfoRepository.getMonsters(),
+                        statusList = battleInfoRepository.getStatusList(),
                         target = targetId,
                         targetNum = item.targetNum,
                     ).first()
@@ -281,7 +281,7 @@ class ActionPhaseViewModel(
                 var targetId = action.target
                 if (playerStatusRepository.getStatus(targetId).statusData.isActive.not()) {
                     targetId = findActiveTargetUseCase.invoke(
-                        statusList = playerStatusRepository.getPlayers(),
+                        statusList = playerStatusRepository.getStatusList(),
                         target = targetId,
                         targetNum = item.targetNum,
                     ).first()
@@ -345,7 +345,7 @@ class ActionPhaseViewModel(
                     id = actionStatusWrapper.newId,
                     statusData = getStatus(actionStatusWrapper),
                     actionData = actionRepository.getAction(actionStatusWrapper.newId),
-                    statusList = battleInfoRepository.getMonsters(),
+                    statusList = battleInfoRepository.getStatusList(),
                     attackUseCase = attackFromPlayerUseCase,
                     conditionUseCase = conditionFromPlayerUseCase,
                     updateAllyParameter = updatePlayerParameter,
@@ -371,7 +371,7 @@ class ActionPhaseViewModel(
             skillAction(
                 id = newId,
                 statusData = getStatus(actionStatusWrapper),
-                statusList = playerStatusRepository.getPlayers(),
+                statusList = playerStatusRepository.getStatusList(),
                 actionData = actionData,
                 attackUseCase = attackFromEnemyUseCase,
                 conditionUseCase = conditionFromEnemyUseCase,

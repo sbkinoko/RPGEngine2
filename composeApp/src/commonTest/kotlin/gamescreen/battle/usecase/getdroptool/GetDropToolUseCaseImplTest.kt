@@ -37,7 +37,7 @@ class GetDropToolUseCaseImplTest {
         val itemId = ToolId.HEAL1
         val getDropToolUseCase: GetDropToolUseCase = GetDropToolUseCaseImpl(
             battleInfoRepository = object : TestBattleInfoRepository {
-                override fun getMonsters(): List<MonsterStatus> {
+                override fun getStatusList(): List<MonsterStatus> {
                     return listOf(
                         TestActiveMonster.copy(
                             dropInfoList = listOf(
@@ -77,7 +77,7 @@ class GetDropToolUseCaseImplTest {
         val itemId = ToolId.HEAL1
         val getDropToolUseCase: GetDropToolUseCase = GetDropToolUseCaseImpl(
             battleInfoRepository = object : TestBattleInfoRepository {
-                override fun getMonsters(): List<MonsterStatus> {
+                override fun getStatusList(): List<MonsterStatus> {
                     return listOf(
                         TestActiveMonster.copy(
                             dropInfoList = listOf(
@@ -112,7 +112,7 @@ class GetDropToolUseCaseImplTest {
         val itemId = ToolId.HEAL1
         val getDropToolUseCase: GetDropToolUseCase = GetDropToolUseCaseImpl(
             battleInfoRepository = object : TestBattleInfoRepository {
-                override fun getMonsters(): List<MonsterStatus> {
+                override fun getStatusList(): List<MonsterStatus> {
                     return listOf(
                         TestActiveMonster.copy(
                             dropInfoList = listOf(
@@ -148,7 +148,7 @@ class GetDropToolUseCaseImplTest {
 
         val getDropToolUseCase: GetDropToolUseCase = GetDropToolUseCaseImpl(
             battleInfoRepository = object : TestBattleInfoRepository {
-                override fun getMonsters(): List<MonsterStatus> {
+                override fun getStatusList(): List<MonsterStatus> {
                     return listOf(
                         TestActiveMonster.copy(
                             dropInfoList = listOf(
@@ -214,7 +214,7 @@ class GetDropToolUseCaseImplTest {
 
         val getDropToolUseCase: GetDropToolUseCase = GetDropToolUseCaseImpl(
             battleInfoRepository = object : TestBattleInfoRepository {
-                override fun getMonsters(): List<MonsterStatus> {
+                override fun getStatusList(): List<MonsterStatus> {
                     return listOf(
                         TestActiveMonster.copy(
                             dropInfoList = listOf(

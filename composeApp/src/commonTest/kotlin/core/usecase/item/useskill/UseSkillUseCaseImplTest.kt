@@ -27,7 +27,7 @@ class UseSkillUseCaseImplTest {
         override val playerStatusFlow: StateFlow<List<PlayerStatus>>
             get() = throw NotImplementedError()
 
-        override fun getPlayers(): List<PlayerStatus> {
+        override fun getStatusList(): List<PlayerStatus> {
             throw NotImplementedError()
         }
 

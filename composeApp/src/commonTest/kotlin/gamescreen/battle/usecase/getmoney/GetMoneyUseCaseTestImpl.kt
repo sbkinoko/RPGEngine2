@@ -19,7 +19,7 @@ class GetMoneyUseCaseTestImpl : KoinTest {
         val money2 = 2
 
         val battleMonsterRepository = object : TestBattleInfoRepository {
-            override fun getMonsters(): List<MonsterStatus> {
+            override fun getStatusList(): List<MonsterStatus> {
                 return listOf(
                     TestActiveMonster.copy(
                         money = money1,
@@ -53,7 +53,7 @@ class GetMoneyUseCaseTestImpl : KoinTest {
         val money3 = 7
 
         val battleMonsterRepository = object : TestBattleInfoRepository {
-            override fun getMonsters(): List<MonsterStatus> {
+            override fun getStatusList(): List<MonsterStatus> {
                 return listOf(
                     TestActiveMonster.copy(
                         money = money1,

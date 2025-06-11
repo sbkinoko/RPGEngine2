@@ -24,7 +24,7 @@ class GiveToolUseCaseImpl(
 ) : GiveToolUseCase {
     override suspend fun invoke(): GiveResult {
         if (targetRepository.target < Constants.playerNum) {
-            val targetPlayer = playerStatusRepository.getPlayers()[targetRepository.target]
+            val targetPlayer = playerStatusRepository.getStatusList()[targetRepository.target]
             if (targetPlayer.toolList.size >= Constants.MAX_TOOL_NUM) {
                 return GiveResult.NG(
                     TextData.HAS_FULL_ITEM
@@ -35,7 +35,7 @@ class GiveToolUseCaseImpl(
         val itemId: ToolId
         if (userRepository.userId < Constants.playerNum) {
             val player = playerStatusRepository
-                .getPlayers()[userRepository.userId]
+                .getStatusList()[userRepository.userId]
             itemId = player.toolList[indexRepository.index]
 
             playerStatusRepository.setStatus(
@@ -57,7 +57,7 @@ class GiveToolUseCaseImpl(
         }
 
         if (targetRepository.target < Constants.playerNum) {
-            val player = playerStatusRepository.getPlayers()[targetRepository.target]
+            val player = playerStatusRepository.getStatusList()[targetRepository.target]
             playerStatusRepository.setStatus(
                 id = targetRepository.target,
                 status = player.copy(

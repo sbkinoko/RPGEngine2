@@ -12,7 +12,7 @@ class AddExpUseCaseImpl(
 ) : AddExpUseCase {
     override fun invoke(exp: Int): List<String> {
         val levelUpList: MutableList<String> = mutableListOf()
-        playerStatusRepository.getPlayers().mapIndexed { index, it ->
+        playerStatusRepository.getStatusList().mapIndexed { index, it ->
             //経験値の加算
             var after = it.copy(
                 exp = it.exp.copy(

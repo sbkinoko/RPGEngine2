@@ -6,7 +6,7 @@ class MaxHealUseCaseImpl(
     private val playerStatusRepository: PlayerStatusRepository,
 ) : MaxHealUseCase {
     override suspend fun invoke() {
-        playerStatusRepository.getPlayers().mapIndexed { index, playerStatus ->
+        playerStatusRepository.getStatusList().mapIndexed { index, playerStatus ->
             playerStatusRepository.setStatus(
                 id = index,
                 status = playerStatus.copy(

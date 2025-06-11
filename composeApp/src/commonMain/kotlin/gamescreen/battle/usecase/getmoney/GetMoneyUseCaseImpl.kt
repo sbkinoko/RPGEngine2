@@ -7,7 +7,7 @@ class GetMoneyUseCaseImpl(
 ) : GetMoneyUseCase {
     override fun invoke(): Int {
         return battleInfoRepository
-            .getMonsters()
+            .getStatusList()
             .sumOf {
                 it.money
             }

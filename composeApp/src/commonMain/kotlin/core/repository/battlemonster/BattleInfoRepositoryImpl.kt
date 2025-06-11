@@ -29,8 +29,8 @@ class BattleInfoRepositoryImpl : BattleInfoRepository {
         return monsterList[id]
     }
 
-    override fun getMonsters(): List<MonsterStatus> {
-        return monsterList.toList()
+    override fun getStatusList(): List<MonsterStatus> {
+        return monsterList
     }
 
     override fun setMonsters(monsters: List<MonsterStatus>) {

@@ -9,6 +9,11 @@ interface StatusRepository<T> {
     fun getStatus(id: Int): T
 
     /**
+     * 全てのデータを返す
+     */
+    fun getStatusList(): List<T>
+
+    /**
      * @param id id番目のstatusを更新
      */
     suspend fun setStatus(

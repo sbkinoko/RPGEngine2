@@ -19,7 +19,7 @@ class AttackFromPlayerUseCaseImpl(
         damageType: DamageType,
     ) {
         var actualTarget = target
-        val monsters = battleInfoRepository.getMonsters()
+        val monsters = battleInfoRepository.getStatusList()
 
         if (monsters[target].statusData.isActive.not()) {
             actualTarget = findTargetService.findNext(
