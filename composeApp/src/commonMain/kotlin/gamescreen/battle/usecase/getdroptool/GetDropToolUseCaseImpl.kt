@@ -12,7 +12,7 @@ class GetDropToolUseCaseImpl(
         // ドロップアイテムの情報を格納するリスト
         val dropList: MutableList<ToolId> = mutableListOf()
 
-        battleInfoRepository.getMonsters().map { monster ->
+        battleInfoRepository.getStatusList().map { monster ->
             monster.dropInfoList.map {
                 val rnd = Random.nextInt(100)
                 if (rnd < it.probability) {

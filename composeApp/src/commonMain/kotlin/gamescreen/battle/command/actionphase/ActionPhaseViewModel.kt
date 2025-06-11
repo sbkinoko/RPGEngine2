@@ -86,7 +86,7 @@ class ActionPhaseViewModel(
 
     private val isMonsterAnnihilated: Boolean
         get() = isAnnihilationService(
-            battleInfoRepository.getMonsters()
+            battleInfoRepository.getStatusList()
         )
 
     private val isPlayerAnnihilated: Boolean
@@ -113,7 +113,7 @@ class ActionPhaseViewModel(
     val attackingStatusId = mutableAttackingStatusId.asStateFlow()
 
     private val monsterNum: Int
-        get() = battleInfoRepository.getMonsters().size
+        get() = battleInfoRepository.getStatusList().size
 
     // 使わないので適当
     override var selectManager: SelectManager = SelectManager(
@@ -143,7 +143,7 @@ class ActionPhaseViewModel(
                 )
             }
 
-        battleInfoRepository.getMonsters()
+        battleInfoRepository.getStatusList()
             .mapIndexed { index, status ->
                 val action = decideMonsterActionService.getAction(
                     status,
@@ -257,7 +257,7 @@ class ActionPhaseViewModel(
                         .statusData.isActive.not()
                 ) {
                     targetId = findActiveTargetUseCase.invoke(
-                        statusList = battleInfoRepository.getMonsters(),
+                        statusList = battleInfoRepository.getStatusList(),
                         target = targetId,
                         targetNum = item.targetNum,
                     ).first()
@@ -345,7 +345,7 @@ class ActionPhaseViewModel(
                     id = actionStatusWrapper.newId,
                     statusData = getStatus(actionStatusWrapper),
                     actionData = actionRepository.getAction(actionStatusWrapper.newId),
-                    statusList = battleInfoRepository.getMonsters(),
+                    statusList = battleInfoRepository.getStatusList(),
                     attackUseCase = attackFromPlayerUseCase,
                     conditionUseCase = conditionFromPlayerUseCase,
                     updateAllyParameter = updatePlayerParameter,

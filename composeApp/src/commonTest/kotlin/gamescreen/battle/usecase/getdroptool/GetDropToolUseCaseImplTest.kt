@@ -37,19 +37,6 @@ class GetDropToolUseCaseImplTest {
         val itemId = ToolId.HEAL1
         val getDropToolUseCase: GetDropToolUseCase = GetDropToolUseCaseImpl(
             battleInfoRepository = object : TestBattleInfoRepository {
-                override fun getMonsters(): List<MonsterStatus> {
-                    return listOf(
-                        TestActiveMonster.copy(
-                            dropInfoList = listOf(
-                                DropItemInfo(
-                                    toolId = itemId,
-                                    probability = 50,
-                                ),
-                            ),
-                        )
-                    )
-                }
-
                 override fun getStatusList(): List<MonsterStatus> {
                     return listOf(
                         TestActiveMonster.copy(
@@ -90,19 +77,6 @@ class GetDropToolUseCaseImplTest {
         val itemId = ToolId.HEAL1
         val getDropToolUseCase: GetDropToolUseCase = GetDropToolUseCaseImpl(
             battleInfoRepository = object : TestBattleInfoRepository {
-                override fun getMonsters(): List<MonsterStatus> {
-                    return listOf(
-                        TestActiveMonster.copy(
-                            dropInfoList = listOf(
-                                DropItemInfo(
-                                    toolId = itemId,
-                                    probability = 100,
-                                ),
-                            ),
-                        )
-                    )
-                }
-
                 override fun getStatusList(): List<MonsterStatus> {
                     return listOf(
                         TestActiveMonster.copy(
@@ -138,19 +112,6 @@ class GetDropToolUseCaseImplTest {
         val itemId = ToolId.HEAL1
         val getDropToolUseCase: GetDropToolUseCase = GetDropToolUseCaseImpl(
             battleInfoRepository = object : TestBattleInfoRepository {
-                override fun getMonsters(): List<MonsterStatus> {
-                    return listOf(
-                        TestActiveMonster.copy(
-                            dropInfoList = listOf(
-                                DropItemInfo(
-                                    toolId = itemId,
-                                    probability = 0,
-                                ),
-                            ),
-                        )
-                    )
-                }
-
                 override fun getStatusList(): List<MonsterStatus> {
                     return listOf(
                         TestActiveMonster.copy(
@@ -187,23 +148,6 @@ class GetDropToolUseCaseImplTest {
 
         val getDropToolUseCase: GetDropToolUseCase = GetDropToolUseCaseImpl(
             battleInfoRepository = object : TestBattleInfoRepository {
-                override fun getMonsters(): List<MonsterStatus> {
-                    return listOf(
-                        TestActiveMonster.copy(
-                            dropInfoList = listOf(
-                                DropItemInfo(
-                                    toolId = itemId1,
-                                    probability = 50,
-                                ),
-                                DropItemInfo(
-                                    toolId = itemId2,
-                                    probability = 50,
-                                ),
-                            ),
-                        )
-                    )
-                }
-
                 override fun getStatusList(): List<MonsterStatus> {
                     return listOf(
                         TestActiveMonster.copy(
@@ -270,27 +214,6 @@ class GetDropToolUseCaseImplTest {
 
         val getDropToolUseCase: GetDropToolUseCase = GetDropToolUseCaseImpl(
             battleInfoRepository = object : TestBattleInfoRepository {
-                override fun getMonsters(): List<MonsterStatus> {
-                    return listOf(
-                        TestActiveMonster.copy(
-                            dropInfoList = listOf(
-                                DropItemInfo(
-                                    toolId = itemId1,
-                                    probability = 50,
-                                ),
-                            ),
-                        ),
-                        TestActiveMonster.copy(
-                            dropInfoList = listOf(
-                                DropItemInfo(
-                                    toolId = itemId2,
-                                    probability = 50,
-                                ),
-                            ),
-                        ),
-                    )
-                }
-
                 override fun getStatusList(): List<MonsterStatus> {
                     return listOf(
                         TestActiveMonster.copy(

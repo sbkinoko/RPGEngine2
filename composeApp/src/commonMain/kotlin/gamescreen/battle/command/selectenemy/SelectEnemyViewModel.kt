@@ -52,7 +52,7 @@ class SelectEnemyViewModel : BattleChildViewModel() {
     }
 
     private val monsters: List<MonsterStatus>
-        get() = monsterRepository.getMonsters()
+        get() = monsterRepository.getStatusList()
 
     override fun isBoundedImpl(commandType: BattleCommandType): Boolean {
         return commandType is SelectEnemyCommand
