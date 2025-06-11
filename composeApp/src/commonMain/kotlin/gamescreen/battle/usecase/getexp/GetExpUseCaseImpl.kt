@@ -8,7 +8,7 @@ class GetExpUseCaseImpl(
     override fun invoke(): Int {
 
         return battleInfoRepository
-            .getMonsters()
+            .getStatusList()
             .sumOf {
                 it.exp
             }
