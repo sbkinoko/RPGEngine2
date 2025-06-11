@@ -18,7 +18,6 @@ sealed class ActionState {
     data object Paralyze : ActionState() {
         override val next: ActionState
             get() = Action
-
     }
 
     data object Action : ActionState() {
@@ -55,7 +54,6 @@ sealed class ActionState {
 
     abstract val next: ActionState
 }
-
 
 /**
  * 現在のアクションの状態と状態異常から次のアクションの状態を決定する

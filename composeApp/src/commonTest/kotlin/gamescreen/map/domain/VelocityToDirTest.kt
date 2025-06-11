@@ -89,7 +89,6 @@ class VelocityToDirTest {
         )
     }
 
-
     /**
      * 右上方向を向いているときの挙動を確認
      */

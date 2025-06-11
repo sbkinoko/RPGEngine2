@@ -10,7 +10,6 @@ import kotlin.test.assertEquals
 class GetExpUseCaseTestImpl : KoinTest {
     private lateinit var getExpUseCase: GetExpUseCase
 
-
     /**
      * 入手経験値のテスト1
      */

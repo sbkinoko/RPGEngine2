@@ -9,7 +9,6 @@ class StatusIncreaseTest {
         const val TEST_LV2_HP = 20
         const val TEST_LV2_MP = 21
 
-
         const val TEST_LV1_SPEED = 1
         const val TEST_LV2_SPEED = 2
 

@@ -225,7 +225,10 @@ class MapViewModel(
         )
     }
 
-    private fun updateVelocityByStick(dx: Float, dy: Float) {
+    private fun updateVelocityByStick(
+        dx: Float,
+        dy: Float,
+    ) {
         // fixme repositoryから取ってないのでデータが反映されてない
         // maxVが0なので初回のスティックだと動かない
         val player = uiStateFlow.value.player
@@ -250,7 +253,10 @@ class MapViewModel(
         tentativePlayerVelocity = velocity
     }
 
-    fun getAroundCellId(x: Int, y: Int): List<List<CellType>> {
+    fun getAroundCellId(
+        x: Int,
+        y: Int,
+    ): List<List<CellType>> {
         return backgroundRepository.getBackgroundAround(
             x = x,
             y = y,

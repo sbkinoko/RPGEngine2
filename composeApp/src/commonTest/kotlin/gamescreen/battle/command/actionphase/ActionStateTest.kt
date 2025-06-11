@@ -85,16 +85,16 @@ class ActionStateTest {
      * 麻痺で状態異常がない場合のテスト
      */
     // fixme 麻痺の場合の処理をViewModelから抽出する
-//    @Test
-//    fun checkParalyze(){
-//        initState = ActionState.Paralyze
-//        conditionList = listOf()
-//
-//        assertEquals(
-//            expected = ActionState.Next,
-//            actual = next,
-//        )
-//    }
+    //    @Test
+    //    fun checkParalyze(){
+    //        initState = ActionState.Paralyze
+    //        conditionList = listOf()
+    //
+    //        assertEquals(
+    //            expected = ActionState.Next,
+    //            actual = next,
+    //        )
+    //    }
 
     /**
      * 状態異常がない場合の行動後の遷移を確認
@@ -167,7 +167,6 @@ class ActionStateTest {
             }
         }
     }
-
 
     /**
      * 必ず治る毒

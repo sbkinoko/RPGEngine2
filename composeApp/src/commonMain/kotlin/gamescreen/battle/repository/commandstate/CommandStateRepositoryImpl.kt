@@ -17,7 +17,6 @@ class CommandStateRepositoryImpl : CommandStateRepository {
     override val nowBattleCommandType: BattleCommandType
         get() = battleCommandTypeQueue.last()
 
-
     private val mutableCommandStateFlow =
         MutableStateFlow(nowBattleCommandType)
     override val commandStateFlow: StateFlow<BattleCommandType> =

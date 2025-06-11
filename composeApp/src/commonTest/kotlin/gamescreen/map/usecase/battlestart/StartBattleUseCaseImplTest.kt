@@ -77,14 +77,16 @@ class StartBattleUseCaseImplTest : KoinTest {
                     checkBackground++
                 }
 
-                override suspend fun setStatus(id: Int, status: MonsterStatus) {
+                override suspend fun setStatus(
+                    id: Int,
+                    status: MonsterStatus,
+                ) {
                     throw NotImplementedError()
                 }
 
                 override fun reload() {
                     throw NotImplementedError()
                 }
-
             },
             screenTypeRepository = screenTypeRepository,
             commandStateRepository = object : CommandStateRepository {
@@ -108,7 +110,6 @@ class StartBattleUseCaseImplTest : KoinTest {
                 override fun popTo(condition: (BattleCommandType) -> Boolean) {
                     throw NotImplementedError()
                 }
-
             },
             actionRepository = object : ActionRepository {
                 override fun setAction(
@@ -120,11 +121,17 @@ class StartBattleUseCaseImplTest : KoinTest {
                     throw NotImplementedError()
                 }
 
-                override fun setTarget(playerId: Int, target: Int) {
+                override fun setTarget(
+                    playerId: Int,
+                    target: Int,
+                ) {
                     throw NotImplementedError()
                 }
 
-                override fun setAlly(playerId: Int, allyId: Int) {
+                override fun setAlly(
+                    playerId: Int,
+                    allyId: Int,
+                ) {
                     throw NotImplementedError()
                 }
 

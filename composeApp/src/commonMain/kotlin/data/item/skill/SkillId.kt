@@ -18,5 +18,4 @@ sealed class SkillId {
 
     data object BufAtk : SkillId()
     data object DeBufAtk : SkillId()
-
 }

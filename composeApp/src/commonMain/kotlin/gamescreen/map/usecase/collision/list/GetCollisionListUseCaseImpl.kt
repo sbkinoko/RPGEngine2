@@ -17,6 +17,5 @@ class GetCollisionListUseCaseImpl(
                 rectangle = rectangle,
                 cellType = cellType,
             )
-
     }
 }

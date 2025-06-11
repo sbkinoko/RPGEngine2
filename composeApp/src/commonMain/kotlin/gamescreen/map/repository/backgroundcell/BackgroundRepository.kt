@@ -16,7 +16,10 @@ interface BackgroundRepository {
 
     val cellSize: Float
 
-    fun getBackgroundAround(x: Int, y: Int): List<List<CellType>>
-    fun getBackgroundAround(mapPoint: MapPoint): List<List<CellType>>
+    fun getBackgroundAround(
+        x: Int,
+        y: Int,
+    ): List<List<CellType>>
 
+    fun getBackgroundAround(mapPoint: MapPoint): List<List<CellType>>
 }

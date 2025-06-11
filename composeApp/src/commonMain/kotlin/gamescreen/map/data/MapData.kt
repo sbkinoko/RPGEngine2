@@ -40,7 +40,10 @@ abstract class MapData {
      * 指定した位置の座標を取得する
      * ループしてるかどうかによって補正が異なる
      */
-    fun getMapPoint(x: Int, y: Int): MapPoint {
+    fun getMapPoint(
+        x: Int,
+        y: Int,
+    ): MapPoint {
         return if (!isLoop) {
             MapPoint(
                 x = x,
@@ -78,7 +81,10 @@ abstract class MapData {
      * @param max 補正の最大値
      * @param value 補正したい値
      */
-    private fun collectPoint(max: Int, value: Int): Int {
+    private fun collectPoint(
+        max: Int,
+        value: Int,
+    ): Int {
         if (value < 0) {
             return value + max
         }

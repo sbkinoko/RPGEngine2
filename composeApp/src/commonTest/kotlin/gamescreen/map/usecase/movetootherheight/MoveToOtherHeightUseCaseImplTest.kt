@@ -118,10 +118,10 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             }
 
             // todo 高さを外に出せるようになったら修正
-//            assertEquals(
-//                expected = targetHeight,
-//                actual = playerPositionRepository.getPlayerPosition().square.objectHeight
-//            )
+            //            assertEquals(
+            //                expected = targetHeight,
+            //                actual = playerPositionRepository.getPlayerPosition().square.objectHeight
+            //            )
         }
     }
 
@@ -140,10 +140,10 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             }
 
             // todo 高さを外に出せるようになったら修正
-//            assertEquals(
-//                expected = targetHeight,
-//                actual = playerPositionRepository.getPlayerPosition().square.objectHeight
-//            )
+            //            assertEquals(
+            //                expected = targetHeight,
+            //                actual = playerPositionRepository.getPlayerPosition().square.objectHeight
+            //            )
         }
     }
 
@@ -175,7 +175,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             }
 
             // todo 高さを外に出せるようになったら修正
-//            checkInWater()
+            //            checkInWater()
         }
     }
 
@@ -206,8 +206,8 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
 
             }
 
-// todo 高さを外に出せるようになったら修正
-//            checkInWater()
+            // todo 高さを外に出せるようになったら修正
+            //            checkInWater()
         }
     }
 
@@ -237,8 +237,8 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             ) {
 
             }
-// todo 高さを外に出せるようになったら修正
-//            checkInWater()
+            // todo 高さを外に出せるようになったら修正
+            //            checkInWater()
         }
     }
 
@@ -269,8 +269,8 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
 
             }
 
-// todo 高さを外に出せるようになったら修正
-//            checkInWater()
+            // todo 高さを外に出せるようになったら修正
+            //            checkInWater()
         }
     }
 
@@ -302,7 +302,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             }
 
             // todo 高さを外に出せるようになったら修正
-//            checkInWater()
+            //            checkInWater()
         }
     }
 
@@ -334,7 +334,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             }
 
             // todo 高さを外に出せるようになったら修正
-//            checkInWater()
+            //            checkInWater()
         }
     }
 
@@ -365,8 +365,8 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
 
             }
 
-// todo 高さを外に出せるようになったら修正
-//            checkInWater()
+            // todo 高さを外に出せるようになったら修正
+            //            checkInWater()
         }
     }
 
@@ -398,7 +398,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             }
 
             // todo 高さを外に出せるようになったら修正
-//            checkInWater()
+            //            checkInWater()
         }
     }
 
@@ -429,8 +429,8 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
 
             }
 
-// todo 高さを外に出せるようになったら修正
-//            checkInWater()
+            // todo 高さを外に出せるようになったら修正
+            //            checkInWater()
         }
     }
 
@@ -462,7 +462,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             }
 
             // todo 高さを外に出せるようになったら修正
-//            checkInWater()
+            //            checkInWater()
         }
     }
 
@@ -494,7 +494,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             }
 
             // todo 高さを外に出せるようになったら修正
-//            checkInWater()
+            //            checkInWater()
         }
     }
 
@@ -524,8 +524,8 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             ) {
 
             }
-// todo 高さを外に出せるようになったら修正
-//            checkInWater()
+            // todo 高さを外に出せるようになったら修正
+            //            checkInWater()
         }
     }
 

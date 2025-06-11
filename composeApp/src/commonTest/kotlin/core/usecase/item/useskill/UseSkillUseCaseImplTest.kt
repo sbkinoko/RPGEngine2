@@ -31,7 +31,10 @@ class UseSkillUseCaseImplTest {
             throw NotImplementedError()
         }
 
-        override fun getTool(playerId: Int, index: Int): ToolId {
+        override fun getTool(
+            playerId: Int,
+            index: Int,
+        ): ToolId {
             throw NotImplementedError()
         }
 
@@ -39,7 +42,10 @@ class UseSkillUseCaseImplTest {
             throw NotImplementedError()
         }
 
-        override suspend fun setStatus(id: Int, status: PlayerStatus) {
+        override suspend fun setStatus(
+            id: Int,
+            status: PlayerStatus,
+        ) {
             throw NotImplementedError()
         }
     }
@@ -47,30 +53,48 @@ class UseSkillUseCaseImplTest {
     private lateinit var playerStatusRepository: TestPlayerStatusRepository
 
     abstract class TestUpdatePlayerStatusUseCase : UpdatePlayerStatusUseCase() {
-        override suspend fun deleteToolAt(playerId: Int, index: Int) {
+        override suspend fun deleteToolAt(
+            playerId: Int,
+            index: Int,
+        ) {
             throw NotImplementedError()
         }
 
         override val statusRepository: StatusRepository<PlayerStatus>
             get() = throw NotImplementedError()
 
-        override fun decHPImpl(amount: Int, status: PlayerStatus): PlayerStatus {
+        override fun decHPImpl(
+            amount: Int,
+            status: PlayerStatus,
+        ): PlayerStatus {
             throw NotImplementedError()
         }
 
-        override fun incHPImpl(amount: Int, status: PlayerStatus): PlayerStatus {
+        override fun incHPImpl(
+            amount: Int,
+            status: PlayerStatus,
+        ): PlayerStatus {
             throw NotImplementedError()
         }
 
-        override fun decMPImpl(amount: Int, status: PlayerStatus): PlayerStatus {
+        override fun decMPImpl(
+            amount: Int,
+            status: PlayerStatus,
+        ): PlayerStatus {
             return status
         }
 
-        override fun incMPImpl(amount: Int, status: PlayerStatus): PlayerStatus {
+        override fun incMPImpl(
+            amount: Int,
+            status: PlayerStatus,
+        ): PlayerStatus {
             throw NotImplementedError()
         }
 
-        override suspend fun addCondition(id: Int, conditionType: ConditionType) {
+        override suspend fun addCondition(
+            id: Int,
+            conditionType: ConditionType,
+        ) {
             throw NotImplementedError()
         }
     }
@@ -78,19 +102,29 @@ class UseSkillUseCaseImplTest {
     private lateinit var updatePlayerStatusUseCase: UpdatePlayerStatusUseCase
 
     private val testUseCase = object : TestUpdatePlayerStatusUseCase() {
-        override suspend fun incHP(id: Int, amount: Int) {
+        override suspend fun incHP(
+            id: Int,
+            amount: Int,
+        ) {
             super.incHP(id, amount)
         }
 
-        override suspend fun decMP(id: Int, amount: Int) {
-
+        override suspend fun decMP(
+            id: Int,
+            amount: Int,
+        ) {
         }
 
-        override suspend fun updateConditionList(id: Int, conditionList: List<ConditionType>) {
-
+        override suspend fun updateConditionList(
+            id: Int,
+            conditionList: List<ConditionType>,
+        ) {
         }
 
-        override suspend fun addBuf(id: Int, buf: BufEffect) {
+        override suspend fun addBuf(
+            id: Int,
+            buf: BufEffect,
+        ) {
             throw NotImplementedError()
         }
 
@@ -107,7 +141,6 @@ class UseSkillUseCaseImplTest {
             skillRepository = skillRepository,
             updateParameter = updatePlayerStatusUseCase,
         )
-
 
     @Test
     fun checkSkillId() {
@@ -130,7 +163,10 @@ class UseSkillUseCaseImplTest {
         }
 
         playerStatusRepository = object : TestPlayerStatusRepository {
-            override fun getSkill(playerId: Int, index: Int): SkillId {
+            override fun getSkill(
+                playerId: Int,
+                index: Int,
+            ): SkillId {
                 assertEquals(
                     actual = testId,
                     expected = playerId
@@ -190,7 +226,10 @@ class UseSkillUseCaseImplTest {
         }
 
         playerStatusRepository = object : TestPlayerStatusRepository {
-            override fun getSkill(playerId: Int, index: Int): SkillId {
+            override fun getSkill(
+                playerId: Int,
+                index: Int,
+            ): SkillId {
                 return skillId
             }
         }
@@ -234,21 +273,32 @@ class UseSkillUseCaseImplTest {
         }
 
         playerStatusRepository = object : TestPlayerStatusRepository {
-            override fun getSkill(playerId: Int, index: Int): SkillId {
+            override fun getSkill(
+                playerId: Int,
+                index: Int,
+            ): SkillId {
                 return skillId
             }
         }
 
         updatePlayerStatusUseCase = object : TestUpdatePlayerStatusUseCase() {
-            override suspend fun decMP(id: Int, amount: Int) {
+            override suspend fun decMP(
+                id: Int,
+                amount: Int,
+            ) {
                 count++
             }
 
-            override suspend fun updateConditionList(id: Int, conditionList: List<ConditionType>) {
-
+            override suspend fun updateConditionList(
+                id: Int,
+                conditionList: List<ConditionType>,
+            ) {
             }
 
-            override suspend fun addBuf(id: Int, buf: BufEffect) {
+            override suspend fun addBuf(
+                id: Int,
+                buf: BufEffect,
+            ) {
                 throw NotImplementedError()
             }
 
@@ -256,8 +306,10 @@ class UseSkillUseCaseImplTest {
                 throw NotImplementedError()
             }
 
-            override suspend fun incHP(id: Int, amount: Int) {
-
+            override suspend fun incHP(
+                id: Int,
+                amount: Int,
+            ) {
             }
         }
 
@@ -298,25 +350,39 @@ class UseSkillUseCaseImplTest {
         }
 
         playerStatusRepository = object : TestPlayerStatusRepository {
-            override fun getSkill(playerId: Int, index: Int): SkillId {
+            override fun getSkill(
+                playerId: Int,
+                index: Int,
+            ): SkillId {
                 return skillId
             }
         }
 
         updatePlayerStatusUseCase = object : TestUpdatePlayerStatusUseCase() {
-            override suspend fun incHP(id: Int, amount: Int) {
+            override suspend fun incHP(
+                id: Int,
+                amount: Int,
+            ) {
                 count++
             }
 
-            override suspend fun decMP(id: Int, amount: Int) {
-
+            override suspend fun decMP(
+                id: Int,
+                amount: Int,
+            ) {
             }
 
-            override suspend fun updateConditionList(id: Int, conditionList: List<ConditionType>) {
+            override suspend fun updateConditionList(
+                id: Int,
+                conditionList: List<ConditionType>,
+            ) {
                 throw NotImplementedError()
             }
 
-            override suspend fun addBuf(id: Int, buf: BufEffect) {
+            override suspend fun addBuf(
+                id: Int,
+                buf: BufEffect,
+            ) {
                 throw NotImplementedError()
             }
 
@@ -362,25 +428,38 @@ class UseSkillUseCaseImplTest {
         }
 
         playerStatusRepository = object : TestPlayerStatusRepository {
-            override fun getSkill(playerId: Int, index: Int): SkillId {
+            override fun getSkill(
+                playerId: Int,
+                index: Int,
+            ): SkillId {
                 return skillId
             }
         }
 
         updatePlayerStatusUseCase = object : TestUpdatePlayerStatusUseCase() {
-            override suspend fun incHP(id: Int, amount: Int) {
+            override suspend fun incHP(
+                id: Int,
+                amount: Int,
+            ) {
                 count++
             }
 
-            override suspend fun decMP(id: Int, amount: Int) {
-
+            override suspend fun decMP(
+                id: Int,
+                amount: Int,
+            ) {
             }
 
-            override suspend fun updateConditionList(id: Int, conditionList: List<ConditionType>) {
-
+            override suspend fun updateConditionList(
+                id: Int,
+                conditionList: List<ConditionType>,
+            ) {
             }
 
-            override suspend fun addBuf(id: Int, buf: BufEffect) {
+            override suspend fun addBuf(
+                id: Int,
+                buf: BufEffect,
+            ) {
                 throw NotImplementedError()
             }
 

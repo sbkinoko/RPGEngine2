@@ -6,7 +6,6 @@ class TextData {
 
         const val NEED_EXP_MAX_LEVEL = "最大レベル"
 
-
         const val BATTLE_MAIN_ATTACK = "攻撃"
         const val BATTLE_MAIN_ESCAPE = "逃げる"
 

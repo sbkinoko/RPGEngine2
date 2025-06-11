@@ -16,7 +16,6 @@ class PlayerStatusRepositoryImpl(
 
     override val playerStatusFlow: StateFlow<List<PlayerStatus>>
 
-
     private var players: List<PlayerStatus>
 
     init {
@@ -39,7 +38,10 @@ class PlayerStatusRepositoryImpl(
         }
     }
 
-    override suspend fun setStatus(id: Int, status: PlayerStatus) {
+    override suspend fun setStatus(
+        id: Int,
+        status: PlayerStatus,
+    ) {
         val list = players
             .mapIndexed { index, playerStatus ->
                 if (index == id) {

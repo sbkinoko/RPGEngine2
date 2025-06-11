@@ -25,7 +25,10 @@ class BackgroundRepositoryImpl : BackgroundRepository {
         )
     }
 
-    override fun getBackgroundAround(x: Int, y: Int): List<List<CellType>> {
+    override fun getBackgroundAround(
+        x: Int,
+        y: Int,
+    ): List<List<CellType>> {
         return listOf(
             listOf(
                 getIdAt(x = x - 1, y = y - 1),
@@ -45,7 +48,10 @@ class BackgroundRepositoryImpl : BackgroundRepository {
         )
     }
 
-    private fun getIdAt(x: Int, y: Int): CellType {
+    private fun getIdAt(
+        x: Int,
+        y: Int,
+    ): CellType {
         return if (mapData.isLoop) {
             mapData.getDataAt(
                 x = correctX(x),

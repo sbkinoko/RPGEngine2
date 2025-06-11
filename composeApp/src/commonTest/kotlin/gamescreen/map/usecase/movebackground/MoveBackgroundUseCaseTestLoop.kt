@@ -31,7 +31,6 @@ class MoveBackgroundUseCaseTestLoop : KoinTest {
     private val BackgroundData.leftTopCell
         get() = this.fieldData[0][0]
 
-
     @BeforeTest
     fun beforeTest() {
         startKoin {

@@ -89,5 +89,4 @@ abstract class AbstractUpdateStatusUseCase<T : Character> : UpdateStatusUseCase<
         amount: Int,
         status: T,
     ): T
-
 }

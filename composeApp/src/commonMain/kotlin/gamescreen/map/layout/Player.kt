@@ -35,7 +35,7 @@ fun Player(
             )
             .background(Colors.Player)
             .clickable(onClick = clickPlayer),
-//
+        //
         contentAlignment = Alignment.Center,
     ) {
         Text(
@@ -63,6 +63,6 @@ fun Player(
             .clickable(
                 onClick = clickEventSquare
             ),
-//                mapViewModel.touchEventSquare()
+        //                mapViewModel.touchEventSquare()
     )
 }

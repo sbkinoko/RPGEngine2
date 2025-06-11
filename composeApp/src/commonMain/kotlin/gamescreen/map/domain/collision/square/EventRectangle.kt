@@ -45,7 +45,10 @@ data class EventRectangle(
         ),
     )
 
-    override fun move(dx: Float, dy: Float): EventRectangle {
+    override fun move(
+        dx: Float,
+        dy: Float,
+    ): EventRectangle {
         return this.copy(
             rectangle = rectangle.move(
                 dx = dx,
@@ -54,7 +57,10 @@ data class EventRectangle(
         )
     }
 
-    override fun moveTo(x: Float, y: Float): EventRectangle {
+    override fun moveTo(
+        x: Float,
+        y: Float,
+    ): EventRectangle {
         return this.copy(
             rectangle = rectangle.moveTo(
                 x = x,

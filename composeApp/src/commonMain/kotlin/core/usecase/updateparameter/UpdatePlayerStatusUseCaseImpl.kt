@@ -9,7 +9,10 @@ import core.repository.status.StatusRepository
 class UpdatePlayerStatusUseCaseImpl(
     override val statusRepository: StatusRepository<PlayerStatus>,
 ) : UpdatePlayerStatusUseCase() {
-    override fun decHPImpl(amount: Int, status: PlayerStatus): PlayerStatus {
+    override fun decHPImpl(
+        amount: Int,
+        status: PlayerStatus,
+    ): PlayerStatus {
         return status.copy(
             statusData = status.statusData.decHP(
                 amount,
@@ -17,19 +20,28 @@ class UpdatePlayerStatusUseCaseImpl(
         )
     }
 
-    override fun incHPImpl(amount: Int, status: PlayerStatus): PlayerStatus {
+    override fun incHPImpl(
+        amount: Int,
+        status: PlayerStatus,
+    ): PlayerStatus {
         return status.copy(
             statusData = status.statusData.incHP(amount)
         )
     }
 
-    override fun decMPImpl(amount: Int, status: PlayerStatus): PlayerStatus {
+    override fun decMPImpl(
+        amount: Int,
+        status: PlayerStatus,
+    ): PlayerStatus {
         return status.copy(
             statusData = status.statusData.decMP(amount)
         )
     }
 
-    override fun incMPImpl(amount: Int, status: PlayerStatus): PlayerStatus {
+    override fun incMPImpl(
+        amount: Int,
+        status: PlayerStatus,
+    ): PlayerStatus {
         return status.copy(
             statusData = status.statusData.incMP(amount)
         )
@@ -52,7 +64,10 @@ class UpdatePlayerStatusUseCaseImpl(
         )
     }
 
-    override suspend fun updateConditionList(id: Int, conditionList: List<ConditionType>) {
+    override suspend fun updateConditionList(
+        id: Int,
+        conditionList: List<ConditionType>,
+    ) {
         val status = statusRepository.getStatus(id)
         val updated = status.copy(
             statusData = status.statusData.updateConditionList(
@@ -105,7 +120,10 @@ class UpdatePlayerStatusUseCaseImpl(
         }
     }
 
-    override suspend fun deleteToolAt(playerId: Int, index: Int) {
+    override suspend fun deleteToolAt(
+        playerId: Int,
+        index: Int,
+    ) {
         val status = statusRepository.getStatus(
             id = playerId,
         ).copy(

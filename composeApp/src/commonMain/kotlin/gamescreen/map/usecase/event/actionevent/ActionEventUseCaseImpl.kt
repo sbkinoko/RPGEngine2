@@ -50,7 +50,6 @@ class ActionEventUseCaseImpl(
                     ),
                 )
 
-
                 val fieldData = mapUiState.backgroundData.fieldData.map { list ->
                     list.map { cell ->
                         if (cell.cellType is CellType.Box &&

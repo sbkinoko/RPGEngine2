@@ -31,8 +31,10 @@ interface TestBattleInfoRepository : BattleInfoRepository {
         throw NotImplementedError()
     }
 
-    override suspend fun setStatus(id: Int, status: MonsterStatus) {
+    override suspend fun setStatus(
+        id: Int,
+        status: MonsterStatus,
+    ) {
         throw NotImplementedError()
     }
-
 }

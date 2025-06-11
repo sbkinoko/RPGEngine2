@@ -19,6 +19,5 @@ class LayoutConst {
         //　選択肢
         const val CHOICE_WIDTH = 0.4f
         const val CHOICE_HEIGHT = 0.2f
-
     }
 }

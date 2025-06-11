@@ -24,7 +24,10 @@ class BackFieldUseCaseImplTest : KoinTest {
                     get() = throw NotImplementedError()
                 override var nowMenuType: MenuType
                     get() = throw NotImplementedError()
-                    set(@Suppress("UNUSED_PARAMETER") value) {
+                    set(
+                        @Suppress("UNUSED_PARAMETER")
+                        value,
+                    ) {
                         throw NotImplementedError()
                     }
 
@@ -47,7 +50,6 @@ class BackFieldUseCaseImplTest : KoinTest {
             },
         )
     }
-
 
     @Test
     fun checkBackField() {

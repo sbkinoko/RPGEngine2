@@ -76,7 +76,6 @@ class PlayerRepositoryImplTest : KoinTest {
         }
     }
 
-
     /**
      * 一回セットしただけのテスト
      */

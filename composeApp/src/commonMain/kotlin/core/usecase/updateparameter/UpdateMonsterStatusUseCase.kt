@@ -10,7 +10,10 @@ class UpdateMonsterStatusUseCase(
     override val statusRepository: StatusRepository<MonsterStatus>,
 ) : AbstractUpdateStatusUseCase<MonsterStatus>() {
 
-    override fun decHPImpl(amount: Int, status: MonsterStatus): MonsterStatus {
+    override fun decHPImpl(
+        amount: Int,
+        status: MonsterStatus,
+    ): MonsterStatus {
         return status.copy(
             statusData = status.statusData.decHP(
                 amount = amount,
@@ -18,7 +21,10 @@ class UpdateMonsterStatusUseCase(
         )
     }
 
-    override fun incHPImpl(amount: Int, status: MonsterStatus): MonsterStatus {
+    override fun incHPImpl(
+        amount: Int,
+        status: MonsterStatus,
+    ): MonsterStatus {
         return status.copy(
             statusData = status.statusData.incHP(
                 amount = amount,
@@ -26,7 +32,10 @@ class UpdateMonsterStatusUseCase(
         )
     }
 
-    override fun decMPImpl(amount: Int, status: MonsterStatus): MonsterStatus {
+    override fun decMPImpl(
+        amount: Int,
+        status: MonsterStatus,
+    ): MonsterStatus {
         return status.copy(
             statusData = status.statusData.decMP(
                 amount = amount,
@@ -34,7 +43,10 @@ class UpdateMonsterStatusUseCase(
         )
     }
 
-    override fun incMPImpl(amount: Int, status: MonsterStatus): MonsterStatus {
+    override fun incMPImpl(
+        amount: Int,
+        status: MonsterStatus,
+    ): MonsterStatus {
         return status.copy(
             statusData = status.statusData.incMP(
                 amount = amount,
@@ -58,7 +70,10 @@ class UpdateMonsterStatusUseCase(
         )
     }
 
-    override suspend fun updateConditionList(id: Int, conditionList: List<ConditionType>) {
+    override suspend fun updateConditionList(
+        id: Int,
+        conditionList: List<ConditionType>,
+    ) {
         val status = statusRepository.getStatus(id)
         val updated = status.copy(
             statusData = status.statusData.updateConditionList(
@@ -71,7 +86,10 @@ class UpdateMonsterStatusUseCase(
         )
     }
 
-    override suspend fun addBuf(id: Int, buf: BufEffect) {
+    override suspend fun addBuf(
+        id: Int,
+        buf: BufEffect,
+    ) {
         val status = statusRepository.getStatus(id)
 
         val updated = when (buf.parameterType) {

@@ -31,46 +31,73 @@ class UseToolUseCaseImplTest : KoinTest {
 
     var countDecItem = 0
     private val decToolUseCase = object : DecToolUseCase {
-        override fun invoke(itemId: ToolId, itemNum: Int) {
+        override fun invoke(
+            itemId: ToolId,
+            itemNum: Int,
+        ) {
             countDecItem++
         }
     }
 
     private var countGetToolId = 0
     private val getToolIdUseCase = object : GetToolIdUseCase {
-        override fun invoke(userId: Int, index: Int): ToolId {
+        override fun invoke(
+            userId: Int,
+            index: Int,
+        ): ToolId {
             countGetToolId++
             return ToolId.None
         }
     }
 
     private val updateStatusService = object : UpdatePlayerStatusUseCase() {
-        override fun decHPImpl(amount: Int, status: PlayerStatus): PlayerStatus {
+        override fun decHPImpl(
+            amount: Int,
+            status: PlayerStatus,
+        ): PlayerStatus {
             throw NotImplementedError()
         }
 
-        override fun incHPImpl(amount: Int, status: PlayerStatus): PlayerStatus {
+        override fun incHPImpl(
+            amount: Int,
+            status: PlayerStatus,
+        ): PlayerStatus {
             countIncHP++
             return status
         }
 
-        override fun decMPImpl(amount: Int, status: PlayerStatus): PlayerStatus {
+        override fun decMPImpl(
+            amount: Int,
+            status: PlayerStatus,
+        ): PlayerStatus {
             throw NotImplementedError()
         }
 
-        override fun incMPImpl(amount: Int, status: PlayerStatus): PlayerStatus {
+        override fun incMPImpl(
+            amount: Int,
+            status: PlayerStatus,
+        ): PlayerStatus {
             throw NotImplementedError()
         }
 
-        override suspend fun addCondition(id: Int, conditionType: ConditionType) {
+        override suspend fun addCondition(
+            id: Int,
+            conditionType: ConditionType,
+        ) {
             throw NotImplementedError()
         }
 
-        override suspend fun updateConditionList(id: Int, conditionList: List<ConditionType>) {
+        override suspend fun updateConditionList(
+            id: Int,
+            conditionList: List<ConditionType>,
+        ) {
             throw NotImplementedError()
         }
 
-        override suspend fun addBuf(id: Int, buf: BufEffect) {
+        override suspend fun addBuf(
+            id: Int,
+            buf: BufEffect,
+        ) {
             throw NotImplementedError()
         }
 
@@ -78,13 +105,19 @@ class UseToolUseCaseImplTest : KoinTest {
             throw NotImplementedError()
         }
 
-        override suspend fun deleteToolAt(playerId: Int, index: Int) {
+        override suspend fun deleteToolAt(
+            playerId: Int,
+            index: Int,
+        ) {
             countDelTool++
         }
 
         override val statusRepository: StatusRepository<PlayerStatus>
             get() = object : StatusRepository<PlayerStatus> {
-                override suspend fun setStatus(id: Int, status: PlayerStatus) {
+                override suspend fun setStatus(
+                    id: Int,
+                    status: PlayerStatus,
+                ) {
                     // NOP
                 }
 
@@ -148,7 +181,6 @@ class UseToolUseCaseImplTest : KoinTest {
             )
         }
     }
-
 
     @Test
     fun reusable() {

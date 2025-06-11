@@ -87,5 +87,4 @@ abstract class ItemTargetViewModel<T> : MenuChildViewModel() {
      * confirmでYesを選んだ時の処理
      */
     abstract fun selectYes()
-
 }

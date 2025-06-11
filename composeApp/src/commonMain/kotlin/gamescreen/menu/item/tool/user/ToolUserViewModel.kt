@@ -30,7 +30,6 @@ class ToolUserViewModel : ItemUserViewModel<ToolId>(),
             itemNum = playerNum,
         )
 
-
     // fixme 初期化タイミングを考える
     // toolGiveUseViewModelでも同じことをしている
     init {

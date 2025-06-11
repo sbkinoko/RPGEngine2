@@ -23,5 +23,4 @@ class EscapeViewModelTest : KoinTest {
     fun afterTest() {
         stopKoin()
     }
-
 }

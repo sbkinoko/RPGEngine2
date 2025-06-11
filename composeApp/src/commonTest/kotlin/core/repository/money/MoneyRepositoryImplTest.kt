@@ -164,7 +164,6 @@ class MoneyRepositoryImplTest : KoinTest {
         }
     }
 
-
     /**
      * お金の減産処理
      * 0

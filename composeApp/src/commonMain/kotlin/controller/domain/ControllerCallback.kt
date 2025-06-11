@@ -11,5 +11,4 @@ interface ControllerCallback {
     fun pressB()
 
     fun pressM()
-
 }

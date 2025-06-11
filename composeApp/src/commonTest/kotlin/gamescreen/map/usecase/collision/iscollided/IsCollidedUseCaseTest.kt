@@ -81,7 +81,6 @@ class IsCollidedUseCaseTest : KoinTest {
             )
         override val npcList: List<NPC>
             get() = npcData.npcList
-
     }
 
     @BeforeTest
@@ -128,7 +127,6 @@ class IsCollidedUseCaseTest : KoinTest {
             )
         }
     }
-
 
     @Test
     fun collideWithWaterAndWater() {

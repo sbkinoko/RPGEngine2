@@ -21,5 +21,4 @@ class MainViewModelTest : KoinTest {
     fun afterTest() {
         stopKoin()
     }
-
 }

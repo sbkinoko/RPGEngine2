@@ -13,5 +13,4 @@ interface UpdateCellContainPlayerUseCase {
         player: Player,
         backgroundData: BackgroundData,
     ): BackgroundCell?
-
 }

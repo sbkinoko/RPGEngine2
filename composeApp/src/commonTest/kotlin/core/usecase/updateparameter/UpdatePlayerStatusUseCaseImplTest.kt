@@ -42,7 +42,10 @@ class UpdatePlayerStatusUseCaseImplTest {
                 return statusList[id]
             }
 
-            override suspend fun setStatus(id: Int, status: PlayerStatus) {
+            override suspend fun setStatus(
+                id: Int,
+                status: PlayerStatus,
+            ) {
                 this.statusList[id] = status
             }
         }
@@ -64,7 +67,6 @@ class UpdatePlayerStatusUseCaseImplTest {
             )
         }
     }
-
 
     @Test
     fun decHP() {
