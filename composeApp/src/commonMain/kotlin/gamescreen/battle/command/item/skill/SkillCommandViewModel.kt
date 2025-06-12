@@ -45,7 +45,7 @@ class SkillCommandViewModel : ItemCommandViewModel<SkillId>() {
 
     override fun canUse(position: Int): Boolean {
         val skillId = itemList[position]
-        val status = playerStatusRepository.getStatus(playerId)
+        val status = statusDataRepository.getStatusData(playerId)
         val ableType = checkCanUseSkillUseCase.invoke(
             skillId = skillId,
             status = status,

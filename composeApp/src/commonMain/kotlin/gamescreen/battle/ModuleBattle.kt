@@ -80,6 +80,7 @@ val ModuleBattle = module {
     single {
         ActionPhaseViewModel(
             decideActionOrderUseCase = get(),
+            statusDataRepository = get(),
         )
     }
 
@@ -177,7 +178,7 @@ val ModuleBattle = module {
         qualifier = named(QualifierAttackFromEnemy),
     ) {
         AttackFromEnemyUseCaseImpl(
-            playerStatusRepository = get(),
+            statusDataRepository = get(),
             findTargetService = get(),
             attackCalcService = get(),
         )
@@ -194,7 +195,7 @@ val ModuleBattle = module {
         qualifier = named(QualifierAttackFromEnemy),
     ) {
         ConditionFromEnemyUseCaseImpl(
-            playerStatusRepository = get(),
+            statusDataRepository = get(),
             findTargetService = get(),
             updatePlayerStatusService = get(),
         )

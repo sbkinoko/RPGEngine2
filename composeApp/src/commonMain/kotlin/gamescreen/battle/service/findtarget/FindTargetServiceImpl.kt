@@ -1,11 +1,11 @@
 package gamescreen.battle.service.findtarget
 
-import core.domain.status.Character
+import core.domain.status.StatusData
 
 class FindTargetServiceImpl : FindTargetService {
 
     override fun findNext(
-        statusList: List<Character>,
+        statusList: List<StatusData>,
         target: Int,
     ): Int {
         var actualTarget = target + 1
@@ -14,7 +14,7 @@ class FindTargetServiceImpl : FindTargetService {
         }
 
         //　戦闘不能じゃないtargetを探す
-        while (statusList[actualTarget].statusData.isActive.not()) {
+        while (statusList[actualTarget].isActive.not()) {
             actualTarget = collectTarget(
                 target = actualTarget + 1,
                 size = statusList.size,
@@ -24,7 +24,7 @@ class FindTargetServiceImpl : FindTargetService {
     }
 
     override fun findPrev(
-        statusList: List<Character>,
+        statusList: List<StatusData>,
         target: Int,
     ): Int {
         var actualTarget = collectTarget(
@@ -33,7 +33,7 @@ class FindTargetServiceImpl : FindTargetService {
         )
 
         //　戦闘不能じゃないtargetを探す
-        while (statusList[actualTarget].statusData.isActive.not()) {
+        while (statusList[actualTarget].isActive.not()) {
             actualTarget = collectTarget(
                 target = actualTarget - 1,
                 size = statusList.size,

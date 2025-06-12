@@ -18,7 +18,7 @@ class ConditionFromPlayerUseCaseImpl(
         val monsters = battleInfoRepository.getStatusList()
         if (monsters[target].statusData.isActive.not()) {
             actualTarget = findTargetService.findNext(
-                statusList = monsters,
+                statusList = monsters.map { it.statusData },
                 target = target,
             )
         }
