@@ -12,12 +12,12 @@ import androidx.compose.ui.text.style.TextAlign
 import common.extension.equalAllocationModifier
 import common.extension.menuItem
 import common.layout.CenterText
-import core.domain.status.PlayerStatus
+import core.domain.status.StatusData
 import org.koin.compose.koinInject
 
 @Composable
 fun PlayerAction(
-    playerStatus: PlayerStatus,
+    playerStatus: StatusData,
     modifier: Modifier = Modifier,
     playerActionViewModel: PlayerActionViewModel = koinInject(),
 ) {
@@ -30,7 +30,7 @@ fun PlayerAction(
             modifier = Modifier
                 .fillMaxWidth(),
             textAlign = TextAlign.Start,
-            text = playerStatus.statusData.name,
+            text = playerStatus.name,
         )
 
         Row(

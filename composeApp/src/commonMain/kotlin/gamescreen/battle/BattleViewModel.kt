@@ -2,11 +2,9 @@ package gamescreen.battle
 
 import controller.domain.ControllerCallback
 import controller.domain.Stick
-import core.domain.status.PlayerStatus
 import core.domain.status.StatusData
 import core.domain.status.monster.MonsterStatus
 import core.repository.battlemonster.BattleInfoRepository
-import core.repository.player.PlayerStatusRepository
 import core.repository.statusdata.StatusDataRepository
 import gamescreen.battle.repository.attackeffect.AttackEffectRepository
 import gamescreen.battle.repository.commandstate.CommandStateRepository
@@ -15,20 +13,16 @@ import gamescreen.battle.usecase.getcontrollerbyscreentype.GetControllerByComman
 import kotlinx.coroutines.flow.StateFlow
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import values.Constants
 
 class BattleViewModel(
     flashRepository: FlashRepository,
     attackEffectInfoRepository: AttackEffectRepository,
 
-    private val statusDataRepository: StatusDataRepository,
+    statusDataRepository: StatusDataRepository,
 ) :
     ControllerCallback,
     KoinComponent {
 
-    lateinit var players: List<PlayerStatus>
-
-    private val playerStatusRepository: PlayerStatusRepository by inject()
     private val battleInfoRepository: BattleInfoRepository by inject()
     private val commandStateRepository: CommandStateRepository by inject()
 
@@ -39,8 +33,6 @@ class BattleViewModel(
 
     val commandStateFlow =
         commandStateRepository.commandStateFlow
-
-    val playerStatusFlow: StateFlow<List<PlayerStatus>> = playerStatusRepository.playerStatusFlow
 
     val statusDataFlow: StateFlow<List<StatusData>> =
         statusDataRepository.statusDataFlow
@@ -54,16 +46,6 @@ class BattleViewModel(
     val flashStateFlow = flashRepository.flashStateFlow
 
     val attackEffectState = attackEffectInfoRepository.effectStateFlow
-
-    init {
-        initPlayers()
-    }
-
-    private fun initPlayers() {
-        players = List(Constants.playerNum) {
-            playerStatusRepository.getStatus(id = it)
-        }
-    }
 
     fun reloadMonster() {
         battleInfoRepository.reload()

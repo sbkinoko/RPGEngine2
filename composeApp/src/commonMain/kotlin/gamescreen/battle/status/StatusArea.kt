@@ -6,11 +6,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import core.domain.status.Character
+import core.domain.status.StatusData
 
 @Composable
 fun StatusArea(
-    statusList: List<Character>,
+    statusList: List<StatusData>,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -22,7 +22,7 @@ fun StatusArea(
                     .padding(5.dp)
                     .weight(1f)
                     .fillMaxHeight(),
-                status = it.statusData,
+                status = it,
                 index = index,
             )
         }

@@ -34,10 +34,6 @@ fun CommandArea(
         .commandStateFlow
         .collectAsState()
 
-    val playerData by battleViewModel
-        .playerStatusFlow
-        .collectAsState()
-
     val statusData by battleViewModel
         .statusDataFlow
         .collectAsState()
@@ -49,20 +45,20 @@ fun CommandArea(
 
         is PlayerActionCommand -> PlayerAction(
             modifier = modifier,
-            playerStatus = playerData[nowState.playerId]
+            playerStatus = statusData[nowState.playerId]
         )
 
         is SelectEnemyCommand -> {
             SelectEnemy(
                 modifier = modifier,
-                playerStatus = playerData[nowState.playerId]
+                playerStatus = statusData[nowState.playerId]
             )
         }
 
         is SelectAllyCommand -> {
             SelectAllyCommandWindow(
                 modifier = modifier,
-                playerStatus = playerData[nowState.playerId]
+                playerStatus = statusData[nowState.playerId]
             )
         }
 
