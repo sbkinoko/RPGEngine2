@@ -4,8 +4,9 @@ import core.ModuleCore
 import core.domain.status.ConditionType
 import core.domain.status.PlayerStatusTest.Companion.testActivePlayer
 import core.domain.status.PlayerStatusTest.Companion.testNotActivePlayer
-import core.repository.player.PlayerStatusRepository
+import core.repository.statusdata.StatusDataRepository
 import data.ModuleData
+import data.status.StatusRepository
 import gamescreen.battle.ModuleBattle
 import gamescreen.battle.QualifierAttackFromEnemy
 import kotlinx.coroutines.runBlocking
@@ -14,6 +15,7 @@ import org.koin.core.context.stopKoin
 import org.koin.core.qualifier.named
 import org.koin.test.KoinTest
 import org.koin.test.inject
+import values.Constants
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -24,7 +26,8 @@ class ConditionUseCaseImplFromEnemyTest : KoinTest {
         qualifier = named(QualifierAttackFromEnemy)
     )
 
-    private val playerStatusRepository: PlayerStatusRepository by inject()
+    private val statusRepository: StatusRepository by inject()
+    private val statusDataRepository: StatusDataRepository by inject()
 
     private val conditionType = ConditionType.Poison()
     private val expectedList = listOf(conditionType)
@@ -38,6 +41,15 @@ class ConditionUseCaseImplFromEnemyTest : KoinTest {
                 ModuleData,
             )
         }
+
+        statusDataRepository.setStatusList(
+            List(Constants.playerNum) {
+                statusRepository.getStatus(
+                    id = it,
+                    level = 1,
+                ).statusData
+            }
+        )
     }
 
     @AfterTest
@@ -48,9 +60,9 @@ class ConditionUseCaseImplFromEnemyTest : KoinTest {
     @Test
     fun toActive() {
         runBlocking {
-            playerStatusRepository.setStatus(
+            statusDataRepository.setStatusData(
                 id = 0,
-                status = testActivePlayer,
+                statusData = testActivePlayer.statusData,
             )
 
             conditionUseCaseImplFromEnemy.invoke(
@@ -58,10 +70,10 @@ class ConditionUseCaseImplFromEnemyTest : KoinTest {
                 conditionType = conditionType,
             )
 
-            playerStatusRepository.getStatus(0).apply {
+            statusDataRepository.getStatusData(0).apply {
                 assertEquals(
                     expected = expectedList,
-                    actual = this.statusData.conditionList,
+                    actual = conditionList,
                 )
             }
         }
@@ -71,19 +83,19 @@ class ConditionUseCaseImplFromEnemyTest : KoinTest {
     fun toActive2() {
         val id = 1
         runBlocking {
-            playerStatusRepository.setStatus(
+            statusDataRepository.setStatusData(
                 id = id,
-                status = testActivePlayer,
+                statusData = testActivePlayer.statusData,
             )
             conditionUseCaseImplFromEnemy.invoke(
                 target = id,
                 conditionType = conditionType,
             )
 
-            playerStatusRepository.getStatus(id).apply {
+            statusDataRepository.getStatusData(id).apply {
                 assertEquals(
                     expected = expectedList,
-                    actual = this.statusData.conditionList,
+                    actual = conditionList,
                 )
             }
         }
@@ -94,13 +106,13 @@ class ConditionUseCaseImplFromEnemyTest : KoinTest {
         val idNotActive = 0
         val idActive = 1
         runBlocking {
-            playerStatusRepository.setStatus(
+            statusDataRepository.setStatusData(
                 id = idNotActive,
-                status = testNotActivePlayer
+                statusData = testNotActivePlayer.statusData
             )
-            playerStatusRepository.setStatus(
+            statusDataRepository.setStatusData(
                 id = idActive,
-                status = testActivePlayer,
+                statusData = testActivePlayer.statusData,
             )
 
             conditionUseCaseImplFromEnemy.invoke(
@@ -108,10 +120,10 @@ class ConditionUseCaseImplFromEnemyTest : KoinTest {
                 conditionType = conditionType,
             )
 
-            playerStatusRepository.getStatus(idActive).apply {
+            statusDataRepository.getStatusData(idActive).apply {
                 assertEquals(
                     expected = expectedList,
-                    actual = this.statusData.conditionList
+                    actual = conditionList
                 )
             }
         }

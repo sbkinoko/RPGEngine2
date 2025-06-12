@@ -1,5 +1,6 @@
 package gamescreen.battle
 
+import core.UpdatePlayer
 import gamescreen.battle.command.actionphase.ActionPhaseViewModel
 import gamescreen.battle.command.escape.EscapeViewModel
 import gamescreen.battle.command.finish.BattleFinishViewModel
@@ -197,7 +198,7 @@ val ModuleBattle = module {
         ConditionFromEnemyUseCaseImpl(
             statusDataRepository = get(),
             findTargetService = get(),
-            updatePlayerStatusService = get(),
+            updatePlayerStatusService = get(qualifier = named(UpdatePlayer)),
         )
     }
 

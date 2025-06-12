@@ -1,14 +1,15 @@
 package gamescreen.battle.usecase.condition
 
 import core.domain.status.ConditionType
+import core.domain.status.PlayerStatus
 import core.repository.statusdata.StatusDataRepository
-import core.usecase.updateparameter.UpdatePlayerStatusUseCase
+import core.usecase.updateparameter.UpdateStatusUseCase
 import gamescreen.battle.service.findtarget.FindTargetService
 
 class ConditionFromEnemyUseCaseImpl(
     private val statusDataRepository: StatusDataRepository,
     private val findTargetService: FindTargetService,
-    private val updatePlayerStatusService: UpdatePlayerStatusUseCase,
+    private val updatePlayerStatusService: UpdateStatusUseCase<PlayerStatus>,
 ) : ConditionUseCase {
     override suspend fun invoke(
         target: Int,
