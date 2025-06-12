@@ -66,20 +66,6 @@ class UpdateStatusUseCaseImplTest {
         statusDataRepository = statusRepository,
     )
 
-    //    @Test
-    //    fun deleteTool() {
-    //        runBlocking {
-    //            updateStatusUseCase.deleteToolAt(
-    //                playerId = 0,
-    //                index = 2,
-    //            )
-    //            assertEquals(
-    //                expected = listOf(ToolId.HEAL1, ToolId.HEAL2),
-    //                actual = statusRepository.getStatus(0).toolList
-    //            )
-    //        }
-    //    }
-
     @Test
     fun decHP() {
         runBlocking {
