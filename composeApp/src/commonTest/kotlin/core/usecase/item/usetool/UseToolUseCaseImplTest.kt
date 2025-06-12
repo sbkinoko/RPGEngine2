@@ -9,9 +9,8 @@ import core.domain.item.Tool
 import core.domain.item.tool.HealTool
 import core.domain.status.ConditionType
 import core.domain.status.PlayerStatus
-import core.domain.status.PlayerStatusTest
-import core.repository.status.StatusRepository
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
+import core.usecase.updateparameter.UpdateStatusUseCase
 import data.item.tool.ToolId
 import data.item.tool.ToolRepository
 import gamescreen.menu.usecase.bag.dectool.DecToolUseCase
@@ -50,33 +49,42 @@ class UseToolUseCaseImplTest : KoinTest {
         }
     }
 
-    private val updateStatusService = object : UpdatePlayerStatusUseCase() {
-        override fun decHPImpl(
+    private val updatePlayerStatusUseCase = object : UpdatePlayerStatusUseCase() {
+
+        override suspend fun deleteToolAt(
+            playerId: Int,
+            index: Int,
+        ) {
+            countDelTool++
+        }
+    }
+
+    private val updateStatusService = object : UpdateStatusUseCase<PlayerStatus> {
+        override suspend fun decHP(
+            id: Int,
             amount: Int,
-            status: PlayerStatus,
-        ): PlayerStatus {
+        ) {
             throw NotImplementedError()
         }
 
-        override fun incHPImpl(
+        override suspend fun incHP(
+            id: Int,
             amount: Int,
-            status: PlayerStatus,
-        ): PlayerStatus {
+        ) {
             countIncHP++
-            return status
         }
 
-        override fun decMPImpl(
+        override suspend fun decMP(
+            id: Int,
             amount: Int,
-            status: PlayerStatus,
-        ): PlayerStatus {
+        ) {
             throw NotImplementedError()
         }
 
-        override fun incMPImpl(
+        override suspend fun incMP(
+            id: Int,
             amount: Int,
-            status: PlayerStatus,
-        ): PlayerStatus {
+        ) {
             throw NotImplementedError()
         }
 
@@ -104,31 +112,6 @@ class UseToolUseCaseImplTest : KoinTest {
         override suspend fun spendTurn(id: Int) {
             throw NotImplementedError()
         }
-
-        override suspend fun deleteToolAt(
-            playerId: Int,
-            index: Int,
-        ) {
-            countDelTool++
-        }
-
-        override val statusRepository: StatusRepository<PlayerStatus>
-            get() = object : StatusRepository<PlayerStatus> {
-                override suspend fun setStatus(
-                    id: Int,
-                    status: PlayerStatus,
-                ) {
-                    // NOP
-                }
-
-                override fun getStatus(id: Int): PlayerStatus {
-                    return PlayerStatusTest.testActivePlayer
-                }
-
-                override fun getStatusList(): List<PlayerStatus> {
-                    throw NotImplementedError()
-                }
-            }
     }
 
     @Test
@@ -151,7 +134,8 @@ class UseToolUseCaseImplTest : KoinTest {
         runBlocking {
             useToolUseCase = UseToolUseCaseImpl(
                 toolRepository = toolRepository,
-                updateStatusService = updateStatusService,
+                updatePlayerStatusUseCase = updatePlayerStatusUseCase,
+                updateStatusUseCase = updateStatusService,
                 decToolUseCase = decToolUseCase,
                 getToolIdUseCase = getToolIdUseCase,
             )
@@ -206,7 +190,8 @@ class UseToolUseCaseImplTest : KoinTest {
         runBlocking {
             useToolUseCase = UseToolUseCaseImpl(
                 toolRepository = toolRepository,
-                updateStatusService = updateStatusService,
+                updatePlayerStatusUseCase = updatePlayerStatusUseCase,
+                updateStatusUseCase = updateStatusService,
                 decToolUseCase = decToolUseCase,
                 getToolIdUseCase = getToolIdUseCase,
             )
@@ -261,7 +246,8 @@ class UseToolUseCaseImplTest : KoinTest {
         runBlocking {
             useToolUseCase = UseToolUseCaseImpl(
                 toolRepository = toolRepository,
-                updateStatusService = updateStatusService,
+                updatePlayerStatusUseCase = updatePlayerStatusUseCase,
+                updateStatusUseCase = updateStatusService,
                 decToolUseCase = decToolUseCase,
                 getToolIdUseCase = getToolIdUseCase,
             )
