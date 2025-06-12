@@ -98,7 +98,8 @@ val ModuleCore = module {
     single<UseToolUseCase> {
         UseToolUseCaseImpl(
             toolRepository = get(),
-            updateStatusService = get(),
+            updatePlayerStatusUseCase = get(),
+            updateStatusUseCase = get(qualifier = named(UpdatePlayer)),
             decToolUseCase = get(),
             getToolIdUseCase = get(),
         )

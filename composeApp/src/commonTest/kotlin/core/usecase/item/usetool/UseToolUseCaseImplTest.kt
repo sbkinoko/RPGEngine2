@@ -151,7 +151,7 @@ class UseToolUseCaseImplTest : KoinTest {
         runBlocking {
             useToolUseCase = UseToolUseCaseImpl(
                 toolRepository = toolRepository,
-                updateStatusService = updateStatusService,
+                updatePlayerStatusUseCase = updateStatusService,
                 decToolUseCase = decToolUseCase,
                 getToolIdUseCase = getToolIdUseCase,
             )
@@ -206,7 +206,7 @@ class UseToolUseCaseImplTest : KoinTest {
         runBlocking {
             useToolUseCase = UseToolUseCaseImpl(
                 toolRepository = toolRepository,
-                updateStatusService = updateStatusService,
+                updatePlayerStatusUseCase = updateStatusService,
                 decToolUseCase = decToolUseCase,
                 getToolIdUseCase = getToolIdUseCase,
             )
@@ -261,7 +261,7 @@ class UseToolUseCaseImplTest : KoinTest {
         runBlocking {
             useToolUseCase = UseToolUseCaseImpl(
                 toolRepository = toolRepository,
-                updateStatusService = updateStatusService,
+                updatePlayerStatusUseCase = updateStatusService,
                 decToolUseCase = decToolUseCase,
                 getToolIdUseCase = getToolIdUseCase,
             )

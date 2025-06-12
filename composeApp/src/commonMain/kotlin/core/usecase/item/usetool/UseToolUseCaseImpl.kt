@@ -2,7 +2,9 @@ package core.usecase.item.usetool
 
 import core.domain.item.CostType
 import core.domain.item.tool.HealTool
+import core.domain.status.PlayerStatus
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
+import core.usecase.updateparameter.UpdateStatusUseCase
 import data.item.tool.ToolId
 import data.item.tool.ToolRepository
 import gamescreen.menu.usecase.bag.dectool.DecToolUseCase
@@ -15,7 +17,8 @@ import values.Constants
 
 class UseToolUseCaseImpl(
     private val toolRepository: ToolRepository,
-    private val updateStatusService: UpdatePlayerStatusUseCase,
+    private val updatePlayerStatusUseCase: UpdatePlayerStatusUseCase,
+    private val updateStatusUseCase: UpdateStatusUseCase<PlayerStatus>,
 
     private val decToolUseCase: DecToolUseCase,
     private val getToolIdUseCase: GetToolIdUseCase,
@@ -51,7 +54,7 @@ class UseToolUseCaseImpl(
 
             when (tool) {
                 is HealTool -> {
-                    updateStatusService.incHP(
+                    updateStatusUseCase.incHP(
                         id = targetId,
                         amount = tool.healAmount,
                     )
@@ -66,7 +69,7 @@ class UseToolUseCaseImpl(
         toolId: ToolId,
     ) {
         if (userId < Constants.playerNum) {
-            updateStatusService.deleteToolAt(
+            updatePlayerStatusUseCase.deleteToolAt(
                 index = index,
                 playerId = userId,
             )
