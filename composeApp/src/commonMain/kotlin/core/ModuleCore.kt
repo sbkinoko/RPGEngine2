@@ -8,6 +8,8 @@ import core.repository.money.MoneyRepository
 import core.repository.money.MoneyRepositoryImpl
 import core.repository.player.PlayerStatusRepository
 import core.repository.player.PlayerStatusRepositoryImpl
+import core.repository.statusdata.StatusDataRepository
+import core.repository.statusdata.StatusDataRepositoryImpl
 import core.service.CheckCanUseService
 import core.service.CheckCanUseServiceImpl
 import core.usecase.changetomap.ChangeToMapUseCase
@@ -28,6 +30,10 @@ import gamescreen.menu.usecase.gettoolid.GetToolIdUseCaseImpl
 import org.koin.dsl.module
 
 val ModuleCore = module {
+    single<StatusDataRepository> {
+        StatusDataRepositoryImpl()
+    }
+
     single<PlayerStatusRepository> {
         PlayerStatusRepositoryImpl(
             statusRepository = get(),
