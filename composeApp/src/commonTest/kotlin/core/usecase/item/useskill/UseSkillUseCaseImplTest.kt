@@ -139,7 +139,7 @@ class UseSkillUseCaseImplTest {
         get() = UseSkillUseCaseImpl(
             playerStatusRepository = playerStatusRepository,
             skillRepository = skillRepository,
-            updateParameter = updatePlayerStatusUseCase,
+            updateStatus = updatePlayerStatusUseCase,
         )
 
     @Test

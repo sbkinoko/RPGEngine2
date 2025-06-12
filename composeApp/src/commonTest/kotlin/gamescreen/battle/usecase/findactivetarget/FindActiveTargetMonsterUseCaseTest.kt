@@ -41,7 +41,7 @@ class FindActiveTargetMonsterUseCaseTest : KoinTest {
         )
 
         findActiveTargetUseCase(
-            statusList = list,
+            statusList = list.map { it.statusData },
             target = 0,
             targetNum = 2,
         ).let {
@@ -64,7 +64,7 @@ class FindActiveTargetMonsterUseCaseTest : KoinTest {
         )
 
         findActiveTargetUseCase(
-            statusList = list,
+            statusList = list.map { it.statusData },
             target = 0,
             targetNum = 2,
         ).let {
@@ -87,7 +87,7 @@ class FindActiveTargetMonsterUseCaseTest : KoinTest {
         )
 
         findActiveTargetUseCase(
-            statusList = list,
+            statusList = list.map { it.statusData },
             target = 0,
             targetNum = 2,
         ).let {
@@ -110,7 +110,7 @@ class FindActiveTargetMonsterUseCaseTest : KoinTest {
         )
 
         findActiveTargetUseCase(
-            statusList = list,
+            statusList = list.map { it.statusData },
             target = 0,
             targetNum = 2,
         ).let {
@@ -133,7 +133,7 @@ class FindActiveTargetMonsterUseCaseTest : KoinTest {
         )
 
         findActiveTargetUseCase(
-            statusList = list,
+            statusList = list.map { it.statusData },
             target = 2,
             targetNum = 2,
         ).let {
@@ -156,7 +156,7 @@ class FindActiveTargetMonsterUseCaseTest : KoinTest {
         )
 
         findActiveTargetUseCase(
-            statusList = list,
+            statusList = list.map { it.statusData },
             target = 0,
             targetNum = 4,
         ).let {
