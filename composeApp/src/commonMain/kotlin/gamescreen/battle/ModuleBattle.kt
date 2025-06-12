@@ -60,6 +60,8 @@ val ModuleBattle = module {
         BattleViewModel(
             flashRepository = get(),
             attackEffectInfoRepository = get(),
+
+            statusDataRepository = get()
         )
     }
 
