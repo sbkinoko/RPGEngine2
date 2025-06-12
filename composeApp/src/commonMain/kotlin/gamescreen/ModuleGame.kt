@@ -8,7 +8,10 @@ import org.koin.dsl.module
 
 val ModuleMain = module {
     single<MainViewModel> {
-        MainViewModel()
+        MainViewModel(
+            statusRepository = get(),
+            statusDataRepository = get(),
+        )
     }
 
     single<ScreenTypeRepository> {
