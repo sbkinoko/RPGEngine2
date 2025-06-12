@@ -39,12 +39,10 @@ class CheckCanUseServiceImplTest : KoinTest {
         val costMP = 5
         val costType = CostType.MP(costMP)
         val result = checkCanUseService.invoke(
-            status = testActivePlayer.copy(
-                statusData = testActivePlayer.statusData.copy(
-                    mp = StatusParameterWithMax(
-                        point = costMP,
-                        maxPoint = costMP,
-                    )
+            status = testActivePlayer.statusData.copy(
+                mp = StatusParameterWithMax(
+                    point = costMP,
+                    maxPoint = costMP,
                 )
             ),
             costType = costType,
@@ -63,12 +61,10 @@ class CheckCanUseServiceImplTest : KoinTest {
         val costMP = 5
         val costType = CostType.MP(costMP)
         val result = checkCanUseService.invoke(
-            status = testActivePlayer.copy(
-                statusData = testActivePlayer.statusData.copy(
-                    mp = StatusParameterWithMax(
-                        point = costMP - 1,
-                        maxPoint = costMP,
-                    )
+            status = testActivePlayer.statusData.copy(
+                mp = StatusParameterWithMax(
+                    point = costMP - 1,
+                    maxPoint = costMP,
                 )
             ),
             costType = costType,
@@ -86,7 +82,7 @@ class CheckCanUseServiceImplTest : KoinTest {
     fun canUseTool() {
         val costType = CostType.Consume
         val result = checkCanUseService.invoke(
-            status = testActivePlayer,
+            status = testActivePlayer.statusData,
             costType = costType,
         )
 

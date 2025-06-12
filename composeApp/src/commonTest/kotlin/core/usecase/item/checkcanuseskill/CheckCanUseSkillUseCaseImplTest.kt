@@ -72,7 +72,7 @@ class CheckCanUseSkillUseCaseImplTest : KoinTest {
 
         val result = checkCanUseSkillUseCase.invoke(
             skillId = SkillId.Normal1,
-            status = playerStatus,
+            status = playerStatus.statusData,
             here = Place.BATTLE
         )
 
@@ -88,7 +88,7 @@ class CheckCanUseSkillUseCaseImplTest : KoinTest {
 
         val result = checkCanUseSkillUseCase.invoke(
             skillId = SkillId.Normal1,
-            status = playerStatus,
+            status = playerStatus.statusData,
             here = Place.MAP,
         )
 
@@ -104,7 +104,7 @@ class CheckCanUseSkillUseCaseImplTest : KoinTest {
 
         val result = checkCanUseSkillUseCase.invoke(
             skillId = SkillId.Normal1,
-            status = playerStatus,
+            status = playerStatus.statusData,
             here = Place.MAP,
         )
 

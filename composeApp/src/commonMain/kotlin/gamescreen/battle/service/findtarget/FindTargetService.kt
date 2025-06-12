@@ -1,16 +1,16 @@
 package gamescreen.battle.service.findtarget
 
-import core.domain.status.Character
+import core.domain.status.StatusData
 
 interface FindTargetService {
 
     fun findNext(
-        statusList: List<Character>,
+        statusList: List<StatusData>,
         target: Int,
     ): Int
 
     fun findPrev(
-        statusList: List<Character>,
+        statusList: List<StatusData>,
         target: Int,
     ): Int
 }

@@ -23,7 +23,9 @@ class AttackFromPlayerUseCaseImpl(
 
         if (monsters[target].statusData.isActive.not()) {
             actualTarget = findTargetService.findNext(
-                statusList = monsters,
+                statusList = monsters.map {
+                    it.statusData
+                },
                 target = target,
             )
         }

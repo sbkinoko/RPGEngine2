@@ -2,6 +2,7 @@ package gamescreen.menu.item.abstract.target
 
 import core.domain.AbleType
 import core.repository.player.PlayerStatusRepository
+import core.repository.statusdata.StatusDataRepository
 import data.item.ItemRepository
 import gamescreen.choice.Choice
 import gamescreen.choice.repository.ChoiceRepository
@@ -18,6 +19,7 @@ abstract class ItemTargetViewModel<T> : MenuChildViewModel() {
     protected val userRepository: UserRepository by inject()
     protected val targetRepository: TargetRepository by inject()
     protected val playerStatusRepository: PlayerStatusRepository by inject()
+    protected val statusDataRepository: StatusDataRepository by inject()
 
     private val choiceRepository: ChoiceRepository by inject()
 

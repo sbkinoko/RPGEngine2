@@ -32,7 +32,7 @@ class SkillTargetViewModel : ItemTargetViewModel<SkillId>() {
         )
 
     override fun getAbleType(): AbleType {
-        val userStatus = playerStatusRepository.getStatus(id = user)
+        val userStatus = statusDataRepository.getStatusData(id = user)
 
         return checkCanUseSkillUseCase.invoke(
             status = userStatus,

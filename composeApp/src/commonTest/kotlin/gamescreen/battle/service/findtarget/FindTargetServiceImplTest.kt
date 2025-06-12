@@ -29,7 +29,7 @@ class FindTargetServiceImplTest {
         // 対象のモンスターが倒れているときは
         // 隣のモンスター攻撃することを確認
         findTarget.findNext(
-            statusList = monsters,
+            statusList = monsters.map { it.statusData },
             target = id,
         ).apply {
             assertEquals(
@@ -55,7 +55,7 @@ class FindTargetServiceImplTest {
         // 隣のモンスター攻撃することを確認
         //　ただし、隣が一周して戻ることもある
         findTarget.findNext(
-            statusList = monsters,
+            statusList = monsters.map { it.statusData },
             target = id,
         ).apply {
             assertEquals(
@@ -82,7 +82,7 @@ class FindTargetServiceImplTest {
         // 隣のモンスター攻撃することを確認
         //　ただし、隣が一周して戻ることもある
         findTarget.findNext(
-            statusList = monsters,
+            statusList = monsters.map { it.statusData },
             target = id,
         ).apply {
             assertEquals(

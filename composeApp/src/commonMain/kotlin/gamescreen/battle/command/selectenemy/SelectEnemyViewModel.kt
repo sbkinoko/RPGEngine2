@@ -82,12 +82,12 @@ class SelectEnemyViewModel : BattleChildViewModel() {
         val newTarget = when (stick.toCommand()) {
             ArrowCommand.Right -> findTargetService.findNext(
                 target = target,
-                statusList = monsters,
+                statusList = monsters.map { it.statusData },
             )
 
             ArrowCommand.Left -> findTargetService.findPrev(
                 target = target,
-                statusList = monsters,
+                statusList = monsters.map { it.statusData },
             )
 
             else -> return
@@ -100,7 +100,7 @@ class SelectEnemyViewModel : BattleChildViewModel() {
         val targetList = findActiveTargetUseCase(
             target = target,
             targetNum = getTargetNumUseCase(playerId = playerId),
-            statusList = monsters,
+            statusList = monsters.map { it.statusData },
         )
 
         mutableSelectedEnemyState.value = mutableSelectedEnemyState.value.copy(

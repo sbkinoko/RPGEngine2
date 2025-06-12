@@ -1,5 +1,6 @@
 package core
 
+import core.domain.status.PlayerStatus
 import core.repository.battlemonster.BattleInfoRepository
 import core.repository.battlemonster.BattleInfoRepositoryImpl
 import core.repository.event.EventRepository
@@ -25,9 +26,14 @@ import core.usecase.restart.RestartUseCaseImpl
 import core.usecase.updateparameter.UpdateMonsterStatusUseCase
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
 import core.usecase.updateparameter.UpdatePlayerStatusUseCaseImpl
+import core.usecase.updateparameter.UpdateStatusUseCase
+import core.usecase.updateparameter.UpdateStatusUseCaseImpl
 import gamescreen.menu.usecase.gettoolid.GetToolIdUseCase
 import gamescreen.menu.usecase.gettoolid.GetToolIdUseCaseImpl
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
+
+val UpdatePlayer = "UpdatePlayer"
 
 val ModuleCore = module {
     single<StatusDataRepository> {
@@ -78,6 +84,14 @@ val ModuleCore = module {
     single<UpdatePlayerStatusUseCase> {
         UpdatePlayerStatusUseCaseImpl(
             statusRepository = get<PlayerStatusRepository>()
+        )
+    }
+
+    single<UpdateStatusUseCase<PlayerStatus>>(
+        qualifier = named(UpdatePlayer)
+    ) {
+        UpdateStatusUseCaseImpl(
+            statusDataRepository = get(),
         )
     }
 

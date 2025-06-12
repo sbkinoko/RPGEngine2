@@ -1,17 +1,17 @@
 package core.service
 
 import core.domain.item.CostType
-import core.domain.status.Character
+import core.domain.status.StatusData
 
 class CheckCanUseServiceImpl : CheckCanUseService {
     override fun invoke(
-        status: Character,
+        status: StatusData,
         costType: CostType,
     ): Boolean {
         return when (costType) {
             is CostType.MP -> {
                 // 現在のMPがコストのMPより多ければ使用可能
-                status.statusData.mp.point >= costType.needMP
+                status.mp.point >= costType.needMP
             }
 
             // ただの道具ならいつでも使える
