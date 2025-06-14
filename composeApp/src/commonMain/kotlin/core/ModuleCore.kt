@@ -37,6 +37,8 @@ const val UpdatePlayer = "UpdatePlayer"
 
 val PlayerStatusRepositoryName = named("PlayerStatusRepository")
 
+val EnemyStatusRepositoryName = named("EnemyStatusRepository")
+
 val ModuleCore = module {
     single<StatusDataRepository<StatusType.Player>>(
         qualifier = PlayerStatusRepositoryName
@@ -52,6 +54,12 @@ val ModuleCore = module {
 
     single<BattleInfoRepository> {
         BattleInfoRepositoryImpl()
+    }
+
+    single<StatusDataRepository<StatusType.Enemy>>(
+        qualifier = EnemyStatusRepositoryName
+    ) {
+        StatusDataRepositoryImpl()
     }
 
     single<MoneyRepository> {
