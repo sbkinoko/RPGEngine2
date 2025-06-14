@@ -1,5 +1,6 @@
 package gamescreen.menu.item.abstract.itemselect
 
+import core.PlayerStatusRepositoryName
 import core.domain.AbleType
 import core.domain.item.Item
 import core.domain.status.StatusType
@@ -28,7 +29,9 @@ abstract class ItemListViewModel<T> : MenuChildViewModel(),
     protected val indexRepository: IndexRepository by inject()
 
     protected val playerStatusRepository: PlayerStatusRepository by inject()
-    protected val statusDataRepository: StatusDataRepository<StatusType.Player> by inject()
+    protected val statusDataRepository: StatusDataRepository<StatusType.Player> by inject(
+        qualifier = PlayerStatusRepositoryName
+    )
 
     protected abstract val itemRepository: ItemRepository<T>
 

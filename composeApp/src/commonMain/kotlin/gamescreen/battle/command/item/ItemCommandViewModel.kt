@@ -1,5 +1,6 @@
 package gamescreen.battle.command.item
 
+import core.PlayerStatusRepositoryName
 import core.domain.Const
 import core.domain.item.TargetType
 import core.domain.status.StatusType
@@ -19,7 +20,9 @@ abstract class ItemCommandViewModel<T> : BattleChildViewModel() {
     protected val actionRepository: ActionRepository by inject()
     protected val playerStatusRepository: PlayerStatusRepository by inject()
 
-    protected val statusDataRepository: StatusDataRepository<StatusType.Player> by inject()
+    protected val statusDataRepository: StatusDataRepository<StatusType.Player> by inject(
+        qualifier = PlayerStatusRepositoryName
+    )
 
     protected abstract val itemRepository: ItemRepository<T>
 

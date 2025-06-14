@@ -1,6 +1,7 @@
 package gamescreen.battle.usecase.attack
 
 import core.ModuleCore
+import core.PlayerStatusRepositoryName
 import core.domain.item.DamageType
 import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
 import core.domain.status.PlayerStatusTest.Companion.testActivePlayer
@@ -31,7 +32,9 @@ class AttackUseCaseImplFromEnemyTest : KoinTest {
     )
 
     private val statusRepository: StatusRepository by inject()
-    private val statusDataRepository: StatusDataRepository<StatusType.Player> by inject()
+    private val statusDataRepository: StatusDataRepository<StatusType.Player> by inject(
+        qualifier = PlayerStatusRepositoryName
+    )
 
     private val hpValue = 50
     val hp = StatusParameterWithMax<ParameterType.HP>(
