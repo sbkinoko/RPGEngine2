@@ -2,15 +2,16 @@ package gamescreen.battle.service.attackcalc
 
 import core.domain.item.DamageType
 import core.domain.status.StatusData
+import core.domain.status.StatusType
 import kotlin.math.max
 
 class AttackCalcServiceImpl : AttackCalcService {
 
-    override fun invoke(
-        attacker: StatusData,
-        attacked: StatusData,
+    override fun <T : StatusType> invoke(
+        attacker: StatusData<*>,
+        attacked: StatusData<T>,
         damageType: DamageType,
-    ): StatusData {
+    ): StatusData<T> {
         return when (damageType) {
             is DamageType.AtkMultiple -> attacked.decHP(
                 max(

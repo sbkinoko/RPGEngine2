@@ -2,6 +2,7 @@ package gamescreen.battle.command.item
 
 import core.domain.Const
 import core.domain.item.TargetType
+import core.domain.status.StatusType
 import core.repository.player.PlayerStatusRepository
 import core.repository.statusdata.StatusDataRepository
 import data.item.ItemRepository
@@ -18,7 +19,7 @@ abstract class ItemCommandViewModel<T> : BattleChildViewModel() {
     protected val actionRepository: ActionRepository by inject()
     protected val playerStatusRepository: PlayerStatusRepository by inject()
 
-    protected val statusDataRepository: StatusDataRepository by inject()
+    protected val statusDataRepository: StatusDataRepository<StatusType.Player> by inject()
 
     protected abstract val itemRepository: ItemRepository<T>
 

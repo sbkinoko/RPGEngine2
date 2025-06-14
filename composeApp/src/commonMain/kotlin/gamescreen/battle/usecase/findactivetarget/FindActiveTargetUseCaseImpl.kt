@@ -7,7 +7,7 @@ class FindActiveTargetUseCaseImpl(
     private val findTargetService: FindTargetService,
 ) : FindActiveTargetUseCase {
     override fun invoke(
-        statusList: List<StatusData>,
+        statusList: List<StatusData<*>>,
         target: Int,
         targetNum: Int,
     ): List<Int> {

@@ -2,6 +2,7 @@ package gamescreen.battle.usecase.attack
 
 import core.domain.item.DamageType
 import core.domain.status.StatusData
+import core.domain.status.StatusType
 import core.repository.battlemonster.BattleInfoRepository
 import gamescreen.battle.service.attackcalc.AttackCalcService
 import gamescreen.battle.service.findtarget.FindTargetService
@@ -12,10 +13,10 @@ class AttackFromPlayerUseCaseImpl(
     private val findTargetService: FindTargetService,
     private val attackCalcService: AttackCalcService,
     private val effectUseCase: EffectUseCase,
-) : AttackUseCase {
+) : AttackUseCase<StatusType.Player> {
     override suspend operator fun invoke(
         target: Int,
-        attacker: StatusData,
+        attacker: StatusData<StatusType.Player>,
         damageType: DamageType,
     ) {
         var actualTarget = target

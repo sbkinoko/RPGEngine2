@@ -9,13 +9,13 @@ class StatusDataTest {
         private const val MAX_HP = 100
         private const val MAX_MP = 100
 
-        val zeroStatus = StatusData(
+        val zeroStatus = StatusData<StatusType.Player>(
             name = NAME,
             hp = StatusParameterWithMax(0),
             mp = StatusParameterWithMax(0),
         )
 
-        val normalStatus = StatusData(
+        val normalStatus = StatusData<StatusType.Player>(
             name = "テスト",
             hp = StatusParameterWithMax(
                 maxPoint = MAX_HP,

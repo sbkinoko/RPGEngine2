@@ -1,7 +1,6 @@
 package gamescreen.battle.command.actionphase
 
 import androidx.compose.runtime.mutableStateOf
-import core.UpdatePlayer
 import core.domain.item.AttackEffect
 import core.domain.item.BufEffect
 import core.domain.item.ConditionEffect
@@ -14,6 +13,7 @@ import core.domain.item.TargetType
 import core.domain.status.Character
 import core.domain.status.PlayerStatus
 import core.domain.status.StatusData
+import core.domain.status.StatusType
 import core.domain.status.param.EXP
 import core.repository.battlemonster.BattleInfoRepository
 import core.repository.player.PlayerStatusRepository
@@ -32,7 +32,6 @@ import gamescreen.battle.domain.ActionType
 import gamescreen.battle.domain.AttackPhaseCommand
 import gamescreen.battle.domain.BattleCommandType
 import gamescreen.battle.domain.FinishCommand
-import gamescreen.battle.domain.StatusType
 import gamescreen.battle.domain.StatusWrapper
 import gamescreen.battle.repository.action.ActionRepository
 import gamescreen.battle.service.isannihilation.IsAnnihilationService
@@ -56,30 +55,28 @@ import values.Constants.Companion.playerNum
 class ActionPhaseViewModel(
     private val decideActionOrderUseCase: DecideActionOrderUseCase,
 
-    private val statusDataRepository: StatusDataRepository,
-
-    ) : BattleChildViewModel() {
+    private val statusDataRepository: StatusDataRepository<StatusType.Player>,
+) : BattleChildViewModel() {
     private val actionRepository: ActionRepository by inject()
     private val battleInfoRepository: BattleInfoRepository by inject()
     private val playerStatusRepository: PlayerStatusRepository by inject()
     private val skillRepository: SkillRepository by inject()
     private val toolRepository: ToolRepository by inject()
 
-    private val updatePlayerParameter: UpdateStatusUseCase<PlayerStatus> by inject(
-        qualifier = named(UpdatePlayer)
-    )
+    private val updatePlayerParameter: UpdateStatusUseCase<StatusType.Player> by inject()
     private val updateEnemyParameter: UpdateMonsterStatusUseCase by inject()
 
-    private val attackFromPlayerUseCase: AttackUseCase by inject(
-        qualifier = named(QualifierAttackFromPlayer)
+    private val attackFromPlayerUseCase: AttackUseCase<StatusType.Player> by inject(
+        qualifier = named(
+            QualifierAttackFromPlayer
+        )
     )
+
     private val conditionFromPlayerUseCase: ConditionUseCase by inject(
         qualifier = named(QualifierAttackFromPlayer)
     )
 
-    private val attackFromEnemyUseCase: AttackUseCase by inject(
-        qualifier = named(QualifierAttackFromEnemy)
-    )
+    private val attackFromEnemyUseCase: AttackUseCase<StatusType.Enemy> by inject()
     private val conditionFromEnemyUseCase: ConditionUseCase by inject(
         qualifier = named(QualifierAttackFromEnemy)
     )
@@ -217,7 +214,7 @@ class ActionPhaseViewModel(
     /**
      * statusWrapperを入れて対応するステータスを取得
      */
-    private fun getStatus(statusWrapper: StatusWrapper): StatusData {
+    private fun getStatus(statusWrapper: StatusWrapper): StatusData<*> {
         return when (statusWrapper.statusType) {
             StatusType.Player -> statusDataRepository.getStatusData(
                 statusWrapper.newId
@@ -338,9 +335,9 @@ class ActionPhaseViewModel(
         when (actionType) {
             ActionType.Normal -> {
                 //　攻撃
-                attackFromPlayerUseCase(
+                attackFromPlayerUseCase.invoke(
                     target = actionRepository.getAction(actionStatusWrapper.newId).target,
-                    attacker = getStatus(actionStatusWrapper),
+                    attacker = (getStatus(actionStatusWrapper) as StatusData<StatusType.Player>),
                     damageType = DamageType.AtkMultiple(1),
                 )
             }
@@ -348,7 +345,7 @@ class ActionPhaseViewModel(
             ActionType.Skill -> {
                 skillAction(
                     id = actionStatusWrapper.newId,
-                    statusData = getStatus(actionStatusWrapper),
+                    statusData = getStatus(actionStatusWrapper) as StatusData<StatusType.Player>,
                     actionData = actionRepository.getAction(actionStatusWrapper.newId),
                     statusList = battleInfoRepository.getStatusList(),
                     attackUseCase = attackFromPlayerUseCase,
@@ -375,7 +372,7 @@ class ActionPhaseViewModel(
         actionStatusWrapper.apply {
             skillAction(
                 id = newId,
-                statusData = getStatus(actionStatusWrapper),
+                statusData = getStatus(actionStatusWrapper) as StatusData<StatusType.Enemy>,
                 statusList = playerStatusRepository.getStatusList(),
                 actionData = actionData,
                 attackUseCase = attackFromEnemyUseCase,
@@ -410,15 +407,15 @@ class ActionPhaseViewModel(
         }
     }
 
-    private suspend fun skillAction(
+    private suspend fun <A : StatusType, E : StatusType> skillAction(
         id: Int,
-        statusData: StatusData,
+        statusData: StatusData<A>,
         actionData: ActionData,
-        statusList: List<Character>,
-        attackUseCase: AttackUseCase,
+        statusList: List<Character<E>>,
+        attackUseCase: AttackUseCase<A>,
         conditionUseCase: ConditionUseCase,
-        updateAllyParameter: UpdateStatusUseCase<*>,
-        updateEnemyParameter: UpdateStatusUseCase<*>,
+        updateAllyParameter: UpdateStatusUseCase<A>,
+        updateEnemyParameter: UpdateStatusUseCase<E>,
     ) {
         val skill = skillRepository.getItem(
             id = actionData.skillId

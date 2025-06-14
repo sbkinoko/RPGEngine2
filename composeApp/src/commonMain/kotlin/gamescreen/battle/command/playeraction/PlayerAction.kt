@@ -13,11 +13,12 @@ import common.extension.equalAllocationModifier
 import common.extension.menuItem
 import common.layout.CenterText
 import core.domain.status.StatusData
+import core.domain.status.StatusType
 import org.koin.compose.koinInject
 
 @Composable
 fun PlayerAction(
-    playerStatus: StatusData,
+    playerStatus: StatusData<StatusType.Player>,
     modifier: Modifier = Modifier,
     playerActionViewModel: PlayerActionViewModel = koinInject(),
 ) {

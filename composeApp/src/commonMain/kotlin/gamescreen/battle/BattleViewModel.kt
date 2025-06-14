@@ -3,6 +3,7 @@ package gamescreen.battle
 import controller.domain.ControllerCallback
 import controller.domain.Stick
 import core.domain.status.StatusData
+import core.domain.status.StatusType
 import core.domain.status.monster.MonsterStatus
 import core.repository.battlemonster.BattleInfoRepository
 import core.repository.statusdata.StatusDataRepository
@@ -18,7 +19,7 @@ class BattleViewModel(
     flashRepository: FlashRepository,
     attackEffectInfoRepository: AttackEffectRepository,
 
-    statusDataRepository: StatusDataRepository,
+    statusDataRepository: StatusDataRepository<StatusType.Player>,
 ) :
     ControllerCallback,
     KoinComponent {
@@ -34,7 +35,7 @@ class BattleViewModel(
     val commandStateFlow =
         commandStateRepository.commandStateFlow
 
-    val statusDataFlow: StateFlow<List<StatusData>> =
+    val statusDataFlow: StateFlow<List<StatusData<StatusType.Player>>> =
         statusDataRepository.statusDataFlow
 
     val monsterStatusFlow: StateFlow<List<MonsterStatus>> =

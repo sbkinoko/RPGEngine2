@@ -5,7 +5,7 @@ import core.domain.status.StatusData
 class FindTargetServiceImpl : FindTargetService {
 
     override fun findNext(
-        statusList: List<StatusData>,
+        statusList: List<StatusData<*>>,
         target: Int,
     ): Int {
         var actualTarget = target + 1
@@ -24,7 +24,7 @@ class FindTargetServiceImpl : FindTargetService {
     }
 
     override fun findPrev(
-        statusList: List<StatusData>,
+        statusList: List<StatusData<*>>,
         target: Int,
     ): Int {
         var actualTarget = collectTarget(
