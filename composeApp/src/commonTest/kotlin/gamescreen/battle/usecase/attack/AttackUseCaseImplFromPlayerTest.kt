@@ -5,6 +5,7 @@ import core.domain.item.DamageType
 import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
 import core.domain.status.MonsterStatusTest.Companion.TestNotActiveMonster
 import core.domain.status.PlayerStatusTest.Companion.testActivePlayer
+import core.domain.status.StatusType
 import core.domain.status.param.ParameterType
 import core.domain.status.param.StatusParameter
 import core.domain.status.param.StatusParameterWithMax
@@ -25,7 +26,7 @@ import kotlin.test.assertEquals
 
 
 class AttackUseCaseImplFromPlayerTest : KoinTest {
-    private val attackUseCase: AttackUseCase by inject<AttackUseCase>(
+    private val attackUseCase: AttackUseCase<StatusType.Player> by inject(
         qualifier = named(
             QualifierAttackFromPlayer
         )

@@ -175,7 +175,10 @@ val ModuleBattle = module {
         )
     }
 
-    single<AttackUseCase<StatusType.Enemy>> {
+    single<AttackUseCase<StatusType.Enemy>>(
+        qualifier = named(QualifierAttackFromEnemy)
+    )
+    {
         AttackFromEnemyUseCaseImpl(
             statusDataRepository = get(),
             findTargetService = get(),

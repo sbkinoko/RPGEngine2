@@ -2,12 +2,13 @@ package core.usecase.updateparameter
 
 import core.domain.status.Character
 import core.domain.status.ConditionType
+import core.domain.status.StatusType
 import core.repository.status.StatusRepository
 import kotlinx.coroutines.runBlocking
 import kotlin.test.assertEquals
 
-class UpdateParameterTest<T : Character>(
-    private val updateStatusUseCase: UpdateStatusUseCase<T>,
+class UpdateParameterTest<V : StatusType, T : Character<V>>(
+    private val updateStatusUseCase: UpdateStatusUseCase<V>,
     private val statusRepository: StatusRepository<T>,
     private val status2: T,
 ) {

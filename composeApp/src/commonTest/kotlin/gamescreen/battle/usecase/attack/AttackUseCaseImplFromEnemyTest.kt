@@ -4,6 +4,7 @@ import core.ModuleCore
 import core.domain.item.DamageType
 import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
 import core.domain.status.PlayerStatusTest.Companion.testActivePlayer
+import core.domain.status.StatusType
 import core.domain.status.param.ParameterType
 import core.domain.status.param.StatusParameter
 import core.domain.status.param.StatusParameterWithMax
@@ -25,12 +26,12 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class AttackUseCaseImplFromEnemyTest : KoinTest {
-    private val attackUseCaseImplFromEnemy: AttackUseCase by inject(
+    private val attackUseCaseImplFromEnemy: AttackUseCase<StatusType.Enemy> by inject(
         qualifier = named(QualifierAttackFromEnemy)
     )
 
     private val statusRepository: StatusRepository by inject()
-    private val statusDataRepository: StatusDataRepository by inject()
+    private val statusDataRepository: StatusDataRepository<StatusType.Player> by inject()
 
     private val hpValue = 50
     val hp = StatusParameterWithMax<ParameterType.HP>(

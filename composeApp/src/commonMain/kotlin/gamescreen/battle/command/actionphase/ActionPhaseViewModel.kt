@@ -76,7 +76,9 @@ class ActionPhaseViewModel(
         qualifier = named(QualifierAttackFromPlayer)
     )
 
-    private val attackFromEnemyUseCase: AttackUseCase<StatusType.Enemy> by inject()
+    private val attackFromEnemyUseCase: AttackUseCase<StatusType.Enemy> by inject(
+        qualifier = named(QualifierAttackFromEnemy)
+    )
     private val conditionFromEnemyUseCase: ConditionUseCase by inject(
         qualifier = named(QualifierAttackFromEnemy)
     )

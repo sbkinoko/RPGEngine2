@@ -24,5 +24,15 @@ class StatusDataTest {
                 maxPoint = MAX_MP,
             ),
         )
+
+        val enemyStatus = StatusData<StatusType.Enemy>(
+            name = "テスト",
+            hp = StatusParameterWithMax(
+                maxPoint = MAX_HP,
+            ),
+            mp = StatusParameterWithMax(
+                maxPoint = MAX_MP,
+            ),
+        )
     }
 }

@@ -1,7 +1,6 @@
 package core.usecase.updateparameter
 
 import core.domain.status.ConditionType
-import core.domain.status.PlayerStatus
 import core.domain.status.PlayerStatusTest.Companion.testActivePlayer
 import core.domain.status.StatusData
 import core.domain.status.StatusType
@@ -63,7 +62,7 @@ class UpdateStatusUseCaseImplTest {
             }
         }
 
-    private val updateStatusUseCase = UpdateStatusUseCaseImpl<PlayerStatus>(
+    private val updateStatusUseCase = UpdateStatusUseCaseImpl(
         statusDataRepository = statusRepository,
     )
 
