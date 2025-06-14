@@ -5,7 +5,7 @@ import core.domain.status.StatusData
 
 class CheckCanUseServiceImpl : CheckCanUseService {
     override fun invoke(
-        status: StatusData,
+        status: StatusData<*>,
         costType: CostType,
     ): Boolean {
         return when (costType) {

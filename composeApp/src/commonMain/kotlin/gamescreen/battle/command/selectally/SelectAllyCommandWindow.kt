@@ -5,12 +5,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import common.layout.CenterText
 import core.domain.status.StatusData
+import core.domain.status.StatusType
 import gamescreen.battle.command.selectenemy.SelectEnemyViewModel
 import org.koin.compose.koinInject
 
 @Composable
 fun SelectAllyCommandWindow(
-    playerStatus: StatusData,
+    playerStatus: StatusData<StatusType.Player>,
     modifier: Modifier = Modifier,
     selectEnemyViewModel: SelectEnemyViewModel = koinInject(),
 ) {

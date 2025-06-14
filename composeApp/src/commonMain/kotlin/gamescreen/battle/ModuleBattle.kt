@@ -1,6 +1,7 @@
 package gamescreen.battle
 
 import core.UpdatePlayer
+import core.domain.status.StatusType
 import gamescreen.battle.command.actionphase.ActionPhaseViewModel
 import gamescreen.battle.command.escape.EscapeViewModel
 import gamescreen.battle.command.finish.BattleFinishViewModel
@@ -154,8 +155,8 @@ val ModuleBattle = module {
         DecideActionOrderUseCaseImpl()
     }
 
-    single<AttackUseCase>(
-        qualifier = named(QualifierAttackFromPlayer),
+    single<AttackUseCase<StatusType.Player>>(
+        qualifier = named(QualifierAttackFromPlayer)
     ) {
         AttackFromPlayerUseCaseImpl(
             battleInfoRepository = get(),
@@ -175,9 +176,10 @@ val ModuleBattle = module {
         )
     }
 
-    single<AttackUseCase>(
-        qualifier = named(QualifierAttackFromEnemy),
-    ) {
+    single<AttackUseCase<StatusType.Enemy>>(
+        qualifier = named(QualifierAttackFromEnemy)
+    )
+    {
         AttackFromEnemyUseCaseImpl(
             statusDataRepository = get(),
             findTargetService = get(),
@@ -198,7 +200,9 @@ val ModuleBattle = module {
         ConditionFromEnemyUseCaseImpl(
             statusDataRepository = get(),
             findTargetService = get(),
-            updatePlayerStatusService = get(qualifier = named(UpdatePlayer)),
+            updatePlayerStatusService = get(
+                qualifier = named(UpdatePlayer),
+            ),
         )
     }
 

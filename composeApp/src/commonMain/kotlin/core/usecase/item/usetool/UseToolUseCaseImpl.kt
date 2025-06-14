@@ -2,7 +2,7 @@ package core.usecase.item.usetool
 
 import core.domain.item.CostType
 import core.domain.item.tool.HealTool
-import core.domain.status.PlayerStatus
+import core.domain.status.StatusType
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
 import core.usecase.updateparameter.UpdateStatusUseCase
 import data.item.tool.ToolId
@@ -18,7 +18,7 @@ import values.Constants
 class UseToolUseCaseImpl(
     private val toolRepository: ToolRepository,
     private val updatePlayerStatusUseCase: UpdatePlayerStatusUseCase,
-    private val updateStatusUseCase: UpdateStatusUseCase<PlayerStatus>,
+    private val updateStatusUseCase: UpdateStatusUseCase<StatusType.Player>,
 
     private val decToolUseCase: DecToolUseCase,
     private val getToolIdUseCase: GetToolIdUseCase,

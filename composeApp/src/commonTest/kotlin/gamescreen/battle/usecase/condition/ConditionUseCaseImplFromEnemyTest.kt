@@ -4,6 +4,7 @@ import core.ModuleCore
 import core.domain.status.ConditionType
 import core.domain.status.PlayerStatusTest.Companion.testActivePlayer
 import core.domain.status.PlayerStatusTest.Companion.testNotActivePlayer
+import core.domain.status.StatusType
 import core.repository.statusdata.StatusDataRepository
 import data.ModuleData
 import data.status.StatusRepository
@@ -27,7 +28,7 @@ class ConditionUseCaseImplFromEnemyTest : KoinTest {
     )
 
     private val statusRepository: StatusRepository by inject()
-    private val statusDataRepository: StatusDataRepository by inject()
+    private val statusDataRepository: StatusDataRepository<StatusType.Player> by inject()
 
     private val conditionType = ConditionType.Poison()
     private val expectedList = listOf(conditionType)

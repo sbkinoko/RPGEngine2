@@ -1,9 +1,10 @@
 package core.usecase.updateparameter
 
 import core.domain.status.Character
+import core.domain.status.StatusType
 import core.repository.status.StatusRepository
 
-abstract class AbstractUpdateStatusUseCase<T : Character> : UpdateStatusUseCase<T> {
+abstract class AbstractUpdateStatusUseCase<V : StatusType, T : Character<V>> : UpdateStatusUseCase<V> {
     abstract val statusRepository: StatusRepository<T>
 
     override suspend fun decHP(

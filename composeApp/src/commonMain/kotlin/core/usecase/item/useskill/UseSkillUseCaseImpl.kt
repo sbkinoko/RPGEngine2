@@ -3,7 +3,7 @@ package core.usecase.item.useskill
 import core.domain.item.CostType
 import core.domain.item.skill.AttackSkill
 import core.domain.item.skill.HealSkill
-import core.domain.status.PlayerStatus
+import core.domain.status.StatusType
 import core.repository.player.PlayerStatusRepository
 import core.usecase.updateparameter.UpdateStatusUseCase
 import data.item.skill.SkillRepository
@@ -11,7 +11,7 @@ import data.item.skill.SkillRepository
 class UseSkillUseCaseImpl(
     private val playerStatusRepository: PlayerStatusRepository,
     private val skillRepository: SkillRepository,
-    private val updateStatus: UpdateStatusUseCase<PlayerStatus>,
+    private val updateStatus: UpdateStatusUseCase<StatusType.Player>,
 ) : UseSkillUseCase {
     override suspend fun invoke(
         userId: Int,

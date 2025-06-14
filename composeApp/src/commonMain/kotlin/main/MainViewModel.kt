@@ -1,5 +1,6 @@
 package main
 
+import core.domain.status.StatusType
 import core.repository.screentype.ScreenTypeRepository
 import core.repository.statusdata.StatusDataRepository
 import data.status.StatusRepository
@@ -8,7 +9,7 @@ import org.koin.core.component.inject
 import values.Constants
 
 class MainViewModel(
-    val statusDataRepository: StatusDataRepository,
+    val statusDataRepository: StatusDataRepository<StatusType.Player>,
     val statusRepository: StatusRepository,
 ) : KoinComponent {
     private val screenTypeRepository: ScreenTypeRepository by inject()

@@ -2,13 +2,14 @@ package core.usecase.updateparameter
 
 import core.domain.item.BufEffect
 import core.domain.status.ConditionType
+import core.domain.status.StatusType
 import core.domain.status.monster.MonsterStatus
 import core.domain.status.param.ParameterType
 import core.repository.status.StatusRepository
 
 class UpdateMonsterStatusUseCase(
     override val statusRepository: StatusRepository<MonsterStatus>,
-) : AbstractUpdateStatusUseCase<MonsterStatus>() {
+) : AbstractUpdateStatusUseCase<StatusType.Enemy, MonsterStatus>() {
 
     override fun decHPImpl(
         amount: Int,

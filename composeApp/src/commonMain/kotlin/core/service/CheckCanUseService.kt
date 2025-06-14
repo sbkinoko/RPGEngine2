@@ -5,7 +5,7 @@ import core.domain.status.StatusData
 
 interface CheckCanUseService {
     operator fun invoke(
-        status: StatusData,
+        status: StatusData<*>,
         costType: CostType,
     ): Boolean
 }

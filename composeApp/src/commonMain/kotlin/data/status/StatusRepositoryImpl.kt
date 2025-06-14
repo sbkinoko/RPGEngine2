@@ -4,6 +4,7 @@ import core.domain.status.IncData
 import core.domain.status.PlayerStatus
 import core.domain.status.StatusData
 import core.domain.status.StatusIncrease
+import core.domain.status.StatusType
 import core.domain.status.param.EXP
 import data.item.skill.SkillId
 import data.item.tool.ToolId
@@ -69,7 +70,7 @@ class StatusRepositoryImpl : AbstractStatusRepository() {
         when (it) {
             0 ->
                 PlayerStatus(
-                    statusData = StatusData(
+                    statusData = StatusData<StatusType.Player>(
                         name = "test1",
                     ),
                     skillList = listOf(
@@ -96,7 +97,7 @@ class StatusRepositoryImpl : AbstractStatusRepository() {
                 )
 
             1 -> PlayerStatus(
-                StatusData(
+                StatusData<StatusType.Player>(
                     name = "test2",
                 ),
                 skillList = listOf(
@@ -115,7 +116,7 @@ class StatusRepositoryImpl : AbstractStatusRepository() {
             )
 
             2 -> PlayerStatus(
-                StatusData(
+                StatusData<StatusType.Player>(
                     name = "test3",
                 ),
                 skillList = listOf(
@@ -134,7 +135,7 @@ class StatusRepositoryImpl : AbstractStatusRepository() {
             )
 
             3 -> PlayerStatus(
-                statusData = StatusData(
+                statusData = StatusData<StatusType.Player>(
                     name = "MPたくさん",
                 ),
                 skillList = listOf(

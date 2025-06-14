@@ -2,8 +2,9 @@ package core.usecase.updateparameter
 
 import core.domain.item.BufEffect
 import core.domain.status.ConditionType
+import core.domain.status.StatusType
 
-interface UpdateStatusUseCase<T> {
+interface UpdateStatusUseCase<T : StatusType> {
     /**
      *  HPを減らして、更新後のステータスを返す
      */

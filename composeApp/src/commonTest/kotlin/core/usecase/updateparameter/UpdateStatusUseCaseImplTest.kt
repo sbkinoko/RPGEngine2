@@ -1,9 +1,9 @@
 package core.usecase.updateparameter
 
 import core.domain.status.ConditionType
-import core.domain.status.PlayerStatus
 import core.domain.status.PlayerStatusTest.Companion.testActivePlayer
 import core.domain.status.StatusData
+import core.domain.status.StatusType
 import core.domain.status.param.StatusParameterWithMax
 import core.repository.statusdata.StatusDataRepository
 import data.item.tool.ToolId
@@ -33,36 +33,36 @@ class UpdateStatusUseCaseImplTest {
     }
     private val status2 = status1.copy()
 
-    private val statusRepository: StatusDataRepository =
-        object : StatusDataRepository {
-            var _statusList: MutableList<StatusData> = mutableListOf(
+    private val statusRepository: StatusDataRepository<StatusType.Player> =
+        object : StatusDataRepository<StatusType.Player> {
+            var _statusList: MutableList<StatusData<StatusType.Player>> = mutableListOf(
                 status1.statusData,
                 status2.statusData,
             )
-            override val statusDataFlow: StateFlow<List<StatusData>>
+            override val statusDataFlow: StateFlow<List<StatusData<StatusType.Player>>>
                 get() = throw NotImplementedError()
 
-            override fun getStatusData(id: Int): StatusData {
+            override fun getStatusData(id: Int): StatusData<StatusType.Player> {
                 return _statusList[id]
             }
 
-            override fun getStatusList(): List<StatusData> {
+            override fun getStatusList(): List<StatusData<StatusType.Player>> {
                 return _statusList
             }
 
-            override fun setStatusList(statusList: List<StatusData>) {
+            override fun setStatusList(statusList: List<StatusData<StatusType.Player>>) {
                 throw NotImplementedError()
             }
 
             override fun setStatusData(
                 id: Int,
-                statusData: StatusData,
+                statusData: StatusData<StatusType.Player>,
             ) {
                 this._statusList[id] = statusData
             }
         }
 
-    private val updateStatusUseCase = UpdateStatusUseCaseImpl<PlayerStatus>(
+    private val updateStatusUseCase = UpdateStatusUseCaseImpl(
         statusDataRepository = statusRepository,
     )
 

@@ -181,7 +181,7 @@ class AttackServiceImplTest : KoinTest {
         def: Int,
         maxPoint: Int,
         rate: Int,
-    ): StatusData {
+    ): StatusData<*> {
         val attacker = testActivePlayer.run {
             copy(
                 statusData = statusData.copy(
@@ -251,7 +251,7 @@ class AttackServiceImplTest : KoinTest {
     private fun rateAttack(
         maxPoint: Int,
         rate: Int,
-    ): StatusData {
+    ): StatusData<*> {
         val attacker = testActivePlayer
 
         val attacked = TestActiveMonster.run {
@@ -315,7 +315,7 @@ class AttackServiceImplTest : KoinTest {
     private fun fixDamage(
         maxPoint: Int,
         amount: Int,
-    ): StatusData {
+    ): StatusData<*> {
         val attacker = testActivePlayer
 
         val attacked = TestActiveMonster.run {

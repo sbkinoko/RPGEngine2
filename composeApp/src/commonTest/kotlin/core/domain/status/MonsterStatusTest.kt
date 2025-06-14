@@ -11,7 +11,7 @@ class MonsterStatusTest {
         val TestActiveMonster
             get() = MonsterStatus(
                 imgId = 1,
-                statusData = StatusDataTest.normalStatus.setHP(
+                statusData = StatusDataTest.enemyStatus.setHP(
                     10
                 ),
                 money = 1,
@@ -30,7 +30,7 @@ class MonsterStatusTest {
 
         val TestNotActiveMonster
             get() = TestActiveMonster.copy(
-                statusData = StatusDataTest.normalStatus.setHP(
+                statusData = StatusDataTest.enemyStatus.setHP(
                     0,
                 )
             )

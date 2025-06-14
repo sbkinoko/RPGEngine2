@@ -3,6 +3,7 @@ package core.repository.player
 import core.ModuleCore
 import core.domain.status.PlayerStatus
 import core.domain.status.StatusData
+import core.domain.status.StatusType
 import core.domain.status.param.EXP
 import core.domain.status.param.StatusParameterWithMax
 import data.ModuleData
@@ -48,7 +49,7 @@ class PlayerStatusRepositoryImplTest : KoinTest {
 
             val id = 0
             val playerStatus = PlayerStatus(
-                statusData = StatusData(
+                statusData = StatusData<StatusType.Player>(
                     name = "test",
                     hp = StatusParameterWithMax(
                         maxPoint = 100,

@@ -1,20 +1,21 @@
 package core.repository.statusdata
 
 import core.domain.status.StatusData
+import core.domain.status.StatusType
 import kotlinx.coroutines.flow.StateFlow
 
-interface StatusDataRepository {
+interface StatusDataRepository<T : StatusType> {
 
-    val statusDataFlow: StateFlow<List<StatusData>>
+    val statusDataFlow: StateFlow<List<StatusData<T>>>
 
-    fun getStatusData(id: Int): StatusData
+    fun getStatusData(id: Int): StatusData<T>
 
     fun setStatusData(
         id: Int,
-        statusData: StatusData,
+        statusData: StatusData<T>,
     )
 
-    fun getStatusList(): List<StatusData>
+    fun getStatusList(): List<StatusData<T>>
 
-    fun setStatusList(statusList: List<StatusData>)
+    fun setStatusList(statusList: List<StatusData<T>>)
 }

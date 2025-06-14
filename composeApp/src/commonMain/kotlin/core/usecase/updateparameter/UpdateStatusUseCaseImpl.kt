@@ -2,11 +2,12 @@ package core.usecase.updateparameter
 
 import core.domain.item.BufEffect
 import core.domain.status.ConditionType
+import core.domain.status.StatusType
 import core.domain.status.param.ParameterType
 import core.repository.statusdata.StatusDataRepository
 
-class UpdateStatusUseCaseImpl<T>(
-    private val statusDataRepository: StatusDataRepository,
+class UpdateStatusUseCaseImpl<T : StatusType>(
+    private val statusDataRepository: StatusDataRepository<T>,
 ) : UpdateStatusUseCase<T> {
     override suspend fun decHP(
         id: Int,
