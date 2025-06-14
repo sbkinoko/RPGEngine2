@@ -3,6 +3,8 @@ package gamescreen.battle.service.isannihilation
 import core.domain.status.Character
 
 interface IsAnnihilationService {
+
+    // fixme statusData使うように修正
     /**
      * 入力したstatusが全滅しているかどうかをチェックする
      */

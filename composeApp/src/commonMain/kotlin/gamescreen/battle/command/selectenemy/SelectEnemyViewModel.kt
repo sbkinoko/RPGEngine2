@@ -2,8 +2,9 @@ package gamescreen.battle.command.selectenemy
 
 import controller.domain.ArrowCommand
 import controller.domain.Stick
-import core.domain.status.monster.MonsterStatus
-import core.repository.battlemonster.BattleInfoRepository
+import core.domain.status.StatusData
+import core.domain.status.StatusType
+import core.repository.statusdata.StatusDataRepository
 import gamescreen.battle.BattleChildViewModel
 import gamescreen.battle.domain.BattleCommandType
 import gamescreen.battle.domain.SelectEnemyCommand
@@ -22,8 +23,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.koin.core.component.inject
 
-class SelectEnemyViewModel : BattleChildViewModel() {
-    private val monsterRepository: BattleInfoRepository by inject()
+class SelectEnemyViewModel(
+    private val enemyStatusDataRepository: StatusDataRepository<StatusType.Enemy>,
+) : BattleChildViewModel() {
     private val actionRepository: ActionRepository by inject()
 
     private val findActiveTargetUseCase: FindActiveTargetUseCase by inject()
@@ -51,8 +53,8 @@ class SelectEnemyViewModel : BattleChildViewModel() {
         }
     }
 
-    private val monsters: List<MonsterStatus>
-        get() = monsterRepository.getStatusList()
+    private val monsters: List<StatusData<StatusType.Enemy>>
+        get() = enemyStatusDataRepository.getStatusList()
 
     override fun isBoundedImpl(commandType: BattleCommandType): Boolean {
         return commandType is SelectEnemyCommand
@@ -82,12 +84,12 @@ class SelectEnemyViewModel : BattleChildViewModel() {
         val newTarget = when (stick.toCommand()) {
             ArrowCommand.Right -> findTargetService.findNext(
                 target = target,
-                statusList = monsters.map { it.statusData },
+                statusList = monsters,
             )
 
             ArrowCommand.Left -> findTargetService.findPrev(
                 target = target,
-                statusList = monsters.map { it.statusData },
+                statusList = monsters,
             )
 
             else -> return
@@ -100,7 +102,7 @@ class SelectEnemyViewModel : BattleChildViewModel() {
         val targetList = findActiveTargetUseCase(
             target = target,
             targetNum = getTargetNumUseCase(playerId = playerId),
-            statusList = monsters.map { it.statusData },
+            statusList = monsters,
         )
 
         mutableSelectedEnemyState.value = mutableSelectedEnemyState.value.copy(

@@ -22,6 +22,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
+import core.domain.status.StatusData
+import core.domain.status.StatusType
 import core.domain.status.monster.MonsterStatus
 import gamescreen.battle.StatusDebugInfo
 import gamescreen.battle.command.selectenemy.SelectEnemyViewModel
@@ -34,7 +36,9 @@ import org.koin.compose.koinInject
 
 @Composable
 fun MonsterArea(
+    // fixme imgIDだけ渡す
     monsters: List<MonsterStatus>,
+    monsterStatusList: List<StatusData<StatusType.Enemy>>,
     flashState: List<FlashInfo>,
     attackEffectInfo: List<AttackEffectInfo>,
     modifier: Modifier = Modifier,
@@ -57,7 +61,9 @@ fun MonsterArea(
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            monsters.mapIndexed { index, monsterStatus ->
+            for (index: Int in monsters.indices) {
+                val statusData = monsterStatusList[index]
+
                 Box(
                     modifier = Modifier
                         .padding(5.dp)
@@ -81,7 +87,7 @@ fun MonsterArea(
                             modifier = Modifier
                                 .fillMaxSize()
                                 .clickable {
-                                    if (monsterStatus.statusData.isActive) {
+                                    if (statusData.isActive) {
                                         selectEnemyViewModel.selectAttackMonster(
                                             monsterId = index,
                                         )
@@ -97,17 +103,17 @@ fun MonsterArea(
                                     //点滅中かつ表示中
                                     (isFlashing && isVisible) ||
                                     //　生存状態かつ非点滅
-                                    (!isFlashing && monsterStatus.statusData.isActive)
+                                    (!isFlashing && statusData.isActive)
                                 ) {
                                     Monster(
                                         modifier = Modifier.fillMaxWidth(),
-                                        monsterStatus = monsterStatus,
+                                        imgId = monsters[index].imgId,
                                     )
                                 }
                             }
 
                             StatusDebugInfo(
-                                statusData = monsterStatus.statusData,
+                                statusData = statusData,
                                 size = boxSize,
                             )
                         }
@@ -125,14 +131,14 @@ fun MonsterArea(
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 fun Monster(
-    monsterStatus: MonsterStatus,
+    imgId: Int,
     modifier: Modifier = Modifier,
 ) {
     Image(
         modifier = modifier,
         painter = painterResource(
             ImageBinder.bind(
-                imgId = monsterStatus.imgId,
+                imgId = imgId,
             )
         ),
         contentScale = ContentScale.Fit,
