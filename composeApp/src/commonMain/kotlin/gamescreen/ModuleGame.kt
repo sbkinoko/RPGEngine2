@@ -1,5 +1,6 @@
 package gamescreen
 
+import core.PlayerStatusRepositoryName
 import core.repository.screentype.ScreenTypeRepository
 import core.repository.screentype.ScreenTypeRepositoryImpl
 import main.MainViewModel
@@ -10,7 +11,9 @@ val ModuleMain = module {
     single<MainViewModel> {
         MainViewModel(
             statusRepository = get(),
-            statusDataRepository = get(),
+            statusDataRepository = get(
+                qualifier = PlayerStatusRepositoryName,
+            ),
         )
     }
 

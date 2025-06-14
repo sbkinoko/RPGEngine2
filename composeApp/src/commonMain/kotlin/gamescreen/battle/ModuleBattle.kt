@@ -1,5 +1,6 @@
 package gamescreen.battle
 
+import core.PlayerStatusRepositoryName
 import core.UpdatePlayer
 import core.domain.status.StatusType
 import gamescreen.battle.command.actionphase.ActionPhaseViewModel
@@ -63,7 +64,7 @@ val ModuleBattle = module {
             flashRepository = get(),
             attackEffectInfoRepository = get(),
 
-            statusDataRepository = get()
+            statusDataRepository = get(qualifier = PlayerStatusRepositoryName)
         )
     }
 
@@ -82,7 +83,9 @@ val ModuleBattle = module {
     single {
         ActionPhaseViewModel(
             decideActionOrderUseCase = get(),
-            statusDataRepository = get(),
+            statusDataRepository = get(
+                qualifier = PlayerStatusRepositoryName
+            ),
         )
     }
 
@@ -181,7 +184,9 @@ val ModuleBattle = module {
     )
     {
         AttackFromEnemyUseCaseImpl(
-            statusDataRepository = get(),
+            statusDataRepository = get(
+                qualifier = PlayerStatusRepositoryName,
+            ),
             findTargetService = get(),
             attackCalcService = get(),
         )
@@ -198,7 +203,9 @@ val ModuleBattle = module {
         qualifier = named(QualifierAttackFromEnemy),
     ) {
         ConditionFromEnemyUseCaseImpl(
-            statusDataRepository = get(),
+            statusDataRepository = get(
+                PlayerStatusRepositoryName,
+            ),
             findTargetService = get(),
             updatePlayerStatusService = get(
                 qualifier = named(UpdatePlayer),

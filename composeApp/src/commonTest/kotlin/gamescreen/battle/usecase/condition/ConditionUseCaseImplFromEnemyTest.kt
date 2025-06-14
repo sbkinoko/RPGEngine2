@@ -1,6 +1,7 @@
 package gamescreen.battle.usecase.condition
 
 import core.ModuleCore
+import core.PlayerStatusRepositoryName
 import core.domain.status.ConditionType
 import core.domain.status.PlayerStatusTest.Companion.testActivePlayer
 import core.domain.status.PlayerStatusTest.Companion.testNotActivePlayer
@@ -28,7 +29,10 @@ class ConditionUseCaseImplFromEnemyTest : KoinTest {
     )
 
     private val statusRepository: StatusRepository by inject()
-    private val statusDataRepository: StatusDataRepository<StatusType.Player> by inject()
+
+    private val statusDataRepository: StatusDataRepository<StatusType.Player> by inject(
+        qualifier = PlayerStatusRepositoryName
+    )
 
     private val conditionType = ConditionType.Poison()
     private val expectedList = listOf(conditionType)
