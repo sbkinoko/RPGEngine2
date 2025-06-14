@@ -8,7 +8,6 @@ import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 
 class SelectEnemyViewModelTest : KoinTest {
-    private val viewModel = SelectEnemyViewModel()
 
     @BeforeTest
     fun beforeTest() {
