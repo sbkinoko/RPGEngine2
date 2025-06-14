@@ -1,6 +1,7 @@
 package gamescreen.battle.command.actionphase
 
 import androidx.compose.runtime.mutableStateOf
+import core.UpdatePlayer
 import core.domain.item.AttackEffect
 import core.domain.item.BufEffect
 import core.domain.item.ConditionEffect
@@ -63,7 +64,9 @@ class ActionPhaseViewModel(
     private val skillRepository: SkillRepository by inject()
     private val toolRepository: ToolRepository by inject()
 
-    private val updatePlayerParameter: UpdateStatusUseCase<StatusType.Player> by inject()
+    private val updatePlayerParameter: UpdateStatusUseCase<StatusType.Player> by inject(
+        qualifier = named(UpdatePlayer)
+    )
     private val updateEnemyParameter: UpdateMonsterStatusUseCase by inject()
 
     private val attackFromPlayerUseCase: AttackUseCase<StatusType.Player> by inject(

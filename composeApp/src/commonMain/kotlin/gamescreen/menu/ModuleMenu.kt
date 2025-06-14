@@ -1,5 +1,6 @@
 package gamescreen.menu
 
+import core.UpdatePlayer
 import core.usecase.item.useskill.UseSkillUseCase
 import core.usecase.item.useskill.UseSkillUseCaseImpl
 import gamescreen.menu.component.StatusComponentViewModel
@@ -32,6 +33,7 @@ import gamescreen.menu.usecase.getviewmodelbycommandtype.GetControllerByCommandT
 import gamescreen.menu.usecase.getviewmodelbycommandtype.GetControllerByCommandTypeUseCaseImpl
 import gamescreen.menu.usecase.givetool.GiveToolUseCase
 import gamescreen.menu.usecase.givetool.GiveToolUseCaseImpl
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val ModuleMenu = module {
@@ -125,7 +127,9 @@ val ModuleMenu = module {
         UseSkillUseCaseImpl(
             playerStatusRepository = get(),
             skillRepository = get(),
-            updateStatus = get(),
+            updateStatus = get(
+                qualifier = named(UpdatePlayer)
+            ),
         )
     }
 

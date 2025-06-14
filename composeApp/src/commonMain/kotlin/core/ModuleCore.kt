@@ -30,7 +30,10 @@ import core.usecase.updateparameter.UpdateStatusUseCase
 import core.usecase.updateparameter.UpdateStatusUseCaseImpl
 import gamescreen.menu.usecase.gettoolid.GetToolIdUseCase
 import gamescreen.menu.usecase.gettoolid.GetToolIdUseCaseImpl
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
+
+val UpdatePlayer = "UpdatePlayer"
 
 val ModuleCore = module {
     single<StatusDataRepository<StatusType.Player>> {
@@ -84,7 +87,9 @@ val ModuleCore = module {
         )
     }
 
-    single<UpdateStatusUseCase<StatusType.Player>> {
+    single<UpdateStatusUseCase<StatusType.Player>>(
+        qualifier = named(UpdatePlayer)
+    ) {
         UpdateStatusUseCaseImpl(
             statusDataRepository = get(),
         )
@@ -94,7 +99,9 @@ val ModuleCore = module {
         UseToolUseCaseImpl(
             toolRepository = get(),
             updatePlayerStatusUseCase = get(),
-            updateStatusUseCase = get(),
+            updateStatusUseCase = get(
+                qualifier = named(UpdatePlayer)
+            ),
             decToolUseCase = get(),
             getToolIdUseCase = get(),
         )
