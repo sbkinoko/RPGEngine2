@@ -23,7 +23,6 @@ import core.usecase.item.usetool.UseToolUseCase
 import core.usecase.item.usetool.UseToolUseCaseImpl
 import core.usecase.restart.RestartUseCase
 import core.usecase.restart.RestartUseCaseImpl
-import core.usecase.updateparameter.UpdateMonsterStatusUseCase
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
 import core.usecase.updateparameter.UpdatePlayerStatusUseCaseImpl
 import core.usecase.updateparameter.UpdateStatusUseCase
@@ -35,7 +34,11 @@ import org.koin.dsl.module
 
 const val UpdatePlayer = "UpdatePlayer"
 
+val UpdateEnemyUseCaseName = named("UpdateEnemyStatus")
+
 val PlayerStatusRepositoryName = named("PlayerStatusRepository")
+
+val EnemyStatusRepositoryName = named("EnemyStatusRepository")
 
 val ModuleCore = module {
     single<StatusDataRepository<StatusType.Player>>(
@@ -52,6 +55,12 @@ val ModuleCore = module {
 
     single<BattleInfoRepository> {
         BattleInfoRepositoryImpl()
+    }
+
+    single<StatusDataRepository<StatusType.Enemy>>(
+        qualifier = EnemyStatusRepositoryName
+    ) {
+        StatusDataRepositoryImpl()
     }
 
     single<MoneyRepository> {
@@ -79,12 +88,6 @@ val ModuleCore = module {
         )
     }
 
-    single {
-        UpdateMonsterStatusUseCase(
-            statusRepository = get<BattleInfoRepository>()
-        )
-    }
-
     single<UpdatePlayerStatusUseCase> {
         UpdatePlayerStatusUseCaseImpl(
             statusRepository = get<PlayerStatusRepository>()
@@ -97,6 +100,17 @@ val ModuleCore = module {
         UpdateStatusUseCaseImpl(
             statusDataRepository = get(
                 qualifier = PlayerStatusRepositoryName
+            ),
+        )
+    }
+
+    single<UpdateStatusUseCase<StatusType.Enemy>>(
+        qualifier = UpdateEnemyUseCaseName,
+    )
+    {
+        UpdateStatusUseCaseImpl(
+            statusDataRepository = get(
+                qualifier = EnemyStatusRepositoryName,
             ),
         )
     }

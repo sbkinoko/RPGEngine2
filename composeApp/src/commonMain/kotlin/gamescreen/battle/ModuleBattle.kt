@@ -1,6 +1,8 @@
 package gamescreen.battle
 
+import core.EnemyStatusRepositoryName
 import core.PlayerStatusRepositoryName
+import core.UpdateEnemyUseCaseName
 import core.UpdatePlayer
 import core.domain.status.StatusType
 import gamescreen.battle.command.actionphase.ActionPhaseViewModel
@@ -77,7 +79,11 @@ val ModuleBattle = module {
     }
 
     single {
-        SelectEnemyViewModel()
+        SelectEnemyViewModel(
+            enemyStatusDataRepository = get(
+                qualifier = EnemyStatusRepositoryName,
+            )
+        )
     }
 
     single {
@@ -86,6 +92,9 @@ val ModuleBattle = module {
             statusDataRepository = get(
                 qualifier = PlayerStatusRepositoryName
             ),
+            enemyDataRepository = get(
+                qualifier = EnemyStatusRepositoryName
+            )
         )
     }
 
@@ -162,7 +171,9 @@ val ModuleBattle = module {
         qualifier = named(QualifierAttackFromPlayer)
     ) {
         AttackFromPlayerUseCaseImpl(
-            battleInfoRepository = get(),
+            statusDataRepository = get(
+                qualifier = EnemyStatusRepositoryName,
+            ),
             findTargetService = get(),
             attackCalcService = get(),
             effectUseCase = get(),
@@ -173,9 +184,13 @@ val ModuleBattle = module {
         qualifier = named(QualifierAttackFromPlayer),
     ) {
         ConditionFromPlayerUseCaseImpl(
-            battleInfoRepository = get(),
+            statusDataRepository = get(
+                qualifier = EnemyStatusRepositoryName,
+            ),
             findTargetService = get(),
-            updateMonsterStatusService = get(),
+            updateMonsterStatusUseCase = get(
+                qualifier = UpdateEnemyUseCaseName,
+            ),
         )
     }
 

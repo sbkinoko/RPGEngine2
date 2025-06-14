@@ -2,10 +2,12 @@ package gamescreen.map.usecase.battlestart
 
 import core.domain.BattleEventCallback
 import core.domain.BattleResult
+import core.domain.status.StatusType
 import core.domain.status.monster.MonsterStatus
 import core.repository.battlemonster.BattleInfoRepository
 import core.repository.event.EventRepository
 import core.repository.screentype.ScreenTypeRepository
+import core.repository.statusdata.StatusDataRepository
 import gamescreen.GameScreenType
 import gamescreen.battle.domain.BattleBackgroundType
 import gamescreen.battle.repository.action.ActionRepository
@@ -25,6 +27,8 @@ class StartBattleUseCaseImpl(
     private val eventRepository: EventRepository,
     private val flashRepository: FlashRepository,
     private val attackEffectRepository: AttackEffectRepository,
+
+    private val statusDataRepository: StatusDataRepository<StatusType.Enemy>,
 ) : StartBattleUseCase, KoinComponent {
 
     override operator fun invoke(
@@ -39,6 +43,9 @@ class StartBattleUseCaseImpl(
         CoroutineScope(Dispatchers.Default).launch {
             battleInfoRepository.setMonsters(
                 monsterList
+            )
+            statusDataRepository.setStatusList(
+                monsterList.map { it.statusData }
             )
             flashRepository.monsterNum = monsterList.size
             attackEffectRepository.monsterNum = monsterList.size

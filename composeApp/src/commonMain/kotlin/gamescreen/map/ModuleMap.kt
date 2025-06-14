@@ -1,5 +1,6 @@
 package gamescreen.map
 
+import core.EnemyStatusRepositoryName
 import gamescreen.map.domain.Player
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.backgroundcell.BackgroundRepositoryImpl
@@ -221,6 +222,10 @@ val ModuleMap = module {
             eventRepository = get(),
             flashRepository = get(),
             attackEffectRepository = get(),
+
+            statusDataRepository = get(
+                EnemyStatusRepositoryName
+            ),
         )
     }
 

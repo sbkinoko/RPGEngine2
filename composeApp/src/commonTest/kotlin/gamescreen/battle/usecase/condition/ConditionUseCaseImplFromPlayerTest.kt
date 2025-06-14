@@ -1,10 +1,12 @@
 package gamescreen.battle.usecase.condition
 
+import core.EnemyStatusRepositoryName
 import core.ModuleCore
 import core.domain.status.ConditionType
 import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
 import core.domain.status.MonsterStatusTest.Companion.TestNotActiveMonster
-import core.repository.battlemonster.BattleInfoRepository
+import core.domain.status.StatusType
+import core.repository.statusdata.StatusDataRepository
 import data.ModuleData
 import gamescreen.battle.ModuleBattle
 import gamescreen.battle.QualifierAttackFromPlayer
@@ -27,7 +29,9 @@ class ConditionUseCaseImplFromPlayerTest : KoinTest {
         )
     )
 
-    private val battleInfoRepository: BattleInfoRepository by inject()
+    private val enemyStatusDataRepository: StatusDataRepository<StatusType.Enemy> by inject(
+        qualifier = EnemyStatusRepositoryName,
+    )
 
     @BeforeTest
     fun beforeTest() {
@@ -49,20 +53,22 @@ class ConditionUseCaseImplFromPlayerTest : KoinTest {
     fun toActive() {
         runBlocking {
             val target = 0
-            battleInfoRepository.setMonsters(
+            enemyStatusDataRepository.setStatusList(
                 listOf(
                     TestActiveMonster,
-                ),
+                ).map {
+                    it.statusData
+                },
             )
             conditionUseCase.invoke(
                 target = target,
                 conditionType = ConditionType.Poison()
             )
 
-            battleInfoRepository.getStatus(target).apply {
+            enemyStatusDataRepository.getStatusData(target).apply {
                 assertEquals(
                     expected = listOf(ConditionType.Poison()),
-                    actual = statusData.conditionList
+                    actual = conditionList
                 )
             }
         }
@@ -72,21 +78,23 @@ class ConditionUseCaseImplFromPlayerTest : KoinTest {
     fun toActive2() {
         val id = 1
         runBlocking {
-            battleInfoRepository.setMonsters(
+            enemyStatusDataRepository.setStatusList(
                 listOf(
                     TestActiveMonster,
                     TestActiveMonster,
-                ),
+                ).map {
+                    it.statusData
+                },
             )
             conditionUseCase.invoke(
                 target = id,
                 conditionType = ConditionType.Poison()
             )
 
-            battleInfoRepository.getStatus(id).apply {
+            enemyStatusDataRepository.getStatusData(id).apply {
                 assertEquals(
                     expected = listOf(ConditionType.Poison()),
-                    actual = statusData.conditionList
+                    actual = conditionList
                 )
             }
         }
@@ -97,11 +105,13 @@ class ConditionUseCaseImplFromPlayerTest : KoinTest {
         val idNotActive = 0
         val idActive = 1
         runBlocking {
-            battleInfoRepository.setMonsters(
+            enemyStatusDataRepository.setStatusList(
                 listOf(
                     TestNotActiveMonster,
                     TestActiveMonster,
-                ),
+                ).map {
+                    it.statusData
+                },
             )
 
             conditionUseCase.invoke(
@@ -109,10 +119,10 @@ class ConditionUseCaseImplFromPlayerTest : KoinTest {
                 conditionType = ConditionType.Poison(),
             )
 
-            battleInfoRepository.getStatus(idActive).apply {
+            enemyStatusDataRepository.getStatusData(idActive).apply {
                 assertEquals(
                     expected = listOf(ConditionType.Poison()),
-                    actual = statusData.conditionList
+                    actual = conditionList
                 )
             }
         }

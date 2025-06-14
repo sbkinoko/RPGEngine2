@@ -2,6 +2,7 @@ package gamescreen.battle
 
 import controller.domain.ControllerCallback
 import controller.domain.Stick
+import core.EnemyStatusRepositoryName
 import core.domain.status.StatusData
 import core.domain.status.StatusType
 import core.domain.status.monster.MonsterStatus
@@ -25,6 +26,8 @@ class BattleViewModel(
     KoinComponent {
 
     private val battleInfoRepository: BattleInfoRepository by inject()
+    private val monsterStatusRepository: StatusDataRepository<StatusType.Enemy> by inject(qualifier = EnemyStatusRepositoryName)
+
     private val commandStateRepository: CommandStateRepository by inject()
 
     private val getControllerByCommandTypeUseCase: GetControllerByCommandTypeUseCase by inject()
@@ -35,11 +38,13 @@ class BattleViewModel(
     val commandStateFlow =
         commandStateRepository.commandStateFlow
 
+    // todo playerにrename
     val statusDataFlow: StateFlow<List<StatusData<StatusType.Player>>> =
         statusDataRepository.statusDataFlow
 
     val monsterStatusFlow: StateFlow<List<MonsterStatus>> =
         battleInfoRepository.monsterListStateFLow
+    val monsterStatusDataFlow: StateFlow<List<StatusData<StatusType.Enemy>>> = monsterStatusRepository.statusDataFlow
 
     val battleBackgroundTypeFlow =
         battleInfoRepository.backgroundType
