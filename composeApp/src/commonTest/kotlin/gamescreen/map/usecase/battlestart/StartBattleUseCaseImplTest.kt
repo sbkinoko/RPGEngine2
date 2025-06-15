@@ -3,6 +3,7 @@ package gamescreen.map.usecase.battlestart
 import core.ModuleCore
 import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
 import core.domain.status.StatusData
+import core.domain.status.StatusDataTest
 import core.domain.status.StatusType
 import core.domain.status.monster.MonsterStatus
 import core.repository.battlemonster.BattleInfoRepository
@@ -221,7 +222,10 @@ class StartBattleUseCaseImplTest : KoinTest {
 
             startBattleUseCase.invoke(
                 monsterList = listOf(
-                    TestActiveMonster,
+                    Pair(
+                        TestActiveMonster,
+                        StatusDataTest.TestEnemyStatusActive,
+                    )
                 ),
                 backgroundType = BattleBackgroundType.Road,
             )

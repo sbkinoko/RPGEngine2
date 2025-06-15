@@ -72,12 +72,12 @@ abstract class ItemTargetViewModel<T> : MenuChildViewModel() {
     }
 
     fun canSelect(target: Int): Boolean {
-        val targetStatus = playerStatusRepository.getStatus(id = target)
+        val targetStatus = statusDataRepository.getStatusData(id = target)
         val skill = itemRepository.getItem(itemId)
 
         val targetType = skill.targetStatusType
 
-        if (targetType.canSelect(targetStatus.statusData).not()) {
+        if (targetType.canSelect(targetStatus).not()) {
             // 対象にとれなかった
             return false
         }

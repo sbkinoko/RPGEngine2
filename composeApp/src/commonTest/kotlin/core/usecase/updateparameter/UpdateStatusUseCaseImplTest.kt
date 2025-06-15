@@ -1,12 +1,11 @@
 package core.usecase.updateparameter
 
 import core.domain.status.ConditionType
-import core.domain.status.PlayerStatusTest.Companion.testActivePlayer
 import core.domain.status.StatusData
+import core.domain.status.StatusDataTest
 import core.domain.status.StatusType
 import core.domain.status.param.StatusParameterWithMax
 import core.repository.statusdata.StatusDataRepository
-import data.item.tool.ToolId
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
@@ -16,28 +15,24 @@ class UpdateStatusUseCaseImplTest {
 
     val hp = 50
     val mp = 30
-    private val status1 = testActivePlayer.run {
-        copy(
-            statusData = statusData.copy(
-                hp = StatusParameterWithMax(
-                    point = hp,
-                    maxPoint = 100,
-                ),
-                mp = StatusParameterWithMax(
-                    point = mp,
-                    maxPoint = 100,
-                ),
-            ),
-            toolList = listOf(ToolId.HEAL1, ToolId.HEAL2, ToolId.HEAL2),
-        )
-    }
+    private val status1 = StatusDataTest.TestPlayerStatusActive.copy(
+        hp = StatusParameterWithMax(
+            point = hp,
+            maxPoint = 100,
+        ),
+        mp = StatusParameterWithMax(
+            point = mp,
+            maxPoint = 100,
+        ),
+    )
+
     private val status2 = status1.copy()
 
     private val statusRepository: StatusDataRepository<StatusType.Player> =
         object : StatusDataRepository<StatusType.Player> {
             var _statusList: MutableList<StatusData<StatusType.Player>> = mutableListOf(
-                status1.statusData,
-                status2.statusData,
+                status1,
+                status2,
             )
             override val statusDataFlow: StateFlow<List<StatusData<StatusType.Player>>>
                 get() = throw NotImplementedError()
@@ -80,7 +75,7 @@ class UpdateStatusUseCaseImplTest {
             )
 
             assertEquals(
-                expected = status2.statusData,
+                expected = status2,
                 actual = statusRepository.getStatusData(1)
             )
         }
@@ -100,7 +95,7 @@ class UpdateStatusUseCaseImplTest {
             )
 
             assertEquals(
-                expected = status2.statusData,
+                expected = status2,
                 actual = statusRepository.getStatusData(1)
             )
         }
@@ -120,7 +115,7 @@ class UpdateStatusUseCaseImplTest {
             )
 
             assertEquals(
-                expected = status2.statusData,
+                expected = status2,
                 actual = statusRepository.getStatusData(1)
             )
         }
@@ -140,7 +135,7 @@ class UpdateStatusUseCaseImplTest {
             )
 
             assertEquals(
-                expected = status2.statusData,
+                expected = status2,
                 actual = statusRepository.getStatusData(1)
             )
         }
@@ -171,7 +166,7 @@ class UpdateStatusUseCaseImplTest {
             )
 
             assertEquals(
-                expected = status2.statusData,
+                expected = status2,
                 actual = statusRepository.getStatusData(1)
             )
         }
@@ -195,7 +190,7 @@ class UpdateStatusUseCaseImplTest {
             )
 
             assertEquals(
-                expected = status2.statusData,
+                expected = status2,
                 actual = statusRepository.getStatusData(1)
             )
         }

@@ -1,5 +1,7 @@
 package gamescreen.menu.item.tool.user
 
+import core.domain.status.StatusType
+import core.repository.statusdata.StatusDataRepository
 import data.item.tool.ToolId
 import data.item.tool.ToolRepository
 import gamescreen.menu.domain.BagToolData
@@ -11,7 +13,9 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import values.Constants
 
-class ToolUserViewModel : ItemUserViewModel<ToolId>(),
+class ToolUserViewModel(
+    private val statusDataRepository: StatusDataRepository<StatusType.Player>,
+) : ItemUserViewModel<ToolId>(),
     KoinComponent {
     override val itemRepository: ToolRepository by inject()
     private val bagRepository: BagRepository by inject()
@@ -49,7 +53,7 @@ class ToolUserViewModel : ItemUserViewModel<ToolId>(),
 
     override fun getPlayerNameAt(id: Int): String {
         return if (id < Constants.playerNum) {
-            playerStatusRepository.getStatus(id).statusData.name
+            statusDataRepository.getStatusData(id).name
         } else {
             "バッグ"
         }

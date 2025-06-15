@@ -1,19 +1,20 @@
 package gamescreen.menu.status
 
 import common.Timer
-import core.domain.status.Character
+import core.domain.status.StatusData
 import core.domain.status.StatusType
 import core.menu.SelectableWindowViewModel
-import core.repository.player.PlayerStatusRepository
+import core.repository.statusdata.StatusDataRepository
 import gamescreen.menu.domain.SelectManager
 import gamescreen.menu.repository.menustate.MenuStateRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import values.Constants
 
-class StatusViewModel : SelectableWindowViewModel(),
+class StatusViewModel(
+    private val statusDataRepository: StatusDataRepository<StatusType.Player>,
+) : SelectableWindowViewModel(),
     KoinComponent {
-    val repository: PlayerStatusRepository by inject()
     private val menuStateRepository: MenuStateRepository by inject()
 
     override var selectManager = SelectManager(
@@ -23,8 +24,8 @@ class StatusViewModel : SelectableWindowViewModel(),
 
     override var timer: Timer = Timer(200)
 
-    fun getStatusAt(id: Int): Character<StatusType.Player> {
-        return repository.getStatus(id)
+    fun getStatusDataAt(id: Int): StatusData<StatusType.Player> {
+        return statusDataRepository.getStatusData(id)
     }
 
     override fun pressA() {}

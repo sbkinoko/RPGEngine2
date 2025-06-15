@@ -34,36 +34,7 @@ class BattleInfoRepositoryImpl : BattleInfoRepository {
     }
 
     override fun setMonsters(monsters: List<MonsterStatus>) {
-        val nameNum: MutableMap<String, Int> = mutableMapOf()
-        monsters.map { mon ->
-            mon.statusData.let {
-                if (nameNum[it.name] != null) {
-                    nameNum[it.name] = (nameNum[it.name]!! + 1)
-                } else {
-                    nameNum[it.name] = 1
-                }
-            }
-        }
-
-        val nameId: MutableMap<String, Int> = mutableMapOf()
-
-        monsterList = monsters.map {
-            if (nameNum[it.statusData.name] == 1) {
-                return@map it
-            }
-
-            if (nameId[it.statusData.name] != null) {
-                nameId[it.statusData.name] = (nameId[it.statusData.name]!! + 1)
-            } else {
-                nameId[it.statusData.name] = 1
-            }
-
-            it.copy(
-                statusData = it.statusData.copy(
-                    name = it.statusData.name + nameId[it.statusData.name]
-                ),
-            )
-        }
+        monsterList = monsters
     }
 
     override suspend fun setStatus(

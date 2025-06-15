@@ -1,7 +1,6 @@
 package gamescreen.battle.service.findtarget
 
-import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
-import core.domain.status.MonsterStatusTest.Companion.TestNotActiveMonster
+import core.domain.status.StatusDataTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -18,9 +17,9 @@ class FindTargetServiceImplTest {
     fun attackTo1When1IsNotActive() {
         val monsters = List(2) {
             if (it == 0) {
-                TestNotActiveMonster
+                StatusDataTest.TestEnemyStatusInActive
             } else {
-                TestActiveMonster
+                StatusDataTest.TestEnemyStatusActive
             }
         }
 
@@ -29,7 +28,7 @@ class FindTargetServiceImplTest {
         // 対象のモンスターが倒れているときは
         // 隣のモンスター攻撃することを確認
         findTarget.findNext(
-            statusList = monsters.map { it.statusData },
+            statusList = monsters,
             target = id,
         ).apply {
             assertEquals(
@@ -43,9 +42,9 @@ class FindTargetServiceImplTest {
     fun attackTo2When2IsNotActive() {
         val monsters = List(2) {
             if (it == 1) {
-                TestNotActiveMonster
+                StatusDataTest.TestEnemyStatusInActive
             } else {
-                TestActiveMonster
+                StatusDataTest.TestEnemyStatusActive
             }
         }
 
@@ -55,7 +54,7 @@ class FindTargetServiceImplTest {
         // 隣のモンスター攻撃することを確認
         //　ただし、隣が一周して戻ることもある
         findTarget.findNext(
-            statusList = monsters.map { it.statusData },
+            statusList = monsters,
             target = id,
         ).apply {
             assertEquals(
@@ -70,9 +69,9 @@ class FindTargetServiceImplTest {
         val activeId = 2
         val monsters = List(3) {
             if (it != 2) {
-                TestNotActiveMonster
+                StatusDataTest.TestEnemyStatusInActive
             } else {
-                TestActiveMonster
+                StatusDataTest.TestEnemyStatusActive
             }
         }
 
@@ -82,7 +81,7 @@ class FindTargetServiceImplTest {
         // 隣のモンスター攻撃することを確認
         //　ただし、隣が一周して戻ることもある
         findTarget.findNext(
-            statusList = monsters.map { it.statusData },
+            statusList = monsters,
             target = id,
         ).apply {
             assertEquals(

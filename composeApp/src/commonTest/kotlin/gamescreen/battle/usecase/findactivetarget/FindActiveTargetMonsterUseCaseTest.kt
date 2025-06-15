@@ -1,7 +1,6 @@
 package gamescreen.battle.usecase.findactivetarget
 
-import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
-import core.domain.status.MonsterStatusTest.Companion.TestNotActiveMonster
+import core.domain.status.StatusDataTest
 import gamescreen.battle.ModuleBattle
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -35,13 +34,13 @@ class FindActiveTargetMonsterUseCaseTest : KoinTest {
     @Test
     fun findNormal() {
         val list = listOf(
-            TestActiveMonster,
-            TestActiveMonster,
-            TestActiveMonster,
+            StatusDataTest.TestEnemyStatusActive,
+            StatusDataTest.TestEnemyStatusActive,
+            StatusDataTest.TestEnemyStatusActive,
         )
 
         findActiveTargetUseCase(
-            statusList = list.map { it.statusData },
+            statusList = list,
             target = 0,
             targetNum = 2,
         ).let {
@@ -58,13 +57,13 @@ class FindActiveTargetMonsterUseCaseTest : KoinTest {
     @Test
     fun findSkip() {
         val list = listOf(
-            TestActiveMonster,
-            TestNotActiveMonster,
-            TestActiveMonster,
+            StatusDataTest.TestEnemyStatusActive,
+            StatusDataTest.TestEnemyStatusInActive,
+            StatusDataTest.TestEnemyStatusActive,
         )
 
         findActiveTargetUseCase(
-            statusList = list.map { it.statusData },
+            statusList = list,
             target = 0,
             targetNum = 2,
         ).let {
@@ -81,13 +80,13 @@ class FindActiveTargetMonsterUseCaseTest : KoinTest {
     @Test
     fun findNext() {
         val list = listOf(
-            TestNotActiveMonster,
-            TestActiveMonster,
-            TestActiveMonster,
+            StatusDataTest.TestEnemyStatusInActive,
+            StatusDataTest.TestEnemyStatusActive,
+            StatusDataTest.TestEnemyStatusActive,
         )
 
         findActiveTargetUseCase(
-            statusList = list.map { it.statusData },
+            statusList = list,
             target = 0,
             targetNum = 2,
         ).let {
@@ -104,13 +103,13 @@ class FindActiveTargetMonsterUseCaseTest : KoinTest {
     @Test
     fun findOne() {
         val list = listOf(
-            TestActiveMonster,
-            TestNotActiveMonster,
-            TestNotActiveMonster,
+            StatusDataTest.TestEnemyStatusActive,
+            StatusDataTest.TestEnemyStatusInActive,
+            StatusDataTest.TestEnemyStatusInActive,
         )
 
         findActiveTargetUseCase(
-            statusList = list.map { it.statusData },
+            statusList = list,
             target = 0,
             targetNum = 2,
         ).let {
@@ -127,13 +126,13 @@ class FindActiveTargetMonsterUseCaseTest : KoinTest {
     @Test
     fun findLoop() {
         val list = listOf(
-            TestActiveMonster,
-            TestActiveMonster,
-            TestActiveMonster,
+            StatusDataTest.TestEnemyStatusActive,
+            StatusDataTest.TestEnemyStatusActive,
+            StatusDataTest.TestEnemyStatusActive,
         )
 
         findActiveTargetUseCase(
-            statusList = list.map { it.statusData },
+            statusList = list,
             target = 2,
             targetNum = 2,
         ).let {
@@ -150,13 +149,13 @@ class FindActiveTargetMonsterUseCaseTest : KoinTest {
     @Test
     fun findOver() {
         val list = listOf(
-            TestActiveMonster,
-            TestActiveMonster,
-            TestActiveMonster,
+            StatusDataTest.TestEnemyStatusActive,
+            StatusDataTest.TestEnemyStatusActive,
+            StatusDataTest.TestEnemyStatusActive,
         )
 
         findActiveTargetUseCase(
-            statusList = list.map { it.statusData },
+            statusList = list,
             target = 0,
             targetNum = 4,
         ).let {

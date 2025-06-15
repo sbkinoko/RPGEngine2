@@ -75,7 +75,11 @@ val ModuleBattle = module {
     }
 
     single {
-        PlayerActionViewModel()
+        PlayerActionViewModel(
+            statusDataRepository = get(
+                qualifier = PlayerStatusRepositoryName,
+            )
+        )
     }
 
     single {
@@ -111,7 +115,11 @@ val ModuleBattle = module {
     }
 
     single {
-        SelectAllyViewModel()
+        SelectAllyViewModel(
+            statusDataRepository = get(
+                qualifier = PlayerStatusRepositoryName,
+            )
+        )
     }
 
     single {
@@ -269,6 +277,9 @@ val ModuleBattle = module {
         AddExpUseCaseImpl(
             playerStatusRepository = get(),
             statusRepository = get(),
+            statusDataRepository = get(
+                PlayerStatusRepositoryName,
+            )
         )
     }
 }

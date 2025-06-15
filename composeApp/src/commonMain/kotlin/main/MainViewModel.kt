@@ -26,7 +26,7 @@ class MainViewModel(
                 statusRepository.getStatus(
                     id = it,
                     level = 1,
-                ).statusData
+                ).second
             }
         )
     }

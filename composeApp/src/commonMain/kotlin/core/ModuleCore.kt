@@ -136,7 +136,9 @@ val ModuleCore = module {
 
     single<MaxHealUseCase> {
         MaxHealUseCaseImpl(
-            playerStatusRepository = get(),
+            playerStatusRepository = get(
+                qualifier = PlayerStatusRepositoryName,
+            ),
         )
     }
 

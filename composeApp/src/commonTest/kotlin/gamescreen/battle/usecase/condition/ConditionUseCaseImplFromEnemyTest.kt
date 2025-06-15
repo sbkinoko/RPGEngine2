@@ -3,8 +3,7 @@ package gamescreen.battle.usecase.condition
 import core.ModuleCore
 import core.PlayerStatusRepositoryName
 import core.domain.status.ConditionType
-import core.domain.status.PlayerStatusTest.Companion.testActivePlayer
-import core.domain.status.PlayerStatusTest.Companion.testNotActivePlayer
+import core.domain.status.StatusDataTest
 import core.domain.status.StatusType
 import core.repository.statusdata.StatusDataRepository
 import data.ModuleData
@@ -52,7 +51,7 @@ class ConditionUseCaseImplFromEnemyTest : KoinTest {
                 statusRepository.getStatus(
                     id = it,
                     level = 1,
-                ).statusData
+                ).second
             }
         )
     }
@@ -67,7 +66,7 @@ class ConditionUseCaseImplFromEnemyTest : KoinTest {
         runBlocking {
             statusDataRepository.setStatusData(
                 id = 0,
-                statusData = testActivePlayer.statusData,
+                statusData = StatusDataTest.TestPlayerStatusActive,
             )
 
             conditionUseCaseImplFromEnemy.invoke(
@@ -90,7 +89,7 @@ class ConditionUseCaseImplFromEnemyTest : KoinTest {
         runBlocking {
             statusDataRepository.setStatusData(
                 id = id,
-                statusData = testActivePlayer.statusData,
+                statusData = StatusDataTest.TestPlayerStatusActive,
             )
             conditionUseCaseImplFromEnemy.invoke(
                 target = id,
@@ -113,11 +112,11 @@ class ConditionUseCaseImplFromEnemyTest : KoinTest {
         runBlocking {
             statusDataRepository.setStatusData(
                 id = idNotActive,
-                statusData = testNotActivePlayer.statusData
+                statusData = StatusDataTest.TestPlayerStatusInActive,
             )
             statusDataRepository.setStatusData(
                 id = idActive,
-                statusData = testActivePlayer.statusData,
+                statusData = StatusDataTest.TestPlayerStatusActive,
             )
 
             conditionUseCaseImplFromEnemy.invoke(
