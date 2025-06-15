@@ -8,12 +8,15 @@ import core.domain.status.param.StatusParameter
 import core.domain.status.param.StatusParameterWithMax
 import gamescreen.battle.command.playeraction.PlayerAction
 import gamescreen.battle.command.playeraction.PlayerActionViewModel
+import org.koin.compose.koinInject
 
 @Preview
 @Composable
-fun PlayerActionPreview() {
+fun PlayerActionPreview(
+    playerActionViewModel: PlayerActionViewModel = koinInject(),
+) {
     PlayerAction(
-        playerActionViewModel = PlayerActionViewModel(),
+        playerActionViewModel = playerActionViewModel,
         playerStatus = StatusData<StatusType.Player>(
             "test",
             hp = StatusParameterWithMax(

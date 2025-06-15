@@ -1,7 +1,8 @@
 package gamescreen.battle.command.selectally
 
 import core.domain.item.TargetStatusType
-import core.repository.player.PlayerStatusRepository
+import core.domain.status.StatusType
+import core.repository.statusdata.StatusDataRepository
 import data.item.skill.SkillRepository
 import data.item.tool.ToolRepository
 import gamescreen.battle.BattleChildViewModel
@@ -19,12 +20,13 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.inject
 import values.Constants.Companion.playerNum
 
-class SelectAllyViewModel : BattleChildViewModel() {
+class SelectAllyViewModel(
+    private val statusDataRepository: StatusDataRepository<StatusType.Player>,
+) : BattleChildViewModel() {
     private val changeSelectingActionPlayerUseCase: ChangeSelectingActionPlayerUseCase by inject()
     private val actionRepository: ActionRepository by inject()
     private val skillRepository: SkillRepository by inject()
     private val toolRepository: ToolRepository by inject()
-    private val playerStatusRepository: PlayerStatusRepository by inject()
 
     private val playerId: Int
         get() {
@@ -79,7 +81,7 @@ class SelectAllyViewModel : BattleChildViewModel() {
 
     override fun selectable(): Boolean {
         val id = selectManager.selected
-        val status = playerStatusRepository.getStatus(id).statusData
+        val status = statusDataRepository.getStatusData(id)
         return targetStatusType.canSelect(status)
     }
 

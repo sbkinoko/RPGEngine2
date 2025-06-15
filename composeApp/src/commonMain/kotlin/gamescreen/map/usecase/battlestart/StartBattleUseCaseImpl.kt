@@ -2,6 +2,7 @@ package gamescreen.map.usecase.battlestart
 
 import core.domain.BattleEventCallback
 import core.domain.BattleResult
+import core.domain.status.StatusData
 import core.domain.status.StatusType
 import core.domain.status.monster.MonsterStatus
 import core.repository.battlemonster.BattleInfoRepository
@@ -32,7 +33,7 @@ class StartBattleUseCaseImpl(
 ) : StartBattleUseCase, KoinComponent {
 
     override operator fun invoke(
-        monsterList: List<MonsterStatus>,
+        monsterList: List<Pair<MonsterStatus, StatusData<StatusType.Enemy>>>,
         battleEventCallback: BattleEventCallback,
         backgroundType: BattleBackgroundType,
     ) {
@@ -42,11 +43,13 @@ class StartBattleUseCaseImpl(
 
         CoroutineScope(Dispatchers.Default).launch {
             battleInfoRepository.setMonsters(
-                monsterList
+                monsterList.map { it.first }
             )
+
             statusDataRepository.setStatusList(
-                monsterList.map { it.statusData }
+                renameMonster(monsterList.map { it.second })
             )
+
             flashRepository.monsterNum = monsterList.size
             attackEffectRepository.monsterNum = monsterList.size
 
@@ -61,6 +64,38 @@ class StartBattleUseCaseImpl(
             eventRepository.setResult(BattleResult.None)
             eventRepository.setCallBack(
                 battleEventCallback,
+            )
+        }
+    }
+
+    private fun renameMonster(monsters: List<StatusData<StatusType.Enemy>>): List<StatusData<StatusType.Enemy>> {
+        val nameNum: MutableMap<String, Int> = mutableMapOf()
+        monsters.map {
+            it.let {
+                if (nameNum[it.name] != null) {
+                    nameNum[it.name] = (nameNum[it.name]!! + 1)
+                } else {
+                    nameNum[it.name] = 1
+                }
+            }
+        }
+
+        val nameId: MutableMap<String, Int> = mutableMapOf()
+
+        return monsters.map {
+            if (nameNum[it.name] == 1) {
+                return@map it
+            }
+
+            if (nameId[it.name] != null) {
+                nameId[it.name] = (nameId[it.name]!! + 1)
+            } else {
+                nameId[it.name] = 1
+            }
+
+
+            it.copy(
+                name = it.name + nameId[it.name]
             )
         }
     }

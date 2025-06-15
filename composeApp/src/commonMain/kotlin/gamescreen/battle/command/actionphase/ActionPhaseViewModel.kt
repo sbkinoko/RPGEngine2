@@ -12,10 +12,8 @@ import core.domain.item.EffectKind
 import core.domain.item.HealEffect
 import core.domain.item.Item
 import core.domain.item.TargetType
-import core.domain.status.PlayerStatus
 import core.domain.status.StatusData
 import core.domain.status.StatusType
-import core.domain.status.param.EXP
 import core.repository.battlemonster.BattleInfoRepository
 import core.repository.player.PlayerStatusRepository
 import core.repository.statusdata.StatusDataRepository
@@ -97,12 +95,12 @@ class ActionPhaseViewModel(
 
     private val isMonsterAnnihilated: Boolean
         get() = isAnnihilationService(
-            battleInfoRepository.getStatusList()
+            enemyDataRepository.getStatusList()
         )
 
     private val isPlayerAnnihilated: Boolean
         get() = isAnnihilationService(
-            playerStatusRepository.getStatusList()
+            statusDataRepository.getStatusList()
         )
 
     private val useToolUseCase: UseToolUseCase by inject()
@@ -145,7 +143,7 @@ class ActionPhaseViewModel(
     fun init() {
         val list = mutableListOf<StatusWrapper>()
         // fixme 使うリポジトリ変える
-        playerStatusRepository.getStatusList()
+        statusDataRepository.getStatusList()
             .mapIndexed { id, status ->
                 list += StatusWrapper(
                     status = status,
@@ -155,19 +153,24 @@ class ActionPhaseViewModel(
                 )
             }
 
-        // fixme 使うリポジトリ変える
-        battleInfoRepository.getStatusList()
+        for (index: Int in 0 until enemyDataRepository.getStatusList().size) {
+            val statusData = enemyDataRepository.getStatusData(index)
+            val enemyData = battleInfoRepository.getStatus(index)
+
+            val action = decideMonsterActionService.getAction(
+                enemyData,
+                playerStatusRepository.getStatusList(),
+            )
+            list += StatusWrapper(
+                status = statusData,
+                actionData = action,
+                statusType = StatusType.Enemy,
+                newId = index,
+            )
+        }
+        enemyDataRepository.getStatusList()
             .mapIndexed { index, status ->
-                val action = decideMonsterActionService.getAction(
-                    status,
-                    playerStatusRepository.getStatusList(),
-                )
-                list += StatusWrapper(
-                    status = status,
-                    actionData = action,
-                    statusType = StatusType.Enemy,
-                    newId = index,
-                )
+
             }
         statusWrapperList = list
 
@@ -679,14 +682,8 @@ class ActionPhaseViewModel(
         private val dummyStatus = StatusWrapper(
             newId = -1,
             statusType = StatusType.None,
-            status = PlayerStatus(
-                statusData = StatusData(name = ""),
-                toolList = listOf(),
-                skillList = listOf(),
-                exp = EXP(listOf()),
-            ),
+            status = StatusData<StatusType.Player>(name = ""),
             actionData = ActionData(),
-
-            )
+        )
     }
 }

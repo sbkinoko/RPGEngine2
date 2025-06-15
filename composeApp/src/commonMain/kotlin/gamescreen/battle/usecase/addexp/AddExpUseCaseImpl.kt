@@ -1,6 +1,8 @@
 package gamescreen.battle.usecase.addexp
 
+import core.domain.status.StatusType
 import core.repository.player.PlayerStatusRepository
+import core.repository.statusdata.StatusDataRepository
 import data.status.StatusRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -9,21 +11,29 @@ import kotlinx.coroutines.launch
 class AddExpUseCaseImpl(
     private val playerStatusRepository: PlayerStatusRepository,
     private val statusRepository: StatusRepository,
+
+    private val statusDataRepository: StatusDataRepository<StatusType.Player>,
 ) : AddExpUseCase {
     override fun invoke(exp: Int): List<String> {
         val levelUpList: MutableList<String> = mutableListOf()
-        playerStatusRepository.getStatusList().mapIndexed { index, it ->
+        for (index: Int in 0 until playerStatusRepository.getStatusList().size) {
+            val playerStatus = playerStatusRepository.getStatus(index)
+
             //経験値の加算
-            var after = it.copy(
-                exp = it.exp.copy(
-                    value = it.exp.value + exp
+            var after = playerStatus.copy(
+                exp = playerStatus.exp.copy(
+                    value = playerStatus.exp.value + exp
                 )
             )
 
+            val nowStatus = statusDataRepository.getStatusData(id = index)
+
+            var afterStatus = statusDataRepository.getStatusData(id = index)
+
             // レベルが上がっていたら
-            if (it.exp.level != after.exp.level) {
+            if (playerStatus.exp.level != after.exp.level) {
                 //表示用リストに追加
-                levelUpList.add(it.statusData.name)
+                levelUpList.add(nowStatus.name)
 
                 //上がったステータスを取得して
                 statusRepository.getStatus(
@@ -31,14 +41,12 @@ class AddExpUseCaseImpl(
                     level = after.exp.level
                 ).apply {
                     //ステータスに反映する
-                    after = after.copy(
-                        statusData = statusData.setHP(
-                            value = it.statusData.hp.point,
-                            max = statusData.hp.maxPoint,
-                        ).setMP(
-                            value = it.statusData.mp.point,
-                            max = statusData.mp.maxPoint,
-                        ),
+                    after = this.first
+
+                    afterStatus = this.second.setHP(
+                        value = nowStatus.hp.point,
+                    ).setMP(
+                        value = nowStatus.mp.point,
                     )
                 }
             }
@@ -48,6 +56,10 @@ class AddExpUseCaseImpl(
                 playerStatusRepository.setStatus(
                     id = index,
                     status = after,
+                )
+                statusDataRepository.setStatusData(
+                    id = index,
+                    statusData = afterStatus,
                 )
             }
         }

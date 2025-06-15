@@ -1,6 +1,7 @@
 package gamescreen.battle.command.playeraction
 
-import core.repository.player.PlayerStatusRepository
+import core.domain.status.StatusType
+import core.repository.statusdata.StatusDataRepository
 import gamescreen.battle.BattleChildViewModel
 import gamescreen.battle.domain.ActionType
 import gamescreen.battle.domain.BattleCommandType
@@ -14,9 +15,10 @@ import gamescreen.battle.usecase.changeselectingactionplayer.ChangeSelectingActi
 import gamescreen.menu.domain.SelectManager
 import org.koin.core.component.inject
 
-class PlayerActionViewModel : BattleChildViewModel() {
+class PlayerActionViewModel(
+    private val statusDataRepository: StatusDataRepository<StatusType.Player>,
+) : BattleChildViewModel() {
     private val actionRepository: ActionRepository by inject()
-    private val playerStatusRepository: PlayerStatusRepository by inject()
 
     private val changeSelectingActionPlayerUseCase: ChangeSelectingActionPlayerUseCase by inject()
 
@@ -34,7 +36,7 @@ class PlayerActionViewModel : BattleChildViewModel() {
 
     fun init() {
         // プレイヤーが行動不能なら次のキャラに移動する
-        if (playerStatusRepository.getStatus(playerId).statusData.isActive.not()) {
+        if (statusDataRepository.getStatusData(playerId).isActive.not()) {
             actionRepository.setAction(
                 playerId = playerId,
                 actionType = ActionType.None,
@@ -90,9 +92,9 @@ class PlayerActionViewModel : BattleChildViewModel() {
                 ?: return@popTo false
 
             val playerId = command.playerId
-            val player = playerStatusRepository.getStatus(playerId)
+            val player = statusDataRepository.getStatusData(playerId)
 
-            player.statusData.isActive
+            player.isActive
         }
     }
 }
