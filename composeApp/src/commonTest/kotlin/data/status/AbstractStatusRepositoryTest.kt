@@ -40,15 +40,17 @@ class AbstractStatusRepositoryTest {
                 StatusIncreaseTest.testStatusUpList
             )
 
-        override val statusBaseList: List<PlayerStatus>
+        override val statusBaseList: List<Pair<PlayerStatus, StatusData<StatusType.Player>>>
             get() = listOf(
-                PlayerStatus(
-                    statusData = StatusData<StatusType.Player>(
+                Pair(
+                    PlayerStatus(
+                        toolList = toolListValue,
+                        skillList = skillListValue,
+                        exp = expValue,
+                    ),
+                    StatusData(
                         name = nameValue
                     ),
-                    toolList = toolListValue,
-                    skillList = skillListValue,
-                    exp = expValue,
                 )
             )
     }
@@ -60,7 +62,7 @@ class AbstractStatusRepositoryTest {
             level = 1,
         )
 
-        status.apply {
+        status.first.apply {
             assertEquals(
                 expected = toolListValue,
                 actual = toolList,
@@ -77,7 +79,7 @@ class AbstractStatusRepositoryTest {
             )
         }
 
-        status.statusData.apply {
+        status.second.apply {
             assertEquals(
                 expected = TEST_LV1_HP,
                 actual = hp.maxPoint,
@@ -112,7 +114,7 @@ class AbstractStatusRepositoryTest {
             level = 2,
         )
 
-        status.apply {
+        status.first.apply {
             assertEquals(
                 expected = toolListValue,
                 actual = toolList,
@@ -129,7 +131,7 @@ class AbstractStatusRepositoryTest {
             )
         }
 
-        status.statusData.apply {
+        status.second.apply {
             assertEquals(
                 expected = TEST_LV1_HP + TEST_LV2_HP,
                 actual = hp.maxPoint,

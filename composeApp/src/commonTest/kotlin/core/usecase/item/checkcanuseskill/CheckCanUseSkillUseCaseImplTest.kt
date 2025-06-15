@@ -7,7 +7,7 @@ import core.domain.item.Skill
 import core.domain.item.TargetStatusType
 import core.domain.item.TargetType
 import core.domain.item.skill.HealSkill
-import core.domain.status.PlayerStatusTest
+import core.domain.status.StatusDataTest
 import core.service.CheckCanUseService
 import data.item.skill.SkillId
 import data.item.skill.SkillRepository
@@ -34,13 +34,9 @@ class CheckCanUseSkillUseCaseImplTest : KoinTest {
         targetType = TargetType.Ally,
     )
 
-    private val playerStatusWithMP = PlayerStatusTest.testActivePlayer
+    private val playerStatusWithMP = StatusDataTest.TestPlayerStatusActive.setMP(0)
 
-    private val playerStatusNoMP = playerStatusWithMP.run {
-        copy(
-            statusData = statusData.setMP(0),
-        )
-    }
+    private val playerStatusNoMP = StatusDataTest.TestPlayerStatusActive.setMP(0)
 
     @BeforeTest
     fun beforeTest() {
@@ -72,7 +68,7 @@ class CheckCanUseSkillUseCaseImplTest : KoinTest {
 
         val result = checkCanUseSkillUseCase.invoke(
             skillId = SkillId.Normal1,
-            status = playerStatus.statusData,
+            status = playerStatus,
             here = Place.BATTLE
         )
 
@@ -88,7 +84,7 @@ class CheckCanUseSkillUseCaseImplTest : KoinTest {
 
         val result = checkCanUseSkillUseCase.invoke(
             skillId = SkillId.Normal1,
-            status = playerStatus.statusData,
+            status = playerStatus,
             here = Place.MAP,
         )
 
@@ -104,7 +100,7 @@ class CheckCanUseSkillUseCaseImplTest : KoinTest {
 
         val result = checkCanUseSkillUseCase.invoke(
             skillId = SkillId.Normal1,
-            status = playerStatus.statusData,
+            status = playerStatus,
             here = Place.MAP,
         )
 

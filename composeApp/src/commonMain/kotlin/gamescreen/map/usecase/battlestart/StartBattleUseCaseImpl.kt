@@ -68,6 +68,7 @@ class StartBattleUseCaseImpl(
         }
     }
 
+    // TODO: test作る
     private fun renameMonster(monsters: List<StatusData<StatusType.Enemy>>): List<StatusData<StatusType.Enemy>> {
         val nameNum: MutableMap<String, Int> = mutableMapOf()
         monsters.map {

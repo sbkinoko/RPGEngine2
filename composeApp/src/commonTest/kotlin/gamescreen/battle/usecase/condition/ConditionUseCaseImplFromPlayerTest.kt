@@ -3,8 +3,7 @@ package gamescreen.battle.usecase.condition
 import core.EnemyStatusRepositoryName
 import core.ModuleCore
 import core.domain.status.ConditionType
-import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
-import core.domain.status.MonsterStatusTest.Companion.TestNotActiveMonster
+import core.domain.status.StatusDataTest
 import core.domain.status.StatusType
 import core.repository.statusdata.StatusDataRepository
 import data.ModuleData
@@ -55,10 +54,8 @@ class ConditionUseCaseImplFromPlayerTest : KoinTest {
             val target = 0
             enemyStatusDataRepository.setStatusList(
                 listOf(
-                    TestActiveMonster,
-                ).map {
-                    it.statusData
-                },
+                    StatusDataTest.TestEnemyStatusActive,
+                )
             )
             conditionUseCase.invoke(
                 target = target,
@@ -80,11 +77,9 @@ class ConditionUseCaseImplFromPlayerTest : KoinTest {
         runBlocking {
             enemyStatusDataRepository.setStatusList(
                 listOf(
-                    TestActiveMonster,
-                    TestActiveMonster,
-                ).map {
-                    it.statusData
-                },
+                    StatusDataTest.TestEnemyStatusActive,
+                    StatusDataTest.TestEnemyStatusActive,
+                )
             )
             conditionUseCase.invoke(
                 target = id,
@@ -107,11 +102,9 @@ class ConditionUseCaseImplFromPlayerTest : KoinTest {
         runBlocking {
             enemyStatusDataRepository.setStatusList(
                 listOf(
-                    TestNotActiveMonster,
-                    TestActiveMonster,
-                ).map {
-                    it.statusData
-                },
+                    StatusDataTest.TestEnemyStatusInActive,
+                    StatusDataTest.TestEnemyStatusActive,
+                )
             )
 
             conditionUseCase.invoke(

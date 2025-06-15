@@ -15,6 +15,7 @@ import gamescreen.battle.usecase.changeselectingactionplayer.ChangeSelectingActi
 import gamescreen.menu.domain.SelectManager
 import org.koin.core.component.inject
 
+// TODO: test作る 
 class PlayerActionViewModel(
     private val statusDataRepository: StatusDataRepository<StatusType.Player>,
 ) : BattleChildViewModel() {

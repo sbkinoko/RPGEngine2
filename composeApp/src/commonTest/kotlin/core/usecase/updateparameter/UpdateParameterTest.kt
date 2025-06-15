@@ -1,15 +1,15 @@
 package core.usecase.updateparameter
 
-import core.domain.status.Character
 import core.domain.status.ConditionType
+import core.domain.status.StatusData
 import core.domain.status.StatusType
-import core.repository.status.StatusRepository
+import core.repository.statusdata.StatusDataRepository
 import kotlinx.coroutines.runBlocking
 import kotlin.test.assertEquals
 
-class UpdateParameterTest<V : StatusType, T : Character<V>>(
+class UpdateParameterTest<V : StatusType, T : StatusData<V>>(
     private val updateStatusUseCase: UpdateStatusUseCase<V>,
-    private val statusRepository: StatusRepository<T>,
+    private val statusRepository: StatusDataRepository<V>,
     private val status2: T,
 ) {
     companion object {
@@ -26,12 +26,12 @@ class UpdateParameterTest<V : StatusType, T : Character<V>>(
 
             assertEquals(
                 expected = HP - 5,
-                actual = statusRepository.getStatus(0).statusData.hp.point
+                actual = statusRepository.getStatusData(0).hp.point
             )
 
             assertEquals(
                 expected = status2,
-                actual = statusRepository.getStatus(1)
+                actual = statusRepository.getStatusData(1)
             )
         }
     }
@@ -45,12 +45,12 @@ class UpdateParameterTest<V : StatusType, T : Character<V>>(
 
             assertEquals(
                 expected = HP + 5,
-                actual = statusRepository.getStatus(0).statusData.hp.point
+                actual = statusRepository.getStatusData(0).hp.point
             )
 
             assertEquals(
                 expected = status2,
-                actual = statusRepository.getStatus(1)
+                actual = statusRepository.getStatusData(1)
             )
         }
     }
@@ -64,12 +64,12 @@ class UpdateParameterTest<V : StatusType, T : Character<V>>(
 
             assertEquals(
                 expected = MP - 5,
-                actual = statusRepository.getStatus(0).statusData.mp.point
+                actual = statusRepository.getStatusData(0).mp.point
             )
 
             assertEquals(
                 expected = status2,
-                actual = statusRepository.getStatus(1)
+                actual = statusRepository.getStatusData(1)
             )
         }
     }
@@ -83,12 +83,12 @@ class UpdateParameterTest<V : StatusType, T : Character<V>>(
 
             assertEquals(
                 expected = MP + 5,
-                actual = statusRepository.getStatus(0).statusData.mp.point
+                actual = statusRepository.getStatusData(0).mp.point
             )
 
             assertEquals(
                 expected = status2,
-                actual = statusRepository.getStatus(1)
+                actual = statusRepository.getStatusData(1)
             )
         }
     }
@@ -103,7 +103,7 @@ class UpdateParameterTest<V : StatusType, T : Character<V>>(
 
             assertEquals(
                 expected = listOf(condition),
-                actual = statusRepository.getStatus(0).statusData.conditionList
+                actual = statusRepository.getStatusData(0).conditionList
             )
 
             updateStatusUseCase.addCondition(
@@ -113,12 +113,12 @@ class UpdateParameterTest<V : StatusType, T : Character<V>>(
 
             assertEquals(
                 expected = listOf(condition, condition),
-                actual = statusRepository.getStatus(0).statusData.conditionList
+                actual = statusRepository.getStatusData(0).conditionList
             )
 
             assertEquals(
                 expected = status2,
-                actual = statusRepository.getStatus(1)
+                actual = statusRepository.getStatusData(1)
             )
         }
     }
@@ -136,12 +136,12 @@ class UpdateParameterTest<V : StatusType, T : Character<V>>(
 
             assertEquals(
                 expected = conditionList,
-                actual = statusRepository.getStatus(0).statusData.conditionList
+                actual = statusRepository.getStatusData(0).conditionList
             )
 
             assertEquals(
                 expected = status2,
-                actual = statusRepository.getStatus(1)
+                actual = statusRepository.getStatusData(1)
             )
         }
     }

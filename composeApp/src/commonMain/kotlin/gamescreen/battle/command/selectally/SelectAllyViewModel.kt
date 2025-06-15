@@ -20,6 +20,7 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.inject
 import values.Constants.Companion.playerNum
 
+// test作る
 class SelectAllyViewModel(
     private val statusDataRepository: StatusDataRepository<StatusType.Player>,
 ) : BattleChildViewModel() {

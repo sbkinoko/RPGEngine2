@@ -1,10 +1,9 @@
 package core.usecase.heal
 
-import core.domain.status.PlayerStatus
-import core.domain.status.PlayerStatusTest.Companion.testActivePlayer
-import core.repository.player.PlayerStatusRepository
-import data.item.skill.SkillId
-import data.item.tool.ToolId
+import core.domain.status.StatusData
+import core.domain.status.StatusDataTest
+import core.domain.status.StatusType
+import core.repository.statusdata.StatusDataRepository
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.runBlocking
 import kotlin.test.BeforeTest
@@ -12,54 +11,39 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class MaxHealUseCaseImplTest {
-    private val playerStatusRepository = object : PlayerStatusRepository {
+    private val playerStatusRepository = object : StatusDataRepository<StatusType.Player> {
         private var statusList = MutableList(2) {
-            testActivePlayer.run {
+            StatusDataTest.TestPlayerStatusActive.run {
                 copy(
-                    statusData = statusData.run {
-                        copy(
-                            hp = hp.set(
-                                value = 0,
-                            ),
-                            mp = mp.set(
-                                value = 0
-                            )
-                        )
-                    },
+                    hp = hp.set(
+                        value = 0,
+                    ),
+                    mp = mp.set(
+                        value = 0
+                    )
                 )
             }
         }
-
-        override val playerStatusFlow: StateFlow<List<PlayerStatus>>
+        override val statusDataFlow: StateFlow<List<StatusData<StatusType.Player>>>
             get() = throw NotImplementedError()
 
-        override fun getStatusList(): List<PlayerStatus> {
-            return statusList
-        }
-
-        override fun getTool(
-            playerId: Int,
-            index: Int,
-        ): ToolId {
-            throw NotImplementedError()
-        }
-
-        override fun getSkill(
-            playerId: Int,
-            index: Int,
-        ): SkillId {
-            throw NotImplementedError()
-        }
-
-        override fun getStatus(id: Int): PlayerStatus {
+        override fun getStatusData(id: Int): StatusData<StatusType.Player> {
             return statusList[id]
         }
 
-        override suspend fun setStatus(
+        override fun setStatusData(
             id: Int,
-            status: PlayerStatus,
+            statusData: StatusData<StatusType.Player>,
         ) {
-            this.statusList[id] = status
+            throw NotImplementedError()
+        }
+
+        override fun getStatusList(): List<StatusData<StatusType.Player>> {
+            return statusList
+        }
+
+        override fun setStatusList(statusList: List<StatusData<StatusType.Player>>) {
+            throw NotImplementedError()
         }
     }
 
@@ -78,7 +62,7 @@ class MaxHealUseCaseImplTest {
             maxHealUseCase.invoke()
 
             playerStatusRepository.getStatusList().map {
-                it.statusData.apply {
+                it.apply {
                     assertEquals(
                         expected = hp.maxPoint,
                         actual = hp.point

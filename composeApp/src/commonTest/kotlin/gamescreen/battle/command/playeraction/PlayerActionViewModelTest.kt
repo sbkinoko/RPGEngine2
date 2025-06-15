@@ -7,8 +7,8 @@ import org.koin.test.KoinTest
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 
+// TODO: test つくる
 class PlayerActionViewModelTest : KoinTest {
-    private val viewModel = PlayerActionViewModel()
 
     @BeforeTest
     fun beforeTest() {

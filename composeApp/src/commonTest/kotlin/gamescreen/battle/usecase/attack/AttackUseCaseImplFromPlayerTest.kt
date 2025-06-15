@@ -3,9 +3,7 @@ package gamescreen.battle.usecase.attack
 import core.EnemyStatusRepositoryName
 import core.ModuleCore
 import core.domain.item.DamageType
-import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
-import core.domain.status.MonsterStatusTest.Companion.TestNotActiveMonster
-import core.domain.status.PlayerStatusTest.Companion.testActivePlayer
+import core.domain.status.StatusDataTest
 import core.domain.status.StatusType
 import core.domain.status.param.ParameterType
 import core.domain.status.param.StatusParameter
@@ -44,13 +42,9 @@ class AttackUseCaseImplFromPlayerTest : KoinTest {
     )
 
     private val atkValue = 5
-    private val statusData = testActivePlayer.run {
-        copy(
-            this.statusData.copy(
-                atk = StatusParameter(atkValue)
-            )
-        )
-    }
+    private val statusData = StatusDataTest.TestPlayerStatusActive.copy(
+        atk = StatusParameter(atkValue)
+    )
 
     @BeforeTest
     fun beforeTest() {
@@ -73,19 +67,15 @@ class AttackUseCaseImplFromPlayerTest : KoinTest {
         runBlocking {
             enemyStatusDataRepository.setStatusList(
                 listOf(
-                    TestActiveMonster.run {
-                        copy(
-                            statusData = statusData.copy(
-                                hp = hp
-                            ),
-                        )
-                    }.statusData
+                    StatusDataTest.TestEnemyStatusActive.copy(
+                        hp = hp
+                    ),
                 ),
             )
 
             attackUseCase.invoke(
                 target = 0,
-                attacker = statusData.statusData,
+                attacker = statusData,
                 damageType = DamageType.AtkMultiple(1),
             )
 
@@ -104,28 +94,18 @@ class AttackUseCaseImplFromPlayerTest : KoinTest {
         runBlocking {
             enemyStatusDataRepository.setStatusList(
                 listOf(
-                    TestActiveMonster.run {
-                        copy(
-                            statusData = statusData.copy(
-                                hp = hp,
-                            ),
-                        )
-                    },
-                    TestActiveMonster.run {
-                        copy(
-                            statusData = statusData.copy(
-                                hp = hp,
-                            ),
-                        )
-                    },
-                ).map {
-                    it.statusData
-                },
+                    StatusDataTest.TestEnemyStatusInActive.copy(
+                        hp = hp,
+                    ),
+                    StatusDataTest.TestEnemyStatusInActive.copy(
+                        hp = hp,
+                    ),
+                )
             )
 
             attackUseCase.invoke(
                 target = id,
-                attacker = statusData.statusData,
+                attacker = statusData,
                 damageType = DamageType.AtkMultiple(1),
             )
 
@@ -145,22 +125,16 @@ class AttackUseCaseImplFromPlayerTest : KoinTest {
         runBlocking {
             enemyStatusDataRepository.setStatusList(
                 listOf(
-                    TestNotActiveMonster,
-                    TestActiveMonster.run {
-                        copy(
-                            statusData = statusData.copy(
-                                hp = hp,
-                            ),
-                        )
-                    },
-                ).map {
-                    it.statusData
-                },
+                    StatusDataTest.TestEnemyStatusInActive,
+                    StatusDataTest.TestEnemyStatusActive.copy(
+                        hp = hp,
+                    ),
+                )
             )
 
             attackUseCase.invoke(
                 target = idNotActive,
-                attacker = statusData.statusData,
+                attacker = statusData,
                 damageType = DamageType.AtkMultiple(1),
             )
 
