@@ -8,4 +8,4 @@ data class PlayerStatus(
     val skillList: List<SkillId>,
     val toolList: List<ToolId>,
     val exp: EXP,
-) : Character<StatusType.Player>
+)
