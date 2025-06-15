@@ -96,7 +96,7 @@ class CheckCanUseSkillUseCaseImplTest : KoinTest {
 
     @Test
     fun canUse() {
-        val playerStatus = playerStatusWithMP
+        val playerStatus = playerStatusWithMP.setMP(1)
 
         val result = checkCanUseSkillUseCase.invoke(
             skillId = SkillId.Normal1,

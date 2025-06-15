@@ -1,10 +1,8 @@
 package gamescreen.battle.usecase.addexp
 
 import core.domain.status.PlayerStatus
-import core.domain.status.PlayerStatusTest
 import core.domain.status.PlayerStatusTest.Companion.testPlayerStatus
 import core.domain.status.StatusData
-import core.domain.status.StatusDataTest
 import core.domain.status.StatusIncrease
 import core.domain.status.StatusIncreaseTest.Companion.TEST_LV1_HP
 import core.domain.status.StatusIncreaseTest.Companion.TEST_LV1_MP
@@ -27,6 +25,8 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class AddExpUseCaseImplTest {
+    val name = "test"
+
     private val statusRepository = (object : AbstractStatusRepository() {
         override val statusUpList: List<List<StatusIncrease>>
             get() = listOf(
@@ -36,7 +36,7 @@ class AddExpUseCaseImplTest {
             get() = listOf(
                 Pair(
                     testPlayerStatus,
-                    StatusDataTest.TestPlayerStatusActive,
+                    StatusData(name = name),
                 )
             )
     })
@@ -76,7 +76,7 @@ class AddExpUseCaseImplTest {
 
         statusDataRepository.setStatusList(
             List(Constants.playerNum) {
-                statusRepository.getStatus(it, 0).second
+                statusRepository.getStatus(it, 1).second
             }
         )
 
@@ -123,7 +123,7 @@ class AddExpUseCaseImplTest {
             }
 
             assertEquals(
-                expected = PlayerStatusTest.NAME,
+                expected = name,
                 actual = result.first()
             )
 

@@ -35,7 +35,7 @@ class MaxHealUseCaseImplTest {
             id: Int,
             statusData: StatusData<StatusType.Player>,
         ) {
-            throw NotImplementedError()
+            statusList[id] = statusData
         }
 
         override fun getStatusList(): List<StatusData<StatusType.Player>> {

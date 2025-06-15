@@ -4,8 +4,6 @@ import core.domain.status.param.EXP
 
 class PlayerStatusTest {
     companion object {
-        const val NAME = "TEST"
-
         val testPlayerStatus
             get() = PlayerStatus(
                 toolList = listOf(),

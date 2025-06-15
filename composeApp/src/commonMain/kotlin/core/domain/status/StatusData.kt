@@ -61,8 +61,8 @@ data class StatusData<T : StatusType>(
     }
 
     fun setMP(
-        value: Int = hp.point,
-        max: Int = hp.maxPoint,
+        value: Int = mp.point,
+        max: Int = mp.maxPoint,
     ): StatusData<T> {
         return this.copy(
             mp = mp.set(
