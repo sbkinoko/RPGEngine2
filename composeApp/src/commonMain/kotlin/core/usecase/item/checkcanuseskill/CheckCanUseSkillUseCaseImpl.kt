@@ -2,7 +2,7 @@ package core.usecase.item.checkcanuseskill
 
 import core.domain.AbleType
 import core.domain.Place
-import core.domain.status.Character
+import core.domain.status.StatusData
 import core.service.CheckCanUseService
 import data.item.skill.SkillId
 import data.item.skill.SkillRepository
@@ -13,7 +13,7 @@ class CheckCanUseSkillUseCaseImpl(
 ) : CheckCanUseSkillUseCase {
     override fun invoke(
         skillId: SkillId,
-        status: Character,
+        status: StatusData<*>,
         here: Place,
     ): AbleType {
         val skill = skillRepository.getItem(skillId)

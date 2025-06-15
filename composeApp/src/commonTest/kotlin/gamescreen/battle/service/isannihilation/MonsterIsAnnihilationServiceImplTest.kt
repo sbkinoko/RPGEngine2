@@ -1,7 +1,6 @@
 package gamescreen.battle.service.isannihilation
 
-import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
-import core.domain.status.MonsterStatusTest.Companion.TestNotActiveMonster
+import core.domain.status.StatusDataTest
 import gamescreen.battle.ModuleBattle
 import kotlinx.coroutines.runBlocking
 import org.koin.core.context.startKoin
@@ -37,9 +36,9 @@ class MonsterIsAnnihilationServiceImplTest : KoinTest {
     fun checkMonsterActive() {
         runBlocking {
             val activeMonsterList = listOf(
-                TestActiveMonster,
-                TestActiveMonster,
-                TestActiveMonster,
+                StatusDataTest.TestEnemyStatusActive,
+                StatusDataTest.TestEnemyStatusActive,
+                StatusDataTest.TestEnemyStatusActive,
             )
 
             assertEquals(
@@ -58,9 +57,9 @@ class MonsterIsAnnihilationServiceImplTest : KoinTest {
     fun checkMonsterActiveAndNotActive() {
         runBlocking {
             val activeMonsterList = listOf(
-                TestActiveMonster,
-                TestNotActiveMonster,
-                TestNotActiveMonster,
+                StatusDataTest.TestEnemyStatusActive,
+                StatusDataTest.TestEnemyStatusInActive,
+                StatusDataTest.TestEnemyStatusInActive,
             )
 
             assertEquals(
@@ -79,9 +78,9 @@ class MonsterIsAnnihilationServiceImplTest : KoinTest {
     fun checkMonsterInActive() {
         runBlocking {
             val activeMonsterList = listOf(
-                TestNotActiveMonster,
-                TestNotActiveMonster,
-                TestNotActiveMonster,
+                StatusDataTest.TestEnemyStatusInActive,
+                StatusDataTest.TestEnemyStatusInActive,
+                StatusDataTest.TestEnemyStatusInActive,
             )
 
             assertEquals(

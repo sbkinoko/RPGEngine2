@@ -6,12 +6,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import core.domain.status.PlayerStatus
+import core.domain.status.StatusData
+import core.domain.status.StatusType
 import org.koin.compose.koinInject
 
 @Composable
 fun SelectEnemy(
-    playerStatus: PlayerStatus,
+    playerStatus: StatusData<StatusType.Player>,
     modifier: Modifier = Modifier,
     selectEnemyViewModel: SelectEnemyViewModel = koinInject(),
 ) {
@@ -24,7 +25,7 @@ fun SelectEnemy(
         Text(
             modifier = Modifier
                 .align(Alignment.Center),
-            text = playerStatus.statusData.name + "の攻撃",
+            text = playerStatus.name + "の攻撃",
         )
     }
 }

@@ -4,6 +4,7 @@ import core.domain.status.IncData
 import core.domain.status.PlayerStatus
 import core.domain.status.StatusData
 import core.domain.status.StatusIncrease
+import core.domain.status.StatusType
 import core.domain.status.param.EXP
 import data.item.skill.SkillId
 import data.item.tool.ToolId
@@ -65,26 +66,89 @@ class StatusRepositoryImpl : AbstractStatusRepository() {
         }
     }
 
-    override val statusBaseList: List<PlayerStatus> = List(3) {
+    override val statusBaseList: List<Pair<PlayerStatus, StatusData<StatusType.Player>>> = List(3) {
         when (it) {
             0 ->
-                PlayerStatus(
-                    statusData = StatusData(
-                        name = "test1",
+                Pair(
+                    PlayerStatus(
+                        skillList = listOf(
+                            SkillId.AttackToTwo,
+                            SkillId.BufAtk,
+                            SkillId.Heal,
+                            SkillId.DeBufAtk,
+                            SkillId.Revive,
+                            SkillId.Poison,
+                        ),
+                        toolList = listOf(
+                            ToolId.HEAL1,
+                            ToolId.HEAL1,
+                            ToolId.HEAL1,
+                            ToolId.HEAL2,
+                            ToolId.HEAL1,
+                            ToolId.HEAL1,
+                            ToolId.HEAL1,
+                            ToolId.HEAL1,
+                        ),
+                        exp = EXP(
+                            EXP.type1,
+                        ),
                     ),
+                    StatusData(
+                        name = "test1",
+                    )
+                )
+
+            1,
+                -> Pair(
+                PlayerStatus(
                     skillList = listOf(
                         SkillId.AttackToTwo,
-                        SkillId.BufAtk,
-                        SkillId.Heal,
-                        SkillId.DeBufAtk,
-                        SkillId.Revive,
+                        SkillId.CantUse,
+                        SkillId.Paralysis,
                         SkillId.Poison,
                     ),
                     toolList = listOf(
                         ToolId.HEAL1,
                         ToolId.HEAL1,
+                    ),
+                    exp = EXP(
+                        EXP.type1,
+                    ),
+                ),
+
+                StatusData(
+                    name = "test2",
+                ),
+            )
+
+            2 -> Pair(
+                PlayerStatus(
+                    skillList = listOf(
+                        SkillId.Heal,
+                        SkillId.Revive,
+                        SkillId.Paralysis,
+                        SkillId.Poison,
+                    ),
+                    toolList = listOf(
                         ToolId.HEAL1,
-                        ToolId.HEAL2,
+                        ToolId.HEAL1,
+                    ),
+                    exp = EXP(
+                        EXP.type1,
+                    ),
+                ),
+                StatusData(
+                    name = "test3",
+                ),
+            )
+
+            3 -> Pair(
+                PlayerStatus(
+                    skillList = listOf(
+                        SkillId.Heal,
+                        SkillId.Revive,
+                    ),
+                    toolList = listOf(
                         ToolId.HEAL1,
                         ToolId.HEAL1,
                         ToolId.HEAL1,
@@ -93,62 +157,9 @@ class StatusRepositoryImpl : AbstractStatusRepository() {
                     exp = EXP(
                         EXP.type1,
                     ),
-                )
-
-            1 -> PlayerStatus(
-                StatusData(
-                    name = "test2",
                 ),
-                skillList = listOf(
-                    SkillId.AttackToTwo,
-                    SkillId.CantUse,
-                    SkillId.Paralysis,
-                    SkillId.Poison,
-                ),
-                toolList = listOf(
-                    ToolId.HEAL1,
-                    ToolId.HEAL1,
-                ),
-                exp = EXP(
-                    EXP.type1,
-                ),
-            )
-
-            2 -> PlayerStatus(
-                StatusData(
-                    name = "test3",
-                ),
-                skillList = listOf(
-                    SkillId.Heal,
-                    SkillId.Revive,
-                    SkillId.Paralysis,
-                    SkillId.Poison,
-                ),
-                toolList = listOf(
-                    ToolId.HEAL1,
-                    ToolId.HEAL1,
-                ),
-                exp = EXP(
-                    EXP.type1,
-                ),
-            )
-
-            3 -> PlayerStatus(
-                statusData = StatusData(
+                StatusData<StatusType.Player>(
                     name = "MPたくさん",
-                ),
-                skillList = listOf(
-                    SkillId.Heal,
-                    SkillId.Revive,
-                ),
-                toolList = listOf(
-                    ToolId.HEAL1,
-                    ToolId.HEAL1,
-                    ToolId.HEAL1,
-                    ToolId.HEAL1,
-                ),
-                exp = EXP(
-                    EXP.type1,
                 ),
             )
 

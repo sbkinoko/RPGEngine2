@@ -32,13 +32,16 @@ fun BattleScreen(
     val monsters by battleViewModel
         .monsterStatusFlow
         .collectAsState()
+    val monsterStatus by battleViewModel
+        .monsterStatusDataFlow
+        .collectAsState()
 
     val flashState by battleViewModel.flashStateFlow.collectAsState()
 
     val attackEffectInfo by battleViewModel.attackEffectState.collectAsState()
 
-    val playerStatusList = battleViewModel
-        .playerStatusFlow
+    val statusData by battleViewModel
+        .statusDataFlow
         .collectAsState()
 
     val backgroundType by battleViewModel
@@ -74,7 +77,7 @@ fun BattleScreen(
                         color = Colors.StatusArea,
                         shape = RectangleShape,
                     ),
-                statusList = playerStatusList.value,
+                statusList = statusData,
             )
 
             MonsterArea(
@@ -86,6 +89,7 @@ fun BattleScreen(
                         shape = RectangleShape,
                     ),
                 monsters = monsters,
+                monsterStatusList = monsterStatus,
                 flashState = flashState,
                 attackEffectInfo = attackEffectInfo,
             )

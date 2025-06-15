@@ -1,6 +1,8 @@
 package gamescreen.battle.command.actionphase
 
 import androidx.compose.runtime.mutableStateOf
+import core.UpdateEnemyUseCaseName
+import core.UpdatePlayer
 import core.domain.item.AttackEffect
 import core.domain.item.BufEffect
 import core.domain.item.ConditionEffect
@@ -10,15 +12,12 @@ import core.domain.item.EffectKind
 import core.domain.item.HealEffect
 import core.domain.item.Item
 import core.domain.item.TargetType
-import core.domain.status.Character
-import core.domain.status.PlayerStatus
 import core.domain.status.StatusData
-import core.domain.status.param.EXP
+import core.domain.status.StatusType
 import core.repository.battlemonster.BattleInfoRepository
 import core.repository.player.PlayerStatusRepository
+import core.repository.statusdata.StatusDataRepository
 import core.usecase.item.usetool.UseToolUseCase
-import core.usecase.updateparameter.UpdateMonsterStatusUseCase
-import core.usecase.updateparameter.UpdatePlayerStatusUseCase
 import core.usecase.updateparameter.UpdateStatusUseCase
 import data.item.skill.SkillId
 import data.item.skill.SkillRepository
@@ -31,7 +30,6 @@ import gamescreen.battle.domain.ActionType
 import gamescreen.battle.domain.AttackPhaseCommand
 import gamescreen.battle.domain.BattleCommandType
 import gamescreen.battle.domain.FinishCommand
-import gamescreen.battle.domain.StatusType
 import gamescreen.battle.domain.StatusWrapper
 import gamescreen.battle.repository.action.ActionRepository
 import gamescreen.battle.service.isannihilation.IsAnnihilationService
@@ -54,24 +52,35 @@ import values.Constants.Companion.playerNum
 
 class ActionPhaseViewModel(
     private val decideActionOrderUseCase: DecideActionOrderUseCase,
+
+    private val statusDataRepository: StatusDataRepository<StatusType.Player>,
+    private val enemyDataRepository: StatusDataRepository<StatusType.Enemy>,
 ) : BattleChildViewModel() {
     private val actionRepository: ActionRepository by inject()
     private val battleInfoRepository: BattleInfoRepository by inject()
+
     private val playerStatusRepository: PlayerStatusRepository by inject()
     private val skillRepository: SkillRepository by inject()
     private val toolRepository: ToolRepository by inject()
 
-    private val updatePlayerParameter: UpdatePlayerStatusUseCase by inject()
-    private val updateEnemyParameter: UpdateMonsterStatusUseCase by inject()
-
-    private val attackFromPlayerUseCase: AttackUseCase by inject(
-        qualifier = named(QualifierAttackFromPlayer)
+    private val updatePlayerParameter: UpdateStatusUseCase<StatusType.Player> by inject(
+        qualifier = named(UpdatePlayer)
     )
+    private val updateEnemyParameter: UpdateStatusUseCase<StatusType.Enemy> by inject(
+        qualifier = UpdateEnemyUseCaseName,
+    )
+
+    private val attackFromPlayerUseCase: AttackUseCase<StatusType.Player> by inject(
+        qualifier = named(
+            QualifierAttackFromPlayer
+        )
+    )
+
     private val conditionFromPlayerUseCase: ConditionUseCase by inject(
         qualifier = named(QualifierAttackFromPlayer)
     )
 
-    private val attackFromEnemyUseCase: AttackUseCase by inject(
+    private val attackFromEnemyUseCase: AttackUseCase<StatusType.Enemy> by inject(
         qualifier = named(QualifierAttackFromEnemy)
     )
     private val conditionFromEnemyUseCase: ConditionUseCase by inject(
@@ -86,12 +95,12 @@ class ActionPhaseViewModel(
 
     private val isMonsterAnnihilated: Boolean
         get() = isAnnihilationService(
-            battleInfoRepository.getStatusList()
+            enemyDataRepository.getStatusList()
         )
 
     private val isPlayerAnnihilated: Boolean
         get() = isAnnihilationService(
-            playerStatusRepository.getStatusList()
+            statusDataRepository.getStatusList()
         )
 
     private val useToolUseCase: UseToolUseCase by inject()
@@ -113,7 +122,7 @@ class ActionPhaseViewModel(
     val attackingStatusId = mutableAttackingStatusId.asStateFlow()
 
     private val monsterNum: Int
-        get() = battleInfoRepository.getStatusList().size
+        get() = enemyDataRepository.getStatusList().size
 
     // 使わないので適当
     override var selectManager: SelectManager = SelectManager(
@@ -133,7 +142,8 @@ class ActionPhaseViewModel(
 
     fun init() {
         val list = mutableListOf<StatusWrapper>()
-        playerStatusRepository.getStatusList()
+        // fixme 使うリポジトリ変える
+        statusDataRepository.getStatusList()
             .mapIndexed { id, status ->
                 list += StatusWrapper(
                     status = status,
@@ -143,18 +153,24 @@ class ActionPhaseViewModel(
                 )
             }
 
-        battleInfoRepository.getStatusList()
+        for (index: Int in 0 until enemyDataRepository.getStatusList().size) {
+            val statusData = enemyDataRepository.getStatusData(index)
+            val enemyData = battleInfoRepository.getStatus(index)
+
+            val action = decideMonsterActionService.getAction(
+                enemyData,
+                playerStatusRepository.getStatusList(),
+            )
+            list += StatusWrapper(
+                status = statusData,
+                actionData = action,
+                statusType = StatusType.Enemy,
+                newId = index,
+            )
+        }
+        enemyDataRepository.getStatusList()
             .mapIndexed { index, status ->
-                val action = decideMonsterActionService.getAction(
-                    status,
-                    playerStatusRepository.getStatusList(),
-                )
-                list += StatusWrapper(
-                    status = status,
-                    actionData = action,
-                    statusType = StatusType.Enemy,
-                    newId = index,
-                )
+
             }
         statusWrapperList = list
 
@@ -211,16 +227,14 @@ class ActionPhaseViewModel(
     /**
      * statusWrapperを入れて対応するステータスを取得
      */
-    private fun getStatus(statusWrapper: StatusWrapper): StatusData {
-        val repo = when (statusWrapper.statusType) {
-            StatusType.Player -> playerStatusRepository
-            StatusType.Enemy -> battleInfoRepository
+    private fun getStatus(statusWrapper: StatusWrapper): StatusData<*> {
+        return when (statusWrapper.statusType) {
+            StatusType.Player -> statusDataRepository
+            StatusType.Enemy -> enemyDataRepository
             StatusType.None -> throw RuntimeException("Noneで処理はない")
-        }
-
-        return repo
-            .getStatus(statusWrapper.newId)
-            .statusData
+        }.getStatusData(
+            statusWrapper.newId
+        )
     }
 
     private fun getActionItem(statusWrapper: StatusWrapper): Item {
@@ -247,27 +261,27 @@ class ActionPhaseViewModel(
         val action = statusWrapper.actionData
         val item = getActionItem(statusWrapper = statusWrapper)
 
-        val attackerRepository = playerStatusRepository
+        val attackerRepository = statusDataRepository
 
         return when (item.targetType) {
             TargetType.Enemy,
                 -> {
                 var targetId = action.target
-                if (battleInfoRepository.getStatus(targetId)
-                        .statusData.isActive.not()
+                if (enemyDataRepository.getStatusData(targetId)
+                        .isActive.not()
                 ) {
                     targetId = findActiveTargetUseCase.invoke(
-                        statusList = battleInfoRepository.getStatusList(),
+                        statusList = enemyDataRepository.getStatusList(),
                         target = targetId,
                         targetNum = item.targetNum,
                     ).first()
                 }
-                battleInfoRepository.getStatus(targetId).statusData.name
+                enemyDataRepository.getStatusData(targetId).name
             }
 
             TargetType.Ally -> {
                 val targetId = action.ally
-                attackerRepository.getStatus(targetId).statusData.name
+                attackerRepository.getStatusData(targetId).name
             }
         }
     }
@@ -279,19 +293,19 @@ class ActionPhaseViewModel(
         return when (item.targetType) {
             TargetType.Enemy -> {
                 var targetId = action.target
-                if (playerStatusRepository.getStatus(targetId).statusData.isActive.not()) {
+                if (statusDataRepository.getStatusData(targetId).isActive.not()) {
                     targetId = findActiveTargetUseCase.invoke(
-                        statusList = playerStatusRepository.getStatusList(),
+                        statusList = statusDataRepository.getStatusList(),
                         target = targetId,
                         targetNum = item.targetNum,
                     ).first()
                 }
-                playerStatusRepository.getStatus(targetId).statusData.name
+                statusDataRepository.getStatusData(targetId).name
             }
 
             TargetType.Ally -> {
                 val targetId = action.ally
-                battleInfoRepository.getStatus(targetId).statusData.name
+                enemyDataRepository.getStatusData(targetId).name
             }
         }
     }
@@ -333,9 +347,9 @@ class ActionPhaseViewModel(
         when (actionType) {
             ActionType.Normal -> {
                 //　攻撃
-                attackFromPlayerUseCase(
+                attackFromPlayerUseCase.invoke(
                     target = actionRepository.getAction(actionStatusWrapper.newId).target,
-                    attacker = getStatus(actionStatusWrapper),
+                    attacker = (getStatus(actionStatusWrapper) as StatusData<StatusType.Player>),
                     damageType = DamageType.AtkMultiple(1),
                 )
             }
@@ -343,9 +357,9 @@ class ActionPhaseViewModel(
             ActionType.Skill -> {
                 skillAction(
                     id = actionStatusWrapper.newId,
-                    statusData = getStatus(actionStatusWrapper),
+                    statusData = getStatus(actionStatusWrapper) as StatusData<StatusType.Player>,
                     actionData = actionRepository.getAction(actionStatusWrapper.newId),
-                    statusList = battleInfoRepository.getStatusList(),
+                    statusList = enemyDataRepository.getStatusList(),
                     attackUseCase = attackFromPlayerUseCase,
                     conditionUseCase = conditionFromPlayerUseCase,
                     updateAllyParameter = updatePlayerParameter,
@@ -370,8 +384,8 @@ class ActionPhaseViewModel(
         actionStatusWrapper.apply {
             skillAction(
                 id = newId,
-                statusData = getStatus(actionStatusWrapper),
-                statusList = playerStatusRepository.getStatusList(),
+                statusData = getStatus(actionStatusWrapper) as StatusData<StatusType.Enemy>,
+                statusList = statusDataRepository.getStatusList(),
                 actionData = actionData,
                 attackUseCase = attackFromEnemyUseCase,
                 conditionUseCase = conditionFromEnemyUseCase,
@@ -405,15 +419,15 @@ class ActionPhaseViewModel(
         }
     }
 
-    private suspend fun skillAction(
+    private suspend fun <A : StatusType, E : StatusType> skillAction(
         id: Int,
-        statusData: StatusData,
+        statusData: StatusData<A>,
         actionData: ActionData,
-        statusList: List<Character>,
-        attackUseCase: AttackUseCase,
+        statusList: List<StatusData<E>>,
+        attackUseCase: AttackUseCase<A>,
         conditionUseCase: ConditionUseCase,
-        updateAllyParameter: UpdateStatusUseCase<*>,
-        updateEnemyParameter: UpdateStatusUseCase<*>,
+        updateAllyParameter: UpdateStatusUseCase<A>,
+        updateEnemyParameter: UpdateStatusUseCase<E>,
     ) {
         val skill = skillRepository.getItem(
             id = actionData.skillId
@@ -529,10 +543,10 @@ class ActionPhaseViewModel(
                 StatusType.Player -> {
                     //　playerを確認
 
-                    val player = playerStatusRepository.getStatus(
+                    val statusData = statusDataRepository.getStatusData(
                         id = actionStatusWrapper.newId,
                     )
-                    if (player.statusData.isActive.not()) {
+                    if (statusData.isActive.not()) {
                         continue
                     }
 
@@ -545,11 +559,11 @@ class ActionPhaseViewModel(
 
                 StatusType.Enemy -> {
                     val monsterId = actionStatusWrapper.newId
-                    val monster = battleInfoRepository
-                        .getStatus(id = monsterId)
+                    val monster = enemyDataRepository
+                        .getStatusData(id = monsterId)
 
                     //　monsterを確認
-                    if (monster.statusData.isActive.not()) {
+                    if (monster.isActive.not()) {
                         continue
                     }
                 }
@@ -668,14 +682,8 @@ class ActionPhaseViewModel(
         private val dummyStatus = StatusWrapper(
             newId = -1,
             statusType = StatusType.None,
-            status = PlayerStatus(
-                statusData = StatusData(name = ""),
-                toolList = listOf(),
-                skillList = listOf(),
-                exp = EXP(listOf()),
-            ),
+            status = StatusData<StatusType.Player>(name = ""),
             actionData = ActionData(),
-
-            )
+        )
     }
 }

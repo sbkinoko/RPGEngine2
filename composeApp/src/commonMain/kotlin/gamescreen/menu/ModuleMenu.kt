@@ -1,5 +1,7 @@
 package gamescreen.menu
 
+import core.PlayerStatusRepositoryName
+import core.UpdatePlayer
 import core.usecase.item.useskill.UseSkillUseCase
 import core.usecase.item.useskill.UseSkillUseCaseImpl
 import gamescreen.menu.component.StatusComponentViewModel
@@ -32,6 +34,7 @@ import gamescreen.menu.usecase.getviewmodelbycommandtype.GetControllerByCommandT
 import gamescreen.menu.usecase.getviewmodelbycommandtype.GetControllerByCommandTypeUseCaseImpl
 import gamescreen.menu.usecase.givetool.GiveToolUseCase
 import gamescreen.menu.usecase.givetool.GiveToolUseCaseImpl
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val ModuleMenu = module {
@@ -44,15 +47,27 @@ val ModuleMenu = module {
     }
 
     single {
-        StatusViewModel()
+        StatusViewModel(
+            statusDataRepository = get(
+                PlayerStatusRepositoryName,
+            )
+        )
     }
 
     single {
-        StatusComponentViewModel()
+        StatusComponentViewModel(
+            statusDataRepository = get(
+                PlayerStatusRepositoryName,
+            )
+        )
     }
 
     single {
-        SkillUserViewModel()
+        SkillUserViewModel(
+            statusDataRepository = get(
+                PlayerStatusRepositoryName,
+            )
+        )
     }
 
     single {
@@ -64,7 +79,11 @@ val ModuleMenu = module {
     }
 
     single {
-        ToolUserViewModel()
+        ToolUserViewModel(
+            statusDataRepository = get(
+                PlayerStatusRepositoryName,
+            )
+        )
     }
 
     single {
@@ -76,7 +95,11 @@ val ModuleMenu = module {
     }
 
     single {
-        ToolGiveUserViewModel()
+        ToolGiveUserViewModel(
+            statusDataRepository = get(
+                PlayerStatusRepositoryName,
+            )
+        )
     }
 
     single<MenuStateRepository> {
@@ -125,7 +148,9 @@ val ModuleMenu = module {
         UseSkillUseCaseImpl(
             playerStatusRepository = get(),
             skillRepository = get(),
-            updateParameter = get(),
+            updateStatus = get(
+                qualifier = named(UpdatePlayer)
+            ),
         )
     }
 

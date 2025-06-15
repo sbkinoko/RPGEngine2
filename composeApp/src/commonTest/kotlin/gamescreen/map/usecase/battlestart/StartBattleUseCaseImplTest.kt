@@ -2,10 +2,14 @@ package gamescreen.map.usecase.battlestart
 
 import core.ModuleCore
 import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
+import core.domain.status.StatusData
+import core.domain.status.StatusDataTest
+import core.domain.status.StatusType
 import core.domain.status.monster.MonsterStatus
 import core.repository.battlemonster.BattleInfoRepository
 import core.repository.event.EventRepository
 import core.repository.screentype.ScreenTypeRepository
+import core.repository.statusdata.StatusDataRepository
 import gamescreen.GameScreenType
 import gamescreen.ModuleMain
 import gamescreen.battle.domain.ActionData
@@ -40,6 +44,7 @@ class StartBattleUseCaseImplTest : KoinTest {
     var checkCommand = 0
     var checkAction = 0
     var checkMonster = 0
+    var checkMonsterStatus = 0
     var checkBackground = 0
     var flashCount = 0
     var effectCount = 0
@@ -173,6 +178,29 @@ class StartBattleUseCaseImplTest : KoinTest {
                 override fun setEffect(list: List<AttackEffectInfo>) {
                     throw NotImplementedError()
                 }
+            },
+            statusDataRepository = object : StatusDataRepository<StatusType.Enemy> {
+                override val statusDataFlow: StateFlow<List<StatusData<StatusType.Enemy>>>
+                    get() = throw NotImplementedError()
+
+                override fun getStatusData(id: Int): StatusData<StatusType.Enemy> {
+                    throw NotImplementedError()
+                }
+
+                override fun getStatusList(): List<StatusData<StatusType.Enemy>> {
+                    throw NotImplementedError()
+                }
+
+                override fun setStatusList(statusList: List<StatusData<StatusType.Enemy>>) {
+                    checkMonsterStatus++
+                }
+
+                override fun setStatusData(
+                    id: Int,
+                    statusData: StatusData<StatusType.Enemy>,
+                ) {
+                    throw NotImplementedError()
+                }
             }
         )
     }
@@ -194,7 +222,10 @@ class StartBattleUseCaseImplTest : KoinTest {
 
             startBattleUseCase.invoke(
                 monsterList = listOf(
-                    TestActiveMonster,
+                    Pair(
+                        TestActiveMonster,
+                        StatusDataTest.TestEnemyStatusActive,
+                    )
                 ),
                 backgroundType = BattleBackgroundType.Road,
             )
@@ -209,6 +240,11 @@ class StartBattleUseCaseImplTest : KoinTest {
             assertEquals(
                 expected = 1,
                 actual = checkMonster,
+            )
+
+            assertEquals(
+                expected = 1,
+                actual = checkMonsterStatus,
             )
 
             assertEquals(

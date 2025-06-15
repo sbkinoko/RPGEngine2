@@ -2,47 +2,46 @@ package gamescreen.battle.usecase.attack
 
 import core.domain.item.DamageType
 import core.domain.status.StatusData
-import core.repository.battlemonster.BattleInfoRepository
+import core.domain.status.StatusType
+import core.repository.statusdata.StatusDataRepository
 import gamescreen.battle.service.attackcalc.AttackCalcService
 import gamescreen.battle.service.findtarget.FindTargetService
 import gamescreen.battle.usecase.effect.EffectUseCase
 
 class AttackFromPlayerUseCaseImpl(
-    private val battleInfoRepository: BattleInfoRepository,
+    private val statusDataRepository: StatusDataRepository<StatusType.Enemy>,
     private val findTargetService: FindTargetService,
     private val attackCalcService: AttackCalcService,
     private val effectUseCase: EffectUseCase,
-) : AttackUseCase {
+) : AttackUseCase<StatusType.Player> {
     override suspend operator fun invoke(
         target: Int,
-        attacker: StatusData,
+        attacker: StatusData<StatusType.Player>,
         damageType: DamageType,
     ) {
         var actualTarget = target
-        val monsters = battleInfoRepository.getStatusList()
+        val monsters = statusDataRepository.getStatusList()
 
-        if (monsters[target].statusData.isActive.not()) {
+        if (monsters[target].isActive.not()) {
             actualTarget = findTargetService.findNext(
                 statusList = monsters,
                 target = target,
             )
         }
 
-        val attacked = battleInfoRepository.getStatus(
+        val attacked = statusDataRepository.getStatusData(
             id = actualTarget,
         )
 
         val damaged = attackCalcService.invoke(
             attacker = attacker,
-            attacked = attacked.statusData,
+            attacked = attacked,
             damageType = damageType,
         )
 
-        battleInfoRepository.setStatus(
+        statusDataRepository.setStatusData(
             id = actualTarget,
-            status = attacked.copy(
-                statusData = damaged,
-            )
+            statusData = damaged,
         )
 
         effectUseCase.invoke(actualTarget)

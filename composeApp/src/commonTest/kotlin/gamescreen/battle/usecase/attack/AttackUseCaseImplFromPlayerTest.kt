@@ -1,14 +1,14 @@
 package gamescreen.battle.usecase.attack
 
+import core.EnemyStatusRepositoryName
 import core.ModuleCore
 import core.domain.item.DamageType
-import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
-import core.domain.status.MonsterStatusTest.Companion.TestNotActiveMonster
-import core.domain.status.PlayerStatusTest.Companion.testActivePlayer
+import core.domain.status.StatusDataTest
+import core.domain.status.StatusType
 import core.domain.status.param.ParameterType
 import core.domain.status.param.StatusParameter
 import core.domain.status.param.StatusParameterWithMax
-import core.repository.battlemonster.BattleInfoRepository
+import core.repository.statusdata.StatusDataRepository
 import data.ModuleData
 import gamescreen.battle.ModuleBattle
 import gamescreen.battle.QualifierAttackFromPlayer
@@ -25,7 +25,7 @@ import kotlin.test.assertEquals
 
 
 class AttackUseCaseImplFromPlayerTest : KoinTest {
-    private val attackUseCase: AttackUseCase by inject<AttackUseCase>(
+    private val attackUseCase: AttackUseCase<StatusType.Player> by inject(
         qualifier = named(
             QualifierAttackFromPlayer
         )
@@ -37,16 +37,14 @@ class AttackUseCaseImplFromPlayerTest : KoinTest {
         maxPoint = 100
     )
 
-    private val battleInfoRepository: BattleInfoRepository by inject()
+    private val enemyStatusDataRepository: StatusDataRepository<StatusType.Enemy> by inject(
+        qualifier = EnemyStatusRepositoryName,
+    )
 
-    private val atk = 5
-    private val statusData = testActivePlayer.run {
-        copy(
-            this.statusData.copy(
-                atk = StatusParameter(atk)
-            )
-        )
-    }
+    private val atkValue = 5
+    private val statusData = StatusDataTest.TestPlayerStatusActive.copy(
+        atk = StatusParameter(atkValue)
+    )
 
     @BeforeTest
     fun beforeTest() {
@@ -67,28 +65,24 @@ class AttackUseCaseImplFromPlayerTest : KoinTest {
     @Test
     fun toActive() {
         runBlocking {
-            battleInfoRepository.setMonsters(
+            enemyStatusDataRepository.setStatusList(
                 listOf(
-                    TestActiveMonster.run {
-                        copy(
-                            statusData = statusData.copy(
-                                hp = hp
-                            ),
-                        )
-                    }
+                    StatusDataTest.TestEnemyStatusActive.copy(
+                        hp = hp
+                    ),
                 ),
             )
 
             attackUseCase.invoke(
                 target = 0,
-                attacker = statusData.statusData,
+                attacker = statusData,
                 damageType = DamageType.AtkMultiple(1),
             )
 
-            battleInfoRepository.getStatus(0).apply {
+            enemyStatusDataRepository.getStatusData(0).apply {
                 assertEquals(
-                    expected = hpValue - atk,
-                    actual = this.statusData.hp.point
+                    expected = hpValue - atkValue,
+                    actual = hp.point
                 )
             }
         }
@@ -98,35 +92,27 @@ class AttackUseCaseImplFromPlayerTest : KoinTest {
     fun toActive2() {
         val id = 1
         runBlocking {
-            battleInfoRepository.setMonsters(
+            enemyStatusDataRepository.setStatusList(
                 listOf(
-                    TestActiveMonster.run {
-                        copy(
-                            statusData = statusData.copy(
-                                hp = hp,
-                            ),
-                        )
-                    },
-                    TestActiveMonster.run {
-                        copy(
-                            statusData = statusData.copy(
-                                hp = hp,
-                            ),
-                        )
-                    },
-                ),
+                    StatusDataTest.TestEnemyStatusInActive.copy(
+                        hp = hp,
+                    ),
+                    StatusDataTest.TestEnemyStatusInActive.copy(
+                        hp = hp,
+                    ),
+                )
             )
 
             attackUseCase.invoke(
                 target = id,
-                attacker = statusData.statusData,
+                attacker = statusData,
                 damageType = DamageType.AtkMultiple(1),
             )
 
-            battleInfoRepository.getStatus(id).apply {
+            enemyStatusDataRepository.getStatusData(id).apply {
                 assertEquals(
-                    expected = hpValue - atk,
-                    actual = this.statusData.hp.point
+                    expected = hpValue - atkValue,
+                    actual = hp.point
                 )
             }
         }
@@ -137,29 +123,25 @@ class AttackUseCaseImplFromPlayerTest : KoinTest {
         val idNotActive = 0
         val idActive = 1
         runBlocking {
-            battleInfoRepository.setMonsters(
+            enemyStatusDataRepository.setStatusList(
                 listOf(
-                    TestNotActiveMonster,
-                    TestActiveMonster.run {
-                        copy(
-                            statusData = statusData.copy(
-                                hp = hp,
-                            ),
-                        )
-                    },
-                ),
+                    StatusDataTest.TestEnemyStatusInActive,
+                    StatusDataTest.TestEnemyStatusActive.copy(
+                        hp = hp,
+                    ),
+                )
             )
 
             attackUseCase.invoke(
                 target = idNotActive,
-                attacker = statusData.statusData,
+                attacker = statusData,
                 damageType = DamageType.AtkMultiple(1),
             )
 
-            battleInfoRepository.getStatus(idActive).apply {
+            enemyStatusDataRepository.getStatusData(idActive).apply {
                 assertEquals(
-                    expected = hpValue - atk,
-                    actual = this.statusData.hp.point
+                    expected = hpValue - atkValue,
+                    actual = hp.point
                 )
             }
         }

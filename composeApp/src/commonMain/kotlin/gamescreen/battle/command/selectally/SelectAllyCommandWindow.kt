@@ -4,13 +4,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import common.layout.CenterText
-import core.domain.status.PlayerStatus
+import core.domain.status.StatusData
+import core.domain.status.StatusType
 import gamescreen.battle.command.selectenemy.SelectEnemyViewModel
 import org.koin.compose.koinInject
 
 @Composable
 fun SelectAllyCommandWindow(
-    playerStatus: PlayerStatus,
+    playerStatus: StatusData<StatusType.Player>,
     modifier: Modifier = Modifier,
     selectEnemyViewModel: SelectEnemyViewModel = koinInject(),
 ) {
@@ -19,6 +20,6 @@ fun SelectAllyCommandWindow(
     }
     CenterText(
         modifier = modifier,
-        text = playerStatus.statusData.name + "の回復",
+        text = playerStatus.name + "の回復",
     )
 }

@@ -2,7 +2,7 @@ package core.service
 
 import core.ModuleCore
 import core.domain.item.CostType
-import core.domain.status.PlayerStatusTest.Companion.testActivePlayer
+import core.domain.status.StatusDataTest
 import core.domain.status.param.StatusParameterWithMax
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -39,12 +39,10 @@ class CheckCanUseServiceImplTest : KoinTest {
         val costMP = 5
         val costType = CostType.MP(costMP)
         val result = checkCanUseService.invoke(
-            status = testActivePlayer.copy(
-                statusData = testActivePlayer.statusData.copy(
-                    mp = StatusParameterWithMax(
-                        point = costMP,
-                        maxPoint = costMP,
-                    )
+            status = StatusDataTest.TestPlayerStatusActive.copy(
+                mp = StatusParameterWithMax(
+                    point = costMP,
+                    maxPoint = costMP,
                 )
             ),
             costType = costType,
@@ -63,12 +61,10 @@ class CheckCanUseServiceImplTest : KoinTest {
         val costMP = 5
         val costType = CostType.MP(costMP)
         val result = checkCanUseService.invoke(
-            status = testActivePlayer.copy(
-                statusData = testActivePlayer.statusData.copy(
-                    mp = StatusParameterWithMax(
-                        point = costMP - 1,
-                        maxPoint = costMP,
-                    )
+            status = StatusDataTest.TestPlayerStatusActive.copy(
+                mp = StatusParameterWithMax(
+                    point = costMP - 1,
+                    maxPoint = costMP,
                 )
             ),
             costType = costType,
@@ -86,7 +82,7 @@ class CheckCanUseServiceImplTest : KoinTest {
     fun canUseTool() {
         val costType = CostType.Consume
         val result = checkCanUseService.invoke(
-            status = testActivePlayer,
+            status = StatusDataTest.TestPlayerStatusActive,
             costType = costType,
         )
 

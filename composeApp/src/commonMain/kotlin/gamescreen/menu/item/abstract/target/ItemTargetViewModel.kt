@@ -1,7 +1,10 @@
 package gamescreen.menu.item.abstract.target
 
+import core.PlayerStatusRepositoryName
 import core.domain.AbleType
+import core.domain.status.StatusType
 import core.repository.player.PlayerStatusRepository
+import core.repository.statusdata.StatusDataRepository
 import data.item.ItemRepository
 import gamescreen.choice.Choice
 import gamescreen.choice.repository.ChoiceRepository
@@ -18,6 +21,9 @@ abstract class ItemTargetViewModel<T> : MenuChildViewModel() {
     protected val userRepository: UserRepository by inject()
     protected val targetRepository: TargetRepository by inject()
     protected val playerStatusRepository: PlayerStatusRepository by inject()
+    protected val statusDataRepository: StatusDataRepository<StatusType.Player> by inject(
+        qualifier = PlayerStatusRepositoryName
+    )
 
     private val choiceRepository: ChoiceRepository by inject()
 
@@ -66,12 +72,12 @@ abstract class ItemTargetViewModel<T> : MenuChildViewModel() {
     }
 
     fun canSelect(target: Int): Boolean {
-        val targetStatus = playerStatusRepository.getStatus(id = target)
+        val targetStatus = statusDataRepository.getStatusData(id = target)
         val skill = itemRepository.getItem(itemId)
 
         val targetType = skill.targetStatusType
 
-        if (targetType.canSelect(targetStatus.statusData).not()) {
+        if (targetType.canSelect(targetStatus).not()) {
             // 対象にとれなかった
             return false
         }

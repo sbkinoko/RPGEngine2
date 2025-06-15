@@ -25,7 +25,7 @@ class SkillListViewModel : ItemListViewModel<SkillId>() {
 
     override fun getAbleType(): AbleType {
         val skillId = itemIdList[selectManager.selected]
-        val status = playerStatusRepository.getStatus(userId)
+        val status = statusDataRepository.getStatusData(userId)
 
         return checkCanUseSkillUseCase.invoke(
             skillId = skillId,

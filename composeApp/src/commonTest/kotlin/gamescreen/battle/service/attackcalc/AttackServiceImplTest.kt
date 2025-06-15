@@ -1,9 +1,8 @@
 package gamescreen.battle.service.attackcalc
 
 import core.domain.item.DamageType
-import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
-import core.domain.status.PlayerStatusTest.Companion.testActivePlayer
 import core.domain.status.StatusData
+import core.domain.status.StatusDataTest
 import core.domain.status.param.StatusParameter
 import core.domain.status.param.StatusParameterWithMax
 import gamescreen.battle.ModuleBattle
@@ -181,29 +180,21 @@ class AttackServiceImplTest : KoinTest {
         def: Int,
         maxPoint: Int,
         rate: Int,
-    ): StatusData {
-        val attacker = testActivePlayer.run {
-            copy(
-                statusData = statusData.copy(
-                    atk = StatusParameter(atk),
-                )
-            )
-        }
+    ): StatusData<*> {
+        val attacker = StatusDataTest.TestPlayerStatusActive.copy(
+            atk = StatusParameter(atk),
+        )
 
-        val attacked = TestActiveMonster.run {
-            copy(
-                statusData = statusData.copy(
-                    def = StatusParameter(def),
-                    hp = StatusParameterWithMax(
-                        maxPoint = maxPoint,
-                    )
-                )
+        val attacked = StatusDataTest.TestEnemyStatusActive.copy(
+            def = StatusParameter(def),
+            hp = StatusParameterWithMax(
+                maxPoint = maxPoint,
             )
-        }
+        )
 
         return attackCalcService.invoke(
-            attacker = attacker.statusData,
-            attacked = attacked.statusData,
+            attacker = attacker,
+            attacked = attacked,
             damageType = DamageType.AtkMultiple(rate),
         )
     }
@@ -251,22 +242,19 @@ class AttackServiceImplTest : KoinTest {
     private fun rateAttack(
         maxPoint: Int,
         rate: Int,
-    ): StatusData {
-        val attacker = testActivePlayer
+    ): StatusData<*> {
+        val attacker = StatusDataTest.TestPlayerStatusActive
 
-        val attacked = TestActiveMonster.run {
-            copy(
-                statusData = statusData.copy(
-                    hp = StatusParameterWithMax(
-                        maxPoint = maxPoint,
-                    )
-                )
+        val attacked = StatusDataTest.TestEnemyStatusActive.copy(
+            hp = StatusParameterWithMax(
+                maxPoint = maxPoint,
             )
-        }
+        )
+
 
         return attackCalcService.invoke(
-            attacker = attacker.statusData,
-            attacked = attacked.statusData,
+            attacker = attacker,
+            attacked = attacked,
             damageType = DamageType.Rate(rate),
         )
     }
@@ -315,22 +303,18 @@ class AttackServiceImplTest : KoinTest {
     private fun fixDamage(
         maxPoint: Int,
         amount: Int,
-    ): StatusData {
-        val attacker = testActivePlayer
+    ): StatusData<*> {
+        val attacker = StatusDataTest.TestPlayerStatusActive
 
-        val attacked = TestActiveMonster.run {
-            copy(
-                statusData = statusData.copy(
+        val attacked = StatusDataTest.TestEnemyStatusActive.copy(
                     hp = StatusParameterWithMax(
                         maxPoint = maxPoint,
                     )
                 )
-            )
-        }
 
         return attackCalcService.invoke(
-            attacker = attacker.statusData,
-            attacked = attacked.statusData,
+            attacker = attacker,
+            attacked = attacked,
             damageType = DamageType.Fixed(amount),
         )
     }

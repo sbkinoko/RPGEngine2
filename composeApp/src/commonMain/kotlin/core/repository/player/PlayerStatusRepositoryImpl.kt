@@ -34,7 +34,7 @@ class PlayerStatusRepositoryImpl(
             statusRepository.getStatus(
                 id = it,
                 level = 1,
-            )
+            ).first
         }
     }
 

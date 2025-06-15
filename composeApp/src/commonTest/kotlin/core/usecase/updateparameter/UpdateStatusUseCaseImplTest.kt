@@ -2,21 +2,66 @@ package core.usecase.updateparameter
 
 import core.domain.status.ConditionType
 import core.domain.status.StatusData
+import core.domain.status.StatusDataTest
 import core.domain.status.StatusType
+import core.domain.status.param.StatusParameterWithMax
 import core.repository.statusdata.StatusDataRepository
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.runBlocking
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class UpdateParameterTest<V : StatusType, T : StatusData<V>>(
-    private val updateStatusUseCase: UpdateStatusUseCase<V>,
-    private val statusRepository: StatusDataRepository<V>,
-    private val status2: T,
-) {
-    companion object {
-        const val HP = 50
-        const val MP = 30
-    }
+class UpdateStatusUseCaseImplTest {
 
+    val hp = 50
+    val mp = 30
+    private val status1 = StatusDataTest.TestPlayerStatusActive.copy(
+        hp = StatusParameterWithMax(
+            point = hp,
+            maxPoint = 100,
+        ),
+        mp = StatusParameterWithMax(
+            point = mp,
+            maxPoint = 100,
+        ),
+    )
+
+    private val status2 = status1.copy()
+
+    private val statusRepository: StatusDataRepository<StatusType.Player> =
+        object : StatusDataRepository<StatusType.Player> {
+            var _statusList: MutableList<StatusData<StatusType.Player>> = mutableListOf(
+                status1,
+                status2,
+            )
+            override val statusDataFlow: StateFlow<List<StatusData<StatusType.Player>>>
+                get() = throw NotImplementedError()
+
+            override fun getStatusData(id: Int): StatusData<StatusType.Player> {
+                return _statusList[id]
+            }
+
+            override fun getStatusList(): List<StatusData<StatusType.Player>> {
+                return _statusList
+            }
+
+            override fun setStatusList(statusList: List<StatusData<StatusType.Player>>) {
+                throw NotImplementedError()
+            }
+
+            override fun setStatusData(
+                id: Int,
+                statusData: StatusData<StatusType.Player>,
+            ) {
+                this._statusList[id] = statusData
+            }
+        }
+
+    private val updateStatusUseCase = UpdateStatusUseCaseImpl(
+        statusDataRepository = statusRepository,
+    )
+
+    @Test
     fun decHP() {
         runBlocking {
             updateStatusUseCase.decHP(
@@ -25,7 +70,7 @@ class UpdateParameterTest<V : StatusType, T : StatusData<V>>(
             )
 
             assertEquals(
-                expected = HP - 5,
+                expected = hp - 5,
                 actual = statusRepository.getStatusData(0).hp.point
             )
 
@@ -36,6 +81,7 @@ class UpdateParameterTest<V : StatusType, T : StatusData<V>>(
         }
     }
 
+    @Test
     fun incHP() {
         runBlocking {
             updateStatusUseCase.incHP(
@@ -44,7 +90,7 @@ class UpdateParameterTest<V : StatusType, T : StatusData<V>>(
             )
 
             assertEquals(
-                expected = HP + 5,
+                expected = hp + 5,
                 actual = statusRepository.getStatusData(0).hp.point
             )
 
@@ -55,6 +101,7 @@ class UpdateParameterTest<V : StatusType, T : StatusData<V>>(
         }
     }
 
+    @Test
     fun decMP() {
         runBlocking {
             updateStatusUseCase.decMP(
@@ -63,7 +110,7 @@ class UpdateParameterTest<V : StatusType, T : StatusData<V>>(
             )
 
             assertEquals(
-                expected = MP - 5,
+                expected = mp - 5,
                 actual = statusRepository.getStatusData(0).mp.point
             )
 
@@ -74,6 +121,7 @@ class UpdateParameterTest<V : StatusType, T : StatusData<V>>(
         }
     }
 
+    @Test
     fun incMP() {
         runBlocking {
             updateStatusUseCase.incMP(
@@ -82,7 +130,7 @@ class UpdateParameterTest<V : StatusType, T : StatusData<V>>(
             )
 
             assertEquals(
-                expected = MP + 5,
+                expected = mp + 5,
                 actual = statusRepository.getStatusData(0).mp.point
             )
 
@@ -93,6 +141,7 @@ class UpdateParameterTest<V : StatusType, T : StatusData<V>>(
         }
     }
 
+    @Test
     fun addCondition() {
         runBlocking {
             val condition = ConditionType.Poison()
@@ -123,6 +172,7 @@ class UpdateParameterTest<V : StatusType, T : StatusData<V>>(
         }
     }
 
+    @Test
     fun setConditionList() {
         runBlocking {
             val conditionList = listOf(

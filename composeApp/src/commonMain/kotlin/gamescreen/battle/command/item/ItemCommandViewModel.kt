@@ -1,8 +1,11 @@
 package gamescreen.battle.command.item
 
+import core.PlayerStatusRepositoryName
 import core.domain.Const
 import core.domain.item.TargetType
+import core.domain.status.StatusType
 import core.repository.player.PlayerStatusRepository
+import core.repository.statusdata.StatusDataRepository
 import data.item.ItemRepository
 import gamescreen.battle.BattleChildViewModel
 import gamescreen.battle.domain.ActionType
@@ -16,6 +19,10 @@ import kotlin.math.max
 abstract class ItemCommandViewModel<T> : BattleChildViewModel() {
     protected val actionRepository: ActionRepository by inject()
     protected val playerStatusRepository: PlayerStatusRepository by inject()
+
+    protected val statusDataRepository: StatusDataRepository<StatusType.Player> by inject(
+        qualifier = PlayerStatusRepositoryName
+    )
 
     protected abstract val itemRepository: ItemRepository<T>
 

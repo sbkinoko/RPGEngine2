@@ -1,10 +1,10 @@
 package gamescreen.battle.usecase.decideactionorder
 
-import core.domain.status.PlayerStatusTest.Companion.testActivePlayer
+import core.domain.status.StatusDataTest
+import core.domain.status.StatusType
 import core.domain.status.param.StatusParameter
 import gamescreen.battle.ModuleBattle
 import gamescreen.battle.domain.ActionData
-import gamescreen.battle.domain.StatusType
 import gamescreen.battle.domain.StatusWrapper
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -19,7 +19,7 @@ class DecideActionOderUseCaseImplTest : KoinTest {
     private val decideActionOrderUseCase: DecideActionOrderUseCase by inject()
 
     private val defaultData = StatusWrapper(
-        status = testActivePlayer,
+        status = StatusDataTest.TestPlayerStatusInActive,
         actionData = ActionData(),
         statusType = StatusType.Player,
         newId = 0,
@@ -44,34 +44,22 @@ class DecideActionOderUseCaseImplTest : KoinTest {
         val list = listOf(
             defaultData.copy(
                 newId = 1,
-                status = testActivePlayer.run {
-                    copy(
-                        statusData = statusData.copy(
-                            speed = StatusParameter(1),
-                        ),
-                    )
-                },
+                status = StatusDataTest.TestPlayerStatusInActive.copy(
+                    speed = StatusParameter(1),
+                ),
             ),
             defaultData.copy(
                 newId = 2,
-                status = testActivePlayer.run {
-                    copy(
-                        statusData = statusData.copy(
-                            speed = StatusParameter(3),
-                        ),
-                    )
-                },
+                status = StatusDataTest.TestPlayerStatusInActive.copy(
+                    speed = StatusParameter(3),
+                ),
             ),
             defaultData.copy(
                 newId = 3,
-                status = testActivePlayer.run {
-                    copy(
-                        statusData = statusData.copy(
-                            speed = StatusParameter(5),
-                        ),
-                    )
-                },
-            ),
+                status = StatusDataTest.TestPlayerStatusInActive.copy(
+                    speed = StatusParameter(5),
+                ),
+            )
         )
 
         val result = decideActionOrderUseCase.invoke(list)
@@ -95,50 +83,34 @@ class DecideActionOderUseCaseImplTest : KoinTest {
         val list = listOf(
             defaultData.copy(
                 newId = 0,
-                status = testActivePlayer.run {
-                    copy(
-                        statusData = statusData.copy(
-                            speed = StatusParameter(1),
-                        ),
-                    )
-                },
+                status = StatusDataTest.TestPlayerStatusInActive.copy(
+                    speed = StatusParameter(1),
+                ),
             ),
             defaultData.copy(
                 newId = 1,
-                status = testActivePlayer.run {
-                    copy(
-                        statusData = statusData.copy(
-                            speed = StatusParameter(3),
-                        ),
-                    )
-                },
+                status = StatusDataTest.TestPlayerStatusInActive.copy(
+                    speed = StatusParameter(3),
+                ),
             ),
             defaultData.copy(
                 newId = 2,
-                status = testActivePlayer.run {
-                    copy(
-                        statusData = statusData.copy(
-                            speed = StatusParameter(5),
-                        ),
-                    )
-                },
+                status = StatusDataTest.TestPlayerStatusInActive.copy(
+                    speed = StatusParameter(5),
+                ),
             ),
             defaultData.copy(
                 newId = 3,
-                status = testActivePlayer.run {
-                    copy(
-                        statusData = statusData.copy(
-                            speed = StatusParameter(4),
-                        ),
-                    )
-                },
+                status = StatusDataTest.TestPlayerStatusInActive.copy(
+                    speed = StatusParameter(4),
+                ),
             )
         )
 
         val result = decideActionOrderUseCase.invoke(list)
 
         val expect = listOf(2, 3, 1, 0)
-        for (id: Int in 0 until expect.size) {
+        for (id: Int in expect.indices) {
             assertEquals(
                 expected = expect[id],
                 actual = result[id].newId,

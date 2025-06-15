@@ -2,9 +2,7 @@ package core.repository.player
 
 import core.ModuleCore
 import core.domain.status.PlayerStatus
-import core.domain.status.StatusData
 import core.domain.status.param.EXP
-import core.domain.status.param.StatusParameterWithMax
 import data.ModuleData
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -48,17 +46,6 @@ class PlayerStatusRepositoryImplTest : KoinTest {
 
             val id = 0
             val playerStatus = PlayerStatus(
-                statusData = StatusData(
-                    name = "test",
-                    hp = StatusParameterWithMax(
-                        maxPoint = 100,
-                        point = 50,
-                    ),
-                    mp = StatusParameterWithMax(
-                        maxPoint = 10,
-                        point = 5,
-                    ),
-                ),
                 skillList = listOf(),
                 toolList = listOf(),
                 exp = EXP(

@@ -11,9 +11,6 @@ class MonsterStatusTest {
         val TestActiveMonster
             get() = MonsterStatus(
                 imgId = 1,
-                statusData = StatusDataTest.normalStatus.setHP(
-                    10
-                ),
                 money = 1,
                 exp = 1,
                 dropInfoList = listOf(
@@ -26,13 +23,6 @@ class MonsterStatusTest {
                     SkillId.Normal1, SkillId.Normal2,
                 ),
                 actionStyle = ActionStyle.RANDOM,
-            )
-
-        val TestNotActiveMonster
-            get() = TestActiveMonster.copy(
-                statusData = StatusDataTest.normalStatus.setHP(
-                    0,
-                )
             )
     }
 }

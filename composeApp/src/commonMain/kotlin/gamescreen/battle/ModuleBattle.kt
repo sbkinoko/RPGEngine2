@@ -1,5 +1,10 @@
 package gamescreen.battle
 
+import core.EnemyStatusRepositoryName
+import core.PlayerStatusRepositoryName
+import core.UpdateEnemyUseCaseName
+import core.UpdatePlayer
+import core.domain.status.StatusType
 import gamescreen.battle.command.actionphase.ActionPhaseViewModel
 import gamescreen.battle.command.escape.EscapeViewModel
 import gamescreen.battle.command.finish.BattleFinishViewModel
@@ -60,6 +65,8 @@ val ModuleBattle = module {
         BattleViewModel(
             flashRepository = get(),
             attackEffectInfoRepository = get(),
+
+            statusDataRepository = get(qualifier = PlayerStatusRepositoryName)
         )
     }
 
@@ -68,16 +75,30 @@ val ModuleBattle = module {
     }
 
     single {
-        PlayerActionViewModel()
+        PlayerActionViewModel(
+            statusDataRepository = get(
+                qualifier = PlayerStatusRepositoryName,
+            )
+        )
     }
 
     single {
-        SelectEnemyViewModel()
+        SelectEnemyViewModel(
+            enemyStatusDataRepository = get(
+                qualifier = EnemyStatusRepositoryName,
+            )
+        )
     }
 
     single {
         ActionPhaseViewModel(
             decideActionOrderUseCase = get(),
+            statusDataRepository = get(
+                qualifier = PlayerStatusRepositoryName
+            ),
+            enemyDataRepository = get(
+                qualifier = EnemyStatusRepositoryName
+            )
         )
     }
 
@@ -94,7 +115,11 @@ val ModuleBattle = module {
     }
 
     single {
-        SelectAllyViewModel()
+        SelectAllyViewModel(
+            statusDataRepository = get(
+                qualifier = PlayerStatusRepositoryName,
+            )
+        )
     }
 
     single {
@@ -150,11 +175,13 @@ val ModuleBattle = module {
         DecideActionOrderUseCaseImpl()
     }
 
-    single<AttackUseCase>(
-        qualifier = named(QualifierAttackFromPlayer),
+    single<AttackUseCase<StatusType.Player>>(
+        qualifier = named(QualifierAttackFromPlayer)
     ) {
         AttackFromPlayerUseCaseImpl(
-            battleInfoRepository = get(),
+            statusDataRepository = get(
+                qualifier = EnemyStatusRepositoryName,
+            ),
             findTargetService = get(),
             attackCalcService = get(),
             effectUseCase = get(),
@@ -165,17 +192,24 @@ val ModuleBattle = module {
         qualifier = named(QualifierAttackFromPlayer),
     ) {
         ConditionFromPlayerUseCaseImpl(
-            battleInfoRepository = get(),
+            statusDataRepository = get(
+                qualifier = EnemyStatusRepositoryName,
+            ),
             findTargetService = get(),
-            updateMonsterStatusService = get(),
+            updateMonsterStatusUseCase = get(
+                qualifier = UpdateEnemyUseCaseName,
+            ),
         )
     }
 
-    single<AttackUseCase>(
-        qualifier = named(QualifierAttackFromEnemy),
-    ) {
+    single<AttackUseCase<StatusType.Enemy>>(
+        qualifier = named(QualifierAttackFromEnemy)
+    )
+    {
         AttackFromEnemyUseCaseImpl(
-            playerStatusRepository = get(),
+            statusDataRepository = get(
+                qualifier = PlayerStatusRepositoryName,
+            ),
             findTargetService = get(),
             attackCalcService = get(),
         )
@@ -192,9 +226,13 @@ val ModuleBattle = module {
         qualifier = named(QualifierAttackFromEnemy),
     ) {
         ConditionFromEnemyUseCaseImpl(
-            playerStatusRepository = get(),
+            statusDataRepository = get(
+                PlayerStatusRepositoryName,
+            ),
             findTargetService = get(),
-            updatePlayerStatusService = get(),
+            updatePlayerStatusService = get(
+                qualifier = named(UpdatePlayer),
+            ),
         )
     }
 
@@ -239,6 +277,9 @@ val ModuleBattle = module {
         AddExpUseCaseImpl(
             playerStatusRepository = get(),
             statusRepository = get(),
+            statusDataRepository = get(
+                PlayerStatusRepositoryName,
+            )
         )
     }
 }

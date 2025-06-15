@@ -1,6 +1,8 @@
 package gamescreen.map.usecase.battledecidemonster
 
 import core.domain.mapcell.CellType
+import core.domain.status.StatusData
+import core.domain.status.StatusType
 import core.domain.status.monster.MonsterStatus
 import data.monster.MonsterRepository
 import gamescreen.map.domain.background.BackgroundCell
@@ -11,7 +13,7 @@ class DecideBattleMonsterUseCaseImpl(
 ) : DecideBattleMonsterUseCase {
     override fun invoke(
         backgroundCell: BackgroundCell,
-    ): List<MonsterStatus> {
+    ): List<Pair<MonsterStatus, StatusData<StatusType.Enemy>>> {
         val cellType = backgroundCell.cellType as? CellType.MonsterCell
             ?: return emptyList()
 

@@ -8,7 +8,7 @@ class StatusTest {
 
     @Test
     fun isActive() {
-        val updated = StatusDataTest.normalStatus.run {
+        val updated = StatusDataTest.TestPlayerStatusActive.run {
             copy(
                 hp = hp.set(value = 1)
             )
@@ -21,7 +21,7 @@ class StatusTest {
 
     @Test
     fun isNotActive() {
-        val updated = StatusDataTest.normalStatus.run {
+        val updated = StatusDataTest.TestPlayerStatusActive.run {
             copy(
                 hp = hp.set(value = 0)
             )

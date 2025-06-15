@@ -3,14 +3,15 @@ package core.usecase.item.useskill
 import core.domain.item.CostType
 import core.domain.item.skill.AttackSkill
 import core.domain.item.skill.HealSkill
+import core.domain.status.StatusType
 import core.repository.player.PlayerStatusRepository
-import core.usecase.updateparameter.UpdatePlayerStatusUseCase
+import core.usecase.updateparameter.UpdateStatusUseCase
 import data.item.skill.SkillRepository
 
 class UseSkillUseCaseImpl(
     private val playerStatusRepository: PlayerStatusRepository,
     private val skillRepository: SkillRepository,
-    private val updateParameter: UpdatePlayerStatusUseCase,
+    private val updateStatus: UpdateStatusUseCase<StatusType.Player>,
 ) : UseSkillUseCase {
     override suspend fun invoke(
         userId: Int,
@@ -29,7 +30,7 @@ class UseSkillUseCaseImpl(
         //コスト処理
         when (val costType = skill.costType) {
             is CostType.MP -> {
-                updateParameter.decMP(
+                updateStatus.decMP(
                     id = userId,
                     amount = costType.needMP,
                 )
@@ -43,7 +44,7 @@ class UseSkillUseCaseImpl(
 
         when (skill) {
             is HealSkill -> {
-                updateParameter.incHP(
+                updateStatus.incHP(
                     id = targetId,
                     amount = skill.healAmount,
                 )

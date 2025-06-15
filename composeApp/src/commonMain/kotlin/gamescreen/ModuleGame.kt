@@ -1,5 +1,6 @@
 package gamescreen
 
+import core.PlayerStatusRepositoryName
 import core.repository.screentype.ScreenTypeRepository
 import core.repository.screentype.ScreenTypeRepositoryImpl
 import main.MainViewModel
@@ -8,7 +9,12 @@ import org.koin.dsl.module
 
 val ModuleMain = module {
     single<MainViewModel> {
-        MainViewModel()
+        MainViewModel(
+            statusRepository = get(),
+            statusDataRepository = get(
+                qualifier = PlayerStatusRepositoryName,
+            ),
+        )
     }
 
     single<ScreenTypeRepository> {

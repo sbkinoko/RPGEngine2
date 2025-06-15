@@ -11,9 +11,9 @@ import core.domain.item.skill.AttackSkill
 import core.domain.item.skill.HealSkill
 import core.domain.status.ConditionType
 import core.domain.status.PlayerStatus
+import core.domain.status.StatusType
 import core.repository.player.PlayerStatusRepository
-import core.repository.status.StatusRepository
-import core.usecase.updateparameter.UpdatePlayerStatusUseCase
+import core.usecase.updateparameter.UpdateStatusUseCase
 import data.item.skill.SkillId
 import data.item.skill.SkillRepository
 import data.item.tool.ToolId
@@ -52,42 +52,26 @@ class UseSkillUseCaseImplTest {
 
     private lateinit var playerStatusRepository: TestPlayerStatusRepository
 
-    abstract class TestUpdatePlayerStatusUseCase : UpdatePlayerStatusUseCase() {
-        override suspend fun deleteToolAt(
-            playerId: Int,
-            index: Int,
+    abstract class TestUpdatePlayerStatusUseCase : UpdateStatusUseCase<StatusType.Player> {
+
+        override suspend fun decHP(
+            id: Int,
+            amount: Int,
         ) {
             throw NotImplementedError()
         }
 
-        override val statusRepository: StatusRepository<PlayerStatus>
-            get() = throw NotImplementedError()
-
-        override fun decHPImpl(
+        override suspend fun incHP(
+            id: Int,
             amount: Int,
-            status: PlayerStatus,
-        ): PlayerStatus {
+        ) {
             throw NotImplementedError()
         }
 
-        override fun incHPImpl(
+        override suspend fun incMP(
+            id: Int,
             amount: Int,
-            status: PlayerStatus,
-        ): PlayerStatus {
-            throw NotImplementedError()
-        }
-
-        override fun decMPImpl(
-            amount: Int,
-            status: PlayerStatus,
-        ): PlayerStatus {
-            return status
-        }
-
-        override fun incMPImpl(
-            amount: Int,
-            status: PlayerStatus,
-        ): PlayerStatus {
+        ) {
             throw NotImplementedError()
         }
 
@@ -99,7 +83,7 @@ class UseSkillUseCaseImplTest {
         }
     }
 
-    private lateinit var updatePlayerStatusUseCase: UpdatePlayerStatusUseCase
+    private lateinit var updatePlayerStatusUseCase: UpdateStatusUseCase<StatusType.Player>
 
     private val testUseCase = object : TestUpdatePlayerStatusUseCase() {
         override suspend fun incHP(
@@ -139,7 +123,7 @@ class UseSkillUseCaseImplTest {
         get() = UseSkillUseCaseImpl(
             playerStatusRepository = playerStatusRepository,
             skillRepository = skillRepository,
-            updateParameter = updatePlayerStatusUseCase,
+            updateStatus = updatePlayerStatusUseCase,
         )
 
     @Test
