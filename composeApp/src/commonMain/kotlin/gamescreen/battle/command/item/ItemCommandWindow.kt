@@ -4,12 +4,21 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.onGloballyPositioned
 import common.extension.equalAllocationModifier
 import common.extension.menuItem
+import common.extension.pxToDp
 import common.layout.CenterText
 import common.layout.DisableBox
 
@@ -27,10 +36,31 @@ fun ItemCommandWindow(
         flg.value = false
     }
 
-    Column(modifier = modifier) {
-        for (i in 0 until 3) {
+    val scrollState = rememberScrollState()
+
+    var height by remember {
+        mutableIntStateOf(0)
+    }
+
+    Column(
+        modifier = modifier.verticalScroll(
+            scrollState,
+        ).onGloballyPositioned {
+            if (height == 0) {
+                height = it.size.height
+            }
+        }
+    ) {
+        if (height == 0) {
+            return@Column
+        }
+
+        for (i in 0 until (itemCommandViewModel.itemList.size + 1) / 2) {
             Row(
-                modifier = equalAllocationModifier,
+                modifier = Modifier.fillMaxWidth()
+                    .height(
+                        height = (height / 3).pxToDp(),
+                    ),
             ) {
                 ItemArea(
                     itemCommandViewModel = itemCommandViewModel,
