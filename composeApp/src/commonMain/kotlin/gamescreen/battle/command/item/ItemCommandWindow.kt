@@ -13,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -21,6 +22,9 @@ import common.extension.menuItem
 import common.extension.pxToDp
 import common.layout.CenterText
 import common.layout.DisableBox
+import kotlinx.coroutines.launch
+
+const val ItemNum = 3
 
 @Composable
 fun ItemCommandWindow(
@@ -42,6 +46,27 @@ fun ItemCommandWindow(
         mutableIntStateOf(0)
     }
 
+    val scope = rememberCoroutineScope()
+
+    // 対象が画面内に入るようにスクロール
+    itemCommandViewModel.scroll = {
+        scope.launch {
+            val targetTop = (it / 2) * height / ItemNum
+            val targetBottom = (it / 2 + 1) * height / ItemNum
+
+            val top = scrollState.value
+            val bottom = scrollState.value + height
+
+            if (targetTop < top) {
+                scrollState.animateScrollTo(targetTop)
+            }
+
+            if (bottom < targetBottom) {
+                scrollState.animateScrollTo(targetTop - height / ItemNum * (ItemNum - 1))
+            }
+        }
+    }
+
     Column(
         modifier = modifier.verticalScroll(
             scrollState,
@@ -59,7 +84,7 @@ fun ItemCommandWindow(
             Row(
                 modifier = Modifier.fillMaxWidth()
                     .height(
-                        height = (height / 3).pxToDp(),
+                        height = (height / ItemNum).pxToDp(),
                     ),
             ) {
                 ItemArea(
