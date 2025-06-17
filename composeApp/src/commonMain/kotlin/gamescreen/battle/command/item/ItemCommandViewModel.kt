@@ -13,6 +13,10 @@ import gamescreen.battle.domain.SelectAllyCommand
 import gamescreen.battle.domain.SelectEnemyCommand
 import gamescreen.battle.repository.action.ActionRepository
 import gamescreen.menu.domain.SelectManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import org.koin.core.component.inject
 import kotlin.math.max
 
@@ -26,6 +30,8 @@ abstract class ItemCommandViewModel<T> : BattleChildViewModel() {
 
     protected abstract val itemRepository: ItemRepository<T>
 
+    var scroll: (Int) -> Unit = {}
+
     abstract val itemList: List<T>
 
     abstract val playerId: Int
@@ -38,6 +44,8 @@ abstract class ItemCommandViewModel<T> : BattleChildViewModel() {
     abstract fun getLastSelectedItemId(): T
 
     abstract fun canUse(position: Int): Boolean
+
+    private var job: Job = CoroutineScope(Dispatchers.Default).launch {}
 
     fun init() {
         // 最後に選ばれていたスキルを呼び出し
@@ -54,6 +62,17 @@ abstract class ItemCommandViewModel<T> : BattleChildViewModel() {
         )
 
         selectManager.selected = selected
+
+
+        job.cancel()
+
+        job = CoroutineScope(Dispatchers.Default).launch {
+            selectedFlowState.collect {
+                scroll(it)
+            }
+        }
+
+        job.start()
     }
 
     override fun selectable(): Boolean {

@@ -21,6 +21,10 @@ import common.extension.menuItem
 import common.extension.pxToDp
 import common.layout.CenterText
 import common.layout.DisableBox
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import kotlinx.coroutines.launch
 
 @Composable
 fun ItemCommandWindow(
@@ -40,6 +44,21 @@ fun ItemCommandWindow(
 
     var height by remember {
         mutableIntStateOf(0)
+    }
+
+    // 対象が画面内に入るようにスクロール
+    itemCommandViewModel.scroll = {
+        CoroutineScope(Dispatchers.IO).launch {
+            val targetTop = (it / 2) * height / 3
+            val targetBottom = (it / 2 + 1) * height / 3
+
+            val top = scrollState.value
+            val bottom = scrollState.value + height
+
+            if (targetTop < top || bottom < targetBottom) {
+                scrollState.scrollTo(targetTop)
+            }
+        }
     }
 
     Column(
