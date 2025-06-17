@@ -13,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -21,9 +22,6 @@ import common.extension.menuItem
 import common.extension.pxToDp
 import common.layout.CenterText
 import common.layout.DisableBox
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 
 @Composable
@@ -46,17 +44,23 @@ fun ItemCommandWindow(
         mutableIntStateOf(0)
     }
 
+    val scope = rememberCoroutineScope()
+
     // 対象が画面内に入るようにスクロール
     itemCommandViewModel.scroll = {
-        CoroutineScope(Dispatchers.IO).launch {
+        scope.launch {
             val targetTop = (it / 2) * height / 3
             val targetBottom = (it / 2 + 1) * height / 3
 
             val top = scrollState.value
             val bottom = scrollState.value + height
 
-            if (targetTop < top || bottom < targetBottom) {
-                scrollState.scrollTo(targetTop)
+            if (targetTop < top) {
+                scrollState.animateScrollTo(targetTop)
+            }
+
+            if (bottom < targetBottom) {
+                scrollState.animateScrollTo(targetTop - height / 3 * 2)
             }
         }
     }
