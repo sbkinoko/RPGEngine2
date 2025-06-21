@@ -1,9 +1,12 @@
 package gamescreen.map.layout
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -11,10 +14,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.util.fastAny
 import gamescreen.map.layout.background.Background
 import gamescreen.map.layout.background.DebugInfo
@@ -25,6 +31,7 @@ import gamescreen.map.viewmodel.MapViewModel
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
+import values.Colors
 import values.GameParams
 
 @Composable
@@ -126,6 +133,17 @@ fun MapScreen(
             screenRatio = screenRatio,
             backgroundCell = mapUiState.backgroundData,
             eventCell = mapUiState.playerIncludeCell,
+        )
+
+        Text(
+            modifier = Modifier
+                .align(
+                    Alignment.BottomEnd,
+                ).background(
+                    Colors.FpsBackground
+                ).padding(10.dp),
+            text = "FPS:${1}",
+            fontSize = 50.sp,
         )
     }
 }
