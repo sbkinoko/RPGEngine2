@@ -1,6 +1,7 @@
 package gamescreen.map.viewmodel
 
 import common.DefaultScope
+import common.FpsCounter
 import controller.domain.ControllerCallback
 import controller.domain.Stick
 import core.domain.mapcell.CellType
@@ -43,6 +44,9 @@ class MapViewModel(
 
     private val moveUseCase: MoveUseCase,
 ) : ControllerCallback, KoinComponent {
+    private val fpsCounter = FpsCounter()
+    val fpsFlow = fpsCounter.fpsFlow
+
     private val playerMoveManageUseCase: PlayerMoveManageUseCase by inject()
 
     private val screenTypeRepository: ScreenTypeRepository by inject()
@@ -130,6 +134,7 @@ class MapViewModel(
 
         //速度が0なら何もしない
         if (tentativePlayerVelocity.isMoving.not()) {
+            fpsCounter.addInfo()
             return
         }
 
@@ -151,6 +156,8 @@ class MapViewModel(
             tentativeVelocity = tentativePlayerVelocity,
             mapUiState = uiStateFlow.value
         )
+
+        fpsCounter.addInfo()
 
         saveUseCase.save(
             player = uiStateFlow.value.player,

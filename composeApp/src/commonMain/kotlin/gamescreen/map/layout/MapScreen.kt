@@ -52,6 +52,10 @@ fun MapScreen(
         .uiStateFlow
         .collectAsState()
 
+    val fps by mapViewModel
+        .fpsFlow
+        .collectAsState()
+
     Box(
         modifier = modifier
             .pointerInput(Unit) {
@@ -142,7 +146,7 @@ fun MapScreen(
                 ).background(
                     Colors.FpsBackground
                 ).padding(10.dp),
-            text = "FPS:${1}",
+            text = "FPS:${fps}",
             fontSize = 50.sp,
         )
     }
