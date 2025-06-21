@@ -16,7 +16,7 @@ fun StatusComponent(
     statusComponentViewModel: StatusComponentViewModel = koinInject(),
 ) {
     // fixme byにする
-    val state = statusComponentViewModel
+    val state by statusComponentViewModel
         .statusFlow
         .collectAsState()
 
@@ -28,18 +28,20 @@ fun StatusComponent(
         modifier = modifier
     ) {
         if (statusId < Constants.playerNum) {
-
-            val parameter = statusData[statusId]
-            parameter.run {
+            statusData[statusId].apply {
                 Text(name)
                 Text("HP : ${hp.point}/${hp.maxPoint}")
                 Text("MP : ${mp.point}/${mp.maxPoint}")
+                Text("ATK:${atk.value}")
+                Text("DEF:${def.value}")
+                Text("SPD:${speed.value}")
             }
 
-            val status = state.value[statusId]
-            Text("レベル : ${status.exp.level}")
-            Text("経験値 : ${status.exp.value}")
-            Text("次のレベルまで : ${status.exp.needExp}")
+            state[statusId].apply {
+                Text("レベル : ${exp.level}")
+                Text("経験値 : ${exp.value}")
+                Text("次のレベルまで : ${exp.needExp}")
+            }
         } else {
             Text("袋")
         }
