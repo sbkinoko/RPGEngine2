@@ -15,7 +15,6 @@ fun StatusComponent(
     modifier: Modifier = Modifier,
     statusComponentViewModel: StatusComponentViewModel = koinInject(),
 ) {
-    // fixme byにする
     val state by statusComponentViewModel
         .statusFlow
         .collectAsState()
