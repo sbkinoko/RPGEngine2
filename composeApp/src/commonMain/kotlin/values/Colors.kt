@@ -41,4 +41,6 @@ object Colors {
     val OverlayMenu = transGrey
 
     val ShopBackground = transGrey
+
+    val FpsBackground = transGrey
 }
