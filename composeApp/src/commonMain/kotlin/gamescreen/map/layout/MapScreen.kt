@@ -28,11 +28,13 @@ import gamescreen.map.layout.background.MapClip
 import gamescreen.map.layout.background.ObjectData
 import gamescreen.map.layout.npc.NPC
 import gamescreen.map.viewmodel.MapViewModel
+import getNowTime
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
 import values.Colors
 import values.GameParams
+import kotlin.math.max
 
 @Composable
 @Preview
@@ -43,8 +45,16 @@ fun MapScreen(
 ) {
     LaunchedEffect(Unit) {
         while (true) {
-            delay(GameParams.DELAY)
+            val before = getNowTime().nowTime
             mapViewModel.updatePosition()
+            val after = getNowTime().nowTime
+
+            delay(
+                max(
+                    0L,
+                    GameParams.DELAY - (after - before),
+                ),
+            )
         }
     }
 

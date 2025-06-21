@@ -127,6 +127,7 @@ class MapViewModel(
     suspend fun updatePosition() {
         // fixme テストに影響がありそうなので確認する
 
+        // todo FPSが落ちることがあるので確認する
         // タップしていたら位置を更新
         if (tapPoint != null) {
             updateVelocityByTap(tapPoint!!)
