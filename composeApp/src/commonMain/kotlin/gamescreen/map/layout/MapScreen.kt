@@ -49,6 +49,7 @@ fun MapScreen(
             mapViewModel.updatePosition()
             val after = getNowTime().nowTime
 
+            // fixme ここでfpsの計測
             delay(
                 max(
                     0L,
