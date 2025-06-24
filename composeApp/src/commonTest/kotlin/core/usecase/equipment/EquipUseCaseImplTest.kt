@@ -16,6 +16,7 @@ import core.repository.statusdata.StatusDataRepository
 import data.item.skill.SkillId
 import data.item.tool.ToolId
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.runBlocking
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -98,7 +99,10 @@ class EquipUseCaseImplTest {
         }
     }
 
-    lateinit var useCase: EquipUseCase
+    private val useCase: EquipUseCase = EquipUseCaseImpl(
+        playerStatusRepository = playerRepository,
+        statusDataRepository = statusDataRepository,
+    )
 
     @BeforeTest
     fun beforeTest() {
@@ -115,34 +119,36 @@ class EquipUseCaseImplTest {
 
     @Test
     fun setEquipment() {
-        val upATK = 11
-        val equipment = Equipment(
-            type = EquipmentType.Weapon,
-            statusList = StatusIncrease.empty.copy(
-                atk = IncData(upATK),
+        runBlocking {
+            val upATK = 11
+            val equipment = Equipment(
+                type = EquipmentType.Weapon,
+                statusList = StatusIncrease.empty.copy(
+                    atk = IncData(upATK),
+                )
             )
-        )
-        val target = 0
-        useCase.invoke(
-            target = target,
-            equipment = equipment,
-        )
+            val target = 0
+            useCase.invoke(
+                target = target,
+                equipment = equipment,
+            )
 
-        assertEquals(
-            expected = initAtk + upATK,
-            actual = statusDataRepository
-                .getStatusData(target)
-                .atk
-                .value
-        )
+            assertEquals(
+                expected = initAtk + upATK,
+                actual = statusDataRepository
+                    .getStatusData(target)
+                    .atk
+                    .value
+            )
 
-        assertEquals(
-            expected = initialEquipment.copy(
-                weapon = equipment,
-            ),
-            actual = playerRepository
-                .getStatus(target)
-                .equipmentData
-        )
+            assertEquals(
+                expected = initialEquipment.copy(
+                    weapon = equipment,
+                ),
+                actual = playerRepository
+                    .getStatus(target)
+                    .equipmentData
+            )
+        }
     }
 }
