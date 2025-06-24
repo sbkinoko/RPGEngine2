@@ -1,8 +1,13 @@
 package core.usecase.equipment
 
+import core.domain.equipment.Equipment
+import core.domain.equipment.EquipmentData
+import core.domain.equipment.EquipmentType
+import core.domain.status.IncData
 import core.domain.status.PlayerStatus
 import core.domain.status.StatusData
 import core.domain.status.StatusDataTest
+import core.domain.status.StatusIncrease
 import core.domain.status.StatusType
 import core.domain.status.param.EXP
 import core.domain.status.param.StatusParameter
@@ -11,18 +16,25 @@ import core.repository.statusdata.StatusDataRepository
 import data.item.skill.SkillId
 import data.item.tool.ToolId
 import kotlinx.coroutines.flow.StateFlow
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class EquipUseCaseImplTest {
+    val initAtk = 10
+
     private val statusDataRepository = object : StatusDataRepository<StatusType.Player> {
         override val statusDataFlow: StateFlow<List<StatusData<StatusType.Player>>>
             get() = throw NotImplementedError()
 
-        var statusData = StatusDataTest.TestPlayerStatusActive.copy(
-            atk = StatusParameter(10)
-        )
+        private var statusDataList = MutableList(5) {
+            StatusDataTest.TestPlayerStatusActive.copy(
+                atk = StatusParameter(initAtk)
+            )
+        }
 
         override fun getStatusData(id: Int): StatusData<StatusType.Player> {
-            return statusData
+            return statusDataList[id]
         }
 
         override fun getStatusList(): List<StatusData<StatusType.Player>> {
@@ -37,19 +49,24 @@ class EquipUseCaseImplTest {
             id: Int,
             statusData: StatusData<StatusType.Player>,
         ) {
-            this.statusData = statusData
+            statusDataList[id] = statusData
         }
     }
+
+    private val initialEquipment = EquipmentData()
 
     private val playerRepository = object : PlayerStatusRepository {
         override val playerStatusFlow: StateFlow<List<PlayerStatus>>
             get() = throw NotImplementedError()
 
-        var status = PlayerStatus(
-            skillList = emptyList(),
-            toolList = emptyList(),
-            exp = EXP(EXP.type1),
-        )
+        private var statusList = MutableList(5) {
+            PlayerStatus(
+                skillList = emptyList(),
+                toolList = emptyList(),
+                exp = EXP(EXP.type1),
+                equipmentData = initialEquipment,
+            )
+        }
 
         override fun getTool(
             playerId: Int,
@@ -66,7 +83,7 @@ class EquipUseCaseImplTest {
         }
 
         override fun getStatus(id: Int): PlayerStatus {
-            return status
+            return statusList[id]
         }
 
         override fun getStatusList(): List<PlayerStatus> {
@@ -77,9 +94,55 @@ class EquipUseCaseImplTest {
             id: Int,
             status: PlayerStatus,
         ) {
-            this.status = status
+            this.statusList[id] = status
         }
     }
 
     lateinit var useCase: EquipUseCase
+
+    @BeforeTest
+    fun beforeTest() {
+        assertEquals(
+            expected = initialEquipment,
+            actual = playerRepository.getStatus(0).equipmentData,
+        )
+
+        assertEquals(
+            expected = initAtk,
+            actual = statusDataRepository.getStatusData(0).atk.value
+        )
+    }
+
+    @Test
+    fun setEquipment() {
+        val upATK = 11
+        val equipment = Equipment(
+            type = EquipmentType.Weapon,
+            statusList = StatusIncrease.empty.copy(
+                atk = IncData(upATK),
+            )
+        )
+        val target = 0
+        useCase.invoke(
+            target = target,
+            equipment = equipment,
+        )
+
+        assertEquals(
+            expected = initAtk + upATK,
+            actual = statusDataRepository
+                .getStatusData(target)
+                .atk
+                .value
+        )
+
+        assertEquals(
+            expected = initialEquipment.copy(
+                weapon = equipment,
+            ),
+            actual = playerRepository
+                .getStatus(target)
+                .equipmentData
+        )
+    }
 }
