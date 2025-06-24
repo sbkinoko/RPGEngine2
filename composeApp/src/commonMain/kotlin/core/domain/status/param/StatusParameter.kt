@@ -24,6 +24,18 @@ data class StatusParameter<T : ParameterType>(
         )
     }
 
+    fun dec(incData: IncData<T>): StatusParameter<T> {
+        val newVal = baseValue - incData.value
+
+        if (newVal < 0) {
+            throw NotImplementedError("")
+        }
+
+        return copy(
+            baseValue = newVal,
+        )
+    }
+
     fun grantBuf(
         buf: Buf<*>,
     ): StatusParameter<T> {
