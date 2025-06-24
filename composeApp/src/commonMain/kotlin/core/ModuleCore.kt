@@ -15,6 +15,8 @@ import core.service.CheckCanUseService
 import core.service.CheckCanUseServiceImpl
 import core.usecase.changetomap.ChangeToMapUseCase
 import core.usecase.changetomap.ChangeToMapUseCaseImpl
+import core.usecase.equipment.EquipUseCase
+import core.usecase.equipment.EquipUseCaseImpl
 import core.usecase.heal.MaxHealUseCase
 import core.usecase.heal.MaxHealUseCaseImpl
 import core.usecase.item.checkcanuseskill.CheckCanUseSkillUseCase
@@ -147,5 +149,9 @@ val ModuleCore = module {
             roadMapUseCase = get(),
             maxHealUseCase = get(),
         )
+    }
+
+    single<EquipUseCase> {
+        EquipUseCaseImpl()
     }
 }
