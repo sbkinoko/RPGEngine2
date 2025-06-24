@@ -9,8 +9,8 @@ interface EquipUseCase {
      * @param target 装備をつけたいキャラ
      * @param equipment つけたい装備
      */
-    fun <T : EquipmentType> invoke(
+    suspend fun invoke(
         target: Int,
-        equipment: Equipment<T>,
+        equipment: Equipment,
     )
 }
