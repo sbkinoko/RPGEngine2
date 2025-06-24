@@ -111,6 +111,21 @@ data class StatusData<T : StatusType>(
         )
     }
 
+    /**
+     * 装備を外したときにステータスを下げる
+     */
+    fun decStatus(
+        statusIncrease: StatusIncrease,
+    ): StatusData<T> {
+        return copy(
+            hp = hp.decMax(statusIncrease.hp),
+            mp = mp.decMax(statusIncrease.mp),
+            atk = atk.dec(statusIncrease.atk),
+            def = def.dec(statusIncrease.def),
+            speed = speed.dec(statusIncrease.speed),
+        )
+    }
+
     fun reduceBuf(): StatusData<T> {
         return copy(
             atk = atk.reduceBuf(),

@@ -14,6 +14,18 @@ data class StatusParameterWithMax<T : ParameterType>(
         )
     }
 
+    fun decMax(incData: IncData<T>): StatusParameterWithMax<T> {
+
+        val newVal = maxPoint - incData.value
+
+        if (newVal < 0) {
+            throw NotImplementedError("")
+        }
+
+        return set(maxValue = newVal)
+    }
+
+
     fun inc(amount: Int): StatusParameterWithMax<T> {
         return copy(
             point = min(point + amount, maxPoint),
