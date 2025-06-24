@@ -1,7 +1,6 @@
 package core.usecase.equipment
 
 import core.domain.equipment.Equipment
-import core.domain.equipment.EquipmentType
 
 interface EquipUseCase {
 
