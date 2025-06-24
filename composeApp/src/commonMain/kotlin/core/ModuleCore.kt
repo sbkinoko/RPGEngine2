@@ -152,6 +152,9 @@ val ModuleCore = module {
     }
 
     single<EquipUseCase> {
-        EquipUseCaseImpl()
+        EquipUseCaseImpl(
+            playerStatusRepository = get(),
+            statusDataRepository = get(),
+        )
     }
 }
