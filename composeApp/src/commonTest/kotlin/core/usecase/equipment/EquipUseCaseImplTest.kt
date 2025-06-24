@@ -151,4 +151,57 @@ class EquipUseCaseImplTest {
             )
         }
     }
+
+    @Test
+    fun setEquipment2() {
+        runBlocking {
+            val upATK = 11
+            val equipment = Equipment(
+                type = EquipmentType.Weapon,
+                statusList = StatusIncrease.empty.copy(
+                    atk = IncData(upATK),
+                )
+            )
+
+            // もともと攻撃力5の装備をつけていた
+            val target = 0
+            val preWpAtk = 5
+            val preStatus =
+                playerRepository
+                    .getStatus(target)
+                    .copy(
+                        equipmentData = initialEquipment.copy(
+                            weapon = equipment.copy(
+                                statusList = equipment.statusList.copy(
+                                    atk = IncData(preWpAtk),
+                                )
+                            )
+                        )
+                    )
+            playerRepository.setStatus(target, preStatus)
+
+
+            useCase.invoke(
+                target = target,
+                equipment = equipment,
+            )
+
+            assertEquals(
+                expected = initAtk + upATK - preWpAtk,
+                actual = statusDataRepository
+                    .getStatusData(target)
+                    .atk
+                    .value
+            )
+
+            assertEquals(
+                expected = initialEquipment.copy(
+                    weapon = equipment,
+                ),
+                actual = playerRepository
+                    .getStatus(target)
+                    .equipmentData
+            )
+        }
+    }
 }
