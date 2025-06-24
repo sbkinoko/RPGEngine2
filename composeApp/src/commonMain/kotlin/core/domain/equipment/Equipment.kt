@@ -2,12 +2,12 @@ package core.domain.equipment
 
 import core.domain.status.StatusIncrease
 
-data class Equipment<T : EquipmentType>(
-    val type: T,
+data class Equipment(
+    val type: EquipmentType,
     val statusList: StatusIncrease,
 ) {
     constructor(
-        type: T,
+        type: EquipmentType,
     ) : this(
         type = type,
         statusList = StatusIncrease(
