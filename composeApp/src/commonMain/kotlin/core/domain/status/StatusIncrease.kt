@@ -22,6 +22,16 @@ data class StatusIncrease(
         def = IncData(def),
         speed = IncData(speed),
     )
+
+    companion object {
+        val empty = StatusIncrease(
+            hp = 0,
+            mp = 0,
+            atk = 0,
+            def = 0,
+            speed = 0,
+        )
+    }
 }
 
 @Suppress("unused")
