@@ -11,6 +11,8 @@ class EquipUseCaseImpl(
     private val statusDataRepository: StatusDataRepository<StatusType.Player>,
 ) : EquipUseCase {
 
+    // todo 外した装備情報を返す
+    // todo 装備の部位を増やす
     override suspend fun invoke(
         target: Int,
         equipment: Equipment,
