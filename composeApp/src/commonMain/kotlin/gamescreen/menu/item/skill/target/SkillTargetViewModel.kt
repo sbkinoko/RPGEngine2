@@ -2,6 +2,7 @@ package gamescreen.menu.item.skill.target
 
 import core.domain.AbleType
 import core.domain.Place
+import core.domain.item.Skill
 import core.usecase.item.checkcanuseskill.CheckCanUseSkillUseCase
 import core.usecase.item.useskill.UseSkillUseCase
 import data.item.skill.SkillId
@@ -15,7 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.core.component.inject
 
-class SkillTargetViewModel : ItemTargetViewModel<SkillId>() {
+class SkillTargetViewModel : ItemTargetViewModel<SkillId, Skill>() {
     override val itemRepository: SkillRepository by inject()
 
     private val indexRepository: IndexRepository by inject()

@@ -1,6 +1,7 @@
 package gamescreen.battle.command.item.tool
 
 import core.domain.Const
+import core.domain.item.Tool
 import data.item.tool.ToolId
 import data.item.tool.ToolRepository
 import gamescreen.battle.command.item.ItemCommandViewModel
@@ -10,7 +11,7 @@ import gamescreen.battle.domain.ToolCommand
 import gamescreen.menu.domain.SelectManager
 import org.koin.core.component.inject
 
-class ToolCommandViewModel : ItemCommandViewModel<ToolId>() {
+class ToolCommandViewModel : ItemCommandViewModel<ToolId, Tool>() {
     override val itemRepository: ToolRepository by inject()
 
     override val itemList: List<ToolId>
@@ -37,7 +38,7 @@ class ToolCommandViewModel : ItemCommandViewModel<ToolId>() {
         ).toolId
     }
 
-    override fun canUse(id: Int): Boolean {
+    override fun canUse(position: Int): Boolean {
         return true
     }
 }

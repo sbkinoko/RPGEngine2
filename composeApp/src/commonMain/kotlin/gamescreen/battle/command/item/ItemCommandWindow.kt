@@ -28,7 +28,7 @@ const val ItemNum = 3
 
 @Composable
 fun ItemCommandWindow(
-    itemCommandViewModel: ItemCommandViewModel<*>,
+    itemCommandViewModel: ItemCommandViewModel<*, *>,
     modifier: Modifier = Modifier,
 ) {
     val flg = remember {
@@ -109,7 +109,7 @@ fun ItemCommandWindow(
 fun ItemArea(
     index: Int,
     size: Int,
-    itemCommandViewModel: ItemCommandViewModel<*>,
+    itemCommandViewModel: ItemCommandViewModel<*, *>,
     modifier: Modifier = Modifier,
 ) {
     if (index < size) {
@@ -128,7 +128,7 @@ fun ItemArea(
 @Composable
 fun ItemText(
     position: Int,
-    itemCommandViewModel: ItemCommandViewModel<*>,
+    itemCommandViewModel: ItemCommandViewModel<*, *>,
     modifier: Modifier = Modifier,
 ) {
     DisableBox(

@@ -2,6 +2,7 @@ package gamescreen.battle.command.item
 
 import core.PlayerStatusRepositoryName
 import core.domain.Const
+import core.domain.item.Item
 import core.domain.item.TargetType
 import core.domain.status.StatusType
 import core.repository.player.PlayerStatusRepository
@@ -20,7 +21,7 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.inject
 import kotlin.math.max
 
-abstract class ItemCommandViewModel<T> : BattleChildViewModel() {
+abstract class ItemCommandViewModel<T, V : Item> : BattleChildViewModel() {
     protected val actionRepository: ActionRepository by inject()
     protected val playerStatusRepository: PlayerStatusRepository by inject()
 
@@ -28,7 +29,7 @@ abstract class ItemCommandViewModel<T> : BattleChildViewModel() {
         qualifier = PlayerStatusRepositoryName
     )
 
-    protected abstract val itemRepository: ItemRepository<T>
+    protected abstract val itemRepository: ItemRepository<T, V>
 
     var scroll: (Int) -> Unit = {}
 

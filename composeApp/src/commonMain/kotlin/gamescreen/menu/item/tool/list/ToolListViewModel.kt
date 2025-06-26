@@ -2,6 +2,7 @@ package gamescreen.menu.item.tool.list
 
 import core.ToolBagRepositoryName
 import core.domain.AbleType
+import core.domain.item.Tool
 import core.repository.bag.BagRepository
 import data.item.tool.ToolId
 import data.item.tool.ToolRepository
@@ -12,7 +13,7 @@ import gamescreen.menu.item.abstract.itemselect.ItemListViewModel
 import org.koin.core.component.inject
 import values.Constants
 
-class ToolListViewModel : ItemListViewModel<ToolId>() {
+class ToolListViewModel : ItemListViewModel<ToolId, Tool>() {
     override val itemRepository: ToolRepository by inject()
     private val bagRepository: BagRepository<ToolId> by inject(
         qualifier = ToolBagRepositoryName,
