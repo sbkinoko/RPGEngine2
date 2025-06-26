@@ -9,6 +9,8 @@ import gamescreen.menu.item.skill.list.SkillListViewModel
 import gamescreen.menu.item.skill.target.SkillTargetViewModel
 import gamescreen.menu.item.skill.user.SkillUserViewModel
 import gamescreen.menu.item.tool.give.ToolGiveUserViewModel
+import gamescreen.menu.item.tool.list.ToolListViewModel
+import gamescreen.menu.item.tool.target.ToolTargetViewModel
 import gamescreen.menu.item.tool.user.ToolUserViewModel
 import gamescreen.menu.main.MainMenuViewModel
 import gamescreen.menu.repository.menustate.MenuStateRepository
@@ -25,8 +27,8 @@ class GetControllerByCommandTypeUseCaseImpl(
     private val skillTargetViewModel: SkillTargetViewModel,
 
     private val toolUserViewModel: ToolUserViewModel,
-    private val toolListViewModel: EquipmentListViewModel,
-    private val toolTargetViewModel: EquipmentTargetViewModel,
+    private val toolListViewModel: ToolListViewModel,
+    private val toolTargetViewModel: ToolTargetViewModel,
     private val toolGiveUserViewModel: ToolGiveUserViewModel,
 
     private val equipmentUserViewModel: EquipmentUserViewModel,
