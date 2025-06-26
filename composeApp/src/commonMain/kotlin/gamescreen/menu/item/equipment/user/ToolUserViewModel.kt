@@ -25,9 +25,9 @@ class EquipmentUserViewModel(
     )
 
     override val boundedScreenType: MenuType
-        get() = MenuType.EQUIPMENT_LIST
+        get() = MenuType.EQUIPMENT_USER
     override val nextScreenType: MenuType
-        get() = throw NotImplementedError()
+        get() = MenuType.EQUIPMENT_LIST
 
     override val playerNum: Int
         get() = Constants.playerNum + 1
