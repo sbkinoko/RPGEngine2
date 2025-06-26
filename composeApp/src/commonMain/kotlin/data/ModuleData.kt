@@ -2,6 +2,8 @@ package data
 
 import data.battle.BattleDataRepository
 import data.battle.BattleDataRepositoryImpl
+import data.item.equipment.EquipmentRepository
+import data.item.equipment.EquipmentRepositoryImpl
 import data.item.skill.SkillRepository
 import data.item.skill.SkillRepositoryImpl
 import data.item.tool.ToolRepository
@@ -19,6 +21,10 @@ val ModuleData = module {
 
     single<ToolRepository> {
         ToolRepositoryImpl()
+    }
+
+    single<EquipmentRepository> {
+        EquipmentRepositoryImpl()
     }
 
     single<MonsterRepository> {

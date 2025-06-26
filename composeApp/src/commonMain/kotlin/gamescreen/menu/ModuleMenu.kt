@@ -6,6 +6,7 @@ import core.UpdatePlayer
 import core.usecase.item.useskill.UseSkillUseCase
 import core.usecase.item.useskill.UseSkillUseCaseImpl
 import gamescreen.menu.component.StatusComponentViewModel
+import gamescreen.menu.item.equipment.user.EquipmentUserViewModel
 import gamescreen.menu.item.repository.index.IndexRepository
 import gamescreen.menu.item.repository.index.IndexRepositoryImpl
 import gamescreen.menu.item.repository.target.TargetRepository
@@ -101,6 +102,14 @@ val ModuleMenu = module {
         )
     }
 
+    single {
+        EquipmentUserViewModel(
+            statusDataRepository = get(
+                qualifier = PlayerStatusRepositoryName,
+            ),
+        )
+    }
+
     single<MenuStateRepository> {
         MenuStateRepositoryImpl()
     }
@@ -129,6 +138,7 @@ val ModuleMenu = module {
             toolListViewModel = get(),
             toolTargetViewModel = get(),
             toolGiveUserViewModel = get(),
+            equipmentUserViewModel = get(),
         )
     }
 
