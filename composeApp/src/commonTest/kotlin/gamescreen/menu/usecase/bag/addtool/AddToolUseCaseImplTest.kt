@@ -1,5 +1,6 @@
 package gamescreen.menu.usecase.bag.addtool
 
+import core.ModuleCore
 import core.ToolBagRepositoryName
 import core.repository.bag.BagRepository
 import data.item.tool.ToolId
@@ -22,7 +23,10 @@ class AddToolUseCaseImplTest : KoinTest {
     @BeforeTest
     fun beforeTest() {
         startKoin {
-            modules(ModuleMenu)
+            modules(
+                ModuleCore,
+                ModuleMenu,
+            )
         }
     }
 
