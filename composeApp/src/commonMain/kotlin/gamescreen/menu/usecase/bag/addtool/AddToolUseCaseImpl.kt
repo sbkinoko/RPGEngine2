@@ -1,11 +1,11 @@
 package gamescreen.menu.usecase.bag.addtool
 
+import core.domain.item.BagItemData
+import core.repository.bag.BagRepository
 import data.item.tool.ToolId
-import gamescreen.menu.domain.BagToolData
-import gamescreen.menu.repository.bag.BagRepository
 
 class AddToolUseCaseImpl(
-    private val bagRepository: BagRepository,
+    private val bagRepository: BagRepository<ToolId>,
 ) : AddToolUseCase {
     override fun invoke(
         toolId: ToolId,
@@ -16,7 +16,7 @@ class AddToolUseCaseImpl(
         if (list.isEmpty()) {
             // 空なので新規追加
             bagRepository.setData(
-                BagToolData(toolId, toolNum)
+                BagItemData(toolId, toolNum)
             )
             return
         }
@@ -33,7 +33,7 @@ class AddToolUseCaseImpl(
         } else {
             // なければ新規追加
             bagRepository.setData(
-                BagToolData(toolId, toolNum)
+                BagItemData(toolId, toolNum)
             )
         }
     }

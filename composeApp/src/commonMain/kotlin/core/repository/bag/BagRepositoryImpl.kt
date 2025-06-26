@@ -1,20 +1,20 @@
-package gamescreen.menu.repository.bag
+package core.repository.bag
 
-import data.item.tool.ToolId
-import gamescreen.menu.domain.BagToolData
+import core.domain.item.BagItemData
+import data.item.ItemId
 
-class BagRepositoryImpl : BagRepository {
-    private var bagToolDataList: List<BagToolData> = listOf()
+class BagRepositoryImpl<T : ItemId> : BagRepository<T> {
+    private var bagToolDataList: List<BagItemData<T>> = listOf()
 
-    override fun getList(): List<BagToolData> {
+    override fun getList(): List<BagItemData<T>> {
         return bagToolDataList
     }
 
-    override fun getItemIdAt(index: Int): ToolId {
+    override fun getItemIdAt(index: Int): T {
         return bagToolDataList[index].id
     }
 
-    override fun setData(data: BagToolData) {
+    override fun setData(data: BagItemData<T>) {
         bagToolDataList = if (
             bagToolDataList.any { it.id == data.id }
         ) {

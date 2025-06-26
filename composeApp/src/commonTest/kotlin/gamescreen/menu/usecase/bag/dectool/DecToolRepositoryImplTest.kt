@@ -1,9 +1,11 @@
 package gamescreen.menu.usecase.bag.dectool
 
+import core.ModuleCore
+import core.ToolBagRepositoryName
+import core.domain.item.BagItemData
+import core.repository.bag.BagRepository
 import data.item.tool.ToolId
 import gamescreen.menu.ModuleMenu
-import gamescreen.menu.domain.BagToolData
-import gamescreen.menu.repository.bag.BagRepository
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
@@ -14,13 +16,16 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class DecToolUseCaseImplTest : KoinTest {
-    private val bagRepository: BagRepository by inject()
+    private val bagRepository: BagRepository<ToolId> by inject(
+        qualifier = ToolBagRepositoryName,
+    )
     private val decToolUseCase: DecToolUseCase by inject()
 
     @BeforeTest
     fun beforeTest() {
         startKoin {
             modules(
+                ModuleCore,
                 ModuleMenu,
             )
         }
@@ -35,7 +40,7 @@ class DecToolUseCaseImplTest : KoinTest {
     fun testDecTool() {
         val id = ToolId.HEAL1
         val num = 1
-        val bagToolData = BagToolData(
+        val bagToolData = BagItemData(
             id = id,
             num = num,
         )

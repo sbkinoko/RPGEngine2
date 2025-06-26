@@ -1,11 +1,11 @@
 package gamescreen.menu.usecase.gettoolid
 
+import core.domain.item.BagItemData
 import core.domain.status.PlayerStatus
+import core.repository.bag.BagRepository
 import core.repository.player.PlayerStatusRepository
 import data.item.skill.SkillId
 import data.item.tool.ToolId
-import gamescreen.menu.domain.BagToolData
-import gamescreen.menu.repository.bag.BagRepository
 import kotlinx.coroutines.flow.StateFlow
 import values.Constants
 import kotlin.test.Test
@@ -49,8 +49,8 @@ class GetToolIdUseCaseImplTest {
     }
 
     private var countBag = 0
-    private val bagRepository = object : BagRepository {
-        override fun getList(): List<BagToolData> {
+    private val bagRepository = object : BagRepository<ToolId> {
+        override fun getList(): List<BagItemData<ToolId>> {
             throw NotImplementedError()
         }
 
@@ -59,7 +59,7 @@ class GetToolIdUseCaseImplTest {
             return ToolId.HEAL1
         }
 
-        override fun setData(data: BagToolData) {
+        override fun setData(data: BagItemData<ToolId>) {
             throw NotImplementedError()
         }
     }
