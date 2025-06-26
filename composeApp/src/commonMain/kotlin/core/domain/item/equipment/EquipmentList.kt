@@ -4,4 +4,9 @@ import data.item.equipment.EquipmentId
 
 data class EquipmentList(
     val weapon: EquipmentId = EquipmentId.None,
-)
+) {
+    val list
+        get() = listOf(
+            weapon
+        )
+}

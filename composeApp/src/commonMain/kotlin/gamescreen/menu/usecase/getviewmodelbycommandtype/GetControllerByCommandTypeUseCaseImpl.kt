@@ -2,6 +2,7 @@ package gamescreen.menu.usecase.getviewmodelbycommandtype
 
 import controller.domain.ControllerCallback
 import gamescreen.menu.domain.MenuType
+import gamescreen.menu.item.equipment.user.EquipmentUserViewModel
 import gamescreen.menu.item.skill.list.SkillListViewModel
 import gamescreen.menu.item.skill.target.SkillTargetViewModel
 import gamescreen.menu.item.skill.user.SkillUserViewModel
@@ -27,6 +28,8 @@ class GetControllerByCommandTypeUseCaseImpl(
     private val toolListViewModel: ToolListViewModel,
     private val toolTargetViewModel: ToolTargetViewModel,
     private val toolGiveUserViewModel: ToolGiveUserViewModel,
+
+    private val equipmentUserViewModel: EquipmentUserViewModel,
 ) : GetControllerByCommandTypeUseCase {
 
     override fun invoke(): ControllerCallback? {
@@ -40,6 +43,7 @@ class GetControllerByCommandTypeUseCaseImpl(
             MenuType.TOOL_LIST -> toolListViewModel
             MenuType.TOOL_TARGET -> toolTargetViewModel
             MenuType.TOOL_GIVE -> toolGiveUserViewModel
+            MenuType.EQUIPMENT_LIST -> equipmentUserViewModel
             MenuType.Item3 -> null
             MenuType.Collision -> null
             MenuType.Item5 -> null
