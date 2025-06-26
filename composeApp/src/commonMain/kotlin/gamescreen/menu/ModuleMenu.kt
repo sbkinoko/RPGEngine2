@@ -1,6 +1,7 @@
 package gamescreen.menu
 
 import core.PlayerStatusRepositoryName
+import core.ToolBagRepositoryName
 import core.UpdatePlayer
 import core.usecase.item.useskill.UseSkillUseCase
 import core.usecase.item.useskill.UseSkillUseCaseImpl
@@ -19,8 +20,6 @@ import gamescreen.menu.item.tool.list.ToolListViewModel
 import gamescreen.menu.item.tool.target.ToolTargetViewModel
 import gamescreen.menu.item.tool.user.ToolUserViewModel
 import gamescreen.menu.main.MainMenuViewModel
-import gamescreen.menu.repository.bag.BagRepository
-import gamescreen.menu.repository.bag.BagRepositoryImpl
 import gamescreen.menu.repository.menustate.MenuStateRepository
 import gamescreen.menu.repository.menustate.MenuStateRepositoryImpl
 import gamescreen.menu.status.StatusViewModel
@@ -118,10 +117,6 @@ val ModuleMenu = module {
         IndexRepositoryImpl()
     }
 
-    single<BagRepository> {
-        BagRepositoryImpl()
-    }
-
     single<GetControllerByCommandTypeUseCase> {
         GetControllerByCommandTypeUseCaseImpl(
             menuStateRepository = get(),
@@ -156,13 +151,17 @@ val ModuleMenu = module {
 
     single<AddToolUseCase> {
         AddToolUseCaseImpl(
-            bagRepository = get(),
+            bagRepository = get(
+                qualifier = ToolBagRepositoryName,
+            ),
         )
     }
 
     single<DecToolUseCase> {
         DecToolUseCaseImpl(
-            bagRepository = get(),
+            bagRepository = get(
+                qualifier = ToolBagRepositoryName
+            ),
         )
     }
 
@@ -171,7 +170,9 @@ val ModuleMenu = module {
             targetRepository = get(),
             userRepository = get(),
             indexRepository = get(),
-            bagRepository = get(),
+            bagRepository = get(
+                qualifier = ToolBagRepositoryName,
+            ),
             playerStatusRepository = get(),
             decToolUseCase = get(),
             addToolUseCase = get(),

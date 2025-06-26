@@ -1,8 +1,9 @@
 package gamescreen.menu.usecase.bag.addtool
 
+import core.ToolBagRepositoryName
+import core.repository.bag.BagRepository
 import data.item.tool.ToolId
 import gamescreen.menu.ModuleMenu
-import gamescreen.menu.repository.bag.BagRepository
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
@@ -13,7 +14,9 @@ import kotlin.test.Test
 import kotlin.test.assertTrue
 
 class AddToolUseCaseImplTest : KoinTest {
-    private val bagRepository: BagRepository by inject()
+    private val bagRepository: BagRepository<ToolId> by inject(
+        qualifier = ToolBagRepositoryName,
+    )
     private val addToolUseCase: AddToolUseCase by inject()
 
     @BeforeTest

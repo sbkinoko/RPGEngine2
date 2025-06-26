@@ -1,16 +1,17 @@
 package gamescreen.menu.usecase.givetool
 
 import core.ModuleCore
+import core.ToolBagRepositoryName
+import core.domain.item.BagItemData
+import core.repository.bag.BagRepository
 import core.repository.player.PlayerStatusRepository
 import data.ModuleData
 import data.item.tool.ToolId
 import gamescreen.menu.ModuleMenu
-import gamescreen.menu.domain.BagToolData
 import gamescreen.menu.domain.GiveResult
 import gamescreen.menu.item.repository.index.IndexRepository
 import gamescreen.menu.item.repository.target.TargetRepository
 import gamescreen.menu.item.repository.user.UserRepository
-import gamescreen.menu.repository.bag.BagRepository
 import kotlinx.coroutines.runBlocking
 import org.koin.core.component.inject
 import org.koin.core.context.startKoin
@@ -25,7 +26,9 @@ import kotlin.test.assertEquals
 
 class GiveToolUseCaseImplTest : KoinTest {
     private val playerStatusRepository: PlayerStatusRepository by inject()
-    private val bagRepository: BagRepository by inject()
+    private val bagRepository: BagRepository<ToolId> by inject(
+        qualifier = ToolBagRepositoryName,
+    )
     private val targetRepository: TargetRepository by inject()
     private val userRepository: UserRepository by inject()
     private val indexRepository: IndexRepository by inject()
@@ -130,7 +133,7 @@ class GiveToolUseCaseImplTest : KoinTest {
 
             assertEquals(
                 expected = listOf(
-                    BagToolData(id = id1, num = 1)
+                    BagItemData(id = id1, num = 1)
                 ),
                 actual = bagRepository.getList()
             )
@@ -158,8 +161,8 @@ class GiveToolUseCaseImplTest : KoinTest {
 
             assertEquals(
                 expected = listOf(
-                    BagToolData(id = id1, num = 1),
-                    BagToolData(id = id2, num = 1),
+                    BagItemData(id = id1, num = 1),
+                    BagItemData(id = id2, num = 1),
                 ),
                 actual = bagRepository.getList()
             )
@@ -209,7 +212,7 @@ class GiveToolUseCaseImplTest : KoinTest {
             val id = ToolId.HEAL1
             val result1 = moveFromBagToPlayer(
                 itemList = listOf(
-                    BagToolData(id = id, num = 1),
+                    BagItemData(id = id, num = 1),
                 ),
                 index = 0,
             )
@@ -225,7 +228,7 @@ class GiveToolUseCaseImplTest : KoinTest {
             )
             assertEquals(
                 expected = listOf(
-                    BagToolData(
+                    BagItemData(
                         id = id,
                         num = 0,
                     )
@@ -237,8 +240,8 @@ class GiveToolUseCaseImplTest : KoinTest {
             val id2 = ToolId.HEAL2
             val result2 = moveFromBagToPlayer(
                 itemList = listOf(
-                    BagToolData(id = id1, num = 1),
-                    BagToolData(id = id2, num = 2),
+                    BagItemData(id = id1, num = 1),
+                    BagItemData(id = id2, num = 2),
                 ),
                 index = 1,
             )
@@ -255,11 +258,11 @@ class GiveToolUseCaseImplTest : KoinTest {
             )
             assertEquals(
                 expected = listOf(
-                    BagToolData(
+                    BagItemData(
                         id = id1,
                         num = 1,
                     ),
-                    BagToolData(
+                    BagItemData(
                         id = id2,
                         num = 1,
                     )
@@ -270,7 +273,7 @@ class GiveToolUseCaseImplTest : KoinTest {
     }
 
     private suspend fun moveFromBagToPlayer(
-        itemList: List<BagToolData>,
+        itemList: List<BagItemData<ToolId>>,
         index: Int,
     ): GiveResult {
         userRepository.userId = Constants.playerNum

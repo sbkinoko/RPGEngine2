@@ -1,6 +1,8 @@
 package core
 
 import core.domain.status.StatusType
+import core.repository.bag.BagRepository
+import core.repository.bag.BagRepositoryImpl
 import core.repository.battlemonster.BattleInfoRepository
 import core.repository.battlemonster.BattleInfoRepositoryImpl
 import core.repository.event.EventRepository
@@ -29,6 +31,7 @@ import core.usecase.updateparameter.UpdatePlayerStatusUseCase
 import core.usecase.updateparameter.UpdatePlayerStatusUseCaseImpl
 import core.usecase.updateparameter.UpdateStatusUseCase
 import core.usecase.updateparameter.UpdateStatusUseCaseImpl
+import data.item.tool.ToolId
 import gamescreen.menu.usecase.gettoolid.GetToolIdUseCase
 import gamescreen.menu.usecase.gettoolid.GetToolIdUseCaseImpl
 import org.koin.core.qualifier.named
@@ -41,6 +44,8 @@ val UpdateEnemyUseCaseName = named("UpdateEnemyStatus")
 val PlayerStatusRepositoryName = named("PlayerStatusRepository")
 
 val EnemyStatusRepositoryName = named("EnemyStatusRepository")
+
+val ToolBagRepositoryName = named("ToolBagRepository")
 
 val ModuleCore = module {
     single<StatusDataRepository<StatusType.Player>>(
@@ -132,7 +137,9 @@ val ModuleCore = module {
     single<GetToolIdUseCase> {
         GetToolIdUseCaseImpl(
             playerStatusRepository = get(),
-            bagRepository = get(),
+            bagRepository = get(
+                qualifier = ToolBagRepositoryName,
+            ),
         )
     }
 
@@ -156,5 +163,11 @@ val ModuleCore = module {
             playerStatusRepository = get(),
             statusDataRepository = get(),
         )
+    }
+
+    single<BagRepository<ToolId>>(
+        qualifier = ToolBagRepositoryName,
+    ) {
+        BagRepositoryImpl()
     }
 }

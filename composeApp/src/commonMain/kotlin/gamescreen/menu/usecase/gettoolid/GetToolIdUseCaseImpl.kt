@@ -1,13 +1,13 @@
 package gamescreen.menu.usecase.gettoolid
 
+import core.repository.bag.BagRepository
 import core.repository.player.PlayerStatusRepository
 import data.item.tool.ToolId
-import gamescreen.menu.repository.bag.BagRepository
 import values.Constants
 
 class GetToolIdUseCaseImpl(
     private val playerStatusRepository: PlayerStatusRepository,
-    private val bagRepository: BagRepository,
+    private val bagRepository: BagRepository<ToolId>,
 ) : GetToolIdUseCase {
     override fun invoke(
         userId: Int,

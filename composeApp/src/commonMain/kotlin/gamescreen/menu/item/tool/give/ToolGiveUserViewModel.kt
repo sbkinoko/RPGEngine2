@@ -1,18 +1,19 @@
 package gamescreen.menu.item.tool.give
 
+import core.ToolBagRepositoryName
+import core.domain.item.BagItemData
 import core.domain.status.StatusType
+import core.repository.bag.BagRepository
 import core.repository.statusdata.StatusDataRepository
 import data.item.tool.ToolId
 import data.item.tool.ToolRepository
 import gamescreen.choice.Choice
 import gamescreen.choice.repository.ChoiceRepository
-import gamescreen.menu.domain.BagToolData
 import gamescreen.menu.domain.GiveResult
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.domain.SelectManager
 import gamescreen.menu.item.abstract.user.ItemUserViewModel
 import gamescreen.menu.item.repository.target.TargetRepository
-import gamescreen.menu.repository.bag.BagRepository
 import gamescreen.menu.usecase.givetool.GiveToolUseCase
 import gamescreen.text.TextBoxData
 import gamescreen.text.repository.TextRepository
@@ -28,7 +29,9 @@ class ToolGiveUserViewModel(
 ) : ItemUserViewModel<ToolId>(),
     KoinComponent {
     override val itemRepository: ToolRepository by inject()
-    private val bagRepository: BagRepository by inject()
+    private val bagRepository: BagRepository<ToolId> by inject(
+        qualifier = ToolBagRepositoryName,
+    )
     private val targetRepository: TargetRepository by inject()
 
     private val choiceRepository: ChoiceRepository by inject()
@@ -54,13 +57,13 @@ class ToolGiveUserViewModel(
     // 別の場所で呼び出す
     init {
         bagRepository.setData(
-            data = BagToolData(
+            data = BagItemData(
                 id = ToolId.HEAL1,
                 num = 100,
             )
         )
         bagRepository.setData(
-            data = BagToolData(
+            data = BagItemData(
                 id = ToolId.HEAL2,
                 num = 100,
             )

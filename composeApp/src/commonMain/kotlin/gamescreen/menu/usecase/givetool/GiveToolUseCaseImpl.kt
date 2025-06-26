@@ -1,12 +1,12 @@
 package gamescreen.menu.usecase.givetool
 
+import core.repository.bag.BagRepository
 import core.repository.player.PlayerStatusRepository
 import data.item.tool.ToolId
 import gamescreen.menu.domain.GiveResult
 import gamescreen.menu.item.repository.index.IndexRepository
 import gamescreen.menu.item.repository.target.TargetRepository
 import gamescreen.menu.item.repository.user.UserRepository
-import gamescreen.menu.repository.bag.BagRepository
 import gamescreen.menu.usecase.bag.addtool.AddToolUseCase
 import gamescreen.menu.usecase.bag.dectool.DecToolUseCase
 import values.Constants
@@ -16,7 +16,7 @@ class GiveToolUseCaseImpl(
     private val targetRepository: TargetRepository,
     private val userRepository: UserRepository,
     private val indexRepository: IndexRepository,
-    private val bagRepository: BagRepository,
+    private val bagRepository: BagRepository<ToolId>,
     private val playerStatusRepository: PlayerStatusRepository,
 
     private val decToolUseCase: DecToolUseCase,

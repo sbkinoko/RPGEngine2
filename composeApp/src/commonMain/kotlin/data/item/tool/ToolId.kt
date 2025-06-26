@@ -1,6 +1,8 @@
 package data.item.tool
 
-enum class ToolId {
+import data.item.ItemId
+
+enum class ToolId : ItemId {
     None,
     HEAL1,
     HEAL2,

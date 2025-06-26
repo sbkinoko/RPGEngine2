@@ -1,10 +1,10 @@
 package gamescreen.menu.usecase.bag.dectool
 
+import core.repository.bag.BagRepository
 import data.item.tool.ToolId
-import gamescreen.menu.repository.bag.BagRepository
 
 class DecToolUseCaseImpl(
-    private val bagRepository: BagRepository,
+    private val bagRepository: BagRepository<ToolId>,
 ) : DecToolUseCase {
     override fun invoke(
         itemId: ToolId,

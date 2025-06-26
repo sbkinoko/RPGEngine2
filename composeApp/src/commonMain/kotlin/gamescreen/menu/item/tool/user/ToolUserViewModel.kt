@@ -1,14 +1,15 @@
 package gamescreen.menu.item.tool.user
 
+import core.ToolBagRepositoryName
+import core.domain.item.BagItemData
 import core.domain.status.StatusType
+import core.repository.bag.BagRepository
 import core.repository.statusdata.StatusDataRepository
 import data.item.tool.ToolId
 import data.item.tool.ToolRepository
-import gamescreen.menu.domain.BagToolData
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.domain.SelectManager
 import gamescreen.menu.item.abstract.user.ItemUserViewModel
-import gamescreen.menu.repository.bag.BagRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import values.Constants
@@ -18,7 +19,9 @@ class ToolUserViewModel(
 ) : ItemUserViewModel<ToolId>(),
     KoinComponent {
     override val itemRepository: ToolRepository by inject()
-    private val bagRepository: BagRepository by inject()
+    private val bagRepository: BagRepository<ToolId> by inject(
+        qualifier = ToolBagRepositoryName,
+    )
 
     override val boundedScreenType: MenuType
         get() = MenuType.TOOL_USER
@@ -38,13 +41,13 @@ class ToolUserViewModel(
     // toolGiveUseViewModelでも同じことをしている
     init {
         bagRepository.setData(
-            data = BagToolData(
+            data = BagItemData(
                 id = ToolId.HEAL1,
                 num = 100,
             )
         )
         bagRepository.setData(
-            data = BagToolData(
+            data = BagItemData(
                 id = ToolId.HEAL2,
                 num = 100,
             )
