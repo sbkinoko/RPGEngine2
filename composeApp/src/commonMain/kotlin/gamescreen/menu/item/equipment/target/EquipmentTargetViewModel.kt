@@ -105,6 +105,8 @@ class EquipmentTargetViewModel(
 
     private fun selectYes() {
         CoroutineScope(Dispatchers.Default).launch {
+            //　todo 袋から装備を減らす
+
             equipmentUseCase.invoke(
                 target = targetRepository.target,
                 equipmentId = itemId,
