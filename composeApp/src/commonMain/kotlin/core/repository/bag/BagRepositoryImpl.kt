@@ -1,20 +1,20 @@
 package core.repository.bag
 
 import core.domain.item.BagItemData
-import data.item.tool.ToolId
+import data.item.ItemId
 
-class BagRepositoryImpl : BagRepository<ToolId> {
-    private var bagToolDataList: List<BagItemData<ToolId>> = listOf()
+class BagRepositoryImpl<T : ItemId> : BagRepository<T> {
+    private var bagToolDataList: List<BagItemData<T>> = listOf()
 
-    override fun getList(): List<BagItemData<ToolId>> {
+    override fun getList(): List<BagItemData<T>> {
         return bagToolDataList
     }
 
-    override fun getItemIdAt(index: Int): ToolId {
+    override fun getItemIdAt(index: Int): T {
         return bagToolDataList[index].id
     }
 
-    override fun setData(data: BagItemData<ToolId>) {
+    override fun setData(data: BagItemData<T>) {
         bagToolDataList = if (
             bagToolDataList.any { it.id == data.id }
         ) {

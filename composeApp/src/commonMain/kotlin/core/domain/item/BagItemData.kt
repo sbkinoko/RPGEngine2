@@ -1,8 +1,8 @@
 package core.domain.item
 
-import data.item.tool.ToolId
+import data.item.ItemId
 
-data class BagItemData<T : ToolId>(
+data class BagItemData<T : ItemId>(
     val id: T,
     val num: Int,
 )
