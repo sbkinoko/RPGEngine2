@@ -8,7 +8,7 @@ import core.usecase.item.useskill.UseSkillUseCase
 import data.item.skill.SkillId
 import data.item.skill.SkillRepository
 import gamescreen.menu.domain.MenuType
-import gamescreen.menu.item.abstract.target.ItemTargetViewModel
+import gamescreen.menu.item.abstract.target.UsableTargetViewModel
 import gamescreen.menu.item.repository.index.IndexRepository
 import gamescreen.text.TextBoxData
 import kotlinx.coroutines.CoroutineScope
@@ -16,7 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.core.component.inject
 
-class SkillTargetViewModel : ItemTargetViewModel<SkillId, Skill>() {
+class SkillTargetViewModel : UsableTargetViewModel<SkillId, Skill>() {
     override val itemRepository: SkillRepository by inject()
 
     private val indexRepository: IndexRepository by inject()
