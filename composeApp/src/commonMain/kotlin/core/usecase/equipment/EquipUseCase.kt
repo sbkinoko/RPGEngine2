@@ -1,15 +1,15 @@
 package core.usecase.equipment
 
-import core.domain.equipment.Equipment
+import data.item.equipment.EquipmentId
 
 interface EquipUseCase {
 
     /**
      * @param target 装備をつけたいキャラ
-     * @param equipment つけたい装備
+     * @param equipmentId つけたい装備
      */
     suspend fun invoke(
         target: Int,
-        equipment: Equipment,
+        equipmentId: EquipmentId,
     )
 }

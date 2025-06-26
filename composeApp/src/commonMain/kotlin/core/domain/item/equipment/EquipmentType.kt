@@ -1,4 +1,4 @@
-package core.domain.equipment
+package core.domain.item.equipment
 
 sealed class EquipmentType {
 
