@@ -21,6 +21,7 @@ enum class MenuType(
 
     EQUIPMENT_USER(title = "装備"),
     EQUIPMENT_LIST,
+    EQUIPMENT_TARGET,
 
     Item3(title = "text3"),
     Collision(title = "当たり判定:"),

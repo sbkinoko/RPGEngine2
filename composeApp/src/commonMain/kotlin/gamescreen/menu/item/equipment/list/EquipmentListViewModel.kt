@@ -20,13 +20,15 @@ class EquipmentListViewModel : ItemListViewModel<EquipmentId, EquipmentData>() {
     override val boundedScreenType: MenuType
         get() = MenuType.EQUIPMENT_LIST
     override val nextScreenType: MenuType
-        get() = throw NotImplementedError()
+        get() = MenuType.EQUIPMENT_TARGET
 
     override fun getAbleType(): AbleType {
         return AbleType.Able
     }
 
     override fun goNextImpl() {
+        // todo playerを選択した状態で次にすすんだらどうするかを考える
+
         // indexを保存
         indexRepository.index = selectManager.selected
 

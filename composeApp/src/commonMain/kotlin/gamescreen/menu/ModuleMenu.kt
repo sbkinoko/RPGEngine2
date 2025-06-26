@@ -7,6 +7,7 @@ import core.usecase.item.useskill.UseSkillUseCase
 import core.usecase.item.useskill.UseSkillUseCaseImpl
 import gamescreen.menu.component.StatusComponentViewModel
 import gamescreen.menu.item.equipment.list.EquipmentListViewModel
+import gamescreen.menu.item.equipment.target.EquipmentTargetViewModel
 import gamescreen.menu.item.equipment.user.EquipmentUserViewModel
 import gamescreen.menu.item.repository.index.IndexRepository
 import gamescreen.menu.item.repository.index.IndexRepositoryImpl
@@ -116,6 +117,12 @@ val ModuleMenu = module {
         )
     }
 
+    single {
+        EquipmentTargetViewModel(
+            equipmentUseCase = get(),
+        )
+    }
+
     single<MenuStateRepository> {
         MenuStateRepositoryImpl()
     }
@@ -147,6 +154,7 @@ val ModuleMenu = module {
 
             equipmentUserViewModel = get(),
             equipmentListViewModel = get(),
+            equipmentTargetViewModel = get(),
         )
     }
 
