@@ -1,5 +1,6 @@
 package gamescreen.menu.item.skill.user
 
+import core.domain.item.Skill
 import core.domain.status.StatusType
 import core.repository.player.PlayerStatusRepository
 import core.repository.statusdata.StatusDataRepository
@@ -13,7 +14,7 @@ import values.Constants
 
 class SkillUserViewModel(
     private val statusDataRepository: StatusDataRepository<StatusType.Player>,
-) : ItemUserViewModel<SkillId>() {
+) : ItemUserViewModel<SkillId, Skill>() {
     val repository: PlayerStatusRepository by inject()
 
     override val itemRepository: SkillRepository by inject()

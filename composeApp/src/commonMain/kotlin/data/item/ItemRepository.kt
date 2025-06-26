@@ -1,7 +1,5 @@
 package data.item
 
-import core.domain.item.Item
-
-interface ItemRepository<T> {
-    fun getItem(id: T): Item
+interface ItemRepository<T, V> {
+    fun getItem(id: T): V
 }

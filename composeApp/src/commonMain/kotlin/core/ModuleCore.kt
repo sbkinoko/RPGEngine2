@@ -31,6 +31,7 @@ import core.usecase.updateparameter.UpdatePlayerStatusUseCase
 import core.usecase.updateparameter.UpdatePlayerStatusUseCaseImpl
 import core.usecase.updateparameter.UpdateStatusUseCase
 import core.usecase.updateparameter.UpdateStatusUseCaseImpl
+import data.item.equipment.EquipmentId
 import data.item.tool.ToolId
 import gamescreen.menu.usecase.gettoolid.GetToolIdUseCase
 import gamescreen.menu.usecase.gettoolid.GetToolIdUseCaseImpl
@@ -46,6 +47,10 @@ val PlayerStatusRepositoryName = named("PlayerStatusRepository")
 val EnemyStatusRepositoryName = named("EnemyStatusRepository")
 
 val ToolBagRepositoryName = named("ToolBagRepository")
+
+val EquipmentBagRepositoryName = named(
+    "EquipmentBagRepository"
+)
 
 val ModuleCore = module {
     single<StatusDataRepository<StatusType.Player>>(
@@ -168,6 +173,13 @@ val ModuleCore = module {
     single<BagRepository<ToolId>>(
         qualifier = ToolBagRepositoryName,
     ) {
+        BagRepositoryImpl()
+    }
+
+    single<BagRepository<EquipmentId>>(
+        qualifier = EquipmentBagRepositoryName
+    )
+    {
         BagRepositoryImpl()
     }
 }

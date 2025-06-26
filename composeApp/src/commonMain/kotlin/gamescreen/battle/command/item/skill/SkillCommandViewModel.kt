@@ -3,6 +3,7 @@ package gamescreen.battle.command.item.skill
 import core.domain.AbleType
 import core.domain.Const
 import core.domain.Place
+import core.domain.item.Skill
 import core.usecase.item.checkcanuseskill.CheckCanUseSkillUseCase
 import data.item.skill.SkillId
 import data.item.skill.SkillRepository
@@ -13,7 +14,7 @@ import gamescreen.battle.domain.SkillCommand
 import gamescreen.menu.domain.SelectManager
 import org.koin.core.component.inject
 
-class SkillCommandViewModel : ItemCommandViewModel<SkillId>() {
+class SkillCommandViewModel : ItemCommandViewModel<SkillId, Skill>() {
     override val itemRepository: SkillRepository by inject()
 
     private val checkCanUseSkillUseCase: CheckCanUseSkillUseCase by inject()

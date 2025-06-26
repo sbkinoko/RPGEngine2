@@ -32,6 +32,12 @@ class EquipUseCaseImpl(
                     copy(
                         weapon = equipment,
                     )
+
+                EquipmentType.Shield -> {
+                    copy(
+                        weapon = equipment,
+                    )
+                }
             }
         }
 

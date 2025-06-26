@@ -19,7 +19,7 @@ import gamescreen.text.repository.TextRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-abstract class ItemListViewModel<T> : MenuChildViewModel(),
+abstract class ItemListViewModel<T, V : Item> : MenuChildViewModel(),
     ItemList<T>,
     KoinComponent {
     protected val menuStateRepository: MenuStateRepository by inject()
@@ -33,7 +33,7 @@ abstract class ItemListViewModel<T> : MenuChildViewModel(),
         qualifier = PlayerStatusRepositoryName
     )
 
-    protected abstract val itemRepository: ItemRepository<T>
+    protected abstract val itemRepository: ItemRepository<T, V>
 
     override var selectManager = SelectManager(
         width = 1,

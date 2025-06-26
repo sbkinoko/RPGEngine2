@@ -2,6 +2,7 @@ package gamescreen.menu.item.abstract.target
 
 import core.PlayerStatusRepositoryName
 import core.domain.AbleType
+import core.domain.item.Item
 import core.domain.status.StatusType
 import core.repository.player.PlayerStatusRepository
 import core.repository.statusdata.StatusDataRepository
@@ -17,7 +18,7 @@ import gamescreen.text.repository.TextRepository
 import org.koin.core.component.inject
 import values.Constants.Companion.playerNum
 
-abstract class ItemTargetViewModel<T> : MenuChildViewModel() {
+abstract class ItemTargetViewModel<T, V : Item> : MenuChildViewModel() {
     protected val userRepository: UserRepository by inject()
     protected val targetRepository: TargetRepository by inject()
     protected val playerStatusRepository: PlayerStatusRepository by inject()
@@ -27,7 +28,7 @@ abstract class ItemTargetViewModel<T> : MenuChildViewModel() {
 
     private val choiceRepository: ChoiceRepository by inject()
 
-    protected abstract val itemRepository: ItemRepository<T>
+    protected abstract val itemRepository: ItemRepository<T, V>
 
     protected val textRepository: TextRepository by inject()
 
