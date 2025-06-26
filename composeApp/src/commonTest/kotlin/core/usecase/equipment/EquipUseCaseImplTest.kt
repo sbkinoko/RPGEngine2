@@ -1,8 +1,8 @@
 package core.usecase.equipment
 
-import core.domain.item.item_.equipment.Equipment
-import core.domain.item.item_.equipment.EquipmentData
-import core.domain.item.item_.equipment.EquipmentType
+import core.domain.item.equipment.EquipmentData
+import core.domain.item.equipment.EquipmentList
+import core.domain.item.equipment.EquipmentType
 import core.domain.status.IncData
 import core.domain.status.PlayerStatus
 import core.domain.status.StatusData
@@ -13,6 +13,8 @@ import core.domain.status.param.EXP
 import core.domain.status.param.StatusParameter
 import core.repository.player.PlayerStatusRepository
 import core.repository.statusdata.StatusDataRepository
+import data.item.equipment.EquipmentId
+import data.item.equipment.EquipmentRepository
 import data.item.skill.SkillId
 import data.item.tool.ToolId
 import kotlinx.coroutines.flow.StateFlow
@@ -23,6 +25,9 @@ import kotlin.test.assertEquals
 
 class EquipUseCaseImplTest {
     val initAtk = 10
+
+    val upATK1 = 10
+    val upATK2 = 15
 
     private val statusDataRepository = object : StatusDataRepository<StatusType.Player> {
         override val statusDataFlow: StateFlow<List<StatusData<StatusType.Player>>>
@@ -54,7 +59,7 @@ class EquipUseCaseImplTest {
         }
     }
 
-    private val initialEquipment = EquipmentData()
+    private val initialEquipment = EquipmentList()
 
     private val playerRepository = object : PlayerStatusRepository {
         override val playerStatusFlow: StateFlow<List<PlayerStatus>>
@@ -99,9 +104,46 @@ class EquipUseCaseImplTest {
         }
     }
 
+    private val equipmentRepository = object : EquipmentRepository {
+
+        override fun getItem(id: EquipmentId): EquipmentData {
+            return when (id) {
+                EquipmentId.Sword -> EquipmentData(
+                    name = "けん",
+                    explain = "けん",
+                    type = EquipmentType.Weapon,
+                    statusList = StatusIncrease.empty.copy(
+                        atk = IncData(upATK1),
+                    )
+                )
+
+                EquipmentId.Shield,
+
+                    -> EquipmentData(
+                    name = "けん２",
+                    explain = "けん2",
+                    type = EquipmentType.Weapon,
+                    statusList = StatusIncrease.empty.copy(
+                        atk = IncData(upATK2),
+                    )
+                )
+
+                EquipmentId.None,
+
+                    -> EquipmentData(
+                    name = "",
+                    explain = "",
+                    statusList = StatusIncrease.empty,
+                    type = EquipmentType.Weapon,
+                )
+            }
+        }
+    }
+
     private val useCase: EquipUseCase = EquipUseCaseImpl(
         playerStatusRepository = playerRepository,
         statusDataRepository = statusDataRepository,
+        equipmentRepository = equipmentRepository,
     )
 
     @BeforeTest
@@ -120,13 +162,8 @@ class EquipUseCaseImplTest {
     @Test
     fun setEquipment() {
         runBlocking {
-            val upATK = 11
-            val equipment = Equipment(
-                type = EquipmentType.Weapon,
-                statusList = StatusIncrease.empty.copy(
-                    atk = IncData(upATK),
-                )
-            )
+            val equipment = EquipmentId.Sword
+
             val target = 0
             useCase.invoke(
                 target = target,
@@ -134,7 +171,7 @@ class EquipUseCaseImplTest {
             )
 
             assertEquals(
-                expected = initAtk + upATK,
+                expected = initAtk + upATK1,
                 actual = statusDataRepository
                     .getStatusData(target)
                     .atk
@@ -155,31 +192,19 @@ class EquipUseCaseImplTest {
     @Test
     fun setEquipment2() {
         runBlocking {
-            val upATK = 11
-            val equipment = Equipment(
-                type = EquipmentType.Weapon,
-                statusList = StatusIncrease.empty.copy(
-                    atk = IncData(upATK),
-                )
-            )
+            val equipment = EquipmentId.Shield
 
             // もともと攻撃力5の装備をつけていた
             val target = 0
-            val preWpAtk = 5
             val preStatus =
                 playerRepository
                     .getStatus(target)
                     .copy(
                         equipmentList = initialEquipment.copy(
-                            weapon = equipment.copy(
-                                statusList = equipment.statusList.copy(
-                                    atk = IncData(preWpAtk),
-                                )
-                            )
+                            weapon = EquipmentId.Sword,
                         )
                     )
             playerRepository.setStatus(target, preStatus)
-
 
             useCase.invoke(
                 target = target,
@@ -187,7 +212,7 @@ class EquipUseCaseImplTest {
             )
 
             assertEquals(
-                expected = initAtk + upATK - preWpAtk,
+                expected = initAtk + upATK2 - upATK1,
                 actual = statusDataRepository
                     .getStatusData(target)
                     .atk
