@@ -6,6 +6,7 @@ import core.UpdatePlayer
 import core.usecase.item.useskill.UseSkillUseCase
 import core.usecase.item.useskill.UseSkillUseCaseImpl
 import gamescreen.menu.component.StatusComponentViewModel
+import gamescreen.menu.item.equipment.list.EquipmentListViewModel
 import gamescreen.menu.item.equipment.user.EquipmentUserViewModel
 import gamescreen.menu.item.repository.index.IndexRepository
 import gamescreen.menu.item.repository.index.IndexRepositoryImpl
@@ -17,7 +18,6 @@ import gamescreen.menu.item.skill.list.SkillListViewModel
 import gamescreen.menu.item.skill.target.SkillTargetViewModel
 import gamescreen.menu.item.skill.user.SkillUserViewModel
 import gamescreen.menu.item.tool.give.ToolGiveUserViewModel
-import gamescreen.menu.item.tool.list.ToolListViewModel
 import gamescreen.menu.item.tool.target.ToolTargetViewModel
 import gamescreen.menu.item.tool.user.ToolUserViewModel
 import gamescreen.menu.main.MainMenuViewModel
@@ -87,7 +87,7 @@ val ModuleMenu = module {
     }
 
     single {
-        ToolListViewModel()
+        EquipmentListViewModel()
     }
 
     single {
@@ -107,6 +107,12 @@ val ModuleMenu = module {
             statusDataRepository = get(
                 qualifier = PlayerStatusRepositoryName,
             ),
+        )
+    }
+
+    single {
+        EquipmentListViewModel(
+
         )
     }
 
@@ -138,7 +144,9 @@ val ModuleMenu = module {
             toolListViewModel = get(),
             toolTargetViewModel = get(),
             toolGiveUserViewModel = get(),
+
             equipmentUserViewModel = get(),
+            equipmentListViewModel = get(),
         )
     }
 

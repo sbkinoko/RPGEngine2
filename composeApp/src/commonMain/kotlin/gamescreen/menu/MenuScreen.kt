@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import gamescreen.menu.domain.MenuType
+import gamescreen.menu.item.equipment.list.EquipmentListWindow
 import gamescreen.menu.item.equipment.user.EquipmentUserWindow
 import gamescreen.menu.item.skill.list.SkillListWindow
 import gamescreen.menu.item.skill.target.SkillTargetWindow
@@ -66,7 +67,11 @@ fun MenuScreen(
                 modifier = menuModifier,
             )
 
-            MenuType.EQUIPMENT_LIST -> EquipmentUserWindow(
+            MenuType.EQUIPMENT_USER -> EquipmentUserWindow(
+                modifier = menuModifier,
+            )
+
+            MenuType.EQUIPMENT_LIST -> EquipmentListWindow(
                 modifier = menuModifier,
             )
 

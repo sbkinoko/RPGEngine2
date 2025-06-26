@@ -1,18 +1,17 @@
-package gamescreen.menu.item.tool.list
+package gamescreen.menu.item.equipment.list
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import gamescreen.menu.item.abstract.itemselect.ItemListWindow
-import gamescreen.menu.item.equipment.list.EquipmentListViewModel
 import org.koin.compose.koinInject
 
 @Composable
-fun ToolListWindow(
+fun EquipmentListWindow(
     modifier: Modifier = Modifier,
-    toolListViewModel: EquipmentListViewModel = koinInject(),
+    listViewModel: EquipmentListViewModel = koinInject(),
 ) {
     ItemListWindow(
         modifier = modifier,
-        itemListViewModel = toolListViewModel,
+        itemListViewModel = listViewModel,
     )
 }
