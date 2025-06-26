@@ -1,48 +1,56 @@
 package core.usecase.equipment
 
-import core.domain.equipment.Equipment
-import core.domain.equipment.EquipmentType
+import core.domain.item.equipment.EquipmentType
 import core.domain.status.StatusType
 import core.repository.player.PlayerStatusRepository
 import core.repository.statusdata.StatusDataRepository
+import data.item.equipment.EquipmentId
+import data.item.equipment.EquipmentRepository
 
 class EquipUseCaseImpl(
     private val playerStatusRepository: PlayerStatusRepository,
     private val statusDataRepository: StatusDataRepository<StatusType.Player>,
+
+    private val equipmentRepository: EquipmentRepository,
 ) : EquipUseCase {
 
     // todo 外した装備情報を返す
     // todo 装備の部位を増やす
     override suspend fun invoke(
         target: Int,
-        equipment: Equipment,
+        equipmentId: EquipmentId,
     ) {
         val player = playerStatusRepository.getStatus(target)
         val parameter = statusDataRepository.getStatusData(target)
 
-        val preEq = player.equipmentData.weapon
+        val equipment = equipmentRepository.getItem(
+            id = equipmentId
+        )
+
+        val preEqid = player.equipmentList.weapon
+        val preEq = equipmentRepository.getItem(preEqid)
 
         val updatedParameter = parameter
             .decStatus(preEq.statusList)
             .incStatus(equipment.statusList)
 
-        val updatedEQ = player.equipmentData.run {
+        val updatedEQ = player.equipmentList.run {
             when (equipment.type) {
                 EquipmentType.Weapon ->
                     copy(
-                        weapon = equipment,
+                        weapon = equipmentId,
                     )
 
                 EquipmentType.Shield -> {
                     copy(
-                        weapon = equipment,
+                        weapon = equipmentId,
                     )
                 }
             }
         }
 
         val updatedStatus = player.copy(
-            equipmentData = updatedEQ,
+            equipmentList = updatedEQ,
         )
 
         statusDataRepository.setStatusData(

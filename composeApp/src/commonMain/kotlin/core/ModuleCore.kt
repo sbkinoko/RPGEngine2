@@ -167,6 +167,7 @@ val ModuleCore = module {
         EquipUseCaseImpl(
             playerStatusRepository = get(),
             statusDataRepository = get(),
+            equipmentRepository = get()
         )
     }
 

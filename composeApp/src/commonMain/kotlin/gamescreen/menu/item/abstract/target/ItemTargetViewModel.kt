@@ -2,7 +2,7 @@ package gamescreen.menu.item.abstract.target
 
 import core.PlayerStatusRepositoryName
 import core.domain.AbleType
-import core.domain.item.Item
+import core.domain.item.UsableItem
 import core.domain.status.StatusType
 import core.repository.player.PlayerStatusRepository
 import core.repository.statusdata.StatusDataRepository
@@ -18,7 +18,7 @@ import gamescreen.text.repository.TextRepository
 import org.koin.core.component.inject
 import values.Constants.Companion.playerNum
 
-abstract class ItemTargetViewModel<T, V : Item> : MenuChildViewModel() {
+abstract class ItemTargetViewModel<T, V : UsableItem> : MenuChildViewModel() {
     protected val userRepository: UserRepository by inject()
     protected val targetRepository: TargetRepository by inject()
     protected val playerStatusRepository: PlayerStatusRepository by inject()
@@ -74,9 +74,9 @@ abstract class ItemTargetViewModel<T, V : Item> : MenuChildViewModel() {
 
     fun canSelect(target: Int): Boolean {
         val targetStatus = statusDataRepository.getStatusData(id = target)
-        val skill = itemRepository.getItem(itemId)
+        val item = itemRepository.getItem(itemId)
 
-        val targetType = skill.targetStatusType
+        val targetType = item.targetStatusType
 
         if (targetType.canSelect(targetStatus).not()) {
             // 対象にとれなかった

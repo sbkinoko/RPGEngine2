@@ -5,6 +5,9 @@ import core.domain.Place
 interface Item {
     val name: String
     val explain: String
+}
+
+interface UsableItem : Item {
     val targetNum: Int
     val usablePlace: Place
     val targetType: TargetType

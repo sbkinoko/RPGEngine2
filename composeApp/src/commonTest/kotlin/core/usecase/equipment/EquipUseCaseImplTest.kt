@@ -1,8 +1,8 @@
 package core.usecase.equipment
 
-import core.domain.equipment.Equipment
-import core.domain.equipment.EquipmentData
-import core.domain.equipment.EquipmentType
+import core.domain.item.item_.equipment.Equipment
+import core.domain.item.item_.equipment.EquipmentData
+import core.domain.item.item_.equipment.EquipmentType
 import core.domain.status.IncData
 import core.domain.status.PlayerStatus
 import core.domain.status.StatusData
@@ -65,7 +65,7 @@ class EquipUseCaseImplTest {
                 skillList = emptyList(),
                 toolList = emptyList(),
                 exp = EXP(EXP.type1),
-                equipmentData = initialEquipment,
+                equipmentList = initialEquipment,
             )
         }
 
@@ -108,7 +108,7 @@ class EquipUseCaseImplTest {
     fun beforeTest() {
         assertEquals(
             expected = initialEquipment,
-            actual = playerRepository.getStatus(0).equipmentData,
+            actual = playerRepository.getStatus(0).equipmentList,
         )
 
         assertEquals(
@@ -130,7 +130,7 @@ class EquipUseCaseImplTest {
             val target = 0
             useCase.invoke(
                 target = target,
-                equipment = equipment,
+                equipmentId = equipment,
             )
 
             assertEquals(
@@ -147,7 +147,7 @@ class EquipUseCaseImplTest {
                 ),
                 actual = playerRepository
                     .getStatus(target)
-                    .equipmentData
+                    .equipmentList
             )
         }
     }
@@ -170,7 +170,7 @@ class EquipUseCaseImplTest {
                 playerRepository
                     .getStatus(target)
                     .copy(
-                        equipmentData = initialEquipment.copy(
+                        equipmentList = initialEquipment.copy(
                             weapon = equipment.copy(
                                 statusList = equipment.statusList.copy(
                                     atk = IncData(preWpAtk),
@@ -183,7 +183,7 @@ class EquipUseCaseImplTest {
 
             useCase.invoke(
                 target = target,
-                equipment = equipment,
+                equipmentId = equipment,
             )
 
             assertEquals(
@@ -200,7 +200,7 @@ class EquipUseCaseImplTest {
                 ),
                 actual = playerRepository
                     .getStatus(target)
-                    .equipmentData
+                    .equipmentList
             )
         }
     }

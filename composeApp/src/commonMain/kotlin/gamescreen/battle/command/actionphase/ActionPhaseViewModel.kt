@@ -10,8 +10,8 @@ import core.domain.item.CostType
 import core.domain.item.DamageType
 import core.domain.item.EffectKind
 import core.domain.item.HealEffect
-import core.domain.item.Item
 import core.domain.item.TargetType
+import core.domain.item.UsableItem
 import core.domain.status.StatusData
 import core.domain.status.StatusType
 import core.repository.battlemonster.BattleInfoRepository
@@ -237,7 +237,7 @@ class ActionPhaseViewModel(
         )
     }
 
-    private fun getActionItem(statusWrapper: StatusWrapper): Item {
+    private fun getActionItem(statusWrapper: StatusWrapper): UsableItem {
         val action = statusWrapper.actionData
         return when (action.thisTurnAction) {
             ActionType.Normal -> skillRepository.getItem(SkillId.Normal1)

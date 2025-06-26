@@ -2,8 +2,8 @@ package gamescreen.battle.command.item
 
 import core.PlayerStatusRepositoryName
 import core.domain.Const
-import core.domain.item.Item
 import core.domain.item.TargetType
+import core.domain.item.UsableItem
 import core.domain.status.StatusType
 import core.repository.player.PlayerStatusRepository
 import core.repository.statusdata.StatusDataRepository
@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.inject
 import kotlin.math.max
 
-abstract class ItemCommandViewModel<T, V : Item> : BattleChildViewModel() {
+abstract class ItemCommandViewModel<T, V : UsableItem> : BattleChildViewModel() {
     protected val actionRepository: ActionRepository by inject()
     protected val playerStatusRepository: PlayerStatusRepository by inject()
 

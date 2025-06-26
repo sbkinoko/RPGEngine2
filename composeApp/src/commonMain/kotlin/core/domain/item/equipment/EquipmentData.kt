@@ -1,14 +1,22 @@
-package core.domain.equipment
+package core.domain.item.equipment
 
+import core.domain.item.Equipment
+import core.domain.item.Item
 import core.domain.status.StatusIncrease
 
-data class Equipment(
+data class EquipmentData(
+    override val name: String,
+    override val explain: String,
     val type: EquipmentType,
     val statusList: StatusIncrease,
-) {
+) : Equipment, Item {
     constructor(
+        name: String,
+        explain: String,
         type: EquipmentType,
     ) : this(
+        name = name,
+        explain = explain,
         type = type,
         statusList = StatusIncrease(
             hp = 0,
