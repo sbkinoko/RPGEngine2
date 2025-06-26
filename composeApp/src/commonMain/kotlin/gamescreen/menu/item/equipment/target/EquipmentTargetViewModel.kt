@@ -105,6 +105,8 @@ class EquipmentTargetViewModel(
                 equipmentId = itemId,
             )
 
+            // todo 袋に装備を入れる
+
             // textを表示
             textRepository.push(
                 TextBoxData(
