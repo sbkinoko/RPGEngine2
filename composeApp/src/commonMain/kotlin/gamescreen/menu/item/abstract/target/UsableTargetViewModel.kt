@@ -6,20 +6,16 @@ import core.domain.item.UsableItem
 import core.domain.status.StatusType
 import core.repository.player.PlayerStatusRepository
 import core.repository.statusdata.StatusDataRepository
-import data.item.ItemRepository
 import gamescreen.choice.Choice
 import gamescreen.choice.repository.ChoiceRepository
-import gamescreen.menu.MenuChildViewModel
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.domain.SelectManager
 import gamescreen.menu.item.repository.target.TargetRepository
-import gamescreen.menu.item.repository.user.UserRepository
 import gamescreen.text.repository.TextRepository
 import org.koin.core.component.inject
 import values.Constants.Companion.playerNum
 
-abstract class ItemTargetViewModel<T, V : UsableItem> : MenuChildViewModel() {
-    protected val userRepository: UserRepository by inject()
+abstract class UsableTargetViewModel<T, V : UsableItem> : TargetViewModel<T, V>() {
     protected val targetRepository: TargetRepository by inject()
     protected val playerStatusRepository: PlayerStatusRepository by inject()
     protected val statusDataRepository: StatusDataRepository<StatusType.Player> by inject(
@@ -28,17 +24,8 @@ abstract class ItemTargetViewModel<T, V : UsableItem> : MenuChildViewModel() {
 
     private val choiceRepository: ChoiceRepository by inject()
 
-    protected abstract val itemRepository: ItemRepository<T, V>
-
     protected val textRepository: TextRepository by inject()
 
-    val user: Int
-        get() = userRepository.userId
-
-    abstract val itemId: T
-
-    val explain: String
-        get() = itemRepository.getItem(itemId).explain
 
     protected abstract val boundedMenuType: MenuType
 
@@ -72,7 +59,7 @@ abstract class ItemTargetViewModel<T, V : UsableItem> : MenuChildViewModel() {
         return canSelect(selectManager.selected)
     }
 
-    fun canSelect(target: Int): Boolean {
+    override fun canSelect(target: Int): Boolean {
         val targetStatus = statusDataRepository.getStatusData(id = target)
         val item = itemRepository.getItem(itemId)
 
