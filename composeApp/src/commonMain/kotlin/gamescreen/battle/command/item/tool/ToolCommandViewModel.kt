@@ -39,6 +39,7 @@ class ToolCommandViewModel : ItemCommandViewModel<ToolId, Tool>() {
     }
 
     override fun canUse(position: Int): Boolean {
+        // todo 使えない道具が出来たら変える
         return true
     }
 }
