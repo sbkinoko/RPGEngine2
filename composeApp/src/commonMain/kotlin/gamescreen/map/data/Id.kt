@@ -1,7 +1,8 @@
 package gamescreen.map.data
 
-val ID_NON_LOOP = 0
-val ID_LOOP = 1
+// TODO: enumつくる
+const val ID_NON_LOOP = 0
+const val ID_LOOP = 1
 
 fun MapData.toId(): Int {
     return when (this) {

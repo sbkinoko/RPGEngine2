@@ -120,7 +120,7 @@ class ImageBinderBackground : KoinComponent {
 
     /**
      * idと画像を紐づけ
-     * @param aroundCellId 周囲のマスの背景画像のid
+     * @param cellType 周囲のマスとして利用する背景画像のid
      */
     @OptIn(ExperimentalResourceApi::class)
     fun bindObject(

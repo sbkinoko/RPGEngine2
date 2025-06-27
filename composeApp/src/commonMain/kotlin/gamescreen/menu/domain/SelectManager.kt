@@ -19,7 +19,7 @@ class SelectManager() {
     }
 
     private val mutableSelectedStateFlow =
-        MutableStateFlow<Int>(FIRST_SELECTED)
+        MutableStateFlow(FIRST_SELECTED)
     val selectedFlowState = mutableSelectedStateFlow.asStateFlow()
 
     var selected: Int

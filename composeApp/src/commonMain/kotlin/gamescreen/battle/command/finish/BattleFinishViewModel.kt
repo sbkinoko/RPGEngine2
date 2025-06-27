@@ -4,7 +4,6 @@ import common.DefaultScope
 import core.domain.BattleResult
 import core.repository.event.EventRepository
 import core.repository.money.MoneyRepository
-import core.repository.player.PlayerStatusRepository
 import core.usecase.changetomap.ChangeToMapUseCase
 import data.item.tool.ToolId
 import data.item.tool.ToolRepository
@@ -36,7 +35,6 @@ class BattleFinishViewModel(
     private val moneyRepository: MoneyRepository by inject()
 
     private val getExpUseCase: GetExpUseCase by inject()
-    private val playerStatusRepository: PlayerStatusRepository by inject()
 
     private val addToolUseCase: AddToolUseCase by inject()
     private val toolRepository: ToolRepository by inject()

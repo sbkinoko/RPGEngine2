@@ -1,5 +1,6 @@
 package core.domain.status.param
 
+import common.error.StatusParameterException
 import core.domain.status.IncData
 import kotlin.math.max
 
@@ -28,7 +29,7 @@ data class StatusParameter<T : ParameterType>(
         val newVal = baseValue - incData.value
 
         if (newVal < 0) {
-            throw NotImplementedError("")
+            throw throw StatusParameterException()
         }
 
         return copy(

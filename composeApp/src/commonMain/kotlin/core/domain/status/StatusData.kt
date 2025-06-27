@@ -30,12 +30,6 @@ data class StatusData<T : StatusType>(
             return 0 < hp.point
         }
 
-    fun updateName(name: String): StatusData<T> {
-        return this.copy(
-            name = name,
-        )
-    }
-
     fun setHP(
         value: Int = hp.point,
         max: Int = hp.maxPoint,

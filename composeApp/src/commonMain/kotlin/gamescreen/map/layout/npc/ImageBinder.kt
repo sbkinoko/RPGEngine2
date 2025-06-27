@@ -21,7 +21,7 @@ class ImageBinder {
     ): DrawableResource {
         return when (npcType) {
             NPCType.GIRL -> Res.drawable.npc_1_1_1
-            NPCType.MARCHANT -> Res.drawable.npc_2
+            NPCType.MERCHANT -> Res.drawable.npc_2
             NPCType.ENEMY -> Res.drawable.npc_3
             NPCType.BOY -> Res.drawable.npc_1
             NPCType.TEMPLATE -> Res.drawable.npc_
