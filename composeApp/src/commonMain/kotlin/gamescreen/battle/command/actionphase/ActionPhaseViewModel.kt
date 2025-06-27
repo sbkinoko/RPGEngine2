@@ -143,7 +143,7 @@ class ActionPhaseViewModel(
 
     fun init() {
         val list = mutableListOf<StatusWrapper>()
-        // fixme 使うリポジトリ変える
+
         statusDataRepository.getStatusList()
             .mapIndexed { id, status ->
                 list += StatusWrapper(
@@ -169,10 +169,7 @@ class ActionPhaseViewModel(
                 newId = index,
             )
         }
-        enemyDataRepository.getStatusList()
-            .mapIndexed { index, status ->
 
-            }
         statusWrapperList = list
 
         speedList = decideActionOrderUseCase.invoke(
