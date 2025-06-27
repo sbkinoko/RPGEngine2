@@ -19,6 +19,7 @@ import gamescreen.menu.item.skill.list.SkillListViewModel
 import gamescreen.menu.item.skill.target.SkillTargetViewModel
 import gamescreen.menu.item.skill.user.SkillUserViewModel
 import gamescreen.menu.item.tool.give.ToolGiveUserViewModel
+import gamescreen.menu.item.tool.list.ToolListViewModel
 import gamescreen.menu.item.tool.target.ToolTargetViewModel
 import gamescreen.menu.item.tool.user.ToolUserViewModel
 import gamescreen.menu.main.MainMenuViewModel
@@ -88,7 +89,7 @@ val ModuleMenu = module {
     }
 
     single {
-        EquipmentListViewModel()
+        ToolListViewModel()
     }
 
     single {
@@ -112,9 +113,7 @@ val ModuleMenu = module {
     }
 
     single {
-        EquipmentListViewModel(
-
-        )
+        EquipmentListViewModel()
     }
 
     single {
