@@ -4,7 +4,6 @@ import core.ModuleCore
 import core.PlayerStatusRepositoryName
 import core.domain.status.ConditionType
 import core.domain.status.StatusDataTest
-import core.domain.status.StatusType
 import core.repository.statusdata.StatusDataRepository
 import data.ModuleData
 import data.status.StatusRepository
@@ -29,7 +28,7 @@ class ConditionUseCaseImplFromEnemyTest : KoinTest {
 
     private val statusRepository: StatusRepository by inject()
 
-    private val statusDataRepository: StatusDataRepository<StatusType.Player> by inject(
+    private val statusDataRepository: StatusDataRepository by inject(
         qualifier = PlayerStatusRepositoryName
     )
 

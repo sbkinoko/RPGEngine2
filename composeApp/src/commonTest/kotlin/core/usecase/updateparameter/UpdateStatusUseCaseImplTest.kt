@@ -3,7 +3,6 @@ package core.usecase.updateparameter
 import core.domain.status.ConditionType
 import core.domain.status.StatusData
 import core.domain.status.StatusDataTest
-import core.domain.status.StatusType
 import core.domain.status.param.StatusParameterWithMax
 import core.repository.statusdata.StatusDataRepository
 import kotlinx.coroutines.flow.StateFlow
@@ -28,30 +27,30 @@ class UpdateStatusUseCaseImplTest {
 
     private val status2 = status1.copy()
 
-    private val statusRepository: StatusDataRepository<StatusType.Player> =
-        object : StatusDataRepository<StatusType.Player> {
-            var _statusList: MutableList<StatusData<StatusType.Player>> = mutableListOf(
+    private val statusRepository: StatusDataRepository =
+        object : StatusDataRepository {
+            var _statusList: MutableList<StatusData> = mutableListOf(
                 status1,
                 status2,
             )
-            override val statusDataFlow: StateFlow<List<StatusData<StatusType.Player>>>
+            override val statusDataFlow: StateFlow<List<StatusData>>
                 get() = throw NotImplementedError()
 
-            override fun getStatusData(id: Int): StatusData<StatusType.Player> {
+            override fun getStatusData(id: Int): StatusData {
                 return _statusList[id]
             }
 
-            override fun getStatusList(): List<StatusData<StatusType.Player>> {
+            override fun getStatusList(): List<StatusData> {
                 return _statusList
             }
 
-            override fun setStatusList(statusList: List<StatusData<StatusType.Player>>) {
+            override fun setStatusList(statusList: List<StatusData>) {
                 throw NotImplementedError()
             }
 
             override fun setStatusData(
                 id: Int,
-                statusData: StatusData<StatusType.Player>,
+                statusData: StatusData,
             ) {
                 this._statusList[id] = statusData
             }

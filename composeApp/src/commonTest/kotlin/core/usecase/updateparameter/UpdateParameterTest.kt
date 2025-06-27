@@ -2,15 +2,14 @@ package core.usecase.updateparameter
 
 import core.domain.status.ConditionType
 import core.domain.status.StatusData
-import core.domain.status.StatusType
 import core.repository.statusdata.StatusDataRepository
 import kotlinx.coroutines.runBlocking
 import kotlin.test.assertEquals
 
-class UpdateParameterTest<V : StatusType, T : StatusData<V>>(
-    private val updateStatusUseCase: UpdateStatusUseCase<V>,
-    private val statusRepository: StatusDataRepository<V>,
-    private val status2: T,
+class UpdateParameterTest(
+    private val updateStatusUseCase: UpdateStatusUseCase,
+    private val statusRepository: StatusDataRepository,
+    private val status2: StatusData,
 ) {
     companion object {
         const val HP = 50

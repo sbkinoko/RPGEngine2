@@ -8,7 +8,6 @@ import core.domain.item.TargetType
 import core.domain.item.Tool
 import core.domain.item.tool.HealTool
 import core.domain.status.ConditionType
-import core.domain.status.StatusType
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
 import core.usecase.updateparameter.UpdateStatusUseCase
 import data.item.tool.ToolId
@@ -59,7 +58,7 @@ class UseToolUseCaseImplTest : KoinTest {
         }
     }
 
-    private val updateStatusService = object : UpdateStatusUseCase<StatusType.Player> {
+    private val updateStatusService = object : UpdateStatusUseCase {
         override suspend fun decHP(
             id: Int,
             amount: Int,

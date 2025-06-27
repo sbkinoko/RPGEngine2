@@ -2,7 +2,6 @@ package gamescreen.map.usecase.battleevent
 
 import core.domain.BattleEventCallback
 import core.domain.status.StatusData
-import core.domain.status.StatusType
 import core.domain.status.monster.MonsterStatus
 import data.battle.BattleDataRepository
 import data.battle.EventBattleData
@@ -36,7 +35,7 @@ class StartEventBattleUseCaseImplTest {
 
     private val startBattleUseCase = object : StartBattleUseCase {
         override fun invoke(
-            monsterList: List<Pair<MonsterStatus, StatusData<StatusType.Enemy>>>,
+            monsterList: List<Pair<MonsterStatus, StatusData>>,
             battleEventCallback: BattleEventCallback,
             backgroundType: BattleBackgroundType,
         ) {

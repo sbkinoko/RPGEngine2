@@ -11,7 +11,7 @@ class StatusDataTest {
 
         val name = "テスト"
 
-        val TestPlayerStatusActive = StatusData<StatusType.Player>(
+        val TestPlayerStatusActive = StatusData(
             name = name,
             hp = StatusParameterWithMax(
                 maxPoint = MAX_HP,
@@ -23,7 +23,7 @@ class StatusDataTest {
 
         val TestPlayerStatusInActive = TestPlayerStatusActive.setHP(0)
 
-        val TestEnemyStatusActive = StatusData<StatusType.Enemy>(
+        val TestEnemyStatusActive = StatusData(
             name = name,
             hp = StatusParameterWithMax(
                 maxPoint = MAX_HP,

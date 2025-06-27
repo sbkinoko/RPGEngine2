@@ -9,7 +9,6 @@ import core.domain.status.StatusIncreaseTest.Companion.TEST_LV1_MP
 import core.domain.status.StatusIncreaseTest.Companion.TEST_LV2_HP
 import core.domain.status.StatusIncreaseTest.Companion.TEST_LV2_MP
 import core.domain.status.StatusIncreaseTest.Companion.testStatusUpList
-import core.domain.status.StatusType
 import core.repository.player.PlayerStatusRepository
 import core.repository.player.PlayerStatusRepositoryImpl
 import core.repository.statusdata.StatusDataRepository
@@ -32,7 +31,7 @@ class AddExpUseCaseImplTest {
             get() = listOf(
                 testStatusUpList,
             )
-        override val statusBaseList: List<Pair<PlayerStatus, StatusData<StatusType.Player>>>
+        override val statusBaseList: List<Pair<PlayerStatus, StatusData>>
             get() = listOf(
                 Pair(
                     testPlayerStatus,
@@ -41,27 +40,27 @@ class AddExpUseCaseImplTest {
             )
     })
 
-    private val statusDataRepository = object : StatusDataRepository<StatusType.Player> {
-        override val statusDataFlow: StateFlow<List<StatusData<StatusType.Player>>>
+    private val statusDataRepository = object : StatusDataRepository {
+        override val statusDataFlow: StateFlow<List<StatusData>>
             get() = throw NotImplementedError()
 
-        private var list: MutableList<StatusData<StatusType.Player>> = mutableListOf()
+        private var list: MutableList<StatusData> = mutableListOf()
 
-        override fun getStatusData(id: Int): StatusData<StatusType.Player> {
+        override fun getStatusData(id: Int): StatusData {
             return list[id]
         }
 
-        override fun getStatusList(): List<StatusData<StatusType.Player>> {
+        override fun getStatusList(): List<StatusData> {
             return list
         }
 
-        override fun setStatusList(statusList: List<StatusData<StatusType.Player>>) {
+        override fun setStatusList(statusList: List<StatusData>) {
             list = statusList.toMutableList()
         }
 
         override fun setStatusData(
             id: Int,
-            statusData: StatusData<StatusType.Player>,
+            statusData: StatusData,
         ) {
             list[id] = statusData
         }

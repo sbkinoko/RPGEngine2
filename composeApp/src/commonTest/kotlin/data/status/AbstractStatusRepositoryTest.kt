@@ -14,7 +14,6 @@ import core.domain.status.StatusIncreaseTest.Companion.TEST_LV2_DEF
 import core.domain.status.StatusIncreaseTest.Companion.TEST_LV2_HP
 import core.domain.status.StatusIncreaseTest.Companion.TEST_LV2_MP
 import core.domain.status.StatusIncreaseTest.Companion.TEST_LV2_SPEED
-import core.domain.status.StatusType
 import core.domain.status.param.EXP
 import core.domain.status.param.StatusParameter
 import data.item.skill.SkillId
@@ -40,7 +39,7 @@ class AbstractStatusRepositoryTest {
                 StatusIncreaseTest.testStatusUpList
             )
 
-        override val statusBaseList: List<Pair<PlayerStatus, StatusData<StatusType.Player>>>
+        override val statusBaseList: List<Pair<PlayerStatus, StatusData>>
             get() = listOf(
                 Pair(
                     PlayerStatus(

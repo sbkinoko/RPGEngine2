@@ -8,7 +8,6 @@ import core.domain.status.PlayerStatus
 import core.domain.status.StatusData
 import core.domain.status.StatusDataTest
 import core.domain.status.StatusIncrease
-import core.domain.status.StatusType
 import core.domain.status.param.EXP
 import core.domain.status.param.StatusParameter
 import core.repository.player.PlayerStatusRepository
@@ -29,8 +28,8 @@ class EquipUseCaseImplTest {
     val upATK1 = 10
     val upATK2 = 15
 
-    private val statusDataRepository = object : StatusDataRepository<StatusType.Player> {
-        override val statusDataFlow: StateFlow<List<StatusData<StatusType.Player>>>
+    private val statusDataRepository = object : StatusDataRepository {
+        override val statusDataFlow: StateFlow<List<StatusData>>
             get() = throw NotImplementedError()
 
         private var statusDataList = MutableList(5) {
@@ -39,21 +38,21 @@ class EquipUseCaseImplTest {
             )
         }
 
-        override fun getStatusData(id: Int): StatusData<StatusType.Player> {
+        override fun getStatusData(id: Int): StatusData {
             return statusDataList[id]
         }
 
-        override fun getStatusList(): List<StatusData<StatusType.Player>> {
+        override fun getStatusList(): List<StatusData> {
             throw NotImplementedError()
         }
 
-        override fun setStatusList(statusList: List<StatusData<StatusType.Player>>) {
+        override fun setStatusList(statusList: List<StatusData>) {
             throw NotImplementedError()
         }
 
         override fun setStatusData(
             id: Int,
-            statusData: StatusData<StatusType.Player>,
+            statusData: StatusData,
         ) {
             statusDataList[id] = statusData
         }
