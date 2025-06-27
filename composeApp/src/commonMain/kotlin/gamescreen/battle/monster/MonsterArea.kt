@@ -23,7 +23,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
 import core.domain.status.StatusData
-import core.domain.status.StatusType
 import core.domain.status.monster.MonsterStatus
 import gamescreen.battle.StatusDebugInfo
 import gamescreen.battle.command.selectenemy.SelectEnemyViewModel
@@ -38,7 +37,7 @@ import org.koin.compose.koinInject
 fun MonsterArea(
     // fixme imgIDだけ渡す
     monsters: List<MonsterStatus>,
-    monsterStatusList: List<StatusData<StatusType.Enemy>>,
+    monsterStatusList: List<StatusData>,
     flashState: List<FlashInfo>,
     attackEffectInfo: List<AttackEffectInfo>,
     modifier: Modifier = Modifier,

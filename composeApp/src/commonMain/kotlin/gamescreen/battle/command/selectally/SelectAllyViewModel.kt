@@ -2,7 +2,6 @@ package gamescreen.battle.command.selectally
 
 import common.DefaultScope
 import core.domain.item.TargetStatusType
-import core.domain.status.StatusType
 import core.repository.statusdata.StatusDataRepository
 import data.item.skill.SkillRepository
 import data.item.tool.ToolRepository
@@ -21,7 +20,7 @@ import values.Constants.Companion.playerNum
 
 // test作る
 class SelectAllyViewModel(
-    private val statusDataRepository: StatusDataRepository<StatusType.Player>,
+    private val statusDataRepository: StatusDataRepository,
 ) : BattleChildViewModel() {
     private val changeSelectingActionPlayerUseCase: ChangeSelectingActionPlayerUseCase by inject()
     private val actionRepository: ActionRepository by inject()

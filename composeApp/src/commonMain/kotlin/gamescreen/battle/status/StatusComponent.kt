@@ -19,7 +19,6 @@ import androidx.compose.ui.unit.dp
 import common.extension.menuItem
 import common.layout.DisableBox
 import core.domain.status.StatusData
-import core.domain.status.StatusType
 import core.domain.status.param.StatusParameterWithMax
 import gamescreen.battle.StatusDebugInfo
 import gamescreen.battle.command.selectally.SelectAllyViewModel
@@ -28,7 +27,7 @@ import values.Colors
 
 @Composable
 fun StatusComponent(
-    status: StatusData<StatusType.Player>,
+    status: StatusData,
     index: Int,
     modifier: Modifier = Modifier,
     selectAllyViewModel: SelectAllyViewModel = koinInject(),

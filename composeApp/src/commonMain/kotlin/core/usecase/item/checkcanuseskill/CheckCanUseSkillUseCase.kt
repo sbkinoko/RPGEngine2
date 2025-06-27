@@ -8,7 +8,7 @@ import data.item.skill.SkillId
 interface CheckCanUseSkillUseCase {
     operator fun invoke(
         skillId: SkillId,
-        status: StatusData<*>,
+        status: StatusData,
         here: Place,
     ): AbleType
 }

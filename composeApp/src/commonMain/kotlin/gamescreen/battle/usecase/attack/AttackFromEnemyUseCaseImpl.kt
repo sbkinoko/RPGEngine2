@@ -2,21 +2,20 @@ package gamescreen.battle.usecase.attack
 
 import core.domain.item.DamageType
 import core.domain.status.StatusData
-import core.domain.status.StatusType
 import core.repository.statusdata.StatusDataRepository
 import gamescreen.battle.service.attackcalc.AttackCalcService
 import gamescreen.battle.service.findtarget.FindTargetService
 
 class AttackFromEnemyUseCaseImpl(
-    private val statusDataRepository: StatusDataRepository<StatusType.Player>,
+    private val statusDataRepository: StatusDataRepository,
 
     private val findTargetService: FindTargetService,
     private val attackCalcService: AttackCalcService,
-) : AttackUseCase<StatusType.Enemy> {
+) : AttackUseCase {
 
     override suspend fun invoke(
         target: Int,
-        attacker: StatusData<StatusType.Enemy>,
+        attacker: StatusData,
         damageType: DamageType,
     ) {
         var actualTarget = target

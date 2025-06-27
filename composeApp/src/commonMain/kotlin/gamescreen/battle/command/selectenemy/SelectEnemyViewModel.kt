@@ -4,7 +4,6 @@ import common.DefaultScope
 import controller.domain.ArrowCommand
 import controller.domain.Stick
 import core.domain.status.StatusData
-import core.domain.status.StatusType
 import core.repository.statusdata.StatusDataRepository
 import gamescreen.battle.BattleChildViewModel
 import gamescreen.battle.domain.BattleCommandType
@@ -23,7 +22,7 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.inject
 
 class SelectEnemyViewModel(
-    private val enemyStatusDataRepository: StatusDataRepository<StatusType.Enemy>,
+    private val enemyStatusDataRepository: StatusDataRepository,
 ) : BattleChildViewModel() {
     private val actionRepository: ActionRepository by inject()
 
@@ -52,7 +51,7 @@ class SelectEnemyViewModel(
         }
     }
 
-    private val monsters: List<StatusData<StatusType.Enemy>>
+    private val monsters: List<StatusData>
         get() = enemyStatusDataRepository.getStatusList()
 
     override fun isBoundedImpl(commandType: BattleCommandType): Boolean {

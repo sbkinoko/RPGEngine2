@@ -4,7 +4,6 @@ import controller.domain.ControllerCallback
 import controller.domain.Stick
 import core.EnemyStatusRepositoryName
 import core.domain.status.StatusData
-import core.domain.status.StatusType
 import core.domain.status.monster.MonsterStatus
 import core.repository.battlemonster.BattleInfoRepository
 import core.repository.statusdata.StatusDataRepository
@@ -20,13 +19,13 @@ class BattleViewModel(
     flashRepository: FlashRepository,
     attackEffectInfoRepository: AttackEffectRepository,
 
-    statusDataRepository: StatusDataRepository<StatusType.Player>,
+    statusDataRepository: StatusDataRepository,
 ) :
     ControllerCallback,
     KoinComponent {
 
     private val battleInfoRepository: BattleInfoRepository by inject()
-    private val monsterStatusRepository: StatusDataRepository<StatusType.Enemy> by inject(qualifier = EnemyStatusRepositoryName)
+    private val monsterStatusRepository: StatusDataRepository by inject(qualifier = EnemyStatusRepositoryName)
 
     private val commandStateRepository: CommandStateRepository by inject()
 
@@ -39,12 +38,12 @@ class BattleViewModel(
         commandStateRepository.commandStateFlow
 
     // todo playerにrename
-    val statusDataFlow: StateFlow<List<StatusData<StatusType.Player>>> =
+    val statusDataFlow: StateFlow<List<StatusData>> =
         statusDataRepository.statusDataFlow
 
     val monsterStatusFlow: StateFlow<List<MonsterStatus>> =
         battleInfoRepository.monsterListStateFLow
-    val monsterStatusDataFlow: StateFlow<List<StatusData<StatusType.Enemy>>> = monsterStatusRepository.statusDataFlow
+    val monsterStatusDataFlow: StateFlow<List<StatusData>> = monsterStatusRepository.statusDataFlow
 
     val battleBackgroundTypeFlow =
         battleInfoRepository.backgroundType

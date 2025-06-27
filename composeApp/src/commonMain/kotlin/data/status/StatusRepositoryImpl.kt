@@ -4,7 +4,6 @@ import core.domain.status.IncData
 import core.domain.status.PlayerStatus
 import core.domain.status.StatusData
 import core.domain.status.StatusIncrease
-import core.domain.status.StatusType
 import core.domain.status.param.EXP
 import data.item.skill.SkillId
 import data.item.tool.ToolId
@@ -66,7 +65,7 @@ class StatusRepositoryImpl : AbstractStatusRepository() {
         }
     }
 
-    override val statusBaseList: List<Pair<PlayerStatus, StatusData<StatusType.Player>>> = List(3) {
+    override val statusBaseList: List<Pair<PlayerStatus, StatusData>> = List(3) {
         when (it) {
             0 ->
                 Pair(

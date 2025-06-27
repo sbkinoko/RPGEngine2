@@ -1,7 +1,6 @@
 package core.usecase.equipment
 
 import core.domain.item.equipment.EquipmentType
-import core.domain.status.StatusType
 import core.repository.player.PlayerStatusRepository
 import core.repository.statusdata.StatusDataRepository
 import data.item.equipment.EquipmentId
@@ -9,7 +8,7 @@ import data.item.equipment.EquipmentRepository
 
 class EquipUseCaseImpl(
     private val playerStatusRepository: PlayerStatusRepository,
-    private val statusDataRepository: StatusDataRepository<StatusType.Player>,
+    private val statusDataRepository: StatusDataRepository,
 
     private val equipmentRepository: EquipmentRepository,
 ) : EquipUseCase {

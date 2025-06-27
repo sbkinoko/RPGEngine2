@@ -13,7 +13,7 @@ class CheckCanUseSkillUseCaseImpl(
 ) : CheckCanUseSkillUseCase {
     override fun invoke(
         skillId: SkillId,
-        status: StatusData<*>,
+        status: StatusData,
         here: Place,
     ): AbleType {
         val skill = skillRepository.getItem(skillId)

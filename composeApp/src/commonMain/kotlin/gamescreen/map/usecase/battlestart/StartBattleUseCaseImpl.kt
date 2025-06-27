@@ -4,7 +4,6 @@ import common.DefaultScope
 import core.domain.BattleEventCallback
 import core.domain.BattleResult
 import core.domain.status.StatusData
-import core.domain.status.StatusType
 import core.domain.status.monster.MonsterStatus
 import core.repository.battlemonster.BattleInfoRepository
 import core.repository.event.EventRepository
@@ -28,11 +27,11 @@ class StartBattleUseCaseImpl(
     private val flashRepository: FlashRepository,
     private val attackEffectRepository: AttackEffectRepository,
 
-    private val statusDataRepository: StatusDataRepository<StatusType.Enemy>,
+    private val statusDataRepository: StatusDataRepository,
 ) : StartBattleUseCase, KoinComponent {
 
     override operator fun invoke(
-        monsterList: List<Pair<MonsterStatus, StatusData<StatusType.Enemy>>>,
+        monsterList: List<Pair<MonsterStatus, StatusData>>,
         battleEventCallback: BattleEventCallback,
         backgroundType: BattleBackgroundType,
     ) {
@@ -68,7 +67,7 @@ class StartBattleUseCaseImpl(
     }
 
     // TODO: test作る
-    private fun renameMonster(monsters: List<StatusData<StatusType.Enemy>>): List<StatusData<StatusType.Enemy>> {
+    private fun renameMonster(monsters: List<StatusData>): List<StatusData> {
         val nameNum: MutableMap<String, Int> = mutableMapOf()
         monsters.map {
             it.let {

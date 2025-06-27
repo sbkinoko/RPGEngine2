@@ -2,7 +2,6 @@ package data.monster
 
 import core.domain.status.DropItemInfo
 import core.domain.status.StatusData
-import core.domain.status.StatusType
 import core.domain.status.monster.ActionStyle
 import core.domain.status.monster.MonsterStatus
 import core.domain.status.param.StatusParameter
@@ -11,7 +10,7 @@ import data.item.skill.SkillId
 import data.item.tool.ToolId
 
 class MonsterRepositoryImpl : MonsterRepository {
-    override fun getMonster(id: Int): Pair<MonsterStatus, StatusData<StatusType.Enemy>> {
+    override fun getMonster(id: Int): Pair<MonsterStatus, StatusData> {
         // fixme モンスターの種類を増やす
         return Pair(
             MonsterStatus(
