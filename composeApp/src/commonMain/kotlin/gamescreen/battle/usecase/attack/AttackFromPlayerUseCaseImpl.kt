@@ -5,25 +5,27 @@ import core.domain.status.StatusData
 import core.repository.statusdata.StatusDataRepository
 import gamescreen.battle.service.attackcalc.AttackCalcService
 import gamescreen.battle.service.findtarget.FindTargetService
-import gamescreen.battle.usecase.effect.EffectUseCase
 
 class AttackFromPlayerUseCaseImpl(
     private val statusDataRepository: StatusDataRepository,
+
     private val findTargetService: FindTargetService,
     private val attackCalcService: AttackCalcService,
-    private val effectUseCase: EffectUseCase,
+
 ) : AttackUseCase {
+
     override suspend operator fun invoke(
         target: Int,
         attacker: StatusData,
         damageType: DamageType,
+        effect: (Int) -> Unit,
     ) {
         var actualTarget = target
-        val monsters = statusDataRepository.getStatusList()
+        val targets = statusDataRepository.getStatusList()
 
-        if (monsters[target].isActive.not()) {
+        if (targets[target].isActive.not()) {
             actualTarget = findTargetService.findNext(
-                statusList = monsters,
+                statusList = targets,
                 target = target,
             )
         }
@@ -43,6 +45,6 @@ class AttackFromPlayerUseCaseImpl(
             statusData = damaged,
         )
 
-        effectUseCase.invoke(actualTarget)
+        effect.invoke(actualTarget)
     }
 }

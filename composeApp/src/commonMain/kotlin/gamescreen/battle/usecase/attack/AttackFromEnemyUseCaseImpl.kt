@@ -17,12 +17,14 @@ class AttackFromEnemyUseCaseImpl(
         target: Int,
         attacker: StatusData,
         damageType: DamageType,
+        effect: (Int) -> Unit,
     ) {
         var actualTarget = target
-        val players = statusDataRepository.getStatusList()
-        if (players[target].isActive.not()) {
+        val targets = statusDataRepository.getStatusList()
+
+        if (targets[target].isActive.not()) {
             actualTarget = findTargetService.findNext(
-                statusList = players,
+                statusList = targets,
                 target = target,
             )
         }
@@ -39,5 +41,7 @@ class AttackFromEnemyUseCaseImpl(
             id = actualTarget,
             statusData = damaged,
         )
+
+        effect.invoke(actualTarget)
     }
 }

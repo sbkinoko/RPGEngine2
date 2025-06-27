@@ -38,6 +38,7 @@ import gamescreen.battle.service.monster.DecideMonsterActionService
 import gamescreen.battle.usecase.attack.AttackUseCase
 import gamescreen.battle.usecase.condition.ConditionUseCase
 import gamescreen.battle.usecase.decideactionorder.DecideActionOrderUseCase
+import gamescreen.battle.usecase.effect.EffectUseCase
 import gamescreen.battle.usecase.findactivetarget.FindActiveTargetUseCase
 import gamescreen.menu.domain.SelectManager
 import kotlinx.coroutines.CoroutineScope
@@ -56,6 +57,8 @@ class ActionPhaseViewModel(
 
     private val statusDataRepository: StatusDataRepository,
     private val enemyDataRepository: StatusDataRepository,
+
+    private val effectUseCase: EffectUseCase,
 ) : BattleChildViewModel() {
     private val actionRepository: ActionRepository by inject()
     private val battleInfoRepository: BattleInfoRepository by inject()
@@ -349,7 +352,9 @@ class ActionPhaseViewModel(
                     target = actionRepository.getAction(actionStatusWrapper.newId).target,
                     attacker = getStatus(actionStatusWrapper),
                     damageType = DamageType.AtkMultiple(1),
-                )
+                ) {
+                    effectUseCase.invoke(it)
+                }
             }
 
             ActionType.Skill -> {
@@ -463,7 +468,9 @@ class ActionPhaseViewModel(
                         target = it,
                         attacker = statusData,
                         damageType = (skill as AttackEffect).damageType,
-                    )
+                    ) {
+
+                    }
                 }
             }
 

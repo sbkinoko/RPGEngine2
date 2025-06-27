@@ -8,5 +8,6 @@ interface AttackUseCase {
         target: Int,
         attacker: StatusData,
         damageType: DamageType,
+        effect: (Int) -> Unit,
     )
 }

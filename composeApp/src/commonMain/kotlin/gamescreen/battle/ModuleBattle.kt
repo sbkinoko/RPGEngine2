@@ -97,7 +97,8 @@ val ModuleBattle = module {
             ),
             enemyDataRepository = get(
                 qualifier = EnemyStatusRepositoryName
-            )
+            ),
+            effectUseCase = get(),
         )
     }
 
@@ -183,7 +184,6 @@ val ModuleBattle = module {
             ),
             findTargetService = get(),
             attackCalcService = get(),
-            effectUseCase = get(),
         )
     }
 
