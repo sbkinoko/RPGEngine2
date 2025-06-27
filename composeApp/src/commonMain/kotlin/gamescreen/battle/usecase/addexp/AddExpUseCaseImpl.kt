@@ -1,11 +1,10 @@
 package gamescreen.battle.usecase.addexp
 
+import common.DefaultScope
 import core.domain.status.StatusType
 import core.repository.player.PlayerStatusRepository
 import core.repository.statusdata.StatusDataRepository
 import data.status.StatusRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class AddExpUseCaseImpl(
@@ -51,7 +50,7 @@ class AddExpUseCaseImpl(
                 }
             }
 
-            CoroutineScope(Dispatchers.Default).launch {
+            DefaultScope.launch {
                 //保存
                 playerStatusRepository.setStatus(
                     id = index,

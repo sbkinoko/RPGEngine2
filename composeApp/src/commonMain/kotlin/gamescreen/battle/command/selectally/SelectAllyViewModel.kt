@@ -1,5 +1,6 @@
 package gamescreen.battle.command.selectally
 
+import common.DefaultScope
 import core.domain.item.TargetStatusType
 import core.domain.status.StatusType
 import core.repository.statusdata.StatusDataRepository
@@ -12,8 +13,6 @@ import gamescreen.battle.domain.SelectAllyCommand
 import gamescreen.battle.repository.action.ActionRepository
 import gamescreen.battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUseCase
 import gamescreen.menu.domain.SelectManager
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -66,7 +65,7 @@ class SelectAllyViewModel(
         }
 
     init {
-        CoroutineScope(Dispatchers.Default).launch {
+        DefaultScope.launch {
             commandRepository.commandStateFlow.collect {
                 _isAllySelecting.value = it is SelectAllyCommand
                 if (isAllySelecting.value) {

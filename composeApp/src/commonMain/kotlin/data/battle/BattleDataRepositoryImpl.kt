@@ -1,5 +1,6 @@
 package data.battle
 
+import common.DefaultScope
 import core.domain.BattleEventCallback
 import core.usecase.heal.MaxHealUseCase
 import data.monster.MonsterRepository
@@ -7,8 +8,6 @@ import gamescreen.battle.domain.BattleBackgroundType
 import gamescreen.battle.domain.BattleId
 import gamescreen.text.TextBoxData
 import gamescreen.text.repository.TextRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class BattleDataRepositoryImpl(
@@ -37,7 +36,7 @@ class BattleDataRepositoryImpl(
                             textBoxData = TextBoxData(
                                 text = "また挑戦してね",
                                 callBack = {
-                                    CoroutineScope(Dispatchers.Default).launch {
+                                    DefaultScope.launch {
                                         maxHealUseCase.invoke()
                                     }
                                 }

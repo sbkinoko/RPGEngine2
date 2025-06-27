@@ -1,6 +1,7 @@
 package gamescreen.menushop
 
 import androidx.compose.runtime.mutableStateOf
+import common.DefaultScope
 import controller.domain.Stick
 import core.menu.SelectableChildViewModel
 import core.repository.money.MoneyRepository
@@ -14,8 +15,6 @@ import gamescreen.menushop.domain.amountdata.AmountData
 import gamescreen.menushop.repository.shopmenu.ShopMenuRepository
 import gamescreen.text.TextBoxData
 import gamescreen.text.repository.TextRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 
@@ -51,21 +50,21 @@ class ShopViewModel(
     private var shopItemList = emptyList<ShopItem>()
 
     init {
-        CoroutineScope(Dispatchers.Default).launch {
+        DefaultScope.launch {
             selectManager.selectedFlowState.collect {
                 selected = it
                 setMax()
             }
         }
 
-        CoroutineScope(Dispatchers.Default).launch {
+        DefaultScope.launch {
             moneyRepository.moneyStateFLow.collect {
                 money = it
                 setMax()
             }
         }
 
-        CoroutineScope(Dispatchers.Default).launch {
+        DefaultScope.launch {
             shopItemStateFlow.collect {
                 shopItemList = it
                 selectManager.itemNum = it.size

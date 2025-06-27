@@ -1,12 +1,11 @@
 package gamescreen.battle.usecase.effect
 
+import common.DefaultScope
 import gamescreen.battle.repository.attackeffect.AttackEffectInfo
 import gamescreen.battle.repository.attackeffect.AttackEffectRepository
 import gamescreen.battle.repository.attackeffect.rateList
 import gamescreen.battle.repository.flash.FlashInfo
 import gamescreen.battle.repository.flash.FlashRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -20,9 +19,9 @@ class EffectUseCaseImpl(
 
     private val effectInfo = attackEffectRepository.effectStateFlow
 
-    private var flashJob: Job = CoroutineScope(Dispatchers.Default).launch { }
+    private var flashJob: Job = DefaultScope.launch { }
 
-    private var effectJob = CoroutineScope(Dispatchers.Default).launch { }
+    private var effectJob = DefaultScope.launch { }
 
     override fun invoke(
         target: Int,
@@ -58,7 +57,7 @@ class EffectUseCaseImpl(
     private fun showEffect() {
         effectJob.cancel()
 
-        effectJob = CoroutineScope(Dispatchers.Default).launch {
+        effectJob = DefaultScope.launch {
             while (
                 effectInfo.value.any {
                     it.count > 0
@@ -92,7 +91,7 @@ class EffectUseCaseImpl(
     private fun flash() {
         flashJob.cancel()
 
-        flashJob = CoroutineScope(Dispatchers.Default).launch {
+        flashJob = DefaultScope.launch {
             while (flashInfo.value.any {
                     // どれか1つでも点滅中なら
                     it.count > 0

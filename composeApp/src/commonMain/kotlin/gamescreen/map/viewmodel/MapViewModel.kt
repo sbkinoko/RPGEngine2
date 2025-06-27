@@ -26,8 +26,6 @@ import gamescreen.map.usecase.event.cellevent.CellEventUseCase
 import gamescreen.map.usecase.move.MoveUseCase
 import gamescreen.map.usecase.roadmap.RoadMapUseCase
 import gamescreen.map.usecase.save.SaveUseCase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -85,7 +83,7 @@ class MapViewModel(
         backgroundRepository.cellNum = CELL_NUM
         backgroundRepository.screenSize = VIRTUAL_SCREEN_SIZE
 
-        CoroutineScope(Dispatchers.Default).launch {
+        DefaultScope.launch {
             val initPlayer = Player(
                 size = VIRTUAL_PLAYER_SIZE,
             )

@@ -1,5 +1,6 @@
 package gamescreen.menu.item.skill.target
 
+import common.DefaultScope
 import core.domain.AbleType
 import core.domain.Place
 import core.domain.item.Skill
@@ -11,8 +12,6 @@ import gamescreen.menu.domain.MenuType
 import gamescreen.menu.item.abstract.target.UsableTargetViewModel
 import gamescreen.menu.item.repository.index.IndexRepository
 import gamescreen.text.TextBoxData
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.core.component.inject
 
@@ -55,7 +54,7 @@ class SkillTargetViewModel : UsableTargetViewModel<SkillId, Skill>() {
         )
 
         //　スキル処理実行
-        CoroutineScope(Dispatchers.Default).launch {
+        DefaultScope.launch {
             useSkillUseCase.invoke(
                 targetId = targetRepository.target,
                 userId = userRepository.userId,

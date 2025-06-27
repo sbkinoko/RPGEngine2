@@ -1,5 +1,6 @@
 package gamescreen.battle.command.finish
 
+import common.DefaultScope
 import core.domain.BattleResult
 import core.repository.event.EventRepository
 import core.repository.money.MoneyRepository
@@ -16,8 +17,6 @@ import gamescreen.battle.usecase.getexp.GetExpUseCase
 import gamescreen.battle.usecase.getmoney.GetMoneyUseCase
 import gamescreen.menu.domain.SelectManager
 import gamescreen.menu.usecase.bag.addtool.AddToolUseCase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -57,7 +56,7 @@ class BattleFinishViewModel(
         MutableStateFlow(listOf())
 
     init {
-        CoroutineScope(Dispatchers.Default).launch {
+        DefaultScope.launch {
             contentType.collect {
                 when (it) {
                     ContentType.Win -> {
@@ -74,7 +73,7 @@ class BattleFinishViewModel(
                             exp = exp
                         )
 
-                        CoroutineScope(Dispatchers.Default).launch {
+                        DefaultScope.launch {
                             levelUpList = addExpUseCase.invoke(
                                 exp = exp,
                             )
@@ -109,7 +108,7 @@ class BattleFinishViewModel(
             }
         }
 
-        CoroutineScope(Dispatchers.Default).launch {
+        DefaultScope.launch {
             dropItemList.collect {
                 //道具画面じゃないので何もしない
                 if (contentType.value != ContentType.Tool) {
@@ -140,7 +139,7 @@ class BattleFinishViewModel(
             }
         }
 
-        CoroutineScope(Dispatchers.Default).launch {
+        DefaultScope.launch {
             mutableLevelUpListStateFlow.collect {
                 if (contentType.value != ContentType.LevelUp) {
                     return@collect

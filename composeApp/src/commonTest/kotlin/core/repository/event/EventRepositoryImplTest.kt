@@ -1,10 +1,9 @@
 package core.repository.event
 
+import common.DefaultScope
 import core.ModuleCore
 import core.domain.BattleEventCallback
 import core.domain.BattleResult
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -58,7 +57,7 @@ class EventRepositoryImplTest : KoinTest {
     fun checkInit() {
         runBlocking {
             lateinit var result: BattleResult
-            val collectJob = CoroutineScope(Dispatchers.Default).launch {
+            val collectJob = DefaultScope.launch {
                 eventRepository.resultStateFlow.collect {
                     result = it
                 }
@@ -80,7 +79,7 @@ class EventRepositoryImplTest : KoinTest {
         runBlocking {
             lateinit var result: BattleResult
             val battleResult = BattleResult.Win
-            val collectJob = CoroutineScope(Dispatchers.Default).launch {
+            val collectJob = DefaultScope.launch {
                 eventRepository.resultStateFlow.collect {
                     result = it
                 }
@@ -118,7 +117,7 @@ class EventRepositoryImplTest : KoinTest {
         runBlocking {
             lateinit var result: BattleResult
             val battleResult = BattleResult.Lose
-            val collectJob = CoroutineScope(Dispatchers.Default).launch {
+            val collectJob = DefaultScope.launch {
                 eventRepository.resultStateFlow.collect {
                     result = it
                 }
@@ -156,7 +155,7 @@ class EventRepositoryImplTest : KoinTest {
         runBlocking {
             lateinit var result: BattleResult
             val battleResult = BattleResult.None
-            val collectJob = CoroutineScope(Dispatchers.Default).launch {
+            val collectJob = DefaultScope.launch {
                 eventRepository.resultStateFlow.collect {
                     result = it
                 }
