@@ -4,7 +4,6 @@ import core.ModuleCore
 import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
 import core.domain.status.StatusData
 import core.domain.status.StatusDataTest
-import core.domain.status.StatusType
 import core.domain.status.monster.MonsterStatus
 import core.repository.battlemonster.BattleInfoRepository
 import core.repository.event.EventRepository
@@ -179,25 +178,25 @@ class StartBattleUseCaseImplTest : KoinTest {
                     throw NotImplementedError()
                 }
             },
-            statusDataRepository = object : StatusDataRepository<StatusType.Enemy> {
-                override val statusDataFlow: StateFlow<List<StatusData<StatusType.Enemy>>>
+            statusDataRepository = object : StatusDataRepository {
+                override val statusDataFlow: StateFlow<List<StatusData>>
                     get() = throw NotImplementedError()
 
-                override fun getStatusData(id: Int): StatusData<StatusType.Enemy> {
+                override fun getStatusData(id: Int): StatusData {
                     throw NotImplementedError()
                 }
 
-                override fun getStatusList(): List<StatusData<StatusType.Enemy>> {
+                override fun getStatusList(): List<StatusData> {
                     throw NotImplementedError()
                 }
 
-                override fun setStatusList(statusList: List<StatusData<StatusType.Enemy>>) {
+                override fun setStatusList(statusList: List<StatusData>) {
                     checkMonsterStatus++
                 }
 
                 override fun setStatusData(
                     id: Int,
-                    statusData: StatusData<StatusType.Enemy>,
+                    statusData: StatusData,
                 ) {
                     throw NotImplementedError()
                 }

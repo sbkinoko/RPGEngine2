@@ -1,6 +1,5 @@
 package core
 
-import core.domain.status.StatusType
 import core.repository.bag.BagRepository
 import core.repository.bag.BagRepositoryImpl
 import core.repository.battlemonster.BattleInfoRepository
@@ -53,7 +52,7 @@ val EquipmentBagRepositoryName = named(
 )
 
 val ModuleCore = module {
-    single<StatusDataRepository<StatusType.Player>>(
+    single<StatusDataRepository>(
         qualifier = PlayerStatusRepositoryName
     ) {
         StatusDataRepositoryImpl()
@@ -69,7 +68,7 @@ val ModuleCore = module {
         BattleInfoRepositoryImpl()
     }
 
-    single<StatusDataRepository<StatusType.Enemy>>(
+    single<StatusDataRepository>(
         qualifier = EnemyStatusRepositoryName
     ) {
         StatusDataRepositoryImpl()
@@ -106,7 +105,7 @@ val ModuleCore = module {
         )
     }
 
-    single<UpdateStatusUseCase<StatusType.Player>>(
+    single<UpdateStatusUseCase>(
         qualifier = named(UpdatePlayer)
     ) {
         UpdateStatusUseCaseImpl(
@@ -116,7 +115,7 @@ val ModuleCore = module {
         )
     }
 
-    single<UpdateStatusUseCase<StatusType.Enemy>>(
+    single<UpdateStatusUseCase>(
         qualifier = UpdateEnemyUseCaseName,
     )
     {

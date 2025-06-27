@@ -17,7 +17,7 @@ import values.Colors
 
 @Composable
 fun StatusDebugInfo(
-    statusData: StatusData<*>,
+    statusData: StatusData,
     size: Int,
     modifier: Modifier = Modifier,
 ) {

@@ -3,14 +3,13 @@ package data.status
 import core.domain.status.PlayerStatus
 import core.domain.status.StatusData
 import core.domain.status.StatusIncrease
-import core.domain.status.StatusType
 
 abstract class AbstractStatusRepository : StatusRepository {
 
     override fun getStatus(
         id: Int,
         level: Int,
-    ): Pair<PlayerStatus, StatusData<StatusType.Player>> {
+    ): Pair<PlayerStatus, StatusData> {
         var (playerStatus, statusData) = statusBaseList[id]
 
         for (lv: Int in 0 until level) {
@@ -38,5 +37,5 @@ abstract class AbstractStatusRepository : StatusRepository {
 
     protected abstract val statusUpList: List<List<StatusIncrease>>
 
-    protected abstract val statusBaseList: List<Pair<PlayerStatus, StatusData<StatusType.Player>>>
+    protected abstract val statusBaseList: List<Pair<PlayerStatus, StatusData>>
 }

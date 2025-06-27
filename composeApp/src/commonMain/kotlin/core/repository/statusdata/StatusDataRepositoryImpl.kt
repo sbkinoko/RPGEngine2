@@ -1,26 +1,25 @@
 package core.repository.statusdata
 
 import core.domain.status.StatusData
-import core.domain.status.StatusType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class StatusDataRepositoryImpl<T : StatusType> : StatusDataRepository<T> {
-    private val mutableStatusData: MutableStateFlow<List<StatusData<T>>> = MutableStateFlow(
+class StatusDataRepositoryImpl : StatusDataRepository {
+    private val mutableStatusData: MutableStateFlow<List<StatusData>> = MutableStateFlow(
         emptyList()
     )
 
-    override val statusDataFlow: StateFlow<List<StatusData<T>>>
+    override val statusDataFlow: StateFlow<List<StatusData>>
         get() = mutableStatusData.asStateFlow()
 
-    override fun getStatusData(id: Int): StatusData<T> {
+    override fun getStatusData(id: Int): StatusData {
         return statusDataFlow.value[id]
     }
 
     override fun setStatusData(
         id: Int,
-        statusData: StatusData<T>,
+        statusData: StatusData,
     ) {
         val list = statusDataFlow.value.toMutableList()
 
@@ -29,11 +28,11 @@ class StatusDataRepositoryImpl<T : StatusType> : StatusDataRepository<T> {
         mutableStatusData.value = list
     }
 
-    override fun getStatusList(): List<StatusData<T>> {
+    override fun getStatusList(): List<StatusData> {
         return statusDataFlow.value
     }
 
-    override fun setStatusList(statusList: List<StatusData<T>>) {
+    override fun setStatusList(statusList: List<StatusData>) {
         mutableStatusData.value = statusList
     }
 }

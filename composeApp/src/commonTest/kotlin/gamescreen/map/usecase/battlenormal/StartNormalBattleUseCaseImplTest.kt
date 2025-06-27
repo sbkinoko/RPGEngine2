@@ -6,7 +6,6 @@ import core.domain.mapcell.toBattleBackGround
 import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
 import core.domain.status.StatusData
 import core.domain.status.StatusDataTest
-import core.domain.status.StatusType
 import core.domain.status.monster.MonsterStatus
 import core.domain.testMapUiState
 import core.usecase.restart.RestartUseCase
@@ -72,7 +71,7 @@ class StartNormalBattleUseCaseImplTest {
     @Test
     fun notStart() {
         decideBattleMonsterUseCase = object : DecideBattleMonsterUseCase {
-            override fun invoke(backgroundCell: BackgroundCell): List<Pair<MonsterStatus, StatusData<StatusType.Enemy>>> {
+            override fun invoke(backgroundCell: BackgroundCell): List<Pair<MonsterStatus, StatusData>> {
                 throw NotImplementedError()
             }
         }
@@ -105,7 +104,7 @@ class StartNormalBattleUseCaseImplTest {
 
         startBattleUseCase = object : StartBattleUseCase {
             override fun invoke(
-                monsterList: List<Pair<MonsterStatus, StatusData<StatusType.Enemy>>>,
+                monsterList: List<Pair<MonsterStatus, StatusData>>,
                 battleEventCallback: BattleEventCallback,
                 backgroundType: BattleBackgroundType,
             ) {
@@ -153,7 +152,7 @@ class StartNormalBattleUseCaseImplTest {
         }
 
         decideBattleMonsterUseCase = object : DecideBattleMonsterUseCase {
-            override fun invoke(backgroundCell: BackgroundCell): List<Pair<MonsterStatus, StatusData<StatusType.Enemy>>> {
+            override fun invoke(backgroundCell: BackgroundCell): List<Pair<MonsterStatus, StatusData>> {
                 assertEquals(
                     expected = expectedBackgroundCell,
                     actual = backgroundCell,
@@ -165,7 +164,7 @@ class StartNormalBattleUseCaseImplTest {
 
         startBattleUseCase = object : StartBattleUseCase {
             override fun invoke(
-                monsterList: List<Pair<MonsterStatus, StatusData<StatusType.Enemy>>>,
+                monsterList: List<Pair<MonsterStatus, StatusData>>,
                 battleEventCallback: BattleEventCallback,
                 backgroundType: BattleBackgroundType,
             ) {
@@ -230,14 +229,14 @@ class StartNormalBattleUseCaseImplTest {
         }
 
         decideBattleMonsterUseCase = object : DecideBattleMonsterUseCase {
-            override fun invoke(backgroundCell: BackgroundCell): List<Pair<MonsterStatus, StatusData<StatusType.Enemy>>> {
+            override fun invoke(backgroundCell: BackgroundCell): List<Pair<MonsterStatus, StatusData>> {
                 return expectedMonsterList
             }
         }
 
         startBattleUseCase = object : StartBattleUseCase {
             override fun invoke(
-                monsterList: List<Pair<MonsterStatus, StatusData<StatusType.Enemy>>>,
+                monsterList: List<Pair<MonsterStatus, StatusData>>,
                 battleEventCallback: BattleEventCallback,
                 backgroundType: BattleBackgroundType,
             ) {

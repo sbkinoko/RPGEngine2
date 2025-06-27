@@ -7,11 +7,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import core.domain.status.StatusData
-import core.domain.status.StatusType
 
 @Composable
 fun StatusArea(
-    statusList: List<StatusData<StatusType.Player>>,
+    statusList: List<StatusData>,
     modifier: Modifier = Modifier,
 ) {
     Row(

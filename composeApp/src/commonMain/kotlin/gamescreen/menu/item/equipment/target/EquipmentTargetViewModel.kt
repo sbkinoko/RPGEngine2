@@ -4,7 +4,6 @@ import common.DefaultScope
 import core.EquipmentBagRepositoryName
 import core.PlayerStatusRepositoryName
 import core.domain.item.equipment.EquipmentData
-import core.domain.status.StatusType
 import core.repository.bag.BagRepository
 import core.repository.player.PlayerStatusRepository
 import core.repository.statusdata.StatusDataRepository
@@ -29,7 +28,7 @@ class EquipmentTargetViewModel(
 ) : TargetViewModel<EquipmentId, EquipmentData>() {
     private val targetRepository: TargetRepository by inject()
     val playerStatusRepository: PlayerStatusRepository by inject()
-    val statusDataRepository: StatusDataRepository<StatusType.Player> by inject(
+    val statusDataRepository: StatusDataRepository by inject(
         qualifier = PlayerStatusRepositoryName
     )
 

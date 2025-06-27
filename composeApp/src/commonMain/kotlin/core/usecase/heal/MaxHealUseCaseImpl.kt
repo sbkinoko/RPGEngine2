@@ -1,10 +1,9 @@
 package core.usecase.heal
 
-import core.domain.status.StatusType
 import core.repository.statusdata.StatusDataRepository
 
 class MaxHealUseCaseImpl(
-    private val playerStatusRepository: StatusDataRepository<StatusType.Player>,
+    private val playerStatusRepository: StatusDataRepository,
 ) : MaxHealUseCase {
     override suspend fun invoke() {
         playerStatusRepository.getStatusList().mapIndexed { index, playerStatus ->

@@ -180,7 +180,7 @@ class AttackServiceImplTest : KoinTest {
         def: Int,
         maxPoint: Int,
         rate: Int,
-    ): StatusData<*> {
+    ): StatusData {
         val attacker = StatusDataTest.TestPlayerStatusActive.copy(
             atk = StatusParameter(atk),
         )
@@ -242,7 +242,7 @@ class AttackServiceImplTest : KoinTest {
     private fun rateAttack(
         maxPoint: Int,
         rate: Int,
-    ): StatusData<*> {
+    ): StatusData {
         val attacker = StatusDataTest.TestPlayerStatusActive
 
         val attacked = StatusDataTest.TestEnemyStatusActive.copy(
@@ -303,7 +303,7 @@ class AttackServiceImplTest : KoinTest {
     private fun fixDamage(
         maxPoint: Int,
         amount: Int,
-    ): StatusData<*> {
+    ): StatusData {
         val attacker = StatusDataTest.TestPlayerStatusActive
 
         val attacked = StatusDataTest.TestEnemyStatusActive.copy(

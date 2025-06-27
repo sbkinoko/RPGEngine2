@@ -5,7 +5,7 @@ import core.domain.status.StatusData
 interface FindActiveTargetUseCase {
 
     operator fun invoke(
-        statusList: List<StatusData<*>>,
+        statusList: List<StatusData>,
         target: Int,
         targetNum: Int,
     ): List<Int>

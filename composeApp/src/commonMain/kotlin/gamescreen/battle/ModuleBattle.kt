@@ -4,7 +4,6 @@ import core.EnemyStatusRepositoryName
 import core.PlayerStatusRepositoryName
 import core.UpdateEnemyUseCaseName
 import core.UpdatePlayer
-import core.domain.status.StatusType
 import gamescreen.battle.command.actionphase.ActionPhaseViewModel
 import gamescreen.battle.command.escape.EscapeViewModel
 import gamescreen.battle.command.finish.BattleFinishViewModel
@@ -175,7 +174,7 @@ val ModuleBattle = module {
         DecideActionOrderUseCaseImpl()
     }
 
-    single<AttackUseCase<StatusType.Player>>(
+    single<AttackUseCase>(
         qualifier = named(QualifierAttackFromPlayer)
     ) {
         AttackFromPlayerUseCaseImpl(
@@ -202,7 +201,7 @@ val ModuleBattle = module {
         )
     }
 
-    single<AttackUseCase<StatusType.Enemy>>(
+    single<AttackUseCase>(
         qualifier = named(QualifierAttackFromEnemy)
     )
     {

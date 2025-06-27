@@ -1,7 +1,6 @@
 package gamescreen.battle.usecase.addexp
 
 import common.DefaultScope
-import core.domain.status.StatusType
 import core.repository.player.PlayerStatusRepository
 import core.repository.statusdata.StatusDataRepository
 import data.status.StatusRepository
@@ -11,7 +10,7 @@ class AddExpUseCaseImpl(
     private val playerStatusRepository: PlayerStatusRepository,
     private val statusRepository: StatusRepository,
 
-    private val statusDataRepository: StatusDataRepository<StatusType.Player>,
+    private val statusDataRepository: StatusDataRepository,
 ) : AddExpUseCase {
     override fun invoke(exp: Int): List<String> {
         val levelUpList: MutableList<String> = mutableListOf()

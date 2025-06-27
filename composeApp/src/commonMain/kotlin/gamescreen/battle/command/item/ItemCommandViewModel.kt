@@ -5,7 +5,6 @@ import core.PlayerStatusRepositoryName
 import core.domain.Const
 import core.domain.item.TargetType
 import core.domain.item.UsableItem
-import core.domain.status.StatusType
 import core.repository.player.PlayerStatusRepository
 import core.repository.statusdata.StatusDataRepository
 import data.item.ItemRepository
@@ -24,7 +23,7 @@ abstract class ItemCommandViewModel<T, V : UsableItem> : BattleChildViewModel() 
     protected val actionRepository: ActionRepository by inject()
     protected val playerStatusRepository: PlayerStatusRepository by inject()
 
-    protected val statusDataRepository: StatusDataRepository<StatusType.Player> by inject(
+    protected val statusDataRepository: StatusDataRepository by inject(
         qualifier = PlayerStatusRepositoryName
     )
 

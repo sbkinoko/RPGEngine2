@@ -3,7 +3,6 @@ package gamescreen.menu.item.tool.user
 import core.ToolBagRepositoryName
 import core.domain.item.BagItemData
 import core.domain.item.Tool
-import core.domain.status.StatusType
 import core.repository.bag.BagRepository
 import core.repository.statusdata.StatusDataRepository
 import data.item.tool.ToolId
@@ -16,7 +15,7 @@ import org.koin.core.component.inject
 import values.Constants
 
 class ToolUserViewModel(
-    private val statusDataRepository: StatusDataRepository<StatusType.Player>,
+    private val statusDataRepository: StatusDataRepository,
 ) : ItemUserViewModel<ToolId, Tool>(),
     KoinComponent {
     override val itemRepository: ToolRepository by inject()

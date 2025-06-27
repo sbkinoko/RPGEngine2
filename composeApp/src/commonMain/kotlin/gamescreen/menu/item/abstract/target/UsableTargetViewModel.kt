@@ -3,7 +3,6 @@ package gamescreen.menu.item.abstract.target
 import core.PlayerStatusRepositoryName
 import core.domain.AbleType
 import core.domain.item.UsableItem
-import core.domain.status.StatusType
 import core.repository.player.PlayerStatusRepository
 import core.repository.statusdata.StatusDataRepository
 import gamescreen.choice.Choice
@@ -18,7 +17,7 @@ import values.Constants.Companion.playerNum
 abstract class UsableTargetViewModel<T, V : UsableItem> : TargetViewModel<T, V>() {
     protected val targetRepository: TargetRepository by inject()
     protected val playerStatusRepository: PlayerStatusRepository by inject()
-    protected val statusDataRepository: StatusDataRepository<StatusType.Player> by inject(
+    protected val statusDataRepository: StatusDataRepository by inject(
         qualifier = PlayerStatusRepositoryName
     )
 

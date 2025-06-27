@@ -5,7 +5,7 @@ import core.domain.status.param.StatusParameter
 import core.domain.status.param.StatusParameterWithMax
 
 // todo statusDataにTを持たせて確認する
-data class StatusData<T : StatusType>(
+data class StatusData(
     val name: String,
     val hp: StatusParameterWithMax<ParameterType.HP> =
         StatusParameterWithMax(
@@ -33,7 +33,7 @@ data class StatusData<T : StatusType>(
     fun setHP(
         value: Int = hp.point,
         max: Int = hp.maxPoint,
-    ): StatusData<T> {
+    ): StatusData {
         return this.copy(
             hp = hp.set(
                 value = value,
@@ -42,13 +42,13 @@ data class StatusData<T : StatusType>(
         )
     }
 
-    fun decHP(amount: Int): StatusData<T> {
+    fun decHP(amount: Int): StatusData {
         return this.copy(
             hp = hp.dec(amount),
         )
     }
 
-    fun incHP(amount: Int): StatusData<T> {
+    fun incHP(amount: Int): StatusData {
         return this.copy(
             hp = hp.inc(amount),
         )
@@ -57,7 +57,7 @@ data class StatusData<T : StatusType>(
     fun setMP(
         value: Int = mp.point,
         max: Int = mp.maxPoint,
-    ): StatusData<T> {
+    ): StatusData {
         return this.copy(
             mp = mp.set(
                 value = value,
@@ -66,25 +66,25 @@ data class StatusData<T : StatusType>(
         )
     }
 
-    fun decMP(amount: Int): StatusData<T> {
+    fun decMP(amount: Int): StatusData {
         return this.copy(
             mp = mp.dec(amount),
         )
     }
 
-    fun incMP(amount: Int): StatusData<T> {
+    fun incMP(amount: Int): StatusData {
         return this.copy(
             mp = mp.inc(amount),
         )
     }
 
-    fun updateConditionList(conditionList: List<ConditionType>): StatusData<T> {
+    fun updateConditionList(conditionList: List<ConditionType>): StatusData {
         return copy(
             conditionList = conditionList,
         )
     }
 
-    fun addConditionType(conditionType: ConditionType): StatusData<T> {
+    fun addConditionType(conditionType: ConditionType): StatusData {
         return this.copy(
             conditionList = conditionList + conditionType,
         )
@@ -95,7 +95,7 @@ data class StatusData<T : StatusType>(
      */
     fun incStatus(
         statusIncrease: StatusIncrease,
-    ): StatusData<T> {
+    ): StatusData {
         return copy(
             hp = hp.incMax(statusIncrease.hp),
             mp = mp.incMax(statusIncrease.mp),
@@ -110,7 +110,7 @@ data class StatusData<T : StatusType>(
      */
     fun decStatus(
         statusIncrease: StatusIncrease,
-    ): StatusData<T> {
+    ): StatusData {
         return copy(
             hp = hp.decMax(statusIncrease.hp),
             mp = mp.decMax(statusIncrease.mp),
@@ -120,7 +120,7 @@ data class StatusData<T : StatusType>(
         )
     }
 
-    fun reduceBuf(): StatusData<T> {
+    fun reduceBuf(): StatusData {
         return copy(
             atk = atk.reduceBuf(),
             def = def.reduceBuf(),

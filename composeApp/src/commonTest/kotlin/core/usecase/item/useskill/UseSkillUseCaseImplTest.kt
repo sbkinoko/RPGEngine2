@@ -11,7 +11,6 @@ import core.domain.item.skill.AttackSkill
 import core.domain.item.skill.HealSkill
 import core.domain.status.ConditionType
 import core.domain.status.PlayerStatus
-import core.domain.status.StatusType
 import core.repository.player.PlayerStatusRepository
 import core.usecase.updateparameter.UpdateStatusUseCase
 import data.item.skill.SkillId
@@ -52,7 +51,7 @@ class UseSkillUseCaseImplTest {
 
     private lateinit var playerStatusRepository: TestPlayerStatusRepository
 
-    abstract class TestUpdatePlayerStatusUseCase : UpdateStatusUseCase<StatusType.Player> {
+    abstract class TestUpdatePlayerStatusUseCase : UpdateStatusUseCase {
 
         override suspend fun decHP(
             id: Int,
@@ -83,7 +82,7 @@ class UseSkillUseCaseImplTest {
         }
     }
 
-    private lateinit var updatePlayerStatusUseCase: UpdateStatusUseCase<StatusType.Player>
+    private lateinit var updatePlayerStatusUseCase: UpdateStatusUseCase
 
     private val testUseCase = object : TestUpdatePlayerStatusUseCase() {
         override suspend fun incHP(

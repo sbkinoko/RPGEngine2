@@ -4,7 +4,6 @@ import core.EnemyStatusRepositoryName
 import core.ModuleCore
 import core.domain.item.DamageType
 import core.domain.status.StatusDataTest
-import core.domain.status.StatusType
 import core.domain.status.param.ParameterType
 import core.domain.status.param.StatusParameter
 import core.domain.status.param.StatusParameterWithMax
@@ -25,7 +24,7 @@ import kotlin.test.assertEquals
 
 
 class AttackUseCaseImplFromPlayerTest : KoinTest {
-    private val attackUseCase: AttackUseCase<StatusType.Player> by inject(
+    private val attackUseCase: AttackUseCase by inject(
         qualifier = named(
             QualifierAttackFromPlayer
         )
@@ -37,7 +36,7 @@ class AttackUseCaseImplFromPlayerTest : KoinTest {
         maxPoint = 100
     )
 
-    private val enemyStatusDataRepository: StatusDataRepository<StatusType.Enemy> by inject(
+    private val enemyStatusDataRepository: StatusDataRepository by inject(
         qualifier = EnemyStatusRepositoryName,
     )
 

@@ -4,7 +4,7 @@ import core.domain.status.StatusData
 
 class IsAnnihilationServiceImpl : IsAnnihilationService {
     override fun invoke(
-        statusList: List<StatusData<*>>,
+        statusList: List<StatusData>,
     ): Boolean {
         //どれか一つでもActiveであれば全滅はしていない
         return !statusList.any {

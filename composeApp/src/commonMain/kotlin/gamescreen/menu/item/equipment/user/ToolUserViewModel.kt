@@ -3,7 +3,6 @@ package gamescreen.menu.item.equipment.user
 import core.EquipmentBagRepositoryName
 import core.domain.item.BagItemData
 import core.domain.item.equipment.EquipmentData
-import core.domain.status.StatusType
 import core.repository.bag.BagRepository
 import core.repository.statusdata.StatusDataRepository
 import data.item.equipment.EquipmentId
@@ -16,7 +15,7 @@ import org.koin.core.component.inject
 import values.Constants
 
 class EquipmentUserViewModel(
-    private val statusDataRepository: StatusDataRepository<StatusType.Player>,
+    private val statusDataRepository: StatusDataRepository,
 ) : ItemUserViewModel<EquipmentId, EquipmentData>(),
     KoinComponent {
     override val itemRepository: EquipmentRepository by inject()
