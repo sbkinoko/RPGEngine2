@@ -1,5 +1,6 @@
 package gamescreen.map.usecase.battlenormal
 
+import common.DefaultScope
 import core.domain.BattleEventCallback
 import core.domain.mapcell.CellType
 import core.domain.mapcell.toBattleBackGround
@@ -10,8 +11,6 @@ import gamescreen.map.usecase.battledecidemonster.DecideBattleMonsterUseCase
 import gamescreen.map.usecase.battlestart.StartBattleUseCase
 import gamescreen.text.TextBoxData
 import gamescreen.text.repository.TextRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class StartNormalBattleUseCaseImpl(
@@ -43,7 +42,7 @@ class StartNormalBattleUseCaseImpl(
             battleEventCallback = BattleEventCallback(
                 winCallback = {},
                 loseCallback = {
-                    CoroutineScope(Dispatchers.Default).launch {
+                    DefaultScope.launch {
                         updateScreen(
                             restartUseCase.invoke(
                                 mapUiState = mapUiState,

@@ -1,5 +1,6 @@
 package gamescreen.map.usecase.event.actionevent
 
+import common.DefaultScope
 import core.domain.mapcell.CellType
 import gamescreen.map.domain.MapUiState
 import gamescreen.map.domain.ObjectHeight
@@ -12,8 +13,6 @@ import gamescreen.menu.usecase.bag.addtool.AddToolUseCase
 import gamescreen.menushop.usecase.setshopitem.SetShopItemUseCase
 import gamescreen.text.TextBoxData
 import gamescreen.text.repository.TextRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import values.event.BoxData
 import values.event.EventType
@@ -120,7 +119,7 @@ class ActionEventUseCaseImpl(
                 textRepository.push(
                     textBoxData,
                 )
-                CoroutineScope(Dispatchers.Default).launch {
+                DefaultScope.launch {
                     moveToOtherHeightUseCase.invoke(
                         targetHeight = ObjectHeight.Water(1),
                         mapUiState = mapUiState,
@@ -136,7 +135,7 @@ class ActionEventUseCaseImpl(
                 textRepository.push(
                     textBoxData,
                 )
-                CoroutineScope(Dispatchers.Default).launch {
+                DefaultScope.launch {
                     moveToOtherHeightUseCase.invoke(
                         targetHeight = ObjectHeight.Ground(1),
                         mapUiState = mapUiState,
@@ -146,7 +145,7 @@ class ActionEventUseCaseImpl(
             }
 
             EventType.Ground1 -> {
-                CoroutineScope(Dispatchers.Default).launch {
+                DefaultScope.launch {
                     update(
                         mapUiState.copy(
                             player = changeHeightUseCase.invoke(
@@ -159,7 +158,7 @@ class ActionEventUseCaseImpl(
             }
 
             EventType.Ground2 -> {
-                CoroutineScope(Dispatchers.Default).launch {
+                DefaultScope.launch {
                     update(
                         mapUiState.copy(
                             player = changeHeightUseCase.invoke(

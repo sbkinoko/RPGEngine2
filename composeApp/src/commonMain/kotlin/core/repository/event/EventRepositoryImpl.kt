@@ -1,9 +1,8 @@
 package core.repository.event
 
+import common.DefaultScope
 import core.domain.BattleEventCallback
 import core.domain.BattleResult
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,7 +18,7 @@ class EventRepositoryImpl : EventRepository {
         get() = mutableBattleResultFlow.asStateFlow()
 
     init {
-        CoroutineScope(Dispatchers.Default).launch {
+        DefaultScope.launch {
             resultStateFlow.collect {
                 battleEventCallback.callback(it)
             }

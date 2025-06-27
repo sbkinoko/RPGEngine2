@@ -1,5 +1,6 @@
 package gamescreen.map.usecase.battlestart
 
+import common.DefaultScope
 import core.domain.BattleEventCallback
 import core.domain.BattleResult
 import core.domain.status.StatusData
@@ -15,8 +16,6 @@ import gamescreen.battle.repository.action.ActionRepository
 import gamescreen.battle.repository.attackeffect.AttackEffectRepository
 import gamescreen.battle.repository.commandstate.CommandStateRepository
 import gamescreen.battle.repository.flash.FlashRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 
@@ -41,7 +40,7 @@ class StartBattleUseCaseImpl(
             return
         }
 
-        CoroutineScope(Dispatchers.Default).launch {
+        DefaultScope.launch {
             battleInfoRepository.setMonsters(
                 monsterList.map { it.first }
             )

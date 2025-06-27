@@ -1,6 +1,7 @@
 package gamescreen.battle.command.actionphase
 
 import androidx.compose.runtime.mutableStateOf
+import common.DefaultScope
 import core.UpdateEnemyUseCaseName
 import core.UpdatePlayer
 import core.domain.item.AttackEffect
@@ -597,7 +598,7 @@ class ActionPhaseViewModel(
         actionState.value = nextState
 
         // 切り替え後の状態で処理を実行
-        CoroutineScope(Dispatchers.Default).launch {
+        DefaultScope.launch {
             when (nextState) {
                 ActionState.Action -> {
                     // fixme delayをなくせるようにする

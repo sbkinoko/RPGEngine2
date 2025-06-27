@@ -1,5 +1,6 @@
 package gamescreen.battle.command.selectenemy
 
+import common.DefaultScope
 import controller.domain.ArrowCommand
 import controller.domain.Stick
 import core.domain.status.StatusData
@@ -15,8 +16,6 @@ import gamescreen.battle.usecase.changeselectingactionplayer.ChangeSelectingActi
 import gamescreen.battle.usecase.findactivetarget.FindActiveTargetUseCase
 import gamescreen.battle.usecase.gettargetnum.GetTargetNumUseCase
 import gamescreen.menu.domain.SelectManager
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -46,7 +45,7 @@ class SelectEnemyViewModel(
         }
 
     init {
-        CoroutineScope(Dispatchers.Default).launch {
+        DefaultScope.launch {
             commandRepository.commandStateFlow.collect {
                 updateArrow()
             }

@@ -1,5 +1,6 @@
 package gamescreen.battle.command.item
 
+import common.DefaultScope
 import core.PlayerStatusRepositoryName
 import core.domain.Const
 import core.domain.item.TargetType
@@ -14,8 +15,6 @@ import gamescreen.battle.domain.SelectAllyCommand
 import gamescreen.battle.domain.SelectEnemyCommand
 import gamescreen.battle.repository.action.ActionRepository
 import gamescreen.menu.domain.SelectManager
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import org.koin.core.component.inject
@@ -46,7 +45,7 @@ abstract class ItemCommandViewModel<T, V : UsableItem> : BattleChildViewModel() 
 
     abstract fun canUse(position: Int): Boolean
 
-    private var job: Job = CoroutineScope(Dispatchers.Default).launch {}
+    private var job: Job = DefaultScope.launch {}
 
     fun init() {
         // 最後に選ばれていたスキルを呼び出し
@@ -67,7 +66,7 @@ abstract class ItemCommandViewModel<T, V : UsableItem> : BattleChildViewModel() 
 
         job.cancel()
 
-        job = CoroutineScope(Dispatchers.Default).launch {
+        job = DefaultScope.launch {
             selectedFlowState.collect {
                 scroll(it)
             }

@@ -1,5 +1,6 @@
 package gamescreen.menu.item.equipment.target
 
+import common.DefaultScope
 import core.EquipmentBagRepositoryName
 import core.PlayerStatusRepositoryName
 import core.domain.item.equipment.EquipmentData
@@ -19,8 +20,6 @@ import gamescreen.menu.item.repository.index.IndexRepository
 import gamescreen.menu.item.repository.target.TargetRepository
 import gamescreen.text.TextBoxData
 import gamescreen.text.repository.TextRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.core.component.inject
 import values.Constants.Companion.playerNum
@@ -97,7 +96,7 @@ class EquipmentTargetViewModel(
     }
 
     private fun selectYes() {
-        CoroutineScope(Dispatchers.Default).launch {
+        DefaultScope.launch {
             //　todo 袋から装備を減らす
 
             equipmentUseCase.invoke(
