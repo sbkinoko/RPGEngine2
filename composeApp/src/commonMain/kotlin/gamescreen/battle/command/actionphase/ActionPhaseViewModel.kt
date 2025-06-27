@@ -176,9 +176,11 @@ class ActionPhaseViewModel(
             val enemyData = battleInfoRepository.getStatus(index)
 
             val action = decideMonsterActionService.getAction(
-                enemyData,
-                playerStatusRepository.getStatusList(),
+                monster = enemyData,
+                statusData = statusData,
+                playerStatusList = playerStatusRepository.getStatusList(),
             )
+
             list += StatusWrapper(
                 status = statusData,
                 actionData = action,
@@ -534,36 +536,16 @@ class ActionPhaseViewModel(
                 break
             }
 
-            when (actionStatusWrapper.statusType) {
-                StatusType.Player -> {
-                    //　playerを確認
+            // このターンの行動がない場合は次へ
+            if (actionStatusWrapper.actionData.thisTurnAction == ActionType.None) {
+                continue
+            }
 
-                    val statusData = statusDataRepository.getStatusData(
-                        id = actionStatusWrapper.newId,
-                    )
-                    if (statusData.isActive.not()) {
-                        continue
-                    }
+            val status = actionStatusWrapper.toStatus()
 
-                    val action = actionRepository.getAction(playerId = actionStatusWrapper.newId)
-                    val actionType = action.thisTurnAction
-                    if (actionType == ActionType.None) {
-                        continue
-                    }
-                }
-
-                StatusType.Enemy -> {
-                    val monsterId = actionStatusWrapper.newId
-                    val monster = enemyDataRepository
-                        .getStatusData(id = monsterId)
-
-                    //　monsterを確認
-                    if (monster.isActive.not()) {
-                        continue
-                    }
-                }
-
-                StatusType.None -> throw RuntimeException("Noneで処理はない")
+            // HPがない場合は次へ
+            if (status.isActive.not()) {
+                continue
             }
 
             // 行動可能なのでデータ更新
