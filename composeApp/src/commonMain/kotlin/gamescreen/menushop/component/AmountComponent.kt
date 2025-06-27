@@ -24,7 +24,8 @@ fun AmountComponent(
     onClickBuy: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val selected by amountData.selected
+    val selected by amountData
+        .selected
         .collectAsState()
 
     Row(
@@ -37,24 +38,26 @@ fun AmountComponent(
             ).clickable { },
     ) {
 
-        amountData.buttonDataList.mapIndexed { index, buttonData ->
-            SpinButton(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(5.dp)
-                    .then(
-                        if (selected == index) {
-                            Modifier.border(
-                                width = 1.dp,
-                                color = Colors.SelectedMenu
-                            )
-                        } else {
-                            Modifier
-                        }
-                    ),
-                spinButtonData = buttonData,
-            )
-        }
+        amountData
+            .buttonDataList
+            .mapIndexed { index, buttonData ->
+                SpinButton(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(5.dp)
+                        .then(
+                            if (selected == index) {
+                                Modifier.border(
+                                    width = 1.dp,
+                                    color = Colors.SelectedMenu
+                                )
+                            } else {
+                                Modifier
+                            }
+                        ),
+                    spinButtonData = buttonData,
+                )
+            }
 
         Button(
             onClick = onClickBuy,

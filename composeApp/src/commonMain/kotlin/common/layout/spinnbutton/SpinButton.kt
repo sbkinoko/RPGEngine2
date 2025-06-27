@@ -13,8 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 
 @Composable
-fun SpinButton(
-    spinButtonData: SpinButtonData<*>,
+fun <T> SpinButton(
+    spinButtonData: SpinButtonData<T>,
     modifier: Modifier = Modifier,
 ) {
     val data by spinButtonData.dataFlow.collectAsState()
@@ -23,7 +23,8 @@ fun SpinButton(
         modifier = modifier,
     ) {
         Button(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth(),
             onClick = {
                 spinButtonData.onClickAdd()
             },
@@ -38,14 +39,16 @@ fun SpinButton(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth(),
                 textAlign = TextAlign.Center,
                 text = data.toString(),
             )
         }
 
         Button(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth(),
             onClick = {
                 spinButtonData.onClickDec()
             },
