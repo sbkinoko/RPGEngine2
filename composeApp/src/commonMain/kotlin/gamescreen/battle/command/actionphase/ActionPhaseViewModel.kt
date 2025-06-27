@@ -144,6 +144,20 @@ class ActionPhaseViewModel(
 
     private var statusWrapperList: List<StatusWrapper> = emptyList()
 
+    /**
+     * statusWrapperに対応したstatusを取得
+     */
+    private fun StatusWrapper.toStatus(): StatusData {
+        // statusWrapperに最新の情報を保持することは出来ない
+        return when (statusType) {
+            StatusType.Player -> statusDataRepository
+            StatusType.Enemy -> enemyDataRepository
+            StatusType.None -> throw RuntimeException("Noneで処理はない")
+        }.getStatusData(
+            newId
+        )
+    }
+
     fun init() {
         val list = mutableListOf<StatusWrapper>()
 
@@ -189,7 +203,8 @@ class ActionPhaseViewModel(
             return ""
         }
 
-        val actionStatusName = getStatus(statusWrapper)
+        val actionStatusName = statusWrapper
+            .toStatus()
             .name
 
         val targetStatusName = getTargetStatusName(statusWrapper)
@@ -225,19 +240,6 @@ class ActionPhaseViewModel(
         }
     }
 
-    /**
-     * statusWrapperを入れて対応するステータスを取得
-     */
-    private fun getStatus(statusWrapper: StatusWrapper): StatusData {
-        return when (statusWrapper.statusType) {
-            StatusType.Player -> statusDataRepository
-            StatusType.Enemy -> enemyDataRepository
-            StatusType.None -> throw RuntimeException("Noneで処理はない")
-        }.getStatusData(
-            statusWrapper.newId
-        )
-    }
-
     private fun getActionItem(statusWrapper: StatusWrapper): UsableItem {
         val action = statusWrapper.actionData
         return when (action.thisTurnAction) {
@@ -251,62 +253,45 @@ class ActionPhaseViewModel(
     }
 
     private fun getTargetStatusName(statusWrapper: StatusWrapper): String {
-        return when (statusWrapper.statusType) {
-            StatusType.Player -> getPlayerActionTargetName(statusWrapper = statusWrapper)
-            StatusType.Enemy -> getMonsterTargetName(statusWrapper = statusWrapper)
-            StatusType.None -> throw RuntimeException("Noneで処理はない")
-        }
-    }
+        val allyRepository: StatusDataRepository
+        val enemyRepository: StatusDataRepository
 
-    private fun getPlayerActionTargetName(statusWrapper: StatusWrapper): String {
+        when (statusWrapper.statusType) {
+            StatusType.Enemy -> {
+                allyRepository = enemyDataRepository
+                enemyRepository = statusDataRepository
+            }
+
+            StatusType.Player -> {
+                allyRepository = statusDataRepository
+                enemyRepository = enemyDataRepository
+            }
+
+            StatusType.None -> throw NotImplementedError()
+        }
+
         val action = statusWrapper.actionData
         val item = getActionItem(statusWrapper = statusWrapper)
-
-        val attackerRepository = statusDataRepository
 
         return when (item.targetType) {
             TargetType.Enemy,
                 -> {
                 var targetId = action.target
-                if (enemyDataRepository.getStatusData(targetId)
+                if (enemyRepository.getStatusData(targetId)
                         .isActive.not()
                 ) {
                     targetId = findActiveTargetUseCase.invoke(
-                        statusList = enemyDataRepository.getStatusList(),
+                        statusList = enemyRepository.getStatusList(),
                         target = targetId,
                         targetNum = item.targetNum,
                     ).first()
                 }
-                enemyDataRepository.getStatusData(targetId).name
+                enemyRepository.getStatusData(targetId).name
             }
 
             TargetType.Ally -> {
                 val targetId = action.ally
-                attackerRepository.getStatusData(targetId).name
-            }
-        }
-    }
-
-    private fun getMonsterTargetName(statusWrapper: StatusWrapper): String {
-        val action = statusWrapper.actionData
-        val item = getActionItem(statusWrapper = statusWrapper)
-
-        return when (item.targetType) {
-            TargetType.Enemy -> {
-                var targetId = action.target
-                if (statusDataRepository.getStatusData(targetId).isActive.not()) {
-                    targetId = findActiveTargetUseCase.invoke(
-                        statusList = statusDataRepository.getStatusList(),
-                        target = targetId,
-                        targetNum = item.targetNum,
-                    ).first()
-                }
-                statusDataRepository.getStatusData(targetId).name
-            }
-
-            TargetType.Ally -> {
-                val targetId = action.ally
-                enemyDataRepository.getStatusData(targetId).name
+                allyRepository.getStatusData(targetId).name
             }
         }
     }
@@ -353,7 +338,7 @@ class ActionPhaseViewModel(
                 //　攻撃
                 attackFromPlayerUseCase.invoke(
                     target = actionRepository.getAction(actionStatusWrapper.newId).target,
-                    attacker = getStatus(actionStatusWrapper),
+                    attacker = actionStatusWrapper.toStatus(),
                     damageType = DamageType.AtkMultiple(1),
                     effect = attackEffect,
                 )
@@ -362,7 +347,7 @@ class ActionPhaseViewModel(
             ActionType.Skill -> {
                 skillAction(
                     id = actionStatusWrapper.newId,
-                    statusData = getStatus(actionStatusWrapper),
+                    statusData = actionStatusWrapper.toStatus(),
                     actionData = actionRepository.getAction(actionStatusWrapper.newId),
                     statusList = enemyDataRepository.getStatusList(),
                     attackUseCase = attackFromPlayerUseCase,
@@ -390,7 +375,7 @@ class ActionPhaseViewModel(
         actionStatusWrapper.apply {
             skillAction(
                 id = newId,
-                statusData = getStatus(actionStatusWrapper),
+                statusData = actionStatusWrapper.toStatus(),
                 statusList = statusDataRepository.getStatusList(),
                 actionData = actionData,
                 attackUseCase = attackFromEnemyUseCase,
@@ -593,7 +578,7 @@ class ActionPhaseViewModel(
 
         // fixme getNextStateの引数にstatusを追加して、その中で処理したい
         // ステータスに関連する処理も内部で行うようにする
-        if (getStatus(actionStatusWrapper).isActive.not()) {
+        if (actionStatusWrapper.toStatus().isActive.not()) {
             // 倒れていたらnextに変更
             actionState.value = ActionState.Next
             return
@@ -601,8 +586,7 @@ class ActionPhaseViewModel(
 
         // 状態の切り替え
         val nextState = actionState.value.getNextState(
-            conditionList = getStatus(actionStatusWrapper)
-                .conditionList
+            conditionList = actionStatusWrapper.toStatus().conditionList
         )
         actionState.value = nextState
 
