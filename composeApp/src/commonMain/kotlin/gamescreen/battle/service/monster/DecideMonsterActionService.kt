@@ -1,6 +1,7 @@
 package gamescreen.battle.service.monster
 
 import core.domain.status.PlayerStatus
+import core.domain.status.StatusData
 import core.domain.status.monster.ActionStyle
 import core.domain.status.monster.MonsterStatus
 import gamescreen.battle.domain.ActionData
@@ -11,8 +12,15 @@ class DecideMonsterActionService {
 
     fun getAction(
         monster: MonsterStatus,
+        statusData: StatusData,
         playerStatusList: List<PlayerStatus>,
     ): ActionData {
+        if (statusData.isActive.not()) {
+            return ActionData(
+                ActionType.None,
+            )
+        }
+
         return when (monster.actionStyle) {
             ActionStyle.RANDOM -> {
                 random(

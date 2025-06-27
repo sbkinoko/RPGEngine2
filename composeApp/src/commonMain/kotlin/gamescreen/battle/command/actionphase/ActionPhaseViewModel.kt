@@ -176,9 +176,11 @@ class ActionPhaseViewModel(
             val enemyData = battleInfoRepository.getStatus(index)
 
             val action = decideMonsterActionService.getAction(
-                enemyData,
-                playerStatusRepository.getStatusList(),
+                monster = enemyData,
+                statusData = statusData,
+                playerStatusList = playerStatusRepository.getStatusList(),
             )
+
             list += StatusWrapper(
                 status = statusData,
                 actionData = action,
