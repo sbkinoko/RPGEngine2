@@ -29,9 +29,8 @@ import gamescreen.battle.service.isannihilation.IsAnnihilationService
 import gamescreen.battle.service.isannihilation.IsAnnihilationServiceImpl
 import gamescreen.battle.usecase.addexp.AddExpUseCase
 import gamescreen.battle.usecase.addexp.AddExpUseCaseImpl
-import gamescreen.battle.usecase.attack.AttackFromEnemyUseCaseImpl
-import gamescreen.battle.usecase.attack.AttackFromPlayerUseCaseImpl
 import gamescreen.battle.usecase.attack.AttackUseCase
+import gamescreen.battle.usecase.attack.AttackUseCaseImpl
 import gamescreen.battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUseCase
 import gamescreen.battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUseCaseImpl
 import gamescreen.battle.usecase.condition.ConditionFromEnemyUseCaseImpl
@@ -178,7 +177,7 @@ val ModuleBattle = module {
     single<AttackUseCase>(
         qualifier = named(QualifierAttackFromPlayer)
     ) {
-        AttackFromPlayerUseCaseImpl(
+        AttackUseCaseImpl(
             statusDataRepository = get(
                 qualifier = EnemyStatusRepositoryName,
             ),
@@ -205,7 +204,7 @@ val ModuleBattle = module {
         qualifier = named(QualifierAttackFromEnemy)
     )
     {
-        AttackFromEnemyUseCaseImpl(
+        AttackUseCaseImpl(
             statusDataRepository = get(
                 qualifier = PlayerStatusRepositoryName,
             ),
