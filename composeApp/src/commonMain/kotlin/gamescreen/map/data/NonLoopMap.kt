@@ -19,7 +19,7 @@ class NonLoopMap : MapData() {
     override val npcList: List<NPC>
         get() = listOf(
             NPC(
-                npcType = NPCType.MARCHANT,
+                npcType = NPCType.MERCHANT,
                 mapPoint = MapPoint(3, 3),
                 eventType = EventType.Shop(
                     shopId = ShopId.Type1,
@@ -33,7 +33,7 @@ class NonLoopMap : MapData() {
                 size = MapViewModel.CELL_SIZE,
             ),
             NPC(
-                npcType = NPCType.MARCHANT,
+                npcType = NPCType.MERCHANT,
                 mapPoint = MapPoint(4, 3),
                 eventType = EventType.Shop(
                     shopId = ShopId.Type2,

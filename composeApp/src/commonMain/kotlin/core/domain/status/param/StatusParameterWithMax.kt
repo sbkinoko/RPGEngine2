@@ -1,5 +1,6 @@
 package core.domain.status.param
 
+import common.error.StatusParameterException
 import core.domain.status.IncData
 import kotlin.math.max
 import kotlin.math.min
@@ -19,7 +20,7 @@ data class StatusParameterWithMax<T : ParameterType>(
         val newVal = maxPoint - incData.value
 
         if (newVal < 0) {
-            throw NotImplementedError("")
+            throw StatusParameterException()
         }
 
         return set(maxValue = newVal)

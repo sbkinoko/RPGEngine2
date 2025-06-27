@@ -34,7 +34,7 @@ class MonsterRepositoryImpl : MonsterRepository {
                 ),
                 actionStyle = ActionStyle.RANDOM,
             ),
-            StatusData<StatusType.Enemy>(
+            StatusData(
                 "花",
                 hp = StatusParameterWithMax(
                     maxPoint = 10,

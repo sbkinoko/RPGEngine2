@@ -27,8 +27,8 @@ class EquipUseCaseImpl(
             id = equipmentId
         )
 
-        val preEqid = player.equipmentList.weapon
-        val preEq = equipmentRepository.getItem(preEqid)
+        val preEqId = player.equipmentList.weapon
+        val preEq = equipmentRepository.getItem(preEqId)
 
         val updatedParameter = parameter
             .decStatus(preEq.statusList)

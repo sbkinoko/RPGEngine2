@@ -176,7 +176,7 @@ class StatusRepositoryImpl : AbstractStatusRepository() {
                         EXP.type1,
                     ),
                 ),
-                StatusData<StatusType.Player>(
+                StatusData(
                     name = "MPたくさん",
                 ),
             )

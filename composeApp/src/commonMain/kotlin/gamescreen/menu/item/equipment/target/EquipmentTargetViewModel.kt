@@ -56,7 +56,7 @@ class EquipmentTargetViewModel(
             }
         }
 
-    val boundedMenuType: MenuType
+    private val boundedMenuType: MenuType
         get() = MenuType.EQUIPMENT_TARGET
 
     private val indexRepository: IndexRepository by inject()
