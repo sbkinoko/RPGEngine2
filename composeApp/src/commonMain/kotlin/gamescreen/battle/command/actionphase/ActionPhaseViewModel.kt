@@ -169,10 +169,7 @@ class ActionPhaseViewModel(
                 newId = index,
             )
         }
-        enemyDataRepository.getStatusList()
-            .mapIndexed { index, status ->
 
-            }
         statusWrapperList = list
 
         speedList = decideActionOrderUseCase.invoke(
