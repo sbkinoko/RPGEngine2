@@ -1,5 +1,6 @@
 package gamescreen.battle
 
+import ConditionUseCaseImpl
 import core.EnemyStatusRepositoryName
 import core.PlayerStatusRepositoryName
 import core.UpdateEnemyUseCaseName
@@ -33,8 +34,6 @@ import gamescreen.battle.usecase.attack.AttackUseCase
 import gamescreen.battle.usecase.attack.AttackUseCaseImpl
 import gamescreen.battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUseCase
 import gamescreen.battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUseCaseImpl
-import gamescreen.battle.usecase.condition.ConditionFromEnemyUseCaseImpl
-import gamescreen.battle.usecase.condition.ConditionFromPlayerUseCaseImpl
 import gamescreen.battle.usecase.condition.ConditionUseCase
 import gamescreen.battle.usecase.decideactionorder.DecideActionOrderUseCase
 import gamescreen.battle.usecase.decideactionorder.DecideActionOrderUseCaseImpl
@@ -189,12 +188,12 @@ val ModuleBattle = module {
     single<ConditionUseCase>(
         qualifier = named(QualifierAttackFromPlayer),
     ) {
-        ConditionFromPlayerUseCaseImpl(
+        ConditionUseCaseImpl(
             statusDataRepository = get(
                 qualifier = EnemyStatusRepositoryName,
             ),
             findTargetService = get(),
-            updateMonsterStatusUseCase = get(
+            updateStatusUseCase = get(
                 qualifier = UpdateEnemyUseCaseName,
             ),
         )
@@ -223,12 +222,12 @@ val ModuleBattle = module {
     single<ConditionUseCase>(
         qualifier = named(QualifierAttackFromEnemy),
     ) {
-        ConditionFromEnemyUseCaseImpl(
+        ConditionUseCaseImpl(
             statusDataRepository = get(
                 PlayerStatusRepositoryName,
             ),
             findTargetService = get(),
-            updatePlayerStatusService = get(
+            updateStatusUseCase = get(
                 qualifier = named(UpdatePlayer),
             ),
         )
