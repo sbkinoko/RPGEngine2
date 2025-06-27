@@ -6,6 +6,7 @@ import core.repository.statusdata.StatusDataRepository
 import kotlinx.coroutines.runBlocking
 import kotlin.test.assertEquals
 
+// fixme テスト作る
 class UpdateParameterTest(
     private val updateStatusUseCase: UpdateStatusUseCase,
     private val statusRepository: StatusDataRepository,
