@@ -62,6 +62,34 @@ class AttackUseCaseImplFromPlayerTest : KoinTest {
     }
 
     @Test
+    fun effect() {
+        runBlocking {
+            enemyStatusDataRepository.setStatusList(
+                listOf(
+                    StatusDataTest.TestEnemyStatusActive.copy(
+                        hp = hp
+                    ),
+                ),
+            )
+
+            var count = 0
+
+            attackUseCase.invoke(
+                target = 0,
+                attacker = statusData,
+                damageType = DamageType.AtkMultiple(1),
+            ) {
+                count++
+            }
+
+            assertEquals(
+                expected = 1,
+                actual = 1,
+            )
+        }
+    }
+
+    @Test
     fun toActive() {
         runBlocking {
             enemyStatusDataRepository.setStatusList(
@@ -76,7 +104,7 @@ class AttackUseCaseImplFromPlayerTest : KoinTest {
                 target = 0,
                 attacker = statusData,
                 damageType = DamageType.AtkMultiple(1),
-            )
+            ) {}
 
             enemyStatusDataRepository.getStatusData(0).apply {
                 assertEquals(
@@ -106,7 +134,7 @@ class AttackUseCaseImplFromPlayerTest : KoinTest {
                 target = id,
                 attacker = statusData,
                 damageType = DamageType.AtkMultiple(1),
-            )
+            ) {}
 
             enemyStatusDataRepository.getStatusData(id).apply {
                 assertEquals(
@@ -135,7 +163,7 @@ class AttackUseCaseImplFromPlayerTest : KoinTest {
                 target = idNotActive,
                 attacker = statusData,
                 damageType = DamageType.AtkMultiple(1),
-            )
+            ) {}
 
             enemyStatusDataRepository.getStatusData(idActive).apply {
                 assertEquals(

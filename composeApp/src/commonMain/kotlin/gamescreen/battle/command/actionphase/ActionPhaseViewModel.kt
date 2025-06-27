@@ -38,6 +38,7 @@ import gamescreen.battle.service.monster.DecideMonsterActionService
 import gamescreen.battle.usecase.attack.AttackUseCase
 import gamescreen.battle.usecase.condition.ConditionUseCase
 import gamescreen.battle.usecase.decideactionorder.DecideActionOrderUseCase
+import gamescreen.battle.usecase.effect.EffectUseCase
 import gamescreen.battle.usecase.findactivetarget.FindActiveTargetUseCase
 import gamescreen.menu.domain.SelectManager
 import kotlinx.coroutines.CoroutineScope
@@ -56,6 +57,8 @@ class ActionPhaseViewModel(
 
     private val statusDataRepository: StatusDataRepository,
     private val enemyDataRepository: StatusDataRepository,
+
+    private val effectUseCase: EffectUseCase,
 ) : BattleChildViewModel() {
     private val actionRepository: ActionRepository by inject()
     private val battleInfoRepository: BattleInfoRepository by inject()
@@ -342,6 +345,9 @@ class ActionPhaseViewModel(
     private suspend fun playerAction() {
         val actionType = actionStatusWrapper.actionData.thisTurnAction
 
+        val attackEffect: (Int) -> Unit = {
+            effectUseCase.invoke(it)
+        }
         when (actionType) {
             ActionType.Normal -> {
                 //　攻撃
@@ -349,6 +355,7 @@ class ActionPhaseViewModel(
                     target = actionRepository.getAction(actionStatusWrapper.newId).target,
                     attacker = getStatus(actionStatusWrapper),
                     damageType = DamageType.AtkMultiple(1),
+                    effect = attackEffect,
                 )
             }
 
@@ -362,6 +369,7 @@ class ActionPhaseViewModel(
                     conditionUseCase = conditionFromPlayerUseCase,
                     updateAllyParameter = updatePlayerParameter,
                     updateEnemyParameter = updateEnemyParameter,
+                    attackEffect = attackEffect,
                 )
             }
 
@@ -389,6 +397,7 @@ class ActionPhaseViewModel(
                 conditionUseCase = conditionFromEnemyUseCase,
                 updateAllyParameter = updateEnemyParameter,
                 updateEnemyParameter = updatePlayerParameter,
+                attackEffect = {},
             )
         }
     }
@@ -426,6 +435,7 @@ class ActionPhaseViewModel(
         conditionUseCase: ConditionUseCase,
         updateAllyParameter: UpdateStatusUseCase,
         updateEnemyParameter: UpdateStatusUseCase,
+        attackEffect: (Int) -> Unit,
     ) {
         val skill = skillRepository.getItem(
             id = actionData.skillId
@@ -463,7 +473,9 @@ class ActionPhaseViewModel(
                         target = it,
                         attacker = statusData,
                         damageType = (skill as AttackEffect).damageType,
-                    )
+                    ) {
+                        attackEffect.invoke(it)
+                    }
                 }
             }
 
