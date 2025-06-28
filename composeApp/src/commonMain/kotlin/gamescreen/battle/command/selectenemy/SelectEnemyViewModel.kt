@@ -1,8 +1,6 @@
 package gamescreen.battle.command.selectenemy
 
 import common.DefaultScope
-import controller.domain.ArrowCommand
-import controller.domain.Stick
 import core.domain.status.StatusData
 import core.repository.statusdata.StatusDataRepository
 import gamescreen.battle.BattleChildViewModel
@@ -10,7 +8,6 @@ import gamescreen.battle.domain.BattleCommandType
 import gamescreen.battle.domain.SelectEnemyCommand
 import gamescreen.battle.domain.SelectedEnemyState
 import gamescreen.battle.repository.action.ActionRepository
-import gamescreen.battle.service.findtarget.FindTargetService
 import gamescreen.battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUseCase
 import gamescreen.battle.usecase.findactivetarget.FindActiveTargetUseCase
 import gamescreen.battle.usecase.gettargetnum.GetTargetNumUseCase
@@ -30,8 +27,6 @@ class SelectEnemyViewModel(
     private val getTargetNumUseCase: GetTargetNumUseCase by inject()
     private val changeSelectingActionPlayerUseCase: ChangeSelectingActionPlayerUseCase by inject()
 
-    private val findTargetService: FindTargetService by inject()
-
     private var mutableSelectedEnemyState: MutableStateFlow<SelectedEnemyState> =
         MutableStateFlow(SelectedEnemyState(emptyList()))
     val selectedEnemyState: StateFlow<SelectedEnemyState> =
@@ -43,6 +38,17 @@ class SelectEnemyViewModel(
             return command.playerId
         }
 
+    // 使わないので適当
+    override var selectManager: SelectManager = SelectManager(
+        width = 1,
+        itemNum = 1,
+    )
+
+    private val monsters: List<StatusData>
+        get() = enemyStatusDataRepository.getStatusList()
+
+    private var job = DefaultScope.launch { }
+
     init {
         DefaultScope.launch {
             commandRepository.commandStateFlow.collect {
@@ -50,9 +56,6 @@ class SelectEnemyViewModel(
             }
         }
     }
-
-    private val monsters: List<StatusData>
-        get() = enemyStatusDataRepository.getStatusList()
 
     override fun isBoundedImpl(commandType: BattleCommandType): Boolean {
         return commandType is SelectEnemyCommand
@@ -70,42 +73,9 @@ class SelectEnemyViewModel(
         changeSelectingActionPlayerUseCase.invoke()
     }
 
-    // 使わないので適当
-    override var selectManager: SelectManager = SelectManager(
-        width = 1,
-        itemNum = 1,
-    )
-
-    override fun moveStick(stick: Stick) {
-        val target = selectedEnemyState.value.selectedEnemy.first()
-
-        val newTarget = when (stick.toCommand()) {
-            ArrowCommand.Right -> findTargetService.findNext(
-                target = target,
-                statusList = monsters,
-            )
-
-            ArrowCommand.Left -> findTargetService.findPrev(
-                target = target,
-                statusList = monsters,
-            )
-
-            else -> return
-        }
-
-        setTargetEnemy(newTarget)
-    }
-
-    private fun setTargetEnemy(target: Int) {
-        val targetList = findActiveTargetUseCase(
-            target = target,
-            targetNum = getTargetNumUseCase(playerId = playerId),
-            statusList = monsters,
-        )
-
-        mutableSelectedEnemyState.value = mutableSelectedEnemyState.value.copy(
-            selectedEnemy = targetList,
-        )
+    override fun selectable(): Boolean {
+        val target = selectManager.selected
+        return enemyStatusDataRepository.getStatusData(target).isActive
     }
 
     fun selectAttackMonster(monsterId: Int) {
@@ -115,15 +85,38 @@ class SelectEnemyViewModel(
         }
 
         // すでに選んでる敵を選んだら確定
-        if (selectedEnemyState.value.selectedEnemy.first() == monsterId) {
+        if (selectManager.selected == monsterId) {
             pressA()
             return
         }
 
-        // 別の敵を選択
-        setTargetEnemy(
-            monsterId
+        selectManager.selected = monsterId
+    }
+
+    fun updateManager() {
+        job.cancel()
+
+        selectManager = SelectManager(
+            width = enemyStatusDataRepository.getStatusList().size,
+            itemNum = enemyStatusDataRepository.getStatusList().size,
         )
+
+        job = DefaultScope.launch {
+            // 選択の先頭が変わった
+            selectManager.selectedFlowState.collect {
+                val targetList = findActiveTargetUseCase(
+                    target = it,
+                    targetNum = getTargetNumUseCase.invoke(playerId = playerId),
+                    statusList = monsters,
+                )
+
+                mutableSelectedEnemyState.value = mutableSelectedEnemyState.value.copy(
+                    selectedEnemy = targetList,
+                )
+            }
+        }
+
+        job.start()
     }
 
     fun updateArrow() {
@@ -136,12 +129,11 @@ class SelectEnemyViewModel(
             )
             return
         }
+
         val playerId = command.playerId
 
         val action = actionRepository.getAction(playerId)
 
-        setTargetEnemy(
-            target = action.target
-        )
+        selectManager.selected = action.target
     }
 }
