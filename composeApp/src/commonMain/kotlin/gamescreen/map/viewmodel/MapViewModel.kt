@@ -235,8 +235,6 @@ class MapViewModel(
         dx: Float,
         dy: Float,
     ) {
-        // fixme repositoryから取ってないのでデータが反映されてない
-        // maxVが0なので初回のスティックだと動かない
         val player = uiStateFlow.value.player
         val vx = player.maxVelocity * dx
         val vy = player.maxVelocity * dy
