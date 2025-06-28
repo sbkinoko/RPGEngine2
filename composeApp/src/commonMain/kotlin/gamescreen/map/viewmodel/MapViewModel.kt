@@ -235,8 +235,6 @@ class MapViewModel(
         dx: Float,
         dy: Float,
     ) {
-        // fixme repositoryから取ってないのでデータが反映されてない
-        // maxVが0なので初回のスティックだと動かない
         val player = uiStateFlow.value.player
         val vx = player.maxVelocity * dx
         val vy = player.maxVelocity * dy
@@ -257,16 +255,6 @@ class MapViewModel(
         tapPoint = null
 
         tentativePlayerVelocity = velocity
-    }
-
-    fun getAroundCellId(
-        x: Int,
-        y: Int,
-    ): List<List<CellType>> {
-        return backgroundRepository.getBackgroundAround(
-            x = x,
-            y = y,
-        )
     }
 
     private fun event() {

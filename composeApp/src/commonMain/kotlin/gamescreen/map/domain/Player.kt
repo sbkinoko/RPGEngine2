@@ -24,8 +24,8 @@ data class Player(
             objectHeight = ObjectHeight.Ground(1),
         ),
         actualVelocity = Velocity(
-            0f,
-            0f,
+            x = 0f,
+            y = 0f,
         ),
         tentativeVelocity = Velocity(),
         moveDistance = 0f,
@@ -45,19 +45,6 @@ data class Player(
                 dy = actualVelocity.y,
             ),
             moveDistance = moveDistance + actualVelocity.scalar,
-        )
-    }
-
-    //fixme 不要なので削除
-    fun move(
-        dx: Float,
-        dy: Float,
-    ): Player {
-        return copy(
-            square = square.move(
-                dx = dx,
-                dy = dy,
-            )
         )
     }
 
