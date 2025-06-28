@@ -15,6 +15,7 @@ fun SelectEnemy(
     modifier: Modifier = Modifier,
     selectEnemyViewModel: SelectEnemyViewModel = koinInject(),
 ) {
+    // fixme 画面下部のテキストエリアが他の表示領域に通知するのはおかしいので呼び出し場所を変える
     LaunchedEffect(Unit) {
         selectEnemyViewModel.updateManager()
         selectEnemyViewModel.updateArrow()
