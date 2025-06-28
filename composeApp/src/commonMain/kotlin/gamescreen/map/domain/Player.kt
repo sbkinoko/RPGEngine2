@@ -48,19 +48,6 @@ data class Player(
         )
     }
 
-    //fixme 不要なので削除
-    fun move(
-        dx: Float,
-        dy: Float,
-    ): Player {
-        return copy(
-            square = square.move(
-                dx = dx,
-                dy = dy,
-            )
-        )
-    }
-
     fun moveTo(
         x: Float,
         y: Float,
