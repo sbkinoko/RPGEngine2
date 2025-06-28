@@ -1,7 +1,6 @@
 package gamescreen.battle.command.selectenemy
 
 import common.DefaultScope
-import controller.domain.ArrowCommand
 import controller.domain.Stick
 import core.domain.status.StatusData
 import core.repository.statusdata.StatusDataRepository
@@ -10,7 +9,6 @@ import gamescreen.battle.domain.BattleCommandType
 import gamescreen.battle.domain.SelectEnemyCommand
 import gamescreen.battle.domain.SelectedEnemyState
 import gamescreen.battle.repository.action.ActionRepository
-import gamescreen.battle.service.findtarget.FindTargetService
 import gamescreen.battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUseCase
 import gamescreen.battle.usecase.findactivetarget.FindActiveTargetUseCase
 import gamescreen.battle.usecase.gettargetnum.GetTargetNumUseCase
@@ -29,8 +27,6 @@ class SelectEnemyViewModel(
     private val findActiveTargetUseCase: FindActiveTargetUseCase by inject()
     private val getTargetNumUseCase: GetTargetNumUseCase by inject()
     private val changeSelectingActionPlayerUseCase: ChangeSelectingActionPlayerUseCase by inject()
-
-    private val findTargetService: FindTargetService by inject()
 
     private var mutableSelectedEnemyState: MutableStateFlow<SelectedEnemyState> =
         MutableStateFlow(SelectedEnemyState(emptyList()))
@@ -76,30 +72,22 @@ class SelectEnemyViewModel(
         itemNum = 1,
     )
 
+    override fun selectable(): Boolean {
+        val target = selectManager.selected
+        return enemyStatusDataRepository.getStatusData(target).isActive
+    }
+
     override fun moveStick(stick: Stick) {
-        val target = selectedEnemyState.value.selectedEnemy.first()
+        super.moveStick(stick)
 
-        val newTarget = when (stick.toCommand()) {
-            ArrowCommand.Right -> findTargetService.findNext(
-                target = target,
-                statusList = monsters,
-            )
-
-            ArrowCommand.Left -> findTargetService.findPrev(
-                target = target,
-                statusList = monsters,
-            )
-
-            else -> return
-        }
-
-        setTargetEnemy(newTarget)
+        //先頭を移動させたので残りも移動
+        setTargetEnemy(selectManager.selected)
     }
 
     private fun setTargetEnemy(target: Int) {
         val targetList = findActiveTargetUseCase(
             target = target,
-            targetNum = getTargetNumUseCase(playerId = playerId),
+            targetNum = getTargetNumUseCase.invoke(playerId = playerId),
             statusList = monsters,
         )
 
@@ -123,6 +111,13 @@ class SelectEnemyViewModel(
         // 別の敵を選択
         setTargetEnemy(
             monsterId
+        )
+    }
+
+    fun updateManager() {
+        selectManager = SelectManager(
+            width = enemyStatusDataRepository.getStatusList().size,
+            itemNum = enemyStatusDataRepository.getStatusList().size,
         )
     }
 

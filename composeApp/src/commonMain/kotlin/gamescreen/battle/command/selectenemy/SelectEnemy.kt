@@ -16,6 +16,7 @@ fun SelectEnemy(
     selectEnemyViewModel: SelectEnemyViewModel = koinInject(),
 ) {
     LaunchedEffect(Unit) {
+        selectEnemyViewModel.updateManager()
         selectEnemyViewModel.updateArrow()
     }
     Box(
