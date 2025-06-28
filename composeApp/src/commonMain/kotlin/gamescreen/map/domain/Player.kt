@@ -24,8 +24,8 @@ data class Player(
             objectHeight = ObjectHeight.Ground(1),
         ),
         actualVelocity = Velocity(
-            0f,
-            0f,
+            x = 0f,
+            y = 0f
         ),
         tentativeVelocity = Velocity(),
         moveDistance = 0f,
