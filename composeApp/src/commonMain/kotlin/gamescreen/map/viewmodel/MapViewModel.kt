@@ -257,16 +257,6 @@ class MapViewModel(
         tentativePlayerVelocity = velocity
     }
 
-    fun getAroundCellId(
-        x: Int,
-        y: Int,
-    ): List<List<CellType>> {
-        return backgroundRepository.getBackgroundAround(
-            x = x,
-            y = y,
-        )
-    }
-
     private fun event() {
         actionEventUseCase.invoke(
             eventType = uiStateFlow.value.player.eventType,
