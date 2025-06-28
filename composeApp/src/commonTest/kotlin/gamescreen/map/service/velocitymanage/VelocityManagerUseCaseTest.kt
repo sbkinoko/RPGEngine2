@@ -83,8 +83,7 @@ class VelocityManagerUseCaseTest : KoinTest {
             player = player.moveTo(
                 x = SMALL_BORDER,
                 y = CENTER,
-
-                ),
+            ),
             velocity = Velocity(
                 x = -3f,
                 y = 0f,
@@ -143,7 +142,6 @@ class VelocityManagerUseCaseTest : KoinTest {
      */
     @Test
     fun checkMoveInRightToRight() {
-
         check(
             player = player.moveTo(
                 x = LARGE_BORDER,
@@ -169,8 +167,7 @@ class VelocityManagerUseCaseTest : KoinTest {
             player = player.moveTo(
                 x = CENTER,
                 y = SMALL_BORDER,
-
-                ),
+            ),
             velocity = Velocity(
                 x = 0f,
                 y = -4f,
@@ -187,7 +184,6 @@ class VelocityManagerUseCaseTest : KoinTest {
      */
     @Test
     fun checkMoveInTopToBottom() {
-
         check(
             player = player.moveTo(
                 x = CENTER,
@@ -235,8 +231,7 @@ class VelocityManagerUseCaseTest : KoinTest {
             player = player.moveTo(
                 x = CENTER,
                 y = LARGE_BORDER,
-
-                ),
+            ),
             velocity = Velocity(
                 x = 0f,
                 y = 4f,

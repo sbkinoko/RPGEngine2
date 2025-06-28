@@ -25,7 +25,7 @@ data class Player(
         ),
         actualVelocity = Velocity(
             x = 0f,
-            y = 0f
+            y = 0f,
         ),
         tentativeVelocity = Velocity(),
         moveDistance = 0f,

@@ -5,9 +5,9 @@ import kotlin.math.abs
 import kotlin.math.sqrt
 
 data class Velocity(
-    val maxVelocity: Float = MAX,
     var x: Float = 0f,
     var y: Float = 0f,
+    val maxVelocity: Float = MAX,
 ) {
     init {
         Normalizer.normalize(
