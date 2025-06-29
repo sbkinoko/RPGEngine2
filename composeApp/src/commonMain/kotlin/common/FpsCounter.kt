@@ -24,9 +24,9 @@ class FpsCounter {
 
         mutableFpsFlow.value = (qSize * 1000 / (time - top))
 
-        if (fpsFlow.value <= 30) {
-            println("debug")
-            println("debug ${fpsFlow.value} $q")
-        }
+        //        if (fpsFlow.value <= 30) {
+        //            println("debug")
+        //            println("debug ${fpsFlow.value} $q")
+        //        }
     }
 }

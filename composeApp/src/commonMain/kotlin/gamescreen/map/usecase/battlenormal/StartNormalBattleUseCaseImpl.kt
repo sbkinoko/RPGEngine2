@@ -40,7 +40,12 @@ class StartNormalBattleUseCaseImpl(
             monsterList = monsterList,
             backgroundType = backgroundType,
             battleEventCallback = BattleEventCallback(
-                winCallback = {},
+                winCallback = {
+                    updateScreen(mapUiState)
+                },
+                escapeCallback = {
+                    updateScreen(mapUiState)
+                },
                 loseCallback = {
                     DefaultScope.launch {
                         updateScreen(

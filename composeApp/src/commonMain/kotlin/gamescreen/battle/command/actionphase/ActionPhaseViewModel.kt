@@ -4,6 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import common.DefaultScope
 import core.UpdateEnemyUseCaseName
 import core.UpdatePlayer
+import core.domain.BattleResult
 import core.domain.item.AttackEffect
 import core.domain.item.BufEffect
 import core.domain.item.ConditionEffect
@@ -396,7 +397,7 @@ class ActionPhaseViewModel(
         if (isPlayerAnnihilated) {
             this.commandRepository.push(
                 FinishCommand(
-                    isWin = false
+                    battleResult = BattleResult.Lose
                 )
             )
             return
@@ -406,7 +407,7 @@ class ActionPhaseViewModel(
         if (isMonsterAnnihilated) {
             this.commandRepository.push(
                 FinishCommand(
-                    isWin = true
+                    battleResult = BattleResult.Win
                 )
             )
             return

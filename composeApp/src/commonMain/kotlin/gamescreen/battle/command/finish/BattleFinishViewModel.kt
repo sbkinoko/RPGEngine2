@@ -65,6 +65,10 @@ class BattleFinishViewModel(
                         mutableTextFLow.value = "戦闘に敗北した"
                     }
 
+                    ContentType.Escape -> {
+                        mutableTextFLow.value = "戦闘から逃げ出した"
+                    }
+
                     ContentType.Exp -> {
                         val exp = getExpUseCase.invoke()
                         mutableTextFLow.value = TextData.BattleFinishExp.getText(
@@ -158,14 +162,14 @@ class BattleFinishViewModel(
     }
 
     fun init(
-        isWin: Boolean,
+        battleResult: BattleResult,
     ) {
-        contentType.value = if (isWin) {
-            battleResult = BattleResult.Win
-            ContentType.Win
-        } else {
-            battleResult = BattleResult.Lose
-            ContentType.Lose
+        this.battleResult = battleResult
+        contentType.value = when (battleResult) {
+            BattleResult.Win -> ContentType.Win
+            BattleResult.Lose -> ContentType.Lose
+            BattleResult.Escape -> ContentType.Escape
+            BattleResult.None -> ContentType.None
         }
     }
 
@@ -206,6 +210,10 @@ class BattleFinishViewModel(
             }
 
             ContentType.Lose -> {
+                finishBattle()
+            }
+
+            ContentType.Escape -> {
                 finishBattle()
             }
 

@@ -22,6 +22,7 @@ class StartEventBattleUseCaseImplTest {
         battleEventCallback = BattleEventCallback(
             winCallback = {},
             loseCallback = {},
+            escapeCallback = {},
         ),
         battleBackgroundType = BattleBackgroundType.Road,
     )

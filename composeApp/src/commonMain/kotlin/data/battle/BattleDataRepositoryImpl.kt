@@ -31,6 +31,13 @@ class BattleDataRepositoryImpl(
                             )
                         )
                     },
+                    escapeCallback = {
+                        textRepository.push(
+                            textBoxData = TextBoxData(
+                                text = "逃げるのも時には大事だね"
+                            )
+                        )
+                    },
                     loseCallback = {
                         textRepository.push(
                             textBoxData = TextBoxData(
