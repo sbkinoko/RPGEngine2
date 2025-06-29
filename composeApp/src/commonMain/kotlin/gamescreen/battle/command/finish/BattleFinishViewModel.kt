@@ -169,7 +169,7 @@ class BattleFinishViewModel(
             BattleResult.Win -> ContentType.Win
             BattleResult.Lose -> ContentType.Lose
             BattleResult.Escape -> ContentType.Escape
-            BattleResult.None -> throw RuntimeException()
+            BattleResult.None -> ContentType.None
         }
     }
 
