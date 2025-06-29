@@ -17,7 +17,7 @@ class PositionRepositoryImpl : PositionRepository {
         RealmConfiguration.create(schema = setOf(PositionRealm::class))
     private val realm = Realm.open(config)
 
-    val position: PositionRealm
+    private val position: PositionRealm
         get() {
             val data = realm.query<PositionRealm>().first().find()
             if (data != null) {

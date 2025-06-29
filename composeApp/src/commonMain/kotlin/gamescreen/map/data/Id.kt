@@ -6,8 +6,9 @@ const val ID_LOOP = 1
 
 fun MapData.toId(): Int {
     return when (this) {
-        NonLoopMap() -> ID_NON_LOOP
-        else -> ID_LOOP
+        is NonLoopMap -> ID_NON_LOOP
+        is LoopMap -> ID_LOOP
+        else -> throw NotImplementedError()
     }
 }
 
