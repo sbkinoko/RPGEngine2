@@ -31,8 +31,15 @@ class EventRepositoryImplTest : KoinTest {
         Unit
     }
 
+    private var escapeCount = 0
+    private val escapeCallBack = {
+        escapeCount++
+        Unit
+    }
+
     private val battleEventCallback = BattleEventCallback(
         winCallback = winCallBack,
+        escapeCallback = escapeCallBack,
         loseCallback = loseCallback,
     )
 
@@ -108,6 +115,11 @@ class EventRepositoryImplTest : KoinTest {
                 actual = loseCount,
             )
 
+            assertEquals(
+                expected = 0,
+                actual = escapeCount,
+            )
+
             collectJob.cancel()
         }
     }
@@ -146,6 +158,54 @@ class EventRepositoryImplTest : KoinTest {
                 actual = loseCount,
             )
 
+            assertEquals(
+                expected = 0,
+                actual = escapeCount,
+            )
+
+            collectJob.cancel()
+        }
+    }
+
+    @Test
+    fun checkEscape() {
+        runBlocking {
+            lateinit var result: BattleResult
+            val battleResult = BattleResult.Escape
+            val collectJob = DefaultScope.launch {
+                eventRepository.resultStateFlow.collect {
+                    result = it
+                }
+            }
+
+            delay(50)
+
+            eventRepository.setResult(
+                battleResult,
+            )
+
+            delay(50)
+
+            assertEquals(
+                expected = battleResult,
+                actual = result,
+            )
+
+            assertEquals(
+                expected = 0,
+                actual = winCount,
+            )
+
+            assertEquals(
+                expected = 0,
+                actual = loseCount,
+            )
+
+            assertEquals(
+                expected = 1,
+                actual = escapeCount,
+            )
+
             collectJob.cancel()
         }
     }
@@ -182,6 +242,11 @@ class EventRepositoryImplTest : KoinTest {
             assertEquals(
                 expected = 0,
                 actual = loseCount,
+            )
+
+            assertEquals(
+                expected = 0,
+                actual = escapeCount,
             )
 
             collectJob.cancel()
