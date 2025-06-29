@@ -1,10 +1,11 @@
 package gamescreen.battle.command.escape
 
+import core.domain.BattleResult
 import core.repository.screentype.ScreenTypeRepository
-import gamescreen.GameScreenType
 import gamescreen.battle.BattleChildViewModel
 import gamescreen.battle.domain.BattleCommandType
 import gamescreen.battle.domain.EscapeCommand
+import gamescreen.battle.domain.FinishCommand
 import gamescreen.menu.domain.SelectManager
 import org.koin.core.component.inject
 
@@ -25,8 +26,10 @@ class EscapeViewModel : BattleChildViewModel() {
             }
 
             escapeCommand -> {
-                screenTypeRepository.setScreenType(
-                    gameScreenType = GameScreenType.FIELD,
+                this.commandRepository.push(
+                    FinishCommand(
+                        battleResult = BattleResult.Escape,
+                    )
                 )
             }
         }

@@ -9,11 +9,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import core.domain.BattleResult
 import org.koin.compose.koinInject
 
 @Composable
 fun FinishCommandWindow(
-    isWin: Boolean,
+    battleResult: BattleResult,
     modifier: Modifier = Modifier,
     battleFinishViewModel: BattleFinishViewModel = koinInject(),
 ) {
@@ -21,7 +22,7 @@ fun FinishCommandWindow(
 
     LaunchedEffect(Unit) {
         battleFinishViewModel.init(
-            isWin = isWin
+            battleResult = battleResult
         )
     }
 

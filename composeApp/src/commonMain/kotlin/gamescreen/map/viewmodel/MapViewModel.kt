@@ -79,6 +79,8 @@ class MapViewModel(
 
     val uiStateFlow = mutableUiStateFlow.asStateFlow()
 
+    private var isInBattle = false
+
     init {
         backgroundRepository.cellNum = CELL_NUM
         backgroundRepository.screenSize = VIRTUAL_SCREEN_SIZE
@@ -199,7 +201,6 @@ class MapViewModel(
             )
         ) {
             startBattle()
-            resetTapPoint()
         }
     }
 
@@ -225,9 +226,11 @@ class MapViewModel(
         val size = uiStateFlow.value.player.size
         val dx = (tapPoint.x) - (square.x + size / 2)
         val dy = (tapPoint.y) - (square.y + size / 2)
-        tentativePlayerVelocity = Velocity(
-            x = dx,
-            y = dy,
+        updateTentativeVelocity(
+            velocity = Velocity(
+                x = dx,
+                y = dy,
+            )
         )
     }
 
@@ -238,10 +241,22 @@ class MapViewModel(
         val player = uiStateFlow.value.player
         val vx = player.maxVelocity * dx
         val vy = player.maxVelocity * dy
-        tentativePlayerVelocity = Velocity(
-            x = vx,
-            y = vy,
+        updateTentativeVelocity(
+            velocity = Velocity(
+                x = vx,
+                y = vy,
+            )
         )
+    }
+
+    private fun updateTentativeVelocity(
+        velocity: Velocity,
+    ) {
+        if (isInBattle) {
+            return
+        }
+
+        tentativePlayerVelocity = velocity
     }
 
     /**
@@ -291,9 +306,19 @@ class MapViewModel(
     }
 
     private fun startBattle() {
+        // バトル中フラグを立てる
+        isInBattle = true
+
+        // タップ状態解除
+        resetTapPoint()
+
         startNormalBattleUseCase.invoke(
             mapUiState = uiStateFlow.value
         ) {
+            // バトルフラグをおろす
+            isInBattle = false
+
+            // 再開場所の情報を受け取る
             mutableUiStateFlow.value = it
         }
     }

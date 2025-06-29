@@ -1,11 +1,13 @@
 package gamescreen.battle.domain
 
+import core.domain.BattleResult
+
 sealed class BattleCommandType
 
 data object MainCommand : BattleCommandType()
 
 class FinishCommand(
-    val isWin: Boolean,
+    val battleResult: BattleResult,
 ) : BattleCommandType()
 
 data object EscapeCommand : BattleCommandType()
