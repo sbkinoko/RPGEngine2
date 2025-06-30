@@ -1,6 +1,5 @@
 package gamescreen.menu.main
 
-import common.Timer
 import core.menu.PairedList
 import core.repository.money.MoneyRepository
 import gamescreen.menu.MenuChildViewModel
@@ -21,8 +20,6 @@ class MainMenuViewModel : MenuChildViewModel(),
 
     private val moneyRepository: MoneyRepository by inject()
     val moneyStateFlow = moneyRepository.moneyStateFLow
-
-    override var timer = Timer(200)
 
     val list: List<MainMenuItem>
         get() = List(5) {
