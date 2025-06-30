@@ -11,7 +11,7 @@ import core.menu.SelectableChildViewModel
 @Composable
 fun SelectableItemList(
     selectedUserId: Int,
-    itemUserViewModel: SelectableChildViewModel,
+    itemUserViewModel: SelectableChildViewModel<Int>,
     itemList: ItemList<*>,
     modifier: Modifier = Modifier,
 ) {

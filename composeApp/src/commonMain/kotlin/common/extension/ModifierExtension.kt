@@ -18,9 +18,9 @@ import gamescreen.battle.command.OnClick2
 import values.Colors
 
 @Composable
-fun Modifier.menuItem(
-    id: Int,
-    childViewModel: SelectableChildViewModel,
+fun <T> Modifier.menuItem(
+    id: T,
+    childViewModel: SelectableChildViewModel<T>,
 ): Modifier {
     val selected by childViewModel
         .selectedFlowState

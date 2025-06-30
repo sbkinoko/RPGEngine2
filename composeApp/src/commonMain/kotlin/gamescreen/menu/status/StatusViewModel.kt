@@ -1,7 +1,7 @@
 package gamescreen.menu.status
 
 import core.domain.status.StatusData
-import core.menu.SelectableChildViewModel
+import core.menu.IntSelectableChildViewModel
 import core.repository.statusdata.StatusDataRepository
 import gamescreen.menu.domain.SelectManager
 import gamescreen.menu.repository.menustate.MenuStateRepository
@@ -11,7 +11,7 @@ import values.Constants
 
 class StatusViewModel(
     private val statusDataRepository: StatusDataRepository,
-) : SelectableChildViewModel(),
+) : IntSelectableChildViewModel(),
     KoinComponent {
     private val menuStateRepository: MenuStateRepository by inject()
 

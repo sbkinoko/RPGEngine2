@@ -1,13 +1,13 @@
 package gamescreen.battle
 
-import core.menu.SelectableChildViewModel
+import core.menu.IntSelectableChildViewModel
 import gamescreen.battle.domain.BattleCommandType
 import gamescreen.battle.repository.commandstate.CommandStateRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 abstract class BattleChildViewModel :
-    SelectableChildViewModel(),
+    IntSelectableChildViewModel(),
     KoinComponent {
     val commandRepository: CommandStateRepository
             by inject()

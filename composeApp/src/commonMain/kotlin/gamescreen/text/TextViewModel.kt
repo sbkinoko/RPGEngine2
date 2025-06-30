@@ -1,11 +1,11 @@
 package gamescreen.text
 
-import core.menu.SelectableChildViewModel
+import core.menu.IntSelectableChildViewModel
 import gamescreen.menu.domain.SelectManager
 import gamescreen.text.repository.TextRepository
 import org.koin.core.component.inject
 
-class TextViewModel : SelectableChildViewModel() {
+class TextViewModel : IntSelectableChildViewModel() {
     val textRepository: TextRepository by inject()
 
     val showState

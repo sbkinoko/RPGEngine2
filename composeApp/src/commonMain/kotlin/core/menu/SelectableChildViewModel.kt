@@ -5,17 +5,18 @@ import controller.domain.ArrowCommand
 import controller.domain.ControllerCallback
 import controller.domain.Stick
 import gamescreen.menu.domain.SelectManager
+import kotlinx.coroutines.flow.StateFlow
 import org.koin.core.component.KoinComponent
 
-abstract class SelectableChildViewModel :
+abstract class SelectableChildViewModel<T> :
     ControllerCallback,
     KoinComponent {
-    var timer: Timer = Timer(awaitTime = 200L)
+
+    protected var timer: Timer = Timer(awaitTime = 200L)
 
     protected abstract var selectManager: SelectManager
 
-    val selectedFlowState
-        get() = selectManager.selectedFlowState
+    abstract val selectedFlowState: StateFlow<T>
 
     /**
      * selectManagerで選択可能な条件
@@ -24,23 +25,12 @@ abstract class SelectableChildViewModel :
     protected open fun selectable(): Boolean {
         return true
     }
-    
-    fun setSelected(id: Int) {
-        selectManager.selected = id
-    }
 
-    fun onClickItem(
-        id: Int,
-    ) {
-        // 選択されていたらコールバック
-        if (selectManager.selected == id) {
-            goNext()
-            return
-        }
+    abstract fun setSelected(id: T)
 
-        //　今クリックしたやつを選択
-        selectManager.selected = id
-    }
+    abstract fun onClickItem(
+        id: T,
+    )
 
     abstract fun goNext()
 

@@ -1,6 +1,6 @@
 package gamescreen.choice
 
-import core.menu.SelectableChildViewModel
+import core.menu.IntSelectableChildViewModel
 import gamescreen.choice.repository.ChoiceRepository
 import gamescreen.menu.domain.SelectManager
 import kotlinx.coroutines.CoroutineScope
@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import org.koin.core.component.inject
 
-class ChoiceViewModel : SelectableChildViewModel() {
+class ChoiceViewModel : IntSelectableChildViewModel() {
     val commandRepository: ChoiceRepository by inject()
 
     private var choiceList: List<Choice> = emptyList()

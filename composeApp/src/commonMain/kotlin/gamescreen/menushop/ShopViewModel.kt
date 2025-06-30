@@ -3,7 +3,7 @@ package gamescreen.menushop
 import androidx.compose.runtime.mutableStateOf
 import common.DefaultScope
 import controller.domain.Stick
-import core.menu.SelectableChildViewModel
+import core.menu.IntSelectableChildViewModel
 import core.repository.money.MoneyRepository
 import gamescreen.choice.Choice
 import gamescreen.choice.repository.ChoiceRepository
@@ -26,7 +26,7 @@ class ShopViewModel(
     val addToolUseCase: AddToolUseCase,
     private val shopMenuRepository: ShopMenuRepository,
 ) : KoinComponent,
-    SelectableChildViewModel() {
+    IntSelectableChildViewModel() {
 
     val shopItemStateFlow = shopMenuRepository.shopItemListStateFlow
 
