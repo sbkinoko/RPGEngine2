@@ -20,7 +20,9 @@ fun Modifier.menuItem(
     id: Int,
     childViewModel: SelectableChildViewModel<*>,
 ): Modifier {
-    val selected by childViewModel.selectedFlowState.collectAsState()
+    val selected by childViewModel
+        .selectedFlowState
+        .collectAsState()
 
     return selectable(
         id = id,

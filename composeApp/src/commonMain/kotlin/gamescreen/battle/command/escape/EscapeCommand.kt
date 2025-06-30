@@ -1,14 +1,11 @@
 package gamescreen.battle.command.escape
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import common.extension.equalAllocationModifier
-import common.extension.selectable
+import common.extension.menuItem
 import common.layout.CenterText
 import org.koin.compose.koinInject
 
@@ -17,8 +14,6 @@ fun EscapeCommand(
     modifier: Modifier,
     escapeViewModel: EscapeViewModel = koinInject(),
 ) {
-    val selected by escapeViewModel.selectedFlowState.collectAsState()
-
     Column(modifier = modifier) {
         CenterText(
             modifier = equalAllocationModifier,
@@ -30,24 +25,18 @@ fun EscapeCommand(
         ) {
             CenterText(
                 modifier = equalAllocationModifier
-                    .selectable(
+                    .menuItem(
                         id = escapeViewModel.escapeCommand,
-                        selected = selected,
-                    ).clickable {
-                        escapeViewModel.onClickItem(id = escapeViewModel.escapeCommand)
-                    },
+                        childViewModel = escapeViewModel,
+                    ),
                 text = "逃げる",
             )
             CenterText(
                 modifier = equalAllocationModifier
-                    .selectable(
+                    .menuItem(
                         id = escapeViewModel.attackCommand,
-                        selected = selected,
-                    ).clickable {
-                        escapeViewModel.onClickItem(
-                            id = escapeViewModel.attackCommand,
-                        )
-                    },
+                        childViewModel = escapeViewModel,
+                    ),
                 text = "戦う",
             )
         }
