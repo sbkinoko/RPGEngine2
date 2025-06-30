@@ -25,8 +25,7 @@ fun Modifier.menuItem(
         .collectAsState()
 
     return selectable(
-        id = id,
-        selected = selected,
+        isSelected = id == selected,
     ).clickable {
         childViewModel.onClickItem(
             id = id,
@@ -35,13 +34,12 @@ fun Modifier.menuItem(
 }
 
 fun Modifier.selectable(
-    id: Int,
-    selected: Int,
+    isSelected: Boolean,
 ): Modifier {
     return border(
         width = 2.dp,
         shape = RectangleShape,
-        color = if (id == selected) {
+        color = if (isSelected) {
             Colors.SelectedMenu
         } else {
             Colors.MenuFrame
