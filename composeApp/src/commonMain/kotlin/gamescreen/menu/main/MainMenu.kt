@@ -4,11 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -17,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
+import common.extension.equalAllocationModifier
 import common.extension.menuItem
 import common.layout.CenterText
 import org.koin.compose.koinInject
@@ -85,13 +83,3 @@ fun MainMenu(
         )
     }
 }
-
-val RowScope.equalAllocationModifier
-    get() = Modifier
-        .weight(1f)
-        .fillMaxHeight()
-
-val ColumnScope.equalAllocationModifier
-    get() = Modifier
-        .fillMaxHeight()
-        .weight(1f)
