@@ -23,9 +23,7 @@ fun UnSelectableItemList(
                         .fillMaxWidth()
                         .weight(1f)
                         .selectable(
-                            // 選択状態にならないようにしておく
-                            id = 1,
-                            selected = 2,
+                            isSelected = false,
                         ),
                     text = item.name,
                 )
