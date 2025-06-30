@@ -2,6 +2,8 @@ package gamescreen.battle.command.selectenemy
 
 import common.DefaultScope
 import core.domain.status.StatusData
+import core.menu.SelectCore
+import core.menu.SelectCoreInt
 import core.repository.statusdata.StatusDataRepository
 import gamescreen.battle.BattleChildViewModel
 import gamescreen.battle.domain.BattleCommandType
@@ -20,7 +22,7 @@ import org.koin.core.component.inject
 
 class SelectEnemyViewModel(
     private val enemyStatusDataRepository: StatusDataRepository,
-) : BattleChildViewModel() {
+) : BattleChildViewModel<Int>() {
     private val actionRepository: ActionRepository by inject()
 
     private val findActiveTargetUseCase: FindActiveTargetUseCase by inject()
@@ -38,10 +40,11 @@ class SelectEnemyViewModel(
             return command.playerId
         }
 
-    // 使わないので適当
-    override var selectManager: SelectManager = SelectManager(
-        width = 1,
-        itemNum = 1,
+    override var selectCore: SelectCore<Int> = SelectCoreInt(
+        SelectManager(
+            width = 1,
+            itemNum = 1,
+        )
     )
 
     private val monsters: List<StatusData>
@@ -73,10 +76,11 @@ class SelectEnemyViewModel(
         changeSelectingActionPlayerUseCase.invoke()
     }
 
-    override fun selectable(): Boolean {
-        val target = selectManager.selected
-        return enemyStatusDataRepository.getStatusData(target).isActive
+
+    override fun selectable(id: Int): Boolean {
+        return enemyStatusDataRepository.getStatusData(id).isActive
     }
+
 
     fun selectAttackMonster(monsterId: Int) {
         //　敵を選択中以外は操作しない
@@ -85,25 +89,27 @@ class SelectEnemyViewModel(
         }
 
         // すでに選んでる敵を選んだら確定
-        if (selectManager.selected == monsterId) {
+        if (selectCore.stateFlow.value == monsterId) {
             pressA()
             return
         }
 
-        selectManager.selected = monsterId
+        selectCore.select(monsterId)
     }
 
     fun updateManager() {
         job.cancel()
 
-        selectManager = SelectManager(
-            width = enemyStatusDataRepository.getStatusList().size,
-            itemNum = enemyStatusDataRepository.getStatusList().size,
+        selectCore = SelectCoreInt(
+            SelectManager(
+                width = enemyStatusDataRepository.getStatusList().size,
+                itemNum = enemyStatusDataRepository.getStatusList().size,
+            )
         )
 
         job = DefaultScope.launch {
             // 選択の先頭が変わった
-            selectManager.selectedFlowState.collect {
+            selectCore.stateFlow.collect {
                 val targetList = findActiveTargetUseCase(
                     target = it,
                     targetNum = getTargetNumUseCase.invoke(playerId = playerId),
@@ -134,6 +140,6 @@ class SelectEnemyViewModel(
 
         val action = actionRepository.getAction(playerId)
 
-        selectManager.selected = action.target
+        selectCore.select(action.target)
     }
 }

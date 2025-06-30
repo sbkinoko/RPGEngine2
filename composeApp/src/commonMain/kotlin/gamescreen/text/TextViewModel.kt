@@ -1,11 +1,13 @@
 package gamescreen.text
 
-import core.menu.IntSelectableChildViewModel
+import core.menu.SelectCore
+import core.menu.SelectCoreInt
+import core.menu.SelectableChildViewModel
 import gamescreen.menu.domain.SelectManager
 import gamescreen.text.repository.TextRepository
 import org.koin.core.component.inject
 
-class TextViewModel : IntSelectableChildViewModel() {
+class TextViewModel : SelectableChildViewModel<Int>() {
     val textRepository: TextRepository by inject()
 
     val showState
@@ -22,10 +24,11 @@ class TextViewModel : IntSelectableChildViewModel() {
         textRepository.pop()
     }
 
-    // スティック操作に反応しないように1にする
-    override var selectManager: SelectManager = SelectManager(
-        width = 1,
-        itemNum = 1,
+    override var selectCore: SelectCore<Int> = SelectCoreInt(
+        SelectManager(
+            width = 1,
+            itemNum = 1,
+        )
     )
 
     // 直接戻りたくないのでAボタンと同じ処理

@@ -62,7 +62,7 @@ fun TextWindow(
                     .fillMaxWidth()
                     .menuItem(
                         id = TextViewModel.INITIAL,
-                        childViewModel = textViewModel,
+                        menuItem = textViewModel,
                     )
                     .background(color = Colors.MenuBackground)
                     .padding(5.dp),

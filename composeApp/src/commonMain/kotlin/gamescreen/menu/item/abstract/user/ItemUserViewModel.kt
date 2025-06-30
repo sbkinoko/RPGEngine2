@@ -29,7 +29,7 @@ abstract class ItemUserViewModel<T, V : Item> : MenuChildViewModel(),
 
     override fun goNextImpl() {
         // 選んだプレイヤーを保存
-        userRepository.userId = selectManager.selected
+        userRepository.userId = selectCore.stateFlow.value
         //　次の画面へ遷移
         commandRepository.push(nextScreenType)
     }

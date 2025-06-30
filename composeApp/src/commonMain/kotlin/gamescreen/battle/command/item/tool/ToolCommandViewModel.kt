@@ -2,6 +2,8 @@ package gamescreen.battle.command.item.tool
 
 import core.domain.Const
 import core.domain.item.Tool
+import core.menu.SelectCore
+import core.menu.SelectCoreInt
 import data.item.tool.ToolId
 import data.item.tool.ToolRepository
 import gamescreen.battle.command.item.ItemCommandViewModel
@@ -23,9 +25,11 @@ class ToolCommandViewModel : ItemCommandViewModel<ToolId, Tool>() {
     override val actionType: ActionType
         get() = ActionType.TOOL
 
-    override var selectManager: SelectManager = SelectManager(
-        width = 2,
-        itemNum = itemList.size,
+    override var selectCore: SelectCore<Int> = SelectCoreInt(
+        SelectManager(
+            width = 2,
+            itemNum = itemList.size,
+        )
     )
 
     override fun isBoundedImpl(commandType: BattleCommandType): Boolean {

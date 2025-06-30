@@ -31,7 +31,7 @@ fun PlayerAction(
 
         CommandMenu(
             itemList = playerActionViewModel.entries,
-            onClick2 = playerActionViewModel,
+            menuItem = playerActionViewModel,
             modifier = modifier,
         )
     }

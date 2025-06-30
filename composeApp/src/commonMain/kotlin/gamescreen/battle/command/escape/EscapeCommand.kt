@@ -26,7 +26,7 @@ fun EscapeCommand(
             modifier = Modifier
                 .weight(1f)
                 .fillMaxWidth(),
-            onClick2 = escapeViewModel,
+            menuItem = escapeViewModel,
         )
     }
 }

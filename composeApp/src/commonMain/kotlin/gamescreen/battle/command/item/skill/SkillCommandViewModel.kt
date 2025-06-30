@@ -4,6 +4,8 @@ import core.domain.AbleType
 import core.domain.Const
 import core.domain.Place
 import core.domain.item.Skill
+import core.menu.SelectCore
+import core.menu.SelectCoreInt
 import core.usecase.item.checkcanuseskill.CheckCanUseSkillUseCase
 import data.item.skill.SkillId
 import data.item.skill.SkillRepository
@@ -29,10 +31,13 @@ class SkillCommandViewModel : ItemCommandViewModel<SkillId, Skill>() {
     override val actionType: ActionType
         get() = ActionType.Skill
 
-    override var selectManager: SelectManager = SelectManager(
-        width = 2,
-        itemNum = itemList.size,
+    override var selectCore: SelectCore<Int> = SelectCoreInt(
+        SelectManager(
+            width = 2,
+            itemNum = itemList.size,
+        )
     )
+
 
     override fun isBoundedImpl(commandType: BattleCommandType): Boolean {
         return commandType is SkillCommand

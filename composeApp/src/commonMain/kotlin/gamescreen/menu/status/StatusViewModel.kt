@@ -1,7 +1,9 @@
 package gamescreen.menu.status
 
 import core.domain.status.StatusData
-import core.menu.IntSelectableChildViewModel
+import core.menu.SelectCore
+import core.menu.SelectCoreInt
+import core.menu.SelectableChildViewModel
 import core.repository.statusdata.StatusDataRepository
 import gamescreen.menu.domain.SelectManager
 import gamescreen.menu.repository.menustate.MenuStateRepository
@@ -11,13 +13,15 @@ import values.Constants
 
 class StatusViewModel(
     private val statusDataRepository: StatusDataRepository,
-) : IntSelectableChildViewModel(),
+) : SelectableChildViewModel<Int>(),
     KoinComponent {
     private val menuStateRepository: MenuStateRepository by inject()
 
-    override var selectManager = SelectManager(
-        width = 1,
-        itemNum = Constants.playerNum,
+    override var selectCore: SelectCore<Int> = SelectCoreInt(
+        SelectManager(
+            width = 1,
+            itemNum = Constants.playerNum,
+        )
     )
 
     override fun goNext() {

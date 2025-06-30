@@ -18,7 +18,7 @@ fun BattleMainCommand(
             itemList = battleMainViewModel.entries,
             modifier = Modifier.fillMaxWidth()
                 .weight(1f),
-            onClick2 = battleMainViewModel,
+            menuItem = battleMainViewModel,
         )
         Spacer(
             modifier = Modifier

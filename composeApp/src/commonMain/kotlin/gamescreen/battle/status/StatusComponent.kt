@@ -56,7 +56,7 @@ fun StatusComponent(
                     // 味方選択中は選択可能にする
                     Modifier.menuItem(
                         id = index,
-                        childViewModel = selectAllyViewModel,
+                        menuItem = selectAllyViewModel,
                     )
                 } else {
                     // ただの表示欄

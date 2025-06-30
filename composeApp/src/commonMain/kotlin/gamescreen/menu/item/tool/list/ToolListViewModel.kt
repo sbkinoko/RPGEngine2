@@ -54,7 +54,7 @@ class ToolListViewModel : ItemListViewModel<ToolId, Tool>() {
 
     private fun goGive() {
         // indexを保存
-        indexRepository.index = selectManager.selected
+        indexRepository.index = selectCore.stateFlow.value
         //　次の画面に遷移
         menuStateRepository.push(
             MenuType.TOOL_GIVE,

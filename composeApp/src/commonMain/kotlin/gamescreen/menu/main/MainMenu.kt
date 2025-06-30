@@ -56,7 +56,7 @@ fun MainMenu(
                     modifier = equalAllocationModifier
                         .menuItem(
                             id = index * 2,
-                            childViewModel = mainMenuViewModel,
+                            menuItem = mainMenuViewModel,
                         ),
                     text = pair.first.text,
                 )
@@ -66,7 +66,7 @@ fun MainMenu(
                         modifier = equalAllocationModifier
                             .menuItem(
                                 id = index * 2 + 1,
-                                childViewModel = mainMenuViewModel,
+                                menuItem = mainMenuViewModel,
                             ),
                         text = it.text,
                     )

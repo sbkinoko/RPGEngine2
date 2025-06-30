@@ -4,33 +4,57 @@ import common.Timer
 import controller.domain.ArrowCommand
 import controller.domain.ControllerCallback
 import controller.domain.Stick
-import gamescreen.menu.domain.SelectManager
 import kotlinx.coroutines.flow.StateFlow
 import org.koin.core.component.KoinComponent
 
+interface MenuItem<T> {
+    fun onClick(id: T)
+
+    val selectedFlowState: StateFlow<T>
+}
+
 abstract class SelectableChildViewModel<T> :
     ControllerCallback,
+    MenuItem<T>,
     KoinComponent {
 
     protected var timer: Timer = Timer(awaitTime = 200L)
 
-    protected abstract var selectManager: SelectManager
+    abstract var selectCore: SelectCore<T>
 
-    abstract val selectedFlowState: StateFlow<T>
+    override val selectedFlowState: StateFlow<T>
+        get() {
+            return selectCore.stateFlow
+        }
+
+    val entries: List<T>
+        get() = selectCore.entries
 
     /**
      * selectManagerで選択可能な条件
      * 基本的には全部選択できるはず
      */
-    protected open fun selectable(): Boolean {
+    protected open fun selectable(id: T): Boolean {
         return true
     }
 
-    abstract fun setSelected(id: T)
+    fun setSelected(id: T) {
+        selectCore.select(id)
+    }
 
-    abstract fun onClickItem(
+    fun onClickItem(
         id: T,
-    )
+    ) {
+        selectCore.click(
+            id,
+        ) {
+            goNext()
+        }
+    }
+
+    override fun onClick(id: T) {
+        onClickItem(id)
+    }
 
     abstract fun goNext()
 
@@ -50,23 +74,9 @@ abstract class SelectableChildViewModel<T> :
             return
 
         timer.callbackIfTimePassed {
-            moveToSelectable(command)
+            selectCore.moveToSelectable(command) {
+                selectable(it)
+            }
         }
-    }
-
-    /**
-     * 選択可能なものまで移動
-     * 無理ならそのまま
-     */
-    private fun moveToSelectable(command: ArrowCommand) {
-        val init = selectManager.selected
-        do {
-            selectManager.move(command)
-        } while (
-        //　選択可能なもの
-            selectable().not() &&
-            //　一周してない
-            selectManager.selected != init
-        )
     }
 }

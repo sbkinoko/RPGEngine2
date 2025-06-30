@@ -65,7 +65,7 @@ fun ShopMenu(
                             .fillMaxWidth()
                             .menuItem(
                                 id = id,
-                                childViewModel = shopViewModel,
+                                menuItem = shopViewModel,
                             ),
                         shopItem = it,
                     )

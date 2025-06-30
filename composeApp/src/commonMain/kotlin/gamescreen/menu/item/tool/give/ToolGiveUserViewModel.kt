@@ -3,6 +3,8 @@ package gamescreen.menu.item.tool.give
 import core.ToolBagRepositoryName
 import core.domain.item.BagItemData
 import core.domain.item.Tool
+import core.menu.SelectCore
+import core.menu.SelectCoreInt
 import core.repository.bag.BagRepository
 import core.repository.statusdata.StatusDataRepository
 import data.item.tool.ToolId
@@ -47,11 +49,12 @@ class ToolGiveUserViewModel(
     override val playerNum: Int
         get() = Constants.playerNum + 1
 
-    override var selectManager: SelectManager =
+    override var selectCore: SelectCore<Int> = SelectCoreInt(
         SelectManager(
             width = 1,
             itemNum = playerNum,
         )
+    )
 
     // fixme 初期化用のuseCaseを作る
     // 別の場所で呼び出す
@@ -71,7 +74,7 @@ class ToolGiveUserViewModel(
     }
 
     override fun goNextImpl() {
-        targetRepository.target = selectManager.selected
+        targetRepository.target = selectCore.stateFlow.value
         choiceRepository.push(
             listOf(
                 Choice(

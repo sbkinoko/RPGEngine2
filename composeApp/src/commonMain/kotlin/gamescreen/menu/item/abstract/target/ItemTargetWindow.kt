@@ -55,7 +55,7 @@ fun ItemTargetWindow(
                             .fillMaxSize()
                             .menuItem(
                                 id = i,
-                                childViewModel = itemTargetViewModel,
+                                menuItem = itemTargetViewModel,
                             ),
                         statusId = i,
                     )

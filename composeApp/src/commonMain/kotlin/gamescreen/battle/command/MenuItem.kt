@@ -7,15 +7,16 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import common.extension.menuItem2
+import common.extension.menuItem
 import common.layout.CenterText
+import core.menu.MenuItem
 
 private const val size = 2
 
 @Composable
 fun <T> CommandMenu(
     itemList: List<T>,
-    onClick2: OnClick2<T>,
+    menuItem: MenuItem<T>,
     modifier: Modifier,
 ) where T : CommandType<T> {
     Column(modifier = modifier) {
@@ -31,7 +32,7 @@ fun <T> CommandMenu(
                             .fillMaxHeight()
                             .weight(1f),
                         id = it,
-                        onClick2 = onClick2,
+                        menuItem = menuItem,
                     )
                 }
 
@@ -51,14 +52,14 @@ fun <T> CommandMenu(
 @Composable
 fun <T : CommandType<T>> MenuItem(
     id: T,
-    onClick2: OnClick2<T>,
+    menuItem: MenuItem<T>,
     modifier: Modifier = Modifier,
 ) {
     CenterText(
         modifier = modifier
-            .menuItem2(
+            .menuItem(
                 id = id,
-                onClick2 = onClick2,
+                menuItem = menuItem,
             ),
         text = id.menuString,
     )

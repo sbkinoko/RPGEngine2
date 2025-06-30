@@ -26,7 +26,7 @@ fun SelectableItemList(
                         .weight(1f)
                         .menuItem(
                             id = index,
-                            childViewModel = itemUserViewModel,
+                            menuItem = itemUserViewModel,
                         ),
                     text = item.name,
                 )

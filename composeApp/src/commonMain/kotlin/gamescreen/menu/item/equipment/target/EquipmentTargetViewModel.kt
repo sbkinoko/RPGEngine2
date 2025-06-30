@@ -4,6 +4,8 @@ import common.DefaultScope
 import core.EquipmentBagRepositoryName
 import core.PlayerStatusRepositoryName
 import core.domain.item.equipment.EquipmentData
+import core.menu.SelectCore
+import core.menu.SelectCoreInt
 import core.repository.bag.BagRepository
 import core.repository.player.PlayerStatusRepository
 import core.repository.statusdata.StatusDataRepository
@@ -42,6 +44,13 @@ class EquipmentTargetViewModel(
 
     val textRepository: TextRepository by inject()
 
+    override var selectCore: SelectCore<Int> = SelectCoreInt(
+        SelectManager(
+            width = 1,
+            itemNum = playerNum,
+        )
+    )
+
     override val itemId: EquipmentId
         get() {
             val index = indexRepository.index
@@ -65,7 +74,7 @@ class EquipmentTargetViewModel(
     }
 
     override fun goNextImpl() {
-        targetRepository.target = selectManager.selected
+        targetRepository.target = selectCore.stateFlow.value
         choiceRepository.push(
             listOf(
                 Choice(
@@ -81,13 +90,9 @@ class EquipmentTargetViewModel(
             ))
     }
 
-    override var selectManager: SelectManager = SelectManager(
-        width = 1,
-        itemNum = playerNum,
-    )
 
-    override fun selectable(): Boolean {
-        return canSelect(selectManager.selected)
+    override fun selectable(id: Int): Boolean {
+        return canSelect(id)
     }
 
     override fun canSelect(target: Int): Boolean {
