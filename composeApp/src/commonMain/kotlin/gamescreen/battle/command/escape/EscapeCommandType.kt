@@ -7,7 +7,4 @@ enum class EscapeCommandType(
 ) : CommandType<EscapeCommandType> {
     Escape("逃げる"),
     BackToBattle("戦う");
-
-    override val entries: List<EscapeCommandType>
-        get() = EscapeCommandType.entries
 }
