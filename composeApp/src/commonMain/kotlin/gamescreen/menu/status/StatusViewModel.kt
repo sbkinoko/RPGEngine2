@@ -1,8 +1,7 @@
 package gamescreen.menu.status
 
-import common.Timer
 import core.domain.status.StatusData
-import core.menu.SelectableWindowViewModel
+import core.menu.SelectableChildViewModel
 import core.repository.statusdata.StatusDataRepository
 import gamescreen.menu.domain.SelectManager
 import gamescreen.menu.repository.menustate.MenuStateRepository
@@ -12,7 +11,7 @@ import values.Constants
 
 class StatusViewModel(
     private val statusDataRepository: StatusDataRepository,
-) : SelectableWindowViewModel(),
+) : SelectableChildViewModel(),
     KoinComponent {
     private val menuStateRepository: MenuStateRepository by inject()
 
@@ -21,7 +20,9 @@ class StatusViewModel(
         itemNum = Constants.playerNum,
     )
 
-    override var timer: Timer = Timer(200)
+    override fun goNext() {
+        // NOP
+    }
 
     fun getStatusDataAt(id: Int): StatusData {
         return statusDataRepository.getStatusData(id)

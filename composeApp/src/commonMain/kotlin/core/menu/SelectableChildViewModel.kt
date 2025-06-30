@@ -3,7 +3,7 @@ package core.menu
 import common.Timer
 import org.koin.core.component.KoinComponent
 
-abstract class SelectableChildViewModel<T> :
+abstract class SelectableChildViewModel :
     SelectableWindowViewModel(),
     KoinComponent {
     override var timer: Timer = Timer(awaitTime = 200L)

@@ -20,7 +20,7 @@ import values.Colors
 @Composable
 fun Modifier.menuItem(
     id: Int,
-    childViewModel: SelectableChildViewModel<*>,
+    childViewModel: SelectableChildViewModel,
 ): Modifier {
     val selected by childViewModel
         .selectedFlowState
