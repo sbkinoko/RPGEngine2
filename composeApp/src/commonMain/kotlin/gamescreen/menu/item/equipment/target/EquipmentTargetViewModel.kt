@@ -17,6 +17,7 @@ import gamescreen.menu.domain.SelectManager
 import gamescreen.menu.item.abstract.target.TargetViewModel
 import gamescreen.menu.item.repository.index.IndexRepository
 import gamescreen.menu.item.repository.target.TargetRepository
+import gamescreen.menu.usecase.bag.dectool.DecItemUseCase
 import gamescreen.text.TextBoxData
 import gamescreen.text.repository.TextRepository
 import kotlinx.coroutines.launch
@@ -25,6 +26,8 @@ import values.Constants.Companion.playerNum
 
 class EquipmentTargetViewModel(
     private val equipmentUseCase: EquipUseCase,
+
+    private val decEquipmentUseCase: DecItemUseCase<EquipmentId>,
 ) : TargetViewModel<EquipmentId, EquipmentData>() {
     private val targetRepository: TargetRepository by inject()
     val playerStatusRepository: PlayerStatusRepository by inject()
@@ -102,6 +105,13 @@ class EquipmentTargetViewModel(
                 target = targetRepository.target,
                 equipmentId = itemId,
             )
+
+            if (userRepository.userId == playerNum) {
+                decEquipmentUseCase.invoke(
+                    itemId = itemId,
+                    itemNum = 1,
+                )
+            }
 
             // todo 袋に装備を入れる
 

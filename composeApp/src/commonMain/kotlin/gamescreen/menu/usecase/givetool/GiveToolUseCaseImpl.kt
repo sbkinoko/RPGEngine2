@@ -8,7 +8,7 @@ import gamescreen.menu.item.repository.index.IndexRepository
 import gamescreen.menu.item.repository.target.TargetRepository
 import gamescreen.menu.item.repository.user.UserRepository
 import gamescreen.menu.usecase.bag.addtool.AddToolUseCase
-import gamescreen.menu.usecase.bag.dectool.DecToolUseCase
+import gamescreen.menu.usecase.bag.dectool.DecItemUseCase
 import values.Constants
 import values.TextData
 
@@ -19,7 +19,7 @@ class GiveToolUseCaseImpl(
     private val bagRepository: BagRepository<ToolId>,
     private val playerStatusRepository: PlayerStatusRepository,
 
-    private val decToolUseCase: DecToolUseCase,
+    private val decToolUseCase: DecItemUseCase<ToolId>,
     private val addToolUseCase: AddToolUseCase,
 ) : GiveToolUseCase {
     override suspend fun invoke(): GiveResult {

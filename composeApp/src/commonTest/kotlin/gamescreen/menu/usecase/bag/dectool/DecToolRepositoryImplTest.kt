@@ -5,6 +5,7 @@ import core.ToolBagRepositoryName
 import core.domain.item.BagItemData
 import core.repository.bag.BagRepository
 import data.item.tool.ToolId
+import gamescreen.menu.DecToolUseCaseName
 import gamescreen.menu.ModuleMenu
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -15,11 +16,13 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class DecToolUseCaseImplTest : KoinTest {
+class DecItemUseCaseImplTest : KoinTest {
     private val bagRepository: BagRepository<ToolId> by inject(
         qualifier = ToolBagRepositoryName,
     )
-    private val decToolUseCase: DecToolUseCase by inject()
+    private val decToolUseCase: DecItemUseCase<ToolId> by inject(
+        qualifier = DecToolUseCaseName
+    )
 
     @BeforeTest
     fun beforeTest() {

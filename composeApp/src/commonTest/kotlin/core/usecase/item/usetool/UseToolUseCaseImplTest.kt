@@ -12,7 +12,7 @@ import core.usecase.updateparameter.UpdatePlayerStatusUseCase
 import core.usecase.updateparameter.UpdateStatusUseCase
 import data.item.tool.ToolId
 import data.item.tool.ToolRepository
-import gamescreen.menu.usecase.bag.dectool.DecToolUseCase
+import gamescreen.menu.usecase.bag.dectool.DecItemUseCase
 import gamescreen.menu.usecase.gettoolid.GetToolIdUseCase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
@@ -28,7 +28,7 @@ class UseToolUseCaseImplTest : KoinTest {
     var countDelTool = 0
 
     var countDecItem = 0
-    private val decToolUseCase = object : DecToolUseCase {
+    private val decToolUseCase = object : DecItemUseCase {
         override fun invoke(
             itemId: ToolId,
             itemNum: Int,

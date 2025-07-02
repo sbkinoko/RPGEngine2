@@ -8,7 +8,8 @@ import org.koin.compose.koinInject
 @Composable
 fun EquipmentTargetWindow(
     modifier: Modifier = Modifier,
-    targetViewModel: EquipmentTargetViewModel = koinInject(),
+    targetViewModel: EquipmentTargetViewModel = koinInject(
+    ),
 ) {
     ItemTargetWindow(
         modifier = modifier,

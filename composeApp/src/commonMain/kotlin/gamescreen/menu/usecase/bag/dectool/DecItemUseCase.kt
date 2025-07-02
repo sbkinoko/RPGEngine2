@@ -1,10 +1,10 @@
 package gamescreen.menu.usecase.bag.dectool
 
-import data.item.tool.ToolId
+import data.item.ItemId
 
-interface DecToolUseCase {
+interface DecItemUseCase<T : ItemId> {
     operator fun invoke(
-        itemId: ToolId,
+        itemId: T,
         itemNum: Int,
     )
 }

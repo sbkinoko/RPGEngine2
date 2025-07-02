@@ -1,10 +1,13 @@
 package gamescreen.menu
 
+import core.EquipmentBagRepositoryName
 import core.PlayerStatusRepositoryName
 import core.ToolBagRepositoryName
 import core.UpdatePlayer
 import core.usecase.item.useskill.UseSkillUseCase
 import core.usecase.item.useskill.UseSkillUseCaseImpl
+import data.item.equipment.EquipmentId
+import data.item.tool.ToolId
 import gamescreen.menu.component.StatusComponentViewModel
 import gamescreen.menu.item.equipment.list.EquipmentListViewModel
 import gamescreen.menu.item.equipment.target.EquipmentTargetViewModel
@@ -30,7 +33,7 @@ import gamescreen.menu.usecase.backfield.CloseMenuUseCase
 import gamescreen.menu.usecase.backfield.CloseMenuUseCaseImpl
 import gamescreen.menu.usecase.bag.addtool.AddToolUseCase
 import gamescreen.menu.usecase.bag.addtool.AddToolUseCaseImpl
-import gamescreen.menu.usecase.bag.dectool.DecToolUseCase
+import gamescreen.menu.usecase.bag.dectool.DecItemUseCase
 import gamescreen.menu.usecase.bag.dectool.DecToolUseCaseImpl
 import gamescreen.menu.usecase.getviewmodelbycommandtype.GetControllerByCommandTypeUseCase
 import gamescreen.menu.usecase.getviewmodelbycommandtype.GetControllerByCommandTypeUseCaseImpl
@@ -38,6 +41,13 @@ import gamescreen.menu.usecase.givetool.GiveToolUseCase
 import gamescreen.menu.usecase.givetool.GiveToolUseCaseImpl
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
+
+val DecToolUseCaseName = named(
+    "DecToolUseCase"
+)
+val DecEquipmentUseCaseName = named(
+    "DecEquipmentUseCase"
+)
 
 val ModuleMenu = module {
     single {
@@ -119,6 +129,9 @@ val ModuleMenu = module {
     single {
         EquipmentTargetViewModel(
             equipmentUseCase = get(),
+            decEquipmentUseCase = get(
+                qualifier = DecEquipmentUseCaseName,
+            )
         )
     }
 
@@ -182,11 +195,23 @@ val ModuleMenu = module {
         )
     }
 
-    single<DecToolUseCase> {
+    single<DecItemUseCase<ToolId>>(
+        qualifier = DecToolUseCaseName,
+    ) {
         DecToolUseCaseImpl(
             bagRepository = get(
                 qualifier = ToolBagRepositoryName
             ),
+        )
+    }
+
+    single<DecItemUseCase<EquipmentId>>(
+        qualifier = DecEquipmentUseCaseName,
+    ) {
+        DecToolUseCaseImpl(
+            bagRepository = get(
+                qualifier = EquipmentBagRepositoryName,
+            )
         )
     }
 
@@ -199,7 +224,9 @@ val ModuleMenu = module {
                 qualifier = ToolBagRepositoryName,
             ),
             playerStatusRepository = get(),
-            decToolUseCase = get(),
+            decToolUseCase = get(
+                qualifier = DecToolUseCaseName,
+            ),
             addToolUseCase = get(),
         )
     }
