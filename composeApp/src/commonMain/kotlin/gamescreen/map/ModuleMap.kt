@@ -68,6 +68,7 @@ import gamescreen.map.usecase.settalk.SetTalkUseCaseImpl
 import gamescreen.map.usecase.updatecellcontainplayer.UpdateCellContainPlayerUseCase
 import gamescreen.map.usecase.updatecellcontainplayer.UpdateCellContainPlayerUseCaseImpl
 import gamescreen.map.viewmodel.MapViewModel
+import gamescreen.menu.qualifierAddToolUseCase
 import org.koin.dsl.module
 
 val ModuleMap = module {
@@ -249,7 +250,9 @@ val ModuleMap = module {
     single<ActionEventUseCase> {
         ActionEventUseCaseImpl(
             textRepository = get(),
-            addToolUseCase = get(),
+            addToolUseCase = get(
+                qualifier = qualifierAddToolUseCase,
+            ),
             setShopItemUseCase = get(),
             setTalkUseCase = get(),
             moveToOtherHeightUseCase = get(),

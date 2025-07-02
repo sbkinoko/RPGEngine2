@@ -1,13 +1,13 @@
 package gamescreen.menu.usecase.bag.dectool
 
 import core.repository.bag.BagRepository
-import data.item.tool.ToolId
+import data.item.ItemId
 
-class DecToolUseCaseImpl(
-    private val bagRepository: BagRepository<ToolId>,
-) : DecToolUseCase {
+class DecToolUseCaseImpl<T : ItemId>(
+    private val bagRepository: BagRepository<T>,
+) : DecItemUseCase<T> {
     override fun invoke(
-        itemId: ToolId,
+        itemId: T,
         itemNum: Int,
     ) {
         val data = bagRepository.getList().find {
