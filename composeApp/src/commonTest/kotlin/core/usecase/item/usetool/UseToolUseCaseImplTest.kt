@@ -28,7 +28,7 @@ class UseToolUseCaseImplTest : KoinTest {
     var countDelTool = 0
 
     var countDecItem = 0
-    private val decToolUseCase = object : DecItemUseCase {
+    private val decToolUseCase = object : DecItemUseCase<ToolId> {
         override fun invoke(
             itemId: ToolId,
             itemNum: Int,
