@@ -101,7 +101,6 @@ class EquipmentTargetViewModel(
 
     private fun selectYes() {
         DefaultScope.launch {
-            //　todo 袋から装備を減らす
 
             val preId = equipmentUseCase.invoke(
                 target = targetRepository.target,
@@ -119,8 +118,6 @@ class EquipmentTargetViewModel(
                     toolNum = 1,
                 )
             }
-
-            // todo 袋に装備を入れる
 
             // textを表示
             textRepository.push(
