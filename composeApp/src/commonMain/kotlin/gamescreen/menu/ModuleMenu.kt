@@ -53,6 +53,10 @@ val qualifierAddToolUseCase = named(
     "AddToolUseCase"
 )
 
+val qualifierAddEquipmentUseCase = named(
+    "AddEquipmentUseCase"
+)
+
 val ModuleMenu = module {
     single {
         MenuViewModel()
@@ -135,6 +139,9 @@ val ModuleMenu = module {
             equipmentUseCase = get(),
             decEquipmentUseCase = get(
                 qualifier = DecEquipmentUseCaseName,
+            ),
+            addEquipmentUseCase = get(
+                qualifier = qualifierAddEquipmentUseCase,
             )
         )
     }
@@ -208,6 +215,16 @@ val ModuleMenu = module {
             bagRepository = get(
                 qualifier = ToolBagRepositoryName
             ),
+        )
+    }
+
+    single<AddToolUseCase<EquipmentId>>(
+        qualifier = qualifierAddEquipmentUseCase
+    ) {
+        AddToolUseCaseImpl(
+            bagRepository = get(
+                qualifier = EquipmentBagRepositoryName,
+            )
         )
     }
 

@@ -18,7 +18,7 @@ class EquipUseCaseImpl(
     override suspend fun invoke(
         target: Int,
         equipmentId: EquipmentId,
-    ) {
+    ): EquipmentId {
         val player = playerStatusRepository.getStatus(target)
         val parameter = statusDataRepository.getStatusData(target)
 
@@ -61,5 +61,7 @@ class EquipUseCaseImpl(
             id = target,
             status = updatedStatus,
         )
+
+        return preEqId
     }
 }
