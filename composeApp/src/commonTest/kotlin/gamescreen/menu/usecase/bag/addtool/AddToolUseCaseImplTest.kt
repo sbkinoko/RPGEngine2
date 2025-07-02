@@ -5,6 +5,7 @@ import core.ToolBagRepositoryName
 import core.repository.bag.BagRepository
 import data.item.tool.ToolId
 import gamescreen.menu.ModuleMenu
+import gamescreen.menu.qualifierAddToolUseCase
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
@@ -18,7 +19,9 @@ class AddToolUseCaseImplTest : KoinTest {
     private val bagRepository: BagRepository<ToolId> by inject(
         qualifier = ToolBagRepositoryName,
     )
-    private val addToolUseCase: AddToolUseCase by inject()
+    private val addToolUseCase: AddToolUseCase<ToolId> by inject(
+        qualifier = qualifierAddToolUseCase,
+    )
 
     @BeforeTest
     fun beforeTest() {

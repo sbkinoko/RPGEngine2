@@ -5,6 +5,7 @@ import common.DefaultScope
 import controller.domain.Stick
 import core.menu.SelectableChildViewModel
 import core.repository.money.MoneyRepository
+import data.item.tool.ToolId
 import gamescreen.choice.Choice
 import gamescreen.choice.repository.ChoiceRepository
 import gamescreen.menu.domain.SelectManager
@@ -23,7 +24,7 @@ class ShopViewModel(
     val amountData: AmountData,
     val choiceRepository: ChoiceRepository,
     val textRepository: TextRepository,
-    val addToolUseCase: AddToolUseCase,
+    val addToolUseCase: AddToolUseCase<ToolId>,
     private val shopMenuRepository: ShopMenuRepository,
 ) : KoinComponent,
     SelectableChildViewModel<Any>() {

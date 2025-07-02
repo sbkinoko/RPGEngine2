@@ -20,7 +20,7 @@ class GiveToolUseCaseImpl(
     private val playerStatusRepository: PlayerStatusRepository,
 
     private val decToolUseCase: DecItemUseCase<ToolId>,
-    private val addToolUseCase: AddToolUseCase,
+    private val addToolUseCase: AddToolUseCase<ToolId>,
 ) : GiveToolUseCase {
     override suspend fun invoke(): GiveResult {
         if (targetRepository.target < Constants.playerNum) {

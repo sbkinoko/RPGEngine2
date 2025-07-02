@@ -2,9 +2,9 @@ package gamescreen.menu.usecase.bag.addtool
 
 import data.item.tool.ToolId
 
-interface AddToolUseCase {
+interface AddToolUseCase<T : ToolId> {
     operator fun invoke(
-        toolId: ToolId,
+        toolId: T,
         toolNum: Int,
     )
 }

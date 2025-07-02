@@ -4,11 +4,11 @@ import core.domain.item.BagItemData
 import core.repository.bag.BagRepository
 import data.item.tool.ToolId
 
-class AddToolUseCaseImpl(
-    private val bagRepository: BagRepository<ToolId>,
-) : AddToolUseCase {
+class AddToolUseCaseImpl<T : ToolId>(
+    private val bagRepository: BagRepository<T>,
+) : AddToolUseCase<T> {
     override fun invoke(
-        toolId: ToolId,
+        toolId: T,
         toolNum: Int,
     ) {
         val list = bagRepository
