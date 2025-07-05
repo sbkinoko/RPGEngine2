@@ -4,7 +4,6 @@ import core.domain.status.param.ParameterType
 import core.domain.status.param.StatusParameter
 import core.domain.status.param.StatusParameterWithMax
 
-// todo statusDataにTを持たせて確認する
 data class StatusData(
     val name: String,
     val hp: StatusParameterWithMax<ParameterType.HP> =
