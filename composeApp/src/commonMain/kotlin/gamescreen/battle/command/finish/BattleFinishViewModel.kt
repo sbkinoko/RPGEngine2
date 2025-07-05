@@ -17,6 +17,7 @@ import gamescreen.battle.usecase.getdroptool.GetDropToolUseCase
 import gamescreen.battle.usecase.getexp.GetExpUseCase
 import gamescreen.battle.usecase.getmoney.GetMoneyUseCase
 import gamescreen.menu.domain.SelectManager
+import gamescreen.menu.qualifierAddToolUseCase
 import gamescreen.menu.usecase.bag.addtool.AddToolUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -45,7 +46,9 @@ class BattleFinishViewModel(
 
     private val getExpUseCase: GetExpUseCase by inject()
 
-    private val addToolUseCase: AddToolUseCase by inject()
+    private val addToolUseCase: AddToolUseCase<ToolId> by inject(
+        qualifier = qualifierAddToolUseCase
+    )
     private val toolRepository: ToolRepository by inject()
     private val getDropToolUseCase: GetDropToolUseCase by inject()
 

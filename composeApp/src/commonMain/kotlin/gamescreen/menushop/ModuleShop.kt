@@ -1,5 +1,6 @@
 package gamescreen.menushop
 
+import gamescreen.menu.qualifierAddToolUseCase
 import gamescreen.menushop.domain.amountdata.AmountData
 import gamescreen.menushop.domain.amountdata.AmountDataImpl
 import gamescreen.menushop.repository.shopmenu.ShopMenuRepository
@@ -16,7 +17,9 @@ val ModuleShop = module {
             amountData = get(),
             choiceRepository = get(),
             textRepository = get(),
-            addToolUseCase = get(),
+            addToolUseCase = get(
+                qualifier = qualifierAddToolUseCase,
+            ),
             shopMenuRepository = get(),
         )
     }
