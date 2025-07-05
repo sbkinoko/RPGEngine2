@@ -3,6 +3,7 @@ package data.battle
 import common.DefaultScope
 import core.domain.BattleEventCallback
 import core.usecase.heal.MaxHealUseCase
+import data.event.Event
 import data.monster.MonsterRepository
 import gamescreen.battle.domain.BattleBackgroundType
 import gamescreen.battle.domain.BattleId
@@ -27,14 +28,16 @@ class BattleDataRepositoryImpl(
                     winCallback = {
                         textRepository.push(
                             textBoxData = TextBoxData(
-                                text = "おめでとう"
+                                text = "おめでとう",
+                                callBack = { Event.eventFlag = 1 },
                             )
                         )
                     },
                     escapeCallback = {
                         textRepository.push(
                             textBoxData = TextBoxData(
-                                text = "逃げるのも時には大事だね"
+                                text = "逃げるのも時には大事だね",
+                                callBack = { Event.eventFlag = 1 },
                             )
                         )
                     },
@@ -43,6 +46,7 @@ class BattleDataRepositoryImpl(
                             textBoxData = TextBoxData(
                                 text = "また挑戦してね",
                                 callBack = {
+                                    Event.eventFlag = 1
                                     DefaultScope.launch {
                                         maxHealUseCase.invoke()
                                     }

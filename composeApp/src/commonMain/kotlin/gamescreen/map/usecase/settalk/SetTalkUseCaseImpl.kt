@@ -1,5 +1,6 @@
 package gamescreen.map.usecase.settalk
 
+import data.event.Event
 import gamescreen.battle.domain.BattleId
 import gamescreen.choice.Choice
 import gamescreen.choice.repository.ChoiceRepository
@@ -47,7 +48,11 @@ class SetTalkUseCaseImpl(
             TalkEvent.Talk2 ->
                 talkData = listOf(
                     TextBoxData(
-                        text = "戦い",
+                        text = if (Event.eventFlag == 0) {
+                            "戦い"
+                        } else {
+                            "再戦"
+                        },
                         callBack = {
                             startEventBattleUseCase.invoke(
                                 battleId = BattleId.Battle1,
