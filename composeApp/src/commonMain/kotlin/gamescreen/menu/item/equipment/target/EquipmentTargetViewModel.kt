@@ -17,6 +17,8 @@ import gamescreen.menu.domain.SelectManager
 import gamescreen.menu.item.abstract.target.TargetViewModel
 import gamescreen.menu.item.repository.index.IndexRepository
 import gamescreen.menu.item.repository.target.TargetRepository
+import gamescreen.menu.usecase.bag.addtool.AddToolUseCase
+import gamescreen.menu.usecase.bag.dectool.DecItemUseCase
 import gamescreen.text.TextBoxData
 import gamescreen.text.repository.TextRepository
 import kotlinx.coroutines.launch
@@ -25,6 +27,9 @@ import values.Constants.Companion.playerNum
 
 class EquipmentTargetViewModel(
     private val equipmentUseCase: EquipUseCase,
+
+    private val decEquipmentUseCase: DecItemUseCase<EquipmentId>,
+    private val addEquipmentUseCase: AddToolUseCase<EquipmentId>,
 ) : TargetViewModel<EquipmentId, EquipmentData>() {
     private val targetRepository: TargetRepository by inject()
     val playerStatusRepository: PlayerStatusRepository by inject()
@@ -96,14 +101,23 @@ class EquipmentTargetViewModel(
 
     private fun selectYes() {
         DefaultScope.launch {
-            //　todo 袋から装備を減らす
 
-            equipmentUseCase.invoke(
+            val preId = equipmentUseCase.invoke(
                 target = targetRepository.target,
                 equipmentId = itemId,
             )
 
-            // todo 袋に装備を入れる
+            if (userRepository.userId == playerNum) {
+                decEquipmentUseCase.invoke(
+                    itemId = itemId,
+                    itemNum = 1,
+                )
+
+                addEquipmentUseCase.invoke(
+                    toolId = preId,
+                    toolNum = 1,
+                )
+            }
 
             // textを表示
             textRepository.push(

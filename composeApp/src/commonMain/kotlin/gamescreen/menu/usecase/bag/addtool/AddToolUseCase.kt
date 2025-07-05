@@ -1,10 +1,11 @@
 package gamescreen.menu.usecase.bag.addtool
 
-import data.item.tool.ToolId
+import data.item.ItemId
 
-interface AddToolUseCase {
+// fixme itemに変える
+interface AddToolUseCase<T : ItemId> {
     operator fun invoke(
-        toolId: ToolId,
+        toolId: T,
         toolNum: Int,
     )
 }

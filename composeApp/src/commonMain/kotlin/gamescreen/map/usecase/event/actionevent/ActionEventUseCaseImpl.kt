@@ -2,6 +2,7 @@ package gamescreen.map.usecase.event.actionevent
 
 import common.DefaultScope
 import core.domain.mapcell.CellType
+import data.item.tool.ToolId
 import gamescreen.map.domain.MapUiState
 import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.background.BackgroundData
@@ -21,7 +22,7 @@ import values.event.TalkEvent
 // todo 画面に反映できるようにする
 class ActionEventUseCaseImpl(
     private val textRepository: TextRepository,
-    private val addToolUseCase: AddToolUseCase,
+    private val addToolUseCase: AddToolUseCase<ToolId>,
     private val setShopItemUseCase: SetShopItemUseCase,
     private val setTalkUseCase: SetTalkUseCase,
     private val moveToOtherHeightUseCase: MoveToOtherHeightUseCase,
