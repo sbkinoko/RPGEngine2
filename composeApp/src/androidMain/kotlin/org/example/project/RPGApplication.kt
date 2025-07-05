@@ -3,6 +3,7 @@ package org.example.project
 import android.app.Application
 import core.ModuleCore
 import data.ModuleData
+import data.event.ModuleEvent
 import gamescreen.ModuleMain
 import gamescreen.battle.ModuleBattle
 import gamescreen.choice.ModuleChoice
@@ -19,6 +20,7 @@ class RPGApplication : Application() {
 
         startKoin {
             androidContext(this@RPGApplication)
+
             modules(
                 ModuleMain,
 
@@ -32,6 +34,8 @@ class RPGApplication : Application() {
 
                 ModuleCore,
                 ModuleData,
+
+                ModuleEvent,
             )
         }
     }
