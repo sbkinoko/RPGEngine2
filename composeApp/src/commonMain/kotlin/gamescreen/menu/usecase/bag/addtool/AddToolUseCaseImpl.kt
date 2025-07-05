@@ -2,13 +2,13 @@ package gamescreen.menu.usecase.bag.addtool
 
 import core.domain.item.BagItemData
 import core.repository.bag.BagRepository
-import data.item.tool.ToolId
+import data.item.ItemId
 
-class AddToolUseCaseImpl(
-    private val bagRepository: BagRepository<ToolId>,
-) : AddToolUseCase {
+class AddToolUseCaseImpl<T : ItemId>(
+    private val bagRepository: BagRepository<T>,
+) : AddToolUseCase<T> {
     override fun invoke(
-        toolId: ToolId,
+        toolId: T,
         toolNum: Int,
     ) {
         val list = bagRepository
