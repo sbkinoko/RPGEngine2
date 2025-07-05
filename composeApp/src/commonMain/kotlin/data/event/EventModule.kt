@@ -15,7 +15,6 @@ val ModuleEvent = module {
         EventManagerImpl(
             maxHealUseCase = get(),
             textRepository = get(),
-            //            startEventBattleUseCase = get(),
         )
     }
 }
