@@ -11,5 +11,5 @@ interface EquipUseCase {
     suspend fun invoke(
         target: Int,
         equipmentId: EquipmentId,
-    )
+    ): EquipmentId
 }
