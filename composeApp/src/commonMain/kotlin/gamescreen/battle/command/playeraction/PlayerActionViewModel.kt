@@ -1,7 +1,9 @@
 package gamescreen.battle.command.playeraction
 
+import common.DefaultScope
 import core.repository.statusdata.StatusDataRepository
 import gamescreen.battle.BattleChildViewModel
+import gamescreen.battle.command.OnClick2
 import gamescreen.battle.domain.ActionType
 import gamescreen.battle.domain.BattleCommandType
 import gamescreen.battle.domain.PlayerActionCommand
@@ -12,27 +14,45 @@ import gamescreen.battle.domain.ToolCommand
 import gamescreen.battle.repository.action.ActionRepository
 import gamescreen.battle.usecase.changeselectingactionplayer.ChangeSelectingActionPlayerUseCase
 import gamescreen.menu.domain.SelectManager
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import org.koin.core.component.inject
 
 // TODO: test作る 
 class PlayerActionViewModel(
     private val statusDataRepository: StatusDataRepository,
-) : BattleChildViewModel() {
+) : BattleChildViewModel(),
+    OnClick2<PlayerActionCommandType> {
     private val actionRepository: ActionRepository by inject()
 
     private val changeSelectingActionPlayerUseCase: ChangeSelectingActionPlayerUseCase by inject()
 
     override var selectManager: SelectManager = SelectManager(
         width = 2,
-        itemNum = 3,
+        itemNum = itemNum,
     )
 
-    val normalAttack = 0
-    val skill = 1
-    val tool = 2
+    override val entries: List<PlayerActionCommandType>
+        get() = PlayerActionCommandType.entries
+
+    private val mutable = MutableStateFlow(selectedFlowState.value.toEnum())
+
+    override val selectedFlowState2: StateFlow<PlayerActionCommandType>
+        get() = mutable.asStateFlow()
+
 
     val playerId: Int
         get() = (commandRepository.nowBattleCommandType as PlayerActionCommand).playerId
+
+    init {
+        DefaultScope.launch {
+            selectedFlowState.collect {
+                mutable.value = it.toEnum()
+            }
+        }
+    }
 
     fun init() {
         // プレイヤーが行動不能なら次のキャラに移動する
@@ -48,9 +68,9 @@ class PlayerActionViewModel(
         val action = actionRepository.getLastSelectAction(playerId = playerId)
 
         selectManager.selected = when (action) {
-            ActionType.Normal -> normalAttack
-            ActionType.Skill -> skill
-            ActionType.TOOL -> tool
+            ActionType.Normal -> PlayerActionCommandType.Normal.toInt()
+            ActionType.Skill -> PlayerActionCommandType.Skill.toInt()
+            ActionType.TOOL -> PlayerActionCommandType.Tool.toInt()
             ActionType.None -> throw RuntimeException()
         }
     }
@@ -60,8 +80,8 @@ class PlayerActionViewModel(
     }
 
     override fun goNextImpl() {
-        when (selectManager.selected) {
-            normalAttack -> {
+        when (selectedFlowState2.value) {
+            PlayerActionCommandType.Normal -> {
                 // 行動を保存
                 actionRepository.setAction(
                     actionType = ActionType.Normal,
@@ -74,11 +94,11 @@ class PlayerActionViewModel(
                 )
             }
 
-            skill -> commandRepository.push(
+            PlayerActionCommandType.Skill -> commandRepository.push(
                 SkillCommand(playerId),
             )
 
-            tool -> commandRepository.push(
+            PlayerActionCommandType.Tool -> commandRepository.push(
                 ToolCommand(playerId)
             )
         }
@@ -96,5 +116,9 @@ class PlayerActionViewModel(
 
             player.isActive
         }
+    }
+
+    override fun onClickItem(id: PlayerActionCommandType) {
+        onClickItem(id.toInt())
     }
 }
