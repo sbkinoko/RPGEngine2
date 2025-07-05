@@ -13,12 +13,11 @@ class EquipUseCaseImpl(
     private val equipmentRepository: EquipmentRepository,
 ) : EquipUseCase {
 
-    // todo 外した装備情報を返す
     // todo 装備の部位を増やす
     override suspend fun invoke(
         target: Int,
         equipmentId: EquipmentId,
-    ) {
+    ): EquipmentId {
         val player = playerStatusRepository.getStatus(target)
         val parameter = statusDataRepository.getStatusData(target)
 
@@ -61,5 +60,7 @@ class EquipUseCaseImpl(
             id = target,
             status = updatedStatus,
         )
+
+        return preEqId
     }
 }
