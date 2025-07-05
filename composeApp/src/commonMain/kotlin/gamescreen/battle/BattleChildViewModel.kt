@@ -6,9 +6,10 @@ import gamescreen.battle.repository.commandstate.CommandStateRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-abstract class BattleChildViewModel :
-    SelectableChildViewModel(),
+abstract class BattleChildViewModel<T> :
+    SelectableChildViewModel<T>(),
     KoinComponent {
+
     val commandRepository: CommandStateRepository
             by inject()
 

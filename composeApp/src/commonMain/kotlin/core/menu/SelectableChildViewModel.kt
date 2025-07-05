@@ -4,42 +4,56 @@ import common.Timer
 import controller.domain.ArrowCommand
 import controller.domain.ControllerCallback
 import controller.domain.Stick
-import gamescreen.menu.domain.SelectManager
+import kotlinx.coroutines.flow.StateFlow
 import org.koin.core.component.KoinComponent
 
-abstract class SelectableChildViewModel :
+interface MenuItem<T> {
+    fun onClick(id: T)
+
+    val selectedFlowState: StateFlow<T>
+}
+
+abstract class SelectableChildViewModel<T> :
     ControllerCallback,
+    MenuItem<T>,
     KoinComponent {
-    var timer: Timer = Timer(awaitTime = 200L)
 
-    protected abstract var selectManager: SelectManager
+    protected var timer: Timer = Timer(awaitTime = 200L)
 
-    val selectedFlowState
-        get() = selectManager.selectedFlowState
+    abstract var selectCore: SelectCore<T>
+
+    override val selectedFlowState: StateFlow<T>
+        get() {
+            return selectCore.stateFlow
+        }
+
+    val entries: List<T>
+        get() = selectCore.entries
 
     /**
      * selectManagerで選択可能な条件
      * 基本的には全部選択できるはず
      */
-    protected open fun selectable(): Boolean {
+    protected open fun selectable(id: T): Boolean {
         return true
     }
-    
-    fun setSelected(id: Int) {
-        selectManager.selected = id
+
+    fun setSelected(id: T) {
+        selectCore.select(id)
     }
 
     fun onClickItem(
-        id: Int,
+        id: T,
     ) {
-        // 選択されていたらコールバック
-        if (selectManager.selected == id) {
+        selectCore.click(
+            id,
+        ) {
             goNext()
-            return
         }
+    }
 
-        //　今クリックしたやつを選択
-        selectManager.selected = id
+    override fun onClick(id: T) {
+        onClickItem(id)
     }
 
     abstract fun goNext()
@@ -60,23 +74,9 @@ abstract class SelectableChildViewModel :
             return
 
         timer.callbackIfTimePassed {
-            moveToSelectable(command)
+            selectCore.moveToSelectable(command) {
+                selectable(it)
+            }
         }
-    }
-
-    /**
-     * 選択可能なものまで移動
-     * 無理ならそのまま
-     */
-    private fun moveToSelectable(command: ArrowCommand) {
-        val init = selectManager.selected
-        do {
-            selectManager.move(command)
-        } while (
-        //　選択可能なもの
-            selectable().not() &&
-            //　一周してない
-            selectManager.selected != init
-        )
     }
 }

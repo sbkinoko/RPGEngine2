@@ -3,6 +3,8 @@ package gamescreen.menu.item.tool.user
 import core.ToolBagRepositoryName
 import core.domain.item.BagItemData
 import core.domain.item.Tool
+import core.menu.SelectCore
+import core.menu.SelectCoreInt
 import core.repository.bag.BagRepository
 import core.repository.statusdata.StatusDataRepository
 import data.item.tool.ToolId
@@ -31,11 +33,12 @@ class ToolUserViewModel(
     override val playerNum: Int
         get() = Constants.playerNum + 1
 
-    override var selectManager: SelectManager =
+    override var selectCore: SelectCore<Int> = SelectCoreInt(
         SelectManager(
             width = 1,
             itemNum = playerNum,
         )
+    )
 
     // fixme 初期化タイミングを考える
     // toolGiveUseViewModelでも同じことをしている

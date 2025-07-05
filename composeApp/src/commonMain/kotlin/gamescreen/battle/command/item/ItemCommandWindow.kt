@@ -136,7 +136,7 @@ fun ItemText(
         modifier = modifier
             .menuItem(
                 id = position,
-                childViewModel = itemCommandViewModel,
+                menuItem = itemCommandViewModel,
             )
     ) {
         CenterText(

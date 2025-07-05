@@ -1,6 +1,8 @@
 package gamescreen.menu.item.skill.user
 
 import core.domain.item.Skill
+import core.menu.SelectCore
+import core.menu.SelectCoreInt
 import core.repository.player.PlayerStatusRepository
 import core.repository.statusdata.StatusDataRepository
 import data.item.skill.SkillId
@@ -17,6 +19,13 @@ class SkillUserViewModel(
     val repository: PlayerStatusRepository by inject()
 
     override val itemRepository: SkillRepository by inject()
+    override var selectCore: SelectCore<Int> = SelectCoreInt(
+        SelectManager(
+            width = 1,
+            itemNum = playerNum,
+        )
+    )
+
     override val boundedScreenType: MenuType
         get() = MenuType.SKILL_USER
     override val nextScreenType: MenuType
@@ -24,12 +33,6 @@ class SkillUserViewModel(
 
     override val playerNum: Int
         get() = Constants.playerNum
-
-    override var selectManager: SelectManager =
-        SelectManager(
-            width = 1,
-            itemNum = playerNum,
-        )
 
     override fun getPlayerNameAt(id: Int): String {
         return statusDataRepository.getStatusData(id).name

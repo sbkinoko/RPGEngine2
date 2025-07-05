@@ -2,6 +2,8 @@ package gamescreen.battle.command.finish
 
 import common.DefaultScope
 import core.domain.BattleResult
+import core.menu.SelectCore
+import core.menu.SelectCoreInt
 import core.repository.event.EventRepository
 import core.repository.money.MoneyRepository
 import core.usecase.changetomap.ChangeToMapUseCase
@@ -25,7 +27,14 @@ import values.TextData
 
 class BattleFinishViewModel(
     private val eventRepository: EventRepository,
-) : BattleChildViewModel() {
+) : BattleChildViewModel<Int>() {
+    override var selectCore: SelectCore<Int> = SelectCoreInt(
+        // 使わない
+        SelectManager(
+            width = 2,
+            itemNum = 2,
+        ),
+    )
 
     private val changeToMapUseCase: ChangeToMapUseCase by inject()
 
@@ -180,11 +189,6 @@ class BattleFinishViewModel(
         return commandType is FinishCommand
     }
 
-    // 使わない
-    override var selectManager: SelectManager = SelectManager(
-        width = 2,
-        itemNum = 2,
-    )
 
     override fun goNextImpl() {
         when (contentType.value) {

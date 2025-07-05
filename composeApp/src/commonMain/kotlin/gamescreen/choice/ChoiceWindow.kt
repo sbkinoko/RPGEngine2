@@ -67,7 +67,7 @@ fun ChoiceWindow(
                             .height((height.value * LayoutConst.CHOICE_HEIGHT).pxToDp())
                             .menuItem(
                                 id = index,
-                                childViewModel = choiceViewModel,
+                                menuItem = choiceViewModel,
                             )
                             .background(color = Colors.MenuBackground),
                         text = choice.text,

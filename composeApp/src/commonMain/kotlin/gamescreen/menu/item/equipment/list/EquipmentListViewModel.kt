@@ -30,7 +30,7 @@ class EquipmentListViewModel : ItemListViewModel<EquipmentId, EquipmentData>() {
         // todo playerを選択した状態で次にすすんだらどうするかを考える
 
         // indexを保存
-        indexRepository.index = selectManager.selected
+        indexRepository.index = selectCore.stateFlow.value
 
         //　次の画面に遷移
         menuStateRepository.push(

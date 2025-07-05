@@ -16,6 +16,8 @@ import core.domain.item.TargetType
 import core.domain.item.UsableItem
 import core.domain.status.StatusData
 import core.domain.status.StatusType
+import core.menu.SelectCore
+import core.menu.SelectCoreInt
 import core.repository.battlemonster.BattleInfoRepository
 import core.repository.player.PlayerStatusRepository
 import core.repository.statusdata.StatusDataRepository
@@ -60,7 +62,7 @@ class ActionPhaseViewModel(
     private val enemyDataRepository: StatusDataRepository,
 
     private val effectUseCase: EffectUseCase,
-) : BattleChildViewModel() {
+) : BattleChildViewModel<Int>() {
     private val actionRepository: ActionRepository by inject()
     private val battleInfoRepository: BattleInfoRepository by inject()
 
@@ -110,6 +112,14 @@ class ActionPhaseViewModel(
 
     private val useToolUseCase: UseToolUseCase by inject()
 
+    override var selectCore: SelectCore<Int> = SelectCoreInt(
+        // 使わないので適当
+        SelectManager(
+            width = 1,
+            itemNum = 1,
+        )
+    )
+
     init {
         CoroutineScope(Dispatchers.IO).launch {
             this@ActionPhaseViewModel.commandRepository.commandStateFlow.collect {
@@ -128,12 +138,6 @@ class ActionPhaseViewModel(
 
     private val monsterNum: Int
         get() = enemyDataRepository.getStatusList().size
-
-    // 使わないので適当
-    override var selectManager: SelectManager = SelectManager(
-        width = 1,
-        itemNum = 1,
-    )
 
     private lateinit var speedList: List<StatusWrapper>
 

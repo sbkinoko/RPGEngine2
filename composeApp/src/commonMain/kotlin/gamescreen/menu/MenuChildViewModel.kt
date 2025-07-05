@@ -6,7 +6,7 @@ import gamescreen.menu.repository.menustate.MenuStateRepository
 import gamescreen.menu.usecase.backfield.CloseMenuUseCase
 import org.koin.core.component.inject
 
-abstract class MenuChildViewModel : SelectableChildViewModel() {
+abstract class MenuChildViewModel : SelectableChildViewModel<Int>() {
     val commandRepository: MenuStateRepository by inject()
     private val closeMenuUseCase: CloseMenuUseCase by inject()
 

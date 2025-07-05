@@ -1,6 +1,8 @@
 package gamescreen.menu.main
 
 import core.menu.PairedList
+import core.menu.SelectCore
+import core.menu.SelectCoreInt
 import core.repository.money.MoneyRepository
 import gamescreen.menu.MenuChildViewModel
 import gamescreen.menu.domain.MenuType
@@ -41,17 +43,20 @@ class MainMenuViewModel : MenuChildViewModel(),
         get() =
             PairedList<MainMenuItem>().toPairedList(list)
 
-    override var selectManager: SelectManager = SelectManager(
-        width = 2,
-        itemNum = itemNum,
+    override var selectCore: SelectCore<Int> = SelectCoreInt(
+        SelectManager(
+            width = 2,
+            itemNum = itemNum,
+        )
     )
+
 
     override fun isBoundedImpl(commandType: MenuType): Boolean {
         return commandType == MenuType.Main
     }
 
     override fun goNextImpl() {
-        val menuType = selectManager.selected.toMenuType()
+        val menuType = selectCore.stateFlow.value.toMenuType()
 
         if (menuType == MenuType.Collision) {
             // 当たり判定の項目なら判定を反転する

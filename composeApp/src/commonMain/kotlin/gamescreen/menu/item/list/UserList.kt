@@ -26,7 +26,7 @@ fun UserList(
                     .fillMaxWidth()
                     .menuItem(
                         id = i,
-                        childViewModel = itemUserViewModel,
+                        menuItem = itemUserViewModel,
                     ),
                 text = itemUserViewModel.getPlayerNameAt(i),
             )

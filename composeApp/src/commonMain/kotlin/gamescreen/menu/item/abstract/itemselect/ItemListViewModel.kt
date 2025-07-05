@@ -3,6 +3,8 @@ package gamescreen.menu.item.abstract.itemselect
 import core.PlayerStatusRepositoryName
 import core.domain.AbleType
 import core.domain.item.Item
+import core.menu.SelectCore
+import core.menu.SelectCoreInt
 import core.repository.player.PlayerStatusRepository
 import core.repository.statusdata.StatusDataRepository
 import data.item.ItemRepository
@@ -34,9 +36,11 @@ abstract class ItemListViewModel<T, V : Item> : MenuChildViewModel(),
 
     protected abstract val itemRepository: ItemRepository<T, V>
 
-    override var selectManager = SelectManager(
-        width = 1,
-        itemNum = 1,
+    override var selectCore: SelectCore<Int> = SelectCoreInt(
+        SelectManager(
+            width = 1,
+            itemNum = 1,
+        )
     )
 
     val userId: Int
@@ -56,12 +60,14 @@ abstract class ItemListViewModel<T, V : Item> : MenuChildViewModel(),
     }
 
     fun init() {
-        selectManager = SelectManager(
-            width = 1,
-            itemNum = itemIdList.size
+        selectCore = SelectCoreInt(
+            SelectManager(
+                width = 1,
+                itemNum = itemIdList.size
+            )
         )
         // fixme 前回の選択位置を利用する
-        selectManager.selected = INIT_ITEM_POSITION
+        selectCore.select(INIT_ITEM_POSITION)
     }
 
     open fun getExplainAt(position: Int): String {
@@ -89,7 +95,7 @@ abstract class ItemListViewModel<T, V : Item> : MenuChildViewModel(),
         when (ableType) {
             AbleType.Able -> {
                 // indexを保存
-                indexRepository.index = selectManager.selected
+                indexRepository.index = selectCore.stateFlow.value
                 //　次の画面に遷移
                 menuStateRepository.push(
                     nextScreenType,

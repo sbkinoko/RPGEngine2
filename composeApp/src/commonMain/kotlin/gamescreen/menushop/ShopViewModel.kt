@@ -3,6 +3,8 @@ package gamescreen.menushop
 import androidx.compose.runtime.mutableStateOf
 import common.DefaultScope
 import controller.domain.Stick
+import core.menu.SelectCore
+import core.menu.SelectCoreInt
 import core.menu.SelectableChildViewModel
 import core.repository.money.MoneyRepository
 import data.item.tool.ToolId
@@ -27,15 +29,16 @@ class ShopViewModel(
     val addToolUseCase: AddToolUseCase<ToolId>,
     private val shopMenuRepository: ShopMenuRepository,
 ) : KoinComponent,
-    SelectableChildViewModel() {
+    SelectableChildViewModel<Int>() {
 
     val shopItemStateFlow = shopMenuRepository.shopItemListStateFlow
 
-    override var selectManager: SelectManager =
+    override var selectCore: SelectCore<Int> = SelectCoreInt(
         SelectManager(
             width = 1,
             itemNum = 1,
         )
+    )
 
     val isShopMenuVisibleStateFlow =
         shopMenuRepository.isVisibleStateFlow
@@ -52,7 +55,7 @@ class ShopViewModel(
 
     init {
         DefaultScope.launch {
-            selectManager.selectedFlowState.collect {
+            selectCore.stateFlow.collect {
                 selected = it
                 setMax()
             }
@@ -68,7 +71,7 @@ class ShopViewModel(
         DefaultScope.launch {
             shopItemStateFlow.collect {
                 shopItemList = it
-                selectManager.itemNum = it.size
+                (selectCore as SelectCoreInt).changeItemNum(it.size)
                 setMax()
             }
         }

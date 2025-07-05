@@ -3,6 +3,8 @@ package gamescreen.menu.item.abstract.target
 import core.PlayerStatusRepositoryName
 import core.domain.AbleType
 import core.domain.item.UsableItem
+import core.menu.SelectCore
+import core.menu.SelectCoreInt
 import core.repository.player.PlayerStatusRepository
 import core.repository.statusdata.StatusDataRepository
 import gamescreen.choice.Choice
@@ -25,6 +27,12 @@ abstract class UsableTargetViewModel<T, V : UsableItem> : TargetViewModel<T, V>(
 
     protected val textRepository: TextRepository by inject()
 
+    override var selectCore: SelectCore<Int> = SelectCoreInt(
+        SelectManager(
+            width = 1,
+            itemNum = playerNum,
+        )
+    )
 
     protected abstract val boundedMenuType: MenuType
 
@@ -33,7 +41,7 @@ abstract class UsableTargetViewModel<T, V : UsableItem> : TargetViewModel<T, V>(
     }
 
     override fun goNextImpl() {
-        targetRepository.target = selectManager.selected
+        targetRepository.target = selectCore.stateFlow.value
         choiceRepository.push(
             listOf(
                 Choice(
@@ -49,13 +57,9 @@ abstract class UsableTargetViewModel<T, V : UsableItem> : TargetViewModel<T, V>(
             ))
     }
 
-    override var selectManager: SelectManager = SelectManager(
-        width = 1,
-        itemNum = playerNum,
-    )
 
-    override fun selectable(): Boolean {
-        return canSelect(selectManager.selected)
+    override fun selectable(id: Int): Boolean {
+        return canSelect(id)
     }
 
     override fun canSelect(target: Int): Boolean {

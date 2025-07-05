@@ -2,6 +2,8 @@ package gamescreen.battle.command.selectally
 
 import common.DefaultScope
 import core.domain.item.TargetStatusType
+import core.menu.SelectCore
+import core.menu.SelectCoreInt
 import core.repository.statusdata.StatusDataRepository
 import data.item.skill.SkillRepository
 import data.item.tool.ToolRepository
@@ -21,11 +23,18 @@ import values.Constants.Companion.playerNum
 // test作る
 class SelectAllyViewModel(
     private val statusDataRepository: StatusDataRepository,
-) : BattleChildViewModel() {
+) : BattleChildViewModel<Int>() {
     private val changeSelectingActionPlayerUseCase: ChangeSelectingActionPlayerUseCase by inject()
     private val actionRepository: ActionRepository by inject()
     private val skillRepository: SkillRepository by inject()
     private val toolRepository: ToolRepository by inject()
+
+    override var selectCore: SelectCore<Int> = SelectCoreInt(
+        selectManager = SelectManager(
+            width = playerNum,
+            itemNum = playerNum,
+        )
+    )
 
     private val playerId: Int
         get() {
@@ -68,7 +77,9 @@ class SelectAllyViewModel(
             commandRepository.commandStateFlow.collect {
                 _isAllySelecting.value = it is SelectAllyCommand
                 if (isAllySelecting.value) {
-                    selectManager.selected = actionRepository.getAction(playerId).ally
+                    selectCore.select(
+                        actionRepository.getAction(playerId).ally
+                    )
                 }
             }
         }
@@ -78,8 +89,7 @@ class SelectAllyViewModel(
         return commandType is SelectAllyCommand
     }
 
-    override fun selectable(): Boolean {
-        val id = selectManager.selected
+    override fun selectable(id: Int): Boolean {
         val status = statusDataRepository.getStatusData(id)
         return targetStatusType.canSelect(status)
     }
@@ -90,13 +100,8 @@ class SelectAllyViewModel(
             playerId = playerId,
             // 表示ようにリストになっていたが、保存する際は先頭だけ保存して、
             //　実際に攻撃するときに攻撃対象を再計算する
-            allyId = selectManager.selected,
+            allyId = selectCore.stateFlow.value,
         )
         changeSelectingActionPlayerUseCase.invoke()
     }
-
-    override var selectManager: SelectManager = SelectManager(
-        width = playerNum,
-        itemNum = playerNum,
-    )
 }

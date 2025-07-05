@@ -5,6 +5,7 @@ import core.PlayerStatusRepositoryName
 import core.domain.Const
 import core.domain.item.TargetType
 import core.domain.item.UsableItem
+import core.menu.SelectCoreInt
 import core.repository.player.PlayerStatusRepository
 import core.repository.statusdata.StatusDataRepository
 import data.item.ItemRepository
@@ -19,7 +20,7 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.inject
 import kotlin.math.max
 
-abstract class ItemCommandViewModel<T, V : UsableItem> : BattleChildViewModel() {
+abstract class ItemCommandViewModel<T, V : UsableItem> : BattleChildViewModel<Int>() {
     protected val actionRepository: ActionRepository by inject()
     protected val playerStatusRepository: PlayerStatusRepository by inject()
 
@@ -38,7 +39,7 @@ abstract class ItemCommandViewModel<T, V : UsableItem> : BattleChildViewModel() 
     abstract val actionType: ActionType
 
     private val selectedItemId: T
-        get() = itemList[selectManager.selected]
+        get() = itemList[selected]
 
     abstract fun getLastSelectedItemId(): T
 
@@ -46,22 +47,26 @@ abstract class ItemCommandViewModel<T, V : UsableItem> : BattleChildViewModel() 
 
     private var job: Job = DefaultScope.launch {}
 
+    val selected
+        get() = selectCore.stateFlow.value
+
     fun init() {
         // 最後に選ばれていたスキルを呼び出し
         val itemId = getLastSelectedItemId()
 
-        val selected = max(
+        val preSelected = max(
             itemList.indexOf(itemId),
             Const.INITIAL_ITEM_POSITION,
         )
 
-        selectManager = SelectManager(
-            width = 2,
-            itemNum = itemList.size,
+        selectCore = SelectCoreInt(
+            SelectManager(
+                width = 2,
+                itemNum = itemList.size,
+            )
         )
 
-        selectManager.selected = selected
-
+        selectCore.select(preSelected)
 
         job.cancel()
 
@@ -74,8 +79,8 @@ abstract class ItemCommandViewModel<T, V : UsableItem> : BattleChildViewModel() 
         job.start()
     }
 
-    override fun selectable(): Boolean {
-        return canUse(selectManager.selected)
+    override fun selectable(id: Int): Boolean {
+        return canUse(id)
     }
 
     fun getName(position: Int): String {
@@ -85,7 +90,7 @@ abstract class ItemCommandViewModel<T, V : UsableItem> : BattleChildViewModel() 
 
     override fun goNextImpl() {
 
-        if (canUse(selectManager.selected).not()) {
+        if (canUse(selected).not()) {
             //　今選択しているアイテムは使えないので進まない
             return
         }
@@ -96,7 +101,7 @@ abstract class ItemCommandViewModel<T, V : UsableItem> : BattleChildViewModel() 
             actionType = actionType,
             playerId = playerId,
             itemId = itemId,
-            itemIndex = selectManager.selected,
+            itemIndex = selected,
         )
 
         when (itemRepository.getItem(itemId).targetType) {
