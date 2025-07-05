@@ -7,7 +7,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 abstract class BattleChildViewModel :
-    SelectableChildViewModel<BattleCommandType>(),
+    SelectableChildViewModel(),
     KoinComponent {
     val commandRepository: CommandStateRepository
             by inject()

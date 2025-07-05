@@ -27,7 +27,7 @@ class ShopViewModel(
     val addToolUseCase: AddToolUseCase<ToolId>,
     private val shopMenuRepository: ShopMenuRepository,
 ) : KoinComponent,
-    SelectableChildViewModel<Any>() {
+    SelectableChildViewModel() {
 
     val shopItemStateFlow = shopMenuRepository.shopItemListStateFlow
 
