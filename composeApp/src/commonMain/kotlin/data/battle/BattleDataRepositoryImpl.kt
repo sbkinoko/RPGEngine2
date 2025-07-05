@@ -1,20 +1,16 @@
 package data.battle
 
-import common.DefaultScope
 import core.domain.BattleEventCallback
-import core.usecase.heal.MaxHealUseCase
+import data.event.EventManager
+import data.event.battle.BattleEventKey
 import data.monster.MonsterRepository
 import gamescreen.battle.domain.BattleBackgroundType
 import gamescreen.battle.domain.BattleId
-import gamescreen.text.TextBoxData
-import gamescreen.text.repository.TextRepository
-import kotlinx.coroutines.launch
 
 class BattleDataRepositoryImpl(
     private val monsterRepository: MonsterRepository,
-    private val textRepository: TextRepository,
 
-    private val maxHealUseCase: MaxHealUseCase,
+    private val eventManager: EventManager<BattleEventKey>,
 ) : BattleDataRepository {
     override fun getBattleMonsterData(battleId: BattleId): EventBattleData {
         return when (battleId) {
@@ -25,29 +21,18 @@ class BattleDataRepositoryImpl(
                 battleBackgroundType = BattleBackgroundType.Event,
                 battleEventCallback = BattleEventCallback(
                     winCallback = {
-                        textRepository.push(
-                            textBoxData = TextBoxData(
-                                text = "おめでとう"
-                            )
+                        eventManager.callEvent(
+                            BattleEventKey.Win,
                         )
                     },
                     escapeCallback = {
-                        textRepository.push(
-                            textBoxData = TextBoxData(
-                                text = "逃げるのも時には大事だね"
-                            )
+                        eventManager.callEvent(
+                            BattleEventKey.Escape,
                         )
                     },
                     loseCallback = {
-                        textRepository.push(
-                            textBoxData = TextBoxData(
-                                text = "また挑戦してね",
-                                callBack = {
-                                    DefaultScope.launch {
-                                        maxHealUseCase.invoke()
-                                    }
-                                }
-                            ),
+                        eventManager.callEvent(
+                            BattleEventKey.Lose,
                         )
                     },
                 ),
