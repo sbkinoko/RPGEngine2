@@ -135,6 +135,8 @@ class EquipUseCaseImplTest {
                     statusList = StatusIncrease.empty,
                     type = EquipmentType.Weapon,
                 )
+
+                else -> throw NotImplementedError()
             }
         }
     }

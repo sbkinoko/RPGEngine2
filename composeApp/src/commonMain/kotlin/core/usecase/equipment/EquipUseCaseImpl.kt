@@ -13,7 +13,6 @@ class EquipUseCaseImpl(
     private val equipmentRepository: EquipmentRepository,
 ) : EquipUseCase {
 
-    // todo 装備の部位を増やす
     override suspend fun invoke(
         target: Int,
         equipmentId: EquipmentId,
