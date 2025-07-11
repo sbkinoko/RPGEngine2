@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class EventBattleManager1(
+class BattleEventManager1(
     private val textRepository: TextRepository,
     private val maxHealUseCase: MaxHealUseCase,
 

@@ -1,7 +1,6 @@
 package gamescreen.map
 
 import core.EnemyStatusRepositoryName
-import data.event.QualifierEventBattle
 import gamescreen.map.domain.Player
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.backgroundcell.BackgroundRepositoryImpl
@@ -255,12 +254,8 @@ val ModuleMap = module {
 
     single<SetTalkUseCase> {
         SetTalkUseCaseImpl(
-            textRepository = get(),
-            choiceRepository = get(),
-
-            eventManager = get(
-                qualifier = QualifierEventBattle,
-            ),
+            talkEventManager1 = get(),
+            battleEventManager1 = get(),
         )
     }
 
