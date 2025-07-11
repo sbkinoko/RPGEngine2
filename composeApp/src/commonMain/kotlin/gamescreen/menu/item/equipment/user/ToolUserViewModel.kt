@@ -55,6 +55,12 @@ class EquipmentUserViewModel(
                 num = 100,
             )
         )
+        bagRepository.setData(
+            data = BagItemData(
+                id = EquipmentId.MagicSword,
+                num = 100
+            )
+        )
     }
 
     override fun getPlayerNameAt(id: Int): String {
