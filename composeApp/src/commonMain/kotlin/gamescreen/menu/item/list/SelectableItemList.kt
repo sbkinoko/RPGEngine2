@@ -6,13 +6,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import common.extension.menuItem
 import common.layout.CenterText
-import core.menu.SelectableChildViewModel
+import core.menu.MenuItem
 
 @Composable
-fun SelectableItemList(
+fun <T> SelectableItemList(
     selectedUserId: Int,
-    itemUserViewModel: SelectableChildViewModel<Int>,
-    itemList: ItemList<*>,
+    menuItem: MenuItem<Int>,
+    itemList: ItemList<T>,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -26,7 +26,7 @@ fun SelectableItemList(
                         .weight(1f)
                         .menuItem(
                             id = index,
-                            menuItem = itemUserViewModel,
+                            menuItem = menuItem,
                         ),
                     text = item.name,
                 )
