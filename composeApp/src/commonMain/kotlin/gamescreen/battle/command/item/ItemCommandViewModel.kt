@@ -30,8 +30,6 @@ abstract class ItemCommandViewModel<T, V : UsableItem> : BattleChildViewModel<In
 
     protected abstract val itemRepository: ItemRepository<T, V>
 
-    var scroll: (Int) -> Unit = {}
-
     abstract val itemList: List<T>
 
     abstract val playerId: Int

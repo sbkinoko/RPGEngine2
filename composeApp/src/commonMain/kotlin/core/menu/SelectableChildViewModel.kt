@@ -11,6 +11,8 @@ interface MenuItem<T> {
     fun onClick(id: T)
 
     val selectedFlowState: StateFlow<T>
+
+    var scroll: (Int) -> Unit
 }
 
 abstract class SelectableChildViewModel<T> :
@@ -26,6 +28,8 @@ abstract class SelectableChildViewModel<T> :
         get() {
             return selectCore.stateFlow
         }
+
+    override var scroll: (Int) -> Unit = {}
 
     val entries: List<T>
         get() = selectCore.entries

@@ -2,11 +2,23 @@ package gamescreen.menu.item.list
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.onGloballyPositioned
 import common.extension.menuItem
+import common.extension.pxToDp
 import common.layout.CenterText
 import core.menu.MenuItem
+
+const val itemNum = 10
 
 @Composable
 fun <T> SelectableItemList(
@@ -15,15 +27,53 @@ fun <T> SelectableItemList(
     itemList: ItemList<T>,
     modifier: Modifier = Modifier,
 ) {
+
+    val scrollState = rememberScrollState()
+
+    var height by remember {
+        mutableIntStateOf(0)
+    }
+
+    val scope = rememberCoroutineScope()
+
+    // 対象が画面内に入るようにスクロール
+    //    menuItem.scroll = {
+    //        scope.launch {
+    //            val targetTop = (it / 2) * height / ItemNum
+    //            val targetBottom = (it / 2 + 1) * height / ItemNum
+    //
+    //            val top = scrollState.value
+    //            val bottom = scrollState.value + height
+    //
+    //            if (targetTop < top) {
+    //                scrollState.animateScrollTo(targetTop)
+    //            }
+    //
+    //            if (bottom < targetBottom) {
+    //                scrollState.animateScrollTo(targetTop - height / ItemNum * (ItemNum - 1))
+    //            }
+    //        }
+    //    }
+
     Column(
-        modifier = modifier,
+        modifier = modifier.verticalScroll(
+            state = scrollState,
+        ).onGloballyPositioned {
+            if (height == 0) {
+                height = it.size.height
+            }
+        },
     ) {
+        if (height == 0) {
+            return@Column
+        }
+
         itemList.getPlayerItemListAt(selectedUserId)
             .forEachIndexed { index, item ->
                 CenterText(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .weight(1f)
+                        .height((height / itemNum).pxToDp())
                         .menuItem(
                             id = index,
                             menuItem = menuItem,
