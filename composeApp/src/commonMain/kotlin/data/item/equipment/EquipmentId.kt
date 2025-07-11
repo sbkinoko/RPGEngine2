@@ -5,5 +5,6 @@ import data.item.ItemId
 enum class EquipmentId : ItemId {
     Sword,
     Shield,
+    MagicSword,
     None,
 }

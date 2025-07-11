@@ -27,9 +27,19 @@ class EquipmentRepositoryImpl : EquipmentRepository {
             EquipmentId.Shield -> EquipmentData(
                 name = "盾",
                 explain = "盾",
-                EquipmentType.Weapon,
+                EquipmentType.Shield,
                 StatusIncrease.empty.copy(
                     def = IncData(10),
+                )
+            )
+
+            EquipmentId.MagicSword -> EquipmentData(
+                name = "魔法の剣",
+                explain = "つけると素早さも上がる剣",
+                EquipmentType.Weapon,
+                StatusIncrease.empty.copy(
+                    speed = IncData(10),
+                    atk = IncData(5),
                 )
             )
         }

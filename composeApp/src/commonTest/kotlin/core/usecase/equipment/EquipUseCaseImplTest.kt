@@ -128,13 +128,14 @@ class EquipUseCaseImplTest {
                 )
 
                 EquipmentId.None,
-
                     -> EquipmentData(
                     name = "",
                     explain = "",
                     statusList = StatusIncrease.empty,
                     type = EquipmentType.Weapon,
                 )
+
+                else -> throw NotImplementedError()
             }
         }
     }
@@ -228,4 +229,6 @@ class EquipUseCaseImplTest {
             )
         }
     }
+
+    // todo 剣と盾をつけるとステータスが2回上がることを確認
 }
