@@ -1,58 +1,22 @@
 package gamescreen.map.usecase.settalk
 
-import data.event.EventManager
 import data.event.battle.BattleEventKey
-import gamescreen.choice.Choice
-import gamescreen.choice.repository.ChoiceRepository
-import gamescreen.text.TextBoxData
-import gamescreen.text.repository.TextRepository
+import data.event.battle.BattleEventManager1
+import data.event.talk.TalkEventKey1
+import data.event.talk.TalkEventManager1
 import values.event.TalkEvent
 
 class SetTalkUseCaseImpl(
-    private val textRepository: TextRepository,
-    private val choiceRepository: ChoiceRepository,
+    private val battleEventManager1: BattleEventManager1,
 
-    private val eventManager: EventManager<BattleEventKey>,
+    private val talkEventManager1: TalkEventManager1,
 ) : SetTalkUseCase {
     override fun invoke(talkEvent: TalkEvent) {
 
         when (talkEvent) {
-            TalkEvent.Talk1 -> {
-                lateinit var talkData: List<TextBoxData>
+            TalkEvent.Talk1 -> talkEventManager1.callEvent(TalkEventKey1.Talk)
 
-                talkData = listOf(
-                    TextBoxData(
-                        text = "お話中"
-                    ),
-                    TextBoxData(
-                        text = "選択肢表示",
-                        callBack = {
-                            choiceRepository.push(
-                                listOf(
-                                    Choice(
-                                        text = "何もしない",
-                                        callBack = {}
-                                    ),
-                                    Choice(
-                                        text = "繰り返す",
-                                        callBack = {
-                                            textRepository.push(
-                                                talkData
-                                            )
-                                        }
-                                    ),
-                                )
-                            )
-                        }
-                    ),
-                )
-
-                textRepository.push(
-                    talkData,
-                )
-            }
-
-            TalkEvent.Talk2 -> eventManager.callEvent(BattleEventKey.Start)
+            TalkEvent.Talk2 -> battleEventManager1.callEvent(BattleEventKey.Start)
         }
     }
 }

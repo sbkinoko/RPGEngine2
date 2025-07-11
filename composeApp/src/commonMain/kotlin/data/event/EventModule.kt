@@ -1,18 +1,13 @@
 package data.event
 
-import data.event.battle.BattleEventKey
-import data.event.battle.EventBattleManager1
-import org.koin.core.qualifier.named
+import data.event.battle.BattleEventManager1
+import data.event.talk.TalkEventManager1
 import org.koin.dsl.module
-
-val QualifierEventBattle = named("EventBattle")
 
 val ModuleEvent = module {
 
-    single<EventManager<BattleEventKey>>(
-        qualifier = QualifierEventBattle,
-    ) {
-        EventBattleManager1(
+    single<BattleEventManager1> {
+        BattleEventManager1(
             maxHealUseCase = get(),
             textRepository = get(),
 
@@ -20,4 +15,12 @@ val ModuleEvent = module {
             monsterRepository = get(),
         )
     }
+
+    single<TalkEventManager1> {
+        TalkEventManager1(
+            textRepository = get(),
+            choiceRepository = get(),
+        )
+    }
+
 }
