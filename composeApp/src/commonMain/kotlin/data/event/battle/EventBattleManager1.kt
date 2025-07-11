@@ -12,15 +12,14 @@ import gamescreen.text.repository.TextRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.koin.core.component.KoinComponent
 
-class EventManagerImpl(
+class EventBattleManager1(
     private val textRepository: TextRepository,
     private val maxHealUseCase: MaxHealUseCase,
 
     private val startBattleUseCase: StartBattleUseCase,
     private val monsterRepository: MonsterRepository,
-) : EventManager<BattleEventKey>, KoinComponent {
+) : EventManager<BattleEventKey> {
 
     private val mutableEventFlag = MutableStateFlow(0)
     override val eventFlag = mutableEventFlag.asStateFlow()

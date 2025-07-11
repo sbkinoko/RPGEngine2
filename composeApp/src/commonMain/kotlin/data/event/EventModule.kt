@@ -1,7 +1,7 @@
 package data.event
 
 import data.event.battle.BattleEventKey
-import data.event.battle.EventManagerImpl
+import data.event.battle.EventBattleManager1
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
@@ -12,7 +12,7 @@ val ModuleEvent = module {
     single<EventManager<BattleEventKey>>(
         qualifier = QualifierEventBattle,
     ) {
-        EventManagerImpl(
+        EventBattleManager1(
             maxHealUseCase = get(),
             textRepository = get(),
 
