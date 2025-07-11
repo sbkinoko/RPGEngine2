@@ -24,8 +24,6 @@ import gamescreen.map.usecase.PlayerMoveManageUseCase
 import gamescreen.map.usecase.PlayerMoveToUseCase
 import gamescreen.map.usecase.battledecidemonster.DecideBattleMonsterUseCase
 import gamescreen.map.usecase.battledecidemonster.DecideBattleMonsterUseCaseImpl
-import gamescreen.map.usecase.battleevent.StartEventBattleUseCase
-import gamescreen.map.usecase.battleevent.StartEventBattleUseCaseImpl
 import gamescreen.map.usecase.battlenormal.StartNormalBattleUseCase
 import gamescreen.map.usecase.battlenormal.StartNormalBattleUseCaseImpl
 import gamescreen.map.usecase.battlestart.StartBattleUseCase
@@ -228,13 +226,6 @@ val ModuleMap = module {
             statusDataRepository = get(
                 EnemyStatusRepositoryName
             ),
-        )
-    }
-
-    single<StartEventBattleUseCase> {
-        StartEventBattleUseCaseImpl(
-            battleDataRepository = get(),
-            startBattleUseCase = get(),
         )
     }
 

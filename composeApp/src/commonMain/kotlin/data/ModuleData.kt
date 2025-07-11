@@ -1,8 +1,5 @@
 package data
 
-import data.battle.BattleDataRepository
-import data.battle.BattleDataRepositoryImpl
-import data.event.QualifierEventBattle
 import data.item.equipment.EquipmentRepository
 import data.item.equipment.EquipmentRepositoryImpl
 import data.item.skill.SkillRepository
@@ -30,15 +27,6 @@ val ModuleData = module {
 
     single<MonsterRepository> {
         MonsterRepositoryImpl()
-    }
-
-    single<BattleDataRepository> {
-        BattleDataRepositoryImpl(
-            monsterRepository = get(),
-            eventManager = get(
-                qualifier = QualifierEventBattle
-            ),
-        )
     }
 
     single<StatusRepository> {
