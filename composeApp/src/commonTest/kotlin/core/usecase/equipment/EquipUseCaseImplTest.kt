@@ -128,7 +128,6 @@ class EquipUseCaseImplTest {
                 )
 
                 EquipmentId.None,
-
                     -> EquipmentData(
                     name = "",
                     explain = "",
@@ -230,4 +229,6 @@ class EquipUseCaseImplTest {
             )
         }
     }
+
+    // todo 剣と盾をつけるとステータスが2回上がることを確認
 }
