@@ -47,7 +47,7 @@ fun ItemListWindow(
                 .fillMaxHeight()
                 .weight(1f),
             selectedUserId = user,
-            itemUserViewModel = itemListViewModel,
+            menuItem = itemListViewModel,
             itemList = itemListViewModel,
         )
 

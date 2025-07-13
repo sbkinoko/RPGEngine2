@@ -7,13 +7,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import gamescreen.menu.item.list.UnSelectableItemList
+import core.domain.item.Item
+import core.menu.MenuItem
+import gamescreen.menu.item.list.SelectableItemList
 import gamescreen.menu.item.list.UserList
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import values.Colors
 
 @Composable
-fun UserWindow(
-    itemUserViewModel: ItemUserViewModel<*, *>,
+fun <T, V : Item> UserWindow(
+    itemUserViewModel: ItemUserViewModel<T, V>,
     modifier: Modifier = Modifier,
 ) {
     val selectedId by itemUserViewModel.selectedFlowState.collectAsState()
@@ -31,12 +36,28 @@ fun UserWindow(
             itemUserViewModel = itemUserViewModel,
         )
 
-        UnSelectableItemList(
+        SelectableItemList(
             modifier = Modifier
                 .fillMaxHeight()
                 .weight(1f),
             selectedUserId = selectedId,
             itemList = itemUserViewModel,
+            menuItem = object : MenuItem<Int> {
+                override var scroll: (Int) -> Unit = {
+                    // NOP
+                }
+
+                override fun collectFlow() {
+                    // NOP
+                }
+
+                override fun onClick(id: Int) {
+                    // NOP
+                }
+
+                override val selectedFlowState: StateFlow<Int>
+                    get() = MutableStateFlow(-1).asStateFlow()
+            },
         )
     }
 }

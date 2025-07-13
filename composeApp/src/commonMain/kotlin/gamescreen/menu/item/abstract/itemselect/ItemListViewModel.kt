@@ -59,6 +59,10 @@ abstract class ItemListViewModel<T, V : Item> : MenuChildViewModel(),
         return commandType == boundedScreenType
     }
 
+    init {
+        collectFlow()
+    }
+
     fun init() {
         selectCore = SelectCoreInt(
             SelectManager(
