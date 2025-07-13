@@ -43,7 +43,12 @@ fun <T, V : Item> UserWindow(
             selectedUserId = selectedId,
             itemList = itemUserViewModel,
             menuItem = object : MenuItem<Int> {
+                override var scroll: (Int) -> Unit = {
+                    // NOP
+                }
+
                 override fun onClick(id: Int) {
+                    // NOP
                 }
 
                 override val selectedFlowState: StateFlow<Int>
