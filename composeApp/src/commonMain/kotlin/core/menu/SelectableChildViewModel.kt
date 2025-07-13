@@ -1,10 +1,12 @@
 package core.menu
 
+import common.DefaultScope
 import common.Timer
 import controller.domain.ArrowCommand
 import controller.domain.ControllerCallback
 import controller.domain.Stick
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 
 interface MenuItem<T> {
@@ -12,7 +14,9 @@ interface MenuItem<T> {
 
     val selectedFlowState: StateFlow<T>
 
-    var scroll: (Int) -> Unit
+    fun collectFlow()
+
+    var scroll: (T) -> Unit
 }
 
 abstract class SelectableChildViewModel<T> :
@@ -29,10 +33,22 @@ abstract class SelectableChildViewModel<T> :
             return selectCore.stateFlow
         }
 
-    override var scroll: (Int) -> Unit = {}
+    override var scroll: (T) -> Unit = {}
 
     val entries: List<T>
         get() = selectCore.entries
+
+    private var job = DefaultScope.launch {}
+
+    final override fun collectFlow() {
+        job.cancel()
+        job = DefaultScope.launch {
+            selectCore.stateFlow.collect {
+                scroll.invoke(it)
+            }
+        }
+        job.start()
+    }
 
     /**
      * selectManagerで選択可能な条件

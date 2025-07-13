@@ -1,6 +1,5 @@
 package gamescreen.menu.item.skill.list
 
-import common.DefaultScope
 import core.domain.AbleType
 import core.domain.Place
 import core.domain.item.Skill
@@ -9,7 +8,6 @@ import data.item.skill.SkillId
 import data.item.skill.SkillRepository
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.item.abstract.itemselect.ItemListViewModel
-import kotlinx.coroutines.launch
 import org.koin.core.component.inject
 
 class SkillListViewModel : ItemListViewModel<SkillId, Skill>() {
@@ -24,16 +22,6 @@ class SkillListViewModel : ItemListViewModel<SkillId, Skill>() {
 
     override fun getPlayerItemIdListAt(id: Int): List<SkillId> {
         return playerStatusRepository.getStatus(id).skillList
-    }
-
-    override var scroll: (Int) -> Unit = {}
-
-    init {
-        DefaultScope.launch {
-            selectCore.stateFlow.collect {
-                scroll(it)
-            }
-        }
     }
 
     override fun getAbleType(): AbleType {

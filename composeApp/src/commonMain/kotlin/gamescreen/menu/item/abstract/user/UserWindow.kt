@@ -47,6 +47,10 @@ fun <T, V : Item> UserWindow(
                     // NOP
                 }
 
+                override fun collectFlow() {
+                    // NOP
+                }
+
                 override fun onClick(id: Int) {
                     // NOP
                 }

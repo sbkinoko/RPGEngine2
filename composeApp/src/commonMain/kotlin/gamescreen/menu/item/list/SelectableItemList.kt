@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
@@ -17,10 +18,9 @@ import common.extension.menuItem
 import common.extension.pxToDp
 import common.layout.CenterText
 import core.menu.MenuItem
-import gamescreen.battle.command.item.ItemNum
 import kotlinx.coroutines.launch
 
-const val itemNum = 10
+private const val VISIBLE_ITEM_NUM = 10
 
 @Composable
 fun <T> SelectableItemList(
@@ -29,6 +29,9 @@ fun <T> SelectableItemList(
     itemList: ItemList<T>,
     modifier: Modifier = Modifier,
 ) {
+    LaunchedEffect(Unit) {
+        menuItem.collectFlow()
+    }
 
     val scrollState = rememberScrollState()
 
@@ -41,8 +44,8 @@ fun <T> SelectableItemList(
     // 対象が画面内に入るようにスクロール
     menuItem.scroll = {
         scope.launch {
-            val targetTop = (it / 2) * height / ItemNum
-            val targetBottom = (it / 2 + 1) * height / ItemNum
+            val targetTop = height / VISIBLE_ITEM_NUM * it
+            val targetBottom = height / VISIBLE_ITEM_NUM * (it + 1)
 
             val top = scrollState.value
             val bottom = scrollState.value + height
@@ -52,7 +55,7 @@ fun <T> SelectableItemList(
             }
 
             if (bottom < targetBottom) {
-                scrollState.animateScrollTo(targetTop - height / ItemNum * (ItemNum - 1))
+                scrollState.animateScrollTo(targetTop - height / VISIBLE_ITEM_NUM * (VISIBLE_ITEM_NUM - 1))
             }
         }
     }
@@ -75,7 +78,7 @@ fun <T> SelectableItemList(
                 CenterText(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height((height / itemNum).pxToDp())
+                        .height((height / VISIBLE_ITEM_NUM).pxToDp())
                         .menuItem(
                             id = index,
                             menuItem = menuItem,
