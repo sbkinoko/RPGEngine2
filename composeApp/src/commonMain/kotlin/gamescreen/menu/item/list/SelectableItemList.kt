@@ -17,6 +17,7 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import common.extension.menuItem
 import common.extension.pxToDp
 import common.layout.CenterText
+import common.layout.scrollInList
 import core.menu.MenuItem
 import kotlinx.coroutines.launch
 
@@ -44,19 +45,12 @@ fun <T> SelectableItemList(
     // 対象が画面内に入るようにスクロール
     menuItem.scroll = {
         scope.launch {
-            val targetTop = height / VISIBLE_ITEM_NUM * it
-            val targetBottom = height / VISIBLE_ITEM_NUM * (it + 1)
-
-            val top = scrollState.value
-            val bottom = scrollState.value + height
-
-            if (targetTop < top) {
-                scrollState.animateScrollTo(targetTop)
-            }
-
-            if (bottom < targetBottom) {
-                scrollState.animateScrollTo(targetTop - height / VISIBLE_ITEM_NUM * (VISIBLE_ITEM_NUM - 1))
-            }
+            scrollInList(
+                targetRow = it,
+                height = height,
+                itemNum = VISIBLE_ITEM_NUM,
+                scrollState = scrollState,
+            )
         }
     }
 
