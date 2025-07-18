@@ -2,6 +2,15 @@ package core.domain.mapcell
 
 import values.event.BoxId
 
+enum class FenceDir {
+    LR,
+    UD,
+    LU,
+    RU,
+    LD,
+    RD,
+}
+
 // fixme いい命名を考える
 sealed class CellType {
 
@@ -69,6 +78,12 @@ sealed class CellType {
     ) : CollisionCell,
         ObjectCell,
         CellType()
+
+
+    data class Fence(
+        val dir: FenceDir,
+    ) : CellType(), CollisionCell, ObjectCell
+
 
     data object Null : CellType()
 

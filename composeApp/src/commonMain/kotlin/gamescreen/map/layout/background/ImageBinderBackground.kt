@@ -2,6 +2,7 @@ package gamescreen.map.layout.background
 
 import common.extension.MapCounter
 import core.domain.mapcell.CellType
+import core.domain.mapcell.FenceDir
 import gamescreen.map.domain.ConnectType
 import gamescreen.map.usecase.decideconnectcype.DecideConnectTypeUseCase
 import org.jetbrains.compose.resources.DrawableResource
@@ -25,6 +26,12 @@ import rpgengine.composeapp.generated.resources.ob_01_09
 import rpgengine.composeapp.generated.resources.ob_01_10
 import rpgengine.composeapp.generated.resources.ob_01_11
 import rpgengine.composeapp.generated.resources.ob_01_12
+import rpgengine.composeapp.generated.resources.ob_05_01
+import rpgengine.composeapp.generated.resources.ob_05_02
+import rpgengine.composeapp.generated.resources.ob_05_05
+import rpgengine.composeapp.generated.resources.ob_05_06
+import rpgengine.composeapp.generated.resources.ob_05_07
+import rpgengine.composeapp.generated.resources.ob_05_08
 import rpgengine.composeapp.generated.resources.ob_98_0
 import rpgengine.composeapp.generated.resources.ob_98_1
 import rpgengine.composeapp.generated.resources.ob_bridge_center_bottom
@@ -89,7 +96,9 @@ class ImageBinderBackground : KoinComponent {
                 }
             }
 
-            is CellType.Box -> return getMajorityBackGround(
+            is CellType.Fence,
+            is CellType.Box,
+                -> return getMajorityBackGround(
                 aroundCellId = aroundCellId,
             )
 
@@ -106,7 +115,11 @@ class ImageBinderBackground : KoinComponent {
         val mapCounter = MapCounter<CellType>()
         aroundCellId.map { list ->
             list.map {
-                mapCounter.inc(it)
+                when (it) {
+                    // 周りのマスとしてカウントするものを制限
+                    is CellType.Glass -> mapCounter.inc(it)
+                    else -> Unit
+                }
             }
         }
 
@@ -137,6 +150,17 @@ class ImageBinderBackground : KoinComponent {
                     Res.drawable.ob_98_1
                 } else {
                     Res.drawable.ob_98_0
+                }
+            }
+
+            is CellType.Fence -> {
+                when (cellType.dir) {
+                    FenceDir.LR -> Res.drawable.ob_05_02
+                    FenceDir.UD -> Res.drawable.ob_05_01
+                    FenceDir.LU -> Res.drawable.ob_05_06
+                    FenceDir.RU -> Res.drawable.ob_05_05
+                    FenceDir.LD -> Res.drawable.ob_05_07
+                    FenceDir.RD -> Res.drawable.ob_05_08
                 }
             }
 

@@ -1,6 +1,7 @@
 package gamescreen.map.repository.collision
 
 import core.domain.mapcell.CellType
+import core.domain.mapcell.FenceDir
 import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.Point
 import gamescreen.map.domain.collision.ShapeCollisionDetect
@@ -176,6 +177,130 @@ class CollisionRepositoryImpl : CollisionRepository {
                             Point(width, height * 0.6f),
                         )
                     )
+                }
+            }
+
+            is CellType.Fence -> {
+                when (cellType.dir) {
+                    FenceDir.LR -> rectangle.run {
+                        listOf(
+                            ConvexPolygon(
+                                objectHeight = ObjectHeight.Ground(1),
+                                Point(0f, height * 0.6f),
+                                Point(0f, height * 0.4f),
+                                Point(width, height * 0.4f),
+                                Point(width, height * 0.6f),
+                            )
+                        )
+                    }
+
+                    FenceDir.UD -> {
+                        rectangle.run {
+                            listOf(
+                                ConvexPolygon(
+                                    objectHeight = ObjectHeight.Ground(1),
+                                    Point(width * 0.4f, 0f),
+                                    Point(width * 0.4f, height),
+                                    Point(width * 0.6f, height),
+                                    Point(width * 0.6f, 0f),
+                                )
+                            )
+                        }
+                    }
+
+                    FenceDir.LU -> {
+                        rectangle.run {
+                            listOf(
+                                // 縦
+                                ConvexPolygon(
+                                    objectHeight = ObjectHeight.Ground(1),
+                                    Point(width * 0.4f, 0f),
+                                    Point(width * 0.4f, height * 0.6f),
+                                    Point(width * 0.6f, height * 0.6f),
+                                    Point(width * 0.6f, 0f),
+                                ),
+                                // 横
+                                ConvexPolygon(
+                                    objectHeight = ObjectHeight.Ground(1),
+                                    Point(0f, height * 0.6f),
+                                    Point(0f, height * 0.4f),
+                                    Point(width * 0.6f, height * 0.4f),
+                                    Point(width * 0.6f, height * 0.6f),
+                                ),
+                            )
+                        }
+                    }
+
+                    FenceDir.RU -> {
+                        rectangle.run {
+                            listOf(
+                                // 縦
+                                ConvexPolygon(
+                                    objectHeight = ObjectHeight.Ground(1),
+                                    Point(width * 0.4f, 0f),
+                                    Point(width * 0.4f, height * 0.6f),
+                                    Point(width * 0.6f, height * 0.6f),
+                                    Point(width * 0.6f, 0f),
+                                ),
+                                // 横
+                                ConvexPolygon(
+                                    objectHeight = ObjectHeight.Ground(1),
+                                    Point(width * 0.4f, height * 0.6f),
+                                    Point(width * 0.6f, height * 0.4f),
+                                    Point(width * 1f, height * 0.4f),
+                                    Point(width * 1f, height * 0.6f),
+                                ),
+                            )
+                        }
+                    }
+
+                    FenceDir.LD -> {
+                        rectangle.run {
+                            listOf(
+                                // 縦
+                                ConvexPolygon(
+                                    objectHeight = ObjectHeight.Ground(1),
+                                    Point(width * 0.4f, height * 0.4f),
+                                    Point(width * 0.4f, height * 1f),
+                                    Point(width * 0.6f, height * 1f),
+                                    Point(width * 0.6f, height * 0.4f),
+                                ),
+                                // 横
+                                ConvexPolygon(
+                                    objectHeight = ObjectHeight.Ground(1),
+                                    Point(0f, height * 0.6f),
+                                    Point(0f, height * 0.4f),
+                                    Point(width * 0.6f, height * 0.4f),
+                                    Point(width * 0.6f, height * 0.6f),
+                                ),
+                            )
+                        }
+                    }
+
+                    FenceDir.RD -> {
+                        rectangle.run {
+                            rectangle.run {
+                                listOf(
+                                    // 縦
+                                    ConvexPolygon(
+                                        objectHeight = ObjectHeight.Ground(1),
+                                        Point(width * 0.4f, height * 0.4f),
+                                        Point(width * 0.4f, height * 1f),
+                                        Point(width * 0.6f, height * 1f),
+                                        Point(width * 0.6f, height * 0.4f),
+                                    ),
+                                    // 横
+                                    ConvexPolygon(
+                                        objectHeight = ObjectHeight.Ground(1),
+                                        Point(width * 0.4f, height * 0.6f),
+                                        Point(width * 0.4f, height * 0.4f),
+                                        Point(width * 1f, height * 0.4f),
+                                        Point(width * 1f, height * 0.6f),
+                                    ),
+                                )
+                            }
+                        }
+                    }
                 }
             }
         }
