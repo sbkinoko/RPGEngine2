@@ -16,6 +16,8 @@ abstract class MapData {
 
     abstract val npcList: List<NPC>
 
+    abstract val outerCell: CellType
+
     fun getDataAt(
         x: Int,
         y: Int,

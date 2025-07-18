@@ -17,6 +17,9 @@ class NonLoopMap : MapData() {
     override val height: Int
         get() = 10
 
+    override val outerCell: CellType
+        get() = CellType.Glass
+
     override val npcList: List<NPC>
         get() = listOf(
             NPC(
