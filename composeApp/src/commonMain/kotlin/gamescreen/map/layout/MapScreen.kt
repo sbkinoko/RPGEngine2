@@ -45,11 +45,12 @@ fun MapScreen(
 ) {
     LaunchedEffect(Unit) {
         while (true) {
+            // fixme ここでfpsの計測
+
             val before = getNowTime().nowTime
             mapViewModel.updatePosition()
             val after = getNowTime().nowTime
 
-            // fixme ここでfpsの計測
             delay(
                 max(
                     0L,
