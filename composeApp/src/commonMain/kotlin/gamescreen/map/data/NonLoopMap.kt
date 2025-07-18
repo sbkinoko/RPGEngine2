@@ -1,6 +1,7 @@
 package gamescreen.map.data
 
 import core.domain.mapcell.CellType
+import core.domain.mapcell.FenceDir
 import gamescreen.map.domain.MapPoint
 import gamescreen.map.domain.npc.NPC
 import gamescreen.map.domain.npc.NPCType
@@ -64,19 +65,19 @@ class NonLoopMap : MapData() {
     override val field: Array<Array<CellType>>
         get() = arrayOf(
             arrayOf(
-                CellType.Water,
-                CellType.Water,
-                CellType.Water,
-                CellType.Water,
-                CellType.Water,
-                CellType.Water,
-                CellType.Water,
-                CellType.Water,
-                CellType.Water,
-                CellType.Water,
+                CellType.Fence(FenceDir.RD),
+                CellType.Fence(FenceDir.LR),
+                CellType.Fence(FenceDir.LR),
+                CellType.Fence(FenceDir.LR),
+                CellType.Fence(FenceDir.LR),
+                CellType.Fence(FenceDir.LR),
+                CellType.Fence(FenceDir.LR),
+                CellType.Fence(FenceDir.LR),
+                CellType.Fence(FenceDir.LR),
+                CellType.Fence(FenceDir.LD),
             ),
             arrayOf(
-                CellType.Water,
+                CellType.Fence(FenceDir.UD),
                 CellType.Glass,
                 CellType.Glass,
                 CellType.Glass,
@@ -85,7 +86,7 @@ class NonLoopMap : MapData() {
                 CellType.Glass,
                 CellType.Glass,
                 CellType.Glass,
-                CellType.Water,
+                CellType.Fence(FenceDir.UD),
             ),
             arrayOf(
                 CellType.Town1O,
@@ -97,10 +98,10 @@ class NonLoopMap : MapData() {
                 CellType.Glass,
                 CellType.Glass,
                 CellType.Glass,
-                CellType.Water,
+                CellType.Fence(FenceDir.UD),
             ),
             arrayOf(
-                CellType.Water,
+                CellType.Fence(FenceDir.UD),
                 CellType.Glass,
                 CellType.Glass,
                 CellType.Glass,
@@ -109,10 +110,10 @@ class NonLoopMap : MapData() {
                 CellType.Glass,
                 CellType.Glass,
                 CellType.Glass,
-                CellType.Water,
+                CellType.Fence(FenceDir.UD),
             ),
             arrayOf(
-                CellType.Water,
+                CellType.Fence(FenceDir.UD),
                 CellType.Glass,
                 CellType.Glass,
                 CellType.Glass,
@@ -121,10 +122,10 @@ class NonLoopMap : MapData() {
                 CellType.Glass,
                 CellType.Glass,
                 CellType.Glass,
-                CellType.Water,
+                CellType.Fence(FenceDir.UD),
             ),
             arrayOf(
-                CellType.Water,
+                CellType.Fence(FenceDir.UD),
                 CellType.Glass,
                 CellType.BridgeLeftTop,
                 CellType.BridgeCenterTop,
@@ -133,10 +134,10 @@ class NonLoopMap : MapData() {
                 CellType.Glass,
                 CellType.Glass,
                 CellType.Glass,
-                CellType.Water,
+                CellType.Fence(FenceDir.UD),
             ),
             arrayOf(
-                CellType.Water,
+                CellType.Fence(FenceDir.UD),
                 CellType.Glass,
                 CellType.BridgeLeftUnder,
                 CellType.BridgeCenterBottom,
@@ -145,10 +146,10 @@ class NonLoopMap : MapData() {
                 CellType.Glass,
                 CellType.Glass,
                 CellType.Glass,
-                CellType.Water,
+                CellType.Fence(FenceDir.UD),
             ),
             arrayOf(
-                CellType.Water,
+                CellType.Fence(FenceDir.UD),
                 CellType.Glass,
                 CellType.Glass,
                 CellType.Glass,
@@ -157,10 +158,10 @@ class NonLoopMap : MapData() {
                 CellType.Glass,
                 CellType.Glass,
                 CellType.Glass,
-                CellType.Water,
+                CellType.Fence(FenceDir.UD),
             ),
             arrayOf(
-                CellType.Water,
+                CellType.Fence(FenceDir.UD),
                 CellType.Glass,
                 CellType.Glass,
                 CellType.Glass,
@@ -169,19 +170,19 @@ class NonLoopMap : MapData() {
                 CellType.Glass,
                 CellType.Glass,
                 CellType.Glass,
-                CellType.Water,
+                CellType.Fence(FenceDir.UD),
             ),
             arrayOf(
-                CellType.Water,
-                CellType.Water,
-                CellType.Water,
-                CellType.Water,
-                CellType.Water,
-                CellType.Water,
-                CellType.Water,
-                CellType.Water,
-                CellType.Water,
-                CellType.Water,
+                CellType.Fence(FenceDir.RU),
+                CellType.Fence(FenceDir.LR),
+                CellType.Fence(FenceDir.LR),
+                CellType.Fence(FenceDir.LR),
+                CellType.Fence(FenceDir.LR),
+                CellType.Fence(FenceDir.LR),
+                CellType.Fence(FenceDir.LR),
+                CellType.Fence(FenceDir.LR),
+                CellType.Fence(FenceDir.LR),
+                CellType.Fence(FenceDir.LU),
             ),
         )
 }
