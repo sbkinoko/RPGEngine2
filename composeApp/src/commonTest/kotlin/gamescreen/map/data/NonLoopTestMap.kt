@@ -8,6 +8,9 @@ class NonLoopTestMap : MapData() {
     override val npcList: List<NPC>
         get() = emptyList()
 
+    override val outerCell: CellType
+        get() = throw NotImplementedError()
+
     override val width: Int
         get() = 4
     override val height: Int
