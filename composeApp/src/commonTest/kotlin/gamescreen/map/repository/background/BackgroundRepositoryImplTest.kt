@@ -79,6 +79,7 @@ class BackgroundRepositoryImplTest : KoinTest {
         }
     }
 
+    // fixme outerCellを追加したので変更した場合のテストも作る
     @Test
     fun getAroundCellOverNoLoop() {
         repository.mapData = NonLoopTestMap()

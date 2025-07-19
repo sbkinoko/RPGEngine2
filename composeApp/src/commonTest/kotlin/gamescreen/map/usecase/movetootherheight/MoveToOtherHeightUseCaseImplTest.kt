@@ -77,6 +77,9 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             )
         override val npcList: List<NPC>
             get() = emptyList()
+
+        override val outerCell: CellType
+            get() = CellType.Null
     }
 
     @BeforeTest

@@ -15,6 +15,9 @@ class LoopMap : MapData() {
     override val npcList: List<NPC>
         get() = listOf()
 
+    override val outerCell: CellType
+        get() = CellType.Null
+
     override val field: Array<Array<CellType>>
         get() = arrayOf(
             arrayOf(

@@ -16,6 +16,8 @@ abstract class MapData {
 
     abstract val npcList: List<NPC>
 
+    abstract val outerCell: CellType
+
     fun getDataAt(
         x: Int,
         y: Int,
@@ -23,7 +25,7 @@ abstract class MapData {
         if (y < 0 || field.size <= y ||
             x < 0 || field[0].size <= x
         ) {
-            return CellType.Null
+            return outerCell
         }
 
         return field[y][x]
@@ -44,15 +46,18 @@ abstract class MapData {
         x: Int,
         y: Int,
     ): MapPoint {
-        return if (!isLoop) {
-            MapPoint(
-                x = x,
-                y = y,
-            )
-        } else {
+
+        return if (isLoop) {
+            // ループ表示したいので適正範囲に入れる
             MapPoint(
                 x = collectX(x = x),
                 y = collectY(y = y),
+            )
+        } else {
+            // ループしていないので範囲外のまま取得
+            MapPoint(
+                x = x,
+                y = y,
             )
         }
     }
