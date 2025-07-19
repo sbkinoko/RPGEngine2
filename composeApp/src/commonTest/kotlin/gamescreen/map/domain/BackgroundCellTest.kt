@@ -1,5 +1,6 @@
 package gamescreen.map.domain
 
+import core.domain.mapcell.CellType
 import gamescreen.map.domain.background.BackgroundCell
 import gamescreen.map.domain.collision.square.NormalRectangle
 import kotlin.test.Test
@@ -22,6 +23,8 @@ class BackgroundCellTest {
         rectangle = square,
         mapPoint = mapPoint,
         collisionData = emptyList(),
+        aroundCellId = emptyList(),
+        cellType = CellType.Null,
     )
 
     @Test
