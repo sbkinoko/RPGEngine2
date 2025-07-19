@@ -9,7 +9,7 @@ class LoopTestMap : MapData() {
         get() = emptyList()
 
     override val outerCell: CellType
-        get() = throw NotImplementedError()
+        get() = CellType.Null
 
     override val width: Int
         get() = 4

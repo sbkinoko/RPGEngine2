@@ -83,7 +83,7 @@ class IsCollidedUseCaseTest : KoinTest {
             get() = npcData.npcList
 
         override val outerCell: CellType
-            get() = throw NotImplementedError()
+            get() = CellType.Null
     }
 
     @BeforeTest

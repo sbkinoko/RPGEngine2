@@ -79,7 +79,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             get() = emptyList()
 
         override val outerCell: CellType
-            get() = throw NotImplementedError()
+            get() = CellType.Null
     }
 
     @BeforeTest
