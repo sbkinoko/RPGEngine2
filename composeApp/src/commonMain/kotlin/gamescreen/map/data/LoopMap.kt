@@ -16,7 +16,7 @@ class LoopMap : MapData() {
         get() = listOf()
 
     override val outerCell: CellType
-        get() = throw NotImplementedError()
+        get() = CellType.Null
 
     override val field: Array<Array<CellType>>
         get() = arrayOf(

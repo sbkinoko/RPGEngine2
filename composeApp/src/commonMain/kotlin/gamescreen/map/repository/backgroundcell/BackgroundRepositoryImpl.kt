@@ -59,7 +59,7 @@ class BackgroundRepositoryImpl : BackgroundRepository {
             )
         } else {
             if (isOutX(x) || isOutY(y)) {
-                CellType.Null
+                mapData.outerCell
             } else {
                 mapData.getDataAt(x, y)
             }

@@ -92,6 +92,7 @@ class MoveBackgroundUseCaseImpl(
                 x = mapX,
                 y = mapY,
             )
+
             val cellType = it.getDataAt(mapPoint)
 
             return bgCell.copy(
