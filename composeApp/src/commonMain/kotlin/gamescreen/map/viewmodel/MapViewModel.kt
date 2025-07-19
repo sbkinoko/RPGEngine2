@@ -184,13 +184,15 @@ class MapViewModel(
         //　プレイヤーが今いるマスに基づいてイベントを呼び出し
         playerCellRepository.eventCell?.let { cell ->
             mutableUiStateFlow.value = cellEventUseCase.invoke(
-                cell.cellType,
+                cellId = cell.cellType,
                 mapUiState = uiStateFlow.value,
             )
             // 戦闘せずに終了
             return
         }
 
+        // todo 中心が移動した直後に処理を一回呼ぶ
+        // マップ外のマスのイベントは全身が入らなくても呼びたい
         val playerCenterCell = playerCellRepository.playerCenterCell
 
         val monsterCell = playerCenterCell.cellType as? CellType.MonsterCell

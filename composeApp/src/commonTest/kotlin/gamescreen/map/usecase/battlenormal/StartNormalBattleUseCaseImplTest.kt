@@ -88,7 +88,7 @@ class StartNormalBattleUseCaseImplTest {
                 }
             override var playerCenterCell: BackgroundCell
                 get() = BackgroundCell(
-                    cellType = CellType.Town1O,
+                    cellType = CellType.Town1Exit,
                     mapPoint = MapPoint(0, 0),
                     rectangle = NormalRectangle(x = 0f, y = 0f, size = 0f),
                     collisionData = emptyList(),

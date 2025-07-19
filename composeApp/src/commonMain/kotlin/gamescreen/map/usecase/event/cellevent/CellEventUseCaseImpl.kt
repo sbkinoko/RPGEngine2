@@ -23,7 +23,8 @@ class CellEventUseCaseImpl(
         }
 
         return when (cellId) {
-            CellType.Town1I -> {
+            CellType.Town1I,
+                -> {
                 backgroundRepository.mapData = NonLoopMap()
                 roadMapDataUseCase.invoke(
                     mapX = 0,
@@ -34,7 +35,7 @@ class CellEventUseCaseImpl(
                 )
             }
 
-            CellType.Town1O -> {
+            CellType.Town1Exit -> {
                 roadMapDataUseCase.invoke(
                     mapX = 4,
                     mapY = 9,

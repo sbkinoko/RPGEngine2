@@ -18,7 +18,7 @@ class NonLoopMap : MapData() {
         get() = 10
 
     override val outerCell: CellType
-        get() = CellType.Glass
+        get() = CellType.Town1Exit
 
     override val npcList: List<NPC>
         get() = listOf(
@@ -92,7 +92,7 @@ class NonLoopMap : MapData() {
                 CellType.Fence(FenceDir.UD),
             ),
             arrayOf(
-                CellType.Town1O,
+                CellType.Town1Exit,
                 CellType.Glass,
                 CellType.Glass,
                 CellType.Glass,
@@ -161,7 +161,7 @@ class NonLoopMap : MapData() {
                 CellType.Glass,
                 CellType.Glass,
                 CellType.Glass,
-                CellType.Fence(FenceDir.UD),
+                CellType.Town1Exit,
             ),
             arrayOf(
                 CellType.Fence(FenceDir.UD),
