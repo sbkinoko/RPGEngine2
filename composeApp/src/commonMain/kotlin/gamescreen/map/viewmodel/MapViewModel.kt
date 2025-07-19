@@ -191,6 +191,8 @@ class MapViewModel(
             return
         }
 
+        // todo 中心が移動した直後に処理を一回呼ぶ
+        // マップ外のマスのイベントは全身が入らなくても呼びたい
         val playerCenterCell = playerCellRepository.playerCenterCell
 
         val monsterCell = playerCenterCell.cellType as? CellType.MonsterCell
