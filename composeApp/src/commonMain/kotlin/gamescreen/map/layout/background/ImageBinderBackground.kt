@@ -73,13 +73,14 @@ class ImageBinderBackground : KoinComponent {
             CellType.BridgeRightUnder,
             CellType.BridgeCenterTop,
             CellType.BridgeCenterBottom,
+            CellType.Town1Exit,
                 -> Res.drawable.bg_00
 
             CellType.Sand,
                 -> Res.drawable.bg_8
 
             CellType.Water -> Res.drawable.bg_02
-            CellType.Town1I, CellType.Town1O -> Res.drawable.bg_20
+            CellType.Town1I -> Res.drawable.bg_20
             CellType.Road -> {
                 when (decideConnectTypeUseCase.invoke(aroundCellId)) {
                     ConnectType.Vertical -> Res.drawable.ob_01_01

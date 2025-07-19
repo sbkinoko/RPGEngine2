@@ -184,7 +184,7 @@ class MapViewModel(
         //　プレイヤーが今いるマスに基づいてイベントを呼び出し
         playerCellRepository.eventCell?.let { cell ->
             mutableUiStateFlow.value = cellEventUseCase.invoke(
-                cell.cellType,
+                cellId = cell.cellType,
                 mapUiState = uiStateFlow.value,
             )
             // 戦闘せずに終了

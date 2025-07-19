@@ -64,7 +64,7 @@ sealed class CellType {
     data object Water : CollisionCell, CellType()
 
     data object Town1I : EventCell, CellType()
-    data object Town1O : EventCell, CellType()
+    data object Town1Exit : CellType(), EventCell
 
 
     data object Road : CellType(), MonsterCell {
