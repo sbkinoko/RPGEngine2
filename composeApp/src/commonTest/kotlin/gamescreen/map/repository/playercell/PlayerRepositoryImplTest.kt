@@ -1,5 +1,6 @@
 package gamescreen.map.repository.playercell
 
+import core.domain.mapcell.CellType
 import gamescreen.map.ModuleMap
 import gamescreen.map.domain.MapPoint
 import gamescreen.map.domain.background.BackgroundCell
@@ -27,6 +28,8 @@ class PlayerRepositoryImplTest : KoinTest {
         ),
         mapPoint = MapPoint(),
         collisionData = emptyList(),
+        aroundCellId = emptyList(),
+        cellType = CellType.Null,
     )
 
     @BeforeTest

@@ -13,10 +13,8 @@ import gamescreen.map.domain.collision.square.RectangleWrapper
 data class BackgroundCell(
     val mapPoint: MapPoint,
     override val rectangle: Rectangle,
-    val cellType: CellType = CellType.Null,
-
-    // fixme デフォルト値削除
-    val aroundCellId: List<List<CellType>> = emptyList(),
+    val cellType: CellType,
+    val aroundCellId: List<List<CellType>>,
 
     val collisionData: List<ShapeCollisionDetect>,
 ) : RectangleWrapper<BackgroundCell>(

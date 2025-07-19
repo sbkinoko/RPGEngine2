@@ -92,6 +92,7 @@ class StartNormalBattleUseCaseImplTest {
                     mapPoint = MapPoint(0, 0),
                     rectangle = NormalRectangle(x = 0f, y = 0f, size = 0f),
                     collisionData = emptyList(),
+                    aroundCellId = emptyList(),
                 )
                 set(
                     @Suppress("UNUSED_PARAMETER")
@@ -127,6 +128,7 @@ class StartNormalBattleUseCaseImplTest {
             mapPoint = MapPoint(0, 0),
             rectangle = NormalRectangle(x = 0f, y = 0f, size = 0f),
             collisionData = emptyList(),
+            aroundCellId = emptyList(),
         )
         var count = 0
 
@@ -192,6 +194,7 @@ class StartNormalBattleUseCaseImplTest {
             mapPoint = MapPoint(0, 0),
             rectangle = NormalRectangle(x = 0f, y = 0f, size = 0f),
             collisionData = emptyList(),
+            aroundCellId = emptyList(),
         )
 
         val expectedBackground = cellType.toBattleBackGround()

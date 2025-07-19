@@ -54,6 +54,7 @@ class GetCollisionListUseCaseImplTest {
             mapPoint = MapPoint(),
             rectangle = squareValue,
             collisionData = emptyList(),
+            aroundCellId = emptyList(),
         )
 
         var count = 0
