@@ -6,6 +6,8 @@ import core.repository.battlemonster.BattleInfoRepository
 import core.repository.battlemonster.BattleInfoRepositoryImpl
 import core.repository.event.EventRepository
 import core.repository.event.EventRepositoryImpl
+import core.repository.mapuistate.MapUiStateRepository
+import core.repository.mapuistate.MapUiStateRepositoryImpl
 import core.repository.money.MoneyRepository
 import core.repository.money.MoneyRepositoryImpl
 import core.repository.player.PlayerStatusRepository
@@ -62,6 +64,10 @@ val ModuleCore = module {
         PlayerStatusRepositoryImpl(
             statusRepository = get(),
         )
+    }
+
+    single<MapUiStateRepository> {
+        MapUiStateRepositoryImpl()
     }
 
     single<BattleInfoRepository> {

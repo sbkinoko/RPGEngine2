@@ -76,6 +76,7 @@ val ModuleMap = module {
             moveUseCase = get(),
             startNormalBattleUseCase = get(),
             positionRepository = get(),
+            mapUiStateRepository = get(),
             saveUseCase = get(),
         )
     }
