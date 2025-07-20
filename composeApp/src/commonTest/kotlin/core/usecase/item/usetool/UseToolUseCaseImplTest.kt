@@ -114,7 +114,7 @@ class UseToolUseCaseImplTest : KoinTest {
         }
     }
 
-    val flyUseCase = object : FlyUseCase {
+    private val flyUseCase = object : FlyUseCase {
         override suspend fun invoke() {
             throw NotImplementedError()
         }
