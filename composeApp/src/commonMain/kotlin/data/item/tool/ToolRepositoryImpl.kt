@@ -5,6 +5,7 @@ import core.domain.item.CostType
 import core.domain.item.TargetStatusType
 import core.domain.item.TargetType
 import core.domain.item.Tool
+import core.domain.item.tool.FlyTool
 import core.domain.item.tool.HealTool
 
 class ToolRepositoryImpl : ToolRepository {
@@ -30,6 +31,16 @@ class ToolRepositoryImpl : ToolRepository {
                 costType = CostType.Consume,
                 isDisposable = true,
                 healAmount = 10,
+                targetStatusType = TargetStatusType.ACTIVE,
+                targetType = TargetType.Ally,
+            )
+
+            ToolId.Fly -> FlyTool(
+                name = "空飛び",
+                targetNum = 1,
+                usablePlace = Place.MAP,
+                costType = CostType.NotConsume,
+                isDisposable = false,
                 targetStatusType = TargetStatusType.ACTIVE,
                 targetType = TargetType.Ally,
             )

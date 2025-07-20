@@ -28,3 +28,5 @@ interface BufEffect : EffectKind {
     val parameterType: ParameterType
     val buf: Buf<*>
 }
+
+interface FlyEffect : EffectKind

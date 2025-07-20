@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import common.extension.pxToDp
+import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.Player
 import values.Colors
 
@@ -33,7 +34,13 @@ fun Player(
                 width = (player.square.width * screenRatio).pxToDp(),
                 height = (player.square.height * screenRatio).pxToDp(),
             )
-            .background(Colors.Player)
+            .background(
+                if (player.square.objectHeight::class == ObjectHeight.Sky::class) {
+                    Colors.PlayerInSky
+                } else {
+                    Colors.Player
+                }
+            )
             .clickable(onClick = clickPlayer),
         //
         contentAlignment = Alignment.Center,

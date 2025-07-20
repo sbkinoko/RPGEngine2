@@ -11,6 +11,7 @@ import core.domain.item.ConditionEffect
 import core.domain.item.CostType
 import core.domain.item.DamageType
 import core.domain.item.EffectKind
+import core.domain.item.FlyEffect
 import core.domain.item.HealEffect
 import core.domain.item.TargetType
 import core.domain.item.UsableItem
@@ -513,6 +514,8 @@ class ActionPhaseViewModel(
                     }
                 }
             }
+
+            is FlyEffect -> throw RuntimeException()
         }
     }
 
