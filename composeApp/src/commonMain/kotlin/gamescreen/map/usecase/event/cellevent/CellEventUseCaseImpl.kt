@@ -31,7 +31,7 @@ class CellEventUseCaseImpl(
                     mapX = 0,
                     mapY = 2,
                     mapId = ID_NON_LOOP,
-                    playerHeight = ObjectHeight.Ground(ObjectHeightDetail.Normal),
+                    playerHeight = ObjectHeight.Ground(ObjectHeightDetail.Mid),
                     player = mapUiState.player,
                 )
             }
@@ -41,7 +41,7 @@ class CellEventUseCaseImpl(
                     mapX = 4,
                     mapY = 9,
                     mapId = ID_LOOP,
-                    playerHeight = ObjectHeight.Ground(ObjectHeightDetail.Normal),
+                    playerHeight = ObjectHeight.Ground(ObjectHeightDetail.Mid),
                     player = mapUiState.player,
                 )
             }

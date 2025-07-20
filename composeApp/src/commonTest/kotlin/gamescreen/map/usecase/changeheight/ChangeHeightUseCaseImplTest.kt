@@ -34,7 +34,7 @@ class ChangeHeightUseCaseImplTest : KoinTest {
     @Test
     fun moveToWater() {
         runBlocking {
-            val target = ObjectHeight.Water(height = ObjectHeightDetail.Normal)
+            val target = ObjectHeight.Water(height = ObjectHeightDetail.Mid)
             val player = gamescreen.map.domain.Player(size = 0f)
             val newPlayer = changeHeightUseCase.invoke(
                 target,
@@ -51,7 +51,7 @@ class ChangeHeightUseCaseImplTest : KoinTest {
     @Test
     fun moveToGround() {
         runBlocking {
-            val target = ObjectHeight.Ground(height = ObjectHeightDetail.Front)
+            val target = ObjectHeight.Ground(height = ObjectHeightDetail.High)
 
             val player = gamescreen.map.domain.Player(size = 0f)
 

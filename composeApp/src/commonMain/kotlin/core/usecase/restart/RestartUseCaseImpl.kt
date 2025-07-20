@@ -23,7 +23,7 @@ class RestartUseCaseImpl(
             mapY = INITIAL_MAP_Y,
             mapId = INITIAL_MAP_DATA,
             playerHeight = ObjectHeight.Ground(
-                ObjectHeightDetail.Normal
+                ObjectHeightDetail.Mid
             ),
             player = mapUiState.player,
         )

@@ -254,7 +254,7 @@ class SquareTest {
                 x = 128.06143f,
                 y = 133.4598f,
                 size = 42f,
-                objectHeight = ObjectHeight.Water(ObjectHeightDetail.Back),
+                objectHeight = ObjectHeight.Water(ObjectHeightDetail.Low),
             ),
             eventType = EventType.Water,
         )

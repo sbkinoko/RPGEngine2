@@ -143,7 +143,7 @@ class IsCollidedUseCaseTest : KoinTest {
 
         val waterPlayer = player.copy(
             square = (player.square as NormalRectangle).copy(
-                objectHeight = ObjectHeight.Water(ObjectHeightDetail.Normal),
+                objectHeight = ObjectHeight.Water(ObjectHeightDetail.Mid),
             )
         )
 

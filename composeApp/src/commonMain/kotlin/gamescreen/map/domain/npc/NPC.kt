@@ -23,7 +23,7 @@ data class NPC(
         eventRectangle = EventRectangle(
             eventType = eventType,
             size = size,
-            objectHeight = ObjectHeight.Ground(ObjectHeightDetail.Normal),
+            objectHeight = ObjectHeight.Ground(ObjectHeightDetail.Mid),
         ),
     )
 

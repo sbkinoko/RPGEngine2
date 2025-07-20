@@ -113,7 +113,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
     @Test
     fun isInWater() {
         runBlocking {
-            val targetHeight = ObjectHeight.Water(ObjectHeightDetail.Normal)
+            val targetHeight = ObjectHeight.Water(ObjectHeightDetail.Mid)
             moveToOtherHeightUseCase.invoke(
                 targetHeight,
                 uiState,
@@ -135,7 +135,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
     @Test
     fun isInGround() {
         runBlocking {
-            val targetHeight = ObjectHeight.Ground(ObjectHeightDetail.Normal)
+            val targetHeight = ObjectHeight.Ground(ObjectHeightDetail.Mid)
             moveToOtherHeightUseCase.invoke(
                 targetHeight,
                 uiState,
@@ -170,7 +170,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             }
 
             moveToOtherHeightUseCase.invoke(
-                ObjectHeight.Water(ObjectHeightDetail.Normal),
+                ObjectHeight.Water(ObjectHeightDetail.Mid),
                 uiState.copy(
                     player = player
                 ),
@@ -202,7 +202,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             }
 
             moveToOtherHeightUseCase.invoke(
-                ObjectHeight.Water(ObjectHeightDetail.Normal),
+                ObjectHeight.Water(ObjectHeightDetail.Mid),
                 uiState.copy(
                     player = player
                 )
@@ -234,7 +234,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             }
 
             moveToOtherHeightUseCase.invoke(
-                ObjectHeight.Water(ObjectHeightDetail.Normal),
+                ObjectHeight.Water(ObjectHeightDetail.Mid),
                 uiState.copy(
                     player = player
                 )
@@ -265,7 +265,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             }
 
             moveToOtherHeightUseCase.invoke(
-                ObjectHeight.Water(ObjectHeightDetail.Normal),
+                ObjectHeight.Water(ObjectHeightDetail.Mid),
                 uiState.copy(
                     player = player
                 )
@@ -297,7 +297,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             }
 
             moveToOtherHeightUseCase.invoke(
-                ObjectHeight.Water(ObjectHeightDetail.Normal),
+                ObjectHeight.Water(ObjectHeightDetail.Mid),
                 uiState.copy(
                     player = player
                 )
@@ -329,7 +329,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             }
 
             moveToOtherHeightUseCase.invoke(
-                ObjectHeight.Water(ObjectHeightDetail.Normal),
+                ObjectHeight.Water(ObjectHeightDetail.Mid),
                 uiState.copy(
                     player = player
                 )
@@ -361,7 +361,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             }
 
             moveToOtherHeightUseCase.invoke(
-                ObjectHeight.Water(ObjectHeightDetail.Normal),
+                ObjectHeight.Water(ObjectHeightDetail.Mid),
                 uiState.copy(
                     player = player
                 )
@@ -393,7 +393,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             }
 
             moveToOtherHeightUseCase.invoke(
-                ObjectHeight.Water(ObjectHeightDetail.Normal),
+                ObjectHeight.Water(ObjectHeightDetail.Mid),
                 uiState.copy(
                     player = player
                 )
@@ -425,7 +425,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             }
 
             moveToOtherHeightUseCase.invoke(
-                ObjectHeight.Water(ObjectHeightDetail.Normal),
+                ObjectHeight.Water(ObjectHeightDetail.Mid),
                 uiState.copy(
                     player = player
                 )
@@ -457,7 +457,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             }
 
             moveToOtherHeightUseCase.invoke(
-                ObjectHeight.Water(ObjectHeightDetail.Normal),
+                ObjectHeight.Water(ObjectHeightDetail.Mid),
                 uiState.copy(
                     player = player
                 )
@@ -489,7 +489,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             }
 
             moveToOtherHeightUseCase.invoke(
-                ObjectHeight.Water(ObjectHeightDetail.Normal),
+                ObjectHeight.Water(ObjectHeightDetail.Mid),
                 uiState.copy(
                     player = player
                 )
@@ -521,7 +521,7 @@ class MoveToOtherHeightUseCaseImplTest : KoinTest {
             }
 
             moveToOtherHeightUseCase.invoke(
-                ObjectHeight.Water(ObjectHeightDetail.Normal),
+                ObjectHeight.Water(ObjectHeightDetail.Mid),
                 uiState.copy(
                     player = player
                 )

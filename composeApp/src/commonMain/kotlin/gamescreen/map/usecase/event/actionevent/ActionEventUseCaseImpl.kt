@@ -123,7 +123,7 @@ class ActionEventUseCaseImpl(
                 )
                 DefaultScope.launch {
                     moveToOtherHeightUseCase.invoke(
-                        targetHeight = ObjectHeight.Water(ObjectHeightDetail.Normal),
+                        targetHeight = ObjectHeight.Water(ObjectHeightDetail.Mid),
                         mapUiState = mapUiState,
                         update = update,
                     )
@@ -139,7 +139,7 @@ class ActionEventUseCaseImpl(
                 )
                 DefaultScope.launch {
                     moveToOtherHeightUseCase.invoke(
-                        targetHeight = ObjectHeight.Ground(ObjectHeightDetail.Normal),
+                        targetHeight = ObjectHeight.Ground(ObjectHeightDetail.Mid),
                         mapUiState = mapUiState,
                         update = update,
                     )
@@ -151,7 +151,7 @@ class ActionEventUseCaseImpl(
                     update(
                         mapUiState.copy(
                             player = changeHeightUseCase.invoke(
-                                ObjectHeight.Ground(ObjectHeightDetail.Normal),
+                                ObjectHeight.Ground(ObjectHeightDetail.Mid),
                                 mapUiState.player,
                             )
                         )
@@ -164,7 +164,7 @@ class ActionEventUseCaseImpl(
                     update(
                         mapUiState.copy(
                             player = changeHeightUseCase.invoke(
-                                ObjectHeight.Ground(ObjectHeightDetail.Front),
+                                ObjectHeight.Ground(ObjectHeightDetail.High),
                                 mapUiState.player,
                             )
                         )
