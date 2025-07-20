@@ -278,29 +278,26 @@ class CollisionRepositoryImpl : CollisionRepository {
                         }
                     }
 
-                    // fixme 余計なrun削除
                     FenceDir.RD -> {
                         rectangle.run {
-                            rectangle.run {
-                                listOf(
-                                    // 縦
-                                    ConvexPolygon(
-                                        objectHeight = ObjectHeight.Ground(ObjectHeightDetail.Mid),
-                                        Point(width * 0.4f, height * 0.4f),
-                                        Point(width * 0.4f, height * 1f),
-                                        Point(width * 0.6f, height * 1f),
-                                        Point(width * 0.6f, height * 0.4f),
-                                    ),
-                                    // 横
-                                    ConvexPolygon(
-                                        objectHeight = ObjectHeight.Ground(ObjectHeightDetail.Mid),
-                                        Point(width * 0.4f, height * 0.6f),
-                                        Point(width * 0.4f, height * 0.4f),
-                                        Point(width * 1f, height * 0.4f),
-                                        Point(width * 1f, height * 0.6f),
-                                    ),
-                                )
-                            }
+                            listOf(
+                                // 縦
+                                ConvexPolygon(
+                                    objectHeight = ObjectHeight.Ground(ObjectHeightDetail.Mid),
+                                    Point(width * 0.4f, height * 0.4f),
+                                    Point(width * 0.4f, height * 1f),
+                                    Point(width * 0.6f, height * 1f),
+                                    Point(width * 0.6f, height * 0.4f),
+                                ),
+                                // 横
+                                ConvexPolygon(
+                                    objectHeight = ObjectHeight.Ground(ObjectHeightDetail.Mid),
+                                    Point(width * 0.4f, height * 0.6f),
+                                    Point(width * 0.4f, height * 0.4f),
+                                    Point(width * 1f, height * 0.4f),
+                                    Point(width * 1f, height * 0.6f),
+                                ),
+                            )
                         }
                     }
                 }
