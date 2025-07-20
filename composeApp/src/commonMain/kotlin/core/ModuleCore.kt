@@ -20,6 +20,8 @@ import core.usecase.changetomap.ChangeToMapUseCase
 import core.usecase.changetomap.ChangeToMapUseCaseImpl
 import core.usecase.equipment.EquipUseCase
 import core.usecase.equipment.EquipUseCaseImpl
+import core.usecase.fly.FlyUseCase
+import core.usecase.fly.FlyUseCaseImpl
 import core.usecase.heal.MaxHealUseCase
 import core.usecase.heal.MaxHealUseCaseImpl
 import core.usecase.item.checkcanuseskill.CheckCanUseSkillUseCase
@@ -34,6 +36,7 @@ import core.usecase.updateparameter.UpdateStatusUseCase
 import core.usecase.updateparameter.UpdateStatusUseCaseImpl
 import data.item.equipment.EquipmentId
 import data.item.tool.ToolId
+import gamescreen.menu.DecToolUseCaseName
 import gamescreen.menu.usecase.gettoolid.GetToolIdUseCase
 import gamescreen.menu.usecase.gettoolid.GetToolIdUseCaseImpl
 import org.koin.core.qualifier.named
@@ -139,8 +142,19 @@ val ModuleCore = module {
             updateStatusUseCase = get(
                 qualifier = named(UpdatePlayer)
             ),
-            decToolUseCase = get(),
+            decToolUseCase = get(
+                qualifier = DecToolUseCaseName
+            ),
             getToolIdUseCase = get(),
+
+            flyUseCase = get(),
+        )
+    }
+
+    single<FlyUseCase> {
+        FlyUseCaseImpl(
+            mapUiStateRepository = get(),
+            changeHeightUseCase = get(),
         )
     }
 

@@ -71,6 +71,12 @@ class ToolGiveUserViewModel(
                 num = 100,
             )
         )
+        bagRepository.setData(
+            data = BagItemData(
+                id = ToolId.Fly,
+                num = 100,
+            )
+        )
     }
 
     override fun goNextImpl() {

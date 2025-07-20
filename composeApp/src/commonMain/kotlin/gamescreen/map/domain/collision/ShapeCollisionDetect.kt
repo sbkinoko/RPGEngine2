@@ -47,6 +47,11 @@ interface ShapeCollisionDetect {
             }
         }
 
+        if (otherHeight::class == ObjectHeight.Sky::class ||
+            thisHeight::class == ObjectHeight.Sky::class) {
+            return false
+        }
+
         // fixme 四角形同士の場合は簡略化したい
         other.lines.forEach { otherLine ->
             movedLines(
@@ -58,6 +63,7 @@ interface ShapeCollisionDetect {
                 }
             }
         }
+
         return false
     }
 

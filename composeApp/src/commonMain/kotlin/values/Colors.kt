@@ -13,6 +13,7 @@ object Colors {
     private val transGrey = Color(128, 128, 128, 100)
 
     val Player = red
+    val PlayerInSky = blue
     val NotEventCollision = transGreen
     val CanEventCollision = transBlue
     val BackgroundCellBorder = blue

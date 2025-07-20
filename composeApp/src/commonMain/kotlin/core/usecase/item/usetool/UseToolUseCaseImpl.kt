@@ -1,7 +1,14 @@
 package core.usecase.item.usetool
 
+import core.domain.item.AttackEffect
+import core.domain.item.BufEffect
+import core.domain.item.ConditionEffect
 import core.domain.item.CostType
+import core.domain.item.EffectKind
+import core.domain.item.FlyEffect
+import core.domain.item.HealEffect
 import core.domain.item.tool.HealTool
+import core.usecase.fly.FlyUseCase
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
 import core.usecase.updateparameter.UpdateStatusUseCase
 import data.item.tool.ToolId
@@ -21,6 +28,8 @@ class UseToolUseCaseImpl(
 
     private val decToolUseCase: DecItemUseCase<ToolId>,
     private val getToolIdUseCase: GetToolIdUseCase,
+
+    private val flyUseCase: FlyUseCase,
 ) : UseToolUseCase {
     override fun invoke(
         userId: Int,
@@ -51,12 +60,20 @@ class UseToolUseCaseImpl(
                 is CostType.MP -> TODO("道具でMPを利用する物を作る")
             }
 
-            when (tool) {
-                is HealTool -> {
+            val type = tool as EffectKind
+            when (type) {
+                is HealEffect -> {
                     updateStatusUseCase.incHP(
                         id = targetId,
-                        amount = tool.healAmount,
+                        amount = (tool as HealTool).healAmount,
                     )
+                }
+
+                is AttackEffect -> TODO()
+                is BufEffect -> TODO()
+                is ConditionEffect -> TODO()
+                is FlyEffect -> {
+                    flyUseCase.invoke()
                 }
             }
         }
