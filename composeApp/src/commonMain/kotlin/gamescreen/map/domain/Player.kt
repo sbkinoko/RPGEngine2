@@ -21,7 +21,9 @@ data class Player(
             x = 0f,
             y = 0f,
             size = size,
-            objectHeight = ObjectHeight.Ground(1),
+            objectHeight = ObjectHeight.Ground(
+                ObjectHeightDetail.Mid,
+            ),
         ),
         actualVelocity = Velocity(
             x = 0f,

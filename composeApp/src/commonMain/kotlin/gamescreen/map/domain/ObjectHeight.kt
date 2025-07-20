@@ -1,18 +1,21 @@
 package gamescreen.map.domain
 
+private const val NONE = 3
+private const val GROUND = 2
+private const val WATER = 1
 
 //fixme マジックナンバー消す
 sealed class ObjectHeight(
-    open val height: Int,
+    open val height: ObjectHeightDetail,
 ) : Comparable<ObjectHeight> {
-    data object None : ObjectHeight(height = 0)
+    data object None : ObjectHeight(height = ObjectHeightDetail.Low)
 
     data class Water(
-        override val height: Int,
+        override val height: ObjectHeightDetail,
     ) : ObjectHeight(height)
 
     data class Ground(
-        override val height: Int,
+        override val height: ObjectHeightDetail,
     ) : ObjectHeight(height)
 
     override fun compareTo(other: ObjectHeight): Int {
@@ -20,14 +23,14 @@ sealed class ObjectHeight(
             return this.toInt() - other.toInt()
         }
 
-        return this.height - other.height
+        return this.height.num - other.height.num
     }
 
     fun toInt(): Int {
         return when (this) {
-            None -> 3
-            is Ground -> 2
-            is Water -> 1
+            None -> NONE
+            is Ground -> GROUND
+            is Water -> WATER
         }
     }
 
@@ -36,10 +39,18 @@ sealed class ObjectHeight(
             height: Int,
             heightDetail: Int,
         ): ObjectHeight {
-            return when (height) {
-                2 -> Ground(heightDetail)
+            lateinit var objectHeightDetail: ObjectHeightDetail
 
-                1 -> Water(heightDetail)
+            ObjectHeightDetail.entries.map {
+                if (it.num == heightDetail) {
+                    objectHeightDetail = it
+                }
+            }
+
+            return when (height) {
+                GROUND -> Ground(objectHeightDetail)
+
+                WATER -> Water(objectHeightDetail)
 
                 else -> None
             }

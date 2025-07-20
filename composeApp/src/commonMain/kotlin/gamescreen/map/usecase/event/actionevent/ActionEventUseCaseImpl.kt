@@ -5,6 +5,7 @@ import core.domain.mapcell.CellType
 import data.item.tool.ToolId
 import gamescreen.map.domain.MapUiState
 import gamescreen.map.domain.ObjectHeight
+import gamescreen.map.domain.ObjectHeightDetail
 import gamescreen.map.domain.background.BackgroundData
 import gamescreen.map.service.makefrontdata.MakeFrontDateService
 import gamescreen.map.usecase.changeheight.ChangeHeightUseCase
@@ -122,7 +123,7 @@ class ActionEventUseCaseImpl(
                 )
                 DefaultScope.launch {
                     moveToOtherHeightUseCase.invoke(
-                        targetHeight = ObjectHeight.Water(1),
+                        targetHeight = ObjectHeight.Water(ObjectHeightDetail.Mid),
                         mapUiState = mapUiState,
                         update = update,
                     )
@@ -138,7 +139,7 @@ class ActionEventUseCaseImpl(
                 )
                 DefaultScope.launch {
                     moveToOtherHeightUseCase.invoke(
-                        targetHeight = ObjectHeight.Ground(1),
+                        targetHeight = ObjectHeight.Ground(ObjectHeightDetail.Mid),
                         mapUiState = mapUiState,
                         update = update,
                     )
@@ -150,7 +151,7 @@ class ActionEventUseCaseImpl(
                     update(
                         mapUiState.copy(
                             player = changeHeightUseCase.invoke(
-                                ObjectHeight.Ground(1),
+                                ObjectHeight.Ground(ObjectHeightDetail.Mid),
                                 mapUiState.player,
                             )
                         )
@@ -163,7 +164,7 @@ class ActionEventUseCaseImpl(
                     update(
                         mapUiState.copy(
                             player = changeHeightUseCase.invoke(
-                                ObjectHeight.Ground(2),
+                                ObjectHeight.Ground(ObjectHeightDetail.High),
                                 mapUiState.player,
                             )
                         )

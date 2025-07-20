@@ -2,6 +2,7 @@ package gamescreen.map.usecase.changeheight
 
 import gamescreen.map.ModuleMap
 import gamescreen.map.domain.ObjectHeight
+import gamescreen.map.domain.ObjectHeightDetail
 import kotlinx.coroutines.runBlocking
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -33,7 +34,7 @@ class ChangeHeightUseCaseImplTest : KoinTest {
     @Test
     fun moveToWater() {
         runBlocking {
-            val target = ObjectHeight.Water(height = 1)
+            val target = ObjectHeight.Water(height = ObjectHeightDetail.Mid)
             val player = gamescreen.map.domain.Player(size = 0f)
             val newPlayer = changeHeightUseCase.invoke(
                 target,
@@ -50,7 +51,7 @@ class ChangeHeightUseCaseImplTest : KoinTest {
     @Test
     fun moveToGround() {
         runBlocking {
-            val target = ObjectHeight.Ground(height = 2)
+            val target = ObjectHeight.Ground(height = ObjectHeightDetail.High)
 
             val player = gamescreen.map.domain.Player(size = 0f)
 
