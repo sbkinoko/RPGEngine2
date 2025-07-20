@@ -5,15 +5,12 @@ import common.FpsCounter
 import controller.domain.ControllerCallback
 import controller.domain.Stick
 import core.domain.mapcell.CellType
+import core.repository.mapuistate.MapUiStateRepository
 import core.repository.screentype.ScreenTypeRepository
 import gamescreen.GameScreenType
-import gamescreen.map.domain.MapUiState
 import gamescreen.map.domain.Player
 import gamescreen.map.domain.Point
 import gamescreen.map.domain.Velocity
-import gamescreen.map.domain.background.BackgroundData
-import gamescreen.map.domain.background.ObjectData
-import gamescreen.map.domain.npc.NPCData
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.encouter.EncounterRepository
 import gamescreen.map.repository.playercell.PlayerCellRepository
@@ -26,8 +23,6 @@ import gamescreen.map.usecase.event.cellevent.CellEventUseCase
 import gamescreen.map.usecase.move.MoveUseCase
 import gamescreen.map.usecase.roadmap.RoadMapUseCase
 import gamescreen.map.usecase.save.SaveUseCase
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -39,6 +34,8 @@ class MapViewModel(
 
     private val positionRepository: PositionRepository,
     private val saveUseCase: SaveUseCase,
+
+    private val mapUiStateRepository: MapUiStateRepository,
 
     private val moveUseCase: MoveUseCase,
 ) : ControllerCallback, KoinComponent {
@@ -66,18 +63,7 @@ class MapViewModel(
     private val canEvent: Boolean
         get() = uiStateFlow.value.player.eventType.canEvent
 
-    private val mutableUiStateFlow = MutableStateFlow(
-        MapUiState(
-            player = Player(size = 0f),
-            npcData = NPCData(emptyList()),
-            backgroundData = BackgroundData(emptyList()),
-            frontObjectData = ObjectData(emptyList()),
-            backObjectData = ObjectData(emptyList()),
-            playerIncludeCell = null,
-        )
-    )
-
-    val uiStateFlow = mutableUiStateFlow.asStateFlow()
+    val uiStateFlow = mapUiStateRepository.stateFlow
 
     private var isInBattle = false
 
@@ -99,21 +85,25 @@ class MapViewModel(
                 playerHeight = data.objectHeight,
                 player = initPlayer,
             ).let {
-                mutableUiStateFlow.value = it.copy(
-                    player = it.player.copy(
-                        square = it.player.square.move(
-                            dx = data.playerX,
-                            dy = data.playerY,
-                        )
-                    ),
+                mapUiStateRepository.updateState(
+                    it.copy(
+                        player = it.player.copy(
+                            square = it.player.square.move(
+                                dx = data.playerX,
+                                dy = data.playerY,
+                            )
+                        ),
+                    )
                 )
             }
         }
 
         DefaultScope.launch {
             playerCellRepository.playerIncludeCellFlow.collect {
-                mutableUiStateFlow.value = uiStateFlow.value.copy(
-                    playerIncludeCell = it,
+                mapUiStateRepository.updateState(
+                    uiStateFlow.value.copy(
+                        playerIncludeCell = it,
+                    )
                 )
             }
         }
@@ -152,10 +142,12 @@ class MapViewModel(
             )
 
         // 表示物を移動
-        mutableUiStateFlow.value = moveUseCase.invoke(
-            actualVelocity = actualVelocity,
-            tentativeVelocity = tentativePlayerVelocity,
-            mapUiState = uiStateFlow.value
+        mapUiStateRepository.updateState(
+            moveUseCase.invoke(
+                actualVelocity = actualVelocity,
+                tentativeVelocity = tentativePlayerVelocity,
+                mapUiState = uiStateFlow.value
+            )
         )
 
         fpsCounter.addInfo()
@@ -175,7 +167,7 @@ class MapViewModel(
                 autoEvent!!,
                 mapUiState = uiStateFlow.value,
             ) {
-                mutableUiStateFlow.value = it
+                mapUiStateRepository.updateState(it)
             }
         }
 
@@ -183,9 +175,11 @@ class MapViewModel(
         // 水上から陸に上がったとき、そこが移動マスならば、移動を呼び出したい
         //　プレイヤーが今いるマスに基づいてイベントを呼び出し
         playerCellRepository.eventCell?.let { cell ->
-            mutableUiStateFlow.value = cellEventUseCase.invoke(
-                cellId = cell.cellType,
-                mapUiState = uiStateFlow.value,
+            mapUiStateRepository.updateState(
+                cellEventUseCase.invoke(
+                    cellId = cell.cellType,
+                    mapUiState = uiStateFlow.value,
+                )
             )
             // 戦闘せずに終了
             return
@@ -279,7 +273,7 @@ class MapViewModel(
             eventType = uiStateFlow.value.player.eventType,
             mapUiState = uiStateFlow.value,
         ) {
-            mutableUiStateFlow.value = it
+            mapUiStateRepository.updateState(it)
         }
     }
 
@@ -321,7 +315,7 @@ class MapViewModel(
             isInBattle = false
 
             // 再開場所の情報を受け取る
-            mutableUiStateFlow.value = it
+            mapUiStateRepository.updateState(it)
         }
     }
 
