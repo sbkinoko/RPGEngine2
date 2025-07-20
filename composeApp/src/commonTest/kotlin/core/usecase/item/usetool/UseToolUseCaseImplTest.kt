@@ -8,6 +8,7 @@ import core.domain.item.TargetType
 import core.domain.item.Tool
 import core.domain.item.tool.HealTool
 import core.domain.status.ConditionType
+import core.usecase.fly.FlyUseCase
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
 import core.usecase.updateparameter.UpdateStatusUseCase
 import data.item.tool.ToolId
@@ -113,6 +114,12 @@ class UseToolUseCaseImplTest : KoinTest {
         }
     }
 
+    val flyUseCase = object : FlyUseCase {
+        override suspend fun invoke() {
+            throw NotImplementedError()
+        }
+    }
+
     @Test
     fun updateHP() {
         val toolRepository: ToolRepository = object : ToolRepository {
@@ -137,6 +144,7 @@ class UseToolUseCaseImplTest : KoinTest {
                 updateStatusUseCase = updateStatusService,
                 decToolUseCase = decToolUseCase,
                 getToolIdUseCase = getToolIdUseCase,
+                flyUseCase = flyUseCase,
             )
 
             useToolUseCase.invoke(
@@ -193,6 +201,7 @@ class UseToolUseCaseImplTest : KoinTest {
                 updateStatusUseCase = updateStatusService,
                 decToolUseCase = decToolUseCase,
                 getToolIdUseCase = getToolIdUseCase,
+                flyUseCase = flyUseCase,
             )
 
             useToolUseCase.invoke(
@@ -249,6 +258,7 @@ class UseToolUseCaseImplTest : KoinTest {
                 updateStatusUseCase = updateStatusService,
                 decToolUseCase = decToolUseCase,
                 getToolIdUseCase = getToolIdUseCase,
+                flyUseCase = flyUseCase,
             )
 
             useToolUseCase.invoke(
