@@ -5,7 +5,6 @@ private const val SKY = 3
 private const val GROUND = 2
 private const val WATER = 1
 
-//fixme マジックナンバー消す
 sealed class ObjectHeight(
     open val height: ObjectHeightDetail,
 ) : Comparable<ObjectHeight> {
