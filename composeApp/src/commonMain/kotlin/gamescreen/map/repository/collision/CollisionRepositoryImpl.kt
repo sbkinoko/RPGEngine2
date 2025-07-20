@@ -278,6 +278,7 @@ class CollisionRepositoryImpl : CollisionRepository {
                         }
                     }
 
+                    // fixme 余計なrun削除
                     FenceDir.RD -> {
                         rectangle.run {
                             rectangle.run {
