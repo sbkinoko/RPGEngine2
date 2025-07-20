@@ -6,6 +6,7 @@ import data.INITIAL_MAP_X
 import data.INITIAL_MAP_Y
 import gamescreen.map.domain.MapUiState
 import gamescreen.map.domain.ObjectHeight
+import gamescreen.map.domain.ObjectHeightDetail
 import gamescreen.map.usecase.roadmap.RoadMapUseCase
 
 // fixme 再スタート先を場合によって変えられるようにする
@@ -21,7 +22,9 @@ class RestartUseCaseImpl(
             mapX = INITIAL_MAP_X,
             mapY = INITIAL_MAP_Y,
             mapId = INITIAL_MAP_DATA,
-            playerHeight = ObjectHeight.Ground(1),
+            playerHeight = ObjectHeight.Ground(
+                ObjectHeightDetail.Normal
+            ),
             player = mapUiState.player,
         )
     }

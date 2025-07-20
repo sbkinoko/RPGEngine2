@@ -2,6 +2,7 @@ package gamescreen.map.domain.npc
 
 import gamescreen.map.domain.MapPoint
 import gamescreen.map.domain.ObjectHeight
+import gamescreen.map.domain.ObjectHeightDetail
 import gamescreen.map.domain.Velocity
 import gamescreen.map.domain.collision.square.EventRectangle
 import values.event.EventType
@@ -22,7 +23,7 @@ data class NPC(
         eventRectangle = EventRectangle(
             eventType = eventType,
             size = size,
-            objectHeight = ObjectHeight.Ground(1),
+            objectHeight = ObjectHeight.Ground(ObjectHeightDetail.Normal),
         ),
     )
 

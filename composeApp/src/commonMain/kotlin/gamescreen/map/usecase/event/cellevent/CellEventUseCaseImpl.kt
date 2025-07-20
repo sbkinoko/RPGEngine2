@@ -6,6 +6,7 @@ import gamescreen.map.data.ID_NON_LOOP
 import gamescreen.map.data.NonLoopMap
 import gamescreen.map.domain.MapUiState
 import gamescreen.map.domain.ObjectHeight
+import gamescreen.map.domain.ObjectHeightDetail
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.usecase.roadmap.RoadMapUseCase
 
@@ -30,7 +31,7 @@ class CellEventUseCaseImpl(
                     mapX = 0,
                     mapY = 2,
                     mapId = ID_NON_LOOP,
-                    playerHeight = ObjectHeight.Ground(1),
+                    playerHeight = ObjectHeight.Ground(ObjectHeightDetail.Normal),
                     player = mapUiState.player,
                 )
             }
@@ -40,7 +41,7 @@ class CellEventUseCaseImpl(
                     mapX = 4,
                     mapY = 9,
                     mapId = ID_LOOP,
-                    playerHeight = ObjectHeight.Ground(1),
+                    playerHeight = ObjectHeight.Ground(ObjectHeightDetail.Normal),
                     player = mapUiState.player,
                 )
             }
