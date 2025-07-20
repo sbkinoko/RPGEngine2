@@ -1,7 +1,5 @@
 package gamescreen.map.domain
 
-import gamescreen.map.domain.ObjectHeight.None.height
-
 private const val NONE = 0
 private const val SKY = 3
 private const val GROUND = 2
@@ -22,7 +20,7 @@ sealed class ObjectHeight(
     ) : ObjectHeight(height)
 
     data class Sky(
-        val objectHeightDetail: ObjectHeightDetail,
+        override val height: ObjectHeightDetail,
     ) : ObjectHeight(height)
 
     override fun compareTo(other: ObjectHeight): Int {
