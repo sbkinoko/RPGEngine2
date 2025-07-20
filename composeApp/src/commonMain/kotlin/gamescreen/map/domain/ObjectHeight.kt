@@ -1,10 +1,10 @@
 package gamescreen.map.domain
 
-private const val NONE = 3
+private const val NONE = 0
+private const val SKY = 3
 private const val GROUND = 2
 private const val WATER = 1
 
-//fixme マジックナンバー消す
 sealed class ObjectHeight(
     open val height: ObjectHeightDetail,
 ) : Comparable<ObjectHeight> {
@@ -15,6 +15,10 @@ sealed class ObjectHeight(
     ) : ObjectHeight(height)
 
     data class Ground(
+        override val height: ObjectHeightDetail,
+    ) : ObjectHeight(height)
+
+    data class Sky(
         override val height: ObjectHeightDetail,
     ) : ObjectHeight(height)
 
@@ -29,6 +33,7 @@ sealed class ObjectHeight(
     fun toInt(): Int {
         return when (this) {
             None -> NONE
+            is Sky -> SKY
             is Ground -> GROUND
             is Water -> WATER
         }
@@ -48,6 +53,8 @@ sealed class ObjectHeight(
             }
 
             return when (height) {
+                SKY -> Sky(objectHeightDetail)
+
                 GROUND -> Ground(objectHeightDetail)
 
                 WATER -> Water(objectHeightDetail)
