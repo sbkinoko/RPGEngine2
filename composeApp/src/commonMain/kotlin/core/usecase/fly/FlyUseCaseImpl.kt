@@ -12,6 +12,8 @@ class FlyUseCaseImpl(
     override suspend fun invoke() {
         val state = mapUiStateRepository.stateFlow.value
 
+        // fixme 着陸できるかどうかをチェックするようにする
+        // 障害物のなかにめり込むことがある
         when (state.player.square.objectHeight) {
 
             ObjectHeight.None,

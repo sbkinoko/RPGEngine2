@@ -96,6 +96,7 @@ abstract class ItemListViewModel<T, V : Item> : MenuChildViewModel(),
     override fun goNextImpl() {
         val ableType = getAbleType()
 
+        // fixme ターゲットがいなかったら直接しよう
         when (ableType) {
             AbleType.Able -> {
                 // indexを保存

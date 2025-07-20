@@ -7,6 +7,7 @@ interface Item {
     val explain: String
 }
 
+// fixme targetをもつinterfaceを作る
 interface UsableItem : Item {
     val targetNum: Int
     val usablePlace: Place
