@@ -2,9 +2,9 @@ package core.domain.item
 
 sealed interface ItemKind
 
-interface Skill : ItemKind, UsableItem
+interface Skill : ItemKind, Item
 
-interface Tool : ItemKind, UsableItem {
+interface Tool : ItemKind, Item {
 
     // 手放せる
     val isDisposable: Boolean

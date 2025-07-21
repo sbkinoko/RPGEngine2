@@ -1,6 +1,7 @@
 package core.usecase.item.useskill
 
 import core.domain.item.CostType
+import core.domain.item.UsableItem
 import core.domain.item.skill.AttackSkill
 import core.domain.item.skill.HealSkill
 import core.repository.player.PlayerStatusRepository
@@ -27,7 +28,7 @@ class UseSkillUseCaseImpl(
         )
 
         //コスト処理
-        when (val costType = skill.costType) {
+        when (val costType = (skill as UsableItem).costType) {
             is CostType.MP -> {
                 updateStatus.decMP(
                     id = userId,

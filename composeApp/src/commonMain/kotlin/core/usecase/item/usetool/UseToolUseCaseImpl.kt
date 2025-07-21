@@ -7,6 +7,7 @@ import core.domain.item.CostType
 import core.domain.item.EffectKind
 import core.domain.item.FlyEffect
 import core.domain.item.HealEffect
+import core.domain.item.UsableItem
 import core.domain.item.tool.HealTool
 import core.usecase.fly.FlyUseCase
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
@@ -45,7 +46,9 @@ class UseToolUseCaseImpl(
                 toolId
             )
 
-            when (tool.costType) {
+
+
+            when ((tool as UsableItem).costType) {
                 CostType.Consume -> {
                     delTool(
                         userId = userId,

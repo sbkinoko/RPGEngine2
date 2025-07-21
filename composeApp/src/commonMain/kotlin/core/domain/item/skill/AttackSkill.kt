@@ -4,9 +4,11 @@ import core.domain.Place
 import core.domain.item.AttackEffect
 import core.domain.item.CostType
 import core.domain.item.DamageType
+import core.domain.item.NeedTarget
 import core.domain.item.Skill
 import core.domain.item.TargetStatusType
 import core.domain.item.TargetType
+import core.domain.item.UsableItem
 
 data class AttackSkill(
     override val name: String,
@@ -16,7 +18,7 @@ data class AttackSkill(
     override val damageType: DamageType,
     override val targetType: TargetType,
     override val targetStatusType: TargetStatusType,
-) : Skill, AttackEffect {
+) : Skill, NeedTarget, UsableItem, AttackEffect {
     override val explain: String
         get() {
             return name

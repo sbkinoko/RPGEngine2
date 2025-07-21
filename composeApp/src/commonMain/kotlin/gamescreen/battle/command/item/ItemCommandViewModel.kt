@@ -3,8 +3,9 @@ package gamescreen.battle.command.item
 import common.DefaultScope
 import core.PlayerStatusRepositoryName
 import core.domain.Const
+import core.domain.item.Item
+import core.domain.item.NeedTarget
 import core.domain.item.TargetType
-import core.domain.item.UsableItem
 import core.menu.SelectCoreInt
 import core.repository.player.PlayerStatusRepository
 import core.repository.statusdata.StatusDataRepository
@@ -20,7 +21,7 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.inject
 import kotlin.math.max
 
-abstract class ItemCommandViewModel<T, V : UsableItem> : BattleChildViewModel<Int>() {
+abstract class ItemCommandViewModel<T, V : Item> : BattleChildViewModel<Int>() {
     protected val actionRepository: ActionRepository by inject()
     protected val playerStatusRepository: PlayerStatusRepository by inject()
 
@@ -102,7 +103,8 @@ abstract class ItemCommandViewModel<T, V : UsableItem> : BattleChildViewModel<In
             itemIndex = selected,
         )
 
-        when (itemRepository.getItem(itemId).targetType) {
+        val item = itemRepository.getItem(itemId)
+        when ((item as NeedTarget).targetType) {
             TargetType.Ally -> {
                 commandRepository.push(
                     SelectAllyCommand(playerId),
