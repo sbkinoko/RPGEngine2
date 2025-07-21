@@ -4,6 +4,7 @@ import core.ToolBagRepositoryName
 import core.domain.AbleType
 import core.domain.item.Tool
 import core.repository.bag.BagRepository
+import core.usecase.item.usetool.UseToolUseCase
 import data.item.tool.ToolId
 import data.item.tool.ToolRepository
 import gamescreen.choice.Choice
@@ -13,13 +14,20 @@ import gamescreen.menu.item.abstract.itemselect.ItemListViewModel
 import org.koin.core.component.inject
 import values.Constants
 
-class ToolListViewModel : ItemListViewModel<ToolId, Tool>() {
+class ToolListViewModel(
+    useToolUseCase: UseToolUseCase,
+) : ItemListViewModel<ToolId, Tool>(
+    useToolUseCase = useToolUseCase,
+) {
     override val itemRepository: ToolRepository by inject()
     private val bagRepository: BagRepository<ToolId> by inject(
         qualifier = ToolBagRepositoryName,
     )
 
     private val choiceRepository: ChoiceRepository by inject()
+
+    override val selectedItem: Tool
+        get() = getPlayerItemListAt(userId)[selectedFlowState.value]
 
     override val boundedScreenType: MenuType
         get() = MenuType.TOOL_LIST

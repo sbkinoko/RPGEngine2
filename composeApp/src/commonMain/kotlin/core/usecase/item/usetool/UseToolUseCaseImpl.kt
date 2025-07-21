@@ -46,8 +46,6 @@ class UseToolUseCaseImpl(
                 toolId
             )
 
-
-
             when ((tool as UsableItem).costType) {
                 CostType.Consume -> {
                     delTool(
