@@ -26,8 +26,9 @@ import core.usecase.heal.MaxHealUseCase
 import core.usecase.heal.MaxHealUseCaseImpl
 import core.usecase.item.checkcanuseskill.CheckCanUseSkillUseCase
 import core.usecase.item.checkcanuseskill.CheckCanUseSkillUseCaseImpl
-import core.usecase.item.usetool.UseToolUseCase
-import core.usecase.item.usetool.UseToolUseCaseImpl
+import core.usecase.item.useitem.UseItemUseCase
+import core.usecase.item.useitem.UseSkillUseCaseImpl
+import core.usecase.item.useitem.UseToolUseCaseImpl
 import core.usecase.restart.RestartUseCase
 import core.usecase.restart.RestartUseCaseImpl
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
@@ -54,6 +55,14 @@ val ToolBagRepositoryName = named("ToolBagRepository")
 
 val EquipmentBagRepositoryName = named(
     "EquipmentBagRepository"
+)
+
+val UseToolUseCaseName_ = named(
+    "UseToolUseCase"
+)
+
+val UseSkillUseCaseName = named(
+    "UseSkillUseCase"
 )
 
 val ModuleCore = module {
@@ -135,7 +144,9 @@ val ModuleCore = module {
         )
     }
 
-    single<UseToolUseCase> {
+    single<UseItemUseCase>(
+        qualifier = UseToolUseCaseName_
+    ) {
         UseToolUseCaseImpl(
             toolRepository = get(),
             updatePlayerStatusUseCase = get(),
@@ -148,6 +159,16 @@ val ModuleCore = module {
             getToolIdUseCase = get(),
 
             flyUseCase = get(),
+        )
+    }
+
+    single<UseItemUseCase>(qualifier = UseSkillUseCaseName) {
+        UseSkillUseCaseImpl(
+            playerStatusRepository = get(),
+            skillRepository = get(),
+            updateStatus = get(
+                qualifier = named(UpdatePlayer)
+            )
         )
     }
 

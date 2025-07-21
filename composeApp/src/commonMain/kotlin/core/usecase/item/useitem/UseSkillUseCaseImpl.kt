@@ -1,6 +1,7 @@
-package core.usecase.item.useskill
+package core.usecase.item.useitem
 
 import core.domain.item.CostType
+import core.domain.item.Item
 import core.domain.item.UsableItem
 import core.domain.item.skill.AttackSkill
 import core.domain.item.skill.HealSkill
@@ -12,12 +13,12 @@ class UseSkillUseCaseImpl(
     private val playerStatusRepository: PlayerStatusRepository,
     private val skillRepository: SkillRepository,
     private val updateStatus: UpdateStatusUseCase,
-) : UseSkillUseCase {
+) : UseItemUseCase {
     override suspend fun invoke(
         userId: Int,
-        targetId: Int,
         index: Int,
-    ) {
+        targetId: Int,
+    ): Item {
         val skillId = playerStatusRepository.getSkill(
             playerId = userId,
             index = index
@@ -53,5 +54,7 @@ class UseSkillUseCaseImpl(
             // 攻撃スキルで来ることはないはず
             is AttackSkill -> Unit
         }
+
+        return skill
     }
 }

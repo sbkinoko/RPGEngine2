@@ -24,7 +24,7 @@ import core.menu.SelectCoreInt
 import core.repository.battlemonster.BattleInfoRepository
 import core.repository.player.PlayerStatusRepository
 import core.repository.statusdata.StatusDataRepository
-import core.usecase.item.usetool.UseToolUseCase
+import core.usecase.item.useitem.UseItemUseCase
 import core.usecase.updateparameter.UpdateStatusUseCase
 import data.item.skill.SkillId
 import data.item.skill.SkillRepository
@@ -64,6 +64,7 @@ class ActionPhaseViewModel(
     private val statusDataRepository: StatusDataRepository,
     private val enemyDataRepository: StatusDataRepository,
 
+    private val useToolUseCase: UseItemUseCase,
     private val effectUseCase: EffectUseCase,
 ) : BattleChildViewModel<Int>() {
     private val actionRepository: ActionRepository by inject()
@@ -112,8 +113,6 @@ class ActionPhaseViewModel(
         get() = isAnnihilationService(
             statusDataRepository.getStatusList()
         )
-
-    private val useToolUseCase: UseToolUseCase by inject()
 
     override var selectCore: SelectCore<Int> = SelectCoreInt(
         // 使わないので適当
@@ -521,7 +520,7 @@ class ActionPhaseViewModel(
         }
     }
 
-    private fun toolAction(
+    private suspend fun toolAction(
         userId: Int,
         actionData: ActionData,
     ) {

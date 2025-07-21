@@ -12,6 +12,8 @@ import core.domain.item.skill.HealSkill
 import core.domain.status.ConditionType
 import core.domain.status.PlayerStatus
 import core.repository.player.PlayerStatusRepository
+import core.usecase.item.useitem.UseItemUseCase
+import core.usecase.item.useitem.UseSkillUseCaseImpl
 import core.usecase.updateparameter.UpdateStatusUseCase
 import data.item.skill.SkillId
 import data.item.skill.SkillRepository
@@ -118,7 +120,7 @@ class UseSkillUseCaseImplTest {
 
     private lateinit var skillRepository: SkillRepository
 
-    private val useSkillUseCase: UseSkillUseCase
+    private val useSkillUseCase: UseItemUseCase
         get() = UseSkillUseCaseImpl(
             playerStatusRepository = playerStatusRepository,
             skillRepository = skillRepository,

@@ -1,5 +1,6 @@
 package gamescreen.menu.item.abstract.target
 
+import common.DefaultScope
 import core.PlayerStatusRepositoryName
 import core.domain.AbleType
 import core.domain.item.Item
@@ -13,12 +14,17 @@ import gamescreen.choice.repository.ChoiceRepository
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.domain.SelectManager
 import gamescreen.menu.item.repository.target.TargetRepository
+import gamescreen.menu.usecase.usetoolinmap.UseItemInMapUseCase
 import gamescreen.text.repository.TextRepository
+import kotlinx.coroutines.launch
 import org.koin.core.component.inject
 import values.Constants.Companion.playerNum
 
-abstract class UsableTargetViewModel<T, V : Item> : TargetViewModel<T, V>() {
-    protected val targetRepository: TargetRepository by inject()
+abstract class UsableTargetViewModel<T, V : Item>(
+    private val useItemInMapUseCase: UseItemInMapUseCase,
+) : TargetViewModel<T, V>() {
+
+    private val targetRepository: TargetRepository by inject()
     protected val playerStatusRepository: PlayerStatusRepository by inject()
     protected val statusDataRepository: StatusDataRepository by inject(
         qualifier = PlayerStatusRepositoryName
@@ -84,5 +90,9 @@ abstract class UsableTargetViewModel<T, V : Item> : TargetViewModel<T, V>() {
     /**
      * confirmでYesを選んだ時の処理
      */
-    abstract fun selectYes()
+    private fun selectYes() {
+        DefaultScope.launch {
+            useItemInMapUseCase.invoke()
+        }
+    }
 }

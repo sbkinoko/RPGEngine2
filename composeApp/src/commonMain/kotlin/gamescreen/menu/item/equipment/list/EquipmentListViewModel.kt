@@ -4,18 +4,18 @@ import core.EquipmentBagRepositoryName
 import core.domain.AbleType
 import core.domain.item.equipment.EquipmentData
 import core.repository.bag.BagRepository
-import core.usecase.item.usetool.UseToolUseCase
 import data.item.equipment.EquipmentId
 import data.item.equipment.EquipmentRepository
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.item.abstract.itemselect.ItemListViewModel
+import gamescreen.menu.usecase.usetoolinmap.UseItemInMapUseCase
 import org.koin.core.component.inject
 import values.Constants
 
 class EquipmentListViewModel(
-    useToolUseCase: UseToolUseCase,
+    useItemInMapUseCase: UseItemInMapUseCase,
 ) : ItemListViewModel<EquipmentId, EquipmentData>(
-    useToolUseCase = useToolUseCase,
+    useItemInMapUseCase = useItemInMapUseCase,
 ) {
     override val itemRepository: EquipmentRepository by inject()
     private val bagRepository: BagRepository<EquipmentId> by inject(

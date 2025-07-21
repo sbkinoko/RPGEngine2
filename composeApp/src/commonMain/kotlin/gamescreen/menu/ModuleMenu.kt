@@ -4,8 +4,10 @@ import core.EquipmentBagRepositoryName
 import core.PlayerStatusRepositoryName
 import core.ToolBagRepositoryName
 import core.UpdatePlayer
-import core.usecase.item.useskill.UseSkillUseCase
-import core.usecase.item.useskill.UseSkillUseCaseImpl
+import core.UseSkillUseCaseName
+import core.UseToolUseCaseName_
+import core.usecase.item.useitem.UseItemUseCase
+import core.usecase.item.useitem.UseSkillUseCaseImpl
 import data.item.equipment.EquipmentId
 import data.item.tool.ToolId
 import gamescreen.menu.component.StatusComponentViewModel
@@ -39,6 +41,8 @@ import gamescreen.menu.usecase.getviewmodelbycommandtype.GetControllerByCommandT
 import gamescreen.menu.usecase.getviewmodelbycommandtype.GetControllerByCommandTypeUseCaseImpl
 import gamescreen.menu.usecase.givetool.GiveToolUseCase
 import gamescreen.menu.usecase.givetool.GiveToolUseCaseImpl
+import gamescreen.menu.usecase.usetoolinmap.UseItemInMapUseCase
+import gamescreen.menu.usecase.usetoolinmap.UseItemInMapUseCaseImpl
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
@@ -92,12 +96,18 @@ val ModuleMenu = module {
 
     single {
         SkillListViewModel(
-            useToolUseCase = get()
+            useItemInMapUseCase = get(
+                qualifier = UseSkillUseCaseName,
+            )
         )
     }
 
     single {
-        SkillTargetViewModel()
+        SkillTargetViewModel(
+            useItemInMapUseCase = get(
+                qualifier = UseSkillUseCaseName,
+            ),
+        )
     }
 
     single {
@@ -110,12 +120,18 @@ val ModuleMenu = module {
 
     single {
         ToolListViewModel(
-            useToolUseCase = get(),
+            useItemInMapUseCase = get(
+                qualifier = UseToolUseCaseName_,
+            ),
         )
     }
 
     single {
-        ToolTargetViewModel()
+        ToolTargetViewModel(
+            useItemInMapUseCase = get(
+                qualifier = UseToolUseCaseName_
+            ),
+        )
     }
 
     single {
@@ -136,7 +152,11 @@ val ModuleMenu = module {
 
     single {
         EquipmentListViewModel(
-            useToolUseCase = get(),
+            // fixme injectしないクラス設計を考える
+            //　未使用クラス
+            useItemInMapUseCase = get(
+                qualifier = UseToolUseCaseName_
+            ),
         )
     }
 
@@ -194,7 +214,7 @@ val ModuleMenu = module {
         )
     }
 
-    single<UseSkillUseCase> {
+    single<UseItemUseCase> {
         UseSkillUseCaseImpl(
             playerStatusRepository = get(),
             skillRepository = get(),
@@ -258,6 +278,36 @@ val ModuleMenu = module {
             ),
             addToolUseCase = get(
                 qualifier = qualifierAddToolUseCase,
+            ),
+        )
+    }
+
+    single<UseItemInMapUseCase>(
+        qualifier = UseToolUseCaseName_
+    ) {
+        UseItemInMapUseCaseImpl(
+            menuStateRepository = get(),
+            textRepository = get(),
+            indexRepository = get(),
+            userRepository = get(),
+            targetRepository = get(),
+            useItemUseCase = get(
+                qualifier = UseToolUseCaseName_
+            ),
+        )
+    }
+
+    single<UseItemInMapUseCase>(
+        qualifier = UseSkillUseCaseName
+    ) {
+        UseItemInMapUseCaseImpl(
+            menuStateRepository = get(),
+            textRepository = get(),
+            indexRepository = get(),
+            userRepository = get(),
+            targetRepository = get(),
+            useItemUseCase = get(
+                qualifier = UseSkillUseCaseName
             ),
         )
     }
