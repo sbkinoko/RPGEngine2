@@ -1,5 +1,6 @@
 package gamescreen.menu.item.abstract.itemselect
 
+import common.DefaultScope
 import core.PlayerStatusRepositoryName
 import core.domain.AbleType
 import core.domain.item.Item
@@ -8,7 +9,6 @@ import core.menu.SelectCore
 import core.menu.SelectCoreInt
 import core.repository.player.PlayerStatusRepository
 import core.repository.statusdata.StatusDataRepository
-import core.usecase.item.usetool.UseToolUseCase
 import data.item.ItemRepository
 import gamescreen.menu.MenuChildViewModel
 import gamescreen.menu.domain.MenuType
@@ -17,13 +17,15 @@ import gamescreen.menu.item.list.ItemList
 import gamescreen.menu.item.repository.index.IndexRepository
 import gamescreen.menu.item.repository.user.UserRepository
 import gamescreen.menu.repository.menustate.MenuStateRepository
+import gamescreen.menu.usecase.usetoolinmap.UseItemInMapUseCase
 import gamescreen.text.TextBoxData
 import gamescreen.text.repository.TextRepository
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 abstract class ItemListViewModel<T, V : Item>(
-    private val useToolUseCase: UseToolUseCase,
+    private val useItemInMapUseCase: UseItemInMapUseCase,
 ) : MenuChildViewModel(),
     ItemList<T>,
     KoinComponent {
@@ -114,16 +116,9 @@ abstract class ItemListViewModel<T, V : Item>(
                         nextScreenType,
                     )
                 } else {
-                    useToolUseCase.invoke(
-                        userId = userRepository.userId,
-                        index = indexRepository.index,
-                        targetId = -1,
-                    )
-                    textRepository.push(
-                        textBoxData = TextBoxData(
-                            text = "${selectedItem.name}を使った"
-                        )
-                    )
+                    DefaultScope.launch {
+                        useItemInMapUseCase.invoke()
+                    }
                 }
             }
 

@@ -4,17 +4,17 @@ import core.domain.AbleType
 import core.domain.Place
 import core.domain.item.Skill
 import core.usecase.item.checkcanuseskill.CheckCanUseSkillUseCase
-import core.usecase.item.usetool.UseToolUseCase
 import data.item.skill.SkillId
 import data.item.skill.SkillRepository
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.item.abstract.itemselect.ItemListViewModel
+import gamescreen.menu.usecase.usetoolinmap.UseItemInMapUseCase
 import org.koin.core.component.inject
 
 class SkillListViewModel(
-    useToolUseCase: UseToolUseCase,
+    useItemInMapUseCase: UseItemInMapUseCase,
 ) : ItemListViewModel<SkillId, Skill>(
-    useToolUseCase = useToolUseCase,
+    useItemInMapUseCase = useItemInMapUseCase,
 ) {
     private val checkCanUseSkillUseCase: CheckCanUseSkillUseCase by inject()
 

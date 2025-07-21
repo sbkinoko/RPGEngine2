@@ -5,6 +5,7 @@ import core.EnemyStatusRepositoryName
 import core.PlayerStatusRepositoryName
 import core.UpdateEnemyUseCaseName
 import core.UpdatePlayer
+import core.UseToolUseCaseName_
 import gamescreen.battle.command.actionphase.ActionPhaseViewModel
 import gamescreen.battle.command.escape.EscapeViewModel
 import gamescreen.battle.command.finish.BattleFinishViewModel
@@ -97,6 +98,9 @@ val ModuleBattle = module {
                 qualifier = EnemyStatusRepositoryName
             ),
             effectUseCase = get(),
+            useToolUseCase = get(
+                qualifier = UseToolUseCaseName_,
+            )
         )
     }
 

@@ -1,4 +1,4 @@
-package core.usecase.item.usetool
+package core.usecase.item.useitem
 
 import core.domain.item.AttackEffect
 import core.domain.item.BufEffect
@@ -7,6 +7,7 @@ import core.domain.item.CostType
 import core.domain.item.EffectKind
 import core.domain.item.FlyEffect
 import core.domain.item.HealEffect
+import core.domain.item.Item
 import core.domain.item.UsableItem
 import core.domain.item.tool.HealTool
 import core.usecase.fly.FlyUseCase
@@ -16,10 +17,6 @@ import data.item.tool.ToolId
 import data.item.tool.ToolRepository
 import gamescreen.menu.usecase.bag.dectool.DecItemUseCase
 import gamescreen.menu.usecase.gettoolid.GetToolIdUseCase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
-import kotlinx.coroutines.launch
 import values.Constants
 
 class UseToolUseCaseImpl(
@@ -31,53 +28,55 @@ class UseToolUseCaseImpl(
     private val getToolIdUseCase: GetToolIdUseCase,
 
     private val flyUseCase: FlyUseCase,
-) : UseToolUseCase {
-    override fun invoke(
+) : UseItemUseCase {
+
+    override suspend fun invoke(
         userId: Int,
         index: Int,
         targetId: Int,
-    ) {
+    ): Item {
         val toolId = getToolIdUseCase(
             userId = userId,
             index = index,
         )
-        CoroutineScope(Dispatchers.IO).launch {
-            val tool = toolRepository.getItem(
-                toolId
-            )
 
-            when ((tool as UsableItem).costType) {
-                CostType.Consume -> {
-                    delTool(
-                        userId = userId,
-                        index = index,
-                        toolId = toolId,
-                    )
-                }
+        val tool = toolRepository.getItem(
+            toolId
+        )
 
-                // 消費しない道具
-                CostType.NotConsume -> Unit
-
-                is CostType.MP -> TODO("道具でMPを利用する物を作る")
+        when ((tool as UsableItem).costType) {
+            CostType.Consume -> {
+                delTool(
+                    userId = userId,
+                    index = index,
+                    toolId = toolId,
+                )
             }
 
-            val type = tool as EffectKind
-            when (type) {
-                is HealEffect -> {
-                    updateStatusUseCase.incHP(
-                        id = targetId,
-                        amount = (tool as HealTool).healAmount,
-                    )
-                }
+            // 消費しない道具
+            CostType.NotConsume -> Unit
 
-                is AttackEffect -> TODO()
-                is BufEffect -> TODO()
-                is ConditionEffect -> TODO()
-                is FlyEffect -> {
-                    flyUseCase.invoke()
-                }
+            is CostType.MP -> TODO("道具でMPを利用する物を作る")
+        }
+
+        val type = tool as EffectKind
+        when (type) {
+            is HealEffect -> {
+                updateStatusUseCase.incHP(
+                    id = targetId,
+                    amount = (tool as HealTool).healAmount,
+                )
+            }
+
+            is AttackEffect -> TODO()
+            is BufEffect -> TODO()
+            is ConditionEffect -> TODO()
+            is FlyEffect -> {
+                flyUseCase.invoke()
             }
         }
+
+        return tool
     }
 
     private suspend fun delTool(

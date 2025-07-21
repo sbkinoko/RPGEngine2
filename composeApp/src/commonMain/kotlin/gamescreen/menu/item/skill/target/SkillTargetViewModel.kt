@@ -1,25 +1,25 @@
 package gamescreen.menu.item.skill.target
 
-import common.DefaultScope
 import core.domain.AbleType
 import core.domain.Place
 import core.domain.item.Skill
 import core.usecase.item.checkcanuseskill.CheckCanUseSkillUseCase
-import core.usecase.item.useskill.UseSkillUseCase
 import data.item.skill.SkillId
 import data.item.skill.SkillRepository
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.item.abstract.target.UsableTargetViewModel
 import gamescreen.menu.item.repository.index.IndexRepository
-import gamescreen.text.TextBoxData
-import kotlinx.coroutines.launch
+import gamescreen.menu.usecase.usetoolinmap.UseItemInMapUseCase
 import org.koin.core.component.inject
 
-class SkillTargetViewModel : UsableTargetViewModel<SkillId, Skill>() {
+class SkillTargetViewModel(
+    useItemInMapUseCase: UseItemInMapUseCase,
+) : UsableTargetViewModel<SkillId, Skill>(
+    useItemInMapUseCase = useItemInMapUseCase,
+) {
     override val itemRepository: SkillRepository by inject()
 
     private val indexRepository: IndexRepository by inject()
-    private val useSkillUseCase: UseSkillUseCase by inject()
     private val checkCanUseSkillUseCase: CheckCanUseSkillUseCase by inject()
 
     override val boundedMenuType: MenuType
@@ -39,27 +39,5 @@ class SkillTargetViewModel : UsableTargetViewModel<SkillId, Skill>() {
             skillId = itemId,
             here = Place.MAP,
         )
-    }
-
-    /**
-     * confirmでYesを選んだ時の処理
-     */
-    override fun selectYes() {
-        // textを表示
-        textRepository.push(
-            TextBoxData(
-                text = "回復しました",
-                callBack = { commandRepository.pop() },
-            )
-        )
-
-        //　スキル処理実行
-        DefaultScope.launch {
-            useSkillUseCase.invoke(
-                targetId = targetRepository.target,
-                userId = userRepository.userId,
-                index = indexRepository.index,
-            )
-        }
     }
 }

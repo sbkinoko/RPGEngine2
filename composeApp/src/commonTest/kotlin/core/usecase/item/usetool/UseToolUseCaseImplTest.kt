@@ -9,6 +9,8 @@ import core.domain.item.Tool
 import core.domain.item.tool.HealTool
 import core.domain.status.ConditionType
 import core.usecase.fly.FlyUseCase
+import core.usecase.item.useitem.UseItemUseCase
+import core.usecase.item.useitem.UseToolUseCaseImpl
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
 import core.usecase.updateparameter.UpdateStatusUseCase
 import data.item.tool.ToolId
@@ -23,7 +25,7 @@ import kotlin.test.assertEquals
 
 class UseToolUseCaseImplTest : KoinTest {
 
-    private lateinit var useToolUseCase: UseToolUseCase
+    private lateinit var useToolUseCase: UseItemUseCase
 
     var countIncHP = 0
     var countDelTool = 0

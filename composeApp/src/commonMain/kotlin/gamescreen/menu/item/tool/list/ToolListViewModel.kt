@@ -4,20 +4,20 @@ import core.ToolBagRepositoryName
 import core.domain.AbleType
 import core.domain.item.Tool
 import core.repository.bag.BagRepository
-import core.usecase.item.usetool.UseToolUseCase
 import data.item.tool.ToolId
 import data.item.tool.ToolRepository
 import gamescreen.choice.Choice
 import gamescreen.choice.repository.ChoiceRepository
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.item.abstract.itemselect.ItemListViewModel
+import gamescreen.menu.usecase.usetoolinmap.UseItemInMapUseCase
 import org.koin.core.component.inject
 import values.Constants
 
 class ToolListViewModel(
-    useToolUseCase: UseToolUseCase,
+    useItemInMapUseCase: UseItemInMapUseCase,
 ) : ItemListViewModel<ToolId, Tool>(
-    useToolUseCase = useToolUseCase,
+    useItemInMapUseCase = useItemInMapUseCase,
 ) {
     override val itemRepository: ToolRepository by inject()
     private val bagRepository: BagRepository<ToolId> by inject(
