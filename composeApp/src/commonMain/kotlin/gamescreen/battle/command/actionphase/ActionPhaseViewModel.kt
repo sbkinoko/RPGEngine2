@@ -13,6 +13,8 @@ import core.domain.item.DamageType
 import core.domain.item.EffectKind
 import core.domain.item.FlyEffect
 import core.domain.item.HealEffect
+import core.domain.item.Item
+import core.domain.item.NeedTarget
 import core.domain.item.TargetType
 import core.domain.item.UsableItem
 import core.domain.status.StatusData
@@ -248,7 +250,7 @@ class ActionPhaseViewModel(
         }
     }
 
-    private fun getActionItem(statusWrapper: StatusWrapper): UsableItem {
+    private fun getActionItem(statusWrapper: StatusWrapper): Item {
         val action = statusWrapper.actionData
         return when (action.thisTurnAction) {
             ActionType.Normal -> skillRepository.getItem(SkillId.Normal1)
@@ -281,7 +283,7 @@ class ActionPhaseViewModel(
         val action = statusWrapper.actionData
         val item = getActionItem(statusWrapper = statusWrapper)
 
-        return when (item.targetType) {
+        return when ((item as NeedTarget).targetType) {
             TargetType.Enemy,
                 -> {
                 var targetId = action.target
@@ -435,7 +437,7 @@ class ActionPhaseViewModel(
         )
 
         //コスト処理
-        when (val costType = skill.costType) {
+        when (val costType = (skill as UsableItem).costType) {
             is CostType.MP -> {
                 updateAllyParameter.decMP(
                     id = id,
@@ -457,7 +459,7 @@ class ActionPhaseViewModel(
                 val targetList = findActiveTargetUseCase.invoke(
                     statusList = statusList,
                     target = actionData.target,
-                    targetNum = skill.targetNum,
+                    targetNum = (skill as NeedTarget).targetNum,
                 )
 
                 //　複数の対象攻撃
@@ -476,7 +478,7 @@ class ActionPhaseViewModel(
                 val targetList = findActiveTargetUseCase.invoke(
                     statusList = statusList,
                     target = actionData.target,
-                    targetNum = skill.targetNum
+                    targetNum = (skill as NeedTarget).targetNum,
                 )
                 //　複数の対象攻撃
                 targetList.forEach {
@@ -496,7 +498,7 @@ class ActionPhaseViewModel(
             }
 
             is BufEffect -> {
-                when (skill.targetType) {
+                when ((skill as NeedTarget).targetType) {
                     TargetType.Ally -> {
                         val target = actionData.ally
                         updateAllyParameter.addBuf(

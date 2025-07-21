@@ -1,5 +1,6 @@
 package gamescreen.battle.usecase.gettargetnum
 
+import core.domain.item.NeedTarget
 import data.item.skill.SkillRepository
 import gamescreen.battle.domain.ActionType
 import gamescreen.battle.repository.action.ActionRepository
@@ -17,7 +18,8 @@ class GetTargetNumUseCaseImpl(
                 }
 
                 ActionType.Skill -> {
-                    skillRepository.getItem(it.skillId).targetNum
+                    val skill = skillRepository.getItem(it.skillId)
+                    (skill as NeedTarget).targetNum
                 }
 
                 ActionType.TOOL -> {

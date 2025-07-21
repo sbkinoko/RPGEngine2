@@ -37,12 +37,9 @@ class ToolRepositoryImpl : ToolRepository {
 
             ToolId.Fly -> FlyTool(
                 name = "空飛び",
-                targetNum = 1,
                 usablePlace = Place.MAP,
                 costType = CostType.NotConsume,
                 isDisposable = false,
-                targetStatusType = TargetStatusType.ACTIVE,
-                targetType = TargetType.Ally,
             )
         }
     }

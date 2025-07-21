@@ -1,6 +1,7 @@
 package gamescreen.battle.command.selectally
 
 import common.DefaultScope
+import core.domain.item.NeedTarget
 import core.domain.item.TargetStatusType
 import core.menu.SelectCore
 import core.menu.SelectCoreInt
@@ -69,7 +70,7 @@ class SelectAllyViewModel(
                 }
             }
 
-            return item.targetStatusType
+            return (item as NeedTarget).targetStatusType
         }
 
     init {

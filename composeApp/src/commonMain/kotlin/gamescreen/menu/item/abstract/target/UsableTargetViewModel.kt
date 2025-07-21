@@ -2,7 +2,8 @@ package gamescreen.menu.item.abstract.target
 
 import core.PlayerStatusRepositoryName
 import core.domain.AbleType
-import core.domain.item.UsableItem
+import core.domain.item.Item
+import core.domain.item.NeedTarget
 import core.menu.SelectCore
 import core.menu.SelectCoreInt
 import core.repository.player.PlayerStatusRepository
@@ -16,7 +17,7 @@ import gamescreen.text.repository.TextRepository
 import org.koin.core.component.inject
 import values.Constants.Companion.playerNum
 
-abstract class UsableTargetViewModel<T, V : UsableItem> : TargetViewModel<T, V>() {
+abstract class UsableTargetViewModel<T, V : Item> : TargetViewModel<T, V>() {
     protected val targetRepository: TargetRepository by inject()
     protected val playerStatusRepository: PlayerStatusRepository by inject()
     protected val statusDataRepository: StatusDataRepository by inject(
@@ -66,7 +67,7 @@ abstract class UsableTargetViewModel<T, V : UsableItem> : TargetViewModel<T, V>(
         val targetStatus = statusDataRepository.getStatusData(id = target)
         val item = itemRepository.getItem(itemId)
 
-        val targetType = item.targetStatusType
+        val targetType = (item as NeedTarget).targetStatusType
 
         if (targetType.canSelect(targetStatus).not()) {
             // 対象にとれなかった
