@@ -91,7 +91,9 @@ val ModuleMenu = module {
     }
 
     single {
-        SkillListViewModel()
+        SkillListViewModel(
+            useToolUseCase = get()
+        )
     }
 
     single {
@@ -107,7 +109,9 @@ val ModuleMenu = module {
     }
 
     single {
-        ToolListViewModel()
+        ToolListViewModel(
+            useToolUseCase = get(),
+        )
     }
 
     single {
@@ -131,7 +135,9 @@ val ModuleMenu = module {
     }
 
     single {
-        EquipmentListViewModel()
+        EquipmentListViewModel(
+            useToolUseCase = get(),
+        )
     }
 
     single {

@@ -4,6 +4,7 @@ import core.EquipmentBagRepositoryName
 import core.domain.AbleType
 import core.domain.item.equipment.EquipmentData
 import core.repository.bag.BagRepository
+import core.usecase.item.usetool.UseToolUseCase
 import data.item.equipment.EquipmentId
 import data.item.equipment.EquipmentRepository
 import gamescreen.menu.domain.MenuType
@@ -11,11 +12,22 @@ import gamescreen.menu.item.abstract.itemselect.ItemListViewModel
 import org.koin.core.component.inject
 import values.Constants
 
-class EquipmentListViewModel : ItemListViewModel<EquipmentId, EquipmentData>() {
+class EquipmentListViewModel(
+    useToolUseCase: UseToolUseCase,
+) : ItemListViewModel<EquipmentId, EquipmentData>(
+    useToolUseCase = useToolUseCase,
+) {
     override val itemRepository: EquipmentRepository by inject()
     private val bagRepository: BagRepository<EquipmentId> by inject(
         qualifier = EquipmentBagRepositoryName,
     )
+
+    override val selectedItem: EquipmentData
+        get() = itemRepository.getItem(
+            bagRepository.getItemIdAt(
+                selectedFlowState.value
+            )
+        )
 
     override val boundedScreenType: MenuType
         get() = MenuType.EQUIPMENT_LIST

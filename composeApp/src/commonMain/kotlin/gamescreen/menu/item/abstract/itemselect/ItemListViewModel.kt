@@ -3,10 +3,12 @@ package gamescreen.menu.item.abstract.itemselect
 import core.PlayerStatusRepositoryName
 import core.domain.AbleType
 import core.domain.item.Item
+import core.domain.item.NeedTarget
 import core.menu.SelectCore
 import core.menu.SelectCoreInt
 import core.repository.player.PlayerStatusRepository
 import core.repository.statusdata.StatusDataRepository
+import core.usecase.item.usetool.UseToolUseCase
 import data.item.ItemRepository
 import gamescreen.menu.MenuChildViewModel
 import gamescreen.menu.domain.MenuType
@@ -20,7 +22,9 @@ import gamescreen.text.repository.TextRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-abstract class ItemListViewModel<T, V : Item> : MenuChildViewModel(),
+abstract class ItemListViewModel<T, V : Item>(
+    private val useToolUseCase: UseToolUseCase,
+) : MenuChildViewModel(),
     ItemList<T>,
     KoinComponent {
     protected val menuStateRepository: MenuStateRepository by inject()
@@ -51,6 +55,8 @@ abstract class ItemListViewModel<T, V : Item> : MenuChildViewModel(),
 
     protected val itemList: List<Item>
         get() = getPlayerItemListAt(userId)
+
+    abstract val selectedItem: V
 
     protected abstract val boundedScreenType: MenuType
     protected abstract val nextScreenType: MenuType
@@ -87,7 +93,7 @@ abstract class ItemListViewModel<T, V : Item> : MenuChildViewModel(),
         return itemRepository.getItem(id).name
     }
 
-    override fun getPlayerItemListAt(id: Int): List<Item> {
+    override fun getPlayerItemListAt(id: Int): List<V> {
         return getPlayerItemIdListAt(id).map {
             itemRepository.getItem(it)
         }
@@ -101,10 +107,24 @@ abstract class ItemListViewModel<T, V : Item> : MenuChildViewModel(),
             AbleType.Able -> {
                 // indexを保存
                 indexRepository.index = selectCore.stateFlow.value
-                //　次の画面に遷移
-                menuStateRepository.push(
-                    nextScreenType,
-                )
+
+                if (selectedItem is NeedTarget) {
+                    //　次の画面に遷移
+                    menuStateRepository.push(
+                        nextScreenType,
+                    )
+                } else {
+                    useToolUseCase.invoke(
+                        userId = userRepository.userId,
+                        index = indexRepository.index,
+                        targetId = -1,
+                    )
+                    textRepository.push(
+                        textBoxData = TextBoxData(
+                            text = "${selectedItem.name}を使った"
+                        )
+                    )
+                }
             }
 
             AbleType.CANT_USE_BY_PLACE -> {
