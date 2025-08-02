@@ -7,12 +7,13 @@ import gamescreen.menushop.repository.shopmenu.ShopMenuRepository
 import gamescreen.menushop.repository.shopmenu.ShopMenuRepositoryImpl
 import gamescreen.menushop.usecase.setshopitem.SetShopItemUseCase
 import gamescreen.menushop.usecase.setshopitem.SetShopItemUseCaseImpl
+import gamescreen.menushop.viewmodel.BuyViewModel
 import org.koin.dsl.module
 
 val ModuleShop = module {
 
     single {
-        ShopViewModel(
+        BuyViewModel(
             moneyRepository = get(),
             amountData = get(),
             choiceRepository = get(),

@@ -1,4 +1,4 @@
-package gamescreen.menushop
+package gamescreen.menushop.viewmodel
 
 import androidx.compose.runtime.mutableStateOf
 import common.DefaultScope
@@ -21,12 +21,12 @@ import gamescreen.text.repository.TextRepository
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 
-class ShopViewModel(
-    val moneyRepository: MoneyRepository,
+abstract class AbstractShopViewModel(
+    private val moneyRepository: MoneyRepository,
     val amountData: AmountData,
-    val choiceRepository: ChoiceRepository,
-    val textRepository: TextRepository,
-    val addToolUseCase: AddToolUseCase<ToolId>,
+    private val choiceRepository: ChoiceRepository,
+    private val textRepository: TextRepository,
+    private val addToolUseCase: AddToolUseCase<ToolId>,
     private val shopMenuRepository: ShopMenuRepository,
 ) : KoinComponent,
     SelectableChildViewModel<Int>() {
@@ -41,7 +41,7 @@ class ShopViewModel(
     )
 
     val isShopMenuVisibleStateFlow =
-        shopMenuRepository.isVisibleStateFlow
+        shopMenuRepository.shopTypeStateFlow
 
     val moneyFlow = moneyRepository.moneyStateFLow
 
@@ -115,7 +115,7 @@ class ShopViewModel(
             }
 
             SubWindowType.AMOUNT -> {
-                buy(
+                decideNum(
                     selected = selected,
                 )
             }
@@ -144,7 +144,7 @@ class ShopViewModel(
         }
     }
 
-    fun buy(selected: Int) {
+    fun decideNum(selected: Int) {
         val itemId = shopItemList[selected].itemId
         val price = shopItemList[selected].price
 

@@ -33,7 +33,7 @@ val ModuleMain = module {
             textViewModel = get(),
 
             shopMenuRepository = get(),
-            shopViewModel = get(),
+            buyViewModel = get(),
 
             screenTypeRepository = get(),
         )
