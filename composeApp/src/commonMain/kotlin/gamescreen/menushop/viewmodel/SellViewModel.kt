@@ -1,26 +1,32 @@
 package gamescreen.menushop.viewmodel
 
+import core.repository.bag.BagRepository
 import core.repository.money.MoneyRepository
 import data.item.tool.ToolId
+import data.item.tool.ToolRepository
 import gamescreen.choice.Choice
 import gamescreen.choice.repository.ChoiceRepository
-import gamescreen.menu.usecase.bag.addtool.AddToolUseCase
+import gamescreen.menu.usecase.bag.dectool.DecItemUseCase
 import gamescreen.menushop.domain.ShopItem
 import gamescreen.menushop.domain.amountdata.AmountData
 import gamescreen.menushop.repository.shopmenu.ShopMenuRepository
 import gamescreen.text.TextBoxData
 import gamescreen.text.repository.TextRepository
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import values.TextData
+import kotlinx.coroutines.flow.asStateFlow
 
-class BuyViewModel(
+
+class SellViewModel(
     moneyRepository: MoneyRepository,
     amountData: AmountData,
     choiceRepository: ChoiceRepository,
     textRepository: TextRepository,
     shopMenuRepository: ShopMenuRepository,
 
-    private val addToolUseCase: AddToolUseCase<ToolId>,
+    private val bagRepository: BagRepository<ToolId>,
+    private val toolRepository: ToolRepository,
+    private val decToolUseCaseImpl: DecItemUseCase<ToolId>,
 ) : AbstractShopViewModel(
     amountData,
     moneyRepository,
@@ -29,17 +35,33 @@ class BuyViewModel(
     shopMenuRepository
 ) {
     override val amountText: String
-        get() = TextData.SHOP_BUY
+        get() = "売る"
+
+    private val mutableShopItemFlow = MutableStateFlow<List<ShopItem>>(
+        emptyList()
+    )
 
     override val shopItemStateFlow: StateFlow<List<ShopItem>>
-        get() = shopMenuRepository.shopItemListStateFlow
+        get() = mutableShopItemFlow.asStateFlow()
 
+
+    fun updateBag() {
+        mutableShopItemFlow.value =
+            bagRepository.getList().map {
+                ShopItem(
+                    name = toolRepository.getItem(it.id).name + "×" + it.num,
+                    price = 100,
+                    explain = toolRepository.getItem(it.id).explain,
+                    itemId = it.id,
+                )
+            }
+    }
 
     override fun setMax() {
-        amountData.maxNum = if (shopItemList.size <= selectedIndex) {
-            0
+        if (bagRepository.getList().isEmpty()) {
+            amountData.maxNum = 0
         } else {
-            money / shopItemList[selectedIndex].price
+            amountData.maxNum = bagRepository.getList()[selectedIndex].num
         }
     }
 
@@ -50,13 +72,13 @@ class BuyViewModel(
         choiceRepository.push(
             commandType = listOf(
                 Choice(
-                    text = "買う",
+                    text = "売る",
                     callBack = {
-                        addToolUseCase.invoke(
-                            toolId = itemId,
-                            toolNum = amountData.num,
+                        decToolUseCaseImpl.invoke(
+                            itemId = itemId,
+                            itemNum = amountData.num,
                         )
-                        moneyRepository.decMoney(
+                        moneyRepository.addMoney(
                             price * amountData.num
                         )
                         textRepository.push(

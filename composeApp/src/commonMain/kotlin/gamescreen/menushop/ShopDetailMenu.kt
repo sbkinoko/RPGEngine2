@@ -29,6 +29,7 @@ import values.Colors
 fun ShopDetailMenu(
     shopViewModel: AbstractShopViewModel,
     modifier: Modifier = Modifier,
+    update: () -> Unit,
 ) {
     val shopType by shopViewModel
         .isShopMenuVisibleStateFlow
@@ -45,6 +46,8 @@ fun ShopDetailMenu(
     }
 
     val subWindowType by shopViewModel.subWindowType
+
+    update()
 
     Box(
         modifier = modifier
@@ -123,6 +126,7 @@ fun ShopDetailMenu(
                         modifier = Modifier.weight(1f)
                             .fillMaxWidth(),
                         amountData = shopViewModel.amountData,
+                        buttonText = shopViewModel.amountText,
                         onClickBuy = {
                             shopViewModel.decideNum(
                                 selected = selected,

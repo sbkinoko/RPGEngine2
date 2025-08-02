@@ -34,7 +34,7 @@ val ModuleMain = module {
 
             shopMenuRepository = get(),
             buyViewModel = get(),
-
+            sellViewModel = get(),
             screenTypeRepository = get(),
         )
     }

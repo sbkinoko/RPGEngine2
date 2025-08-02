@@ -16,11 +16,11 @@ import androidx.compose.ui.unit.dp
 import common.layout.spinnbutton.SpinButton
 import gamescreen.menushop.domain.amountdata.AmountData
 import values.Colors
-import values.TextData
 
 @Composable
 fun AmountComponent(
     amountData: AmountData,
+    buttonText: String,
     onClickBuy: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -66,7 +66,7 @@ fun AmountComponent(
                 .fillMaxHeight(),
         ) {
             Text(
-                text = TextData.SHOP_BUY
+                text = buttonText,
             )
         }
     }
