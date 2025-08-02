@@ -14,6 +14,8 @@ import gamescreen.map.usecase.changeheight.ChangeHeightUseCase
 import gamescreen.map.usecase.movetootherheight.MoveToOtherHeightUseCase
 import gamescreen.map.usecase.settalk.SetTalkUseCase
 import gamescreen.menu.usecase.bag.addtool.AddToolUseCase
+import gamescreen.menushop.domain.ShopType
+import gamescreen.menushop.repository.shopmenu.ShopMenuRepository
 import gamescreen.menushop.usecase.setshopitem.SetShopItemUseCase
 import gamescreen.text.TextBoxData
 import gamescreen.text.repository.TextRepository
@@ -33,6 +35,7 @@ class ActionEventUseCaseImpl(
     private val makeFrontDateService: MakeFrontDateService,
 
     private val choiceRepository: ChoiceRepository,
+    private val shopMenuRepository: ShopMenuRepository,
 ) : ActionEventUseCase {
 
     override fun invoke(
@@ -114,6 +117,16 @@ class ActionEventUseCaseImpl(
                                         "買う",
                                         callBack = {
                                             setShopItemUseCase.invoke(eventType.shopId)
+
+                                            shopMenuRepository.setShopType(ShopType.BUY)
+                                        }
+                                    ),
+                                    Choice(
+                                        "売る",
+                                        callBack = {
+                                            shopMenuRepository.setShopType(
+                                                ShopType.SELL
+                                            )
                                         }
                                     ),
                                     Choice(
@@ -125,7 +138,7 @@ class ActionEventUseCaseImpl(
                                                 )
                                             )
                                         },
-                                    )
+                                    ),
                                 )
                             )
                         }

@@ -13,6 +13,7 @@ import gamescreen.choice.repository.ChoiceRepository
 import gamescreen.menu.domain.SelectManager
 import gamescreen.menu.usecase.bag.addtool.AddToolUseCase
 import gamescreen.menushop.domain.ShopItem
+import gamescreen.menushop.domain.ShopType
 import gamescreen.menushop.domain.SubWindowType
 import gamescreen.menushop.domain.amountdata.AmountData
 import gamescreen.menushop.repository.shopmenu.ShopMenuRepository
@@ -101,6 +102,7 @@ abstract class AbstractShopViewModel(
 
     fun hideMenu() {
         shopMenuRepository.setList(emptyList())
+        shopMenuRepository.setShopType(ShopType.CLOSE)
         textRepository.push(
             TextBoxData("また来てね")
         )

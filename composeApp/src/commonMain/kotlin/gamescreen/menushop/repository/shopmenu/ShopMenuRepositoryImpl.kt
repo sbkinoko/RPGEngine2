@@ -23,11 +23,9 @@ class ShopMenuRepositoryImpl : ShopMenuRepository {
 
     override fun setList(list: List<ShopItem>) {
         mutableShopItemListStateFlow.value = list
+    }
 
-        if (list.isNotEmpty()) {
-            mutableShopTypeStateFlow.value = ShopType.BUY
-        } else {
-            mutableShopTypeStateFlow.value = ShopType.CLOSE
-        }
+    override fun setShopType(shopType: ShopType) {
+        mutableShopTypeStateFlow.value = shopType
     }
 }

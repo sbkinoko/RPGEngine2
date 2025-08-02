@@ -51,33 +51,6 @@ class BuyViewModelTest : KoinTest {
         stopKoin()
     }
 
-    @Test
-    fun checkInit() {
-        runBlocking {
-            var result = ShopType.CLOSE
-            var count = 0
-            val collectJob = launch {
-                shopMenuRepository.shopTypeStateFlow.collect {
-                    result = it
-                    count++
-                }
-            }
-
-            delay(50)
-
-            assertEquals(
-                expected = ShopType.BUY,
-                actual = result,
-            )
-
-            assertEquals(
-                expected = 1,
-                actual = count,
-            )
-
-            collectJob.cancel()
-        }
-    }
 
     @Test
     fun hideMenu() {
@@ -103,7 +76,7 @@ class BuyViewModelTest : KoinTest {
             )
 
             assertEquals(
-                expected = 2,
+                expected = 1,
                 actual = count,
             )
 
