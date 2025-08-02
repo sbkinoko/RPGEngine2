@@ -3,6 +3,8 @@ package gamescreen.map.usecase.event.actionevent
 import common.DefaultScope
 import core.domain.mapcell.CellType
 import data.item.tool.ToolId
+import gamescreen.choice.Choice
+import gamescreen.choice.repository.ChoiceRepository
 import gamescreen.map.domain.MapUiState
 import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.ObjectHeightDetail
@@ -29,6 +31,8 @@ class ActionEventUseCaseImpl(
     private val moveToOtherHeightUseCase: MoveToOtherHeightUseCase,
     private val changeHeightUseCase: ChangeHeightUseCase,
     private val makeFrontDateService: MakeFrontDateService,
+
+    private val choiceRepository: ChoiceRepository,
 ) : ActionEventUseCase {
 
     override fun invoke(
@@ -104,7 +108,26 @@ class ActionEventUseCaseImpl(
                     TextBoxData(
                         text = "いらっしゃい",
                         callBack = {
-                            setShopItemUseCase.invoke(eventType.shopId)
+                            choiceRepository.push(
+                                listOf(
+                                    Choice(
+                                        "買う",
+                                        callBack = {
+                                            setShopItemUseCase.invoke(eventType.shopId)
+                                        }
+                                    ),
+                                    Choice(
+                                        "何もしない",
+                                        callBack = {
+                                            textRepository.push(
+                                                TextBoxData(
+                                                    text = "また来てね",
+                                                )
+                                            )
+                                        },
+                                    )
+                                )
+                            )
                         }
                     )
                 )
