@@ -9,6 +9,10 @@ interface ShopMenuRepository {
 
     val shopTypeStateFlow: StateFlow<ShopType>
 
+    fun setShopType(
+        shopType: ShopType,
+    )
+
     fun setList(
         list: List<ShopItem>,
     )

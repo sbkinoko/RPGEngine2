@@ -7,6 +7,11 @@ enum class ShopType {
     BUY,
 
     /**
+     * 売却状態
+     */
+    SELL,
+    
+    /**
      * 非表示状態
      */
     CLOSE,

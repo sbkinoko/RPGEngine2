@@ -251,6 +251,7 @@ val ModuleMap = module {
             changeHeightUseCase = get(),
             makeFrontDateService = get(),
             choiceRepository = get(),
+            shopMenuRepository = get(),
         )
     }
 
