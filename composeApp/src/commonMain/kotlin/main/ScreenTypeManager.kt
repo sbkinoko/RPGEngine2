@@ -12,6 +12,7 @@ import gamescreen.menu.MenuViewModel
 import gamescreen.menushop.domain.ShopType
 import gamescreen.menushop.repository.shopmenu.ShopMenuRepository
 import gamescreen.menushop.viewmodel.BuyViewModel
+import gamescreen.menushop.viewmodel.SellViewModel
 import gamescreen.text.TextBoxData
 import gamescreen.text.TextViewModel
 import gamescreen.text.repository.TextRepository
@@ -35,6 +36,7 @@ class ScreenTypeManager(
 
     private val shopMenuRepository: ShopMenuRepository,
     private val buyViewModel: BuyViewModel,
+    private val sellViewModel: SellViewModel,
 
     private val screenTypeRepository: ScreenTypeRepository,
 ) : KoinComponent {
@@ -95,6 +97,12 @@ class ScreenTypeManager(
             mutableControllerFlow.value = buyViewModel
             return
         }
+
+        if (shopType == ShopType.SELL) {
+            mutableControllerFlow.value = sellViewModel
+            return
+        }
+
 
         mutableControllerFlow.value = when (gameScreenType) {
             GameScreenType.BATTLE -> battleViewModel

@@ -7,11 +7,8 @@ import core.menu.SelectCore
 import core.menu.SelectCoreInt
 import core.menu.SelectableChildViewModel
 import core.repository.money.MoneyRepository
-import data.item.tool.ToolId
-import gamescreen.choice.Choice
 import gamescreen.choice.repository.ChoiceRepository
 import gamescreen.menu.domain.SelectManager
-import gamescreen.menu.usecase.bag.addtool.AddToolUseCase
 import gamescreen.menushop.domain.ShopItem
 import gamescreen.menushop.domain.ShopType
 import gamescreen.menushop.domain.SubWindowType
@@ -19,20 +16,24 @@ import gamescreen.menushop.domain.amountdata.AmountData
 import gamescreen.menushop.repository.shopmenu.ShopMenuRepository
 import gamescreen.text.TextBoxData
 import gamescreen.text.repository.TextRepository
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 
 abstract class AbstractShopViewModel(
-    private val moneyRepository: MoneyRepository,
     val amountData: AmountData,
-    private val choiceRepository: ChoiceRepository,
-    private val textRepository: TextRepository,
-    private val addToolUseCase: AddToolUseCase<ToolId>,
-    private val shopMenuRepository: ShopMenuRepository,
+
+    protected val moneyRepository: MoneyRepository,
+    protected val choiceRepository: ChoiceRepository,
+    protected val textRepository: TextRepository,
+    protected val shopMenuRepository: ShopMenuRepository,
 ) : KoinComponent,
     SelectableChildViewModel<Int>() {
 
-    val shopItemStateFlow = shopMenuRepository.shopItemListStateFlow
+    abstract val shopItemStateFlow: StateFlow<List<ShopItem>>
+
+    abstract val amountText: String
 
     override var selectCore: SelectCore<Int> = SelectCoreInt(
         SelectManager(
@@ -50,19 +51,23 @@ abstract class AbstractShopViewModel(
         SubWindowType.EXPLAIN,
     )
 
-    private var money = 0
-    private var selected = 0
-    private var shopItemList = emptyList<ShopItem>()
+    protected var money = 0
+    protected var selectedIndex = 0
+    protected var shopItemList = emptyList<ShopItem>()
 
     init {
         DefaultScope.launch {
+            // fixme 初期化タイミングを調べる
+            delay(500)
             selectCore.stateFlow.collect {
-                selected = it
+                selectedIndex = it
                 setMax()
             }
         }
 
         DefaultScope.launch {
+            // fixme 初期化タイミングを調べる
+            delay(500)
             moneyRepository.moneyStateFLow.collect {
                 money = it
                 setMax()
@@ -70,6 +75,8 @@ abstract class AbstractShopViewModel(
         }
 
         DefaultScope.launch {
+            // fixme 初期化タイミングを調べる
+            delay(500)
             shopItemStateFlow.collect {
                 shopItemList = it
                 (selectCore as SelectCoreInt).changeItemNum(it.size)
@@ -80,13 +87,7 @@ abstract class AbstractShopViewModel(
         moneyRepository.setMoney(1000)
     }
 
-    private fun setMax() {
-        amountData.maxNum = if (shopItemList.size <= selected) {
-            0
-        } else {
-            money / shopItemList[selected].price
-        }
-    }
+    abstract fun setMax()
 
     fun reset() {
         amountData.reset()
@@ -118,7 +119,7 @@ abstract class AbstractShopViewModel(
 
             SubWindowType.AMOUNT -> {
                 decideNum(
-                    selected = selected,
+                    selected = selectedIndex,
                 )
             }
         }
@@ -146,36 +147,5 @@ abstract class AbstractShopViewModel(
         }
     }
 
-    fun decideNum(selected: Int) {
-        val itemId = shopItemList[selected].itemId
-        val price = shopItemList[selected].price
-
-        choiceRepository.push(
-            commandType = listOf(
-                Choice(
-                    text = "買う",
-                    callBack = {
-                        addToolUseCase.invoke(
-                            toolId = itemId,
-                            toolNum = amountData.num,
-                        )
-                        moneyRepository.decMoney(
-                            price * amountData.num
-                        )
-                        textRepository.push(
-                            TextBoxData(
-                                text = "まいどあり",
-                                callBack = {
-                                    pressB()
-                                }
-                            ),
-                        )
-                    },
-                ),
-                Choice(
-                    text = "やめる",
-                )
-            )
-        )
-    }
+    abstract fun decideNum(selected: Int)
 }
