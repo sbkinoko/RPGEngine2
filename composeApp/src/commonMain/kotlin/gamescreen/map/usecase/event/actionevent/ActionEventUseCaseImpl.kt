@@ -117,6 +117,8 @@ class ActionEventUseCaseImpl(
                                         "買う",
                                         callBack = {
                                             setShopItemUseCase.invoke(eventType.shopId)
+
+                                            shopMenuRepository.setShopType(ShopType.BUY)
                                         }
                                     ),
                                     Choice(

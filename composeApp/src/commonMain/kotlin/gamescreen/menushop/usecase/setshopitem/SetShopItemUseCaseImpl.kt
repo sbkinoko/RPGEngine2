@@ -2,7 +2,6 @@ package gamescreen.menushop.usecase.setshopitem
 
 import data.item.tool.ToolId
 import gamescreen.menushop.domain.ShopItem
-import gamescreen.menushop.domain.ShopType
 import gamescreen.menushop.repository.shopmenu.ShopMenuRepository
 import values.event.ShopId
 
@@ -39,6 +38,5 @@ class SetShopItemUseCaseImpl(
         shopMenuRepository.setList(
             list = list,
         )
-        shopMenuRepository.setShopType(ShopType.BUY)
     }
 }
