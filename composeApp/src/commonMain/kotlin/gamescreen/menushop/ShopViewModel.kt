@@ -101,6 +101,9 @@ class ShopViewModel(
 
     fun hideMenu() {
         shopMenuRepository.setList(emptyList())
+        textRepository.push(
+            TextBoxData("また来てね")
+        )
     }
 
     override fun goNext() {

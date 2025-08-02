@@ -250,6 +250,7 @@ val ModuleMap = module {
             moveToOtherHeightUseCase = get(),
             changeHeightUseCase = get(),
             makeFrontDateService = get(),
+            choiceRepository = get(),
         )
     }
 
