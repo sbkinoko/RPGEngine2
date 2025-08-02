@@ -10,7 +10,7 @@ fun ShopMenu(
     modifier: Modifier,
     buyViewModel: BuyViewModel = koinInject(),
 ) {
-    BuyMenu(
+    ShopDetailMenu(
         shopViewModel = buyViewModel,
         modifier = modifier,
     )

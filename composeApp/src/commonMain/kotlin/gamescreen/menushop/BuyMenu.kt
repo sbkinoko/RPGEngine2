@@ -26,7 +26,7 @@ import gamescreen.menushop.viewmodel.AbstractShopViewModel
 import values.Colors
 
 @Composable
-fun BuyMenu(
+fun ShopDetailMenu(
     shopViewModel: AbstractShopViewModel,
     modifier: Modifier = Modifier,
 ) {
