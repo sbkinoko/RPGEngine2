@@ -1,8 +1,10 @@
-package gamescreen.menushop
+package gamescreen.menushop.viewmodel
 
 import core.ModuleCore
 import gamescreen.choice.ModuleChoice
 import gamescreen.menu.ModuleMenu
+import gamescreen.menushop.ModuleShop
+import gamescreen.menushop.domain.ShopType
 import gamescreen.menushop.domain.amountdata.dummyItem
 import gamescreen.menushop.repository.shopmenu.ShopMenuRepository
 import gamescreen.text.ModuleText
@@ -18,8 +20,8 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class ShopViewModelTest : KoinTest {
-    private val shopViewModel: ShopViewModel by inject()
+class BuyViewModelTest : KoinTest {
+    private val shopViewModel: BuyViewModel by inject()
 
     private val shopMenuRepository: ShopMenuRepository by inject()
 
@@ -52,10 +54,10 @@ class ShopViewModelTest : KoinTest {
     @Test
     fun checkInit() {
         runBlocking {
-            var result = false
+            var result = ShopType.CLOSE
             var count = 0
             val collectJob = launch {
-                shopMenuRepository.isVisibleStateFlow.collect {
+                shopMenuRepository.shopTypeStateFlow.collect {
                     result = it
                     count++
                 }
@@ -64,7 +66,7 @@ class ShopViewModelTest : KoinTest {
             delay(50)
 
             assertEquals(
-                expected = true,
+                expected = ShopType.BUY,
                 actual = result,
             )
 
@@ -80,10 +82,10 @@ class ShopViewModelTest : KoinTest {
     @Test
     fun hideMenu() {
         runBlocking {
-            var result = false
+            var result = ShopType.CLOSE
             var count = 0
             val collectJob = launch {
-                shopMenuRepository.isVisibleStateFlow.collect {
+                shopMenuRepository.shopTypeStateFlow.collect {
                     result = it
                     count++
                 }
@@ -96,7 +98,7 @@ class ShopViewModelTest : KoinTest {
             delay(50)
 
             assertEquals(
-                expected = false,
+                expected = ShopType.CLOSE,
                 actual = result,
             )
 

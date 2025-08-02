@@ -42,6 +42,7 @@ fun PlayArea(
             }
         }
 
+        // フィールドを背景にしたいのでscreenTypeにはしない
         ShopMenu(
             modifier = Modifier.fillMaxSize(),
         )

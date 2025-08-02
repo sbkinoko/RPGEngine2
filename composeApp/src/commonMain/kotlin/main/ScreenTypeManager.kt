@@ -9,8 +9,9 @@ import gamescreen.choice.ChoiceViewModel
 import gamescreen.choice.repository.ChoiceRepository
 import gamescreen.map.viewmodel.MapViewModel
 import gamescreen.menu.MenuViewModel
-import gamescreen.menushop.ShopViewModel
+import gamescreen.menushop.domain.ShopType
 import gamescreen.menushop.repository.shopmenu.ShopMenuRepository
+import gamescreen.menushop.viewmodel.BuyViewModel
 import gamescreen.text.TextBoxData
 import gamescreen.text.TextViewModel
 import gamescreen.text.repository.TextRepository
@@ -33,7 +34,7 @@ class ScreenTypeManager(
     private val textViewModel: TextViewModel,
 
     private val shopMenuRepository: ShopMenuRepository,
-    private val shopViewModel: ShopViewModel,
+    private val buyViewModel: BuyViewModel,
 
     private val screenTypeRepository: ScreenTypeRepository,
 ) : KoinComponent {
@@ -46,7 +47,7 @@ class ScreenTypeManager(
     private var choiceList: List<Choice> = emptyList()
     private var textBoxData: TextBoxData? = null
     private var gameScreenType: GameScreenType = GameScreenType.FIELD
-    private var isShop: Boolean = false
+    private var shopType: ShopType = ShopType.CLOSE
 
 
     init {
@@ -72,8 +73,8 @@ class ScreenTypeManager(
         }
 
         CoroutineScope(Dispatchers.Main).launch {
-            shopMenuRepository.isVisibleStateFlow.collect {
-                isShop = it
+            shopMenuRepository.shopTypeStateFlow.collect {
+                shopType = it
                 updateScreenType()
             }
         }
@@ -90,8 +91,8 @@ class ScreenTypeManager(
             return
         }
 
-        if (isShop) {
-            mutableControllerFlow.value = shopViewModel
+        if (shopType == ShopType.BUY) {
+            mutableControllerFlow.value = buyViewModel
             return
         }
 

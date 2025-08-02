@@ -2,6 +2,7 @@ package gamescreen.menushop.repository.shopmenu
 
 import gamescreen.menushop.ModuleShop
 import gamescreen.menushop.domain.ShopItem
+import gamescreen.menushop.domain.ShopType
 import gamescreen.menushop.domain.amountdata.dummyItem
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -36,10 +37,10 @@ class ShopMenuRepositoryImplTest : KoinTest {
     @Test
     fun checkInit() {
         runBlocking {
-            var result = false
+            var result = ShopType.CLOSE
             var count = 0
             val collectJob = launch {
-                shopMenuRepository.isVisibleStateFlow
+                shopMenuRepository.shopTypeStateFlow
                     .collect {
                         result = it
                         count++
@@ -49,7 +50,7 @@ class ShopMenuRepositoryImplTest : KoinTest {
             delay(50)
 
             assertEquals(
-                expected = false,
+                expected = ShopType.CLOSE,
                 actual = result,
             )
 
@@ -65,10 +66,10 @@ class ShopMenuRepositoryImplTest : KoinTest {
     @Test
     fun setTrueAndFalse() {
         runBlocking {
-            var result = false
+            var result = ShopType.CLOSE
             var count = 0
             val collectJob = launch {
-                shopMenuRepository.isVisibleStateFlow
+                shopMenuRepository.shopTypeStateFlow
                     .collect {
                         result = it
                         count++
@@ -95,7 +96,7 @@ class ShopMenuRepositoryImplTest : KoinTest {
             delay(50)
 
             assertEquals(
-                expected = true,
+                expected = ShopType.BUY,
                 actual = result,
             )
             assertEquals(
@@ -116,7 +117,7 @@ class ShopMenuRepositoryImplTest : KoinTest {
             delay(50)
 
             assertEquals(
-                expected = false,
+                expected = ShopType.CLOSE,
                 actual = result,
             )
 
