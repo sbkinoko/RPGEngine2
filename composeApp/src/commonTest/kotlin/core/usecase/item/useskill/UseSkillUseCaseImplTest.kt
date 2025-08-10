@@ -15,9 +15,9 @@ import core.repository.player.PlayerStatusRepository
 import core.usecase.item.useitem.UseItemUseCase
 import core.usecase.item.useitem.UseSkillUseCaseImpl
 import core.usecase.updateparameter.UpdateStatusUseCase
-import data.item.skill.SkillId
-import data.item.skill.SkillRepository
-import data.item.tool.ToolId
+import data.repository.monster.item.skill.SkillId
+import data.repository.monster.item.skill.SkillRepository
+import data.repository.monster.item.tool.ToolId
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test

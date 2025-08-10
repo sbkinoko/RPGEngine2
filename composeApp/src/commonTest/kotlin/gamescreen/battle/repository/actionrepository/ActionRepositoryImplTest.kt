@@ -1,6 +1,6 @@
 package gamescreen.battle.repository.actionrepository
 
-import data.item.skill.SkillId
+import data.repository.monster.item.skill.SkillId
 import gamescreen.battle.domain.ActionType
 import gamescreen.battle.repository.action.ActionRepository
 import gamescreen.battle.repository.action.ActionRepositoryImpl

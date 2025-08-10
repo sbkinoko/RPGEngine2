@@ -1,6 +1,6 @@
 package gamescreen.menushop.domain
 
-import data.item.tool.ToolId
+import data.repository.monster.item.tool.ToolId
 
 data class ShopItem(
     val name: String,

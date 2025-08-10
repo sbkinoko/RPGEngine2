@@ -1,4 +1,4 @@
-package data.item.equipment
+package data.repository.item.equipment
 
 import core.domain.item.equipment.EquipmentData
 import core.domain.item.equipment.EquipmentType

@@ -1,7 +1,7 @@
 package gamescreen.menu.usecase.bag.dectool
 
 import core.repository.bag.BagRepository
-import data.item.ItemId
+import data.repository.monster.item.ItemId
 
 class DecToolUseCaseImpl<T : ItemId>(
     private val bagRepository: BagRepository<T>,

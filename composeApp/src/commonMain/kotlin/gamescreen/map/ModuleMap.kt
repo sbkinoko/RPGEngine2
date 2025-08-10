@@ -1,6 +1,8 @@
 package gamescreen.map
 
 import core.EnemyStatusRepositoryName
+import data.usecase.battledecidemonster.DecideBattleMonsterUseCase
+import data.usecase.battledecidemonster.DecideBattleMonsterUseCaseImpl
 import gamescreen.map.domain.Player
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.backgroundcell.BackgroundRepositoryImpl
@@ -21,8 +23,6 @@ import gamescreen.map.service.velocitymanage.VelocityManageServiceImpl
 import gamescreen.map.usecase.GetScreenCenterUseCase
 import gamescreen.map.usecase.PlayerMoveManageUseCase
 import gamescreen.map.usecase.PlayerMoveToUseCase
-import gamescreen.map.usecase.battledecidemonster.DecideBattleMonsterUseCase
-import gamescreen.map.usecase.battledecidemonster.DecideBattleMonsterUseCaseImpl
 import gamescreen.map.usecase.battlenormal.StartNormalBattleUseCase
 import gamescreen.map.usecase.battlenormal.StartNormalBattleUseCaseImpl
 import gamescreen.map.usecase.battlestart.StartBattleUseCase

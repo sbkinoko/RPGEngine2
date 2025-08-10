@@ -4,7 +4,7 @@ import common.DefaultScope
 import core.domain.BattleEventCallback
 import core.usecase.heal.MaxHealUseCase
 import data.event.EventManager
-import data.monster.MonsterRepository
+import data.repository.monster.MonsterRepository
 import gamescreen.battle.domain.BattleBackgroundType
 import gamescreen.map.usecase.battlestart.StartBattleUseCase
 import gamescreen.text.TextBoxData

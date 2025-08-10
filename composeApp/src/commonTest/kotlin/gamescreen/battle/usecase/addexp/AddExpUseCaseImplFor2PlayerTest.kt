@@ -9,7 +9,7 @@ import core.domain.status.StatusIncreaseTest.Companion.testStatusUpList
 import core.repository.player.PlayerStatusRepository
 import core.repository.player.PlayerStatusRepositoryImpl
 import core.repository.statusdata.StatusDataRepository
-import data.status.AbstractStatusRepository
+import data.repository.status.AbstractStatusRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.runBlocking

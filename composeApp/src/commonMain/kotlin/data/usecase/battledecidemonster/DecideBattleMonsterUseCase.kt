@@ -1,4 +1,4 @@
-package gamescreen.map.usecase.battledecidemonster
+package data.usecase.battledecidemonster
 
 import core.domain.status.StatusData
 import core.domain.status.monster.MonsterStatus

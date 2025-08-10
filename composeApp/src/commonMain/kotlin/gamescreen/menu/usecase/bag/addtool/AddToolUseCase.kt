@@ -1,6 +1,6 @@
 package gamescreen.menu.usecase.bag.addtool
 
-import data.item.ItemId
+import data.repository.monster.item.ItemId
 
 // fixme itemに変える
 interface AddToolUseCase<T : ItemId> {

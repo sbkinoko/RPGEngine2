@@ -9,8 +9,8 @@ import core.domain.item.TargetType
 import core.domain.item.skill.HealSkill
 import core.domain.status.StatusDataTest
 import core.service.CheckCanUseService
-import data.item.skill.SkillId
-import data.item.skill.SkillRepository
+import data.repository.item.skill.SkillId
+import data.repository.item.skill.SkillRepository
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest

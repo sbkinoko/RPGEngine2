@@ -1,6 +1,6 @@
 package values.event
 
-import data.item.tool.ToolId
+import data.repository.monster.item.tool.ToolId
 
 class BoxData {
     companion object {

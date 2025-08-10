@@ -1,6 +1,6 @@
 package core.domain.item.equipment
 
-import data.item.equipment.EquipmentId
+import data.repository.monster.item.equipment.EquipmentId
 
 data class EquipmentList(
     val weapon: EquipmentId = EquipmentId.None,

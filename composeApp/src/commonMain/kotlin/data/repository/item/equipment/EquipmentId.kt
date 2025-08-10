@@ -1,6 +1,6 @@
-package data.item.equipment
+package data.repository.item.equipment
 
-import data.item.ItemId
+import data.repository.monster.item.ItemId
 
 enum class EquipmentId : ItemId {
     Sword,

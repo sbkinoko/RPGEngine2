@@ -1,12 +1,12 @@
-package gamescreen.map.usecase.battledecidemonster
+package data.usecase.battledecidemonster
 
 import core.domain.mapcell.CellType
 import core.domain.status.StatusData
 import core.domain.status.monster.MonsterStatus
-import data.monster.MonsterRepository
+import data.repository.monster.MonsterRepository
 import gamescreen.map.domain.background.BackgroundCell
 
-// fixme dataに移動する
+
 class DecideBattleMonsterUseCaseImpl(
     private val monsterRepository: MonsterRepository,
 ) : DecideBattleMonsterUseCase {

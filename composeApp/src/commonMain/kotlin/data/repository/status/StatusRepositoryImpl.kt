@@ -1,12 +1,12 @@
-package data.status
+package data.repository.status
 
 import core.domain.status.IncData
 import core.domain.status.PlayerStatus
 import core.domain.status.StatusData
 import core.domain.status.StatusIncrease
 import core.domain.status.param.EXP
-import data.item.skill.SkillId
-import data.item.tool.ToolId
+import data.repository.monster.item.skill.SkillId
+import data.repository.monster.item.tool.ToolId
 
 class StatusRepositoryImpl : AbstractStatusRepository() {
 

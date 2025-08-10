@@ -7,8 +7,8 @@ import core.domain.item.Skill
 import core.menu.SelectCore
 import core.menu.SelectCoreInt
 import core.usecase.item.checkcanuseskill.CheckCanUseSkillUseCase
-import data.item.skill.SkillId
-import data.item.skill.SkillRepository
+import data.repository.monster.item.skill.SkillId
+import data.repository.monster.item.skill.SkillRepository
 import gamescreen.battle.command.item.ItemCommandViewModel
 import gamescreen.battle.domain.ActionType
 import gamescreen.battle.domain.BattleCommandType

@@ -2,7 +2,7 @@ package gamescreen.battle.usecase.gettargetnum
 
 import core.ModuleCore
 import data.ModuleData
-import data.item.skill.SkillId
+import data.repository.monster.item.skill.SkillId
 import gamescreen.battle.ModuleBattle
 import gamescreen.battle.domain.ActionType
 import gamescreen.battle.repository.action.ActionRepository

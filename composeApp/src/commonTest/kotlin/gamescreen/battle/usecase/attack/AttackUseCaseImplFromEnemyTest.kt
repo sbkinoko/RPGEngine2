@@ -9,7 +9,7 @@ import core.domain.status.param.StatusParameter
 import core.domain.status.param.StatusParameterWithMax
 import core.repository.statusdata.StatusDataRepository
 import data.ModuleData
-import data.status.StatusRepository
+import data.repository.status.StatusRepository
 import gamescreen.battle.ModuleBattle
 import gamescreen.battle.QualifierAttackFromEnemy
 import kotlinx.coroutines.runBlocking

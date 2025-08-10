@@ -13,8 +13,8 @@ import core.domain.item.tool.HealTool
 import core.usecase.fly.FlyUseCase
 import core.usecase.updateparameter.UpdatePlayerStatusUseCase
 import core.usecase.updateparameter.UpdateStatusUseCase
-import data.item.tool.ToolId
-import data.item.tool.ToolRepository
+import data.repository.monster.item.tool.ToolId
+import data.repository.monster.item.tool.ToolRepository
 import gamescreen.menu.usecase.bag.dectool.DecItemUseCase
 import gamescreen.menu.usecase.gettoolid.GetToolIdUseCase
 import values.Constants

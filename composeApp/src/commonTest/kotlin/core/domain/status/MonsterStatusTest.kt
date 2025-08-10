@@ -2,8 +2,8 @@ package core.domain.status
 
 import core.domain.status.monster.ActionStyle
 import core.domain.status.monster.MonsterStatus
-import data.item.skill.SkillId
-import data.item.tool.ToolId
+import data.repository.monster.item.skill.SkillId
+import data.repository.monster.item.tool.ToolId
 
 class MonsterStatusTest {
     companion object {

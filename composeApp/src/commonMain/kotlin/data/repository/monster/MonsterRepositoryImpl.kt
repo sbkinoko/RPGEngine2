@@ -1,4 +1,4 @@
-package data.monster
+package data.repository.monster
 
 import core.domain.status.DropItemInfo
 import core.domain.status.StatusData
@@ -6,8 +6,8 @@ import core.domain.status.monster.ActionStyle
 import core.domain.status.monster.MonsterStatus
 import core.domain.status.param.StatusParameter
 import core.domain.status.param.StatusParameterWithMax
-import data.item.skill.SkillId
-import data.item.tool.ToolId
+import data.repository.monster.item.skill.SkillId
+import data.repository.monster.item.tool.ToolId
 
 class MonsterRepositoryImpl : MonsterRepository {
     override fun getMonster(id: Int): Pair<MonsterStatus, StatusData> {

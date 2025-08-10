@@ -12,10 +12,10 @@ import core.domain.status.param.EXP
 import core.domain.status.param.StatusParameter
 import core.repository.player.PlayerStatusRepository
 import core.repository.statusdata.StatusDataRepository
-import data.item.equipment.EquipmentId
-import data.item.equipment.EquipmentRepository
-import data.item.skill.SkillId
-import data.item.tool.ToolId
+import data.repository.monster.item.equipment.EquipmentId
+import data.repository.monster.item.equipment.EquipmentRepository
+import data.repository.monster.item.skill.SkillId
+import data.repository.monster.item.tool.ToolId
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.runBlocking
 import kotlin.test.BeforeTest

@@ -1,7 +1,7 @@
 package core.repository.bag
 
 import core.domain.item.BagItemData
-import data.item.ItemId
+import data.repository.monster.item.ItemId
 
 class BagRepositoryImpl<T : ItemId> : BagRepository<T> {
     private var bagToolDataList: List<BagItemData<T>> = listOf()

@@ -26,9 +26,9 @@ import core.repository.player.PlayerStatusRepository
 import core.repository.statusdata.StatusDataRepository
 import core.usecase.item.useitem.UseItemUseCase
 import core.usecase.updateparameter.UpdateStatusUseCase
-import data.item.skill.SkillId
-import data.item.skill.SkillRepository
-import data.item.tool.ToolRepository
+import data.repository.monster.item.skill.SkillId
+import data.repository.monster.item.skill.SkillRepository
+import data.repository.monster.item.tool.ToolRepository
 import gamescreen.battle.BattleChildViewModel
 import gamescreen.battle.QualifierAttackFromEnemy
 import gamescreen.battle.QualifierAttackFromPlayer
@@ -453,7 +453,7 @@ class ActionPhaseViewModel(
         // todo 複数回攻撃する技を作ったら表示方法を考える
         // todo 味方を選択するスキルで対象が対象外になっている場合の挙動を作成する
         // todo 敵のスキルをつくってからマップとの共通化を考える
-        when (skill as EffectKind) {
+        when (skill) {
             is AttackEffect -> {
                 val targetList = findActiveTargetUseCase.invoke(
                     statusList = statusList,

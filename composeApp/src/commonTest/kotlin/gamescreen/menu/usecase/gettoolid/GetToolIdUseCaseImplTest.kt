@@ -4,8 +4,8 @@ import core.domain.item.BagItemData
 import core.domain.status.PlayerStatus
 import core.repository.bag.BagRepository
 import core.repository.player.PlayerStatusRepository
-import data.item.skill.SkillId
-import data.item.tool.ToolId
+import data.repository.monster.item.skill.SkillId
+import data.repository.monster.item.tool.ToolId
 import kotlinx.coroutines.flow.StateFlow
 import values.Constants
 import kotlin.test.Test
