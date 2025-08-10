@@ -4,8 +4,8 @@ import core.EquipmentBagRepositoryName
 import core.domain.AbleType
 import core.domain.item.equipment.EquipmentData
 import core.repository.bag.BagRepository
-import data.item.equipment.EquipmentId
-import data.item.equipment.EquipmentRepository
+import data.repository.item.equipment.EquipmentId
+import data.repository.item.equipment.EquipmentRepository
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.item.abstract.itemselect.ItemListViewModel
 import gamescreen.menu.usecase.usetoolinmap.UseItemInMapUseCase

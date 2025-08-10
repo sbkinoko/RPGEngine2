@@ -1,4 +1,4 @@
-package data.item.skill
+package data.repository.item.skill
 
 
 // fixme enumにする

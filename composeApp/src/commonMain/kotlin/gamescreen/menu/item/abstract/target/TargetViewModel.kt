@@ -1,7 +1,7 @@
 package gamescreen.menu.item.abstract.target
 
 import core.domain.item.Item
-import data.item.ItemRepository
+import data.repository.item.ItemRepository
 import gamescreen.menu.MenuChildViewModel
 import gamescreen.menu.item.repository.user.UserRepository
 import org.koin.core.component.inject

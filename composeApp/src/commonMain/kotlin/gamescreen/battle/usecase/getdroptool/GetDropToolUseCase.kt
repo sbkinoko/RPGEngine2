@@ -1,6 +1,6 @@
 package gamescreen.battle.usecase.getdroptool
 
-import data.item.tool.ToolId
+import data.repository.item.tool.ToolId
 
 interface GetDropToolUseCase {
 

@@ -1,6 +1,6 @@
 package core.domain.item
 
-import data.item.ItemId
+import data.repository.item.ItemId
 
 data class BagItemData<T : ItemId>(
     val id: T,

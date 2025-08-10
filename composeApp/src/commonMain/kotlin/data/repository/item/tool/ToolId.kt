@@ -1,6 +1,6 @@
-package data.item.tool
+package data.repository.item.tool
 
-import data.item.ItemId
+import data.repository.item.ItemId
 
 enum class ToolId : ItemId {
     None,

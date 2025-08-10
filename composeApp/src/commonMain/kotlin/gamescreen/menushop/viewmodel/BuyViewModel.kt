@@ -1,7 +1,7 @@
 package gamescreen.menushop.viewmodel
 
 import core.repository.money.MoneyRepository
-import data.item.tool.ToolId
+import data.repository.item.tool.ToolId
 import gamescreen.choice.Choice
 import gamescreen.choice.repository.ChoiceRepository
 import gamescreen.menu.usecase.bag.addtool.AddToolUseCase

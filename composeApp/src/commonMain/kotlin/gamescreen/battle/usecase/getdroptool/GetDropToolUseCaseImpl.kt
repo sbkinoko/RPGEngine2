@@ -1,7 +1,7 @@
 package gamescreen.battle.usecase.getdroptool
 
 import core.repository.battlemonster.BattleInfoRepository
-import data.item.tool.ToolId
+import data.repository.item.tool.ToolId
 import kotlin.random.Random
 
 class GetDropToolUseCaseImpl(

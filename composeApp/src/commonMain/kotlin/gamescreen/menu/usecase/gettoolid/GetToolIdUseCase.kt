@@ -1,6 +1,7 @@
 package gamescreen.menu.usecase.gettoolid
 
-import data.item.tool.ToolId
+import data.repository.item.tool.ToolId
+
 
 interface GetToolIdUseCase {
     operator fun invoke(

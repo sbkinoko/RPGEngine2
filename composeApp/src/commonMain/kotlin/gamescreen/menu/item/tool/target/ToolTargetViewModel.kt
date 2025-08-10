@@ -2,8 +2,8 @@ package gamescreen.menu.item.tool.target
 
 import core.domain.AbleType
 import core.domain.item.Tool
-import data.item.tool.ToolId
-import data.item.tool.ToolRepository
+import data.repository.item.tool.ToolId
+import data.repository.item.tool.ToolRepository
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.item.abstract.target.UsableTargetViewModel
 import gamescreen.menu.item.repository.index.IndexRepository

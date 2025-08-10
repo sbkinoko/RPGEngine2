@@ -1,6 +1,6 @@
 package gamescreen.menushop.domain.amountdata
 
-import data.item.tool.ToolId
+import data.repository.item.tool.ToolId
 import gamescreen.menushop.domain.ShopItem
 
 val dummyItem = ShopItem(

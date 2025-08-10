@@ -2,8 +2,8 @@ package core.domain.status
 
 import core.domain.item.equipment.EquipmentList
 import core.domain.status.param.EXP
-import data.item.skill.SkillId
-import data.item.tool.ToolId
+import data.repository.item.skill.SkillId
+import data.repository.item.tool.ToolId
 
 data class PlayerStatus(
     val skillList: List<SkillId>,

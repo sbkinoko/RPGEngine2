@@ -4,7 +4,8 @@ import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
 import core.domain.status.StatusData
 import core.domain.status.StatusDataTest
 import core.domain.status.monster.MonsterStatus
-import data.monster.MonsterRepository
+import data.repository.monster.MonsterRepository
+import data.usecase.battledecidemonster.DecideBattleMonsterUseCaseImpl
 import kotlin.test.Test
 
 class DecideBattleMonsterUseCaseImplTest {

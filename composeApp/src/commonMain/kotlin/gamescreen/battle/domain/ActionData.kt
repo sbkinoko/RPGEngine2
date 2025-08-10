@@ -1,7 +1,7 @@
 package gamescreen.battle.domain
 
-import data.item.skill.SkillId
-import data.item.tool.ToolId
+import data.repository.item.skill.SkillId
+import data.repository.item.tool.ToolId
 
 // fixme デフォルト引数を削除する
 data class ActionData(

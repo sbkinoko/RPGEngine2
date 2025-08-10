@@ -2,7 +2,7 @@ package main
 
 import core.repository.screentype.ScreenTypeRepository
 import core.repository.statusdata.StatusDataRepository
-import data.status.StatusRepository
+import data.repository.status.StatusRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import values.Constants

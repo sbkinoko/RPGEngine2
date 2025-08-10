@@ -1,4 +1,4 @@
-package data.item.skill
+package data.repository.item.skill
 
 import core.domain.Place
 import core.domain.item.CostType

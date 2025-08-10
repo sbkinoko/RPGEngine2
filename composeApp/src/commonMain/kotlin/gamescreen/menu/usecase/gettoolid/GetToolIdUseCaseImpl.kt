@@ -2,7 +2,7 @@ package gamescreen.menu.usecase.gettoolid
 
 import core.repository.bag.BagRepository
 import core.repository.player.PlayerStatusRepository
-import data.item.tool.ToolId
+import data.repository.item.tool.ToolId
 import values.Constants
 
 class GetToolIdUseCaseImpl(

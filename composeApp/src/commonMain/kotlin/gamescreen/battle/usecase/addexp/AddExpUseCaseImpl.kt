@@ -3,7 +3,7 @@ package gamescreen.battle.usecase.addexp
 import common.DefaultScope
 import core.repository.player.PlayerStatusRepository
 import core.repository.statusdata.StatusDataRepository
-import data.status.StatusRepository
+import data.repository.status.StatusRepository
 import kotlinx.coroutines.launch
 
 class AddExpUseCaseImpl(

@@ -5,8 +5,8 @@ import core.domain.Place
 import core.domain.item.UsableItem
 import core.domain.status.StatusData
 import core.service.CheckCanUseService
-import data.item.skill.SkillId
-import data.item.skill.SkillRepository
+import data.repository.item.skill.SkillId
+import data.repository.item.skill.SkillRepository
 
 class CheckCanUseSkillUseCaseImpl(
     private val skillRepository: SkillRepository,

@@ -1,7 +1,7 @@
 package gamescreen.battle.repository.action
 
-import data.item.skill.SkillId
-import data.item.tool.ToolId
+import data.repository.item.skill.SkillId
+import data.repository.item.tool.ToolId
 import gamescreen.battle.domain.ActionData
 import gamescreen.battle.domain.ActionType
 

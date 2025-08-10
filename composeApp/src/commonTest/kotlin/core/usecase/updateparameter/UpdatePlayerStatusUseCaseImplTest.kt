@@ -3,7 +3,7 @@ package core.usecase.updateparameter
 import core.domain.status.PlayerStatus
 import core.domain.status.PlayerStatusTest.Companion.testActivePlayer
 import core.repository.status.StatusRepository
-import data.item.tool.ToolId
+import data.repository.item.tool.ToolId
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 import kotlin.test.assertEquals

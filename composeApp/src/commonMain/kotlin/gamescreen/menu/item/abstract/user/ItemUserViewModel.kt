@@ -2,7 +2,7 @@ package gamescreen.menu.item.abstract.user
 
 import core.domain.item.Item
 import core.repository.player.PlayerStatusRepository
-import data.item.ItemRepository
+import data.repository.item.ItemRepository
 import gamescreen.menu.MenuChildViewModel
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.item.list.ItemList

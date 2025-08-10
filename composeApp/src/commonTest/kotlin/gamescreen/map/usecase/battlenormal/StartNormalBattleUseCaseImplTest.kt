@@ -9,13 +9,13 @@ import core.domain.status.StatusDataTest
 import core.domain.status.monster.MonsterStatus
 import core.domain.testMapUiState
 import core.usecase.restart.RestartUseCase
+import data.usecase.battledecidemonster.DecideBattleMonsterUseCase
 import gamescreen.battle.domain.BattleBackgroundType
 import gamescreen.map.domain.MapPoint
 import gamescreen.map.domain.MapUiState
 import gamescreen.map.domain.background.BackgroundCell
 import gamescreen.map.domain.collision.square.NormalRectangle
 import gamescreen.map.repository.playercell.PlayerCellRepository
-import gamescreen.map.usecase.battledecidemonster.DecideBattleMonsterUseCase
 import gamescreen.map.usecase.battlestart.StartBattleUseCase
 import gamescreen.text.TextBoxData
 import gamescreen.text.repository.TextRepository

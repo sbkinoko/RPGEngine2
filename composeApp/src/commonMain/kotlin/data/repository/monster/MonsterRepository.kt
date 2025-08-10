@@ -1,4 +1,4 @@
-package data.monster
+package data.repository.monster
 
 import core.domain.status.StatusData
 import core.domain.status.monster.MonsterStatus

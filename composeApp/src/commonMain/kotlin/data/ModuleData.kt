@@ -1,15 +1,15 @@
 package data
 
-import data.item.equipment.EquipmentRepository
-import data.item.equipment.EquipmentRepositoryImpl
-import data.item.skill.SkillRepository
-import data.item.skill.SkillRepositoryImpl
-import data.item.tool.ToolRepository
-import data.item.tool.ToolRepositoryImpl
-import data.monster.MonsterRepository
-import data.monster.MonsterRepositoryImpl
-import data.status.StatusRepository
-import data.status.StatusRepositoryImpl
+import data.repository.item.equipment.EquipmentRepository
+import data.repository.item.equipment.EquipmentRepositoryImpl
+import data.repository.item.skill.SkillRepository
+import data.repository.item.skill.SkillRepositoryImpl
+import data.repository.item.tool.ToolRepository
+import data.repository.item.tool.ToolRepositoryImpl
+import data.repository.monster.MonsterRepository
+import data.repository.monster.MonsterRepositoryImpl
+import data.repository.status.StatusRepository
+import data.repository.status.StatusRepositoryImpl
 import org.koin.dsl.module
 
 val ModuleData = module {

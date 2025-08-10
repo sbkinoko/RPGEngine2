@@ -8,8 +8,8 @@ import core.UseSkillUseCaseName
 import core.UseToolUseCaseName_
 import core.usecase.item.useitem.UseItemUseCase
 import core.usecase.item.useitem.UseSkillUseCaseImpl
-import data.item.equipment.EquipmentId
-import data.item.tool.ToolId
+import data.repository.item.equipment.EquipmentId
+import data.repository.item.tool.ToolId
 import gamescreen.menu.component.StatusComponentViewModel
 import gamescreen.menu.item.equipment.list.EquipmentListViewModel
 import gamescreen.menu.item.equipment.target.EquipmentTargetViewModel

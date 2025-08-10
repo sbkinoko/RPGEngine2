@@ -1,4 +1,4 @@
-package data.status
+package data.repository.status
 
 import core.domain.status.PlayerStatus
 import core.domain.status.StatusData

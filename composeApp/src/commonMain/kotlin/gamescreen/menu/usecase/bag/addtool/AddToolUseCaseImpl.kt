@@ -2,7 +2,7 @@ package gamescreen.menu.usecase.bag.addtool
 
 import core.domain.item.BagItemData
 import core.repository.bag.BagRepository
-import data.item.ItemId
+import data.repository.item.ItemId
 
 class AddToolUseCaseImpl<T : ItemId>(
     private val bagRepository: BagRepository<T>,

@@ -4,8 +4,8 @@ import core.domain.AbleType
 import core.domain.Place
 import core.domain.item.Skill
 import core.usecase.item.checkcanuseskill.CheckCanUseSkillUseCase
-import data.item.skill.SkillId
-import data.item.skill.SkillRepository
+import data.repository.item.skill.SkillId
+import data.repository.item.skill.SkillRepository
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.item.abstract.target.UsableTargetViewModel
 import gamescreen.menu.item.repository.index.IndexRepository

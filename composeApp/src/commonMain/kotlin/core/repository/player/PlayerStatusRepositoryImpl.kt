@@ -1,9 +1,9 @@
 package core.repository.player
 
 import core.domain.status.PlayerStatus
-import data.item.skill.SkillId
-import data.item.tool.ToolId
-import data.status.StatusRepository
+import data.repository.item.skill.SkillId
+import data.repository.item.tool.ToolId
+import data.repository.status.StatusRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

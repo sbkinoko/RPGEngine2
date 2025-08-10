@@ -1,6 +1,6 @@
 package gamescreen.menu.domain
 
-import data.item.tool.ToolId
+import data.repository.item.tool.ToolId
 
 sealed class GiveResult {
 

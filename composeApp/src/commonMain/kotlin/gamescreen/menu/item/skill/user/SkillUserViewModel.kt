@@ -5,8 +5,8 @@ import core.menu.SelectCore
 import core.menu.SelectCoreInt
 import core.repository.player.PlayerStatusRepository
 import core.repository.statusdata.StatusDataRepository
-import data.item.skill.SkillId
-import data.item.skill.SkillRepository
+import data.repository.item.skill.SkillId
+import data.repository.item.skill.SkillRepository
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.domain.SelectManager
 import gamescreen.menu.item.abstract.user.ItemUserViewModel
