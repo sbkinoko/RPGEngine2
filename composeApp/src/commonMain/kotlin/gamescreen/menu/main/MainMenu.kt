@@ -45,32 +45,25 @@ fun MainMenu(
             5.dp,
         )
     ) {
-        mainMenuViewModel.pairedList.forEachIndexed { index, pair ->
+        mainMenuViewModel.chunkedList.forEachIndexed { index, list ->
             Row(
                 modifier = equalAllocationModifier,
                 horizontalArrangement = Arrangement.spacedBy(
                     5.dp
                 ),
             ) {
-                CenterText(
-                    modifier = equalAllocationModifier
-                        .menuItem(
-                            id = index * 2,
-                            menuItem = mainMenuViewModel,
-                        ),
-                    text = pair.first.text,
-                )
-
-                pair.second?.let {
+                list.forEachIndexed { index2, item ->
                     CenterText(
                         modifier = equalAllocationModifier
                             .menuItem(
-                                id = index * 2 + 1,
+                                id = index * mainMenuViewModel.chunkSize + index2,
                                 menuItem = mainMenuViewModel,
                             ),
-                        text = it.text,
+                        text = item.text,
                     )
-                } ?: run {
+                }
+
+                repeat(mainMenuViewModel.chunkSize - list.size) {
                     Spacer(
                         modifier = equalAllocationModifier,
                     )

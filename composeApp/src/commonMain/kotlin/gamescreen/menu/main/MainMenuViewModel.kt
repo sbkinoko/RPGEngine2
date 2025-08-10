@@ -1,6 +1,5 @@
 package gamescreen.menu.main
 
-import core.menu.PairedList
 import core.menu.SelectCore
 import core.menu.SelectCoreInt
 import core.repository.money.MoneyRepository
@@ -39,9 +38,9 @@ class MainMenuViewModel : MenuChildViewModel(),
 
     val itemNum: Int = list.size
 
-    val pairedList: List<Pair<MainMenuItem, MainMenuItem?>>
-        get() =
-            PairedList<MainMenuItem>().toPairedList(list)
+    val chunkSize = 2
+    val chunkedList: List<List<MainMenuItem>>
+        get() = list.chunked(chunkSize)
 
     override var selectCore: SelectCore<Int> = SelectCoreInt(
         SelectManager(
