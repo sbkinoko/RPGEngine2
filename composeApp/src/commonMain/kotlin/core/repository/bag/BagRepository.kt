@@ -1,7 +1,7 @@
 package core.repository.bag
 
 import core.domain.item.BagItemData
-import data.repository.monster.item.ItemId
+import data.repository.item.ItemId
 
 interface BagRepository<T : ItemId> {
     fun getList(): List<BagItemData<T>>

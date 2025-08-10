@@ -10,8 +10,8 @@ import core.repository.bag.BagRepository
 import core.repository.player.PlayerStatusRepository
 import core.repository.statusdata.StatusDataRepository
 import core.usecase.equipment.EquipUseCase
-import data.repository.monster.item.equipment.EquipmentId
-import data.repository.monster.item.equipment.EquipmentRepository
+import data.repository.item.equipment.EquipmentId
+import data.repository.item.equipment.EquipmentRepository
 import gamescreen.choice.Choice
 import gamescreen.choice.repository.ChoiceRepository
 import gamescreen.menu.domain.MenuType

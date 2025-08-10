@@ -4,8 +4,8 @@ import core.ToolBagRepositoryName
 import core.domain.AbleType
 import core.domain.item.Tool
 import core.repository.bag.BagRepository
-import data.repository.monster.item.tool.ToolId
-import data.repository.monster.item.tool.ToolRepository
+import data.repository.item.tool.ToolId
+import data.repository.item.tool.ToolRepository
 import gamescreen.choice.Choice
 import gamescreen.choice.repository.ChoiceRepository
 import gamescreen.menu.domain.MenuType

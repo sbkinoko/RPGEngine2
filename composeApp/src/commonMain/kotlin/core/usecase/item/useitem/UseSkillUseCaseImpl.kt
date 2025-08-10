@@ -7,7 +7,7 @@ import core.domain.item.skill.AttackSkill
 import core.domain.item.skill.HealSkill
 import core.repository.player.PlayerStatusRepository
 import core.usecase.updateparameter.UpdateStatusUseCase
-import data.repository.monster.item.skill.SkillRepository
+import data.repository.item.skill.SkillRepository
 
 class UseSkillUseCaseImpl(
     private val playerStatusRepository: PlayerStatusRepository,

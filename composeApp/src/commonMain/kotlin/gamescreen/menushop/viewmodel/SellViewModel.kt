@@ -2,8 +2,8 @@ package gamescreen.menushop.viewmodel
 
 import core.repository.bag.BagRepository
 import core.repository.money.MoneyRepository
-import data.repository.monster.item.tool.ToolId
-import data.repository.monster.item.tool.ToolRepository
+import data.repository.item.tool.ToolId
+import data.repository.item.tool.ToolRepository
 import gamescreen.choice.Choice
 import gamescreen.choice.repository.ChoiceRepository
 import gamescreen.menu.usecase.bag.dectool.DecItemUseCase

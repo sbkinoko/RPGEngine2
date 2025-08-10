@@ -7,8 +7,8 @@ import core.menu.SelectCore
 import core.menu.SelectCoreInt
 import core.repository.bag.BagRepository
 import core.repository.statusdata.StatusDataRepository
-import data.repository.monster.item.equipment.EquipmentId
-import data.repository.monster.item.equipment.EquipmentRepository
+import data.repository.item.equipment.EquipmentId
+import data.repository.item.equipment.EquipmentRepository
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.domain.SelectManager
 import gamescreen.menu.item.abstract.user.ItemUserViewModel

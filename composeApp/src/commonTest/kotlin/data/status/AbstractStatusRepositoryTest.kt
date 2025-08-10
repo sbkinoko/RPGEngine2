@@ -16,8 +16,8 @@ import core.domain.status.StatusIncreaseTest.Companion.TEST_LV2_MP
 import core.domain.status.StatusIncreaseTest.Companion.TEST_LV2_SPEED
 import core.domain.status.param.EXP
 import core.domain.status.param.StatusParameter
-import data.repository.monster.item.skill.SkillId
-import data.repository.monster.item.tool.ToolId
+import data.repository.item.skill.SkillId
+import data.repository.item.tool.ToolId
 import data.repository.status.AbstractStatusRepository
 import data.repository.status.StatusRepository
 import kotlin.test.Test

@@ -1,7 +1,7 @@
 package core.domain.status.monster
 
 import core.domain.status.DropItemInfo
-import data.repository.monster.item.skill.SkillId
+import data.repository.item.skill.SkillId
 
 // fixme IDだけ入れれば画像とモンスター名を引っ張って来れるようにする
 data class MonsterStatus(

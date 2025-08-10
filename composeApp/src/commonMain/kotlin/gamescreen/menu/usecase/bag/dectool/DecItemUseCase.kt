@@ -1,6 +1,6 @@
 package gamescreen.menu.usecase.bag.dectool
 
-import data.repository.monster.item.ItemId
+import data.repository.item.ItemId
 
 interface DecItemUseCase<T : ItemId> {
     operator fun invoke(

@@ -6,8 +6,8 @@ import core.domain.item.TargetStatusType
 import core.menu.SelectCore
 import core.menu.SelectCoreInt
 import core.repository.statusdata.StatusDataRepository
-import data.repository.monster.item.skill.SkillRepository
-import data.repository.monster.item.tool.ToolRepository
+import data.repository.item.skill.SkillRepository
+import data.repository.item.tool.ToolRepository
 import gamescreen.battle.BattleChildViewModel
 import gamescreen.battle.domain.ActionType
 import gamescreen.battle.domain.BattleCommandType

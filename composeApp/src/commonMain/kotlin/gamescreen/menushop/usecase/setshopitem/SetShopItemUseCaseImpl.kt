@@ -1,6 +1,6 @@
 package gamescreen.menushop.usecase.setshopitem
 
-import data.repository.monster.item.tool.ToolId
+import data.repository.item.tool.ToolId
 import gamescreen.menushop.domain.ShopItem
 import gamescreen.menushop.repository.shopmenu.ShopMenuRepository
 import values.event.ShopId

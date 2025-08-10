@@ -35,8 +35,9 @@ import core.usecase.updateparameter.UpdatePlayerStatusUseCase
 import core.usecase.updateparameter.UpdatePlayerStatusUseCaseImpl
 import core.usecase.updateparameter.UpdateStatusUseCase
 import core.usecase.updateparameter.UpdateStatusUseCaseImpl
-import data.repository.monster.item.equipment.EquipmentId
-import data.repository.monster.item.tool.ToolId
+import data.repository.item.equipment.EquipmentId
+import data.repository.item.tool.ToolId
+
 import gamescreen.menu.DecToolUseCaseName
 import gamescreen.menu.usecase.gettoolid.GetToolIdUseCase
 import gamescreen.menu.usecase.gettoolid.GetToolIdUseCaseImpl

@@ -1,7 +1,7 @@
 package gamescreen.battle.usecase.gettargetnum
 
 import core.domain.item.NeedTarget
-import data.repository.monster.item.skill.SkillRepository
+import data.repository.item.skill.SkillRepository
 import gamescreen.battle.domain.ActionType
 import gamescreen.battle.repository.action.ActionRepository
 

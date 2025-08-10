@@ -3,8 +3,9 @@ package core.usecase.equipment
 import core.domain.item.equipment.EquipmentType
 import core.repository.player.PlayerStatusRepository
 import core.repository.statusdata.StatusDataRepository
-import data.repository.monster.item.equipment.EquipmentId
-import data.repository.monster.item.equipment.EquipmentRepository
+import data.repository.item.equipment.EquipmentId
+import data.repository.item.equipment.EquipmentRepository
+
 
 class EquipUseCaseImpl(
     private val playerStatusRepository: PlayerStatusRepository,

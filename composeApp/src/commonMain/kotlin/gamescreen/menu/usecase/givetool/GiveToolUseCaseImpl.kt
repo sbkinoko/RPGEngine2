@@ -2,7 +2,7 @@ package gamescreen.menu.usecase.givetool
 
 import core.repository.bag.BagRepository
 import core.repository.player.PlayerStatusRepository
-import data.repository.monster.item.tool.ToolId
+import data.repository.item.tool.ToolId
 import gamescreen.menu.domain.GiveResult
 import gamescreen.menu.item.repository.index.IndexRepository
 import gamescreen.menu.item.repository.target.TargetRepository

@@ -5,8 +5,8 @@ import core.domain.status.PlayerStatus
 import core.domain.status.StatusData
 import core.domain.status.StatusIncrease
 import core.domain.status.param.EXP
-import data.repository.monster.item.skill.SkillId
-import data.repository.monster.item.tool.ToolId
+import data.repository.item.skill.SkillId
+import data.repository.item.tool.ToolId
 
 class StatusRepositoryImpl : AbstractStatusRepository() {
 

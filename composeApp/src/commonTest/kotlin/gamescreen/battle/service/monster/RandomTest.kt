@@ -3,7 +3,7 @@ package gamescreen.battle.service.monster
 import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
 import core.domain.status.PlayerStatusTest.Companion.testActivePlayer
 import core.domain.status.StatusDataTest
-import data.repository.monster.item.skill.SkillId
+import data.repository.item.skill.SkillId
 import gamescreen.battle.domain.ActionData
 import gamescreen.battle.domain.ActionType
 import kotlin.test.Test

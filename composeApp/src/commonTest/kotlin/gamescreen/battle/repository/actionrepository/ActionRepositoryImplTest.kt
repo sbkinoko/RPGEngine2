@@ -1,13 +1,12 @@
 package gamescreen.battle.repository.actionrepository
 
-import data.repository.monster.item.skill.SkillId
+import data.repository.item.skill.SkillId
 import gamescreen.battle.domain.ActionType
 import gamescreen.battle.repository.action.ActionRepository
 import gamescreen.battle.repository.action.ActionRepositoryImpl
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
-
 
 class ActionRepositoryImplTest {
     private lateinit var actionRepository: ActionRepository

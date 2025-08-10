@@ -3,7 +3,7 @@ package gamescreen.menu.usecase.bag.addtool
 import core.ModuleCore
 import core.ToolBagRepositoryName
 import core.repository.bag.BagRepository
-import data.repository.monster.item.tool.ToolId
+import data.repository.item.tool.ToolId
 import gamescreen.menu.ModuleMenu
 import gamescreen.menu.qualifierAddToolUseCase
 import org.koin.core.context.startKoin

@@ -1,6 +1,6 @@
 package core.domain.status
 
-import data.repository.monster.item.tool.ToolId
+import data.repository.item.tool.ToolId
 
 data class DropItemInfo(
     val toolId: ToolId,

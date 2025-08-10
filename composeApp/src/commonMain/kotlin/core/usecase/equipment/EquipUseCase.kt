@@ -1,6 +1,6 @@
 package core.usecase.equipment
 
-import data.repository.monster.item.equipment.EquipmentId
+import data.repository.item.equipment.EquipmentId
 
 interface EquipUseCase {
 
