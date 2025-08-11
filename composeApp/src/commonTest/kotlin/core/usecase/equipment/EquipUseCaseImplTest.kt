@@ -10,8 +10,8 @@ import core.domain.status.StatusDataTest
 import core.domain.status.StatusIncrease
 import core.domain.status.param.EXP
 import core.domain.status.param.StatusParameter
-import core.repository.player.PlayerStatusRepository
-import core.repository.statusdata.StatusDataRepository
+import core.repository.character.player.PlayerCharacterRepository
+import core.repository.character.statusdata.StatusDataRepository
 import data.repository.item.equipment.EquipmentId
 import data.repository.item.equipment.EquipmentRepository
 import data.repository.item.skill.SkillId
@@ -60,7 +60,7 @@ class EquipUseCaseImplTest {
 
     private val initialEquipment = EquipmentList()
 
-    private val playerRepository = object : PlayerStatusRepository {
+    private val playerRepository = object : PlayerCharacterRepository {
         override val playerStatusFlow: StateFlow<List<PlayerStatus>>
             get() = throw NotImplementedError()
 

@@ -5,7 +5,7 @@ import core.domain.item.NeedTarget
 import core.domain.item.TargetStatusType
 import core.menu.SelectCore
 import core.menu.SelectCoreInt
-import core.repository.statusdata.StatusDataRepository
+import core.repository.character.statusdata.StatusDataRepository
 import data.repository.item.skill.SkillRepository
 import data.repository.item.tool.ToolRepository
 import gamescreen.battle.BattleChildViewModel

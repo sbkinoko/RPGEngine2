@@ -20,9 +20,9 @@ import core.domain.status.StatusData
 import core.domain.status.StatusType
 import core.menu.SelectCore
 import core.menu.SelectCoreInt
-import core.repository.battlemonster.BattleInfoRepository
-import core.repository.player.PlayerStatusRepository
-import core.repository.statusdata.StatusDataRepository
+import core.repository.character.battlemonster.BattleInfoRepository
+import core.repository.character.player.PlayerCharacterRepository
+import core.repository.character.statusdata.StatusDataRepository
 import core.usecase.item.useitem.UseItemUseCase
 import core.usecase.updateparameter.UpdateStatusUseCase
 import data.repository.item.skill.SkillId
@@ -69,7 +69,7 @@ class ActionPhaseViewModel(
     private val actionRepository: ActionRepository by inject()
     private val battleInfoRepository: BattleInfoRepository by inject()
 
-    private val playerStatusRepository: PlayerStatusRepository by inject()
+    private val playerStatusRepository: PlayerCharacterRepository by inject()
     private val skillRepository: SkillRepository by inject()
     private val toolRepository: ToolRepository by inject()
 

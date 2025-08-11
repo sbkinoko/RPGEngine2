@@ -7,8 +7,8 @@ import core.domain.item.Item
 import core.domain.item.NeedTarget
 import core.menu.SelectCore
 import core.menu.SelectCoreInt
-import core.repository.player.PlayerStatusRepository
-import core.repository.statusdata.StatusDataRepository
+import core.repository.character.player.PlayerCharacterRepository
+import core.repository.character.statusdata.StatusDataRepository
 import gamescreen.choice.Choice
 import gamescreen.choice.repository.ChoiceRepository
 import gamescreen.menu.domain.MenuType
@@ -25,7 +25,7 @@ abstract class UsableTargetViewModel<T, V : Item>(
 ) : TargetViewModel<T, V>() {
 
     private val targetRepository: TargetRepository by inject()
-    protected val playerStatusRepository: PlayerStatusRepository by inject()
+    protected val playerStatusRepository: PlayerCharacterRepository by inject()
     protected val statusDataRepository: StatusDataRepository by inject(
         qualifier = PlayerStatusRepositoryName
     )

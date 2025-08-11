@@ -7,8 +7,8 @@ import core.domain.item.Item
 import core.domain.item.NeedTarget
 import core.domain.item.TargetType
 import core.menu.SelectCoreInt
-import core.repository.player.PlayerStatusRepository
-import core.repository.statusdata.StatusDataRepository
+import core.repository.character.player.PlayerCharacterRepository
+import core.repository.character.statusdata.StatusDataRepository
 import data.repository.item.ItemRepository
 import gamescreen.battle.BattleChildViewModel
 import gamescreen.battle.domain.ActionType
@@ -23,7 +23,7 @@ import kotlin.math.max
 
 abstract class ItemCommandViewModel<T, V : Item> : BattleChildViewModel<Int>() {
     protected val actionRepository: ActionRepository by inject()
-    protected val playerStatusRepository: PlayerStatusRepository by inject()
+    protected val playerStatusRepository: PlayerCharacterRepository by inject()
 
     protected val statusDataRepository: StatusDataRepository by inject(
         qualifier = PlayerStatusRepositoryName

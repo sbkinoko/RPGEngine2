@@ -7,8 +7,8 @@ import core.domain.item.Item
 import core.domain.item.NeedTarget
 import core.menu.SelectCore
 import core.menu.SelectCoreInt
-import core.repository.player.PlayerStatusRepository
-import core.repository.statusdata.StatusDataRepository
+import core.repository.character.player.PlayerCharacterRepository
+import core.repository.character.statusdata.StatusDataRepository
 import data.repository.item.ItemRepository
 import gamescreen.menu.MenuChildViewModel
 import gamescreen.menu.domain.MenuType
@@ -35,7 +35,7 @@ abstract class ItemListViewModel<T, V : Item>(
     private val userRepository: UserRepository by inject()
     protected val indexRepository: IndexRepository by inject()
 
-    protected val playerStatusRepository: PlayerStatusRepository by inject()
+    protected val playerStatusRepository: PlayerCharacterRepository by inject()
     protected val statusDataRepository: StatusDataRepository by inject(
         qualifier = PlayerStatusRepositoryName
     )

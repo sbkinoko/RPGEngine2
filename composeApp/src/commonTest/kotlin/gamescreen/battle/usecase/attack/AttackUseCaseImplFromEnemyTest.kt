@@ -7,7 +7,7 @@ import core.domain.status.StatusDataTest
 import core.domain.status.param.ParameterType
 import core.domain.status.param.StatusParameter
 import core.domain.status.param.StatusParameterWithMax
-import core.repository.statusdata.StatusDataRepository
+import core.repository.character.statusdata.StatusDataRepository
 import data.ModuleData
 import data.repository.status.StatusRepository
 import gamescreen.battle.ModuleBattle

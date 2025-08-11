@@ -5,10 +5,10 @@ import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
 import core.domain.status.StatusData
 import core.domain.status.StatusDataTest
 import core.domain.status.monster.MonsterStatus
-import core.repository.battlemonster.BattleInfoRepository
+import core.repository.character.battlemonster.BattleInfoRepository
+import core.repository.character.statusdata.StatusDataRepository
 import core.repository.event.EventRepository
 import core.repository.screentype.ScreenTypeRepository
-import core.repository.statusdata.StatusDataRepository
 import gamescreen.GameScreenType
 import gamescreen.ModuleMain
 import gamescreen.battle.domain.ActionData

@@ -6,7 +6,7 @@ import core.domain.item.Tool
 import core.menu.SelectCore
 import core.menu.SelectCoreInt
 import core.repository.bag.BagRepository
-import core.repository.statusdata.StatusDataRepository
+import core.repository.character.statusdata.StatusDataRepository
 import data.repository.item.tool.ToolId
 import data.repository.item.tool.ToolRepository
 import gamescreen.choice.Choice

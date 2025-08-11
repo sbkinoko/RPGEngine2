@@ -6,7 +6,7 @@ import core.domain.item.equipment.EquipmentData
 import core.menu.SelectCore
 import core.menu.SelectCoreInt
 import core.repository.bag.BagRepository
-import core.repository.statusdata.StatusDataRepository
+import core.repository.character.statusdata.StatusDataRepository
 import data.repository.item.equipment.EquipmentId
 import data.repository.item.equipment.EquipmentRepository
 import gamescreen.menu.domain.MenuType

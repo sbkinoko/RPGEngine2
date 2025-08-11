@@ -4,7 +4,7 @@ import common.DefaultScope
 import core.domain.status.StatusData
 import core.menu.SelectCore
 import core.menu.SelectCoreInt
-import core.repository.statusdata.StatusDataRepository
+import core.repository.character.statusdata.StatusDataRepository
 import gamescreen.battle.BattleChildViewModel
 import gamescreen.battle.domain.BattleCommandType
 import gamescreen.battle.domain.SelectEnemyCommand

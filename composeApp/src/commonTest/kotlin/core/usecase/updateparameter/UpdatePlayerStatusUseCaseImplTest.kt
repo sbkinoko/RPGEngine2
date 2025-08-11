@@ -2,7 +2,7 @@ package core.usecase.updateparameter
 
 import core.domain.status.PlayerStatus
 import core.domain.status.PlayerStatusTest.Companion.testActivePlayer
-import core.repository.status.StatusRepository
+import core.repository.character.CharacterRepository
 import data.repository.item.tool.ToolId
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
@@ -17,8 +17,8 @@ class UpdatePlayerStatusUseCaseImplTest {
     }
     private val status2 = status1.copy()
 
-    private val statusRepository: StatusRepository<PlayerStatus> =
-        object : StatusRepository<PlayerStatus> {
+    private val characterRepository: CharacterRepository<PlayerStatus> =
+        object : CharacterRepository<PlayerStatus> {
             var _statusList: MutableList<PlayerStatus> = mutableListOf(
                 status1,
                 status2,
@@ -41,7 +41,7 @@ class UpdatePlayerStatusUseCaseImplTest {
         }
 
     private val updateStatusUseCase = UpdatePlayerStatusUseCaseImpl(
-        statusRepository = statusRepository,
+        characterRepository = characterRepository,
     )
 
     @Test
@@ -53,7 +53,7 @@ class UpdatePlayerStatusUseCaseImplTest {
             )
             assertEquals(
                 expected = listOf(ToolId.HEAL1, ToolId.HEAL2),
-                actual = statusRepository.getStatus(0).toolList
+                actual = characterRepository.getStatus(0).toolList
             )
         }
     }

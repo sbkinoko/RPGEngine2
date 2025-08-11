@@ -4,7 +4,7 @@ import core.domain.status.ConditionType
 import core.domain.status.StatusData
 import core.domain.status.StatusDataTest
 import core.domain.status.param.StatusParameterWithMax
-import core.repository.statusdata.StatusDataRepository
+import core.repository.character.statusdata.StatusDataRepository
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test

@@ -1,13 +1,13 @@
 package gamescreen.battle.usecase.addexp
 
 import common.DefaultScope
-import core.repository.player.PlayerStatusRepository
-import core.repository.statusdata.StatusDataRepository
+import core.repository.character.player.PlayerCharacterRepository
+import core.repository.character.statusdata.StatusDataRepository
 import data.repository.status.StatusRepository
 import kotlinx.coroutines.launch
 
 class AddExpUseCaseImpl(
-    private val playerStatusRepository: PlayerStatusRepository,
+    private val playerStatusRepository: PlayerCharacterRepository,
     private val statusRepository: StatusRepository,
 
     private val statusDataRepository: StatusDataRepository,

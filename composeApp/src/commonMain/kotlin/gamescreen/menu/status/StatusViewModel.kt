@@ -4,7 +4,7 @@ import core.domain.status.StatusData
 import core.menu.SelectCore
 import core.menu.SelectCoreInt
 import core.menu.SelectableChildViewModel
-import core.repository.statusdata.StatusDataRepository
+import core.repository.character.statusdata.StatusDataRepository
 import gamescreen.menu.domain.SelectManager
 import gamescreen.menu.repository.menustate.MenuStateRepository
 import org.koin.core.component.KoinComponent

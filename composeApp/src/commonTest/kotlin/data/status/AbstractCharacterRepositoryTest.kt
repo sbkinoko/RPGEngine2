@@ -23,7 +23,7 @@ import data.repository.status.StatusRepository
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class AbstractStatusRepositoryTest {
+class AbstractCharacterRepositoryTest {
     private val skillListValue = listOf(SkillId.Normal1)
     private val toolListValue = listOf(ToolId.HEAL1)
 
