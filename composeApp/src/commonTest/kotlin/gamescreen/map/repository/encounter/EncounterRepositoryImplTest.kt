@@ -11,7 +11,6 @@ import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertNotEquals
 import kotlin.test.assertTrue
 
 class EncounterRepositoryImplTest : KoinTest {
@@ -73,10 +72,6 @@ class EncounterRepositoryImplTest : KoinTest {
             battleCount.toFloat() in
                     EXPECTED_BATTLE_NUM * LOW..EXPECTED_BATTLE_NUM * HIGH
         }
-        assertNotEquals(
-            illegal = 0,
-            actual = battleCount,
-        )
     }
 
     @Test

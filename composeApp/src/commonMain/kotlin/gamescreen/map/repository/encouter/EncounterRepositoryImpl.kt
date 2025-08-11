@@ -10,7 +10,7 @@ class EncounterRepositoryImpl : EncounterRepository {
         totalDistance += distance
         if ((judgeCount + 1) * GameParams.ENCOUNTER_DISTANCE <= totalDistance) {
             judgeCount++
-            return Random.nextInt(100) <= GameParams.ENCOUNTER_PROBABILITY
+            return Random.nextInt(100) < GameParams.ENCOUNTER_PROBABILITY
         }
         return false
     }
