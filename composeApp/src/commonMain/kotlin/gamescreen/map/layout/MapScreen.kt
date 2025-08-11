@@ -72,6 +72,7 @@ fun MapScreen(
             val du = end - before
 
             // fixme　処理は遅くないが、時間の取得が遅いことがある
+            // 別の処理がスレッドを占有してアクセスできてない？
             if (GameParams.DELAY + 5 < du) {
                 println(du)
             }
