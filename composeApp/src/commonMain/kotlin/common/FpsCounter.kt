@@ -1,6 +1,5 @@
 package common
 
-import getNowTime
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
@@ -9,24 +8,27 @@ class FpsCounter {
     val fpsFlow = mutableFpsFlow.asStateFlow()
 
     private val q: ArrayDeque<Long> = ArrayDeque()
-    private val qSize = 50
+    private val qSize = 60
 
-    fun addInfo() {
-        val time = getNowTime().nowTime
-        if (q.size < qSize) {
+    fun addInfo(time: Long) {
+
+        if (q.size != qSize) {
+            mutableFpsFlow.value = -1
             q.addLast(time)
             return
         }
 
         val top = q.first()
+
+        val interval = time - top
+
+        mutableFpsFlow.value = qSize * 1000 / interval
+
         q.removeFirst()
         q.addLast(time)
+    }
 
-        mutableFpsFlow.value = (qSize * 1000 / (time - top))
-
-        //        if (fpsFlow.value <= 30) {
-        //            println("debug")
-        //            println("debug ${fpsFlow.value} $q")
-        //        }
+    fun clear() {
+        q.clear()
     }
 }

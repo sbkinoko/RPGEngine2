@@ -111,6 +111,14 @@ class MapViewModel(
 
     private var autoEvent: EventType? = null
 
+    fun clearFPS() {
+        fpsCounter.clear()
+    }
+
+    fun measureFPS(time: Long) {
+        fpsCounter.addInfo(time)
+    }
+
     /**
      * 主人公の位置を更新
      */
@@ -125,7 +133,6 @@ class MapViewModel(
 
         //速度が0なら何もしない
         if (tentativePlayerVelocity.isMoving.not()) {
-            fpsCounter.addInfo()
             return
         }
 
@@ -149,8 +156,6 @@ class MapViewModel(
                 mapUiState = uiStateFlow.value
             )
         )
-
-        fpsCounter.addInfo()
 
         saveUseCase.save(
             player = uiStateFlow.value.player,

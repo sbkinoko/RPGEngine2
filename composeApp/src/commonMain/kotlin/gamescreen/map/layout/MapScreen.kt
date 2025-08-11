@@ -34,7 +34,6 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
 import values.Colors
 import values.GameParams
-import kotlin.math.max
 
 @Composable
 @Preview
@@ -43,20 +42,39 @@ fun MapScreen(
     modifier: Modifier = Modifier,
     mapViewModel: MapViewModel = koinInject(),
 ) {
+
     LaunchedEffect(Unit) {
+        mapViewModel.clearFPS()
+        var pre = 0L
         while (true) {
-            // fixme ここでfpsの計測
-
             val before = getNowTime().nowTime
-            mapViewModel.updatePosition()
-            val after = getNowTime().nowTime
 
-            delay(
-                max(
-                    0L,
-                    GameParams.DELAY - (after - before),
-                ),
-            )
+            if (50 < before - pre) {
+                println()
+            }
+
+            pre = before
+            mapViewModel.measureFPS(before)
+
+            mapViewModel.updatePosition()
+
+            var waited = false
+            // delayより短い間は待機する
+            while (getNowTime().nowTime - before < GameParams.DELAY) {
+                delay(1)
+                waited = true
+            }
+
+            if (!waited) {
+                println("heavy")
+            }
+            val end: Long = getNowTime().nowTime
+            val du = end - before
+
+            // fixme　処理は遅くないが、時間の取得が遅いことがある
+            if (GameParams.DELAY + 5 < du) {
+                println(du)
+            }
         }
     }
 
