@@ -2,7 +2,7 @@ package core.usecase.updateparameter
 
 import core.domain.status.ConditionType
 import core.domain.status.StatusData
-import core.repository.statusdata.StatusDataRepository
+import core.repository.character.statusdata.StatusDataRepository
 import kotlinx.coroutines.runBlocking
 import kotlin.test.assertEquals
 

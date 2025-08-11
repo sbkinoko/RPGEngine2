@@ -11,7 +11,7 @@ import core.domain.item.skill.AttackSkill
 import core.domain.item.skill.HealSkill
 import core.domain.status.ConditionType
 import core.domain.status.PlayerStatus
-import core.repository.player.PlayerStatusRepository
+import core.repository.character.player.PlayerCharacterRepository
 import core.usecase.item.useitem.UseItemUseCase
 import core.usecase.item.useitem.UseSkillUseCaseImpl
 import core.usecase.updateparameter.UpdateStatusUseCase
@@ -24,7 +24,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class UseSkillUseCaseImplTest {
-    interface TestPlayerStatusRepository : PlayerStatusRepository {
+    interface TestPlayerCharacterRepository : PlayerCharacterRepository {
         override val playerStatusFlow: StateFlow<List<PlayerStatus>>
             get() = throw NotImplementedError()
 
@@ -51,7 +51,7 @@ class UseSkillUseCaseImplTest {
         }
     }
 
-    private lateinit var playerStatusRepository: TestPlayerStatusRepository
+    private lateinit var playerStatusRepository: TestPlayerCharacterRepository
 
     abstract class TestUpdatePlayerStatusUseCase : UpdateStatusUseCase {
 
@@ -147,7 +147,7 @@ class UseSkillUseCaseImplTest {
             }
         }
 
-        playerStatusRepository = object : TestPlayerStatusRepository {
+        playerStatusRepository = object : TestPlayerCharacterRepository {
             override fun getSkill(
                 playerId: Int,
                 index: Int,
@@ -210,7 +210,7 @@ class UseSkillUseCaseImplTest {
             }
         }
 
-        playerStatusRepository = object : TestPlayerStatusRepository {
+        playerStatusRepository = object : TestPlayerCharacterRepository {
             override fun getSkill(
                 playerId: Int,
                 index: Int,
@@ -257,7 +257,7 @@ class UseSkillUseCaseImplTest {
             }
         }
 
-        playerStatusRepository = object : TestPlayerStatusRepository {
+        playerStatusRepository = object : TestPlayerCharacterRepository {
             override fun getSkill(
                 playerId: Int,
                 index: Int,
@@ -334,7 +334,7 @@ class UseSkillUseCaseImplTest {
             }
         }
 
-        playerStatusRepository = object : TestPlayerStatusRepository {
+        playerStatusRepository = object : TestPlayerCharacterRepository {
             override fun getSkill(
                 playerId: Int,
                 index: Int,
@@ -412,7 +412,7 @@ class UseSkillUseCaseImplTest {
             }
         }
 
-        playerStatusRepository = object : TestPlayerStatusRepository {
+        playerStatusRepository = object : TestPlayerCharacterRepository {
             override fun getSkill(
                 playerId: Int,
                 index: Int,

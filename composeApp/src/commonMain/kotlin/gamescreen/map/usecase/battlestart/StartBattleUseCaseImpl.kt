@@ -5,10 +5,10 @@ import core.domain.BattleEventCallback
 import core.domain.BattleResult
 import core.domain.status.StatusData
 import core.domain.status.monster.MonsterStatus
-import core.repository.battlemonster.BattleInfoRepository
+import core.repository.character.battlemonster.BattleInfoRepository
+import core.repository.character.statusdata.StatusDataRepository
 import core.repository.event.EventRepository
 import core.repository.screentype.ScreenTypeRepository
-import core.repository.statusdata.StatusDataRepository
 import gamescreen.GameScreenType
 import gamescreen.battle.domain.BattleBackgroundType
 import gamescreen.battle.repository.action.ActionRepository

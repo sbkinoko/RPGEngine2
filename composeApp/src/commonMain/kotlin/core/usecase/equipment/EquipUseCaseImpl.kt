@@ -1,14 +1,14 @@
 package core.usecase.equipment
 
 import core.domain.item.equipment.EquipmentType
-import core.repository.player.PlayerStatusRepository
-import core.repository.statusdata.StatusDataRepository
+import core.repository.character.player.PlayerCharacterRepository
+import core.repository.character.statusdata.StatusDataRepository
 import data.repository.item.equipment.EquipmentId
 import data.repository.item.equipment.EquipmentRepository
 
 
 class EquipUseCaseImpl(
-    private val playerStatusRepository: PlayerStatusRepository,
+    private val playerStatusRepository: PlayerCharacterRepository,
     private val statusDataRepository: StatusDataRepository,
 
     private val equipmentRepository: EquipmentRepository,

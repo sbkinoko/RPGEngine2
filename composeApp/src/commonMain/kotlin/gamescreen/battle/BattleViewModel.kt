@@ -5,8 +5,8 @@ import controller.domain.Stick
 import core.EnemyStatusRepositoryName
 import core.domain.status.StatusData
 import core.domain.status.monster.MonsterStatus
-import core.repository.battlemonster.BattleInfoRepository
-import core.repository.statusdata.StatusDataRepository
+import core.repository.character.battlemonster.BattleInfoRepository
+import core.repository.character.statusdata.StatusDataRepository
 import gamescreen.battle.repository.attackeffect.AttackEffectRepository
 import gamescreen.battle.repository.commandstate.CommandStateRepository
 import gamescreen.battle.repository.flash.FlashRepository

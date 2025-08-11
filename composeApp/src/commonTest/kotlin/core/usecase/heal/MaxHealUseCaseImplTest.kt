@@ -2,7 +2,7 @@ package core.usecase.heal
 
 import core.domain.status.StatusData
 import core.domain.status.StatusDataTest
-import core.repository.statusdata.StatusDataRepository
+import core.repository.character.statusdata.StatusDataRepository
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.runBlocking
 import kotlin.test.BeforeTest

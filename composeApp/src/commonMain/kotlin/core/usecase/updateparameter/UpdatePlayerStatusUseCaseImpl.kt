@@ -1,27 +1,27 @@
 package core.usecase.updateparameter
 
 import core.domain.status.PlayerStatus
-import core.repository.status.StatusRepository
+import core.repository.character.CharacterRepository
 
 class UpdatePlayerStatusUseCaseImpl(
-    val statusRepository: StatusRepository<PlayerStatus>,
+    val characterRepository: CharacterRepository<PlayerStatus>,
 ) : UpdatePlayerStatusUseCase() {
 
     override suspend fun deleteToolAt(
         playerId: Int,
         index: Int,
     ) {
-        val status = statusRepository.getStatus(
+        val status = characterRepository.getStatus(
             id = playerId,
         ).copy(
-            toolList = statusRepository.getStatus(
+            toolList = characterRepository.getStatus(
                 id = playerId,
             ).toolList.filterIndexed { id, _ ->
                 id != index
             }
         )
 
-        statusRepository.setStatus(
+        characterRepository.setStatus(
             id = playerId,
             status = status,
         )

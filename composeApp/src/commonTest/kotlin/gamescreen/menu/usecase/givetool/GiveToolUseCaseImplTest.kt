@@ -4,7 +4,7 @@ import core.ModuleCore
 import core.ToolBagRepositoryName
 import core.domain.item.BagItemData
 import core.repository.bag.BagRepository
-import core.repository.player.PlayerStatusRepository
+import core.repository.character.player.PlayerCharacterRepository
 import data.ModuleData
 import data.repository.item.tool.ToolId
 import gamescreen.menu.ModuleMenu
@@ -25,7 +25,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class GiveToolUseCaseImplTest : KoinTest {
-    private val playerStatusRepository: PlayerStatusRepository by inject()
+    private val playerStatusRepository: PlayerCharacterRepository by inject()
     private val bagRepository: BagRepository<ToolId> by inject(
         qualifier = ToolBagRepositoryName,
     )

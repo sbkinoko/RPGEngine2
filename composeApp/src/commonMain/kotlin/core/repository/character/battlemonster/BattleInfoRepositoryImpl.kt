@@ -1,4 +1,4 @@
-package core.repository.battlemonster
+package core.repository.character.battlemonster
 
 import core.domain.status.monster.MonsterStatus
 import gamescreen.battle.domain.BattleBackgroundType

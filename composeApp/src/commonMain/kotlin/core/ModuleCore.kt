@@ -2,18 +2,18 @@ package core
 
 import core.repository.bag.BagRepository
 import core.repository.bag.BagRepositoryImpl
-import core.repository.battlemonster.BattleInfoRepository
-import core.repository.battlemonster.BattleInfoRepositoryImpl
+import core.repository.character.battlemonster.BattleInfoRepository
+import core.repository.character.battlemonster.BattleInfoRepositoryImpl
+import core.repository.character.player.PlayerCharacterRepository
+import core.repository.character.player.PlayerCharacterRepositoryImpl
+import core.repository.character.statusdata.StatusDataRepository
+import core.repository.character.statusdata.StatusDataRepositoryImpl
 import core.repository.event.EventRepository
 import core.repository.event.EventRepositoryImpl
 import core.repository.mapuistate.MapUiStateRepository
 import core.repository.mapuistate.MapUiStateRepositoryImpl
 import core.repository.money.MoneyRepository
 import core.repository.money.MoneyRepositoryImpl
-import core.repository.player.PlayerStatusRepository
-import core.repository.player.PlayerStatusRepositoryImpl
-import core.repository.statusdata.StatusDataRepository
-import core.repository.statusdata.StatusDataRepositoryImpl
 import core.service.CheckCanUseService
 import core.service.CheckCanUseServiceImpl
 import core.usecase.changetomap.ChangeToMapUseCase
@@ -37,7 +37,6 @@ import core.usecase.updateparameter.UpdateStatusUseCase
 import core.usecase.updateparameter.UpdateStatusUseCaseImpl
 import data.repository.item.equipment.EquipmentId
 import data.repository.item.tool.ToolId
-
 import gamescreen.menu.DecToolUseCaseName
 import gamescreen.menu.usecase.gettoolid.GetToolIdUseCase
 import gamescreen.menu.usecase.gettoolid.GetToolIdUseCaseImpl
@@ -73,8 +72,8 @@ val ModuleCore = module {
         StatusDataRepositoryImpl()
     }
 
-    single<PlayerStatusRepository> {
-        PlayerStatusRepositoryImpl(
+    single<PlayerCharacterRepository> {
+        PlayerCharacterRepositoryImpl(
             statusRepository = get(),
         )
     }
@@ -120,7 +119,7 @@ val ModuleCore = module {
 
     single<UpdatePlayerStatusUseCase> {
         UpdatePlayerStatusUseCaseImpl(
-            statusRepository = get<PlayerStatusRepository>()
+            characterRepository = get<PlayerCharacterRepository>()
         )
     }
 

@@ -1,5 +1,6 @@
+
 import core.domain.status.ConditionType
-import core.repository.statusdata.StatusDataRepository
+import core.repository.character.statusdata.StatusDataRepository
 import core.usecase.updateparameter.UpdateStatusUseCase
 import gamescreen.battle.service.findtarget.FindTargetService
 import gamescreen.battle.usecase.condition.ConditionUseCase

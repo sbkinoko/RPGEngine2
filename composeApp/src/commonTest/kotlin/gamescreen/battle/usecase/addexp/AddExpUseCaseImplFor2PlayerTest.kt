@@ -6,9 +6,9 @@ import core.domain.status.StatusData
 import core.domain.status.StatusDataTest
 import core.domain.status.StatusIncrease
 import core.domain.status.StatusIncreaseTest.Companion.testStatusUpList
-import core.repository.player.PlayerStatusRepository
-import core.repository.player.PlayerStatusRepositoryImpl
-import core.repository.statusdata.StatusDataRepository
+import core.repository.character.player.PlayerCharacterRepository
+import core.repository.character.player.PlayerCharacterRepositoryImpl
+import core.repository.character.statusdata.StatusDataRepository
 import data.repository.status.AbstractStatusRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.StateFlow
@@ -73,7 +73,7 @@ class AddExpUseCaseImplFor2PlayerTest {
         }
     }
 
-    private lateinit var playerStatusRepository: PlayerStatusRepository
+    private lateinit var playerStatusRepository: PlayerCharacterRepository
     private lateinit var addExpUseCase: AddExpUseCase
 
     @BeforeTest
@@ -86,7 +86,7 @@ class AddExpUseCaseImplFor2PlayerTest {
             }
         )
 
-        playerStatusRepository = PlayerStatusRepositoryImpl(
+        playerStatusRepository = PlayerCharacterRepositoryImpl(
             statusRepository = statusRepository,
         )
 

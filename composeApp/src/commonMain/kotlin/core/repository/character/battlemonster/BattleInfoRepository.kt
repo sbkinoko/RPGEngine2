@@ -1,11 +1,11 @@
-package core.repository.battlemonster
+package core.repository.character.battlemonster
 
 import core.domain.status.monster.MonsterStatus
-import core.repository.status.StatusRepository
+import core.repository.character.CharacterRepository
 import gamescreen.battle.domain.BattleBackgroundType
 import kotlinx.coroutines.flow.StateFlow
 
-interface BattleInfoRepository : StatusRepository<MonsterStatus> {
+interface BattleInfoRepository : CharacterRepository<MonsterStatus> {
 
     val monsterListStateFLow: StateFlow<List<MonsterStatus>>
 

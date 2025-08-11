@@ -1,4 +1,4 @@
-package core.repository.player
+package core.repository.character.player
 
 import core.domain.status.PlayerStatus
 import data.repository.item.skill.SkillId
@@ -9,9 +9,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import values.Constants
 
-class PlayerStatusRepositoryImpl(
+class PlayerCharacterRepositoryImpl(
     private val statusRepository: StatusRepository,
-) : PlayerStatusRepository {
+) : PlayerCharacterRepository {
     private val mutableStatusListFlow: MutableStateFlow<List<PlayerStatus>>
 
     override val playerStatusFlow: StateFlow<List<PlayerStatus>>

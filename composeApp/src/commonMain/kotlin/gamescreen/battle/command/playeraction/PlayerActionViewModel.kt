@@ -2,7 +2,7 @@ package gamescreen.battle.command.playeraction
 
 import core.menu.SelectCore
 import core.menu.SelectCoreEnum
-import core.repository.statusdata.StatusDataRepository
+import core.repository.character.statusdata.StatusDataRepository
 import gamescreen.battle.BattleChildViewModel
 import gamescreen.battle.domain.ActionType
 import gamescreen.battle.domain.BattleCommandType

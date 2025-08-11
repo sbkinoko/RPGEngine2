@@ -4,7 +4,7 @@ import core.ModuleCore
 import core.PlayerStatusRepositoryName
 import core.domain.status.ConditionType
 import core.domain.status.StatusDataTest
-import core.repository.statusdata.StatusDataRepository
+import core.repository.character.statusdata.StatusDataRepository
 import data.ModuleData
 import data.repository.status.StatusRepository
 import gamescreen.battle.ModuleBattle

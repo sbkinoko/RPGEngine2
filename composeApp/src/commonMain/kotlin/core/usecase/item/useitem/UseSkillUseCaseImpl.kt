@@ -5,12 +5,12 @@ import core.domain.item.Item
 import core.domain.item.UsableItem
 import core.domain.item.skill.AttackSkill
 import core.domain.item.skill.HealSkill
-import core.repository.player.PlayerStatusRepository
+import core.repository.character.player.PlayerCharacterRepository
 import core.usecase.updateparameter.UpdateStatusUseCase
 import data.repository.item.skill.SkillRepository
 
 class UseSkillUseCaseImpl(
-    private val playerStatusRepository: PlayerStatusRepository,
+    private val playerStatusRepository: PlayerCharacterRepository,
     private val skillRepository: SkillRepository,
     private val updateStatus: UpdateStatusUseCase,
 ) : UseItemUseCase {

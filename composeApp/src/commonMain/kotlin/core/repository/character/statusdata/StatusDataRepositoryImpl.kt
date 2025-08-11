@@ -1,4 +1,4 @@
-package core.repository.statusdata
+package core.repository.character.statusdata
 
 import core.domain.status.StatusData
 import kotlinx.coroutines.flow.MutableStateFlow

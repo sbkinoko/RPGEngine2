@@ -2,7 +2,7 @@ package gamescreen.battle.usecase.attack
 
 import core.domain.item.DamageType
 import core.domain.status.StatusData
-import core.repository.statusdata.StatusDataRepository
+import core.repository.character.statusdata.StatusDataRepository
 import gamescreen.battle.service.attackcalc.AttackCalcService
 import gamescreen.battle.service.findtarget.FindTargetService
 

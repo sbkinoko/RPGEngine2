@@ -3,8 +3,8 @@ package gamescreen.menu.item.skill.user
 import core.domain.item.Skill
 import core.menu.SelectCore
 import core.menu.SelectCoreInt
-import core.repository.player.PlayerStatusRepository
-import core.repository.statusdata.StatusDataRepository
+import core.repository.character.player.PlayerCharacterRepository
+import core.repository.character.statusdata.StatusDataRepository
 import data.repository.item.skill.SkillId
 import data.repository.item.skill.SkillRepository
 import gamescreen.menu.domain.MenuType
@@ -16,7 +16,7 @@ import values.Constants
 class SkillUserViewModel(
     private val statusDataRepository: StatusDataRepository,
 ) : ItemUserViewModel<SkillId, Skill>() {
-    val repository: PlayerStatusRepository by inject()
+    val repository: PlayerCharacterRepository by inject()
 
     override val itemRepository: SkillRepository by inject()
     override var selectCore: SelectCore<Int> = SelectCoreInt(

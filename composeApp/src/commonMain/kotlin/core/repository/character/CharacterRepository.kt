@@ -1,8 +1,6 @@
-package core.repository.status
+package core.repository.character
 
-// fixme statusDataに変更したい
-// fixme 全データを返す処理を作成
-interface StatusRepository<T> {
+interface CharacterRepository<T> {
     /**
      * @param id id番目のstatusを取得
      */

@@ -4,7 +4,7 @@ import core.EnemyStatusRepositoryName
 import core.ModuleCore
 import core.domain.status.ConditionType
 import core.domain.status.StatusDataTest
-import core.repository.statusdata.StatusDataRepository
+import core.repository.character.statusdata.StatusDataRepository
 import data.ModuleData
 import gamescreen.battle.ModuleBattle
 import gamescreen.battle.QualifierAttackFromPlayer

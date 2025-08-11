@@ -3,7 +3,7 @@ package core.usecase.updateparameter
 import core.domain.item.BufEffect
 import core.domain.status.ConditionType
 import core.domain.status.param.ParameterType
-import core.repository.statusdata.StatusDataRepository
+import core.repository.character.statusdata.StatusDataRepository
 
 class UpdateStatusUseCaseImpl(
     private val statusDataRepository: StatusDataRepository,
