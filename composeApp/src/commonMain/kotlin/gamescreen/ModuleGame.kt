@@ -1,8 +1,11 @@
 package gamescreen
 
+import core.EquipmentBagRepositoryName
 import core.PlayerStatusRepositoryName
 import core.repository.screentype.ScreenTypeRepository
 import core.repository.screentype.ScreenTypeRepositoryImpl
+import gamescreen.init.InitUseCase
+import gamescreen.init.InitUseCaseImpl
 import main.MainViewModel
 import main.ScreenTypeManager
 import org.koin.dsl.module
@@ -14,6 +17,7 @@ val ModuleMain = module {
             statusDataRepository = get(
                 qualifier = PlayerStatusRepositoryName,
             ),
+            initUseCase = get(),
         )
     }
 
@@ -36,6 +40,13 @@ val ModuleMain = module {
             buyViewModel = get(),
             sellViewModel = get(),
             screenTypeRepository = get(),
+        )
+    }
+
+    single<InitUseCase> {
+
+        InitUseCaseImpl(
+            equipmentBagRepository = get(EquipmentBagRepositoryName),
         )
     }
 }

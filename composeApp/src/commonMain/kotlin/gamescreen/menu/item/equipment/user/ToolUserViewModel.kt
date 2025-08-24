@@ -1,7 +1,6 @@
 package gamescreen.menu.item.equipment.user
 
 import core.EquipmentBagRepositoryName
-import core.domain.item.BagItemData
 import core.domain.item.equipment.EquipmentData
 import core.menu.SelectCore
 import core.menu.SelectCoreInt
@@ -39,29 +38,6 @@ class EquipmentUserViewModel(
             itemNum = playerNum,
         )
     )
-
-    // fixme 初期化タイミングを考える
-    // toolGiveUseViewModelでも同じことをしている
-    init {
-        bagRepository.setData(
-            data = BagItemData(
-                id = EquipmentId.Sword,
-                num = 100
-            )
-        )
-        bagRepository.setData(
-            data = BagItemData(
-                id = EquipmentId.Shield,
-                num = 100,
-            )
-        )
-        bagRepository.setData(
-            data = BagItemData(
-                id = EquipmentId.MagicSword,
-                num = 100
-            )
-        )
-    }
 
     override fun getPlayerNameAt(id: Int): String {
         return if (id < Constants.playerNum) {
