@@ -22,6 +22,7 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.util.fastAny
+import common.DefaultScope
 import gamescreen.map.layout.background.Background
 import gamescreen.map.layout.background.DebugInfo
 import gamescreen.map.layout.background.MapClip
@@ -30,10 +31,26 @@ import gamescreen.map.layout.npc.NPC
 import gamescreen.map.viewmodel.MapViewModel
 import getNowTime
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
 import values.Colors
 import values.GameParams
+
+class Timer {
+
+    var time = getNowTime().nowTime
+
+    init {
+        DefaultScope.launch {
+            while (true) {
+                delay(1)
+                time = getNowTime().nowTime
+            }
+        }
+    }
+}
+
 
 @Composable
 @Preview
@@ -43,11 +60,14 @@ fun MapScreen(
     mapViewModel: MapViewModel = koinInject(),
 ) {
 
+    val timer = Timer()
+
+
     LaunchedEffect(Unit) {
         mapViewModel.clearFPS()
         var pre = 0L
         while (true) {
-            val before = getNowTime().nowTime
+            val before = timer.time
 
             if (50 < before - pre) {
                 println()
@@ -60,7 +80,7 @@ fun MapScreen(
 
             var waited = false
             // delayより短い間は待機する
-            while (getNowTime().nowTime - before < GameParams.DELAY) {
+            while (timer.time - before < GameParams.DELAY) {
                 delay(1)
                 waited = true
             }
@@ -68,7 +88,7 @@ fun MapScreen(
             if (!waited) {
                 println("heavy")
             }
-            val end: Long = getNowTime().nowTime
+            val end: Long = timer.time
             val du = end - before
 
             // fixme　処理は遅くないが、時間の取得が遅いことがある
