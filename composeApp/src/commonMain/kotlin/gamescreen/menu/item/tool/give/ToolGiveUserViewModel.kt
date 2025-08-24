@@ -1,7 +1,6 @@
 package gamescreen.menu.item.tool.give
 
 import core.ToolBagRepositoryName
-import core.domain.item.BagItemData
 import core.domain.item.Tool
 import core.menu.SelectCore
 import core.menu.SelectCoreInt
@@ -55,29 +54,6 @@ class ToolGiveUserViewModel(
             itemNum = playerNum,
         )
     )
-
-    // fixme 初期化用のuseCaseを作る
-    // 別の場所で呼び出す
-    init {
-        bagRepository.setData(
-            data = BagItemData(
-                id = ToolId.HEAL1,
-                num = 100,
-            )
-        )
-        bagRepository.setData(
-            data = BagItemData(
-                id = ToolId.HEAL2,
-                num = 100,
-            )
-        )
-        bagRepository.setData(
-            data = BagItemData(
-                id = ToolId.Fly,
-                num = 100,
-            )
-        )
-    }
 
     override fun goNextImpl() {
         targetRepository.target = selectCore.stateFlow.value

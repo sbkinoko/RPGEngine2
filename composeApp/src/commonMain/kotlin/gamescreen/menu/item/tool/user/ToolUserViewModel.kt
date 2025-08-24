@@ -1,7 +1,6 @@
 package gamescreen.menu.item.tool.user
 
 import core.ToolBagRepositoryName
-import core.domain.item.BagItemData
 import core.domain.item.Tool
 import core.menu.SelectCore
 import core.menu.SelectCoreInt
@@ -39,23 +38,6 @@ class ToolUserViewModel(
             itemNum = playerNum,
         )
     )
-
-    // fixme 初期化タイミングを考える
-    // toolGiveUseViewModelでも同じことをしている
-    init {
-        bagRepository.setData(
-            data = BagItemData(
-                id = ToolId.HEAL1,
-                num = 100,
-            )
-        )
-        bagRepository.setData(
-            data = BagItemData(
-                id = ToolId.HEAL2,
-                num = 100,
-            )
-        )
-    }
 
     override fun getPlayerNameAt(id: Int): String {
         return if (id < Constants.playerNum) {

@@ -23,7 +23,6 @@ import org.koin.core.component.KoinComponent
 
 abstract class AbstractShopViewModel(
     val amountData: AmountData,
-
     protected val moneyRepository: MoneyRepository,
     protected val choiceRepository: ChoiceRepository,
     protected val textRepository: TextRepository,
@@ -83,8 +82,6 @@ abstract class AbstractShopViewModel(
                 setMax()
             }
         }
-
-        moneyRepository.setMoney(1000)
     }
 
     abstract fun setMax()
