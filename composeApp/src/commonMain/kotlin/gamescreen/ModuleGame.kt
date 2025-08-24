@@ -14,10 +14,6 @@ import org.koin.dsl.module
 val ModuleMain = module {
     single<MainViewModel> {
         MainViewModel(
-            statusRepository = get(),
-            statusDataRepository = get(
-                qualifier = PlayerStatusRepositoryName,
-            ),
             initUseCase = get(),
         )
     }
@@ -49,6 +45,10 @@ val ModuleMain = module {
         InitUseCaseImpl(
             equipmentBagRepository = get(EquipmentBagRepositoryName),
             toolBagRepository = get(ToolBagRepositoryName),
+            statusRepository = get(),
+            statusDataRepository = get(
+                qualifier = PlayerStatusRepositoryName,
+            ),
         )
     }
 }
