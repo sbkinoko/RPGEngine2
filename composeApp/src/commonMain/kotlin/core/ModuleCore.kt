@@ -9,6 +9,8 @@ import core.repository.memory.event.EventRepositoryImpl
 import core.repository.memory.mapuistate.MapUiStateRepositoryImpl
 import core.repository.memory.money.MoneyRepository
 import core.repository.memory.money.MoneyRepositoryImpl
+import core.repository.storage.MoneyDBRepository
+import core.repository.storage.MoneyDBRepositoryImpl
 import core.service.CheckCanUseService
 import core.service.CheckCanUseServiceImpl
 import core.usecase.changetomap.ChangeToMapUseCase
@@ -89,6 +91,10 @@ val ModuleCore = module {
 
     single<MoneyRepository> {
         MoneyRepositoryImpl()
+    }
+
+    single<MoneyDBRepository> {
+        MoneyDBRepositoryImpl()
     }
 
     single<core.repository.memory.event.EventRepository> {

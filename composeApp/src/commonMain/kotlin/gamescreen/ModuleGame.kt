@@ -50,6 +50,7 @@ val ModuleMain = module {
                 qualifier = PlayerStatusRepositoryName,
             ),
             moneyRepository = get(),
+            moneyDBRepository = get(),
         )
     }
 }
