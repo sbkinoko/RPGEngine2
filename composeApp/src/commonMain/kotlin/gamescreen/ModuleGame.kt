@@ -2,6 +2,7 @@ package gamescreen
 
 import core.EquipmentBagRepositoryName
 import core.PlayerStatusRepositoryName
+import core.ToolBagRepositoryName
 import core.repository.screentype.ScreenTypeRepository
 import core.repository.screentype.ScreenTypeRepositoryImpl
 import gamescreen.init.InitUseCase
@@ -47,6 +48,7 @@ val ModuleMain = module {
 
         InitUseCaseImpl(
             equipmentBagRepository = get(EquipmentBagRepositoryName),
+            toolBagRepository = get(ToolBagRepositoryName),
         )
     }
 }
