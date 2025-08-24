@@ -5,7 +5,6 @@ import core.domain.item.NeedTarget
 import core.domain.item.TargetStatusType
 import core.menu.SelectCore
 import core.menu.SelectCoreInt
-import core.repository.character.statusdata.StatusDataRepository
 import data.repository.item.skill.SkillRepository
 import data.repository.item.tool.ToolRepository
 import gamescreen.battle.BattleChildViewModel
@@ -23,7 +22,7 @@ import values.Constants.Companion.playerNum
 
 // test作る
 class SelectAllyViewModel(
-    private val statusDataRepository: StatusDataRepository,
+    private val statusDataRepository: core.repository.memory.character.statusdata.StatusDataRepository,
 ) : BattleChildViewModel<Int>() {
     private val changeSelectingActionPlayerUseCase: ChangeSelectingActionPlayerUseCase by inject()
     private val actionRepository: ActionRepository by inject()

@@ -6,7 +6,7 @@ import controller.domain.Stick
 import core.menu.SelectCore
 import core.menu.SelectCoreInt
 import core.menu.SelectableChildViewModel
-import core.repository.money.MoneyRepository
+import core.repository.memory.money.MoneyRepository
 import gamescreen.choice.repository.ChoiceRepository
 import gamescreen.menu.domain.SelectManager
 import gamescreen.menushop.domain.ShopItem

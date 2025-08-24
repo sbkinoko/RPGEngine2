@@ -5,10 +5,8 @@ import core.domain.BattleEventCallback
 import core.domain.BattleResult
 import core.domain.status.StatusData
 import core.domain.status.monster.MonsterStatus
-import core.repository.character.battlemonster.BattleInfoRepository
-import core.repository.character.statusdata.StatusDataRepository
-import core.repository.event.EventRepository
-import core.repository.screentype.ScreenTypeRepository
+import core.repository.memory.character.battlemonster.BattleInfoRepository
+import core.repository.memory.screentype.ScreenTypeRepository
 import gamescreen.GameScreenType
 import gamescreen.battle.domain.BattleBackgroundType
 import gamescreen.battle.repository.action.ActionRepository
@@ -23,11 +21,11 @@ class StartBattleUseCaseImpl(
     private val screenTypeRepository: ScreenTypeRepository,
     private val commandStateRepository: CommandStateRepository,
     private val actionRepository: ActionRepository,
-    private val eventRepository: EventRepository,
+    private val eventRepository: core.repository.memory.event.EventRepository,
     private val flashRepository: FlashRepository,
     private val attackEffectRepository: AttackEffectRepository,
 
-    private val statusDataRepository: StatusDataRepository,
+    private val statusDataRepository: core.repository.memory.character.statusdata.StatusDataRepository,
 ) : StartBattleUseCase, KoinComponent {
 
     override operator fun invoke(

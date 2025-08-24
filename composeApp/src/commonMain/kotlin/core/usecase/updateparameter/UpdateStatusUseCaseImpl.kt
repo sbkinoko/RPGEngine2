@@ -3,10 +3,9 @@ package core.usecase.updateparameter
 import core.domain.item.BufEffect
 import core.domain.status.ConditionType
 import core.domain.status.param.ParameterType
-import core.repository.character.statusdata.StatusDataRepository
 
 class UpdateStatusUseCaseImpl(
-    private val statusDataRepository: StatusDataRepository,
+    private val statusDataRepository: core.repository.memory.character.statusdata.StatusDataRepository,
 ) : UpdateStatusUseCase {
     override suspend fun decHP(
         id: Int,

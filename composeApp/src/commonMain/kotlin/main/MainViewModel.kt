@@ -1,6 +1,6 @@
 package main
 
-import core.repository.screentype.ScreenTypeRepository
+import core.repository.memory.screentype.ScreenTypeRepository
 import gamescreen.init.InitUseCase
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject

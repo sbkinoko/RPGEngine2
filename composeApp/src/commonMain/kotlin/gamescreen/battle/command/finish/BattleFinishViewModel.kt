@@ -4,8 +4,7 @@ import common.DefaultScope
 import core.domain.BattleResult
 import core.menu.SelectCore
 import core.menu.SelectCoreInt
-import core.repository.event.EventRepository
-import core.repository.money.MoneyRepository
+import core.repository.memory.money.MoneyRepository
 import core.usecase.changetomap.ChangeToMapUseCase
 import data.repository.item.tool.ToolId
 import data.repository.item.tool.ToolRepository
@@ -26,7 +25,7 @@ import org.koin.core.component.inject
 import values.TextData
 
 class BattleFinishViewModel(
-    private val eventRepository: EventRepository,
+    private val eventRepository: core.repository.memory.event.EventRepository,
 ) : BattleChildViewModel<Int>() {
     override var selectCore: SelectCore<Int> = SelectCoreInt(
         // 使わない

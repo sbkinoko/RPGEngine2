@@ -1,4 +1,4 @@
-package core.repository.character
+package core.repository.memory.character
 
 interface CharacterRepository<T> {
     /**

@@ -4,7 +4,6 @@ import core.EnemyStatusRepositoryName
 import core.ModuleCore
 import core.domain.status.ConditionType
 import core.domain.status.StatusDataTest
-import core.repository.character.statusdata.StatusDataRepository
 import data.ModuleData
 import gamescreen.battle.ModuleBattle
 import gamescreen.battle.QualifierAttackFromPlayer
@@ -27,7 +26,7 @@ class ConditionUseCaseImplFromPlayerTest : KoinTest {
         )
     )
 
-    private val enemyStatusDataRepository: StatusDataRepository by inject(
+    private val enemyStatusDataRepository: core.repository.memory.character.statusdata.StatusDataRepository by inject(
         qualifier = EnemyStatusRepositoryName,
     )
 

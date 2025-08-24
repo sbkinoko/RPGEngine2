@@ -1,4 +1,4 @@
-package core.repository.character.player
+package core.repository.memory.character.player
 
 import core.domain.status.PlayerStatus
 import data.repository.item.skill.SkillId

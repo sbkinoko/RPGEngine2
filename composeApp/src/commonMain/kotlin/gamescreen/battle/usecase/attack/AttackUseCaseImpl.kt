@@ -2,12 +2,11 @@ package gamescreen.battle.usecase.attack
 
 import core.domain.item.DamageType
 import core.domain.status.StatusData
-import core.repository.character.statusdata.StatusDataRepository
 import gamescreen.battle.service.attackcalc.AttackCalcService
 import gamescreen.battle.service.findtarget.FindTargetService
 
 class AttackUseCaseImpl(
-    private val statusDataRepository: StatusDataRepository,
+    private val statusDataRepository: core.repository.memory.character.statusdata.StatusDataRepository,
 
     private val findTargetService: FindTargetService,
     private val attackCalcService: AttackCalcService,

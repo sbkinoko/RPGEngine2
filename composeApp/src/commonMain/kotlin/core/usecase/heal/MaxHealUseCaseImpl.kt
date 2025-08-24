@@ -1,6 +1,6 @@
 package core.usecase.heal
 
-import core.repository.character.statusdata.StatusDataRepository
+import core.repository.memory.character.statusdata.StatusDataRepository
 
 class MaxHealUseCaseImpl(
     private val playerStatusRepository: StatusDataRepository,

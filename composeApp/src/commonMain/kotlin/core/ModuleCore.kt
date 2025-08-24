@@ -1,19 +1,14 @@
 package core
 
-import core.repository.bag.BagRepository
-import core.repository.bag.BagRepositoryImpl
-import core.repository.character.battlemonster.BattleInfoRepository
-import core.repository.character.battlemonster.BattleInfoRepositoryImpl
-import core.repository.character.player.PlayerCharacterRepository
-import core.repository.character.player.PlayerCharacterRepositoryImpl
-import core.repository.character.statusdata.StatusDataRepository
-import core.repository.character.statusdata.StatusDataRepositoryImpl
-import core.repository.event.EventRepository
-import core.repository.event.EventRepositoryImpl
-import core.repository.mapuistate.MapUiStateRepository
-import core.repository.mapuistate.MapUiStateRepositoryImpl
-import core.repository.money.MoneyRepository
-import core.repository.money.MoneyRepositoryImpl
+import core.repository.memory.bag.BagRepository
+import core.repository.memory.bag.BagRepositoryImpl
+import core.repository.memory.character.battlemonster.BattleInfoRepository
+import core.repository.memory.character.battlemonster.BattleInfoRepositoryImpl
+import core.repository.memory.character.statusdata.StatusDataRepositoryImpl
+import core.repository.memory.event.EventRepositoryImpl
+import core.repository.memory.mapuistate.MapUiStateRepositoryImpl
+import core.repository.memory.money.MoneyRepository
+import core.repository.memory.money.MoneyRepositoryImpl
 import core.service.CheckCanUseService
 import core.service.CheckCanUseServiceImpl
 import core.usecase.changetomap.ChangeToMapUseCase
@@ -66,19 +61,19 @@ val UseSkillUseCaseName = named(
 )
 
 val ModuleCore = module {
-    single<StatusDataRepository>(
+    single<core.repository.memory.character.statusdata.StatusDataRepository>(
         qualifier = PlayerStatusRepositoryName
     ) {
         StatusDataRepositoryImpl()
     }
 
-    single<PlayerCharacterRepository> {
-        PlayerCharacterRepositoryImpl(
+    single<core.repository.memory.character.player.PlayerCharacterRepository> {
+        core.repository.memory.character.player.PlayerCharacterRepositoryImpl(
             statusRepository = get(),
         )
     }
 
-    single<MapUiStateRepository> {
+    single<core.repository.memory.mapuistate.MapUiStateRepository> {
         MapUiStateRepositoryImpl()
     }
 
@@ -86,7 +81,7 @@ val ModuleCore = module {
         BattleInfoRepositoryImpl()
     }
 
-    single<StatusDataRepository>(
+    single<core.repository.memory.character.statusdata.StatusDataRepository>(
         qualifier = EnemyStatusRepositoryName
     ) {
         StatusDataRepositoryImpl()
@@ -96,7 +91,7 @@ val ModuleCore = module {
         MoneyRepositoryImpl()
     }
 
-    single<EventRepository> {
+    single<core.repository.memory.event.EventRepository> {
         EventRepositoryImpl()
     }
 
@@ -119,7 +114,7 @@ val ModuleCore = module {
 
     single<UpdatePlayerStatusUseCase> {
         UpdatePlayerStatusUseCaseImpl(
-            characterRepository = get<PlayerCharacterRepository>()
+            characterRepository = get<core.repository.memory.character.player.PlayerCharacterRepository>()
         )
     }
 

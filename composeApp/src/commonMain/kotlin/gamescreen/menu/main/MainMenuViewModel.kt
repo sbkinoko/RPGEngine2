@@ -2,7 +2,7 @@ package gamescreen.menu.main
 
 import core.menu.SelectCore
 import core.menu.SelectCoreInt
-import core.repository.money.MoneyRepository
+import core.repository.memory.money.MoneyRepository
 import gamescreen.menu.MenuChildViewModel
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.domain.SelectManager

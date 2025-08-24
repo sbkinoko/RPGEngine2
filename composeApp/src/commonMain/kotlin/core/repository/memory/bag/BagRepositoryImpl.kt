@@ -1,4 +1,4 @@
-package core.repository.bag
+package core.repository.memory.bag
 
 import core.domain.item.BagItemData
 import data.repository.item.ItemId

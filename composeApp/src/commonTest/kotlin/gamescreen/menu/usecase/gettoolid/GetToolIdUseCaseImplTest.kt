@@ -2,8 +2,7 @@ package gamescreen.menu.usecase.gettoolid
 
 import core.domain.item.BagItemData
 import core.domain.status.PlayerStatus
-import core.repository.bag.BagRepository
-import core.repository.character.player.PlayerCharacterRepository
+import core.repository.memory.bag.BagRepository
 import data.repository.item.skill.SkillId
 import data.repository.item.tool.ToolId
 import kotlinx.coroutines.flow.StateFlow
@@ -13,7 +12,7 @@ import kotlin.test.assertEquals
 
 class GetToolIdUseCaseImplTest {
     private var countPlayer = 0
-    private val playerRepository = object : PlayerCharacterRepository {
+    private val playerRepository = object : core.repository.memory.character.player.PlayerCharacterRepository {
         override val playerStatusFlow: StateFlow<List<PlayerStatus>>
             get() = throw NotImplementedError()
 

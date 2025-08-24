@@ -1,6 +1,6 @@
-package core.repository.screentype
+package core.repository.memory.screentype
 
-import core.repository.screentype.ScreenTypeRepository.Companion.INITIAL_SCREEN_TYPE
+import core.repository.memory.screentype.ScreenTypeRepository.Companion.INITIAL_SCREEN_TYPE
 import gamescreen.GameScreenType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

@@ -3,7 +3,7 @@ package gamescreen.menu.repository.bag
 import core.ModuleCore
 import core.ToolBagRepositoryName
 import core.domain.item.BagItemData
-import core.repository.bag.BagRepository
+import core.repository.memory.bag.BagRepository
 import data.repository.item.tool.ToolId
 import gamescreen.menu.ModuleMenu
 import org.koin.core.context.startKoin

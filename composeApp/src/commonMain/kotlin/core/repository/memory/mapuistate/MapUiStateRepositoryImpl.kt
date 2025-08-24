@@ -1,4 +1,4 @@
-package core.repository.mapuistate
+package core.repository.memory.mapuistate
 
 import gamescreen.map.domain.MapUiState
 import gamescreen.map.domain.Player

@@ -1,7 +1,7 @@
-package core.repository.character.player
+package core.repository.memory.character.player
 
 import core.domain.status.PlayerStatus
-import core.repository.character.CharacterRepository
+import core.repository.memory.character.CharacterRepository
 import data.repository.item.skill.SkillId
 import data.repository.item.tool.ToolId
 import kotlinx.coroutines.flow.StateFlow

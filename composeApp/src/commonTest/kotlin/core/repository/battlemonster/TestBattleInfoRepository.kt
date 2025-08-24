@@ -1,7 +1,7 @@
 package core.repository.battlemonster
 
 import core.domain.status.monster.MonsterStatus
-import core.repository.character.battlemonster.BattleInfoRepository
+import core.repository.memory.character.battlemonster.BattleInfoRepository
 import gamescreen.battle.domain.BattleBackgroundType
 import kotlinx.coroutines.flow.StateFlow
 

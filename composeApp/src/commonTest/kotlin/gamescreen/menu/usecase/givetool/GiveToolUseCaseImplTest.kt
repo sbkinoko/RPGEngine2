@@ -3,8 +3,7 @@ package gamescreen.menu.usecase.givetool
 import core.ModuleCore
 import core.ToolBagRepositoryName
 import core.domain.item.BagItemData
-import core.repository.bag.BagRepository
-import core.repository.character.player.PlayerCharacterRepository
+import core.repository.memory.bag.BagRepository
 import data.ModuleData
 import data.repository.item.tool.ToolId
 import gamescreen.menu.ModuleMenu
@@ -25,7 +24,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class GiveToolUseCaseImplTest : KoinTest {
-    private val playerStatusRepository: PlayerCharacterRepository by inject()
+    private val playerStatusRepository: core.repository.memory.character.player.PlayerCharacterRepository by inject()
     private val bagRepository: BagRepository<ToolId> by inject(
         qualifier = ToolBagRepositoryName,
     )

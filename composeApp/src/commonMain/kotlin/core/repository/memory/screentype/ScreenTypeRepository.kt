@@ -1,4 +1,4 @@
-package core.repository.screentype
+package core.repository.memory.screentype
 
 import gamescreen.GameScreenType
 import kotlinx.coroutines.flow.StateFlow

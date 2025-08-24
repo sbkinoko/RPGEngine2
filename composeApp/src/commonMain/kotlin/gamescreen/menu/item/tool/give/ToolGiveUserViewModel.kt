@@ -4,8 +4,7 @@ import core.ToolBagRepositoryName
 import core.domain.item.Tool
 import core.menu.SelectCore
 import core.menu.SelectCoreInt
-import core.repository.bag.BagRepository
-import core.repository.character.statusdata.StatusDataRepository
+import core.repository.memory.bag.BagRepository
 import data.repository.item.tool.ToolId
 import data.repository.item.tool.ToolRepository
 import gamescreen.choice.Choice
@@ -26,7 +25,7 @@ import org.koin.core.component.inject
 import values.Constants
 
 class ToolGiveUserViewModel(
-    private val statusDataRepository: StatusDataRepository,
+    private val statusDataRepository: core.repository.memory.character.statusdata.StatusDataRepository,
 ) : ItemUserViewModel<ToolId, Tool>(),
     KoinComponent {
     override val itemRepository: ToolRepository by inject()

@@ -2,7 +2,6 @@ package gamescreen.battle.command.playeraction
 
 import core.menu.SelectCore
 import core.menu.SelectCoreEnum
-import core.repository.character.statusdata.StatusDataRepository
 import gamescreen.battle.BattleChildViewModel
 import gamescreen.battle.domain.ActionType
 import gamescreen.battle.domain.BattleCommandType
@@ -17,7 +16,7 @@ import org.koin.core.component.inject
 
 // TODO: test作る 
 class PlayerActionViewModel(
-    private val statusDataRepository: StatusDataRepository,
+    private val statusDataRepository: core.repository.memory.character.statusdata.StatusDataRepository,
 ) : BattleChildViewModel<PlayerActionCommandType>() {
     private val actionRepository: ActionRepository by inject()
 

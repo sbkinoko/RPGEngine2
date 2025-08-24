@@ -20,9 +20,7 @@ import core.domain.status.StatusData
 import core.domain.status.StatusType
 import core.menu.SelectCore
 import core.menu.SelectCoreInt
-import core.repository.character.battlemonster.BattleInfoRepository
-import core.repository.character.player.PlayerCharacterRepository
-import core.repository.character.statusdata.StatusDataRepository
+import core.repository.memory.character.battlemonster.BattleInfoRepository
 import core.usecase.item.useitem.UseItemUseCase
 import core.usecase.updateparameter.UpdateStatusUseCase
 import data.repository.item.skill.SkillId
@@ -60,8 +58,8 @@ import values.Constants.Companion.playerNum
 class ActionPhaseViewModel(
     private val decideActionOrderUseCase: DecideActionOrderUseCase,
 
-    private val statusDataRepository: StatusDataRepository,
-    private val enemyDataRepository: StatusDataRepository,
+    private val statusDataRepository: core.repository.memory.character.statusdata.StatusDataRepository,
+    private val enemyDataRepository: core.repository.memory.character.statusdata.StatusDataRepository,
 
     private val useToolUseCase: UseItemUseCase,
     private val effectUseCase: EffectUseCase,
@@ -69,7 +67,7 @@ class ActionPhaseViewModel(
     private val actionRepository: ActionRepository by inject()
     private val battleInfoRepository: BattleInfoRepository by inject()
 
-    private val playerStatusRepository: PlayerCharacterRepository by inject()
+    private val playerStatusRepository: core.repository.memory.character.player.PlayerCharacterRepository by inject()
     private val skillRepository: SkillRepository by inject()
     private val toolRepository: ToolRepository by inject()
 
@@ -261,8 +259,8 @@ class ActionPhaseViewModel(
     }
 
     private fun getTargetStatusName(statusWrapper: StatusWrapper): String {
-        val allyRepository: StatusDataRepository
-        val enemyRepository: StatusDataRepository
+        val allyRepository: core.repository.memory.character.statusdata.StatusDataRepository
+        val enemyRepository: core.repository.memory.character.statusdata.StatusDataRepository
 
         when (statusWrapper.statusType) {
             StatusType.Enemy -> {

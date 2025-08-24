@@ -4,7 +4,6 @@ import common.DefaultScope
 import core.domain.status.StatusData
 import core.menu.SelectCore
 import core.menu.SelectCoreInt
-import core.repository.character.statusdata.StatusDataRepository
 import gamescreen.battle.BattleChildViewModel
 import gamescreen.battle.domain.BattleCommandType
 import gamescreen.battle.domain.SelectEnemyCommand
@@ -21,7 +20,7 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.inject
 
 class SelectEnemyViewModel(
-    private val enemyStatusDataRepository: StatusDataRepository,
+    private val enemyStatusDataRepository: core.repository.memory.character.statusdata.StatusDataRepository,
 ) : BattleChildViewModel<Int>() {
     private val actionRepository: ActionRepository by inject()
 

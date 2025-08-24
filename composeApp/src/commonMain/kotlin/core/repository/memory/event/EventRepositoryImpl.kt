@@ -1,4 +1,4 @@
-package core.repository.event
+package core.repository.memory.event
 
 import common.DefaultScope
 import core.domain.BattleEventCallback

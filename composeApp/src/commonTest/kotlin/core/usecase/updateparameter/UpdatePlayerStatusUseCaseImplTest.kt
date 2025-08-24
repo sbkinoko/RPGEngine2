@@ -2,7 +2,7 @@ package core.usecase.updateparameter
 
 import core.domain.status.PlayerStatus
 import core.domain.status.PlayerStatusTest.Companion.testActivePlayer
-import core.repository.character.CharacterRepository
+import core.repository.memory.character.CharacterRepository
 import data.repository.item.tool.ToolId
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test

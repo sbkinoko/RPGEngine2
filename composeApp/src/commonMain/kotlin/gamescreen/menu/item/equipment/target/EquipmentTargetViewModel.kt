@@ -6,9 +6,7 @@ import core.PlayerStatusRepositoryName
 import core.domain.item.equipment.EquipmentData
 import core.menu.SelectCore
 import core.menu.SelectCoreInt
-import core.repository.bag.BagRepository
-import core.repository.character.player.PlayerCharacterRepository
-import core.repository.character.statusdata.StatusDataRepository
+import core.repository.memory.bag.BagRepository
 import core.usecase.equipment.EquipUseCase
 import data.repository.item.equipment.EquipmentId
 import data.repository.item.equipment.EquipmentRepository
@@ -34,8 +32,8 @@ class EquipmentTargetViewModel(
     private val addEquipmentUseCase: AddToolUseCase<EquipmentId>,
 ) : TargetViewModel<EquipmentId, EquipmentData>() {
     private val targetRepository: TargetRepository by inject()
-    val playerStatusRepository: PlayerCharacterRepository by inject()
-    val statusDataRepository: StatusDataRepository by inject(
+    val playerStatusRepository: core.repository.memory.character.player.PlayerCharacterRepository by inject()
+    val statusDataRepository: core.repository.memory.character.statusdata.StatusDataRepository by inject(
         qualifier = PlayerStatusRepositoryName
     )
 

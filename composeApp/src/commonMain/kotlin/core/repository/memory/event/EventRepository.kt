@@ -1,4 +1,4 @@
-package core.repository.event
+package core.repository.memory.event
 
 import core.domain.BattleEventCallback
 import core.domain.BattleResult

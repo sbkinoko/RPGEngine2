@@ -3,8 +3,8 @@ package gamescreen
 import core.EquipmentBagRepositoryName
 import core.PlayerStatusRepositoryName
 import core.ToolBagRepositoryName
-import core.repository.screentype.ScreenTypeRepository
-import core.repository.screentype.ScreenTypeRepositoryImpl
+import core.repository.memory.screentype.ScreenTypeRepository
+import core.repository.memory.screentype.ScreenTypeRepositoryImpl
 import gamescreen.init.InitUseCase
 import gamescreen.init.InitUseCaseImpl
 import main.MainViewModel
