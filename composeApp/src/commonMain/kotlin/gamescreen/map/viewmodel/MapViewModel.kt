@@ -5,6 +5,7 @@ import common.FpsCounter
 import controller.domain.ControllerCallback
 import controller.domain.Stick
 import core.domain.mapcell.CellType
+import core.repository.memory.mapuistate.MapUiStateRepository
 import core.repository.memory.screentype.ScreenTypeRepository
 import gamescreen.GameScreenType
 import gamescreen.map.domain.Player
@@ -34,7 +35,7 @@ class MapViewModel(
     private val positionRepository: PositionRepository,
     private val saveUseCase: SaveUseCase,
 
-    private val mapUiStateRepository: core.repository.memory.mapuistate.MapUiStateRepository,
+    private val mapUiStateRepository: MapUiStateRepository,
 
     private val moveUseCase: MoveUseCase,
 ) : ControllerCallback, KoinComponent {

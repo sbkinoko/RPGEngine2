@@ -1,11 +1,12 @@
 package core.usecase.fly
 
+import core.repository.memory.mapuistate.MapUiStateRepository
 import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.ObjectHeightDetail
 import gamescreen.map.usecase.changeheight.ChangeHeightUseCase
 
 class FlyUseCaseImpl(
-    private val mapUiStateRepository: core.repository.memory.mapuistate.MapUiStateRepository,
+    private val mapUiStateRepository: MapUiStateRepository,
     private val changeHeightUseCase: ChangeHeightUseCase,
 ) : FlyUseCase {
     override suspend fun invoke() {
