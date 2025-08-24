@@ -1,12 +1,11 @@
 
 import core.domain.status.ConditionType
-import core.repository.character.statusdata.StatusDataRepository
 import core.usecase.updateparameter.UpdateStatusUseCase
 import gamescreen.battle.service.findtarget.FindTargetService
 import gamescreen.battle.usecase.condition.ConditionUseCase
 
 class ConditionUseCaseImpl(
-    private val statusDataRepository: StatusDataRepository,
+    private val statusDataRepository: core.repository.memory.character.statusdata.StatusDataRepository,
     private val findTargetService: FindTargetService,
     private val updateStatusUseCase: UpdateStatusUseCase,
 ) : ConditionUseCase {

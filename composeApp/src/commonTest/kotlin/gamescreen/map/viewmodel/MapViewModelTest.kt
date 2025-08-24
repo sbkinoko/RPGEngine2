@@ -2,7 +2,6 @@ package gamescreen.map.viewmodel
 
 import core.ModuleCore
 import core.domain.realm.Position
-import core.repository.mapuistate.MapUiStateRepository
 import data.ModuleData
 import gamescreen.ModuleMain
 import gamescreen.battle.ModuleBattle
@@ -79,7 +78,7 @@ class MapViewModelTest : KoinTest {
                 override fun save(player: Player) {
                 }
             },
-            mapUiStateRepository = object : MapUiStateRepository {
+            mapUiStateRepository = object : core.repository.memory.mapuistate.MapUiStateRepository {
                 override val stateFlow: StateFlow<MapUiState>
                     get() = throw NotImplementedError()
 

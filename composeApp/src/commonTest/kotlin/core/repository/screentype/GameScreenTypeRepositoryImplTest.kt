@@ -1,5 +1,6 @@
 package core.repository.screentype
 
+import core.repository.memory.screentype.ScreenTypeRepository
 import gamescreen.GameScreenType
 import gamescreen.ModuleMain
 import kotlinx.coroutines.delay

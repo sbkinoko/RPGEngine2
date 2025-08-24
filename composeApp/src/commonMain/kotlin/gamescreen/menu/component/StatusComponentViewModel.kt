@@ -1,14 +1,12 @@
 package gamescreen.menu.component
 
-import core.repository.character.player.PlayerCharacterRepository
-import core.repository.character.statusdata.StatusDataRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class StatusComponentViewModel(
-    statusDataRepository: StatusDataRepository,
+    statusDataRepository: core.repository.memory.character.statusdata.StatusDataRepository,
 ) : KoinComponent {
-    private val playerStatusRepository: PlayerCharacterRepository by inject()
+    private val playerStatusRepository: core.repository.memory.character.player.PlayerCharacterRepository by inject()
 
     val statusFlow = playerStatusRepository
         .playerStatusFlow

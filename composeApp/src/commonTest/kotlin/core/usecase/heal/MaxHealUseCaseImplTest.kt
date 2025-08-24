@@ -2,7 +2,6 @@ package core.usecase.heal
 
 import core.domain.status.StatusData
 import core.domain.status.StatusDataTest
-import core.repository.character.statusdata.StatusDataRepository
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.runBlocking
 import kotlin.test.BeforeTest
@@ -10,7 +9,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class MaxHealUseCaseImplTest {
-    private val playerStatusRepository = object : StatusDataRepository {
+    private val playerStatusRepository = object : core.repository.memory.character.statusdata.StatusDataRepository {
         private var statusList = MutableList(2) {
             StatusDataTest.TestPlayerStatusActive.run {
                 copy(

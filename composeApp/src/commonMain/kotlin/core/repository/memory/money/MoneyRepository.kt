@@ -1,4 +1,4 @@
-package core.repository.money
+package core.repository.memory.money
 
 import kotlinx.coroutines.flow.StateFlow
 

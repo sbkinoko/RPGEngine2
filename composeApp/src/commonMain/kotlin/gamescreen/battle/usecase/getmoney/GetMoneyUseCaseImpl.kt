@@ -1,6 +1,6 @@
 package gamescreen.battle.usecase.getmoney
 
-import core.repository.character.battlemonster.BattleInfoRepository
+import core.repository.memory.character.battlemonster.BattleInfoRepository
 
 class GetMoneyUseCaseImpl(
     private val battleInfoRepository: BattleInfoRepository,

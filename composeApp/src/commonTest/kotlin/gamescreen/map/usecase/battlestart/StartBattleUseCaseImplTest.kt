@@ -5,10 +5,8 @@ import core.domain.status.MonsterStatusTest.Companion.TestActiveMonster
 import core.domain.status.StatusData
 import core.domain.status.StatusDataTest
 import core.domain.status.monster.MonsterStatus
-import core.repository.character.battlemonster.BattleInfoRepository
-import core.repository.character.statusdata.StatusDataRepository
-import core.repository.event.EventRepository
-import core.repository.screentype.ScreenTypeRepository
+import core.repository.memory.character.battlemonster.BattleInfoRepository
+import core.repository.memory.screentype.ScreenTypeRepository
 import gamescreen.GameScreenType
 import gamescreen.ModuleMain
 import gamescreen.battle.domain.ActionData
@@ -38,7 +36,7 @@ class StartBattleUseCaseImplTest : KoinTest {
     private lateinit var startBattleUseCase: StartBattleUseCase
 
     private val screenTypeRepository: ScreenTypeRepository by inject()
-    private val eventRepository: EventRepository by inject()
+    private val eventRepository: core.repository.memory.event.EventRepository by inject()
 
     var checkCommand = 0
     var checkAction = 0
@@ -178,7 +176,7 @@ class StartBattleUseCaseImplTest : KoinTest {
                     throw NotImplementedError()
                 }
             },
-            statusDataRepository = object : StatusDataRepository {
+            statusDataRepository = object : core.repository.memory.character.statusdata.StatusDataRepository {
                 override val statusDataFlow: StateFlow<List<StatusData>>
                     get() = throw NotImplementedError()
 

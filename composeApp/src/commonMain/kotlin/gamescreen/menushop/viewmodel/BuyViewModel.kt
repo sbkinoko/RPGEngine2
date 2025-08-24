@@ -1,6 +1,6 @@
 package gamescreen.menushop.viewmodel
 
-import core.repository.money.MoneyRepository
+import core.repository.memory.money.MoneyRepository
 import data.repository.item.tool.ToolId
 import gamescreen.choice.Choice
 import gamescreen.choice.repository.ChoiceRepository

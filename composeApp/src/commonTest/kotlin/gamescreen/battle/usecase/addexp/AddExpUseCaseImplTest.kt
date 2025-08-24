@@ -9,9 +9,6 @@ import core.domain.status.StatusIncreaseTest.Companion.TEST_LV1_MP
 import core.domain.status.StatusIncreaseTest.Companion.TEST_LV2_HP
 import core.domain.status.StatusIncreaseTest.Companion.TEST_LV2_MP
 import core.domain.status.StatusIncreaseTest.Companion.testStatusUpList
-import core.repository.character.player.PlayerCharacterRepository
-import core.repository.character.player.PlayerCharacterRepositoryImpl
-import core.repository.character.statusdata.StatusDataRepository
 import data.repository.status.AbstractStatusRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.StateFlow
@@ -40,7 +37,7 @@ class AddExpUseCaseImplTest {
             )
     })
 
-    private val statusDataRepository = object : StatusDataRepository {
+    private val statusDataRepository = object : core.repository.memory.character.statusdata.StatusDataRepository {
         override val statusDataFlow: StateFlow<List<StatusData>>
             get() = throw NotImplementedError()
 
@@ -66,7 +63,7 @@ class AddExpUseCaseImplTest {
         }
     }
 
-    private lateinit var playerStatusRepository: PlayerCharacterRepository
+    private lateinit var playerStatusRepository: core.repository.memory.character.player.PlayerCharacterRepository
     private lateinit var addExpUseCase: AddExpUseCase
 
     @BeforeTest
@@ -79,7 +76,7 @@ class AddExpUseCaseImplTest {
             }
         )
 
-        playerStatusRepository = PlayerCharacterRepositoryImpl(
+        playerStatusRepository = core.repository.memory.character.player.PlayerCharacterRepositoryImpl(
             statusRepository = statusRepository,
         )
 

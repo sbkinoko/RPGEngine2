@@ -3,7 +3,6 @@ package core.repository.player
 import core.ModuleCore
 import core.domain.status.PlayerStatus
 import core.domain.status.param.EXP
-import core.repository.character.player.PlayerCharacterRepository
 import data.ModuleData
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -18,7 +17,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class PlayerCharacterRepositoryImplTest : KoinTest {
-    private val playerStatusRepository: PlayerCharacterRepository by inject()
+    private val playerStatusRepository: core.repository.memory.character.player.PlayerCharacterRepository by inject()
 
     @BeforeTest
     fun beforeTest() {

@@ -1,3 +1,3 @@
-package core.repository.money
+package core.repository.memory.money
 
 class MoneyLackException : Exception()

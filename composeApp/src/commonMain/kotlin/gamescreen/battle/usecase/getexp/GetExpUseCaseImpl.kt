@@ -1,6 +1,6 @@
 package gamescreen.battle.usecase.getexp
 
-import core.repository.character.battlemonster.BattleInfoRepository
+import core.repository.memory.character.battlemonster.BattleInfoRepository
 
 class GetExpUseCaseImpl(
     private val battleInfoRepository: BattleInfoRepository,

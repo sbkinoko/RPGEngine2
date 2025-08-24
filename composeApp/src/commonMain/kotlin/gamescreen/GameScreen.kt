@@ -19,7 +19,7 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
 import common.extension.pxToDp
 import controller.layout.Controller
-import core.repository.screentype.ScreenTypeRepository
+import core.repository.memory.screentype.ScreenTypeRepository
 import main.MainViewModel
 import org.koin.compose.koinInject
 import values.Colors

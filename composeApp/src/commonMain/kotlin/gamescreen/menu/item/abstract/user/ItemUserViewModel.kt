@@ -1,7 +1,6 @@
 package gamescreen.menu.item.abstract.user
 
 import core.domain.item.Item
-import core.repository.character.player.PlayerCharacterRepository
 import data.repository.item.ItemRepository
 import gamescreen.menu.MenuChildViewModel
 import gamescreen.menu.domain.MenuType
@@ -14,7 +13,7 @@ abstract class ItemUserViewModel<T, V : Item> : MenuChildViewModel(),
     ItemList<T>,
     KoinComponent {
     private val userRepository: UserRepository by inject()
-    protected val playerStatusRepository: PlayerCharacterRepository by inject()
+    protected val playerStatusRepository: core.repository.memory.character.player.PlayerCharacterRepository by inject()
     protected abstract val itemRepository: ItemRepository<T, V>
 
     abstract val boundedScreenType: MenuType

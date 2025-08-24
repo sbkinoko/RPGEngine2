@@ -3,7 +3,7 @@ package gamescreen.menu.item.equipment.list
 import core.EquipmentBagRepositoryName
 import core.domain.AbleType
 import core.domain.item.equipment.EquipmentData
-import core.repository.bag.BagRepository
+import core.repository.memory.bag.BagRepository
 import data.repository.item.equipment.EquipmentId
 import data.repository.item.equipment.EquipmentRepository
 import gamescreen.menu.domain.MenuType

@@ -1,6 +1,6 @@
 package gamescreen.menu.usecase.bag.dectool
 
-import core.repository.bag.BagRepository
+import core.repository.memory.bag.BagRepository
 import data.repository.item.ItemId
 
 class DecToolUseCaseImpl<T : ItemId>(

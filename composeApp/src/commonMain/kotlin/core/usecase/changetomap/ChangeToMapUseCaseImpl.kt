@@ -1,6 +1,6 @@
 package core.usecase.changetomap
 
-import core.repository.screentype.ScreenTypeRepository
+import core.repository.memory.screentype.ScreenTypeRepository
 import gamescreen.GameScreenType
 
 class ChangeToMapUseCaseImpl(

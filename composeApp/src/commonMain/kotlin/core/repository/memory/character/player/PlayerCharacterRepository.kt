@@ -1,12 +1,11 @@
-package core.repository.character.player
+package core.repository.memory.character.player
 
 import core.domain.status.PlayerStatus
-import core.repository.character.CharacterRepository
 import data.repository.item.skill.SkillId
 import data.repository.item.tool.ToolId
 import kotlinx.coroutines.flow.StateFlow
 
-interface PlayerCharacterRepository : CharacterRepository<PlayerStatus> {
+interface PlayerCharacterRepository : core.repository.memory.character.CharacterRepository<PlayerStatus> {
     val playerStatusFlow: StateFlow<List<PlayerStatus>>
 
     fun getTool(

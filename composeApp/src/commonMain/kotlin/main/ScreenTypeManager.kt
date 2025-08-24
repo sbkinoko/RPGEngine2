@@ -1,7 +1,7 @@
 package main
 
 import controller.domain.ControllerCallback
-import core.repository.screentype.ScreenTypeRepository
+import core.repository.memory.screentype.ScreenTypeRepository
 import gamescreen.GameScreenType
 import gamescreen.battle.BattleViewModel
 import gamescreen.choice.Choice

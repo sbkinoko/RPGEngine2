@@ -4,7 +4,6 @@ import core.domain.status.ConditionType
 import core.domain.status.StatusData
 import core.domain.status.StatusDataTest
 import core.domain.status.param.StatusParameterWithMax
-import core.repository.character.statusdata.StatusDataRepository
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
@@ -27,8 +26,8 @@ class UpdateStatusUseCaseImplTest {
 
     private val status2 = status1.copy()
 
-    private val statusRepository: StatusDataRepository =
-        object : StatusDataRepository {
+    private val statusRepository: core.repository.memory.character.statusdata.StatusDataRepository =
+        object : core.repository.memory.character.statusdata.StatusDataRepository {
             var _statusList: MutableList<StatusData> = mutableListOf(
                 status1,
                 status2,

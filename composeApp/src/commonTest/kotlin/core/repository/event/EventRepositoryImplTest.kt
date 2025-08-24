@@ -17,7 +17,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class EventRepositoryImplTest : KoinTest {
-    private val eventRepository by inject<EventRepository>()
+    private val eventRepository by inject<core.repository.memory.event.EventRepository>()
 
     private var winCount = 0
     private val winCallBack = {

@@ -11,7 +11,6 @@ import core.domain.item.skill.AttackSkill
 import core.domain.item.skill.HealSkill
 import core.domain.status.ConditionType
 import core.domain.status.PlayerStatus
-import core.repository.character.player.PlayerCharacterRepository
 import core.usecase.item.useitem.UseItemUseCase
 import core.usecase.item.useitem.UseSkillUseCaseImpl
 import core.usecase.updateparameter.UpdateStatusUseCase
@@ -24,7 +23,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class UseSkillUseCaseImplTest {
-    interface TestPlayerCharacterRepository : PlayerCharacterRepository {
+    interface TestPlayerCharacterRepository : core.repository.memory.character.player.PlayerCharacterRepository {
         override val playerStatusFlow: StateFlow<List<PlayerStatus>>
             get() = throw NotImplementedError()
 

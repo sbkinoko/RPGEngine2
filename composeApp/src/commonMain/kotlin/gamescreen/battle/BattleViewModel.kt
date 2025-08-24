@@ -5,8 +5,7 @@ import controller.domain.Stick
 import core.EnemyStatusRepositoryName
 import core.domain.status.StatusData
 import core.domain.status.monster.MonsterStatus
-import core.repository.character.battlemonster.BattleInfoRepository
-import core.repository.character.statusdata.StatusDataRepository
+import core.repository.memory.character.battlemonster.BattleInfoRepository
 import gamescreen.battle.repository.attackeffect.AttackEffectRepository
 import gamescreen.battle.repository.commandstate.CommandStateRepository
 import gamescreen.battle.repository.flash.FlashRepository
@@ -19,13 +18,15 @@ class BattleViewModel(
     flashRepository: FlashRepository,
     attackEffectInfoRepository: AttackEffectRepository,
 
-    statusDataRepository: StatusDataRepository,
+    statusDataRepository: core.repository.memory.character.statusdata.StatusDataRepository,
 ) :
     ControllerCallback,
     KoinComponent {
 
     private val battleInfoRepository: BattleInfoRepository by inject()
-    private val monsterStatusRepository: StatusDataRepository by inject(qualifier = EnemyStatusRepositoryName)
+    private val monsterStatusRepository: core.repository.memory.character.statusdata.StatusDataRepository by inject(
+        qualifier = EnemyStatusRepositoryName
+    )
 
     private val commandStateRepository: CommandStateRepository by inject()
 

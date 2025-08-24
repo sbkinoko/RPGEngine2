@@ -4,8 +4,7 @@ import core.EquipmentBagRepositoryName
 import core.domain.item.equipment.EquipmentData
 import core.menu.SelectCore
 import core.menu.SelectCoreInt
-import core.repository.bag.BagRepository
-import core.repository.character.statusdata.StatusDataRepository
+import core.repository.memory.bag.BagRepository
 import data.repository.item.equipment.EquipmentId
 import data.repository.item.equipment.EquipmentRepository
 import gamescreen.menu.domain.MenuType
@@ -16,7 +15,7 @@ import org.koin.core.component.inject
 import values.Constants
 
 class EquipmentUserViewModel(
-    private val statusDataRepository: StatusDataRepository,
+    private val statusDataRepository: core.repository.memory.character.statusdata.StatusDataRepository,
 ) : ItemUserViewModel<EquipmentId, EquipmentData>(),
     KoinComponent {
     override val itemRepository: EquipmentRepository by inject()

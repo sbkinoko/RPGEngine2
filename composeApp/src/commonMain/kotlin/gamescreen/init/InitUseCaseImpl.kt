@@ -1,9 +1,8 @@
 package gamescreen.init
 
 import core.domain.item.BagItemData
-import core.repository.bag.BagRepository
-import core.repository.character.statusdata.StatusDataRepository
-import core.repository.money.MoneyRepository
+import core.repository.memory.bag.BagRepository
+import core.repository.memory.money.MoneyRepository
 import data.repository.item.equipment.EquipmentId
 import data.repository.item.tool.ToolId
 import data.repository.status.StatusRepository
@@ -12,7 +11,7 @@ import values.Constants
 class InitUseCaseImpl(
     private val equipmentBagRepository: BagRepository<EquipmentId>,
     private val toolBagRepository: BagRepository<ToolId>,
-    private val statusDataRepository: StatusDataRepository,
+    private val statusDataRepository: core.repository.memory.character.statusdata.StatusDataRepository,
     private val statusRepository: StatusRepository,
     private val moneyRepository: MoneyRepository,
 ) : InitUseCase {

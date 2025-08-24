@@ -7,7 +7,6 @@ import core.domain.status.StatusDataTest
 import core.domain.status.param.ParameterType
 import core.domain.status.param.StatusParameter
 import core.domain.status.param.StatusParameterWithMax
-import core.repository.character.statusdata.StatusDataRepository
 import data.ModuleData
 import data.repository.status.StatusRepository
 import gamescreen.battle.ModuleBattle
@@ -30,7 +29,7 @@ class AttackUseCaseImplFromEnemyTest : KoinTest {
     )
 
     private val statusRepository: StatusRepository by inject()
-    private val statusDataRepository: StatusDataRepository by inject(
+    private val statusDataRepository: core.repository.memory.character.statusdata.StatusDataRepository by inject(
         qualifier = PlayerStatusRepositoryName
     )
 
