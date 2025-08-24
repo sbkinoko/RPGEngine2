@@ -2,7 +2,7 @@ package gamescreen.menu.usecase.bag.addtool
 
 import core.ModuleCore
 import core.ToolBagRepositoryName
-import core.repository.bag.BagRepository
+import core.repository.memory.bag.BagRepository
 import data.repository.item.tool.ToolId
 import gamescreen.menu.ModuleMenu
 import gamescreen.menu.qualifierAddToolUseCase
