@@ -49,6 +49,7 @@ val ModuleMain = module {
             statusDataRepository = get(
                 qualifier = PlayerStatusRepositoryName,
             ),
+            moneyRepository = get(),
         )
     }
 }

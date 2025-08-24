@@ -3,6 +3,7 @@ package gamescreen.init
 import core.domain.item.BagItemData
 import core.repository.bag.BagRepository
 import core.repository.character.statusdata.StatusDataRepository
+import core.repository.money.MoneyRepository
 import data.repository.item.equipment.EquipmentId
 import data.repository.item.tool.ToolId
 import data.repository.status.StatusRepository
@@ -13,8 +14,11 @@ class InitUseCaseImpl(
     private val toolBagRepository: BagRepository<ToolId>,
     private val statusDataRepository: StatusDataRepository,
     private val statusRepository: StatusRepository,
+    private val moneyRepository: MoneyRepository,
 ) : InitUseCase {
     override fun invoke() {
+        moneyRepository.setMoney(1000)
+
         statusDataRepository.setStatusList(
             List(Constants.playerNum) {
                 statusRepository.getStatus(
