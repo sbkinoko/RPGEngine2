@@ -39,17 +39,13 @@ import values.GameParams
 
 class Timer {
 
-    var time = 0L
-    var pre = time
+    var time = getNowTime().nowTime
 
     init {
         DefaultScope.launch {
             while (true) {
                 delay(1)
                 time = getNowTime().nowTime
-                if (time - pre <= 2) {
-                    println(time)
-                }
             }
         }
     }
