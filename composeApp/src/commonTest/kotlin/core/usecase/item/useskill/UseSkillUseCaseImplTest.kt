@@ -48,6 +48,11 @@ class UseSkillUseCaseImplTest {
         ) {
             throw NotImplementedError()
         }
+
+
+        override suspend fun setStatusList(status: List<PlayerStatus>) {
+            throw NotImplementedError()
+        }
     }
 
     private lateinit var playerStatusRepository: TestPlayerCharacterRepository

@@ -11,6 +11,8 @@ import core.repository.memory.money.MoneyRepository
 import core.repository.memory.money.MoneyRepositoryImpl
 import core.repository.storage.MoneyDBRepository
 import core.repository.storage.MoneyDBRepositoryImpl
+import core.repository.storage.player.PlayerDBRepository
+import core.repository.storage.player.PlayerDBRepositoryImpl
 import core.service.CheckCanUseService
 import core.service.CheckCanUseServiceImpl
 import core.usecase.changetomap.ChangeToMapUseCase
@@ -225,5 +227,9 @@ val ModuleCore = module {
     )
     {
         BagRepositoryImpl()
+    }
+
+    single<PlayerDBRepository> {
+        PlayerDBRepositoryImpl()
     }
 }

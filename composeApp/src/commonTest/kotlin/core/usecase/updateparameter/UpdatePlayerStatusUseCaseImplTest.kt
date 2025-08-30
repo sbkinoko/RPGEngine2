@@ -38,6 +38,10 @@ class UpdatePlayerStatusUseCaseImplTest {
             ) {
                 this._statusList[id] = status
             }
+
+            override suspend fun setStatusList(status: List<PlayerStatus>) {
+                throw NotImplementedError()
+            }
         }
 
     private val updateStatusUseCase = UpdatePlayerStatusUseCaseImpl(

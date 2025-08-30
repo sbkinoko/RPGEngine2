@@ -4,6 +4,7 @@ import core.domain.item.BagItemData
 import core.repository.memory.bag.BagRepository
 import core.repository.memory.money.MoneyRepository
 import core.repository.storage.MoneyDBRepository
+import core.repository.storage.player.PlayerDBRepository
 import data.repository.item.equipment.EquipmentId
 import data.repository.item.tool.ToolId
 import data.repository.status.StatusRepository
@@ -16,6 +17,8 @@ class InitUseCaseImpl(
     private val statusRepository: StatusRepository,
     private val moneyRepository: MoneyRepository,
     private val moneyDBRepository: MoneyDBRepository,
+
+    private val playerDBRepository: PlayerDBRepository,
 ) : InitUseCase {
     override fun invoke() {
         initMoney()
@@ -67,6 +70,8 @@ class InitUseCaseImpl(
                 num = 100,
             )
         )
+
+        playerDBRepository.getPlayers()
     }
 
     private fun initMoney() {

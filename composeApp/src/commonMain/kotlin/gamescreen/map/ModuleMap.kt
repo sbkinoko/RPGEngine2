@@ -297,6 +297,9 @@ val ModuleMap = module {
             backgroundRepository = get(),
             moneyRepository = get(),
             moneyDBRepository = get(),
+
+            playerDBRepository = get(),
+            playerCharacterRepository = get(),
         )
     }
 }

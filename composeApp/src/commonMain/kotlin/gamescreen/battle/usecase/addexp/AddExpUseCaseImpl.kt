@@ -1,17 +1,19 @@
 package gamescreen.battle.usecase.addexp
 
 import common.DefaultScope
+import core.repository.memory.character.player.PlayerCharacterRepository
 import data.repository.status.StatusRepository
 import kotlinx.coroutines.launch
 
 class AddExpUseCaseImpl(
-    private val playerStatusRepository: core.repository.memory.character.player.PlayerCharacterRepository,
+    private val playerStatusRepository: PlayerCharacterRepository,
     private val statusRepository: StatusRepository,
 
     private val statusDataRepository: core.repository.memory.character.statusdata.StatusDataRepository,
 ) : AddExpUseCase {
     override fun invoke(exp: Int): List<String> {
         val levelUpList: MutableList<String> = mutableListOf()
+        val afterList = playerStatusRepository.getStatusList().toMutableList()
         for (index: Int in 0 until playerStatusRepository.getStatusList().size) {
             val playerStatus = playerStatusRepository.getStatus(index)
 
@@ -49,16 +51,18 @@ class AddExpUseCaseImpl(
 
             DefaultScope.launch {
                 //保存
-                playerStatusRepository.setStatus(
-                    id = index,
-                    status = after,
-                )
+                afterList[index] = after
                 statusDataRepository.setStatusData(
                     id = index,
                     statusData = afterStatus,
                 )
             }
         }
+
+        DefaultScope.launch {
+            playerStatusRepository.setStatusList(afterList)
+        }
+
 
         return levelUpList
     }
