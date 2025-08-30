@@ -37,6 +37,11 @@ class BattleInfoRepositoryImpl : BattleInfoRepository {
         monsterList = monsters
     }
 
+    // fixme 後で統一
+    override suspend fun setStatusList(status: List<MonsterStatus>) {
+        setMonsters(status)
+    }
+
     override suspend fun setStatus(
         id: Int,
         status: MonsterStatus,

@@ -18,4 +18,8 @@ interface CharacterRepository<T> {
         id: Int,
         status: T,
     )
+
+    suspend fun setStatusList(
+        status: List<T>,
+    )
 }

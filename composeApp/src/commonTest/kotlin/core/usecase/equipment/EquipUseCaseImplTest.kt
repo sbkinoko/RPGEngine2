@@ -99,6 +99,10 @@ class EquipUseCaseImplTest {
         ) {
             this.statusList[id] = status
         }
+
+        override suspend fun setStatusList(status: List<PlayerStatus>) {
+            throw NotImplementedError()
+        }
     }
 
     private val equipmentRepository = object : EquipmentRepository {

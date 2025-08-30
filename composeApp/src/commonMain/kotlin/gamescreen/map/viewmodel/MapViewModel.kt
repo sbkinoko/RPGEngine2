@@ -157,9 +157,11 @@ class MapViewModel(
             )
         )
 
-        saveUseCase.save(
-            player = uiStateFlow.value.player,
-        )
+        DefaultScope.launch {
+            saveUseCase.save(
+                player = uiStateFlow.value.player,
+            )
+        }
 
         val preEvent = autoEvent
         autoEvent = isEventCollidedEventUseCase.invoke(

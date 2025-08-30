@@ -52,7 +52,12 @@ class PlayerCharacterRepositoryImpl(
             }
         players = list
 
-        mutableStatusListFlow.emit(players)
+        mutableStatusListFlow.value = players
+    }
+
+    override suspend fun setStatusList(status: List<PlayerStatus>) {
+        players = status
+        mutableStatusListFlow.value = players
     }
 
     override fun getStatus(id: Int): PlayerStatus {

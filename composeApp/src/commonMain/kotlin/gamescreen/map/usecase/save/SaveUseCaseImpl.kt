@@ -1,7 +1,9 @@
 package gamescreen.map.usecase.save
 
+import core.repository.memory.character.player.PlayerCharacterRepository
 import core.repository.memory.money.MoneyRepository
 import core.repository.storage.MoneyDBRepository
+import core.repository.storage.player.PlayerDBRepository
 import gamescreen.map.domain.Player
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.playercell.PlayerCellRepository
@@ -14,6 +16,9 @@ class SaveUseCaseImpl(
 
     private val moneyRepository: MoneyRepository,
     private val moneyDBRepository: MoneyDBRepository,
+
+    private val playerCharacterRepository: PlayerCharacterRepository,
+    private val playerDBRepository: PlayerDBRepository,
 ) : SaveUseCase {
     override fun save(
         player: Player,
@@ -31,6 +36,12 @@ class SaveUseCaseImpl(
 
         moneyDBRepository.set(
             moneyRepository.moneyStateFLow.value
+        )
+
+        playerDBRepository.setPlayers(
+            playerCharacterRepository.playerStatusFlow.value.map {
+                it.exp.value
+            }
         )
     }
 }
