@@ -22,7 +22,7 @@ enum class ToolId(val id: Int) : ItemId {
     }
 }
 
-const val NONE = 0
-const val Heal1 = 1
-const val Heal2 = 2
-const val FLY = 3
+private const val NONE = 0
+private const val Heal1 = 1
+private const val Heal2 = 2
+private const val FLY = 3
