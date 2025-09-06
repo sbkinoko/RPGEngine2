@@ -4,6 +4,7 @@ import core.repository.memory.character.player.PlayerCharacterRepository
 import core.repository.memory.money.MoneyRepository
 import core.repository.storage.MoneyDBRepository
 import core.repository.storage.player.PlayerDBRepository
+import core.repository.storage.tool.ToolDBRepository
 import gamescreen.map.domain.Player
 import gamescreen.map.repository.backgroundcell.BackgroundRepository
 import gamescreen.map.repository.playercell.PlayerCellRepository
@@ -19,6 +20,8 @@ class SaveUseCaseImpl(
 
     private val playerCharacterRepository: PlayerCharacterRepository,
     private val playerDBRepository: PlayerDBRepository,
+
+    private val toolDBRepository: ToolDBRepository,
 ) : SaveUseCase {
     override fun save(
         player: Player,
@@ -42,6 +45,10 @@ class SaveUseCaseImpl(
             playerCharacterRepository.playerStatusFlow.value.map {
                 it.exp.value
             }
+        )
+
+        toolDBRepository.setPlayers(
+            playerCharacterRepository.getStatusList()
         )
     }
 }

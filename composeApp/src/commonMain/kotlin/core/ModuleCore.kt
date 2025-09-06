@@ -13,6 +13,8 @@ import core.repository.storage.MoneyDBRepository
 import core.repository.storage.MoneyDBRepositoryImpl
 import core.repository.storage.player.PlayerDBRepository
 import core.repository.storage.player.PlayerDBRepositoryImpl
+import core.repository.storage.tool.ToolDBRepository
+import core.repository.storage.tool.ToolDBRepositoryImpl
 import core.service.CheckCanUseService
 import core.service.CheckCanUseServiceImpl
 import core.usecase.changetomap.ChangeToMapUseCase
@@ -231,5 +233,9 @@ val ModuleCore = module {
 
     single<PlayerDBRepository> {
         PlayerDBRepositoryImpl()
+    }
+
+    single<ToolDBRepository> {
+        ToolDBRepositoryImpl()
     }
 }

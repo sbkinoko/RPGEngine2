@@ -52,6 +52,9 @@ val ModuleMain = module {
             moneyRepository = get(),
             moneyDBRepository = get(),
             playerDBRepository = get(),
+
+            playerCharacterRepository = get(),
+            toolDBRepository = get(),
         )
     }
 }

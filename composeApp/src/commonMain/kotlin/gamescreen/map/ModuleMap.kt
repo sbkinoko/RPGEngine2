@@ -300,6 +300,7 @@ val ModuleMap = module {
 
             playerDBRepository = get(),
             playerCharacterRepository = get(),
+            toolDBRepository = get(),
         )
     }
 }
