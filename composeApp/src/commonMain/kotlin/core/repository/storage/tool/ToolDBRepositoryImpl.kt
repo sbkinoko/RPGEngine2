@@ -9,6 +9,7 @@ import io.realm.kotlin.RealmConfiguration
 import io.realm.kotlin.ext.query
 import io.realm.kotlin.ext.realmListOf
 import org.mongodb.kbson.ObjectId
+import values.Constants
 
 class ToolDBRepositoryImpl : ToolDBRepository {
 
@@ -24,7 +25,7 @@ class ToolDBRepositoryImpl : ToolDBRepository {
     override fun setPlayers(players: List<PlayerStatus>) {
         val idList = listRealm.query<RealmPlayerList>().first().find()
 
-        for (i: Int in 0 until 3) {
+        for (i: Int in 0 until Constants.playerNum) {
             val id = idList!!.players[i]
             val tools = players[i].toolList
             val toolList = toolRealm.query<RealmToolList>(
@@ -49,7 +50,7 @@ class ToolDBRepositoryImpl : ToolDBRepository {
         if (idList == null) {
             idList = RealmPlayerList()
             val list = realmListOf<ObjectId>()
-            repeat(3) {
+            repeat(Constants.playerNum) {
                 list.add(ObjectId())
             }
             idList.players = list
