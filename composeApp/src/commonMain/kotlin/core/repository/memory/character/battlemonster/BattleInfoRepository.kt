@@ -11,7 +11,6 @@ interface BattleInfoRepository : CharacterRepository<MonsterStatus> {
 
     val backgroundType: StateFlow<BattleBackgroundType>
 
-    fun setMonsters(monsters: List<MonsterStatus>)
 
     fun setBackgroundType(backgroundType: BattleBackgroundType)
 

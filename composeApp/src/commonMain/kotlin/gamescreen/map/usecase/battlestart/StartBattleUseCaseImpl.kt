@@ -38,7 +38,7 @@ class StartBattleUseCaseImpl(
         }
 
         DefaultScope.launch {
-            battleInfoRepository.setMonsters(
+            battleInfoRepository.setStatusList(
                 monsterList.map { it.first }
             )
 
