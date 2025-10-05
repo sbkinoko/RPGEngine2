@@ -41,7 +41,7 @@ fun BattleScreen(
     val attackEffectInfo by battleViewModel.attackEffectState.collectAsState()
 
     val statusData by battleViewModel
-        .statusDataFlow
+        .playerStatusFlow
         .collectAsState()
 
     val backgroundType by battleViewModel

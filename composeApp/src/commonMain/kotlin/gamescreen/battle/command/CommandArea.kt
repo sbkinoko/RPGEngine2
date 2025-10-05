@@ -35,7 +35,7 @@ fun CommandArea(
         .collectAsState()
 
     val statusData by battleViewModel
-        .statusDataFlow
+        .playerStatusFlow
         .collectAsState()
 
     when (val nowState = state) {
