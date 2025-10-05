@@ -1,21 +1,20 @@
 package data.repository.item.skill
 
 
-// fixme enumにする
-sealed class SkillId {
-    data object NONE : SkillId()
-    data object CantUse : SkillId()
+enum class SkillId {
+    NONE,
+    CantUse,
 
-    data object AttackToTwo : SkillId()
-    data object Normal1 : SkillId()
-    data object Normal2 : SkillId()
+    AttackToTwo,
+    Normal1,
+    Normal2,
 
-    data object Heal : SkillId()
-    data object Revive : SkillId()
+    Heal,
+    Revive,
 
-    data object Paralysis : SkillId()
-    data object Poison : SkillId()
+    Paralysis,
+    Poison,
 
-    data object BufAtk : SkillId()
-    data object DeBufAtk : SkillId()
+    BufAtk,
+    DeBufAtk;
 }
