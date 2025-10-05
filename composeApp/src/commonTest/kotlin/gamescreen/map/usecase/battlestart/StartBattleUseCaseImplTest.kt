@@ -68,15 +68,11 @@ class StartBattleUseCaseImplTest : KoinTest {
                 }
 
                 override suspend fun setStatusList(status: List<MonsterStatus>) {
-                    throw NotImplementedError()
+                    checkMonster++
                 }
 
                 override fun getStatusList(): List<MonsterStatus> {
                     throw NotImplementedError()
-                }
-
-                override fun setMonsters(monsters: List<MonsterStatus>) {
-                    checkMonster++
                 }
 
                 override fun setBackgroundType(backgroundType: BattleBackgroundType) {
