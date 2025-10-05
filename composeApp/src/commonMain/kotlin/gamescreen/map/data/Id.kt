@@ -1,6 +1,5 @@
 package gamescreen.map.data
 
-// TODO: enumつくる
 private const val ID_NON_LOOP = 0
 private const val ID_LOOP = 1
 
