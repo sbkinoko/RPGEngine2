@@ -25,23 +25,6 @@ class BattleInfoRepositoryImpl : BattleInfoRepository {
         get() = mutableBackgroundType.asStateFlow()
 
 
-    override fun getStatus(id: Int): MonsterStatus {
-        return monsterList[id]
-    }
-
-    override fun getStatusList(): List<MonsterStatus> {
-        return monsterList
-    }
-
-    override fun setMonsters(monsters: List<MonsterStatus>) {
-        monsterList = monsters
-    }
-
-    // fixme 後で統一
-    override suspend fun setStatusList(status: List<MonsterStatus>) {
-        setMonsters(status)
-    }
-
     override suspend fun setStatus(
         id: Int,
         status: MonsterStatus,
@@ -53,6 +36,18 @@ class BattleInfoRepositoryImpl : BattleInfoRepository {
                 status
             }
         }
+    }
+
+    override fun getStatus(id: Int): MonsterStatus {
+        return monsterList[id]
+    }
+
+    override suspend fun setStatusList(status: List<MonsterStatus>) {
+        monsterList = status
+    }
+
+    override fun getStatusList(): List<MonsterStatus> {
+        return monsterList
     }
 
     override fun setBackgroundType(backgroundType: BattleBackgroundType) {

@@ -20,10 +20,6 @@ interface TestBattleInfoRepository : BattleInfoRepository {
         throw NotImplementedError()
     }
 
-    override fun setMonsters(monsters: List<MonsterStatus>) {
-        throw NotImplementedError()
-    }
-
     override suspend fun setStatusList(status: List<MonsterStatus>) {
         throw NotImplementedError()
     }
