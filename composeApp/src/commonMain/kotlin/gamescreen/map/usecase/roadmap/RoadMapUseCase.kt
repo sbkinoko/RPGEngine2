@@ -1,5 +1,6 @@
 package gamescreen.map.usecase.roadmap
 
+import gamescreen.map.data.MapID
 import gamescreen.map.domain.MapUiState
 import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.Player
@@ -12,7 +13,7 @@ interface RoadMapUseCase {
     suspend operator fun invoke(
         mapX: Int,
         mapY: Int,
-        mapId: Int,
+        mapId: MapID,
         playerHeight: ObjectHeight,
         player: Player,
     ): MapUiState

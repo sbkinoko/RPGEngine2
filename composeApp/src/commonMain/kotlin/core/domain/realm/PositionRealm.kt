@@ -1,5 +1,6 @@
 package core.domain.realm
 
+import gamescreen.map.data.MapID
 import gamescreen.map.domain.ObjectHeight
 import io.realm.kotlin.types.RealmObject
 import io.realm.kotlin.types.annotations.PrimaryKey
@@ -26,5 +27,5 @@ fun PositionRealm.convert(): Position = Position(
         height,
         heightDetail,
     ),
-    mapId = this.mapId,
+    mapId = MapID.itoId(this.mapId),
 )

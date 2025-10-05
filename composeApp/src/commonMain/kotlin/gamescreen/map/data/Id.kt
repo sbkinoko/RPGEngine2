@@ -1,20 +1,37 @@
 package gamescreen.map.data
 
-// TODO: enumつくる
-const val ID_NON_LOOP = 0
-const val ID_LOOP = 1
+private const val ID_NON_LOOP = 0
+private const val ID_LOOP = 1
 
-fun MapData.toId(): Int {
+enum class MapID(val intId: Int) {
+    NON_LOOP(ID_NON_LOOP),
+    LOOP(ID_LOOP),
+    ;
+
+    companion object {
+        fun itoId(i: Int): MapID {
+            entries.forEach {
+                if (it.intId == i) {
+                    return it
+                }
+            }
+
+            throw RuntimeException()
+        }
+    }
+}
+
+fun MapData.toId(): MapID {
     return when (this) {
-        is NonLoopMap -> ID_NON_LOOP
-        is LoopMap -> ID_LOOP
+        is NonLoopMap -> MapID.NON_LOOP
+        is LoopMap -> MapID.LOOP
         else -> throw NotImplementedError()
     }
 }
 
-fun Int.toMap(): MapData {
+fun MapID.toMap(): MapData {
     return when (this) {
-        ID_NON_LOOP -> NonLoopMap()
-        else -> LoopMap()
+        MapID.NON_LOOP -> NonLoopMap()
+        MapID.LOOP -> LoopMap()
     }
 }

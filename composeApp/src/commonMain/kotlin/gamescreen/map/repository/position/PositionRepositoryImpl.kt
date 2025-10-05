@@ -54,7 +54,7 @@ class PositionRepositoryImpl : PositionRepository {
                 playerY = playerDy
                 height = objectHeight.toInt()
                 heightDetail = objectHeight.height.num
-                mapId = mapData.toId()
+                mapId = mapData.toId().intId
             }
         }
     }
