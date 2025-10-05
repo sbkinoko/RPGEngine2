@@ -15,11 +15,14 @@ fun SelectEnemy(
     modifier: Modifier = Modifier,
     selectEnemyViewModel: SelectEnemyViewModel = koinInject(),
 ) {
-    // fixme 画面下部のテキストエリアが他の表示領域に通知するのはおかしいので呼び出し場所を変える
+    // 画面下部のテキストエリアが他の表示領域に通知するのはおかしいが、他の分岐と形を揃えるために中で処理
+
+    //テキストの表示と矢印の表示は同じタイミングでOK
     LaunchedEffect(Unit) {
         selectEnemyViewModel.updateManager()
         selectEnemyViewModel.updateArrow()
     }
+
     Box(
         modifier = modifier,
     ) {
