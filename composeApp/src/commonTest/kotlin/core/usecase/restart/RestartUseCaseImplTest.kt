@@ -2,6 +2,7 @@ package core.usecase.restart
 
 import core.domain.testMapUiState
 import core.usecase.heal.MaxHealUseCase
+import gamescreen.map.data.MapID
 import gamescreen.map.domain.MapUiState
 import gamescreen.map.domain.ObjectHeight
 import gamescreen.map.domain.Player
@@ -19,7 +20,7 @@ class RestartUseCaseImplTest {
         override suspend fun invoke(
             mapX: Int,
             mapY: Int,
-            mapId: Int,
+            mapId: MapID,
             playerHeight: ObjectHeight,
             player: Player,
         ): MapUiState {
