@@ -1,6 +1,7 @@
 package core.service
 
 import core.ModuleCore
+import core.domain.AbleType
 import core.domain.item.CostType
 import core.domain.status.StatusDataTest
 import core.domain.status.param.StatusParameterWithMax
@@ -11,8 +12,7 @@ import org.koin.test.inject
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
+import kotlin.test.assertEquals
 
 class CheckCanUseServiceImplTest : KoinTest {
     private val checkCanUseService: CheckCanUseService by inject()
@@ -48,9 +48,10 @@ class CheckCanUseServiceImplTest : KoinTest {
             costType = costType,
         )
 
-        assertTrue {
-            result
-        }
+        assertEquals(
+            AbleType.Able,
+            result,
+        )
     }
 
     /**
@@ -70,9 +71,10 @@ class CheckCanUseServiceImplTest : KoinTest {
             costType = costType,
         )
 
-        assertFalse {
-            result
-        }
+        assertEquals(
+            AbleType.CANT_USE_BY_MP,
+            result,
+        )
     }
 
     /**
@@ -86,8 +88,9 @@ class CheckCanUseServiceImplTest : KoinTest {
             costType = costType,
         )
 
-        assertTrue {
-            result
-        }
+        assertEquals(
+            AbleType.Able,
+            result,
+        )
     }
 }

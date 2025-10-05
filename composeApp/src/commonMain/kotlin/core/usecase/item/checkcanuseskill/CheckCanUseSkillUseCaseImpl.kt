@@ -28,16 +28,9 @@ class CheckCanUseSkillUseCaseImpl(
             return AbleType.CANT_USE_BY_PLACE
         }
 
-        // fixme　コストのタイプで判断して、使用可否を返却する
-        return if (
-            checkCanUseService.invoke(
-                status = status,
-                costType = skill.costType
-            )
-        ) {
-            AbleType.Able
-        } else {
-            AbleType.CANT_USE_BY_MP
-        }
+        return checkCanUseService.invoke(
+            status = status,
+            costType = skill.costType,
+        )
     }
 }
