@@ -22,7 +22,6 @@ import gamescreen.map.service.velocitymanage.VelocityManageService
 import gamescreen.map.service.velocitymanage.VelocityManageServiceImpl
 import gamescreen.map.usecase.GetScreenCenterUseCase
 import gamescreen.map.usecase.PlayerMoveManageUseCase
-import gamescreen.map.usecase.PlayerMoveToUseCase
 import gamescreen.map.usecase.battlenormal.StartNormalBattleUseCase
 import gamescreen.map.usecase.battlenormal.StartNormalBattleUseCaseImpl
 import gamescreen.map.usecase.battlestart.StartBattleUseCase
@@ -133,10 +132,6 @@ val ModuleMap = module {
             isCollidedUseCase = get(),
             moveUseCase = get(),
         )
-    }
-
-    single {
-        PlayerMoveToUseCase()
     }
 
     single<MoveBackgroundUseCase> {
@@ -282,7 +277,6 @@ val ModuleMap = module {
     single<SetPlayerCenterUseCase> {
         SetPlayerCenterUseCaseImpl(
             getScreenCenterUseCase = get(),
-            playerMoveToUseCase = get(),
         )
     }
 
