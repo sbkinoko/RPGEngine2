@@ -38,8 +38,7 @@ class BattleViewModel(
     val commandStateFlow =
         commandStateRepository.commandStateFlow
 
-    // todo playerにrename
-    val statusDataFlow: StateFlow<List<StatusData>> =
+    val playerStatusFlow: StateFlow<List<StatusData>> =
         statusDataRepository.statusDataFlow
 
     val monsterStatusFlow: StateFlow<List<MonsterStatus>> =
