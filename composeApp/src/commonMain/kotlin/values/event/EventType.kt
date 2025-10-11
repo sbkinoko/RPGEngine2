@@ -14,6 +14,10 @@ sealed class EventType {
         val id: BoxId,
     ) : EventType()
 
+    data class TalkEvent(
+        val talkID: TalkID,
+    ) : EventType()
+
     data object Water : EventType()
 
     data object Ground : EventType()
