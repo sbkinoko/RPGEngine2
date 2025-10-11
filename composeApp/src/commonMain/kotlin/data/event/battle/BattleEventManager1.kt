@@ -36,7 +36,7 @@ class BattleEventManager1(
                     )
                 )
             },
-            escapeCallback = {
+            loseCallback = {
                 textRepository.push(
                     textBoxData = TextBoxData(
                         text = "また挑戦してね",
@@ -49,7 +49,7 @@ class BattleEventManager1(
                     ),
                 )
             },
-            loseCallback = {
+            escapeCallback = {
                 textRepository.push(
                     textBoxData = TextBoxData(
                         text = "逃げるのも時には大事だね",

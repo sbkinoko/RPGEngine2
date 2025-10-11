@@ -101,7 +101,7 @@ class ActionEventUseCaseImpl(
 
             is EventType.TalkEvent -> {
                 setTalkUseCase.invoke(
-                    talkEvent = eventType.talkID,
+                    eventGroup = eventType.eventGroup,
                 )
             }
 

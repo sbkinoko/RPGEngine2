@@ -6,9 +6,11 @@ import gamescreen.map.domain.MapPoint
 import gamescreen.map.domain.npc.NPC
 import gamescreen.map.domain.npc.NPCType
 import gamescreen.map.viewmodel.MapViewModel
+import values.event.EventGroup1
+import values.event.EventGroup2
+import values.event.EventGroupBattle
 import values.event.EventType
 import values.event.ShopId
-import values.event.TalkID
 
 class NonLoopMap : MapData() {
     override val isLoop = false
@@ -33,7 +35,7 @@ class NonLoopMap : MapData() {
             NPC(
                 npcType = NPCType.GIRL,
                 mapPoint = MapPoint(8, 8),
-                eventType = EventType.TalkEvent(TalkID.Talk1),
+                eventType = EventType.TalkEvent(EventGroup1.Girl),
                 size = MapViewModel.CELL_SIZE,
             ),
             NPC(
@@ -47,26 +49,26 @@ class NonLoopMap : MapData() {
             NPC(
                 npcType = NPCType.ENEMY,
                 mapPoint = MapPoint(3, 1),
-                eventType = EventType.TalkEvent(TalkID.Talk2),
+                eventType = EventType.TalkEvent(EventGroupBattle.Monster),
                 size = MapViewModel.CELL_SIZE,
             ),
             NPC(
                 npcType = NPCType.TEMPLATE,
                 mapPoint = MapPoint(5, 1),
-                eventType = EventType.TalkEvent(TalkID.Talk2),
+                eventType = EventType.TalkEvent(EventGroupBattle.Monster),
                 size = MapViewModel.CELL_SIZE * 0.8f,
             ),
 
             NPC(
                 npcType = NPCType.BOY,
                 mapPoint = MapPoint(7, 1),
-                eventType = EventType.TalkEvent(TalkID.Talk3),
+                eventType = EventType.TalkEvent(EventGroup2.Boy1),
                 size = MapViewModel.CELL_SIZE * 0.8f,
             ),
             NPC(
                 npcType = NPCType.BOY,
                 mapPoint = MapPoint(8, 1),
-                eventType = EventType.TalkEvent(TalkID.Talk3),
+                eventType = EventType.TalkEvent(EventGroup2.Boy2),
                 size = MapViewModel.CELL_SIZE * 0.8f,
             ),
         )

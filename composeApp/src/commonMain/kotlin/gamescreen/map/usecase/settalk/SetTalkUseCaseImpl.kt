@@ -2,10 +2,12 @@ package gamescreen.map.usecase.settalk
 
 import data.event.battle.BattleEventKey
 import data.event.battle.BattleEventManager1
-import data.event.talk.TalkEventKey1
 import data.event.talk.TalkEventManager1
 import data.event.talk.TalkEventManager2
-import values.event.TalkID
+import values.event.EventGroup
+import values.event.EventGroup1
+import values.event.EventGroup2
+import values.event.EventGroupBattle
 
 class SetTalkUseCaseImpl(
     private val battleEventManager1: BattleEventManager1,
@@ -13,15 +15,18 @@ class SetTalkUseCaseImpl(
     private val talkEventManager1: TalkEventManager1,
     private val talkEventManager2: TalkEventManager2,
 ) : SetTalkUseCase {
-    override fun invoke(talkEvent: TalkID) {
 
-        when (talkEvent) {
-            TalkID.Talk1 -> talkEventManager1.callEvent(TalkEventKey1.Talk)
+    override fun invoke(
+        eventGroup: EventGroup,
+    ) {
 
-            TalkID.Talk2 -> battleEventManager1.callEvent(BattleEventKey.Start)
+        when (eventGroup) {
+            is EventGroup1 -> talkEventManager1.callEvent(eventGroup)
 
-            TalkID.Talk3 -> talkEventManager2.callEvent(
-                TalkEventKey1.Talk
+            is EventGroupBattle -> battleEventManager1.callEvent(BattleEventKey.Start)
+
+            is EventGroup2 -> talkEventManager2.callEvent(
+                eventGroup
             )
         }
     }
