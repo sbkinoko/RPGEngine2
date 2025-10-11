@@ -47,9 +47,7 @@ class NonLoopMap : MapData() {
             NPC(
                 npcType = NPCType.ENEMY,
                 mapPoint = MapPoint(3, 1),
-                eventType = EventType.TalkEvent(
-                    TalkID.Talk2
-                ),
+                eventType = EventType.TalkEvent(TalkID.Talk2),
                 size = MapViewModel.CELL_SIZE,
             ),
             NPC(
