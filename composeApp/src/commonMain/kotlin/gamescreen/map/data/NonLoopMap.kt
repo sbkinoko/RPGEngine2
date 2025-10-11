@@ -8,7 +8,7 @@ import gamescreen.map.domain.npc.NPCType
 import gamescreen.map.viewmodel.MapViewModel
 import values.event.EventType
 import values.event.ShopId
-import values.event.TalkEvent
+import values.event.TalkID
 
 class NonLoopMap : MapData() {
     override val isLoop = false
@@ -33,7 +33,7 @@ class NonLoopMap : MapData() {
             NPC(
                 npcType = NPCType.GIRL,
                 mapPoint = MapPoint(8, 8),
-                eventType = TalkEvent.Talk1,
+                eventType = EventType.TalkEvent(TalkID.Talk1),
                 size = MapViewModel.CELL_SIZE,
             ),
             NPC(
@@ -47,20 +47,26 @@ class NonLoopMap : MapData() {
             NPC(
                 npcType = NPCType.ENEMY,
                 mapPoint = MapPoint(3, 1),
-                eventType = TalkEvent.Talk2,
+                eventType = EventType.TalkEvent(TalkID.Talk2),
                 size = MapViewModel.CELL_SIZE,
             ),
             NPC(
                 npcType = NPCType.TEMPLATE,
                 mapPoint = MapPoint(5, 1),
-                eventType = TalkEvent.Talk2,
+                eventType = EventType.TalkEvent(TalkID.Talk2),
                 size = MapViewModel.CELL_SIZE * 0.8f,
             ),
 
             NPC(
                 npcType = NPCType.BOY,
-                mapPoint = MapPoint(5, 3),
-                eventType = TalkEvent.Talk2,
+                mapPoint = MapPoint(7, 1),
+                eventType = EventType.TalkEvent(TalkID.Talk3),
+                size = MapViewModel.CELL_SIZE * 0.8f,
+            ),
+            NPC(
+                npcType = NPCType.BOY,
+                mapPoint = MapPoint(8, 1),
+                eventType = EventType.TalkEvent(TalkID.Talk3),
                 size = MapViewModel.CELL_SIZE * 0.8f,
             ),
         )

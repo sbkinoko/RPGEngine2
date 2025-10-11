@@ -22,7 +22,6 @@ import gamescreen.text.repository.TextRepository
 import kotlinx.coroutines.launch
 import values.event.BoxData
 import values.event.EventType
-import values.event.TalkEvent
 
 // todo 画面に反映できるようにする
 class ActionEventUseCaseImpl(
@@ -100,9 +99,9 @@ class ActionEventUseCaseImpl(
                 )
             }
 
-            is TalkEvent -> {
+            is EventType.TalkEvent -> {
                 setTalkUseCase.invoke(
-                    talkEvent = eventType,
+                    talkEvent = eventType.talkID,
                 )
             }
 
