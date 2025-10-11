@@ -15,7 +15,7 @@ sealed class EventType {
     ) : EventType()
 
     data class TalkEvent(
-        val talkID: TalkID,
+        val eventGroup: EventGroup,
     ) : EventType()
 
     data object Water : EventType()

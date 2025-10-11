@@ -1,9 +1,9 @@
 package gamescreen.map.usecase.settalk
 
-import values.event.TalkID
+import values.event.EventGroup
 
 interface SetTalkUseCase {
     operator fun invoke(
-        talkEvent: TalkID,
+        eventGroup: EventGroup,
     )
 }
