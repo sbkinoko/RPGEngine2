@@ -16,6 +16,7 @@ class TalkEventManager2(
     private val textRepository: TextRepository,
 ) : EventManager<EventGroup2> {
 
+    // todo 抽象クラスを作ってそこに持たせる
     private val config: RealmConfiguration =
         RealmConfiguration.create(schema = setOf(RealmEvent::class))
     private val realm = Realm.open(config)
@@ -25,11 +26,14 @@ class TalkEventManager2(
     override val eventFlag: StateFlow<Int>
         get() = mutableStateFlow.asStateFlow()
 
+    // todo nameだけ実クラスで定義
+    // iniは抽象クラスに入れる
     val ini = RealmEvent().apply {
         name = "test"
         flg = 0
     }
 
+    // 抽象クラスに入れる
     fun getData(): RealmEvent {
         return realm.query<RealmEvent>("name == 'test'")
             .first()
@@ -43,6 +47,7 @@ class TalkEventManager2(
             }
     }
 
+    // todo 抽象クラスに入れる
     fun updateFlg(flg: Int) {
         mutableStateFlow.value = flg
         realm.writeBlocking {
