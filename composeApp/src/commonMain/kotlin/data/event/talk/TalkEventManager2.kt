@@ -1,8 +1,12 @@
 package data.event.talk
 
+import core.domain.realm.RealmEvent
 import data.event.EventManager
 import gamescreen.text.TextBoxData
 import gamescreen.text.repository.TextRepository
+import io.realm.kotlin.Realm
+import io.realm.kotlin.RealmConfiguration
+import io.realm.kotlin.ext.query
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -12,10 +16,41 @@ class TalkEventManager2(
     private val textRepository: TextRepository,
 ) : EventManager<EventGroup2> {
 
-    private val mutableStateFlow = MutableStateFlow(0)
+    private val config: RealmConfiguration =
+        RealmConfiguration.create(schema = setOf(RealmEvent::class))
+    private val realm = Realm.open(config)
+
+    private val mutableStateFlow = MutableStateFlow(getData().flg)
 
     override val eventFlag: StateFlow<Int>
         get() = mutableStateFlow.asStateFlow()
+
+    val ini = RealmEvent().apply {
+        name = "test"
+        flg = 0
+    }
+
+    fun getData(): RealmEvent {
+        return realm.query<RealmEvent>("name == 'test'")
+            .first()
+            .find()
+            ?: run {
+                realm.writeBlocking {
+                    copyToRealm(ini)
+                }
+
+                ini
+            }
+    }
+
+    fun updateFlg(flg: Int) {
+        mutableStateFlow.value = flg
+        realm.writeBlocking {
+            findLatest(getData())?.apply {
+                this.flg = flg
+            }
+        }
+    }
 
     override fun callEvent(key: EventGroup2) {
         var talkData: List<TextBoxData>
@@ -27,18 +62,18 @@ class TalkEventManager2(
                         text = "ようこそ"
                     ),
                 )
-                mutableStateFlow.value = 1
+                updateFlg(1)
             }
 
             EventGroup2.Boy2 -> {
-                if (mutableStateFlow.value == 0) {
-                    talkData = listOf(
+                talkData = if (mutableStateFlow.value == 0) {
+                    listOf(
                         TextBoxData(
                             text = "先に左の人と話してね"
                         ),
                     )
                 } else {
-                    talkData = listOf(
+                    listOf(
                         TextBoxData(
                             text = "左の人と話したんだね"
                         ),
