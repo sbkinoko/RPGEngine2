@@ -1,6 +1,5 @@
-package data.event.talk
+package data.event
 
-import data.event.AbstractEventManager
 import gamescreen.text.TextBoxData
 import gamescreen.text.repository.TextRepository
 import values.event.EventGroup2

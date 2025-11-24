@@ -1,4 +1,4 @@
-package data.event.battle
+package data.event
 
 enum class BattleEventKey {
     Start,
