@@ -9,8 +9,7 @@ import values.event.EventGroup1
 class TalkEventManager1(
     private val textRepository: TextRepository,
     private val choiceRepository: ChoiceRepository,
-
-    ) : AbstractEventManager<EventGroup1>() {
+) : AbstractEventManager<EventGroup1>() {
     override val flgName: String
         get() = "event1"
 
