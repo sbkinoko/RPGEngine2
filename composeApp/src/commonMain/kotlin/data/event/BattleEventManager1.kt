@@ -1,16 +1,13 @@
-package data.event.battle
+package data.event
 
 import common.DefaultScope
 import core.domain.BattleEventCallback
 import core.usecase.heal.MaxHealUseCase
-import data.event.EventManager
 import data.repository.monster.MonsterRepository
 import gamescreen.battle.domain.BattleBackgroundType
 import gamescreen.map.usecase.battlestart.StartBattleUseCase
 import gamescreen.text.TextBoxData
 import gamescreen.text.repository.TextRepository
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class BattleEventManager1(
@@ -19,10 +16,10 @@ class BattleEventManager1(
 
     private val startBattleUseCase: StartBattleUseCase,
     private val monsterRepository: MonsterRepository,
-) : EventManager<BattleEventKey> {
+) : AbstractEventManager<BattleEventKey>() {
 
-    private val mutableEventFlag = MutableStateFlow(0)
-    override val eventFlag = mutableEventFlag.asStateFlow()
+    override val flgName: String
+        get() = "battle_event"
 
     override fun callEvent(
         key: BattleEventKey,
@@ -32,7 +29,7 @@ class BattleEventManager1(
                 textRepository.push(
                     textBoxData = TextBoxData(
                         text = "おめでとう",
-                        callBack = { mutableEventFlag.value = 1 },
+                        callBack = { updateFlg(1) },
                     )
                 )
             },
@@ -41,7 +38,7 @@ class BattleEventManager1(
                     textBoxData = TextBoxData(
                         text = "また挑戦してね",
                         callBack = {
-                            mutableEventFlag.value = 1
+                            updateFlg(1)
                             DefaultScope.launch {
                                 maxHealUseCase.invoke()
                             }
@@ -53,7 +50,7 @@ class BattleEventManager1(
                 textRepository.push(
                     textBoxData = TextBoxData(
                         text = "逃げるのも時には大事だね",
-                        callBack = { mutableEventFlag.value = 1 },
+                        callBack = { updateFlg(1) },
                     )
                 )
             },
@@ -73,8 +70,7 @@ class BattleEventManager1(
                         },
                         backgroundType = BattleBackgroundType.Event,
                         battleEventCallback = battleCallBack,
-
-                        )
+                    )
                 },
             ),
         )

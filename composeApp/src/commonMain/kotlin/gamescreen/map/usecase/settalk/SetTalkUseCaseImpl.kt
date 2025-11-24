@@ -1,9 +1,9 @@
 package gamescreen.map.usecase.settalk
 
-import data.event.battle.BattleEventKey
-import data.event.battle.BattleEventManager1
-import data.event.talk.TalkEventManager1
-import data.event.talk.TalkEventManager2
+import data.event.BattleEventKey
+import data.event.BattleEventManager1
+import data.event.TalkEventManager1
+import data.event.TalkEventManager2
 import values.event.EventGroup
 import values.event.EventGroup1
 import values.event.EventGroup2

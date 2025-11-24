@@ -1,8 +1,5 @@
 package data.event
 
-import data.event.battle.BattleEventManager1
-import data.event.talk.TalkEventManager1
-import data.event.talk.TalkEventManager2
 import org.koin.dsl.module
 
 val ModuleEvent = module {

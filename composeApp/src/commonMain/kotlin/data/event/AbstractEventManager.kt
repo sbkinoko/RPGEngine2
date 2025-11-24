@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-abstract class AbstractEventManager<T> : EventManager<T> {
+sealed class AbstractEventManager<T> : EventManager<T> {
 
     private val config: RealmConfiguration =
         RealmConfiguration.create(schema = setOf(RealmEvent::class))

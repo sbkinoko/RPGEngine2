@@ -1,21 +1,17 @@
-package data.event.talk
+package data.event
 
-import data.event.EventManager
 import gamescreen.choice.Choice
 import gamescreen.choice.repository.ChoiceRepository
 import gamescreen.text.TextBoxData
 import gamescreen.text.repository.TextRepository
-import kotlinx.coroutines.flow.StateFlow
 import values.event.EventGroup1
 
 class TalkEventManager1(
     private val textRepository: TextRepository,
     private val choiceRepository: ChoiceRepository,
-) : EventManager<EventGroup1> {
-
-    // 状態に依存しないのでエラー
-    override val eventFlag: StateFlow<Int>
-        get() = throw NotImplementedError()
+) : AbstractEventManager<EventGroup1>() {
+    override val flgName: String
+        get() = "event1"
 
     override fun callEvent(key: EventGroup1) {
 
