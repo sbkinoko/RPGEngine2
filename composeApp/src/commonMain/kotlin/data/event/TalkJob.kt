@@ -56,6 +56,15 @@ class TalkJob(
             )
         }
 
+        list += Choice(
+            text = "やっぱやめた",
+            callBack = {
+                textRepository.push(
+                    textBoxData = TextBoxData("またお越しください")
+                )
+            }
+        )
+
         textRepository.push(
             TextBoxData(
                 text = "誰を変更しますか？",
