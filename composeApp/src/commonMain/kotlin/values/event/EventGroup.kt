@@ -14,3 +14,7 @@ sealed class EventGroup2 : EventGroup() {
     data object Boy1 : EventGroup2()
     data object Boy2 : EventGroup2()
 }
+
+sealed class EventJob : EventGroup() {
+    data object Event : EventJob()
+}

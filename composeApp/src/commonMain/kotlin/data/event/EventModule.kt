@@ -27,4 +27,11 @@ val ModuleEvent = module {
         )
     }
 
+    single<TalkJob> {
+        TalkJob(
+            textRepository = get(),
+            choiceRepository = get(),
+        )
+    }
+
 }

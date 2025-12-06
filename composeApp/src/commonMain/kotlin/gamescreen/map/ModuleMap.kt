@@ -255,6 +255,7 @@ val ModuleMap = module {
             talkEventManager1 = get(),
             talkEventManager2 = get(),
             battleEventManager1 = get(),
+            talkJob = get(),
         )
     }
 
