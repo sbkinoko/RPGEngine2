@@ -9,6 +9,7 @@ import gamescreen.map.viewmodel.MapViewModel
 import values.event.EventGroup1
 import values.event.EventGroup2
 import values.event.EventGroupBattle
+import values.event.EventJob
 import values.event.EventType
 import values.event.ShopId
 
@@ -55,7 +56,7 @@ class NonLoopMap : MapData() {
             NPC(
                 npcType = NPCType.TEMPLATE,
                 mapPoint = MapPoint(5, 1),
-                eventType = EventType.TalkEvent(EventGroupBattle.Monster),
+                eventType = EventType.TalkEvent(EventJob.Event),
                 size = MapViewModel.CELL_SIZE * 0.8f,
             ),
 
