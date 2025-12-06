@@ -1,5 +1,6 @@
 package data.event
 
+import core.PlayerStatusRepositoryName
 import org.koin.dsl.module
 
 val ModuleEvent = module {
@@ -31,7 +32,9 @@ val ModuleEvent = module {
         TalkJob(
             textRepository = get(),
             choiceRepository = get(),
+
+            playerCharacterRepository = get(),
+            playerRepository = get(PlayerStatusRepositoryName),
         )
     }
-
 }
