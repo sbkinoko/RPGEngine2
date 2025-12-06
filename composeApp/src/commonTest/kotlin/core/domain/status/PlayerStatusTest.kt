@@ -1,5 +1,6 @@
 package core.domain.status
 
+import core.domain.status.job.Job
 import core.domain.status.param.EXP
 
 class PlayerStatusTest {
@@ -12,7 +13,8 @@ class PlayerStatusTest {
                     listOf(
                         1,
                     )
-                )
+                ),
+                job = Job.Warrior,
             )
 
         val testActivePlayer
@@ -22,6 +24,7 @@ class PlayerStatusTest {
                 exp = EXP(
                     EXP.type1,
                 ),
+                job = Job.Warrior,
             )
     }
 }

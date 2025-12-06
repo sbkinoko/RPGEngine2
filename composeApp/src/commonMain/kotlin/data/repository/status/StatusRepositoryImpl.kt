@@ -4,6 +4,7 @@ import core.domain.status.IncData
 import core.domain.status.PlayerStatus
 import core.domain.status.StatusData
 import core.domain.status.StatusIncrease
+import core.domain.status.job.Job
 import core.domain.status.param.EXP
 import data.repository.item.skill.SkillId
 import data.repository.item.tool.ToolId
@@ -100,6 +101,7 @@ class StatusRepositoryImpl : AbstractStatusRepository() {
                         exp = EXP(
                             EXP.type1,
                         ),
+                        job = Job.Warrior,
                     ),
                     StatusData(
                         name = "test1",
@@ -122,6 +124,7 @@ class StatusRepositoryImpl : AbstractStatusRepository() {
                     exp = EXP(
                         EXP.type1,
                     ),
+                    job = Job.Warrior,
                 ),
 
                 StatusData(
@@ -141,6 +144,7 @@ class StatusRepositoryImpl : AbstractStatusRepository() {
                     exp = EXP(
                         EXP.type1,
                     ),
+                    job = Job.Warrior,
                 ),
                 StatusData(
                     name = "test3",
@@ -157,6 +161,7 @@ class StatusRepositoryImpl : AbstractStatusRepository() {
                     exp = EXP(
                         EXP.type1,
                     ),
+                    job = Job.Warrior,
                 ),
                 StatusData(
                     name = "MPたくさん",
