@@ -2,6 +2,7 @@ package core.repository.player
 
 import core.ModuleCore
 import core.domain.status.PlayerStatus
+import core.domain.status.job.Job
 import core.domain.status.param.EXP
 import data.ModuleData
 import kotlinx.coroutines.delay
@@ -51,6 +52,7 @@ class PlayerCharacterRepositoryImplTest : KoinTest {
                 exp = EXP(
                     EXP.type1,
                 ),
+                job = Job.Warrior,
             )
 
             playerStatusRepository.setStatus(

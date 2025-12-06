@@ -29,6 +29,13 @@ fun StatusComponent(
         if (statusId < Constants.playerNum) {
             statusData[statusId].apply {
                 Text(name)
+            }
+
+            state[statusId].apply {
+                Text(job.displayName)
+            }
+
+            statusData[statusId].apply {
                 Text("HP : ${hp.point}/${hp.maxPoint}")
                 Text("MP : ${mp.point}/${mp.maxPoint}")
                 Text("ATK:${atk.value}")

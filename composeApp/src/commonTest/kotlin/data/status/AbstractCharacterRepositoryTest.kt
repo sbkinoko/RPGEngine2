@@ -14,6 +14,7 @@ import core.domain.status.StatusIncreaseTest.Companion.TEST_LV2_DEF
 import core.domain.status.StatusIncreaseTest.Companion.TEST_LV2_HP
 import core.domain.status.StatusIncreaseTest.Companion.TEST_LV2_MP
 import core.domain.status.StatusIncreaseTest.Companion.TEST_LV2_SPEED
+import core.domain.status.job.Job
 import core.domain.status.param.EXP
 import core.domain.status.param.StatusParameter
 import data.repository.item.skill.SkillId
@@ -48,6 +49,7 @@ class AbstractCharacterRepositoryTest {
                         toolList = toolListValue,
                         skillList = skillListValue,
                         exp = expValue,
+                        job = Job.Warrior,
                     ),
                     StatusData(
                         name = nameValue

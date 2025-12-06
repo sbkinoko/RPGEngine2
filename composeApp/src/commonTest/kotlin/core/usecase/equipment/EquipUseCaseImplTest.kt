@@ -8,6 +8,7 @@ import core.domain.status.PlayerStatus
 import core.domain.status.StatusData
 import core.domain.status.StatusDataTest
 import core.domain.status.StatusIncrease
+import core.domain.status.job.Job
 import core.domain.status.param.EXP
 import core.domain.status.param.StatusParameter
 import data.repository.item.equipment.EquipmentId
@@ -68,6 +69,7 @@ class EquipUseCaseImplTest {
                 toolList = emptyList(),
                 exp = EXP(EXP.type1),
                 equipmentList = initialEquipment,
+                job = Job.Warrior,
             )
         }
 
