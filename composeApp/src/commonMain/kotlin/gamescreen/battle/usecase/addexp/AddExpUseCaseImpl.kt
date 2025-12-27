@@ -11,9 +11,11 @@ class AddExpUseCaseImpl(
 
     private val statusDataRepository: core.repository.memory.character.statusdata.StatusDataRepository,
 ) : AddExpUseCase {
+
     override fun invoke(exp: Int): List<String> {
         val levelUpList: MutableList<String> = mutableListOf()
         val afterList = playerStatusRepository.getStatusList().toMutableList()
+
         for (index: Int in 0 until playerStatusRepository.getStatusList().size) {
             val playerStatus = playerStatusRepository.getStatus(index)
 
@@ -28,8 +30,6 @@ class AddExpUseCaseImpl(
 
             val nowStatus = statusDataRepository.getStatusData(id = index)
 
-            var afterStatus = statusDataRepository.getStatusData(id = index)
-
             // レベルが上がっていたら
             if (playerStatus.exp.level != after.exp.level) {
                 //表示用リストに追加
@@ -40,28 +40,30 @@ class AddExpUseCaseImpl(
                     id = index,
                     level = after.exp.level
                 ).apply {
+                    // todo afterにexpを食わせないようにしたい
                     //ステータスに反映する
                     after = this.first
                     after = after.copy(
                         exp = afterEXP
                     )
 
-                    afterStatus = this.second.setHP(
+                    val afterStatus = this.second.setHP(
                         value = nowStatus.hp.point,
                     ).setMP(
                         value = nowStatus.mp.point,
                     )
+
+                    DefaultScope.launch {
+                        //保存
+                        statusDataRepository.setStatusData(
+                            id = index,
+                            statusData = afterStatus,
+                        )
+                    }
                 }
             }
 
             afterList[index] = after
-            DefaultScope.launch {
-                //保存
-                statusDataRepository.setStatusData(
-                    id = index,
-                    statusData = afterStatus,
-                )
-            }
         }
 
         DefaultScope.launch {
