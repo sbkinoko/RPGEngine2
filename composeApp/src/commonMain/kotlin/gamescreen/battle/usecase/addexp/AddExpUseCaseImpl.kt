@@ -17,11 +17,13 @@ class AddExpUseCaseImpl(
         for (index: Int in 0 until playerStatusRepository.getStatusList().size) {
             val playerStatus = playerStatusRepository.getStatus(index)
 
+            val afterEXP = playerStatus.exp.copy(
+                value = playerStatus.exp.value + exp
+            )
+
             //経験値の加算
             var after = playerStatus.copy(
-                exp = playerStatus.exp.copy(
-                    value = playerStatus.exp.value + exp
-                )
+                exp = afterEXP
             )
 
             val nowStatus = statusDataRepository.getStatusData(id = index)
@@ -40,6 +42,9 @@ class AddExpUseCaseImpl(
                 ).apply {
                     //ステータスに反映する
                     after = this.first
+                    after = after.copy(
+                        exp = afterEXP
+                    )
 
                     afterStatus = this.second.setHP(
                         value = nowStatus.hp.point,
@@ -49,9 +54,9 @@ class AddExpUseCaseImpl(
                 }
             }
 
+            afterList[index] = after
             DefaultScope.launch {
                 //保存
-                afterList[index] = after
                 statusDataRepository.setStatusData(
                     id = index,
                     statusData = afterStatus,
