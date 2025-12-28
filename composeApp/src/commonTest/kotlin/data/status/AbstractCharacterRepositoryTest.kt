@@ -62,7 +62,7 @@ class AbstractCharacterRepositoryTest {
     fun lv1Param() {
         val status = testRepository.getStatus(
             id = 0,
-            level = 1,
+            exp = 0,
         )
 
         status.first.apply {
@@ -112,9 +112,10 @@ class AbstractCharacterRepositoryTest {
 
     @Test
     fun lv2Param() {
+        val expNum = 2
         val status = testRepository.getStatus(
             id = 0,
-            level = 2,
+            exp = expNum,
         )
 
         status.first.apply {
@@ -129,7 +130,9 @@ class AbstractCharacterRepositoryTest {
             )
 
             assertEquals(
-                expected = expValue,
+                expected = expValue.copy(
+                    value = expNum,
+                ),
                 actual = exp,
             )
         }
