@@ -11,7 +11,6 @@ import core.repository.storage.tool.ToolDBRepository
 import data.repository.item.equipment.EquipmentId
 import data.repository.item.tool.ToolId
 import data.repository.status.StatusRepository
-import kotlinx.coroutines.runBlocking
 import values.Constants
 
 class InitUseCaseImpl(
@@ -28,16 +27,25 @@ class InitUseCaseImpl(
     private val playerCharacterRepository: PlayerCharacterRepository,
 ) : InitUseCase {
 
-    override fun invoke() {
+    override suspend fun invoke() {
+
         initMoney()
 
+        val expList = playerDBRepository.getPlayers()
+
+        val statusList = List(Constants.playerNum) {
+            statusRepository.getStatus(
+                id = it,
+                exp = expList[it],
+            )
+        }
+
         statusDataRepository.setStatusList(
-            List(Constants.playerNum) {
-                statusRepository.getStatus(
-                    id = it,
-                    level = 1,
-                ).second
-            }
+            statusList.map { it.second }
+        )
+
+        playerCharacterRepository.setStatusList(
+            statusList.map { it.first }
         )
 
         equipmentBagRepository.setData(
@@ -78,11 +86,7 @@ class InitUseCaseImpl(
             )
         )
 
-        playerDBRepository.getPlayers()
-
-        runBlocking {
-            initTool()
-        }
+        initTool()
     }
 
     private fun initMoney() {

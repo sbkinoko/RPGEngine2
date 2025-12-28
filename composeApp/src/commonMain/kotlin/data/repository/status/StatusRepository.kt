@@ -7,6 +7,6 @@ interface StatusRepository {
 
     fun getStatus(
         id: Int,
-        level: Int,
+        exp: Int,
     ): Pair<PlayerStatus, StatusData>
 }

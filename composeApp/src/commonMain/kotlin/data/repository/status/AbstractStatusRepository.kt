@@ -8,9 +8,16 @@ abstract class AbstractStatusRepository : StatusRepository {
 
     override fun getStatus(
         id: Int,
-        level: Int,
+        exp: Int,
     ): Pair<PlayerStatus, StatusData> {
         var (playerStatus, statusData) = statusBaseList[id]
+
+        val expStatus = playerStatus.copy(
+            exp = playerStatus.exp.copy(
+                value = exp
+            )
+        )
+        val level = expStatus.exp.level
 
         for (lv: Int in 0 until level) {
             // fixme 本来はいらないがテスト段階では必要
@@ -27,7 +34,7 @@ abstract class AbstractStatusRepository : StatusRepository {
 
         // fixme セーブするようになったらvalueをセーブデータから読み取る
         return Pair(
-            playerStatus,
+            expStatus,
             statusData.copy(
                 hp = statusData.hp.set(value = Int.MAX_VALUE),
                 mp = statusData.mp.set(value = Int.MAX_VALUE),

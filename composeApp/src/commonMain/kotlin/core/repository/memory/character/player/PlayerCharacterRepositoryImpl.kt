@@ -33,7 +33,7 @@ class PlayerCharacterRepositoryImpl(
         return List(Constants.playerNum) {
             statusRepository.getStatus(
                 id = it,
-                level = 1,
+                exp = 0,
             ).first
         }
     }

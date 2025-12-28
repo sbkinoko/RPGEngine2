@@ -2,5 +2,5 @@ package gamescreen.init
 
 interface InitUseCase {
 
-    operator fun invoke()
+    suspend operator fun invoke()
 }
