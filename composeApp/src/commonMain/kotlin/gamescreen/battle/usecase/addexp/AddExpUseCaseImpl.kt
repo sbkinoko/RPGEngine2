@@ -38,14 +38,11 @@ class AddExpUseCaseImpl(
                 //上がったステータスを取得して
                 statusRepository.getStatus(
                     id = index,
-                    level = after.exp.level
+                    exp = after.exp.value
                 ).apply {
-                    // todo afterにexpを食わせないようにしたい
+
                     //ステータスに反映する
                     after = this.first
-                    after = after.copy(
-                        exp = afterEXP
-                    )
 
                     val afterStatus = this.second.setHP(
                         value = nowStatus.hp.point,

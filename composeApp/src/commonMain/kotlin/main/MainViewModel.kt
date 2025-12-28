@@ -2,6 +2,7 @@ package main
 
 import core.repository.memory.screentype.ScreenTypeRepository
 import gamescreen.init.InitUseCase
+import kotlinx.coroutines.runBlocking
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -17,6 +18,8 @@ class MainViewModel(
     val controllerFlow = screenTypeManager.controllerFlow
 
     init {
-        initUseCase.invoke()
+        runBlocking {
+            initUseCase.invoke()
+        }
     }
 }
