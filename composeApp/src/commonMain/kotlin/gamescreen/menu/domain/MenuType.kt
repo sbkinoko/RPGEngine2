@@ -24,9 +24,10 @@ enum class MenuType(
     EQUIPMENT_TARGET,
 
     Item3(title = "text3"),
-    Collision(title = "当たり判定:"),
     Item5(title = "text5"),
     Item6(title = "text6"),
+
+    Debug(title = "デバッグ")
 }
 
 // 暫定でmainMenuの操作を楽にするためにint→menuTypeの関数を作成
@@ -35,7 +36,7 @@ fun Int.toMenuType() = when (this) {
     0 -> MenuType.Status
     1 -> MenuType.SKILL_USER
     2 -> MenuType.TOOL_USER
-    3 -> MenuType.Collision
+    3 -> MenuType.Debug
     4 -> MenuType.EQUIPMENT_USER
     5 -> MenuType.Item6
     else -> throw RuntimeException()

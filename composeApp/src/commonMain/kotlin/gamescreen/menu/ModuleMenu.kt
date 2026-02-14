@@ -11,6 +11,7 @@ import core.usecase.item.useitem.UseSkillUseCaseImpl
 import data.repository.item.equipment.EquipmentId
 import data.repository.item.tool.ToolId
 import gamescreen.menu.component.StatusComponentViewModel
+import gamescreen.menu.debug.DebugViewModel
 import gamescreen.menu.item.equipment.list.EquipmentListViewModel
 import gamescreen.menu.item.equipment.target.EquipmentTargetViewModel
 import gamescreen.menu.item.equipment.user.EquipmentUserViewModel
@@ -172,6 +173,10 @@ val ModuleMenu = module {
         )
     }
 
+    single {
+        DebugViewModel()
+    }
+
     single<MenuStateRepository> {
         MenuStateRepositoryImpl()
     }
@@ -204,6 +209,8 @@ val ModuleMenu = module {
             equipmentUserViewModel = get(),
             equipmentListViewModel = get(),
             equipmentTargetViewModel = get(),
+
+            debugViewModel = get(),
         )
     }
 
