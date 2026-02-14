@@ -7,6 +7,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import gamescreen.menu.debug.DebugMenu
 import gamescreen.menu.domain.MenuType
 import gamescreen.menu.item.equipment.list.EquipmentListWindow
 import gamescreen.menu.item.equipment.target.EquipmentTargetWindow
@@ -80,8 +81,13 @@ fun MenuScreen(
                 modifier = menuModifier,
             )
 
+            MenuType.Debug -> {
+                DebugMenu(
+                    modifier = menuModifier,
+                )
+            }
+
             MenuType.Item3,
-            MenuType.Collision,
             MenuType.Item5,
             MenuType.Item6,
                 -> Text(
