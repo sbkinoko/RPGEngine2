@@ -2,16 +2,15 @@ package gamescreen.menu.debug
 
 import core.menu.SelectCore
 import core.menu.SelectCoreInt
-import core.menu.SelectableChildViewModel
+import gamescreen.menu.MenuChildViewModel
+import gamescreen.menu.domain.MenuType
 import gamescreen.menu.domain.SelectManager
-import gamescreen.menu.repository.menustate.MenuStateRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import values.Constants
 
-class DebugViewModel : SelectableChildViewModel<Int>(),
+class DebugViewModel : MenuChildViewModel(),
     KoinComponent {
     private val mutableCollision = MutableStateFlow(true)
 
@@ -21,8 +20,6 @@ class DebugViewModel : SelectableChildViewModel<Int>(),
 
     val frameState = mutableFrame.asStateFlow()
 
-    private val menuStateRepository: MenuStateRepository by inject()
-
     override var selectCore: SelectCore<Int> = SelectCoreInt(
         SelectManager(
             width = 1,
@@ -30,10 +27,11 @@ class DebugViewModel : SelectableChildViewModel<Int>(),
         )
     )
 
-    override fun pressA() {
+    override fun isBoundedImpl(commandType: MenuType): Boolean {
+        return commandType == MenuType.Debug
     }
 
-    override fun goNext() {
+    override fun goNextImpl() {
         when (selectedFlowState.value) {
             0 -> {
                 mutableCollision.value = !collisionState.value
@@ -57,9 +55,5 @@ class DebugViewModel : SelectableChildViewModel<Int>(),
         }
 
         throw NotImplementedError()
-    }
-
-    override fun pressB() {
-        menuStateRepository.pop()
     }
 }
