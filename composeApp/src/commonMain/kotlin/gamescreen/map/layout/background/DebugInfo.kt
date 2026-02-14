@@ -36,50 +36,66 @@ fun DebugInfo(
     Box {
         backgroundCell.fieldData.forEachIndexed { row, backgroundCells ->
             backgroundCells.forEachIndexed { col, cell ->
-                cell.apply {
+                if (frame) {
+                    CellInfo(
+                        cell = cell,
+                        row = row,
+                        col = col,
+                        eventCell = eventCell,
+                        screenRatio = screenRatio,
+                    )
+                }
 
-                    if (frame) {
-                        Box(
-                            modifier = Modifier
-                                .size(
-                                    width = (rectangle.width * screenRatio).pxToDp(),
-                                    height = (rectangle.height * screenRatio).pxToDp(),
-                                )
-                                .offset(
-                                    x = (rectangle.leftSide * screenRatio).pxToDp(),
-                                    y = (rectangle.topSide * screenRatio).pxToDp(),
-                                )
-                                .border(
-                                    width = 1.dp,
-                                    color = if (this == eventCell) {
-                                        Colors.PlayerIncludeCell
-                                    } else {
-                                        Colors.BackgroundCellBorder
-                                    },
-                                    shape = RectangleShape,
-                                )
-                        ) {
-                            Text(
-                                modifier = Modifier
-                                    .fillMaxSize(),
-                                text = StringBuilder()
-                                    .append("row:$row\n")
-                                    .append("col:$col\n")
-                                    .append("mapX:${mapPoint.x}\n")
-                                    .append("mapY:${mapPoint.y}\n")
-                                    .toString(),
-                            )
-                        }
-                    }
-
-                    if (collision) {
-                        CollisionObjects(
-                            backgroundCell = this@apply,
-                            screenRatio = screenRatio,
-                        )
-                    }
+                if (collision) {
+                    CollisionObjects(
+                        backgroundCell = cell,
+                        screenRatio = screenRatio,
+                    )
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun CellInfo(
+    cell: BackgroundCell,
+    row: Int,
+    col: Int,
+    eventCell: BackgroundCell?,
+    screenRatio: Float,
+) {
+    cell.apply {
+        Box(
+            modifier = Modifier
+                .size(
+                    width = (rectangle.width * screenRatio).pxToDp(),
+                    height = (rectangle.height * screenRatio).pxToDp(),
+                )
+                .offset(
+                    x = (rectangle.leftSide * screenRatio).pxToDp(),
+                    y = (rectangle.topSide * screenRatio).pxToDp(),
+                )
+                .border(
+                    width = 1.dp,
+                    color = if (this == eventCell) {
+                        Colors.PlayerIncludeCell
+                    } else {
+                        Colors.BackgroundCellBorder
+                    },
+                    shape = RectangleShape,
+                )
+        ) {
+            Text(
+                modifier = Modifier
+                    .fillMaxSize(),
+                text = StringBuilder()
+                    .append("row:$row\n")
+                    .append("col:$col\n")
+                    .append("mapX:${mapPoint.x}\n")
+                    .append("mapY:${mapPoint.y}\n")
+                    .toString(),
+            )
         }
     }
 }
