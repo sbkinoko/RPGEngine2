@@ -117,7 +117,7 @@ class LoopMap : MapData() {
                 CellType.Glass,
                 CellType.Glass,
                 CellType.Road,
-                CellType.Glass,
+                CellType.ForestEntrance,
                 CellType.Road,
                 CellType.Glass,
                 CellType.Glass

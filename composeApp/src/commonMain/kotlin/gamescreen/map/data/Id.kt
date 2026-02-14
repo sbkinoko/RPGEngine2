@@ -2,10 +2,12 @@ package gamescreen.map.data
 
 private const val ID_NON_LOOP = 0
 private const val ID_LOOP = 1
+private const val ID_FOREST = 2
 
 enum class MapID(val intId: Int) {
     NON_LOOP(ID_NON_LOOP),
     LOOP(ID_LOOP),
+    FOREST(ID_FOREST),
     ;
 
     companion object {
@@ -23,8 +25,17 @@ enum class MapID(val intId: Int) {
 
 fun MapData.toId(): MapID {
     return when (this) {
-        is NonLoopMap -> MapID.NON_LOOP
-        is LoopMap -> MapID.LOOP
+        is NonLoopMap -> {
+            MapID.NON_LOOP
+        }
+
+        is LoopMap -> {
+            MapID.LOOP
+        }
+
+        is ForestMap -> {
+            MapID.FOREST
+        }
         else -> throw NotImplementedError()
     }
 }
@@ -33,5 +44,6 @@ fun MapID.toMap(): MapData {
     return when (this) {
         MapID.NON_LOOP -> NonLoopMap()
         MapID.LOOP -> LoopMap()
+        MapID.FOREST -> ForestMap()
     }
 }
