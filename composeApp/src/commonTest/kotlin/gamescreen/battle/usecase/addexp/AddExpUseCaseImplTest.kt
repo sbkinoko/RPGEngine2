@@ -99,6 +99,7 @@ class AddExpUseCaseImplTest {
         }
     }
 
+    // todo コメントアウト解除してテストする
     @Test
     fun lvUp() {
         //        runBlocking {
