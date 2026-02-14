@@ -40,6 +40,7 @@ fun DebugMenu(
             verticalArrangement = Arrangement.spacedBy(5.dp),
         ) {
 
+            // fixme listに修正してforで書きたい
             CenterText(
                 modifier = Modifier
                     .weight(1f)
