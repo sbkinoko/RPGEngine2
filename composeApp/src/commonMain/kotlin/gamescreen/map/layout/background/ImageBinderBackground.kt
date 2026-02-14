@@ -12,6 +12,8 @@ import org.koin.core.component.inject
 import rpgengine.composeapp.generated.resources.Res
 import rpgengine.composeapp.generated.resources.bg_00
 import rpgengine.composeapp.generated.resources.bg_02
+import rpgengine.composeapp.generated.resources.bg_10
+import rpgengine.composeapp.generated.resources.bg_11
 import rpgengine.composeapp.generated.resources.bg_20
 import rpgengine.composeapp.generated.resources.bg_8
 import rpgengine.composeapp.generated.resources.bg_null
@@ -78,6 +80,14 @@ class ImageBinderBackground : KoinComponent {
 
             CellType.Sand,
                 -> Res.drawable.bg_8
+
+            CellType.Forest,
+            CellType.ForestEntrance,
+            CellType.ForestExit,
+                -> Res.drawable.bg_10
+
+            CellType.ForestWood,
+                -> Res.drawable.bg_11
 
             CellType.Water -> Res.drawable.bg_02
             CellType.Town1I -> Res.drawable.bg_20

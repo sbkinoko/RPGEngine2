@@ -49,6 +49,11 @@ sealed class CellType {
             get() = 2.0f
     }
 
+    data object Forest : CellType()
+    data object ForestWood : CellType()
+    data object ForestEntrance : CellType(), EventCell
+    data object ForestExit : CellType(), EventCell
+
     data object Sand : CellType(), MonsterCell {
         override val distanceLate: Float
             get() = 1.0f
