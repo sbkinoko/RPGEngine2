@@ -32,7 +32,6 @@ import gamescreen.map.viewmodel.MapViewModel
 import getNowTime
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
 import values.Colors
 import values.GameParams
@@ -53,7 +52,6 @@ class Timer {
 
 
 @Composable
-@Preview
 fun MapScreen(
     screenRatio: Float,
     modifier: Modifier = Modifier,
