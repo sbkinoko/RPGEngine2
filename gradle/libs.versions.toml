@@ -1,15 +1,15 @@
 [versions]
-agp = "8.13.2"
+agp = "9.0.1"
 android-compileSdk = "36"
 android-minSdk = "24"
 android-targetSdk = "36"
-androidx-activityCompose = "1.10.1"
-compose = "1.8.0"
-compose-plugin = "1.6.0"
-kotlin = "1.9.22"
-koin = "3.5.0"
-koin-compose = "1.0.4"
-realm = "1.16.0"
+androidx-activityCompose = "1.13.0"
+compose = "1.10.5"
+compose-plugin = "1.10.3"
+kotlin = "2.3.20"
+koin = "4.2.0"
+koin-compose = "4.2.0"
+realm = "3.0.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -27,4 +27,6 @@ androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+
 realm = { id = "io.realm.kotlin", version.ref = "realm" }
