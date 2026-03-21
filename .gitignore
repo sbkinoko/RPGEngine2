@@ -17,3 +17,6 @@ captures
 **/xcshareddata/WorkspaceSettings.xcsettings
 /composeApp/default.realm
 /composeApp/default.realm.lock
+
+/.kotlin/errors
+/.kotlin/metadata
