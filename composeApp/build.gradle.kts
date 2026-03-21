@@ -7,7 +7,6 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
 
-    //    alias(libs.plugins.realm)
 }
 
 kotlin {
@@ -43,7 +42,6 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
-            implementation(libs.realm.library.base)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
