@@ -1,14 +1,14 @@
 [versions]
-agp = "9.0.1"
-android-compileSdk = "36"
+agp = "9.4.1"
+android-compileSdk = "37"
 android-minSdk = "24"
-android-targetSdk = "36"
+android-targetSdk = "37"
 androidx-activityCompose = "1.13.0"
-compose = "1.10.5"
-compose-plugin = "1.10.3"
-kotlin = "2.3.20"
-koin = "4.2.0"
-koin-compose = "4.2.0"
+compose = "1.12.1"
+compose-plugin = "1.12.1"
+kotlin = "2.4.21"
+koin = "4.2.2"
+koin-compose = "4.2.2"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
