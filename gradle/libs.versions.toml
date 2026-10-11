@@ -7,8 +7,8 @@ androidx-activityCompose = "1.13.0"
 compose = "1.10.5"
 compose-plugin = "1.10.3"
 kotlin = "2.4.21"
-koin = "4.2.0"
-koin-compose = "4.2.0"
+koin = "4.2.2"
+koin-compose = "4.2.2"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
